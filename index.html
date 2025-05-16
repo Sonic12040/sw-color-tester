@@ -12,13 +12,14 @@
     />
   </head>
   <body>
+    <header style="position:sticky; top: 0; z-index: 2; background: #fff; padding: 1em 0; text-align: center; border-bottom: 1px solid #000;">
     <h1>Sherwin Williams Color Explorer</h1>
     <p>
       Favorite colors and hidden colors are appended to the URL as query
       parameters. Update your favorites and hidden colors in the URL to see them
       reflected in the color tiles, then share the URL with your friends.
     </p>
-    <div style="display: flex; gap: 1em; margin-bottom: 1.5em;">
+    <div style="display: flex; justify-content: center; gap: 1em; margin-bottom: 1.5em;">
       <button
         id="clear-favorites-btn"
         style="
@@ -48,6 +49,8 @@
         Clear All Hidden Colors
       </button>
     </div>
+  </header>
+
     <style type="text/css">
       * {
         font-family: "Roboto", sans-serif;
