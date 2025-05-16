@@ -1,4 +1,3 @@
-
 const colorData = [
   {
     colorNumber: "6840",
@@ -90620,7 +90619,6 @@ function renderColors () {
         color
       )};font-size:1.2em;">
         <strong>${color.name}</strong><br/>
-        <span>${color.hex}</span>
       </div>
       </div>
       `;
