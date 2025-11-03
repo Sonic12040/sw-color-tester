@@ -90578,10 +90578,8 @@ function generateAccessibleText(color) {
   return "black";
 }
 
-
-
 // --- RENDERING ---
-function renderColors () {
+function renderColors() {
   const favorites = getFavoritesFromUrl();
   const hidden = getHiddenFromUrl();
   function colorTemplate(color) {
@@ -90600,7 +90598,9 @@ function renderColors () {
       color.id
     }" style="background:none;border:none;cursor:pointer;">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="${
-            favorites.includes(color.id) ? generateAccessibleText(color) : "none"
+            favorites.includes(color.id)
+              ? generateAccessibleText(color)
+              : "none"
           }" stroke=${generateAccessibleText(
       color
     )} stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polygon points="12 21 2 13 5 3 19 3 22 13 12 21"/></svg>
@@ -90623,7 +90623,7 @@ function renderColors () {
       </div>
       `;
   }
-  let colors = colorData.filter((c) => !hidden.includes(c.id));
+  let colors = colorData.filter((c) => !hidden.includes(c.id) && !c.archived);
   colors = colors.slice();
   colors.sort((a, b) => {
     const aFav = favorites.includes(a.id);
@@ -90670,16 +90670,16 @@ function renderColors () {
 
 // --- INITIALIZE ---
 renderColors();
-const clearFavBtn = document.getElementById('clear-favorites-btn');
+const clearFavBtn = document.getElementById("clear-favorites-btn");
 if (clearFavBtn) {
-  clearFavBtn.addEventListener('click', () => {
+  clearFavBtn.addEventListener("click", () => {
     setFavoritesToUrl([]);
     renderColors();
   });
 }
-const clearHiddenBtn = document.getElementById('clear-hidden-btn');
+const clearHiddenBtn = document.getElementById("clear-hidden-btn");
 if (clearHiddenBtn) {
-  clearHiddenBtn.addEventListener('click', () => {
+  clearHiddenBtn.addEventListener("click", () => {
     setHiddenToUrl([]);
     renderColors();
   });
