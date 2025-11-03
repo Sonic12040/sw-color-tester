@@ -90791,7 +90791,7 @@ function renderColors() {
     `Hidden Colors${hiddenCount > 0 ? ` (${hiddenCount})` : ""}`
   );
 
-  // 3. Color family sections
+  // 3. Color family sections (moved before categories)
   sortedFamilies.forEach((family) => {
     const count = colorFamilies[family].length;
     accordionHTML += createAccordionItem(
@@ -90799,6 +90799,39 @@ function renderColors() {
       `${family} (${count})`,
       false,
       true // Show bulk actions for color families
+    );
+  });
+
+  // 4. Group colors by categories (branded collections)
+  const colorCategories = {};
+  visibleColors.forEach((color) => {
+    if (
+      color.brandedCollectionNames &&
+      color.brandedCollectionNames.length > 0
+    ) {
+      color.brandedCollectionNames.forEach((category) => {
+        if (!colorCategories[category]) {
+          colorCategories[category] = [];
+        }
+        colorCategories[category].push(color);
+      });
+    }
+  });
+
+  // Sort categories alphabetically
+  const sortedCategories = Object.keys(colorCategories).sort();
+
+  // 5. Color category sections (moved after families)
+  sortedCategories.forEach((category) => {
+    const count = colorCategories[category].length;
+    accordionHTML += createAccordionItem(
+      `category-${category
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/'/g, "")}`,
+      `${category} Collection (${count})`,
+      false,
+      true // Show bulk actions for color categories
     );
   });
 
@@ -90845,7 +90878,7 @@ function renderColors() {
       '<div class="empty-message">No hidden colors. Click the eye icon on any color to hide it.</div>';
   }
 
-  // Populate color family sections
+  // Populate color family sections (moved before categories)
   sortedFamilies.forEach((family) => {
     const familyId = `family-${family.toLowerCase().replace(/\s+/g, "-")}`;
     const familyContainer = document.getElementById(`${familyId}-tiles`);
@@ -90853,6 +90886,20 @@ function renderColors() {
 
     familyColors.forEach((color) => {
       familyContainer.insertAdjacentHTML("beforeend", colorTemplate(color));
+    });
+  });
+
+  // Populate color category sections (moved after families)
+  sortedCategories.forEach((category) => {
+    const categoryId = `category-${category
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/'/g, "")}`;
+    const categoryContainer = document.getElementById(`${categoryId}-tiles`);
+    const categoryColors = colorCategories[category];
+
+    categoryColors.forEach((color) => {
+      categoryContainer.insertAdjacentHTML("beforeend", colorTemplate(color));
     });
   });
 
@@ -90941,6 +90988,14 @@ function focusPreviousHeader(headers, currentIndex) {
 // --- HELPER FUNCTIONS ---
 function convertFamilyIdToName(familyId) {
   // Convert family-red-purple to Red Purple, family-neutral to Neutral, etc.
+  // Also handle category-high-voltage to High Voltage, etc.
+  if (familyId.startsWith("category-")) {
+    return familyId
+      .replace("category-", "")
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  }
   return familyId
     .replace("family-", "")
     .split("-")
@@ -90957,6 +91012,29 @@ function getFamilyColors(familyName) {
       (family) => family.toLowerCase() === familyName.toLowerCase()
     );
   });
+}
+
+function getCategoryColors(categoryName) {
+  return colorData.filter((color) => {
+    if (!color.brandedCollectionNames || color.archived) return false;
+
+    // Check if any of the color's categories match the target category
+    return color.brandedCollectionNames.some(
+      (category) => category.toLowerCase() === categoryName.toLowerCase()
+    );
+  });
+}
+
+function getColorsForId(id) {
+  // Handle both family and category IDs
+  if (id.startsWith("family-")) {
+    const familyName = convertFamilyIdToName(id);
+    return getFamilyColors(familyName);
+  } else if (id.startsWith("category-")) {
+    const categoryName = convertFamilyIdToName(id);
+    return getCategoryColors(categoryName);
+  }
+  return [];
 }
 
 function getHiddenFamilies() {
@@ -91032,26 +91110,25 @@ function attachColorButtonListeners() {
   document.querySelectorAll(".bulk-favorite-btn").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.stopPropagation(); // Prevent accordion toggle
-      const familyId = btn.getAttribute("data-family");
-      const familyName = convertFamilyIdToName(familyId);
+      const groupId = btn.getAttribute("data-family");
 
-      // Get all colors in this family
-      const familyColors = getFamilyColors(familyName);
+      // Get all colors in this group (family or category)
+      const groupColors = getColorsForId(groupId);
       let favs = getFavoritesFromUrl();
 
       // Check if all colors are already favorited
-      const allFavorited = familyColors.every((color) =>
+      const allFavorited = groupColors.every((color) =>
         favs.includes(color.id)
       );
 
       if (allFavorited) {
-        // Remove all colors in this family from favorites
-        familyColors.forEach((color) => {
+        // Remove all colors in this group from favorites
+        groupColors.forEach((color) => {
           favs = favs.filter((f) => f !== color.id);
         });
       } else {
-        // Add all colors in this family to favorites
-        familyColors.forEach((color) => {
+        // Add all colors in this group to favorites
+        groupColors.forEach((color) => {
           if (!favs.includes(color.id)) {
             favs.push(color.id);
           }
@@ -91067,26 +91144,23 @@ function attachColorButtonListeners() {
   document.querySelectorAll(".bulk-hide-btn").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.stopPropagation(); // Prevent accordion toggle
-      const familyId = btn.getAttribute("data-family");
-      const familyName = convertFamilyIdToName(familyId);
+      const groupId = btn.getAttribute("data-family");
 
-      // Get all colors in this family
-      const familyColors = getFamilyColors(familyName);
+      // Get all colors in this group (family or category)
+      const groupColors = getColorsForId(groupId);
       let hidden = getHiddenFromUrl();
 
       // Check if all colors are already hidden
-      const allHidden = familyColors.every((color) =>
-        hidden.includes(color.id)
-      );
+      const allHidden = groupColors.every((color) => hidden.includes(color.id));
 
       if (allHidden) {
-        // Remove all colors in this family from hidden
-        familyColors.forEach((color) => {
+        // Remove all colors in this group from hidden
+        groupColors.forEach((color) => {
           hidden = hidden.filter((h) => h !== color.id);
         });
       } else {
-        // Add all colors in this family to hidden
-        familyColors.forEach((color) => {
+        // Add all colors in this group to hidden
+        groupColors.forEach((color) => {
           if (!hidden.includes(color.id)) {
             hidden.push(color.id);
           }
