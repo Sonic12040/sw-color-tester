@@ -90579,7 +90579,46 @@ function generateAccessibleText(color) {
 }
 
 // --- ACCORDION FUNCTIONS ---
-function createAccordionItem(id, title, isOpen = false) {
+function createAccordionItem(
+  id,
+  title,
+  isOpen = false,
+  showBulkActions = false
+) {
+  const bulkActionsHTML = showBulkActions
+    ? `
+    <div class="bulk-actions-panel" style="margin-bottom: 16px; padding: 12px; background: #f9f9f9; border-radius: 6px; border: 1px solid #e0e0e0;">
+      <div style="display: flex; gap: 12px; align-items: center;">
+        <span style="font-weight: 500; color: #333;">Family Actions:</span>
+        <button 
+          class="bulk-favorite-btn" 
+          data-family="${id}"
+          style="display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid #ddd; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 14px;"
+          title="Favorite all colors in this family"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+          <span>Favorite All</span>
+        </button>
+        <button 
+          class="bulk-hide-btn" 
+          data-family="${id}"
+          style="display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid #ddd; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 14px;"
+          title="Hide all colors in this family"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="1" y1="1" x2="23" y2="23"/>
+            <path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-5 0-9.27-3.11-11-7 1.21-2.61 3.16-4.77 5.66-6.11"/>
+            <path d="M1 1l22 22"/>
+          </svg>
+          <span>Hide All</span>
+        </button>
+      </div>
+    </div>
+  `
+    : "";
+
   return `
     <div class="accordion-item">
       <button 
@@ -90602,6 +90641,7 @@ function createAccordionItem(id, title, isOpen = false) {
         role="region"
       >
         <div class="accordion-panel">
+          ${bulkActionsHTML}
           <div id="${id}-tiles" class="color-tiles-grid"></div>
         </div>
       </div>
@@ -90649,6 +90689,35 @@ function colorTemplate(color) {
         color
       )};font-size:1.2em;">
         <strong>${color.name}</strong><br/>
+      </div>
+    </div>
+  `;
+}
+
+function familyTileTemplate(familyName, colorCount) {
+  return `
+    <div class="color-tile family-tile" aria-label="Unhide ${familyName} family" 
+         style="position: relative; background: linear-gradient(135deg, #6c757d 0%, #495057 100%); color: white; cursor: pointer; border: 2px dashed rgba(255,255,255,0.3);"
+         data-family="${familyName}">
+      <div style="position:absolute;top:8px;right:8px;">
+        <button aria-label="Unhide all ${familyName} colors" class="family-unhide-btn" data-family="${familyName}" 
+                style="background:none;border:none;cursor:pointer;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </button>
+      </div>
+      <div style="position:absolute;bottom:8px;left:8px;color:white;font-size:1.2em;">
+        <strong>${familyName} Family</strong><br/>
+        <span style="font-size:0.9em;opacity:0.8;">${colorCount} colors hidden</span>
+      </div>
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.3;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="1" y1="1" x2="23" y2="23"/>
+          <path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-5 0-9.27-3.11-11-7 1.21-2.61 3.16-4.77 5.66-6.11"/>
+          <path d="M1 1l22 22"/>
+        </svg>
       </div>
     </div>
   `;
@@ -90727,7 +90796,9 @@ function renderColors() {
     const count = colorFamilies[family].length;
     accordionHTML += createAccordionItem(
       `family-${family.toLowerCase().replace(/\s+/g, "-")}`,
-      `${family} (${count})`
+      `${family} (${count})`,
+      false,
+      true // Show bulk actions for color families
     );
   });
 
@@ -90746,11 +90817,30 @@ function renderColors() {
 
   // Populate hidden section
   const hiddenContainer = document.getElementById("hidden-tiles");
-  if (hiddenColors.length > 0) {
-    hiddenColors.forEach((color) => {
-      hiddenContainer.insertAdjacentHTML("beforeend", colorTemplate(color));
-    });
-  } else {
+  const hiddenFamilies = getHiddenFamilies();
+
+  // Add hidden family tiles first
+  hiddenFamilies.forEach((family) => {
+    hiddenContainer.insertAdjacentHTML(
+      "beforeend",
+      familyTileTemplate(family.name, family.count)
+    );
+  });
+
+  // Add individual hidden colors (excluding those in completely hidden families)
+  const hiddenFamilyNames = hiddenFamilies.map((f) => f.name);
+  const individualHiddenColors = hiddenColors.filter((color) => {
+    if (!color.colorFamilyNames || color.colorFamilyNames.length === 0)
+      return true;
+    const primaryFamily = color.colorFamilyNames[0];
+    return !hiddenFamilyNames.includes(primaryFamily);
+  });
+
+  individualHiddenColors.forEach((color) => {
+    hiddenContainer.insertAdjacentHTML("beforeend", colorTemplate(color));
+  });
+
+  if (hiddenFamilies.length === 0 && individualHiddenColors.length === 0) {
     hiddenContainer.innerHTML =
       '<div class="empty-message">No hidden colors. Click the eye icon on any color to hide it.</div>';
   }
@@ -90848,6 +90938,62 @@ function focusPreviousHeader(headers, currentIndex) {
   headers[prevIndex].focus();
 }
 
+// --- HELPER FUNCTIONS ---
+function convertFamilyIdToName(familyId) {
+  // Convert family-red-purple to Red Purple, family-neutral to Neutral, etc.
+  return familyId
+    .replace("family-", "")
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+function getFamilyColors(familyName) {
+  return colorData.filter((color) => {
+    if (!color.colorFamilyNames || color.archived) return false;
+
+    // Check if any of the color's families match the target family
+    return color.colorFamilyNames.some(
+      (family) => family.toLowerCase() === familyName.toLowerCase()
+    );
+  });
+}
+
+function getHiddenFamilies() {
+  const hidden = getHiddenFromUrl();
+  const allFamilies = {};
+
+  // Get all color families and their colors
+  colorData
+    .filter((c) => !c.archived)
+    .forEach((color) => {
+      if (color.colorFamilyNames && color.colorFamilyNames.length > 0) {
+        const primaryFamily = color.colorFamilyNames[0];
+        if (!allFamilies[primaryFamily]) {
+          allFamilies[primaryFamily] = [];
+        }
+        allFamilies[primaryFamily].push(color);
+      }
+    });
+
+  // Find families where ALL colors are hidden
+  const hiddenFamilies = [];
+  Object.keys(allFamilies).forEach((familyName) => {
+    const familyColors = allFamilies[familyName];
+    const allHidden =
+      familyColors.length > 0 &&
+      familyColors.every((color) => hidden.includes(color.id));
+    if (allHidden) {
+      hiddenFamilies.push({
+        name: familyName,
+        count: familyColors.length,
+      });
+    }
+  });
+
+  return hiddenFamilies;
+}
+
 // --- EVENT LISTENERS ---
 function attachColorButtonListeners() {
   // Attach favorite button listeners
@@ -90879,6 +91025,118 @@ function attachColorButtonListeners() {
       }
       setHiddenToUrl(hidden);
       renderColors();
+    });
+  });
+
+  // Attach bulk favorite button listeners
+  document.querySelectorAll(".bulk-favorite-btn").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation(); // Prevent accordion toggle
+      const familyId = btn.getAttribute("data-family");
+      const familyName = convertFamilyIdToName(familyId);
+
+      // Get all colors in this family
+      const familyColors = getFamilyColors(familyName);
+      let favs = getFavoritesFromUrl();
+
+      // Check if all colors are already favorited
+      const allFavorited = familyColors.every((color) =>
+        favs.includes(color.id)
+      );
+
+      if (allFavorited) {
+        // Remove all colors in this family from favorites
+        familyColors.forEach((color) => {
+          favs = favs.filter((f) => f !== color.id);
+        });
+      } else {
+        // Add all colors in this family to favorites
+        familyColors.forEach((color) => {
+          if (!favs.includes(color.id)) {
+            favs.push(color.id);
+          }
+        });
+      }
+
+      setFavoritesToUrl(favs);
+      renderColors();
+    });
+  });
+
+  // Attach bulk hide button listeners
+  document.querySelectorAll(".bulk-hide-btn").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation(); // Prevent accordion toggle
+      const familyId = btn.getAttribute("data-family");
+      const familyName = convertFamilyIdToName(familyId);
+
+      // Get all colors in this family
+      const familyColors = getFamilyColors(familyName);
+      let hidden = getHiddenFromUrl();
+
+      // Check if all colors are already hidden
+      const allHidden = familyColors.every((color) =>
+        hidden.includes(color.id)
+      );
+
+      if (allHidden) {
+        // Remove all colors in this family from hidden
+        familyColors.forEach((color) => {
+          hidden = hidden.filter((h) => h !== color.id);
+        });
+      } else {
+        // Add all colors in this family to hidden
+        familyColors.forEach((color) => {
+          if (!hidden.includes(color.id)) {
+            hidden.push(color.id);
+          }
+        });
+      }
+
+      setHiddenToUrl(hidden);
+      renderColors();
+    });
+  });
+
+  // Attach family unhide button listeners
+  document.querySelectorAll(".family-unhide-btn").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation(); // Prevent any parent event
+      const familyName = btn.getAttribute("data-family");
+
+      // Get all colors in this family and unhide them
+      const familyColors = getFamilyColors(familyName);
+      let hidden = getHiddenFromUrl();
+
+      // Remove all colors in this family from hidden
+      familyColors.forEach((color) => {
+        hidden = hidden.filter((h) => h !== color.id);
+      });
+
+      setHiddenToUrl(hidden);
+      renderColors();
+    });
+  });
+
+  // Also make family tiles clickable to unhide
+  document.querySelectorAll(".family-tile").forEach((tile) => {
+    tile.addEventListener("click", (e) => {
+      // Only trigger if not clicking the button
+      if (!e.target.closest(".family-unhide-btn")) {
+        const familyName = tile.getAttribute("data-family");
+
+        // Get all colors in this family and unhide them
+        const familyColors = getFamilyColors(familyName);
+        let hidden = getHiddenFromUrl();
+
+        // Remove all colors in this family from hidden
+        familyColors.forEach((color) => {
+          hidden = hidden.filter((h) => h !== color.id);
+        });
+
+        setHiddenToUrl(hidden);
+        renderColors();
+      }
     });
   });
 }

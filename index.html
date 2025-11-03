@@ -124,6 +124,71 @@
         transform: rotate(180deg);
       }
 
+      /* Bulk action panel styles */
+      .bulk-actions-panel {
+        margin-bottom: 16px;
+        padding: 12px;
+        background: #f9f9f9;
+        border-radius: 6px;
+        border: 1px solid #e0e0e0;
+      }
+
+      .bulk-favorite-btn,
+      .bulk-hide-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: #fff;
+        border: 1px solid #ddd;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.2s ease;
+      }
+
+      .bulk-favorite-btn:hover {
+        background: #f8f9fa;
+        border-color: #c82333;
+        color: #c82333;
+      }
+
+      .bulk-hide-btn:hover {
+        background: #f8f9fa;
+        border-color: #495057;
+        color: #495057;
+      }
+
+      .bulk-favorite-btn:focus,
+      .bulk-hide-btn:focus {
+        outline: 2px solid #0066cc;
+        outline-offset: 1px;
+      }
+
+      /* Family tile styles */
+      .family-tile {
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .family-tile:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .family-unhide-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 4px;
+        transition: background-color 0.2s ease;
+      }
+
+      .family-unhide-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
       .accordion-content {
         overflow: hidden;
         transition: max-height 0.3s ease-out;
