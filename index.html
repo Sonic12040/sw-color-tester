@@ -192,6 +192,8 @@
       .accordion-content {
         overflow: hidden;
         transition: max-height 0.3s ease-out;
+        scrollbar-width: thin;
+        scrollbar-color: #c1c1c1 #f1f1f1;
       }
 
       .accordion-content[aria-hidden="true"] {
@@ -200,16 +202,39 @@
       }
 
       .accordion-content[aria-hidden="false"] {
-        max-height: 2000px; /* Large enough for content */
+        max-height: 80vh; /* Use viewport height for better responsiveness */
+        overflow-y: auto; /* Enable vertical scrolling */
+        overflow-x: hidden; /* Prevent horizontal scrolling */
       }
 
       .accordion-panel {
         padding: 20px;
         background: white;
+        min-height: 0; /* Allow content to shrink */
       }
 
       .accordion-content[aria-hidden="true"] .accordion-panel {
         padding: 0 20px;
+      }
+
+      /* Custom scrollbar styling for webkit browsers */
+      .accordion-content::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .accordion-content::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+      }
+
+      .accordion-content::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 4px;
+        transition: background 0.2s ease;
+      }
+
+      .accordion-content::-webkit-scrollbar-thumb:hover {
+        background: #a8a8a8;
       }
 
       /* Color tile styles within accordion */
