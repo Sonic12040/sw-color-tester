@@ -90578,41 +90578,71 @@ function generateAccessibleText(color) {
   return "black";
 }
 
-// --- RENDERING ---
-function renderColors() {
+// --- ACCORDION FUNCTIONS ---
+function createAccordionItem(id, title, isOpen = false) {
+  return `
+    <div class="accordion-item">
+      <button 
+        class="accordion-header" 
+        aria-expanded="${isOpen}" 
+        aria-controls="${id}-content"
+        id="${id}-header"
+        data-section="${id}"
+      >
+        <span>${title}</span>
+        <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="m6 9 6 6 6-6"/>
+        </svg>
+      </button>
+      <div 
+        class="accordion-content" 
+        id="${id}-content"
+        aria-labelledby="${id}-header"
+        aria-hidden="${!isOpen}"
+        role="region"
+      >
+        <div class="accordion-panel">
+          <div id="${id}-tiles" class="color-tiles-grid"></div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function colorTemplate(color) {
   const favorites = getFavoritesFromUrl();
   const hidden = getHiddenFromUrl();
-  function colorTemplate(color) {
-    return `
-    <div class="color-tile" aria-label=${
+
+  return `
+    <div class="color-tile" aria-label="${
       color.name
-    } style="position: relative; background: ${generateHSLColor(
-      color.hue,
-      color.saturation,
-      color.lightness
-    )}; color: ${generateAccessibleText(color)}">
+    }" style="position: relative; background: ${generateHSLColor(
+    color.hue,
+    color.saturation,
+    color.lightness
+  )}; color: ${generateAccessibleText(color)}">
       <div style="position:absolute;top:8px;right:8px;display:flex;gap:8px;">
         <button aria-label="${
           favorites.includes(color.id) ? "Unfavorite" : "Favorite"
         } color" class="favorite-btn" data-id="${
-      color.id
-    }" style="background:none;border:none;cursor:pointer;">
+    color.id
+  }" style="background:none;border:none;cursor:pointer;">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="${
             favorites.includes(color.id)
               ? generateAccessibleText(color)
               : "none"
-          }" stroke=${generateAccessibleText(
-      color
-    )} stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polygon points="12 21 2 13 5 3 19 3 22 13 12 21"/></svg>
+          }" stroke="${generateAccessibleText(
+    color
+  )}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polygon points="12 21 2 13 5 3 19 3 22 13 12 21"/></svg>
         </button>
         <button aria-label="${
           hidden.includes(color.id) ? "Unhide" : "Hide"
         } color" class="hide-btn" data-id="${
-      color.id
-    }" style="background:none;border:none;cursor:pointer;">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke=${generateAccessibleText(
+    color.id
+  }" style="background:none;border:none;cursor:pointer;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${generateAccessibleText(
             color
-          )} stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="1" y1="1" x2="23" y2="23"/><path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-5 0-9.27-3.11-11-7 1.21-2.61 3.16-4.77 5.66-6.11"/><path d="M1 1l22 22"/></svg>
+          )}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="1" y1="1" x2="23" y2="23"/><path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-5 0-9.27-3.11-11-7 1.21-2.61 3.16-4.77 5.66-6.11"/><path d="M1 1l22 22"/></svg>
         </button>
       </div>
       <div style="position:absolute;bottom:8px;left:8px;color:${generateAccessibleText(
@@ -90620,28 +90650,210 @@ function renderColors() {
       )};font-size:1.2em;">
         <strong>${color.name}</strong><br/>
       </div>
-      </div>
-      `;
-  }
-  let colors = colorData.filter((c) => !hidden.includes(c.id) && !c.archived);
-  colors = colors.slice();
-  colors.sort((a, b) => {
-    const aFav = favorites.includes(a.id);
-    const bFav = favorites.includes(b.id);
-    if (aFav && !bFav) return -1;
-    if (!aFav && bFav) return 1;
-    return 0;
-  });
-  const container = document.getElementById("color-tiles");
-  container.innerHTML = "";
-  colors.forEach((color) => {
-    const colorTemplateInstance = colorTemplate(color);
-    container.insertAdjacentHTML("beforeend", colorTemplateInstance);
+    </div>
+  `;
+}
+
+// --- RENDERING ---
+function renderColors() {
+  const favorites = getFavoritesFromUrl();
+  const hidden = getHiddenFromUrl();
+  const container = document.getElementById("color-accordion");
+
+  // Get all colors (excluding archived)
+  const allColors = colorData.filter((c) => !c.archived);
+
+  // Get favorite and hidden colors
+  const favoriteColors = allColors.filter((c) => favorites.includes(c.id));
+  const hiddenColors = allColors.filter((c) => hidden.includes(c.id));
+
+  // Group colors by family (excluding hidden colors)
+  const visibleColors = allColors.filter((c) => !hidden.includes(c.id));
+  const colorFamilies = {};
+
+  visibleColors.forEach((color) => {
+    // Handle multiple color families - use the first one as primary
+    const primaryFamily =
+      color.colorFamilyNames && color.colorFamilyNames.length > 0
+        ? color.colorFamilyNames[0]
+        : "Other";
+
+    if (!colorFamilies[primaryFamily]) {
+      colorFamilies[primaryFamily] = [];
+    }
+    colorFamilies[primaryFamily].push(color);
   });
 
-  // Attach event listeners
-  container.querySelectorAll(".favorite-btn").forEach((btn) => {
+  // Sort families alphabetically, but put common color families first
+  const familyOrder = [
+    "Red",
+    "Orange",
+    "Yellow",
+    "Green",
+    "Blue",
+    "Purple",
+    "Neutral",
+  ];
+  const sortedFamilies = Object.keys(colorFamilies).sort((a, b) => {
+    const aIndex = familyOrder.indexOf(a);
+    const bIndex = familyOrder.indexOf(b);
+
+    if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+    if (aIndex !== -1) return -1;
+    if (bIndex !== -1) return 1;
+    return a.localeCompare(b);
+  });
+
+  // Build accordion HTML
+  let accordionHTML = "";
+
+  // 1. Favorites section (open by default)
+  const favoritesCount = favoriteColors.length;
+  accordionHTML += createAccordionItem(
+    "favorites",
+    `Favorites${favoritesCount > 0 ? ` (${favoritesCount})` : ""}`,
+    true
+  );
+
+  // 2. Hidden section
+  const hiddenCount = hiddenColors.length;
+  accordionHTML += createAccordionItem(
+    "hidden",
+    `Hidden Colors${hiddenCount > 0 ? ` (${hiddenCount})` : ""}`
+  );
+
+  // 3. Color family sections
+  sortedFamilies.forEach((family) => {
+    const count = colorFamilies[family].length;
+    accordionHTML += createAccordionItem(
+      `family-${family.toLowerCase().replace(/\s+/g, "-")}`,
+      `${family} (${count})`
+    );
+  });
+
+  container.innerHTML = accordionHTML;
+
+  // Populate favorites section
+  const favoritesContainer = document.getElementById("favorites-tiles");
+  if (favoriteColors.length > 0) {
+    favoriteColors.forEach((color) => {
+      favoritesContainer.insertAdjacentHTML("beforeend", colorTemplate(color));
+    });
+  } else {
+    favoritesContainer.innerHTML =
+      '<div class="empty-message">No favorite colors yet. Click the heart icon on any color to add it to your favorites.</div>';
+  }
+
+  // Populate hidden section
+  const hiddenContainer = document.getElementById("hidden-tiles");
+  if (hiddenColors.length > 0) {
+    hiddenColors.forEach((color) => {
+      hiddenContainer.insertAdjacentHTML("beforeend", colorTemplate(color));
+    });
+  } else {
+    hiddenContainer.innerHTML =
+      '<div class="empty-message">No hidden colors. Click the eye icon on any color to hide it.</div>';
+  }
+
+  // Populate color family sections
+  sortedFamilies.forEach((family) => {
+    const familyId = `family-${family.toLowerCase().replace(/\s+/g, "-")}`;
+    const familyContainer = document.getElementById(`${familyId}-tiles`);
+    const familyColors = colorFamilies[family];
+
+    familyColors.forEach((color) => {
+      familyContainer.insertAdjacentHTML("beforeend", colorTemplate(color));
+    });
+  });
+
+  // Add accordion functionality
+  setupAccordionBehavior();
+
+  // Attach color button event listeners
+  attachColorButtonListeners();
+}
+
+// --- ACCORDION BEHAVIOR ---
+function setupAccordionBehavior() {
+  const headers = document.querySelectorAll(".accordion-header");
+
+  headers.forEach((header, index) => {
+    header.addEventListener("click", () => {
+      toggleAccordionItem(header);
+    });
+
+    // Keyboard support
+    header.addEventListener("keydown", (e) => {
+      switch (e.key) {
+        case "Enter":
+        case " ":
+          e.preventDefault();
+          toggleAccordionItem(header);
+          break;
+        case "ArrowDown":
+          e.preventDefault();
+          focusNextHeader(headers, index);
+          break;
+        case "ArrowUp":
+          e.preventDefault();
+          focusPreviousHeader(headers, index);
+          break;
+        case "Home":
+          e.preventDefault();
+          headers[0].focus();
+          break;
+        case "End":
+          e.preventDefault();
+          headers[headers.length - 1].focus();
+          break;
+      }
+    });
+  });
+}
+
+function toggleAccordionItem(clickedHeader) {
+  const isExpanded = clickedHeader.getAttribute("aria-expanded") === "true";
+  const content = document.getElementById(
+    clickedHeader.getAttribute("aria-controls")
+  );
+
+  // Close all other accordion items
+  document.querySelectorAll(".accordion-header").forEach((header) => {
+    if (header !== clickedHeader) {
+      header.setAttribute("aria-expanded", "false");
+      const otherContent = document.getElementById(
+        header.getAttribute("aria-controls")
+      );
+      otherContent.setAttribute("aria-hidden", "true");
+    }
+  });
+
+  // Toggle clicked item
+  if (isExpanded) {
+    clickedHeader.setAttribute("aria-expanded", "false");
+    content.setAttribute("aria-hidden", "true");
+  } else {
+    clickedHeader.setAttribute("aria-expanded", "true");
+    content.setAttribute("aria-hidden", "false");
+  }
+}
+
+function focusNextHeader(headers, currentIndex) {
+  const nextIndex = (currentIndex + 1) % headers.length;
+  headers[nextIndex].focus();
+}
+
+function focusPreviousHeader(headers, currentIndex) {
+  const prevIndex = currentIndex === 0 ? headers.length - 1 : currentIndex - 1;
+  headers[prevIndex].focus();
+}
+
+// --- EVENT LISTENERS ---
+function attachColorButtonListeners() {
+  // Attach favorite button listeners
+  document.querySelectorAll(".favorite-btn").forEach((btn) => {
     btn.addEventListener("click", (e) => {
+      e.stopPropagation(); // Prevent accordion toggle
       const id = btn.getAttribute("data-id");
       let favs = getFavoritesFromUrl();
       if (favs.includes(id)) {
@@ -90653,8 +90865,11 @@ function renderColors() {
       renderColors();
     });
   });
-  container.querySelectorAll(".hide-btn").forEach((btn) => {
+
+  // Attach hide button listeners
+  document.querySelectorAll(".hide-btn").forEach((btn) => {
     btn.addEventListener("click", (e) => {
+      e.stopPropagation(); // Prevent accordion toggle
       const id = btn.getAttribute("data-id");
       let hidden = getHiddenFromUrl();
       if (hidden.includes(id)) {
