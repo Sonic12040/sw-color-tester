@@ -487,14 +487,12 @@ function attachColorButtonListeners() {
 
       if (allFavorited) {
         // Remove all colors in this group from favorites
-        groupColors.forEach((color) => {
-          URLState.removeFavorite(color.id);
-        });
+        const colorIds = groupColors.map((color) => color.id);
+        URLState.removeMultipleFavorites(colorIds);
       } else {
         // Add all colors in this group to favorites
-        groupColors.forEach((color) => {
-          URLState.addFavorite(color.id);
-        });
+        const colorIds = groupColors.map((color) => color.id);
+        URLState.addMultipleFavorites(colorIds);
       }
       renderColors();
     });
@@ -515,14 +513,12 @@ function attachColorButtonListeners() {
 
       if (allHidden) {
         // Remove all colors in this group from hidden
-        groupColors.forEach((color) => {
-          URLState.removeHidden(color.id);
-        });
+        const colorIds = groupColors.map((color) => color.id);
+        URLState.removeMultipleHidden(colorIds);
       } else {
         // Add all colors in this group to hidden
-        groupColors.forEach((color) => {
-          URLState.addHidden(color.id);
-        });
+        const colorIds = groupColors.map((color) => color.id);
+        URLState.addMultipleHidden(colorIds);
       }
       renderColors();
     });
@@ -538,9 +534,8 @@ function attachColorButtonListeners() {
       const familyColors = getFamilyColors(familyName);
 
       // Remove all colors in this family from hidden
-      familyColors.forEach((color) => {
-        URLState.removeHidden(color.id);
-      });
+      const colorIds = familyColors.map((color) => color.id);
+      URLState.removeMultipleHidden(colorIds);
       renderColors();
     });
   });
@@ -556,9 +551,8 @@ function attachColorButtonListeners() {
         const familyColors = getFamilyColors(familyName);
 
         // Remove all colors in this family from hidden
-        familyColors.forEach((color) => {
-          URLState.removeHidden(color.id);
-        });
+        const colorIds = familyColors.map((color) => color.id);
+        URLState.removeMultipleHidden(colorIds);
         renderColors();
       }
     });
@@ -574,9 +568,8 @@ function attachColorButtonListeners() {
       const categoryColors = getCategoryColors(categoryName);
 
       // Remove all colors in this category from hidden
-      categoryColors.forEach((color) => {
-        URLState.removeHidden(color.id);
-      });
+      const colorIds = categoryColors.map((color) => color.id);
+      URLState.removeMultipleHidden(colorIds);
       renderColors();
     });
   });
@@ -592,9 +585,8 @@ function attachColorButtonListeners() {
         const categoryColors = getCategoryColors(categoryName);
 
         // Remove all colors in this category from hidden
-        categoryColors.forEach((color) => {
-          URLState.removeHidden(color.id);
-        });
+        const colorIds = categoryColors.map((color) => color.id);
+        URLState.removeMultipleHidden(colorIds);
         renderColors();
       }
     });
