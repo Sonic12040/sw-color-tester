@@ -1,38 +1,5 @@
 import { colorData } from "./constants.js";
-
-function getFavoritesFromUrl() {
-  const params = new URLSearchParams(window.location.search);
-  const favs = params.get("favorites");
-  return favs ? favs.split(",") : [];
-}
-
-function getHiddenFromUrl() {
-  const params = new URLSearchParams(window.location.search);
-  const hidden = params.get("hidden");
-  return hidden ? hidden.split(",") : [];
-}
-
-function setFavoritesToUrl(favorites) {
-  const params = new URLSearchParams(window.location.search);
-  if (favorites.length) {
-    params.set("favorites", favorites.join(","));
-  } else {
-    params.delete("favorites");
-  }
-  const newUrl = `${window.location.pathname}?${params.toString()}`;
-  window.history.replaceState({}, "", newUrl);
-}
-
-function setHiddenToUrl(hidden) {
-  const params = new URLSearchParams(window.location.search);
-  if (hidden.length) {
-    params.set("hidden", hidden.join(","));
-  } else {
-    params.delete("hidden");
-  }
-  const newUrl = `${window.location.pathname}?${params.toString()}`;
-  window.history.replaceState({}, "", newUrl);
-}
+import { URLState } from "./url-parameter-utilities.js";
 
 function generateHSLColor(hue, saturation, lightness) {
   return `hsl(${hue * 360}deg ${saturation * 100}% ${lightness * 100}%)`;
@@ -117,8 +84,8 @@ function createAccordionItem(
 }
 
 function colorTemplate(color) {
-  const favorites = getFavoritesFromUrl();
-  const hidden = getHiddenFromUrl();
+  const favorites = URLState.getFavorites();
+  const hidden = URLState.getHidden();
 
   return `
     <div class="color-tile" aria-label="${
@@ -223,8 +190,8 @@ const categoryNameToId = {};
 
 // --- RENDERING ---
 function renderColors() {
-  const favorites = getFavoritesFromUrl();
-  const hidden = getHiddenFromUrl();
+  const favorites = URLState.getFavorites();
+  const hidden = URLState.getHidden();
   const container = document.getElementById("color-accordion");
 
   // Get all colors (excluding archived)
@@ -577,7 +544,7 @@ function getColorsForId(id) {
 }
 
 function getHiddenFamilies() {
-  const hidden = getHiddenFromUrl();
+  const hidden = URLState.getHidden();
   const allFamilies = {};
 
   // Get all color families and their colors
@@ -612,7 +579,7 @@ function getHiddenFamilies() {
 }
 
 function getHiddenCategories() {
-  const hidden = getHiddenFromUrl();
+  const hidden = URLState.getHidden();
   const allCategories = {};
 
   // Get all color categories and their colors
@@ -658,13 +625,7 @@ function attachColorButtonListeners() {
     btn.addEventListener("click", (e) => {
       e.stopPropagation(); // Prevent accordion toggle
       const id = btn.getAttribute("data-id");
-      let favs = getFavoritesFromUrl();
-      if (favs.includes(id)) {
-        favs = favs.filter((f) => f !== id);
-      } else {
-        favs.push(id);
-      }
-      setFavoritesToUrl(favs);
+      URLState.toggleFavorite(id);
       renderColors();
     });
   });
@@ -674,13 +635,7 @@ function attachColorButtonListeners() {
     btn.addEventListener("click", (e) => {
       e.stopPropagation(); // Prevent accordion toggle
       const id = btn.getAttribute("data-id");
-      let hidden = getHiddenFromUrl();
-      if (hidden.includes(id)) {
-        hidden = hidden.filter((h) => h !== id);
-      } else {
-        hidden.push(id);
-      }
-      setHiddenToUrl(hidden);
+      URLState.toggleHidden(id);
       renderColors();
     });
   });
@@ -693,7 +648,7 @@ function attachColorButtonListeners() {
 
       // Get all colors in this group (family or category)
       const groupColors = getColorsForId(groupId);
-      let favs = getFavoritesFromUrl();
+      const favs = URLState.getFavorites();
 
       // Check if all colors are already favorited
       const allFavorited = groupColors.every((color) =>
@@ -703,18 +658,14 @@ function attachColorButtonListeners() {
       if (allFavorited) {
         // Remove all colors in this group from favorites
         groupColors.forEach((color) => {
-          favs = favs.filter((f) => f !== color.id);
+          URLState.removeFavorite(color.id);
         });
       } else {
         // Add all colors in this group to favorites
         groupColors.forEach((color) => {
-          if (!favs.includes(color.id)) {
-            favs.push(color.id);
-          }
+          URLState.addFavorite(color.id);
         });
       }
-
-      setFavoritesToUrl(favs);
       renderColors();
     });
   });
@@ -727,7 +678,7 @@ function attachColorButtonListeners() {
 
       // Get all colors in this group (family or category)
       const groupColors = getColorsForId(groupId);
-      let hidden = getHiddenFromUrl();
+      const hidden = URLState.getHidden();
 
       // Check if all colors are already hidden
       const allHidden = groupColors.every((color) => hidden.includes(color.id));
@@ -735,18 +686,14 @@ function attachColorButtonListeners() {
       if (allHidden) {
         // Remove all colors in this group from hidden
         groupColors.forEach((color) => {
-          hidden = hidden.filter((h) => h !== color.id);
+          URLState.removeHidden(color.id);
         });
       } else {
         // Add all colors in this group to hidden
         groupColors.forEach((color) => {
-          if (!hidden.includes(color.id)) {
-            hidden.push(color.id);
-          }
+          URLState.addHidden(color.id);
         });
       }
-
-      setHiddenToUrl(hidden);
       renderColors();
     });
   });
@@ -759,14 +706,11 @@ function attachColorButtonListeners() {
 
       // Get all colors in this family and unhide them
       const familyColors = getFamilyColors(familyName);
-      let hidden = getHiddenFromUrl();
 
       // Remove all colors in this family from hidden
       familyColors.forEach((color) => {
-        hidden = hidden.filter((h) => h !== color.id);
+        URLState.removeHidden(color.id);
       });
-
-      setHiddenToUrl(hidden);
       renderColors();
     });
   });
@@ -780,14 +724,11 @@ function attachColorButtonListeners() {
 
         // Get all colors in this family and unhide them
         const familyColors = getFamilyColors(familyName);
-        let hidden = getHiddenFromUrl();
 
         // Remove all colors in this family from hidden
         familyColors.forEach((color) => {
-          hidden = hidden.filter((h) => h !== color.id);
+          URLState.removeHidden(color.id);
         });
-
-        setHiddenToUrl(hidden);
         renderColors();
       }
     });
@@ -801,14 +742,11 @@ function attachColorButtonListeners() {
 
       // Get all colors in this category and unhide them
       const categoryColors = getCategoryColors(categoryName);
-      let hidden = getHiddenFromUrl();
 
       // Remove all colors in this category from hidden
       categoryColors.forEach((color) => {
-        hidden = hidden.filter((h) => h !== color.id);
+        URLState.removeHidden(color.id);
       });
-
-      setHiddenToUrl(hidden);
       renderColors();
     });
   });
@@ -822,14 +760,11 @@ function attachColorButtonListeners() {
 
         // Get all colors in this category and unhide them
         const categoryColors = getCategoryColors(categoryName);
-        let hidden = getHiddenFromUrl();
 
         // Remove all colors in this category from hidden
         categoryColors.forEach((color) => {
-          hidden = hidden.filter((h) => h !== color.id);
+          URLState.removeHidden(color.id);
         });
-
-        setHiddenToUrl(hidden);
         renderColors();
       }
     });
@@ -841,14 +776,14 @@ renderColors();
 const clearFavBtn = document.getElementById("clear-favorites-btn");
 if (clearFavBtn) {
   clearFavBtn.addEventListener("click", () => {
-    setFavoritesToUrl([]);
+    URLState.clearFavorites();
     renderColors();
   });
 }
 const clearHiddenBtn = document.getElementById("clear-hidden-btn");
 if (clearHiddenBtn) {
   clearHiddenBtn.addEventListener("click", () => {
-    setHiddenToUrl([]);
+    URLState.clearHidden();
     renderColors();
   });
 }
