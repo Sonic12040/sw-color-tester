@@ -90723,6 +90723,37 @@ function familyTileTemplate(familyName, colorCount) {
   `;
 }
 
+function categoryTileTemplate(categoryName, colorCount) {
+  return `
+    <div class="color-tile category-tile" aria-label="Unhide ${categoryName} collection" 
+         style="position: relative; background: linear-gradient(135deg, #8e44ad 0%, #6c3483 100%); color: white; cursor: pointer; border: 2px dashed rgba(255,255,255,0.3);"
+         data-category="${categoryName}">
+      <div style="position:absolute;top:8px;right:8px;">
+        <button aria-label="Unhide all ${categoryName} colors" class="category-unhide-btn" data-category="${categoryName}" 
+                style="background:none;border:none;cursor:pointer;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </button>
+      </div>
+      <div style="position:absolute;bottom:8px;left:8px;color:white;font-size:1.2em;">
+        <strong>${categoryName} Collection</strong><br/>
+        <span style="font-size:0.9em;opacity:0.8;">${colorCount} colors hidden</span>
+      </div>
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.3;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 3h6l2 4h9l-3 7H6l-2-4H2z"/>
+        </svg>
+      </div>
+    </div>
+  `;
+}
+
+// Category name mapping for ID conversion
+const categoryIdToName = {};
+const categoryNameToId = {};
+
 // --- RENDERING ---
 function renderColors() {
   const favorites = getFavoritesFromUrl();
@@ -90824,11 +90855,17 @@ function renderColors() {
   // 5. Color category sections (moved after families)
   sortedCategories.forEach((category) => {
     const count = colorCategories[category].length;
+    const categoryId = `category-${category
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9\-]/g, "")}`;
+
+    // Store mapping for later use
+    categoryIdToName[categoryId] = category;
+    categoryNameToId[category] = categoryId;
+
     accordionHTML += createAccordionItem(
-      `category-${category
-        .toLowerCase()
-        .replace(/\s+/g, "-")
-        .replace(/'/g, "")}`,
+      categoryId,
       `${category} Collection (${count})`,
       false,
       true // Show bulk actions for color categories
@@ -90850,7 +90887,9 @@ function renderColors() {
 
   // Populate hidden section
   const hiddenContainer = document.getElementById("hidden-tiles");
+  hiddenContainer.innerHTML = ""; // Clear existing hidden tiles
   const hiddenFamilies = getHiddenFamilies();
+  const hiddenCategories = getHiddenCategories();
 
   // Add hidden family tiles first
   hiddenFamilies.forEach((family) => {
@@ -90860,20 +90899,49 @@ function renderColors() {
     );
   });
 
-  // Add individual hidden colors (excluding those in completely hidden families)
+  // Add hidden category tiles
+  hiddenCategories.forEach((category) => {
+    hiddenContainer.insertAdjacentHTML(
+      "beforeend",
+      categoryTileTemplate(category.name, category.count)
+    );
+  });
+
+  // Add individual hidden colors (excluding those in completely hidden families or categories)
   const hiddenFamilyNames = hiddenFamilies.map((f) => f.name);
+  const hiddenCategoryNames = hiddenCategories.map((c) => c.name);
   const individualHiddenColors = hiddenColors.filter((color) => {
-    if (!color.colorFamilyNames || color.colorFamilyNames.length === 0)
-      return true;
-    const primaryFamily = color.colorFamilyNames[0];
-    return !hiddenFamilyNames.includes(primaryFamily);
+    // Check if color belongs to a completely hidden family
+    let inHiddenFamily = false;
+    if (color.colorFamilyNames && color.colorFamilyNames.length > 0) {
+      const primaryFamily = color.colorFamilyNames[0];
+      inHiddenFamily = hiddenFamilyNames.includes(primaryFamily);
+    }
+
+    // Check if color belongs to any completely hidden category
+    let inHiddenCategory = false;
+    if (
+      color.brandedCollectionNames &&
+      color.brandedCollectionNames.length > 0
+    ) {
+      inHiddenCategory = color.brandedCollectionNames.some((category) =>
+        hiddenCategoryNames.includes(category)
+      );
+    }
+
+    // Include color only if it's not in a completely hidden family or category
+    return !inHiddenFamily && !inHiddenCategory;
   });
 
   individualHiddenColors.forEach((color) => {
     hiddenContainer.insertAdjacentHTML("beforeend", colorTemplate(color));
   });
 
-  if (hiddenFamilies.length === 0 && individualHiddenColors.length === 0) {
+  if (
+    hiddenFamilies.length === 0 &&
+    hiddenCategories.length === 0 &&
+    individualHiddenColors.length === 0
+  ) {
     hiddenContainer.innerHTML =
       '<div class="empty-message">No hidden colors. Click the eye icon on any color to hide it.</div>';
   }
@@ -90894,7 +90962,7 @@ function renderColors() {
     const categoryId = `category-${category
       .toLowerCase()
       .replace(/\s+/g, "-")
-      .replace(/'/g, "")}`;
+      .replace(/[^a-z0-9\-]/g, "")}`;
     const categoryContainer = document.getElementById(`${categoryId}-tiles`);
     const categoryColors = colorCategories[category];
 
@@ -90988,8 +91056,12 @@ function focusPreviousHeader(headers, currentIndex) {
 // --- HELPER FUNCTIONS ---
 function convertFamilyIdToName(familyId) {
   // Convert family-red-purple to Red Purple, family-neutral to Neutral, etc.
-  // Also handle category-high-voltage to High Voltage, etc.
+  // Also handle category IDs using mapping
   if (familyId.startsWith("category-")) {
+    // Use the mapping if available, otherwise fall back to string conversion
+    if (categoryIdToName[familyId]) {
+      return categoryIdToName[familyId];
+    }
     return familyId
       .replace("category-", "")
       .split("-")
@@ -91070,6 +91142,46 @@ function getHiddenFamilies() {
   });
 
   return hiddenFamilies;
+}
+
+function getHiddenCategories() {
+  const hidden = getHiddenFromUrl();
+  const allCategories = {};
+
+  // Get all color categories and their colors
+  colorData
+    .filter((c) => !c.archived)
+    .forEach((color) => {
+      if (
+        color.brandedCollectionNames &&
+        color.brandedCollectionNames.length > 0
+      ) {
+        color.brandedCollectionNames.forEach((category) => {
+          if (!allCategories[category]) {
+            allCategories[category] = [];
+          }
+          allCategories[category].push(color);
+        });
+      }
+    });
+
+  // Find categories where ALL colors are hidden
+  const hiddenCategories = [];
+  Object.keys(allCategories).forEach((categoryName) => {
+    const categoryColors = allCategories[categoryName];
+    const allHidden =
+      categoryColors.length > 0 &&
+      categoryColors.every((color) => hidden.includes(color.id));
+
+    if (allHidden) {
+      hiddenCategories.push({
+        name: categoryName,
+        count: categoryColors.length,
+      });
+    }
+  });
+
+  return hiddenCategories;
 }
 
 // --- EVENT LISTENERS ---
@@ -91205,6 +91317,48 @@ function attachColorButtonListeners() {
 
         // Remove all colors in this family from hidden
         familyColors.forEach((color) => {
+          hidden = hidden.filter((h) => h !== color.id);
+        });
+
+        setHiddenToUrl(hidden);
+        renderColors();
+      }
+    });
+  });
+
+  // Attach category unhide button listeners
+  document.querySelectorAll(".category-unhide-btn").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation(); // Prevent any parent event
+      const categoryName = btn.getAttribute("data-category");
+
+      // Get all colors in this category and unhide them
+      const categoryColors = getCategoryColors(categoryName);
+      let hidden = getHiddenFromUrl();
+
+      // Remove all colors in this category from hidden
+      categoryColors.forEach((color) => {
+        hidden = hidden.filter((h) => h !== color.id);
+      });
+
+      setHiddenToUrl(hidden);
+      renderColors();
+    });
+  });
+
+  // Also make category tiles clickable to unhide
+  document.querySelectorAll(".category-tile").forEach((tile) => {
+    tile.addEventListener("click", (e) => {
+      // Only trigger if not clicking the button
+      if (!e.target.closest(".category-unhide-btn")) {
+        const categoryName = tile.getAttribute("data-category");
+
+        // Get all colors in this category and unhide them
+        const categoryColors = getCategoryColors(categoryName);
+        let hidden = getHiddenFromUrl();
+
+        // Remove all colors in this category from hidden
+        categoryColors.forEach((color) => {
           hidden = hidden.filter((h) => h !== color.id);
         });
 
