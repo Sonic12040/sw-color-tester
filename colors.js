@@ -142,7 +142,10 @@ function renderColors() {
   const favoritesContainer = document.getElementById("favorites-tiles");
   if (favoriteColors.length > 0) {
     favoriteColors.forEach((color) => {
-      favoritesContainer.insertAdjacentHTML("beforeend", colorTemplate(color));
+      favoritesContainer.insertAdjacentHTML(
+        "beforeend",
+        colorTemplate(color, { showHideButton: false })
+      );
     });
   } else {
     favoritesContainer.innerHTML =
@@ -198,7 +201,10 @@ function renderColors() {
   });
 
   individualHiddenColors.forEach((color) => {
-    hiddenContainer.insertAdjacentHTML("beforeend", colorTemplate(color));
+    hiddenContainer.insertAdjacentHTML(
+      "beforeend",
+      colorTemplate(color, { showFavoriteButton: false })
+    );
   });
 
   if (

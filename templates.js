@@ -98,11 +98,46 @@ export function createAccordionItem(
 /**
  * Creates a color tile with favorite and hide buttons
  * @param {Object} color - The color object with properties like id, name, hue, saturation, lightness, isDark
+ * @param {Object} options - Options for which buttons to show
+ * @param {boolean} options.showFavoriteButton - Whether to show the favorite button (default: true)
+ * @param {boolean} options.showHideButton - Whether to show the hide button (default: true)
  * @returns {string} HTML string for the color tile
  */
-export function colorTemplate(color) {
+export function colorTemplate(color, options = {}) {
+  const { showFavoriteButton = true, showHideButton = true } = options;
   const favorites = URLState.getFavorites();
   const hidden = URLState.getHidden();
+
+  // Build button HTML conditionally
+  const favoriteButtonHTML = showFavoriteButton
+    ? `
+    <button aria-label="${
+      favorites.includes(color.id) ? "Unfavorite" : "Favorite"
+    } color" class="favorite-btn" data-id="${
+        color.id
+      }" style="background:none;border:none;cursor:pointer;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="${
+        favorites.includes(color.id) ? generateAccessibleText(color) : "none"
+      }" stroke="${generateAccessibleText(
+        color
+      )}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    </button>
+  `
+    : "";
+
+  const hideButtonHTML = showHideButton
+    ? `
+    <button aria-label="${
+      hidden.includes(color.id) ? "Unhide" : "Hide"
+    } color" class="hide-btn" data-id="${
+        color.id
+      }" style="background:none;border:none;cursor:pointer;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${generateAccessibleText(
+        color
+      )}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="1" y1="1" x2="23" y2="23"/><path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-5 0-9.27-3.11-11-7 1.21-2.61 3.16-4.77 5.66-6.11"/><path d="M1 1l22 22"/></svg>
+    </button>
+  `
+    : "";
 
   return `
     <div class="color-tile" aria-label="${
@@ -113,28 +148,8 @@ export function colorTemplate(color) {
     color.lightness
   )}; color: ${generateAccessibleText(color)}">
       <div style="position:absolute;top:8px;right:8px;display:flex;gap:8px;">
-        <button aria-label="${
-          favorites.includes(color.id) ? "Unfavorite" : "Favorite"
-        } color" class="favorite-btn" data-id="${
-    color.id
-  }" style="background:none;border:none;cursor:pointer;">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="${
-            favorites.includes(color.id)
-              ? generateAccessibleText(color)
-              : "none"
-          }" stroke="${generateAccessibleText(
-    color
-  )}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </button>
-        <button aria-label="${
-          hidden.includes(color.id) ? "Unhide" : "Hide"
-        } color" class="hide-btn" data-id="${
-    color.id
-  }" style="background:none;border:none;cursor:pointer;">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${generateAccessibleText(
-            color
-          )}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="1" y1="1" x2="23" y2="23"/><path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-5 0-9.27-3.11-11-7 1.21-2.61 3.16-4.77 5.66-6.11"/><path d="M1 1l22 22"/></svg>
-        </button>
+        ${favoriteButtonHTML}
+        ${hideButtonHTML}
       </div>
       <div style="position:absolute;bottom:8px;left:8px;color:${generateAccessibleText(
         color
