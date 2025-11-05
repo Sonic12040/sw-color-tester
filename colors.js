@@ -448,149 +448,155 @@ function getHiddenCategories() {
   return hiddenCategories;
 }
 
+// --- EVENT LISTENER UTILITIES ---
+/**
+ * Creates a simple button event handler that prevents event propagation
+ * @param {string} selector - CSS selector for buttons
+ * @param {string} dataAttribute - Data attribute to read from button
+ * @param {Function} callback - Function to call with the attribute value
+ */
+function createSimpleButtonHandler(selector, dataAttribute, callback) {
+  for (const btn of document.querySelectorAll(selector)) {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const value = btn.getAttribute(dataAttribute);
+      callback(value);
+      renderColors();
+    });
+  }
+}
+
+/**
+ * Creates a bulk action button handler for family/category operations
+ * @param {string} selector - CSS selector for buttons
+ * @param {string} dataAttribute - Data attribute to read from button
+ * @param {Function} getCurrentState - Function that returns current state array
+ * @param {Function} addMultiple - Function to add multiple items
+ * @param {Function} removeMultiple - Function to remove multiple items
+ */
+function createBulkActionHandler(
+  selector,
+  dataAttribute,
+  getCurrentState,
+  addMultiple,
+  removeMultiple
+) {
+  for (const btn of document.querySelectorAll(selector)) {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const groupId = btn.getAttribute(dataAttribute);
+      const groupColors = getColorsForId(groupId);
+      const currentState = getCurrentState();
+
+      // Check if all colors are already in the current state
+      const allInState = groupColors.every((color) =>
+        currentState.includes(color.id)
+      );
+      const colorIds = groupColors.map((color) => color.id);
+
+      if (allInState) {
+        removeMultiple(colorIds);
+      } else {
+        addMultiple(colorIds);
+      }
+      renderColors();
+    });
+  }
+}
+
+/**
+ * Creates a tile click handler with button exclusion logic
+ * @param {string} selector - CSS selector for tiles
+ * @param {string} dataAttribute - Data attribute to read from tile
+ * @param {string} excludeButtonSelector - Selector for buttons to exclude from tile clicks
+ * @param {Function} getColors - Function to get colors for the tile
+ * @param {Function} unhideColors - Function to unhide the colors
+ */
+function createTileClickHandler(
+  selector,
+  dataAttribute,
+  excludeButtonSelector,
+  getColors,
+  unhideColors
+) {
+  for (const tile of document.querySelectorAll(selector)) {
+    tile.addEventListener("click", (e) => {
+      // Only trigger if not clicking the excluded button
+      if (!e.target.closest(excludeButtonSelector)) {
+        const name = tile.getAttribute(dataAttribute);
+        const colors = getColors(name);
+        const colorIds = colors.map((color) => color.id);
+        unhideColors(colorIds);
+        renderColors();
+      }
+    });
+  }
+}
+
 // --- EVENT LISTENERS ---
 function attachColorButtonListeners() {
-  // Attach favorite button listeners
-  document.querySelectorAll(".favorite-btn").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation(); // Prevent accordion toggle
-      const id = btn.getAttribute("data-id");
-      URLState.toggleFavorite(id);
-      renderColors();
-    });
-  });
+  // Simple individual color actions
+  createSimpleButtonHandler(".favorite-btn", "data-id", (id) =>
+    URLState.toggleFavorite(id)
+  );
+  createSimpleButtonHandler(".hide-btn", "data-id", (id) =>
+    URLState.toggleHidden(id)
+  );
 
-  // Attach hide button listeners
-  document.querySelectorAll(".hide-btn").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation(); // Prevent accordion toggle
-      const id = btn.getAttribute("data-id");
-      URLState.toggleHidden(id);
-      renderColors();
-    });
-  });
+  // Bulk actions for families/categories
+  createBulkActionHandler(
+    ".bulk-favorite-btn",
+    "data-family",
+    () => URLState.getFavorites(),
+    (colorIds) => URLState.addMultipleFavorites(colorIds),
+    (colorIds) => URLState.removeMultipleFavorites(colorIds)
+  );
 
-  // Attach bulk favorite button listeners
-  document.querySelectorAll(".bulk-favorite-btn").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation(); // Prevent accordion toggle
-      const groupId = btn.getAttribute("data-family");
+  createBulkActionHandler(
+    ".bulk-hide-btn",
+    "data-family",
+    () => URLState.getHidden(),
+    (colorIds) => URLState.addMultipleHidden(colorIds),
+    (colorIds) => URLState.removeMultipleHidden(colorIds)
+  );
 
-      // Get all colors in this group (family or category)
-      const groupColors = getColorsForId(groupId);
-      const favs = URLState.getFavorites();
-
-      // Check if all colors are already favorited
-      const allFavorited = groupColors.every((color) =>
-        favs.includes(color.id)
-      );
-
-      if (allFavorited) {
-        // Remove all colors in this group from favorites
-        const colorIds = groupColors.map((color) => color.id);
-        URLState.removeMultipleFavorites(colorIds);
-      } else {
-        // Add all colors in this group to favorites
-        const colorIds = groupColors.map((color) => color.id);
-        URLState.addMultipleFavorites(colorIds);
-      }
-      renderColors();
-    });
-  });
-
-  // Attach bulk hide button listeners
-  document.querySelectorAll(".bulk-hide-btn").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation(); // Prevent accordion toggle
-      const groupId = btn.getAttribute("data-family");
-
-      // Get all colors in this group (family or category)
-      const groupColors = getColorsForId(groupId);
-      const hidden = URLState.getHidden();
-
-      // Check if all colors are already hidden
-      const allHidden = groupColors.every((color) => hidden.includes(color.id));
-
-      if (allHidden) {
-        // Remove all colors in this group from hidden
-        const colorIds = groupColors.map((color) => color.id);
-        URLState.removeMultipleHidden(colorIds);
-      } else {
-        // Add all colors in this group to hidden
-        const colorIds = groupColors.map((color) => color.id);
-        URLState.addMultipleHidden(colorIds);
-      }
-      renderColors();
-    });
-  });
-
-  // Attach family unhide button listeners
-  document.querySelectorAll(".family-unhide-btn").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation(); // Prevent any parent event
-      const familyName = btn.getAttribute("data-family");
-
-      // Get all colors in this family and unhide them
+  // Unhide button actions
+  createSimpleButtonHandler(
+    ".family-unhide-btn",
+    "data-family",
+    (familyName) => {
       const familyColors = getFamilyColors(familyName);
-
-      // Remove all colors in this family from hidden
       const colorIds = familyColors.map((color) => color.id);
       URLState.removeMultipleHidden(colorIds);
-      renderColors();
-    });
-  });
+    }
+  );
 
-  // Also make family tiles clickable to unhide
-  document.querySelectorAll(".family-tile").forEach((tile) => {
-    tile.addEventListener("click", (e) => {
-      // Only trigger if not clicking the button
-      if (!e.target.closest(".family-unhide-btn")) {
-        const familyName = tile.getAttribute("data-family");
-
-        // Get all colors in this family and unhide them
-        const familyColors = getFamilyColors(familyName);
-
-        // Remove all colors in this family from hidden
-        const colorIds = familyColors.map((color) => color.id);
-        URLState.removeMultipleHidden(colorIds);
-        renderColors();
-      }
-    });
-  });
-
-  // Attach category unhide button listeners
-  document.querySelectorAll(".category-unhide-btn").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation(); // Prevent any parent event
-      const categoryName = btn.getAttribute("data-category");
-
-      // Get all colors in this category and unhide them
+  createSimpleButtonHandler(
+    ".category-unhide-btn",
+    "data-category",
+    (categoryName) => {
       const categoryColors = getCategoryColors(categoryName);
-
-      // Remove all colors in this category from hidden
       const colorIds = categoryColors.map((color) => color.id);
       URLState.removeMultipleHidden(colorIds);
-      renderColors();
-    });
-  });
+    }
+  );
 
-  // Also make category tiles clickable to unhide
-  document.querySelectorAll(".category-tile").forEach((tile) => {
-    tile.addEventListener("click", (e) => {
-      // Only trigger if not clicking the button
-      if (!e.target.closest(".category-unhide-btn")) {
-        const categoryName = tile.getAttribute("data-category");
+  // Tile click handlers for unhiding
+  createTileClickHandler(
+    ".family-tile",
+    "data-family",
+    ".family-unhide-btn",
+    getFamilyColors,
+    URLState.removeMultipleHidden
+  );
 
-        // Get all colors in this category and unhide them
-        const categoryColors = getCategoryColors(categoryName);
-
-        // Remove all colors in this category from hidden
-        const colorIds = categoryColors.map((color) => color.id);
-        URLState.removeMultipleHidden(colorIds);
-        renderColors();
-      }
-    });
-  });
+  createTileClickHandler(
+    ".category-tile",
+    "data-category",
+    ".category-unhide-btn",
+    getCategoryColors,
+    URLState.removeMultipleHidden
+  );
 }
 
 // --- INITIALIZE ---
