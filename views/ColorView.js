@@ -27,6 +27,8 @@ export class ColorView {
     this.container = document.getElementById(containerId);
     this.categoryIdToName = {};
     this.categoryNameToId = {};
+    this.favoriteIds = [];
+    this.hiddenIds = [];
   }
 
   /**
@@ -44,6 +46,10 @@ export class ColorView {
       hiddenFamilies,
       hiddenCategories,
     } = renderData;
+
+    // Store IDs for template rendering
+    this.favoriteIds = favoriteColors.map((c) => c.id);
+    this.hiddenIds = hiddenColors.map((c) => c.id);
 
     // Build and insert accordion HTML
     const accordionHTML = this.buildAccordionHTML(
@@ -136,7 +142,11 @@ export class ColorView {
       for (const color of favoriteColors) {
         favoritesContainer.insertAdjacentHTML(
           "beforeend",
-          colorTemplate(color, { showHideButton: false })
+          colorTemplate(color, {
+            showHideButton: false,
+            favoriteIds: this.favoriteIds,
+            hiddenIds: this.hiddenIds,
+          })
         );
       }
     } else {
@@ -196,7 +206,11 @@ export class ColorView {
     for (const color of individualHiddenColors) {
       hiddenContainer.insertAdjacentHTML(
         "beforeend",
-        colorTemplate(color, { showFavoriteButton: false })
+        colorTemplate(color, {
+          showFavoriteButton: false,
+          favoriteIds: this.favoriteIds,
+          hiddenIds: this.hiddenIds,
+        })
       );
     }
 
@@ -227,7 +241,13 @@ export class ColorView {
       const familyColors = colorFamilies[family];
 
       for (const color of familyColors) {
-        familyContainer.insertAdjacentHTML("beforeend", colorTemplate(color));
+        familyContainer.insertAdjacentHTML(
+          "beforeend",
+          colorTemplate(color, {
+            favoriteIds: this.favoriteIds,
+            hiddenIds: this.hiddenIds,
+          })
+        );
       }
     }
 
@@ -240,7 +260,13 @@ export class ColorView {
       const categoryColors = colorCategories[category];
 
       for (const color of categoryColors) {
-        categoryContainer.insertAdjacentHTML("beforeend", colorTemplate(color));
+        categoryContainer.insertAdjacentHTML(
+          "beforeend",
+          colorTemplate(color, {
+            favoriteIds: this.favoriteIds,
+            hiddenIds: this.hiddenIds,
+          })
+        );
       }
     }
   }

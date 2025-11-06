@@ -1,7 +1,6 @@
 // templates.js
 // HTML template functions for the color tester application
 
-import { URLState } from "./url-parameter-utilities.js";
 import { CSS_CLASSES, DATA_ATTRIBUTES, ICONS } from "./config.js";
 
 /**
@@ -101,15 +100,20 @@ export function createAccordionItem(
  * @param {Object} options - Options for which buttons to show
  * @param {boolean} options.showFavoriteButton - Whether to show the favorite button (default: true)
  * @param {boolean} options.showHideButton - Whether to show the hide button (default: true)
+ * @param {string[]} options.favoriteIds - Array of favorite color IDs (default: [])
+ * @param {string[]} options.hiddenIds - Array of hidden color IDs (default: [])
  * @returns {string} HTML string for the color tile
  */
 export function colorTemplate(color, options = {}) {
-  const { showFavoriteButton = true, showHideButton = true } = options;
-  const favorites = URLState.getFavorites();
-  const hidden = URLState.getHidden();
+  const {
+    showFavoriteButton = true,
+    showHideButton = true,
+    favoriteIds = [],
+    hiddenIds = [],
+  } = options;
 
-  const isFavorited = favorites.includes(color.id);
-  const isHidden = hidden.includes(color.id);
+  const isFavorited = favoriteIds.includes(color.id);
+  const isHidden = hiddenIds.includes(color.id);
   const textColor = generateAccessibleText(color);
 
   const favoriteLabel = isFavorited ? "Unfavorite" : "Favorite";
