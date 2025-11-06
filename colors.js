@@ -535,6 +535,85 @@ function getHiddenCategories() {
 }
 
 // --- EVENT DELEGATION ---
+
+// Handler for individual color favorite button
+function handleFavoriteButton(colorId) {
+  URLState.toggleFavorite(colorId);
+  renderColors();
+}
+
+// Handler for individual color hide button
+function handleHideButton(colorId) {
+  URLState.toggleHidden(colorId);
+  renderColors();
+}
+
+// Handler for bulk favorite button (family/category)
+function handleBulkFavoriteButton(groupId) {
+  const groupColors = getColorsForId(groupId);
+  const favorites = URLState.getFavorites();
+
+  // Check if all colors are already favorited
+  const allFavorited = groupColors.every((color) =>
+    favorites.includes(color.id)
+  );
+  const colorIds = groupColors.map((color) => color.id);
+
+  if (allFavorited) {
+    URLState.removeMultipleFavorites(colorIds);
+  } else {
+    URLState.addMultipleFavorites(colorIds);
+  }
+  renderColors();
+}
+
+// Handler for bulk hide button (family/category)
+function handleBulkHideButton(groupId) {
+  const groupColors = getColorsForId(groupId);
+  const hidden = URLState.getHidden();
+
+  // Check if all colors are already hidden
+  const allHidden = groupColors.every((color) => hidden.includes(color.id));
+  const colorIds = groupColors.map((color) => color.id);
+
+  if (allHidden) {
+    URLState.removeMultipleHidden(colorIds);
+  } else {
+    URLState.addMultipleHidden(colorIds);
+  }
+  renderColors();
+}
+
+// Handler for unhide button (both family and category tiles)
+function handleUnhideButton(familyName, categoryName) {
+  if (familyName) {
+    const familyColors = getFamilyColors(familyName);
+    const colorIds = familyColors.map((color) => color.id);
+    URLState.removeMultipleHidden(colorIds);
+  } else if (categoryName) {
+    const categoryColors = getCategoryColors(categoryName);
+    const colorIds = categoryColors.map((color) => color.id);
+    URLState.removeMultipleHidden(colorIds);
+  }
+  renderColors();
+}
+
+// Handler for family tile click (unhide entire family)
+function handleFamilyTileClick(familyName) {
+  const familyColors = getFamilyColors(familyName);
+  const colorIds = familyColors.map((color) => color.id);
+  URLState.removeMultipleHidden(colorIds);
+  renderColors();
+}
+
+// Handler for category tile click (unhide entire category)
+function handleCategoryTileClick(categoryName) {
+  const categoryColors = getCategoryColors(categoryName);
+  const colorIds = categoryColors.map((color) => color.id);
+  URLState.removeMultipleHidden(colorIds);
+  renderColors();
+}
+
 /**
  * Sets up a single delegated event listener on the accordion container
  * This replaces hundreds of individual button listeners with one efficient delegated listener
@@ -561,8 +640,7 @@ function setupEventDelegation() {
     if (favoriteBtn) {
       e.stopPropagation();
       const colorId = favoriteBtn.getAttribute(DATA_ATTRIBUTES.ID);
-      URLState.toggleFavorite(colorId);
-      renderColors();
+      handleFavoriteButton(colorId);
       return;
     }
 
@@ -571,8 +649,7 @@ function setupEventDelegation() {
     if (hideBtn) {
       e.stopPropagation();
       const colorId = hideBtn.getAttribute(DATA_ATTRIBUTES.ID);
-      URLState.toggleHidden(colorId);
-      renderColors();
+      handleHideButton(colorId);
       return;
     }
 
@@ -583,21 +660,7 @@ function setupEventDelegation() {
     if (bulkFavoriteBtn) {
       e.stopPropagation();
       const groupId = bulkFavoriteBtn.getAttribute(DATA_ATTRIBUTES.FAMILY);
-      const groupColors = getColorsForId(groupId);
-      const favorites = URLState.getFavorites();
-
-      // Check if all colors are already favorited
-      const allFavorited = groupColors.every((color) =>
-        favorites.includes(color.id)
-      );
-      const colorIds = groupColors.map((color) => color.id);
-
-      if (allFavorited) {
-        URLState.removeMultipleFavorites(colorIds);
-      } else {
-        URLState.addMultipleFavorites(colorIds);
-      }
-      renderColors();
+      handleBulkFavoriteButton(groupId);
       return;
     }
 
@@ -608,19 +671,7 @@ function setupEventDelegation() {
     if (bulkHideBtn) {
       e.stopPropagation();
       const groupId = bulkHideBtn.getAttribute(DATA_ATTRIBUTES.FAMILY);
-      const groupColors = getColorsForId(groupId);
-      const hidden = URLState.getHidden();
-
-      // Check if all colors are already hidden
-      const allHidden = groupColors.every((color) => hidden.includes(color.id));
-      const colorIds = groupColors.map((color) => color.id);
-
-      if (allHidden) {
-        URLState.removeMultipleHidden(colorIds);
-      } else {
-        URLState.addMultipleHidden(colorIds);
-      }
-      renderColors();
+      handleBulkHideButton(groupId);
       return;
     }
 
@@ -632,17 +683,7 @@ function setupEventDelegation() {
       e.stopPropagation();
       const familyName = unhideBtn.getAttribute(DATA_ATTRIBUTES.FAMILY);
       const categoryName = unhideBtn.getAttribute(DATA_ATTRIBUTES.CATEGORY);
-
-      if (familyName) {
-        const familyColors = getFamilyColors(familyName);
-        const colorIds = familyColors.map((color) => color.id);
-        URLState.removeMultipleHidden(colorIds);
-      } else if (categoryName) {
-        const categoryColors = getCategoryColors(categoryName);
-        const colorIds = categoryColors.map((color) => color.id);
-        URLState.removeMultipleHidden(colorIds);
-      }
-      renderColors();
+      handleUnhideButton(familyName, categoryName);
       return;
     }
 
@@ -653,10 +694,7 @@ function setupEventDelegation() {
       !e.target.closest(`.${CSS_CLASSES.COLOR_TILE_UNHIDE_BUTTON}`)
     ) {
       const familyName = familyTile.getAttribute(DATA_ATTRIBUTES.FAMILY);
-      const familyColors = getFamilyColors(familyName);
-      const colorIds = familyColors.map((color) => color.id);
-      URLState.removeMultipleHidden(colorIds);
-      renderColors();
+      handleFamilyTileClick(familyName);
       return;
     }
 
@@ -669,10 +707,7 @@ function setupEventDelegation() {
       !e.target.closest(`.${CSS_CLASSES.COLOR_TILE_UNHIDE_BUTTON}`)
     ) {
       const categoryName = categoryTile.getAttribute(DATA_ATTRIBUTES.CATEGORY);
-      const categoryColors = getCategoryColors(categoryName);
-      const colorIds = categoryColors.map((color) => color.id);
-      URLState.removeMultipleHidden(colorIds);
-      renderColors();
+      handleCategoryTileClick(categoryName);
     }
   });
 }
