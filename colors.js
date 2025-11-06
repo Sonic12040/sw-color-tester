@@ -15,6 +15,7 @@ import {
   FAMILY_ORDER,
   createGroupId,
   getTilesContainerId,
+  convertIdToName,
 } from "./config.js";
 
 // Color utility functions are now imported from templates.js
@@ -408,26 +409,6 @@ function focusPreviousHeader(headers, currentIndex) {
 }
 
 // --- HELPER FUNCTIONS ---
-function convertFamilyIdToName(familyId) {
-  // Convert family-red-purple to Red Purple, family-neutral to Neutral, etc.
-  // Also handle category IDs using mapping
-  if (familyId.startsWith("category-")) {
-    // Use the mapping if available, otherwise fall back to string conversion
-    if (categoryIdToName[familyId]) {
-      return categoryIdToName[familyId];
-    }
-    return familyId
-      .replace("category-", "")
-      .split("-")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-  }
-  return familyId
-    .replace("family-", "")
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-}
 
 function getFamilyColors(familyName) {
   return colorData.filter((color) => {
@@ -454,84 +435,75 @@ function getCategoryColors(categoryName) {
 function getColorsForId(id) {
   // Handle both family and category IDs
   if (id.startsWith("family-")) {
-    const familyName = convertFamilyIdToName(id);
+    const familyName = convertIdToName(id);
     return getFamilyColors(familyName);
   } else if (id.startsWith("category-")) {
-    const categoryName = convertFamilyIdToName(id);
+    const categoryName = convertIdToName(id);
     return getCategoryColors(categoryName);
   }
   return [];
 }
 
-function getHiddenFamilies() {
+/**
+ * Generic function to find groups (families or categories) where ALL colors are hidden
+ * @param {string} groupType - Either 'family' or 'category'
+ * @returns {Array<{name: string, count: number}>} Array of hidden groups with their color counts
+ */
+function getHiddenGroups(groupType) {
   const hidden = URLState.getHidden();
-  const allFamilies = {};
+  const allGroups = {};
+  const propertyName =
+    groupType === "family" ? "colorFamilyNames" : "brandedCollectionNames";
 
-  // Get all color families and their colors
+  // Get all groups and their colors
   for (const color of colorData.filter((c) => !c.archived)) {
-    if (color.colorFamilyNames && color.colorFamilyNames.length > 0) {
-      const primaryFamily = color.colorFamilyNames[0];
-      if (!allFamilies[primaryFamily]) {
-        allFamilies[primaryFamily] = [];
+    const groupNames = color[propertyName];
+    if (!groupNames || groupNames.length === 0) continue;
+
+    // Families use primary (first), categories use all
+    const groups = groupType === "family" ? [groupNames[0]] : groupNames;
+
+    for (const groupName of groups) {
+      if (!allGroups[groupName]) {
+        allGroups[groupName] = [];
       }
-      allFamilies[primaryFamily].push(color);
+      allGroups[groupName].push(color);
     }
   }
 
-  // Find families where ALL colors are hidden
-  const hiddenFamilies = [];
-  for (const familyName of Object.keys(allFamilies)) {
-    const familyColors = allFamilies[familyName];
+  // Find groups where ALL colors are hidden
+  const hiddenGroups = [];
+  for (const groupName of Object.keys(allGroups)) {
+    const groupColors = allGroups[groupName];
     const allHidden =
-      familyColors.length > 0 &&
-      familyColors.every((color) => hidden.includes(color.id));
+      groupColors.length > 0 &&
+      groupColors.every((color) => hidden.includes(color.id));
+
     if (allHidden) {
-      hiddenFamilies.push({
-        name: familyName,
-        count: familyColors.length,
+      hiddenGroups.push({
+        name: groupName,
+        count: groupColors.length,
       });
     }
   }
 
-  return hiddenFamilies;
+  return hiddenGroups;
 }
 
+/**
+ * Find all color families where ALL colors are hidden
+ * @returns {Array<{name: string, count: number}>} Array of hidden families
+ */
+function getHiddenFamilies() {
+  return getHiddenGroups("family");
+}
+
+/**
+ * Find all color categories where ALL colors are hidden
+ * @returns {Array<{name: string, count: number}>} Array of hidden categories
+ */
 function getHiddenCategories() {
-  const hidden = URLState.getHidden();
-  const allCategories = {};
-
-  // Get all color categories and their colors
-  for (const color of colorData.filter((c) => !c.archived)) {
-    if (
-      color.brandedCollectionNames &&
-      color.brandedCollectionNames.length > 0
-    ) {
-      for (const category of color.brandedCollectionNames) {
-        if (!allCategories[category]) {
-          allCategories[category] = [];
-        }
-        allCategories[category].push(color);
-      }
-    }
-  }
-
-  // Find categories where ALL colors are hidden
-  const hiddenCategories = [];
-  for (const categoryName of Object.keys(allCategories)) {
-    const categoryColors = allCategories[categoryName];
-    const allHidden =
-      categoryColors.length > 0 &&
-      categoryColors.every((color) => hidden.includes(color.id));
-
-    if (allHidden) {
-      hiddenCategories.push({
-        name: categoryName,
-        count: categoryColors.length,
-      });
-    }
-  }
-
-  return hiddenCategories;
+  return getHiddenGroups("category");
 }
 
 // --- EVENT DELEGATION ---
