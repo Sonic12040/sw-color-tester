@@ -194,6 +194,24 @@ export class ColorController {
   // --- EVENT HANDLERS ---
 
   /**
+   * Private helper to unhide a group of colors (family or category)
+   * @private
+   * @param {string} groupType - Either 'family' or 'category'
+   * @param {string} groupName - Name of the group to unhide
+   */
+  _unhideGroup(groupType, groupName) {
+    const getColors =
+      groupType === "family"
+        ? this.model.getFamilyColors.bind(this.model)
+        : this.model.getCategoryColors.bind(this.model);
+
+    const colors = getColors(groupName);
+    const colorIds = colors.map((color) => color.id);
+    this.state.removeMultipleHidden(colorIds);
+    this.render();
+  }
+
+  /**
    * Handle individual color favorite button click
    */
   handleFavoriteButton(colorId) {
@@ -254,35 +272,24 @@ export class ColorController {
    */
   handleUnhideButton(familyName, categoryName) {
     if (familyName) {
-      const familyColors = this.model.getFamilyColors(familyName);
-      const colorIds = familyColors.map((color) => color.id);
-      this.state.removeMultipleHidden(colorIds);
+      this._unhideGroup("family", familyName);
     } else if (categoryName) {
-      const categoryColors = this.model.getCategoryColors(categoryName);
-      const colorIds = categoryColors.map((color) => color.id);
-      this.state.removeMultipleHidden(colorIds);
+      this._unhideGroup("category", categoryName);
     }
-    this.render();
   }
 
   /**
    * Handle family tile click (unhide entire family)
    */
   handleFamilyTileClick(familyName) {
-    const familyColors = this.model.getFamilyColors(familyName);
-    const colorIds = familyColors.map((color) => color.id);
-    this.state.removeMultipleHidden(colorIds);
-    this.render();
+    this._unhideGroup("family", familyName);
   }
 
   /**
    * Handle category tile click (unhide entire category)
    */
   handleCategoryTileClick(categoryName) {
-    const categoryColors = this.model.getCategoryColors(categoryName);
-    const colorIds = categoryColors.map((color) => color.id);
-    this.state.removeMultipleHidden(colorIds);
-    this.render();
+    this._unhideGroup("category", categoryName);
   }
 
   /**
