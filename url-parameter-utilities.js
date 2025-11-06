@@ -61,6 +61,39 @@ export class URLParameterManager {
   }
 
   /**
+   * Process an array parameter value
+   * @private
+   */
+  static _processArrayParameter(params, key, value) {
+    if (value.length === 0) {
+      params.delete(key);
+      return;
+    }
+
+    const filteredValues = value.filter((v) => v && v.toString().trim() !== "");
+
+    if (filteredValues.length > 0) {
+      params.set(key, filteredValues.join(","));
+    } else {
+      params.delete(key);
+    }
+  }
+
+  /**
+   * Process a scalar (non-array) parameter value
+   * @private
+   */
+  static _processScalarParameter(params, key, value) {
+    const stringValue = value.toString().trim();
+
+    if (stringValue === "") {
+      params.delete(key);
+    } else {
+      params.set(key, stringValue);
+    }
+  }
+
+  /**
    * Batch update multiple parameters at once to avoid rapid History API calls
    * @param {Object} updates - Object with parameter updates
    * @param {boolean} replaceState - Whether to replace the current history state (default: true)
@@ -72,24 +105,9 @@ export class URLParameterManager {
       if (value === null || value === undefined) {
         params.delete(key);
       } else if (Array.isArray(value)) {
-        if (value.length > 0) {
-          const filteredValues = value.filter(
-            (v) => v && v.toString().trim() !== ""
-          );
-          if (filteredValues.length > 0) {
-            params.set(key, filteredValues.join(","));
-          } else {
-            params.delete(key);
-          }
-        } else {
-          params.delete(key);
-        }
+        this._processArrayParameter(params, key, value);
       } else {
-        if (value.toString().trim() !== "") {
-          params.set(key, value.toString());
-        } else {
-          params.delete(key);
-        }
+        this._processScalarParameter(params, key, value);
       }
     }
 
