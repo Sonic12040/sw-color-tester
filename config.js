@@ -11,25 +11,43 @@ export const PREFIX = {
   HIDDEN: "hidden",
 };
 
-// CSS class names
+// CSS class names (BEM Convention: block__element--modifier)
 export const CSS_CLASSES = {
+  // Header
+  HEADER: "header",
+  HEADER_ACTIONS: "header__actions",
+  HEADER_BUTTON: "header__button",
+  
+  // Accordion
   ACCORDION: "accordion",
   ACCORDION_ITEM: "accordion-item",
   ACCORDION_HEADER: "accordion-header",
   ACCORDION_CONTENT: "accordion-content",
   ACCORDION_PANEL: "accordion-panel",
   ACCORDION_ICON: "accordion-icon",
+  
+  // Color Tiles
   COLOR_TILE: "color-tile",
+  COLOR_TILE_ACTIONS: "color-tile__actions",
+  COLOR_TILE_BUTTON: "color-tile__button",
+  COLOR_TILE_FAVORITE_BUTTON: "color-tile__favorite-button",
+  COLOR_TILE_HIDE_BUTTON: "color-tile__hide-button",
+  COLOR_TILE_UNHIDE_BUTTON: "color-tile__unhide-button",
+  COLOR_TILE_INFO: "color-tile__info",
+  COLOR_TILE_FAMILY: "color-tile--family",
+  COLOR_TILE_CATEGORY: "color-tile--category",
+  COLOR_TILE_COUNT: "color-tile__count",
+  COLOR_TILE_ICON_OVERLAY: "color-tile__icon-overlay",
   COLOR_TILES_GRID: "color-tiles-grid",
-  FAMILY_TILE: "family-tile",
-  CATEGORY_TILE: "category-tile",
-  FAVORITE_BTN: "favorite-btn",
-  HIDE_BTN: "hide-btn",
-  BULK_FAVORITE_BTN: "bulk-favorite-btn",
-  BULK_HIDE_BTN: "bulk-hide-btn",
+  
+  // Bulk Actions
   BULK_ACTIONS_PANEL: "bulk-actions-panel",
-  FAMILY_UNHIDE_BTN: "family-unhide-btn",
-  CATEGORY_UNHIDE_BTN: "category-unhide-btn",
+  BULK_ACTIONS_PANEL_CONTAINER: "bulk-actions-panel__container",
+  BULK_ACTIONS_PANEL_LABEL: "bulk-actions-panel__label",
+  BULK_ACTIONS_FAVORITE_BUTTON: "bulk-actions__favorite-button",
+  BULK_ACTIONS_HIDE_BUTTON: "bulk-actions__hide-button",
+  
+  // Empty State
   EMPTY_MESSAGE: "empty-message",
 };
 

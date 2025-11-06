@@ -34,13 +34,12 @@ export function createAccordionItem(
 ) {
   const bulkActionsHTML = showBulkActions
     ? `
-    <div class="${CSS_CLASSES.BULK_ACTIONS_PANEL}" style="margin-bottom: 16px; padding: 12px; background: #f9f9f9; border-radius: 6px; border: 1px solid #e0e0e0;">
-      <div style="display: flex; gap: 12px; align-items: center;">
-        <span style="font-weight: 500; color: #333;">Family Actions:</span>
+    <div class="${CSS_CLASSES.BULK_ACTIONS_PANEL}">
+      <div class="${CSS_CLASSES.BULK_ACTIONS_PANEL_CONTAINER}">
+        <span class="${CSS_CLASSES.BULK_ACTIONS_PANEL_LABEL}">Family Actions:</span>
         <button 
-          class="${CSS_CLASSES.BULK_FAVORITE_BTN}" 
+          class="${CSS_CLASSES.BULK_ACTIONS_FAVORITE_BUTTON}" 
           ${DATA_ATTRIBUTES.FAMILY}="${id}"
-          style="display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid #ddd; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 14px;"
           title="Favorite all colors in this family"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -49,9 +48,8 @@ export function createAccordionItem(
           <span>Favorite All</span>
         </button>
         <button 
-          class="${CSS_CLASSES.BULK_HIDE_BTN}" 
+          class="${CSS_CLASSES.BULK_ACTIONS_HIDE_BUTTON}" 
           ${DATA_ATTRIBUTES.FAMILY}="${id}"
-          style="display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid #ddd; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 14px;"
           title="Hide all colors in this family"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -122,9 +120,8 @@ export function colorTemplate(color, options = {}) {
   const favoriteButtonHTML = showFavoriteButton
     ? `
     <button aria-label="${favoriteLabel} color" 
-            class="${CSS_CLASSES.FAVORITE_BTN}" 
-            ${DATA_ATTRIBUTES.ID}="${color.id}" 
-            style="background:none;border:none;cursor:pointer;">
+            class="${CSS_CLASSES.COLOR_TILE_FAVORITE_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON}" 
+            ${DATA_ATTRIBUTES.ID}="${color.id}">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="${favoriteFill}" stroke="${textColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
         ${ICONS.HEART}
       </svg>
@@ -135,9 +132,8 @@ export function colorTemplate(color, options = {}) {
   const hideButtonHTML = showHideButton
     ? `
     <button aria-label="${hideLabel} color" 
-            class="${CSS_CLASSES.HIDE_BTN}" 
-            ${DATA_ATTRIBUTES.ID}="${color.id}" 
-            style="background:none;border:none;cursor:pointer;">
+            class="${CSS_CLASSES.COLOR_TILE_HIDE_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON}" 
+            ${DATA_ATTRIBUTES.ID}="${color.id}">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${textColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
         ${ICONS.EYE_OFF}
       </svg>
@@ -146,18 +142,18 @@ export function colorTemplate(color, options = {}) {
     : "";
 
   return `
-    <div class="${CSS_CLASSES.COLOR_TILE}" aria-label="${
-    color.name
-  }" style="position: relative; background: ${generateHSLColor(
-    color.hue,
-    color.saturation,
-    color.lightness
-  )}; color: ${textColor}">
-      <div style="position:absolute;top:8px;right:8px;display:flex;gap:8px;">
+    <div class="${CSS_CLASSES.COLOR_TILE}" 
+         aria-label="${color.name}" 
+         style="background: ${generateHSLColor(
+           color.hue,
+           color.saturation,
+           color.lightness
+         )}; color: ${textColor}">
+      <div class="${CSS_CLASSES.COLOR_TILE_ACTIONS}">
         ${favoriteButtonHTML}
         ${hideButtonHTML}
       </div>
-      <div style="position:absolute;bottom:8px;left:8px;color:${textColor};font-size:1.2em;">
+      <div class="${CSS_CLASSES.COLOR_TILE_INFO}" style="color:${textColor};">
         <strong>${color.name}</strong><br/>
       </div>
     </div>
@@ -172,22 +168,23 @@ export function colorTemplate(color, options = {}) {
  */
 export function familyTileTemplate(familyName, colorCount) {
   return `
-    <div class="${CSS_CLASSES.COLOR_TILE} ${CSS_CLASSES.FAMILY_TILE}" aria-label="Unhide ${familyName} family" 
-         style="position: relative; background: linear-gradient(135deg, #6c757d 0%, #495057 100%); color: white; cursor: pointer; border: 2px dashed rgba(255,255,255,0.3);"
+    <div class="${CSS_CLASSES.COLOR_TILE} ${CSS_CLASSES.COLOR_TILE_FAMILY}" 
+         aria-label="Unhide ${familyName} family" 
          ${DATA_ATTRIBUTES.FAMILY}="${familyName}">
-      <div style="position:absolute;top:8px;right:8px;">
-        <button aria-label="Unhide all ${familyName} colors" class="${CSS_CLASSES.FAMILY_UNHIDE_BTN}" ${DATA_ATTRIBUTES.FAMILY}="${familyName}" 
-                style="background:none;border:none;cursor:pointer;">
+      <div class="${CSS_CLASSES.COLOR_TILE_ACTIONS}">
+        <button aria-label="Unhide all ${familyName} colors" 
+                class="${CSS_CLASSES.COLOR_TILE_UNHIDE_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON}" 
+                ${DATA_ATTRIBUTES.FAMILY}="${familyName}">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
             ${ICONS.EYE}
           </svg>
         </button>
       </div>
-      <div style="position:absolute;bottom:8px;left:8px;color:white;font-size:1.2em;">
+      <div class="${CSS_CLASSES.COLOR_TILE_INFO}">
         <strong>${familyName} Family</strong><br/>
-        <span style="font-size:0.9em;opacity:0.8;">${colorCount} colors hidden</span>
+        <span class="${CSS_CLASSES.COLOR_TILE_COUNT}">${colorCount} colors hidden</span>
       </div>
-      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.3;">
+      <div class="${CSS_CLASSES.COLOR_TILE_ICON_OVERLAY}">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
           ${ICONS.EYE_OFF}
         </svg>
@@ -204,22 +201,23 @@ export function familyTileTemplate(familyName, colorCount) {
  */
 export function categoryTileTemplate(categoryName, colorCount) {
   return `
-    <div class="${CSS_CLASSES.COLOR_TILE} ${CSS_CLASSES.CATEGORY_TILE}" aria-label="Unhide ${categoryName} collection" 
-         style="position: relative; background: linear-gradient(135deg, #8e44ad 0%, #6c3483 100%); color: white; cursor: pointer; border: 2px dashed rgba(255,255,255,0.3);"
+    <div class="${CSS_CLASSES.COLOR_TILE} ${CSS_CLASSES.COLOR_TILE_CATEGORY}" 
+         aria-label="Unhide ${categoryName} collection" 
          ${DATA_ATTRIBUTES.CATEGORY}="${categoryName}">
-      <div style="position:absolute;top:8px;right:8px;">
-        <button aria-label="Unhide all ${categoryName} colors" class="${CSS_CLASSES.CATEGORY_UNHIDE_BTN}" ${DATA_ATTRIBUTES.CATEGORY}="${categoryName}" 
-                style="background:none;border:none;cursor:pointer;">
+      <div class="${CSS_CLASSES.COLOR_TILE_ACTIONS}">
+        <button aria-label="Unhide all ${categoryName} colors" 
+                class="${CSS_CLASSES.COLOR_TILE_UNHIDE_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON}" 
+                ${DATA_ATTRIBUTES.CATEGORY}="${categoryName}">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
             ${ICONS.EYE}
           </svg>
         </button>
       </div>
-      <div style="position:absolute;bottom:8px;left:8px;color:white;font-size:1.2em;">
+      <div class="${CSS_CLASSES.COLOR_TILE_INFO}">
         <strong>${categoryName} Collection</strong><br/>
-        <span style="font-size:0.9em;opacity:0.8;">${colorCount} colors hidden</span>
+        <span class="${CSS_CLASSES.COLOR_TILE_COUNT}">${colorCount} colors hidden</span>
       </div>
-      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.3;">
+      <div class="${CSS_CLASSES.COLOR_TILE_ICON_OVERLAY}">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
           <path d="M2 3h6l2 4h9l-3 7H6l-2-4H2z"/>
         </svg>

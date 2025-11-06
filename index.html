@@ -19,256 +19,27 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
       rel="stylesheet"
     />
+    <!-- Application Styles -->
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header
-      style="
-        position: sticky;
-        top: 0;
-        z-index: 2;
-        background: #fff;
-        padding: 1em 0;
-        text-align: center;
-        border-bottom: 1px solid #000;
-      "
-    >
+    <header class="header">
       <h1>Sherwin Williams Color Explorer</h1>
       <p>
         Favorite colors and hidden colors are appended to the URL as query
         parameters. Update your favorites and hidden colors in the URL to see
         them reflected in the color tiles, then share the URL with your friends.
       </p>
-      <div
-        style="
-          display: flex;
-          justify-content: center;
-          gap: 1em;
-          margin-bottom: 1.5em;
-        "
-      >
-        <button
-          id="clear-favorites-btn"
-          style="
-            background: #fff;
-            color: #000;
-            border: 1px solid #000;
-            padding: 0.5em 1.2em;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1em;
-          "
-        >
+      <div class="header__actions">
+        <button id="clear-favorites-btn" class="header__button">
           Clear All Favorites
         </button>
-        <button
-          id="clear-hidden-btn"
-          style="
-            background: #fff;
-            color: #000;
-            border: 1px solid #000;
-            padding: 0.5em 1.2em;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1em;
-          "
-        >
+        <button id="clear-hidden-btn" class="header__button">
           Clear All Hidden Colors
         </button>
       </div>
     </header>
 
-    <style type="text/css">
-      * {
-        font-family: "Roboto", sans-serif;
-      }
-
-      /* Accordion Styles */
-      .accordion {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-      }
-
-      .accordion-item {
-        border: 1px solid #ccc;
-        margin-bottom: 4px;
-        border-radius: 4px;
-        overflow: hidden;
-      }
-
-      .accordion-header {
-        background: #f5f5f5;
-        border: none;
-        width: 100%;
-        padding: 16px 20px;
-        text-align: left;
-        font-size: 18px;
-        font-weight: 600;
-        cursor: pointer;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        transition: background-color 0.2s ease;
-        text-transform: capitalize;
-      }
-
-      .accordion-header:hover {
-        background: #e8e8e8;
-      }
-
-      .accordion-header:focus {
-        outline: 2px solid #0066cc;
-        outline-offset: -2px;
-      }
-
-      .accordion-header[aria-expanded="true"] {
-        background: #e0e0e0;
-      }
-
-      .accordion-icon {
-        transform: rotate(0deg);
-        transition: transform 0.2s ease;
-      }
-
-      .accordion-header[aria-expanded="true"] .accordion-icon {
-        transform: rotate(180deg);
-      }
-
-      /* Bulk action panel styles */
-      .bulk-actions-panel {
-        margin-bottom: 16px;
-        padding: 12px;
-        background: #f9f9f9;
-        border-radius: 6px;
-        border: 1px solid #e0e0e0;
-      }
-
-      .bulk-favorite-btn,
-      .bulk-hide-btn {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        background: #fff;
-        border: 1px solid #ddd;
-        padding: 6px 12px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 14px;
-        transition: all 0.2s ease;
-      }
-
-      .bulk-favorite-btn:hover {
-        background: #f8f9fa;
-        border-color: #c82333;
-        color: #c82333;
-      }
-
-      .bulk-hide-btn:hover {
-        background: #f8f9fa;
-        border-color: #495057;
-        color: #495057;
-      }
-
-      .bulk-favorite-btn:focus,
-      .bulk-hide-btn:focus {
-        outline: 2px solid #0066cc;
-        outline-offset: 1px;
-      }
-
-      /* Family tile styles */
-      .family-tile {
-        cursor: pointer;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-      }
-
-      .family-tile:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      }
-
-      .family-unhide-btn {
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 4px;
-        border-radius: 4px;
-        transition: background-color 0.2s ease;
-      }
-
-      .family-unhide-btn:hover {
-        background: rgba(255, 255, 255, 0.2);
-      }
-
-      .accordion-content {
-        overflow: hidden;
-        transition: max-height 0.3s ease-out;
-        scrollbar-width: thin;
-        scrollbar-color: #c1c1c1 #f1f1f1;
-      }
-
-      .accordion-content[aria-hidden="true"] {
-        max-height: 0;
-        padding: 0;
-      }
-
-      .accordion-content[aria-hidden="false"] {
-        max-height: 80vh; /* Use viewport height for better responsiveness */
-        overflow-y: auto; /* Enable vertical scrolling */
-        overflow-x: hidden; /* Prevent horizontal scrolling */
-      }
-
-      .accordion-panel {
-        padding: 20px;
-        background: white;
-        min-height: 0; /* Allow content to shrink */
-      }
-
-      .accordion-content[aria-hidden="true"] .accordion-panel {
-        padding: 0 20px;
-      }
-
-      /* Custom scrollbar styling for webkit browsers */
-      .accordion-content::-webkit-scrollbar {
-        width: 8px;
-      }
-
-      .accordion-content::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 4px;
-      }
-
-      .accordion-content::-webkit-scrollbar-thumb {
-        background: #c1c1c1;
-        border-radius: 4px;
-        transition: background 0.2s ease;
-      }
-
-      .accordion-content::-webkit-scrollbar-thumb:hover {
-        background: #a8a8a8;
-      }
-
-      /* Color tile styles within accordion */
-      .color-tiles-grid {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-      }
-
-      .color-tile {
-        width: 250px;
-        height: 100px;
-        padding: 4px;
-        position: relative;
-      }
-
-      .empty-message {
-        text-align: center;
-        color: #666;
-        font-style: italic;
-        padding: 20px;
-      }
-    </style>
     <section
       id="color-accordion"
       class="accordion"

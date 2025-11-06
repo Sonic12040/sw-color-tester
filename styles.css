@@ -1,0 +1,341 @@
+/* Sherwin Williams Color Tester - Styles */
+/* BEM Naming Convention: block__element--modifier */
+
+* {
+  font-family: "Roboto", sans-serif;
+}
+
+/* Header Component */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #fff;
+  padding: 1em 0;
+  text-align: center;
+  border-bottom: 1px solid #000;
+}
+
+.header__actions {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+  margin-bottom: 1.5em;
+}
+
+.header__button {
+  background: #fff;
+  color: #000;
+  border: 1px solid #000;
+  padding: 0.5em 1.2em;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.header__button:hover {
+  background: #f5f5f5;
+}
+
+.header__button:focus {
+  outline: 2px solid #0066cc;
+  outline-offset: 2px;
+}
+
+/* Accordion Styles */
+.accordion {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.accordion-item {
+  border: 1px solid #ccc;
+  margin-bottom: 4px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.accordion-header {
+  background: #f5f5f5;
+  border: none;
+  width: 100%;
+  padding: 16px 20px;
+  text-align: left;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s ease;
+  text-transform: capitalize;
+}
+
+.accordion-header:hover {
+  background: #e8e8e8;
+}
+
+.accordion-header:focus {
+  outline: 2px solid #0066cc;
+  outline-offset: -2px;
+}
+
+.accordion-header[aria-expanded="true"] {
+  background: #e0e0e0;
+}
+
+.accordion-icon {
+  transform: rotate(0deg);
+  transition: transform 0.2s ease;
+}
+
+.accordion-header[aria-expanded="true"] .accordion-icon {
+  transform: rotate(180deg);
+}
+
+/* Bulk action panel styles */
+.bulk-actions-panel {
+  margin-bottom: 16px;
+  padding: 12px;
+  background: #f9f9f9;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+.bulk-actions-panel__container {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.bulk-actions-panel__label {
+  font-weight: 500;
+  color: #333;
+}
+
+/* Bulk action buttons (BEM) */
+.bulk-actions__favorite-button,
+.bulk-actions__hide-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.bulk-actions__favorite-button:hover {
+  background: #f8f9fa;
+  border-color: #c82333;
+  color: #c82333;
+}
+
+.bulk-actions__hide-button:hover {
+  background: #f8f9fa;
+  border-color: #495057;
+  color: #495057;
+}
+
+.bulk-actions__favorite-button:focus,
+.bulk-actions__hide-button:focus {
+  outline: 2px solid #0066cc;
+  outline-offset: 1px;
+}
+
+/* Color tile interaction buttons (BEM) */
+.color-tile__favorite-button,
+.color-tile__hide-button,
+.color-tile__unhide-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+
+.color-tile__favorite-button:hover,
+.color-tile__hide-button:hover {
+  opacity: 0.8;
+}
+
+.color-tile__favorite-button:focus,
+.color-tile__hide-button:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
+.color-tile__unhide-button {
+  border-radius: 4px;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.color-tile__unhide-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  opacity: 0.9;
+}
+
+.color-tile__unhide-button:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
+/* Tile hover effects for family and category modifiers */
+.color-tile--family,
+.color-tile--category {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.color-tile--family:hover,
+.color-tile--category:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.accordion-content {
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  scrollbar-width: thin;
+  scrollbar-color: #c1c1c1 #f1f1f1;
+}
+
+.accordion-content[aria-hidden="true"] {
+  max-height: 0;
+  padding: 0;
+}
+
+.accordion-content[aria-hidden="false"] {
+  max-height: 80vh; /* Use viewport height for better responsiveness */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+.accordion-panel {
+  padding: 20px;
+  background: white;
+  min-height: 0; /* Allow content to shrink */
+}
+
+.accordion-content[aria-hidden="true"] .accordion-panel {
+  padding: 0 20px;
+}
+
+/* Custom scrollbar styling for webkit browsers */
+.accordion-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.accordion-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.accordion-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.accordion-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Color tile styles within accordion */
+.color-tiles-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.color-tile {
+  width: 250px;
+  height: 100px;
+  padding: 4px;
+  position: relative;
+}
+
+.color-tile__actions {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 8px;
+}
+
+.color-tile__button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+
+.color-tile__button:hover {
+  opacity: 0.8;
+}
+
+.color-tile__button:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
+.color-tile__info {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  font-size: 1.2em;
+  color: white;
+}
+
+.color-tile--family .color-tile__info,
+.color-tile--category .color-tile__info {
+  color: white;
+}
+
+.color-tile--family {
+  position: relative;
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+  color: white;
+  cursor: pointer;
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+}
+
+.color-tile--category {
+  position: relative;
+  background: linear-gradient(135deg, #8e44ad 0%, #6c3483 100%);
+  color: white;
+  cursor: pointer;
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+}
+
+.color-tile__count {
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+.color-tile__icon-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.3;
+}
+
+.empty-message {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 20px;
+}

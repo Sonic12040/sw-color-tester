@@ -475,7 +475,7 @@ function setupEventDelegation() {
   // Single delegated click handler for all interactive elements
   accordion.addEventListener("click", (e) => {
     // Individual color favorite button
-    const favoriteBtn = e.target.closest(`.${CSS_CLASSES.FAVORITE_BTN}`);
+    const favoriteBtn = e.target.closest(`.${CSS_CLASSES.COLOR_TILE_FAVORITE_BUTTON}`);
     if (favoriteBtn) {
       e.stopPropagation();
       const colorId = favoriteBtn.getAttribute(DATA_ATTRIBUTES.ID);
@@ -485,7 +485,7 @@ function setupEventDelegation() {
     }
 
     // Individual color hide button
-    const hideBtn = e.target.closest(`.${CSS_CLASSES.HIDE_BTN}`);
+    const hideBtn = e.target.closest(`.${CSS_CLASSES.COLOR_TILE_HIDE_BUTTON}`);
     if (hideBtn) {
       e.stopPropagation();
       const colorId = hideBtn.getAttribute(DATA_ATTRIBUTES.ID);
@@ -495,9 +495,7 @@ function setupEventDelegation() {
     }
 
     // Bulk favorite button for family/category
-    const bulkFavoriteBtn = e.target.closest(
-      `.${CSS_CLASSES.BULK_FAVORITE_BTN}`
-    );
+    const bulkFavoriteBtn = e.target.closest(`.${CSS_CLASSES.BULK_ACTIONS_FAVORITE_BUTTON}`);
     if (bulkFavoriteBtn) {
       e.stopPropagation();
       const groupId = bulkFavoriteBtn.getAttribute(DATA_ATTRIBUTES.FAMILY);
@@ -520,7 +518,7 @@ function setupEventDelegation() {
     }
 
     // Bulk hide button for family/category
-    const bulkHideBtn = e.target.closest(`.${CSS_CLASSES.BULK_HIDE_BTN}`);
+    const bulkHideBtn = e.target.closest(`.${CSS_CLASSES.BULK_ACTIONS_HIDE_BUTTON}`);
     if (bulkHideBtn) {
       e.stopPropagation();
       const groupId = bulkHideBtn.getAttribute(DATA_ATTRIBUTES.FAMILY);
@@ -540,39 +538,29 @@ function setupEventDelegation() {
       return;
     }
 
-    // Family unhide button
-    const familyUnhideBtn = e.target.closest(
-      `.${CSS_CLASSES.FAMILY_UNHIDE_BTN}`
-    );
-    if (familyUnhideBtn) {
+    // Unhide button (for both family and category tiles)
+    const unhideBtn = e.target.closest(`.${CSS_CLASSES.COLOR_TILE_UNHIDE_BUTTON}`);
+    if (unhideBtn) {
       e.stopPropagation();
-      const familyName = familyUnhideBtn.getAttribute(DATA_ATTRIBUTES.FAMILY);
-      const familyColors = getFamilyColors(familyName);
-      const colorIds = familyColors.map((color) => color.id);
-      URLState.removeMultipleHidden(colorIds);
-      renderColors();
-      return;
-    }
-
-    // Category unhide button
-    const categoryUnhideBtn = e.target.closest(
-      `.${CSS_CLASSES.CATEGORY_UNHIDE_BTN}`
-    );
-    if (categoryUnhideBtn) {
-      e.stopPropagation();
-      const categoryName = categoryUnhideBtn.getAttribute(
-        DATA_ATTRIBUTES.CATEGORY
-      );
-      const categoryColors = getCategoryColors(categoryName);
-      const colorIds = categoryColors.map((color) => color.id);
-      URLState.removeMultipleHidden(colorIds);
+      const familyName = unhideBtn.getAttribute(DATA_ATTRIBUTES.FAMILY);
+      const categoryName = unhideBtn.getAttribute(DATA_ATTRIBUTES.CATEGORY);
+      
+      if (familyName) {
+        const familyColors = getFamilyColors(familyName);
+        const colorIds = familyColors.map((color) => color.id);
+        URLState.removeMultipleHidden(colorIds);
+      } else if (categoryName) {
+        const categoryColors = getCategoryColors(categoryName);
+        const colorIds = categoryColors.map((color) => color.id);
+        URLState.removeMultipleHidden(colorIds);
+      }
       renderColors();
       return;
     }
 
     // Family tile click (unhide entire family)
-    const familyTile = e.target.closest(`.${CSS_CLASSES.FAMILY_TILE}`);
-    if (familyTile && !e.target.closest(`.${CSS_CLASSES.FAMILY_UNHIDE_BTN}`)) {
+    const familyTile = e.target.closest(`.${CSS_CLASSES.COLOR_TILE_FAMILY}`);
+    if (familyTile && !e.target.closest(`.${CSS_CLASSES.COLOR_TILE_UNHIDE_BUTTON}`)) {
       const familyName = familyTile.getAttribute(DATA_ATTRIBUTES.FAMILY);
       const familyColors = getFamilyColors(familyName);
       const colorIds = familyColors.map((color) => color.id);
@@ -582,11 +570,8 @@ function setupEventDelegation() {
     }
 
     // Category tile click (unhide entire category)
-    const categoryTile = e.target.closest(`.${CSS_CLASSES.CATEGORY_TILE}`);
-    if (
-      categoryTile &&
-      !e.target.closest(`.${CSS_CLASSES.CATEGORY_UNHIDE_BTN}`)
-    ) {
+    const categoryTile = e.target.closest(`.${CSS_CLASSES.COLOR_TILE_CATEGORY}`);
+    if (categoryTile && !e.target.closest(`.${CSS_CLASSES.COLOR_TILE_UNHIDE_BUTTON}`)) {
       const categoryName = categoryTile.getAttribute(DATA_ATTRIBUTES.CATEGORY);
       const categoryColors = getCategoryColors(categoryName);
       const colorIds = categoryColors.map((color) => color.id);
