@@ -165,36 +165,63 @@ export function colorTemplate(color, options = {}) {
 }
 
 /**
- * Creates a family tile template for showing hidden color families
- * @param {string} familyName - The name of the color family
- * @param {number} colorCount - The number of hidden colors in the family
- * @returns {string} HTML string for the family tile
+ * Private helper to create a hidden group tile (family or category)
+ * @private
+ * @param {string} groupName - Name of the group
+ * @param {number} colorCount - Number of hidden colors
+ * @param {string} groupType - Either 'family' or 'category'
+ * @returns {string} HTML string for the hidden group tile
  */
-export function familyTileTemplate(familyName, colorCount) {
+function createHiddenGroupTile(groupName, colorCount, groupType) {
+  const isFamily = groupType === "family";
+  const displayType = isFamily ? "Family" : "Collection";
+  const tileClass = isFamily
+    ? CSS_CLASSES.COLOR_TILE_FAMILY
+    : CSS_CLASSES.COLOR_TILE_CATEGORY;
+  const attribute = isFamily
+    ? DATA_ATTRIBUTES.FAMILY
+    : DATA_ATTRIBUTES.CATEGORY;
+  const ariaLabel = isFamily
+    ? `${groupName} family`
+    : `${groupName} collection`;
+  const overlayIcon = isFamily
+    ? ICONS.EYE_OFF
+    : '<path d="M2 3h6l2 4h9l-3 7H6l-2-4H2z"/>';
+
   return `
-    <div class="${CSS_CLASSES.COLOR_TILE} ${CSS_CLASSES.COLOR_TILE_FAMILY}" 
-         aria-label="Unhide ${familyName} family" 
-         ${DATA_ATTRIBUTES.FAMILY}="${familyName}">
+    <div class="${CSS_CLASSES.COLOR_TILE} ${tileClass}" 
+         aria-label="Unhide ${ariaLabel}" 
+         ${attribute}="${groupName}">
       <div class="${CSS_CLASSES.COLOR_TILE_ACTIONS}">
-        <button aria-label="Unhide all ${familyName} colors" 
+        <button aria-label="Unhide all ${groupName} colors" 
                 class="${CSS_CLASSES.COLOR_TILE_UNHIDE_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON}" 
-                ${DATA_ATTRIBUTES.FAMILY}="${familyName}">
+                ${attribute}="${groupName}">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
             ${ICONS.EYE}
           </svg>
         </button>
       </div>
       <div class="${CSS_CLASSES.COLOR_TILE_INFO}">
-        <strong>${familyName} Family</strong><br/>
+        <strong>${groupName} ${displayType}</strong><br/>
         <span class="${CSS_CLASSES.COLOR_TILE_COUNT}">${colorCount} colors hidden</span>
       </div>
       <div class="${CSS_CLASSES.COLOR_TILE_ICON_OVERLAY}">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-          ${ICONS.EYE_OFF}
+          ${overlayIcon}
         </svg>
       </div>
     </div>
   `;
+}
+
+/**
+ * Creates a family tile template for showing hidden color families
+ * @param {string} familyName - The name of the color family
+ * @param {number} colorCount - The number of hidden colors in the family
+ * @returns {string} HTML string for the family tile
+ */
+export function familyTileTemplate(familyName, colorCount) {
+  return createHiddenGroupTile(familyName, colorCount, "family");
 }
 
 /**
@@ -204,30 +231,7 @@ export function familyTileTemplate(familyName, colorCount) {
  * @returns {string} HTML string for the category tile
  */
 export function categoryTileTemplate(categoryName, colorCount) {
-  return `
-    <div class="${CSS_CLASSES.COLOR_TILE} ${CSS_CLASSES.COLOR_TILE_CATEGORY}" 
-         aria-label="Unhide ${categoryName} collection" 
-         ${DATA_ATTRIBUTES.CATEGORY}="${categoryName}">
-      <div class="${CSS_CLASSES.COLOR_TILE_ACTIONS}">
-        <button aria-label="Unhide all ${categoryName} colors" 
-                class="${CSS_CLASSES.COLOR_TILE_UNHIDE_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON}" 
-                ${DATA_ATTRIBUTES.CATEGORY}="${categoryName}">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-            ${ICONS.EYE}
-          </svg>
-        </button>
-      </div>
-      <div class="${CSS_CLASSES.COLOR_TILE_INFO}">
-        <strong>${categoryName} Collection</strong><br/>
-        <span class="${CSS_CLASSES.COLOR_TILE_COUNT}">${colorCount} colors hidden</span>
-      </div>
-      <div class="${CSS_CLASSES.COLOR_TILE_ICON_OVERLAY}">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M2 3h6l2 4h9l-3 7H6l-2-4H2z"/>
-        </svg>
-      </div>
-    </div>
-  `;
+  return createHiddenGroupTile(categoryName, colorCount, "category");
 }
 
 /**
