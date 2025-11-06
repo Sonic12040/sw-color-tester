@@ -44,7 +44,7 @@ function renderColors() {
   const visibleColors = allColors.filter((c) => !hidden.includes(c.id));
   const colorFamilies = {};
 
-  visibleColors.forEach((color) => {
+  for (const color of visibleColors) {
     // Handle multiple color families - use the first one as primary
     const primaryFamily =
       color.colorFamilyNames && color.colorFamilyNames.length > 0
@@ -55,7 +55,7 @@ function renderColors() {
       colorFamilies[primaryFamily] = [];
     }
     colorFamilies[primaryFamily].push(color);
-  });
+  }
 
   // Sort families alphabetically, but put common color families first
   const sortedFamilies = Object.keys(colorFamilies).sort((a, b) => {
@@ -96,19 +96,19 @@ function renderColors() {
 
   // 4. Group colors by categories (branded collections)
   const colorCategories = {};
-  visibleColors.forEach((color) => {
+  for (const color of visibleColors) {
     if (
       color.brandedCollectionNames &&
       color.brandedCollectionNames.length > 0
     ) {
-      color.brandedCollectionNames.forEach((category) => {
+      for (const category of color.brandedCollectionNames) {
         if (!colorCategories[category]) {
           colorCategories[category] = [];
         }
         colorCategories[category].push(color);
-      });
+      }
     }
-  });
+  }
 
   // Sort categories alphabetically
   const sortedCategories = Object.keys(colorCategories).sort((a, b) =>
@@ -384,21 +384,19 @@ function getHiddenFamilies() {
   const allFamilies = {};
 
   // Get all color families and their colors
-  colorData
-    .filter((c) => !c.archived)
-    .forEach((color) => {
-      if (color.colorFamilyNames && color.colorFamilyNames.length > 0) {
-        const primaryFamily = color.colorFamilyNames[0];
-        if (!allFamilies[primaryFamily]) {
-          allFamilies[primaryFamily] = [];
-        }
-        allFamilies[primaryFamily].push(color);
+  for (const color of colorData.filter((c) => !c.archived)) {
+    if (color.colorFamilyNames && color.colorFamilyNames.length > 0) {
+      const primaryFamily = color.colorFamilyNames[0];
+      if (!allFamilies[primaryFamily]) {
+        allFamilies[primaryFamily] = [];
       }
-    });
+      allFamilies[primaryFamily].push(color);
+    }
+  }
 
   // Find families where ALL colors are hidden
   const hiddenFamilies = [];
-  Object.keys(allFamilies).forEach((familyName) => {
+  for (const familyName of Object.keys(allFamilies)) {
     const familyColors = allFamilies[familyName];
     const allHidden =
       familyColors.length > 0 &&
@@ -409,7 +407,7 @@ function getHiddenFamilies() {
         count: familyColors.length,
       });
     }
-  });
+  }
 
   return hiddenFamilies;
 }
@@ -419,25 +417,23 @@ function getHiddenCategories() {
   const allCategories = {};
 
   // Get all color categories and their colors
-  colorData
-    .filter((c) => !c.archived)
-    .forEach((color) => {
-      if (
-        color.brandedCollectionNames &&
-        color.brandedCollectionNames.length > 0
-      ) {
-        color.brandedCollectionNames.forEach((category) => {
-          if (!allCategories[category]) {
-            allCategories[category] = [];
-          }
-          allCategories[category].push(color);
-        });
+  for (const color of colorData.filter((c) => !c.archived)) {
+    if (
+      color.brandedCollectionNames &&
+      color.brandedCollectionNames.length > 0
+    ) {
+      for (const category of color.brandedCollectionNames) {
+        if (!allCategories[category]) {
+          allCategories[category] = [];
+        }
+        allCategories[category].push(color);
       }
-    });
+    }
+  }
 
   // Find categories where ALL colors are hidden
   const hiddenCategories = [];
-  Object.keys(allCategories).forEach((categoryName) => {
+  for (const categoryName of Object.keys(allCategories)) {
     const categoryColors = allCategories[categoryName];
     const allHidden =
       categoryColors.length > 0 &&
@@ -449,7 +445,7 @@ function getHiddenCategories() {
         count: categoryColors.length,
       });
     }
-  });
+  }
 
   return hiddenCategories;
 }

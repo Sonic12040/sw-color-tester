@@ -68,7 +68,7 @@ export class URLParameterManager {
   static batchUpdate(updates, replaceState = true) {
     const params = new URLSearchParams(globalThis.location.search);
 
-    Object.entries(updates).forEach(([key, value]) => {
+    for (const [key, value] of Object.entries(updates)) {
       if (value === null || value === undefined) {
         params.delete(key);
       } else if (Array.isArray(value)) {
@@ -91,7 +91,7 @@ export class URLParameterManager {
           params.delete(key);
         }
       }
-    });
+    }
 
     const newUrl = `${globalThis.location.pathname}?${params.toString()}`;
 
