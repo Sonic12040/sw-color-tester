@@ -8,12 +8,7 @@
  * - Application initialization
  */
 
-import {
-  CSS_CLASSES,
-  ELEMENT_IDS,
-  DATA_ATTRIBUTES,
-  convertIdToName,
-} from "../utils/config.js";
+import { CSS_CLASSES, ELEMENT_IDS, DATA_ATTRIBUTES } from "../utils/config.js";
 
 export class ColorController {
   constructor(model, state, view) {
@@ -73,7 +68,64 @@ export class ColorController {
   }
 
   /**
+   * Event handler registry - maps selectors to handlers
+   * Strategy pattern to eliminate nested conditionals
+   * @private
+   */
+  _getEventHandlerRegistry() {
+    return [
+      {
+        selector: `.${CSS_CLASSES.COLOR_TILE_FAVORITE_BUTTON}`,
+        getAttribute: DATA_ATTRIBUTES.ID,
+        handler: (colorId) => this.handleFavoriteButton(colorId),
+      },
+      {
+        selector: `.${CSS_CLASSES.COLOR_TILE_HIDE_BUTTON}`,
+        getAttribute: DATA_ATTRIBUTES.ID,
+        handler: (colorId) => this.handleHideButton(colorId),
+      },
+      {
+        selector: `.${CSS_CLASSES.BULK_ACTIONS_FAVORITE_BUTTON}`,
+        handler: (element) => {
+          const groupId = element.getAttribute(DATA_ATTRIBUTES.FAMILY);
+          const groupName = element.getAttribute(DATA_ATTRIBUTES.NAME);
+          this.handleBulkFavoriteButton(groupId, groupName);
+        },
+      },
+      {
+        selector: `.${CSS_CLASSES.BULK_ACTIONS_HIDE_BUTTON}`,
+        handler: (element) => {
+          const groupId = element.getAttribute(DATA_ATTRIBUTES.FAMILY);
+          const groupName = element.getAttribute(DATA_ATTRIBUTES.NAME);
+          this.handleBulkHideButton(groupId, groupName);
+        },
+      },
+      {
+        selector: `.${CSS_CLASSES.COLOR_TILE_UNHIDE_BUTTON}`,
+        handler: (element) => {
+          const familyName = element.getAttribute(DATA_ATTRIBUTES.FAMILY);
+          const categoryName = element.getAttribute(DATA_ATTRIBUTES.CATEGORY);
+          this.handleUnhideButton(familyName, categoryName);
+        },
+      },
+      {
+        selector: `.${CSS_CLASSES.COLOR_TILE_FAMILY}`,
+        getAttribute: DATA_ATTRIBUTES.FAMILY,
+        excludeIfContains: `.${CSS_CLASSES.COLOR_TILE_UNHIDE_BUTTON}`,
+        handler: (familyName) => this.handleFamilyTileClick(familyName),
+      },
+      {
+        selector: `.${CSS_CLASSES.COLOR_TILE_CATEGORY}`,
+        getAttribute: DATA_ATTRIBUTES.CATEGORY,
+        excludeIfContains: `.${CSS_CLASSES.COLOR_TILE_UNHIDE_BUTTON}`,
+        handler: (categoryName) => this.handleCategoryTileClick(categoryName),
+      },
+    ];
+  }
+
+  /**
    * Setup delegated event listeners on accordion
+   * Uses strategy pattern with handler registry for extensibility
    */
   setupEventListeners() {
     const accordion = document.getElementById(ELEMENT_IDS.COLOR_ACCORDION);
@@ -83,87 +135,33 @@ export class ColorController {
       return;
     }
 
-    // Single delegated click handler for all interactive elements
+    const handlers = this._getEventHandlerRegistry();
+
+    // Single delegated click handler using handler registry
     accordion.addEventListener("click", (e) => {
-      // Individual color favorite button
-      const favoriteBtn = e.target.closest(
-        `.${CSS_CLASSES.COLOR_TILE_FAVORITE_BUTTON}`
-      );
-      if (favoriteBtn) {
+      for (const config of handlers) {
+        const element = e.target.closest(config.selector);
+
+        // Skip if element not found or contains excluded element
+        if (!element) continue;
+        if (
+          config.excludeIfContains &&
+          e.target.closest(config.excludeIfContains)
+        ) {
+          continue;
+        }
+
+        // Prevent default behavior and stop propagation
+        e.preventDefault();
         e.stopPropagation();
-        const colorId = favoriteBtn.getAttribute(DATA_ATTRIBUTES.ID);
-        this.handleFavoriteButton(colorId);
-        return;
-      }
 
-      // Individual color hide button
-      const hideBtn = e.target.closest(
-        `.${CSS_CLASSES.COLOR_TILE_HIDE_BUTTON}`
-      );
-      if (hideBtn) {
-        e.stopPropagation();
-        const colorId = hideBtn.getAttribute(DATA_ATTRIBUTES.ID);
-        this.handleHideButton(colorId);
-        return;
-      }
+        // Get attribute value if specified, otherwise pass element
+        const value = config.getAttribute
+          ? element.getAttribute(config.getAttribute)
+          : element;
 
-      // Bulk favorite button for family/category
-      const bulkFavoriteBtn = e.target.closest(
-        `.${CSS_CLASSES.BULK_ACTIONS_FAVORITE_BUTTON}`
-      );
-      if (bulkFavoriteBtn) {
-        e.stopPropagation();
-        const groupId = bulkFavoriteBtn.getAttribute(DATA_ATTRIBUTES.FAMILY);
-        this.handleBulkFavoriteButton(groupId);
-        return;
-      }
-
-      // Bulk hide button for family/category
-      const bulkHideBtn = e.target.closest(
-        `.${CSS_CLASSES.BULK_ACTIONS_HIDE_BUTTON}`
-      );
-      if (bulkHideBtn) {
-        e.stopPropagation();
-        const groupId = bulkHideBtn.getAttribute(DATA_ATTRIBUTES.FAMILY);
-        this.handleBulkHideButton(groupId);
-        return;
-      }
-
-      // Unhide button (for both family and category tiles)
-      const unhideBtn = e.target.closest(
-        `.${CSS_CLASSES.COLOR_TILE_UNHIDE_BUTTON}`
-      );
-      if (unhideBtn) {
-        e.stopPropagation();
-        const familyName = unhideBtn.getAttribute(DATA_ATTRIBUTES.FAMILY);
-        const categoryName = unhideBtn.getAttribute(DATA_ATTRIBUTES.CATEGORY);
-        this.handleUnhideButton(familyName, categoryName);
-        return;
-      }
-
-      // Family tile click (unhide entire family)
-      const familyTile = e.target.closest(`.${CSS_CLASSES.COLOR_TILE_FAMILY}`);
-      if (
-        familyTile &&
-        !e.target.closest(`.${CSS_CLASSES.COLOR_TILE_UNHIDE_BUTTON}`)
-      ) {
-        const familyName = familyTile.getAttribute(DATA_ATTRIBUTES.FAMILY);
-        this.handleFamilyTileClick(familyName);
-        return;
-      }
-
-      // Category tile click (unhide entire category)
-      const categoryTile = e.target.closest(
-        `.${CSS_CLASSES.COLOR_TILE_CATEGORY}`
-      );
-      if (
-        categoryTile &&
-        !e.target.closest(`.${CSS_CLASSES.COLOR_TILE_UNHIDE_BUTTON}`)
-      ) {
-        const categoryName = categoryTile.getAttribute(
-          DATA_ATTRIBUTES.CATEGORY
-        );
-        this.handleCategoryTileClick(categoryName);
+        config.handler(value);
+        return; // Handler found and executed, stop searching
       }
     });
   }
@@ -230,8 +228,8 @@ export class ColorController {
   /**
    * Handle bulk favorite button click (family/category)
    */
-  handleBulkFavoriteButton(groupId) {
-    const groupColors = this.model.getColorsForId(groupId, convertIdToName);
+  handleBulkFavoriteButton(groupId, groupName) {
+    const groupColors = this.model.getColorsForId(groupId, () => groupName);
     const favorites = this.state.getFavorites();
 
     // Check if all colors are already favorited
@@ -251,8 +249,8 @@ export class ColorController {
   /**
    * Handle bulk hide button click (family/category)
    */
-  handleBulkHideButton(groupId) {
-    const groupColors = this.model.getColorsForId(groupId, convertIdToName);
+  handleBulkHideButton(groupId, groupName) {
+    const groupColors = this.model.getColorsForId(groupId, () => groupName);
     const hidden = this.state.getHidden();
 
     // Check if all colors are already hidden

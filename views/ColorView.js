@@ -92,12 +92,12 @@ export class ColorView {
     // 1. Favorites section (open by default)
     const favoritesTitle =
       favoriteCount > 0 ? `Favorites (${favoriteCount})` : "Favorites";
-    accordionHTML += createAccordionItem("favorites", favoritesTitle, true);
+    accordionHTML += createAccordionItem("favorites", favoritesTitle, "", true);
 
     // 2. Hidden section
     const hiddenTitle =
       hiddenCount > 0 ? `Hidden Colors (${hiddenCount})` : "Hidden Colors";
-    accordionHTML += createAccordionItem("hidden", hiddenTitle);
+    accordionHTML += createAccordionItem("hidden", hiddenTitle, "");
 
     // 3. Color family sections
     for (const family of sortedFamilies) {
@@ -105,6 +105,7 @@ export class ColorView {
       accordionHTML += createAccordionItem(
         createGroupId(family, PREFIX.FAMILY),
         `${family} (${count})`,
+        family, // Original name for bulk actions
         false,
         true // Show bulk actions for color families
       );
@@ -122,6 +123,7 @@ export class ColorView {
       accordionHTML += createAccordionItem(
         categoryId,
         `${category} Collection (${count})`,
+        category, // Original name for bulk actions
         false,
         true // Show bulk actions for color categories
       );

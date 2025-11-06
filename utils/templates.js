@@ -21,6 +21,7 @@ function generateAccessibleText(color) {
  * Creates an accordion item with optional bulk actions
  * @param {string} id - The unique identifier for the accordion item
  * @param {string} title - The title text for the accordion header
+ * @param {string} name - The original name for the group (used in bulk actions)
  * @param {boolean} isOpen - Whether the accordion should be open by default
  * @param {boolean} showBulkActions - Whether to show bulk action buttons
  * @returns {string} HTML string for the accordion item
@@ -28,6 +29,7 @@ function generateAccessibleText(color) {
 export function createAccordionItem(
   id,
   title,
+  name,
   isOpen = false,
   showBulkActions = false
 ) {
@@ -37,8 +39,10 @@ export function createAccordionItem(
       <div class="${CSS_CLASSES.BULK_ACTIONS_PANEL_CONTAINER}">
         <span class="${CSS_CLASSES.BULK_ACTIONS_PANEL_LABEL}">Family Actions:</span>
         <button 
+          type="button"
           class="${CSS_CLASSES.BULK_ACTIONS_FAVORITE_BUTTON}" 
           ${DATA_ATTRIBUTES.FAMILY}="${id}"
+          ${DATA_ATTRIBUTES.NAME}="${name}"
           title="Favorite all colors in this family"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -47,8 +51,10 @@ export function createAccordionItem(
           <span>Favorite All</span>
         </button>
         <button 
+          type="button"
           class="${CSS_CLASSES.BULK_ACTIONS_HIDE_BUTTON}" 
           ${DATA_ATTRIBUTES.FAMILY}="${id}"
+          ${DATA_ATTRIBUTES.NAME}="${name}"
           title="Hide all colors in this family"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

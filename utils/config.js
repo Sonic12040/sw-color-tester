@@ -66,6 +66,7 @@ export const DATA_ATTRIBUTES = {
   FAMILY: "data-family",
   CATEGORY: "data-category",
   SECTION: "data-section",
+  NAME: "data-name",
 };
 
 // URL parameter names
@@ -103,7 +104,8 @@ export function createGroupId(name, type) {
   return `${type}-${name
     .toLowerCase()
     .replaceAll(/\s+/g, "-")
-    .replaceAll(/[^a-z0-9-]/g, "")}`;
+    .replaceAll(/[^a-z0-9-]/g, "")
+    .replaceAll(/-+/g, "-")}`;
 }
 
 /**
@@ -118,6 +120,7 @@ export function convertIdToName(groupId) {
   // Convert to title case
   return withoutPrefix
     .split("-")
+    .filter((word) => word.length > 0) // Remove empty strings from consecutive hyphens
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 }
