@@ -241,9 +241,6 @@ function renderColors() {
 
   // Add accordion functionality
   setupAccordionBehavior();
-
-  // Attach color button event listeners
-  attachColorButtonListeners();
 }
 
 // --- ACCORDION BEHAVIOR ---
@@ -455,161 +452,156 @@ function getHiddenCategories() {
   return hiddenCategories;
 }
 
-// --- EVENT LISTENER UTILITIES ---
+// --- EVENT DELEGATION ---
 /**
- * Creates a simple button event handler that prevents event propagation
- * @param {string} selector - CSS selector for buttons
- * @param {string} dataAttribute - Data attribute to read from button
- * @param {Function} callback - Function to call with the attribute value
+ * Sets up a single delegated event listener on the accordion container
+ * This replaces hundreds of individual button listeners with one efficient delegated listener
+ * Benefits:
+ * - Massive performance improvement (1 listener instead of 100s)
+ * - Works with dynamically added elements
+ * - Lower memory usage
+ * - Cleaner event handler management
  */
-function createSimpleButtonHandler(cssClass, dataAttribute, callback) {
-  for (const btn of document.querySelectorAll(`.${cssClass}`)) {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const value = btn.getAttribute(dataAttribute);
-      callback(value);
-      renderColors();
-    });
+function setupEventDelegation() {
+  const accordion = document.getElementById(ELEMENT_IDS.COLOR_ACCORDION);
+
+  if (!accordion) {
+    console.error("Accordion container not found");
+    return;
   }
-}
 
-/**
- * Creates a bulk action button handler for family/category operations
- * @param {string} selector - CSS selector for buttons
- * @param {string} dataAttribute - Data attribute to read from button
- * @param {Function} getCurrentState - Function that returns current state array
- * @param {Function} addMultiple - Function to add multiple items
- * @param {Function} removeMultiple - Function to remove multiple items
- */
-function createBulkActionHandler(
-  cssClass,
-  dataAttribute,
-  getCurrentState,
-  addMultiple,
-  removeMultiple
-) {
-  for (const btn of document.querySelectorAll(`.${cssClass}`)) {
-    btn.addEventListener("click", (e) => {
+  // Single delegated click handler for all interactive elements
+  accordion.addEventListener("click", (e) => {
+    // Individual color favorite button
+    const favoriteBtn = e.target.closest(`.${CSS_CLASSES.FAVORITE_BTN}`);
+    if (favoriteBtn) {
       e.stopPropagation();
-      const groupId = btn.getAttribute(dataAttribute);
-      const groupColors = getColorsForId(groupId);
-      const currentState = getCurrentState();
+      const colorId = favoriteBtn.getAttribute(DATA_ATTRIBUTES.ID);
+      URLState.toggleFavorite(colorId);
+      renderColors();
+      return;
+    }
 
-      // Check if all colors are already in the current state
-      const allInState = groupColors.every((color) =>
-        currentState.includes(color.id)
+    // Individual color hide button
+    const hideBtn = e.target.closest(`.${CSS_CLASSES.HIDE_BTN}`);
+    if (hideBtn) {
+      e.stopPropagation();
+      const colorId = hideBtn.getAttribute(DATA_ATTRIBUTES.ID);
+      URLState.toggleHidden(colorId);
+      renderColors();
+      return;
+    }
+
+    // Bulk favorite button for family/category
+    const bulkFavoriteBtn = e.target.closest(
+      `.${CSS_CLASSES.BULK_FAVORITE_BTN}`
+    );
+    if (bulkFavoriteBtn) {
+      e.stopPropagation();
+      const groupId = bulkFavoriteBtn.getAttribute(DATA_ATTRIBUTES.FAMILY);
+      const groupColors = getColorsForId(groupId);
+      const favorites = URLState.getFavorites();
+
+      // Check if all colors are already favorited
+      const allFavorited = groupColors.every((color) =>
+        favorites.includes(color.id)
       );
       const colorIds = groupColors.map((color) => color.id);
 
-      if (allInState) {
-        removeMultiple(colorIds);
+      if (allFavorited) {
+        URLState.removeMultipleFavorites(colorIds);
       } else {
-        addMultiple(colorIds);
+        URLState.addMultipleFavorites(colorIds);
       }
       renderColors();
-    });
-  }
-}
+      return;
+    }
 
-/**
- * Creates a tile click handler with button exclusion logic
- * @param {string} selector - CSS selector for tiles
- * @param {string} dataAttribute - Data attribute to read from tile
- * @param {string} excludeButtonSelector - Selector for buttons to exclude from tile clicks
- * @param {Function} getColors - Function to get colors for the tile
- * @param {Function} unhideColors - Function to unhide the colors
- */
-function createTileClickHandler(
-  cssClass,
-  dataAttribute,
-  excludeButtonSelector,
-  getColors,
-  unhideColors
-) {
-  for (const tile of document.querySelectorAll(`.${cssClass}`)) {
-    tile.addEventListener("click", (e) => {
-      // Only trigger if not clicking the excluded button
-      if (!e.target.closest(excludeButtonSelector)) {
-        const name = tile.getAttribute(dataAttribute);
-        const colors = getColors(name);
-        const colorIds = colors.map((color) => color.id);
-        unhideColors(colorIds);
-        renderColors();
+    // Bulk hide button for family/category
+    const bulkHideBtn = e.target.closest(`.${CSS_CLASSES.BULK_HIDE_BTN}`);
+    if (bulkHideBtn) {
+      e.stopPropagation();
+      const groupId = bulkHideBtn.getAttribute(DATA_ATTRIBUTES.FAMILY);
+      const groupColors = getColorsForId(groupId);
+      const hidden = URLState.getHidden();
+
+      // Check if all colors are already hidden
+      const allHidden = groupColors.every((color) => hidden.includes(color.id));
+      const colorIds = groupColors.map((color) => color.id);
+
+      if (allHidden) {
+        URLState.removeMultipleHidden(colorIds);
+      } else {
+        URLState.addMultipleHidden(colorIds);
       }
-    });
-  }
-}
+      renderColors();
+      return;
+    }
 
-// --- EVENT LISTENERS ---
-function attachColorButtonListeners() {
-  // Simple individual color actions
-  createSimpleButtonHandler(
-    CSS_CLASSES.FAVORITE_BTN,
-    DATA_ATTRIBUTES.ID,
-    (id) => URLState.toggleFavorite(id)
-  );
-  createSimpleButtonHandler(CSS_CLASSES.HIDE_BTN, DATA_ATTRIBUTES.ID, (id) =>
-    URLState.toggleHidden(id)
-  );
-
-  // Bulk actions for families/categories
-  createBulkActionHandler(
-    CSS_CLASSES.BULK_FAVORITE_BTN,
-    DATA_ATTRIBUTES.FAMILY,
-    () => URLState.getFavorites(),
-    (colorIds) => URLState.addMultipleFavorites(colorIds),
-    (colorIds) => URLState.removeMultipleFavorites(colorIds)
-  );
-
-  createBulkActionHandler(
-    CSS_CLASSES.BULK_HIDE_BTN,
-    DATA_ATTRIBUTES.FAMILY,
-    () => URLState.getHidden(),
-    (colorIds) => URLState.addMultipleHidden(colorIds),
-    (colorIds) => URLState.removeMultipleHidden(colorIds)
-  );
-
-  // Unhide button actions
-  createSimpleButtonHandler(
-    CSS_CLASSES.FAMILY_UNHIDE_BTN,
-    DATA_ATTRIBUTES.FAMILY,
-    (familyName) => {
+    // Family unhide button
+    const familyUnhideBtn = e.target.closest(
+      `.${CSS_CLASSES.FAMILY_UNHIDE_BTN}`
+    );
+    if (familyUnhideBtn) {
+      e.stopPropagation();
+      const familyName = familyUnhideBtn.getAttribute(DATA_ATTRIBUTES.FAMILY);
       const familyColors = getFamilyColors(familyName);
       const colorIds = familyColors.map((color) => color.id);
       URLState.removeMultipleHidden(colorIds);
+      renderColors();
+      return;
     }
-  );
 
-  createSimpleButtonHandler(
-    CSS_CLASSES.CATEGORY_UNHIDE_BTN,
-    DATA_ATTRIBUTES.CATEGORY,
-    (categoryName) => {
+    // Category unhide button
+    const categoryUnhideBtn = e.target.closest(
+      `.${CSS_CLASSES.CATEGORY_UNHIDE_BTN}`
+    );
+    if (categoryUnhideBtn) {
+      e.stopPropagation();
+      const categoryName = categoryUnhideBtn.getAttribute(
+        DATA_ATTRIBUTES.CATEGORY
+      );
       const categoryColors = getCategoryColors(categoryName);
       const colorIds = categoryColors.map((color) => color.id);
       URLState.removeMultipleHidden(colorIds);
+      renderColors();
+      return;
     }
-  );
 
-  // Tile click handlers for unhiding
-  createTileClickHandler(
-    CSS_CLASSES.FAMILY_TILE,
-    DATA_ATTRIBUTES.FAMILY,
-    `.${CSS_CLASSES.FAMILY_UNHIDE_BTN}`,
-    getFamilyColors,
-    URLState.removeMultipleHidden
-  );
+    // Family tile click (unhide entire family)
+    const familyTile = e.target.closest(`.${CSS_CLASSES.FAMILY_TILE}`);
+    if (familyTile && !e.target.closest(`.${CSS_CLASSES.FAMILY_UNHIDE_BTN}`)) {
+      const familyName = familyTile.getAttribute(DATA_ATTRIBUTES.FAMILY);
+      const familyColors = getFamilyColors(familyName);
+      const colorIds = familyColors.map((color) => color.id);
+      URLState.removeMultipleHidden(colorIds);
+      renderColors();
+      return;
+    }
 
-  createTileClickHandler(
-    CSS_CLASSES.CATEGORY_TILE,
-    DATA_ATTRIBUTES.CATEGORY,
-    `.${CSS_CLASSES.CATEGORY_UNHIDE_BTN}`,
-    getCategoryColors,
-    URLState.removeMultipleHidden
-  );
+    // Category tile click (unhide entire category)
+    const categoryTile = e.target.closest(`.${CSS_CLASSES.CATEGORY_TILE}`);
+    if (
+      categoryTile &&
+      !e.target.closest(`.${CSS_CLASSES.CATEGORY_UNHIDE_BTN}`)
+    ) {
+      const categoryName = categoryTile.getAttribute(DATA_ATTRIBUTES.CATEGORY);
+      const categoryColors = getCategoryColors(categoryName);
+      const colorIds = categoryColors.map((color) => color.id);
+      URLState.removeMultipleHidden(colorIds);
+      renderColors();
+    }
+  });
 }
 
 // --- INITIALIZE ---
+// Set up event delegation once at startup (not on every render)
+setupEventDelegation();
+
+// Initial render
 renderColors();
+
+// Header button listeners (outside accordion, so not delegated)
 const clearFavBtn = document.getElementById(ELEMENT_IDS.CLEAR_FAVORITES_BTN);
 if (clearFavBtn) {
   clearFavBtn.addEventListener("click", () => {
