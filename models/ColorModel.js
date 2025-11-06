@@ -7,7 +7,7 @@
  * - Hidden group detection
  */
 
-import { FAMILY_ORDER } from "../config.js";
+import { FAMILY_ORDER } from "../utils/config.js";
 
 export class ColorModel {
   constructor(colorData) {

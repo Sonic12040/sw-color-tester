@@ -13,14 +13,14 @@ import {
   colorTemplate,
   familyTileTemplate,
   categoryTileTemplate,
-} from "../templates.js";
+} from "../utils/templates.js";
 import {
   PREFIX,
   CSS_CLASSES,
   ELEMENT_IDS,
   createGroupId,
   getTilesContainerId,
-} from "../config.js";
+} from "../utils/config.js";
 
 export class ColorView {
   constructor(containerId) {

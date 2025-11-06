@@ -13,7 +13,7 @@ import {
   ELEMENT_IDS,
   DATA_ATTRIBUTES,
   convertIdToName,
-} from "../config.js";
+} from "../utils/config.js";
 
 export class ColorController {
   constructor(model, state, view) {

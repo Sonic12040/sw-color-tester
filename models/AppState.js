@@ -8,8 +8,8 @@
  * - Provide state query and mutation methods
  */
 
-import { URLParameterManager } from "../url-parameter-utilities.js";
-import { URL_PARAMS } from "../config.js";
+import { URLParameterManager } from "../utils/url-parameter-utilities.js";
+import { URL_PARAMS } from "../utils/config.js";
 
 export class AppState {
   constructor() {
