@@ -1,5 +1,6 @@
 import { colorData } from "./constants.js";
-import { URLState } from "./url-parameter-utilities.js";
+import { ColorModel } from "./models/ColorModel.js";
+import { AppState } from "./models/AppState.js";
 import {
   createAccordionItem,
   colorTemplate,
@@ -12,7 +13,6 @@ import {
   CSS_CLASSES,
   ELEMENT_IDS,
   DATA_ATTRIBUTES,
-  FAMILY_ORDER,
   createGroupId,
   getTilesContainerId,
   convertIdToName,
@@ -20,6 +20,10 @@ import {
 
 // Color utility functions are now imported from templates.js
 const { generateHSLColor, generateAccessibleText } = TemplateUtils;
+
+// Initialize Model and State
+const colorModel = new ColorModel(colorData);
+const appState = new AppState();
 
 // --- ACCORDION FUNCTIONS ---
 // All template functions are now imported from templates.js
@@ -32,74 +36,39 @@ const categoryNameToId = {};
 
 /**
  * Prepare and filter color data based on favorites and hidden status
+ * @deprecated Now uses ColorModel methods directly
  */
 function prepareColorData(favorites, hidden) {
-  const allColors = colorData.filter((c) => !c.archived);
-  const favoriteColors = allColors.filter((c) => favorites.includes(c.id));
-  const hiddenColors = allColors.filter((c) => hidden.includes(c.id));
-  const visibleColors = allColors.filter((c) => !hidden.includes(c.id));
-
-  return { allColors, favoriteColors, hiddenColors, visibleColors };
+  return {
+    allColors: colorModel.getActiveColors(),
+    favoriteColors: colorModel.getFavoriteColors(favorites),
+    hiddenColors: colorModel.getHiddenColors(hidden),
+    visibleColors: colorModel.getVisibleColors(hidden),
+  };
 }
 
 /**
  * Group colors by their primary family
+ * @deprecated Now uses ColorModel.groupByFamily
  */
 function groupColorsByFamily(visibleColors) {
-  const colorFamilies = {};
-
-  for (const color of visibleColors) {
-    // Handle multiple color families - use the first one as primary
-    const primaryFamily =
-      color.colorFamilyNames && color.colorFamilyNames.length > 0
-        ? color.colorFamilyNames[0]
-        : "Other";
-
-    if (!colorFamilies[primaryFamily]) {
-      colorFamilies[primaryFamily] = [];
-    }
-    colorFamilies[primaryFamily].push(color);
-  }
-
-  return colorFamilies;
+  return colorModel.groupByFamily(visibleColors);
 }
 
 /**
  * Sort family names by priority order, then alphabetically
+ * @deprecated Now uses ColorModel.sortFamiliesByPriority
  */
 function sortFamiliesByPriority(familyKeys) {
-  return familyKeys.sort((a, b) => {
-    const aIndex = FAMILY_ORDER.indexOf(a);
-    const bIndex = FAMILY_ORDER.indexOf(b);
-
-    if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
-    if (aIndex !== -1) return -1;
-    if (bIndex !== -1) return 1;
-    return a.localeCompare(b);
-  });
+  return colorModel.sortFamiliesByPriority(familyKeys);
 }
 
 /**
  * Group colors by their branded collection categories
+ * @deprecated Now uses ColorModel.groupByCategory
  */
 function groupColorsByCategory(visibleColors) {
-  const colorCategories = {};
-
-  for (const color of visibleColors) {
-    if (
-      color.brandedCollectionNames &&
-      color.brandedCollectionNames.length > 0
-    ) {
-      for (const category of color.brandedCollectionNames) {
-        if (!colorCategories[category]) {
-          colorCategories[category] = [];
-        }
-        colorCategories[category].push(color);
-      }
-    }
-  }
-
-  return colorCategories;
+  return colorModel.groupByCategory(visibleColors);
 }
 
 /**
@@ -282,8 +251,8 @@ function populateColorSections(
 
 // --- MAIN RENDERING FUNCTION ---
 function renderColors() {
-  const favorites = URLState.getFavorites();
-  const hidden = URLState.getHidden();
+  const favorites = appState.getFavorites();
+  const hidden = appState.getHidden();
   const container = document.getElementById(ELEMENT_IDS.COLOR_ACCORDION);
 
   // Prepare color data
@@ -409,121 +378,46 @@ function focusPreviousHeader(headers, currentIndex) {
 }
 
 // --- HELPER FUNCTIONS ---
+// Now delegating to ColorModel
 
 function getFamilyColors(familyName) {
-  return colorData.filter((color) => {
-    if (!color.colorFamilyNames || color.archived) return false;
-
-    // Check if any of the color's families match the target family
-    return color.colorFamilyNames.some(
-      (family) => family.toLowerCase() === familyName.toLowerCase()
-    );
-  });
+  return colorModel.getFamilyColors(familyName);
 }
 
 function getCategoryColors(categoryName) {
-  return colorData.filter((color) => {
-    if (!color.brandedCollectionNames || color.archived) return false;
-
-    // Check if any of the color's categories match the target category
-    return color.brandedCollectionNames.some(
-      (category) => category.toLowerCase() === categoryName.toLowerCase()
-    );
-  });
+  return colorModel.getCategoryColors(categoryName);
 }
 
 function getColorsForId(id) {
-  // Handle both family and category IDs
-  if (id.startsWith("family-")) {
-    const familyName = convertIdToName(id);
-    return getFamilyColors(familyName);
-  } else if (id.startsWith("category-")) {
-    const categoryName = convertIdToName(id);
-    return getCategoryColors(categoryName);
-  }
-  return [];
+  return colorModel.getColorsForId(id, convertIdToName);
 }
 
-/**
- * Generic function to find groups (families or categories) where ALL colors are hidden
- * @param {string} groupType - Either 'family' or 'category'
- * @returns {Array<{name: string, count: number}>} Array of hidden groups with their color counts
- */
-function getHiddenGroups(groupType) {
-  const hidden = URLState.getHidden();
-  const allGroups = {};
-  const propertyName =
-    groupType === "family" ? "colorFamilyNames" : "brandedCollectionNames";
-
-  // Get all groups and their colors
-  for (const color of colorData.filter((c) => !c.archived)) {
-    const groupNames = color[propertyName];
-    if (!groupNames || groupNames.length === 0) continue;
-
-    // Families use primary (first), categories use all
-    const groups = groupType === "family" ? [groupNames[0]] : groupNames;
-
-    for (const groupName of groups) {
-      if (!allGroups[groupName]) {
-        allGroups[groupName] = [];
-      }
-      allGroups[groupName].push(color);
-    }
-  }
-
-  // Find groups where ALL colors are hidden
-  const hiddenGroups = [];
-  for (const groupName of Object.keys(allGroups)) {
-    const groupColors = allGroups[groupName];
-    const allHidden =
-      groupColors.length > 0 &&
-      groupColors.every((color) => hidden.includes(color.id));
-
-    if (allHidden) {
-      hiddenGroups.push({
-        name: groupName,
-        count: groupColors.length,
-      });
-    }
-  }
-
-  return hiddenGroups;
-}
-
-/**
- * Find all color families where ALL colors are hidden
- * @returns {Array<{name: string, count: number}>} Array of hidden families
- */
 function getHiddenFamilies() {
-  return getHiddenGroups("family");
+  return colorModel.getHiddenFamilies(appState.getHidden());
 }
 
-/**
- * Find all color categories where ALL colors are hidden
- * @returns {Array<{name: string, count: number}>} Array of hidden categories
- */
 function getHiddenCategories() {
-  return getHiddenGroups("category");
+  return colorModel.getHiddenCategories(appState.getHidden());
 }
 
 // --- EVENT DELEGATION ---
 
 // Handler for individual color favorite button
 function handleFavoriteButton(colorId) {
-  URLState.toggleFavorite(colorId);
+  appState.toggleFavorite(colorId);
   renderColors();
 }
 
 // Handler for individual color hide button
 function handleHideButton(colorId) {
-  URLState.toggleHidden(colorId);
+  appState.toggleHidden(colorId);
   renderColors();
 }
 
 // Handler for bulk favorite button (family/category)
 function handleBulkFavoriteButton(groupId) {
   const groupColors = getColorsForId(groupId);
-  const favorites = URLState.getFavorites();
+  const favorites = appState.getFavorites();
 
   // Check if all colors are already favorited
   const allFavorited = groupColors.every((color) =>
@@ -532,9 +426,9 @@ function handleBulkFavoriteButton(groupId) {
   const colorIds = groupColors.map((color) => color.id);
 
   if (allFavorited) {
-    URLState.removeMultipleFavorites(colorIds);
+    appState.removeMultipleFavorites(colorIds);
   } else {
-    URLState.addMultipleFavorites(colorIds);
+    appState.addMultipleFavorites(colorIds);
   }
   renderColors();
 }
@@ -542,16 +436,16 @@ function handleBulkFavoriteButton(groupId) {
 // Handler for bulk hide button (family/category)
 function handleBulkHideButton(groupId) {
   const groupColors = getColorsForId(groupId);
-  const hidden = URLState.getHidden();
+  const hidden = appState.getHidden();
 
   // Check if all colors are already hidden
   const allHidden = groupColors.every((color) => hidden.includes(color.id));
   const colorIds = groupColors.map((color) => color.id);
 
   if (allHidden) {
-    URLState.removeMultipleHidden(colorIds);
+    appState.removeMultipleHidden(colorIds);
   } else {
-    URLState.addMultipleHidden(colorIds);
+    appState.addMultipleHidden(colorIds);
   }
   renderColors();
 }
@@ -561,11 +455,11 @@ function handleUnhideButton(familyName, categoryName) {
   if (familyName) {
     const familyColors = getFamilyColors(familyName);
     const colorIds = familyColors.map((color) => color.id);
-    URLState.removeMultipleHidden(colorIds);
+    appState.removeMultipleHidden(colorIds);
   } else if (categoryName) {
     const categoryColors = getCategoryColors(categoryName);
     const colorIds = categoryColors.map((color) => color.id);
-    URLState.removeMultipleHidden(colorIds);
+    appState.removeMultipleHidden(colorIds);
   }
   renderColors();
 }
@@ -574,7 +468,7 @@ function handleUnhideButton(familyName, categoryName) {
 function handleFamilyTileClick(familyName) {
   const familyColors = getFamilyColors(familyName);
   const colorIds = familyColors.map((color) => color.id);
-  URLState.removeMultipleHidden(colorIds);
+  appState.removeMultipleHidden(colorIds);
   renderColors();
 }
 
@@ -582,7 +476,7 @@ function handleFamilyTileClick(familyName) {
 function handleCategoryTileClick(categoryName) {
   const categoryColors = getCategoryColors(categoryName);
   const colorIds = categoryColors.map((color) => color.id);
-  URLState.removeMultipleHidden(colorIds);
+  appState.removeMultipleHidden(colorIds);
   renderColors();
 }
 
@@ -695,14 +589,14 @@ renderColors();
 const clearFavBtn = document.getElementById(ELEMENT_IDS.CLEAR_FAVORITES_BTN);
 if (clearFavBtn) {
   clearFavBtn.addEventListener("click", () => {
-    URLState.clearFavorites();
+    appState.clearFavorites();
     renderColors();
   });
 }
 const clearHiddenBtn = document.getElementById(ELEMENT_IDS.CLEAR_HIDDEN_BTN);
 if (clearHiddenBtn) {
   clearHiddenBtn.addEventListener("click", () => {
-    URLState.clearHidden();
+    appState.clearHidden();
     renderColors();
   });
 }
