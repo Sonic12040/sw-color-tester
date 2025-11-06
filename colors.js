@@ -7,6 +7,15 @@ import {
   categoryTileTemplate,
   TemplateUtils,
 } from "./templates.js";
+import {
+  PREFIX,
+  CSS_CLASSES,
+  ELEMENT_IDS,
+  DATA_ATTRIBUTES,
+  FAMILY_ORDER,
+  createGroupId,
+  getTilesContainerId,
+} from "./config.js";
 
 // Color utility functions are now imported from templates.js
 const { generateHSLColor, generateAccessibleText } = TemplateUtils;
@@ -22,7 +31,7 @@ const categoryNameToId = {};
 function renderColors() {
   const favorites = URLState.getFavorites();
   const hidden = URLState.getHidden();
-  const container = document.getElementById("color-accordion");
+  const container = document.getElementById(ELEMENT_IDS.COLOR_ACCORDION);
 
   // Get all colors (excluding archived)
   const allColors = colorData.filter((c) => !c.archived);
@@ -49,18 +58,9 @@ function renderColors() {
   });
 
   // Sort families alphabetically, but put common color families first
-  const familyOrder = [
-    "Red",
-    "Orange",
-    "Yellow",
-    "Green",
-    "Blue",
-    "Purple",
-    "Neutral",
-  ];
   const sortedFamilies = Object.keys(colorFamilies).sort((a, b) => {
-    const aIndex = familyOrder.indexOf(a);
-    const bIndex = familyOrder.indexOf(b);
+    const aIndex = FAMILY_ORDER.indexOf(a);
+    const bIndex = FAMILY_ORDER.indexOf(b);
 
     if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
     if (aIndex !== -1) return -1;
@@ -87,15 +87,15 @@ function renderColors() {
   );
 
   // 3. Color family sections (moved before categories)
-  sortedFamilies.forEach((family) => {
+  for (const family of sortedFamilies) {
     const count = colorFamilies[family].length;
     accordionHTML += createAccordionItem(
-      `family-${family.toLowerCase().replace(/\s+/g, "-")}`,
+      createGroupId(family, PREFIX.FAMILY),
       `${family} (${count})`,
       false,
       true // Show bulk actions for color families
     );
-  });
+  }
 
   // 4. Group colors by categories (branded collections)
   const colorCategories = {};
@@ -117,12 +117,9 @@ function renderColors() {
   const sortedCategories = Object.keys(colorCategories).sort();
 
   // 5. Color category sections (moved after families)
-  sortedCategories.forEach((category) => {
+  for (const category of sortedCategories) {
     const count = colorCategories[category].length;
-    const categoryId = `category-${category
-      .toLowerCase()
-      .replace(/\s+/g, "-")
-      .replace(/[^a-z0-9\-]/g, "")}`;
+    const categoryId = createGroupId(category, PREFIX.CATEGORY);
 
     // Store mapping for later use
     categoryIdToName[categoryId] = category;
@@ -134,45 +131,46 @@ function renderColors() {
       false,
       true // Show bulk actions for color categories
     );
-  });
+  }
 
   container.innerHTML = accordionHTML;
 
   // Populate favorites section
-  const favoritesContainer = document.getElementById("favorites-tiles");
+  const favoritesContainer = document.getElementById(
+    ELEMENT_IDS.FAVORITES_TILES
+  );
   if (favoriteColors.length > 0) {
-    favoriteColors.forEach((color) => {
+    for (const color of favoriteColors) {
       favoritesContainer.insertAdjacentHTML(
         "beforeend",
         colorTemplate(color, { showHideButton: false })
       );
-    });
+    }
   } else {
-    favoritesContainer.innerHTML =
-      '<div class="empty-message">No favorite colors yet. Click the heart icon on any color to add it to your favorites.</div>';
+    favoritesContainer.innerHTML = `<div class="${CSS_CLASSES.EMPTY_MESSAGE}">No favorite colors yet. Click the heart icon on any color to add it to your favorites.</div>`;
   }
 
   // Populate hidden section
-  const hiddenContainer = document.getElementById("hidden-tiles");
+  const hiddenContainer = document.getElementById(ELEMENT_IDS.HIDDEN_TILES);
   hiddenContainer.innerHTML = ""; // Clear existing hidden tiles
   const hiddenFamilies = getHiddenFamilies();
   const hiddenCategories = getHiddenCategories();
 
   // Add hidden family tiles first
-  hiddenFamilies.forEach((family) => {
+  for (const family of hiddenFamilies) {
     hiddenContainer.insertAdjacentHTML(
       "beforeend",
       familyTileTemplate(family.name, family.count)
     );
-  });
+  }
 
   // Add hidden category tiles
-  hiddenCategories.forEach((category) => {
+  for (const category of hiddenCategories) {
     hiddenContainer.insertAdjacentHTML(
       "beforeend",
       categoryTileTemplate(category.name, category.count)
     );
-  });
+  }
 
   // Add individual hidden colors (excluding those in completely hidden families or categories)
   const hiddenFamilyNames = hiddenFamilies.map((f) => f.name);
@@ -200,46 +198,46 @@ function renderColors() {
     return !inHiddenFamily && !inHiddenCategory;
   });
 
-  individualHiddenColors.forEach((color) => {
+  for (const color of individualHiddenColors) {
     hiddenContainer.insertAdjacentHTML(
       "beforeend",
       colorTemplate(color, { showFavoriteButton: false })
     );
-  });
+  }
 
   if (
     hiddenFamilies.length === 0 &&
     hiddenCategories.length === 0 &&
     individualHiddenColors.length === 0
   ) {
-    hiddenContainer.innerHTML =
-      '<div class="empty-message">No hidden colors. Click the eye icon on any color to hide it.</div>';
+    hiddenContainer.innerHTML = `<div class="${CSS_CLASSES.EMPTY_MESSAGE}">No hidden colors. Click the eye icon on any color to hide it.</div>`;
   }
 
   // Populate color family sections (moved before categories)
-  sortedFamilies.forEach((family) => {
-    const familyId = `family-${family.toLowerCase().replace(/\s+/g, "-")}`;
-    const familyContainer = document.getElementById(`${familyId}-tiles`);
+  for (const family of sortedFamilies) {
+    const familyId = createGroupId(family, PREFIX.FAMILY);
+    const familyContainer = document.getElementById(
+      getTilesContainerId(familyId)
+    );
     const familyColors = colorFamilies[family];
 
-    familyColors.forEach((color) => {
+    for (const color of familyColors) {
       familyContainer.insertAdjacentHTML("beforeend", colorTemplate(color));
-    });
-  });
+    }
+  }
 
   // Populate color category sections (moved after families)
-  sortedCategories.forEach((category) => {
-    const categoryId = `category-${category
-      .toLowerCase()
-      .replace(/\s+/g, "-")
-      .replace(/[^a-z0-9\-]/g, "")}`;
-    const categoryContainer = document.getElementById(`${categoryId}-tiles`);
+  for (const category of sortedCategories) {
+    const categoryId = createGroupId(category, PREFIX.CATEGORY);
+    const categoryContainer = document.getElementById(
+      getTilesContainerId(categoryId)
+    );
     const categoryColors = colorCategories[category];
 
-    categoryColors.forEach((color) => {
+    for (const color of categoryColors) {
       categoryContainer.insertAdjacentHTML("beforeend", colorTemplate(color));
-    });
-  });
+    }
+  }
 
   // Add accordion functionality
   setupAccordionBehavior();
@@ -250,9 +248,10 @@ function renderColors() {
 
 // --- ACCORDION BEHAVIOR ---
 function setupAccordionBehavior() {
-  const headers = document.querySelectorAll(".accordion-header");
+  const headers = document.querySelectorAll(`.${CSS_CLASSES.ACCORDION_HEADER}`);
+  const headersArray = [...headers];
 
-  headers.forEach((header, index) => {
+  for (const [index, header] of headersArray.entries()) {
     header.addEventListener("click", () => {
       toggleAccordionItem(header);
     });
@@ -267,23 +266,23 @@ function setupAccordionBehavior() {
           break;
         case "ArrowDown":
           e.preventDefault();
-          focusNextHeader(headers, index);
+          focusNextHeader(headersArray, index);
           break;
         case "ArrowUp":
           e.preventDefault();
-          focusPreviousHeader(headers, index);
+          focusPreviousHeader(headersArray, index);
           break;
         case "Home":
           e.preventDefault();
-          headers[0].focus();
+          headersArray[0].focus();
           break;
         case "End":
           e.preventDefault();
-          headers[headers.length - 1].focus();
+          headersArray[headersArray.length - 1].focus();
           break;
       }
     });
-  });
+  }
 }
 
 function toggleAccordionItem(clickedHeader) {
@@ -293,7 +292,9 @@ function toggleAccordionItem(clickedHeader) {
   );
 
   // Close all other accordion items
-  document.querySelectorAll(".accordion-header").forEach((header) => {
+  for (const header of document.querySelectorAll(
+    `.${CSS_CLASSES.ACCORDION_HEADER}`
+  )) {
     if (header !== clickedHeader) {
       header.setAttribute("aria-expanded", "false");
       const otherContent = document.getElementById(
@@ -301,7 +302,7 @@ function toggleAccordionItem(clickedHeader) {
       );
       otherContent.setAttribute("aria-hidden", "true");
     }
-  });
+  }
 
   // Toggle clicked item
   if (isExpanded) {
@@ -461,8 +462,8 @@ function getHiddenCategories() {
  * @param {string} dataAttribute - Data attribute to read from button
  * @param {Function} callback - Function to call with the attribute value
  */
-function createSimpleButtonHandler(selector, dataAttribute, callback) {
-  for (const btn of document.querySelectorAll(selector)) {
+function createSimpleButtonHandler(cssClass, dataAttribute, callback) {
+  for (const btn of document.querySelectorAll(`.${cssClass}`)) {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
       const value = btn.getAttribute(dataAttribute);
@@ -481,13 +482,13 @@ function createSimpleButtonHandler(selector, dataAttribute, callback) {
  * @param {Function} removeMultiple - Function to remove multiple items
  */
 function createBulkActionHandler(
-  selector,
+  cssClass,
   dataAttribute,
   getCurrentState,
   addMultiple,
   removeMultiple
 ) {
-  for (const btn of document.querySelectorAll(selector)) {
+  for (const btn of document.querySelectorAll(`.${cssClass}`)) {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
       const groupId = btn.getAttribute(dataAttribute);
@@ -519,13 +520,13 @@ function createBulkActionHandler(
  * @param {Function} unhideColors - Function to unhide the colors
  */
 function createTileClickHandler(
-  selector,
+  cssClass,
   dataAttribute,
   excludeButtonSelector,
   getColors,
   unhideColors
 ) {
-  for (const tile of document.querySelectorAll(selector)) {
+  for (const tile of document.querySelectorAll(`.${cssClass}`)) {
     tile.addEventListener("click", (e) => {
       // Only trigger if not clicking the excluded button
       if (!e.target.closest(excludeButtonSelector)) {
@@ -542,25 +543,27 @@ function createTileClickHandler(
 // --- EVENT LISTENERS ---
 function attachColorButtonListeners() {
   // Simple individual color actions
-  createSimpleButtonHandler(".favorite-btn", "data-id", (id) =>
-    URLState.toggleFavorite(id)
+  createSimpleButtonHandler(
+    CSS_CLASSES.FAVORITE_BTN,
+    DATA_ATTRIBUTES.ID,
+    (id) => URLState.toggleFavorite(id)
   );
-  createSimpleButtonHandler(".hide-btn", "data-id", (id) =>
+  createSimpleButtonHandler(CSS_CLASSES.HIDE_BTN, DATA_ATTRIBUTES.ID, (id) =>
     URLState.toggleHidden(id)
   );
 
   // Bulk actions for families/categories
   createBulkActionHandler(
-    ".bulk-favorite-btn",
-    "data-family",
+    CSS_CLASSES.BULK_FAVORITE_BTN,
+    DATA_ATTRIBUTES.FAMILY,
     () => URLState.getFavorites(),
     (colorIds) => URLState.addMultipleFavorites(colorIds),
     (colorIds) => URLState.removeMultipleFavorites(colorIds)
   );
 
   createBulkActionHandler(
-    ".bulk-hide-btn",
-    "data-family",
+    CSS_CLASSES.BULK_HIDE_BTN,
+    DATA_ATTRIBUTES.FAMILY,
     () => URLState.getHidden(),
     (colorIds) => URLState.addMultipleHidden(colorIds),
     (colorIds) => URLState.removeMultipleHidden(colorIds)
@@ -568,8 +571,8 @@ function attachColorButtonListeners() {
 
   // Unhide button actions
   createSimpleButtonHandler(
-    ".family-unhide-btn",
-    "data-family",
+    CSS_CLASSES.FAMILY_UNHIDE_BTN,
+    DATA_ATTRIBUTES.FAMILY,
     (familyName) => {
       const familyColors = getFamilyColors(familyName);
       const colorIds = familyColors.map((color) => color.id);
@@ -578,8 +581,8 @@ function attachColorButtonListeners() {
   );
 
   createSimpleButtonHandler(
-    ".category-unhide-btn",
-    "data-category",
+    CSS_CLASSES.CATEGORY_UNHIDE_BTN,
+    DATA_ATTRIBUTES.CATEGORY,
     (categoryName) => {
       const categoryColors = getCategoryColors(categoryName);
       const colorIds = categoryColors.map((color) => color.id);
@@ -589,17 +592,17 @@ function attachColorButtonListeners() {
 
   // Tile click handlers for unhiding
   createTileClickHandler(
-    ".family-tile",
-    "data-family",
-    ".family-unhide-btn",
+    CSS_CLASSES.FAMILY_TILE,
+    DATA_ATTRIBUTES.FAMILY,
+    `.${CSS_CLASSES.FAMILY_UNHIDE_BTN}`,
     getFamilyColors,
     URLState.removeMultipleHidden
   );
 
   createTileClickHandler(
-    ".category-tile",
-    "data-category",
-    ".category-unhide-btn",
+    CSS_CLASSES.CATEGORY_TILE,
+    DATA_ATTRIBUTES.CATEGORY,
+    `.${CSS_CLASSES.CATEGORY_UNHIDE_BTN}`,
     getCategoryColors,
     URLState.removeMultipleHidden
   );
@@ -607,14 +610,14 @@ function attachColorButtonListeners() {
 
 // --- INITIALIZE ---
 renderColors();
-const clearFavBtn = document.getElementById("clear-favorites-btn");
+const clearFavBtn = document.getElementById(ELEMENT_IDS.CLEAR_FAVORITES_BTN);
 if (clearFavBtn) {
   clearFavBtn.addEventListener("click", () => {
     URLState.clearFavorites();
     renderColors();
   });
 }
-const clearHiddenBtn = document.getElementById("clear-hidden-btn");
+const clearHiddenBtn = document.getElementById(ELEMENT_IDS.CLEAR_HIDDEN_BTN);
 if (clearHiddenBtn) {
   clearHiddenBtn.addEventListener("click", () => {
     URLState.clearHidden();

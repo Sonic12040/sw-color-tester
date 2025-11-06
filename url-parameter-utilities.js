@@ -1,9 +1,11 @@
 /**
  * URL Parameter Utilities
- * 
+ *
  * A centralized module for managing URL parameters in a consistent and reusable way.
  * Provides methods to get and set array-based URL parameters with automatic URL history management.
  */
+
+import { URL_PARAMS } from "./config.js";
 
 export class URLParameterManager {
   /**
@@ -12,10 +14,12 @@ export class URLParameterManager {
    * @param {string} delimiter - The delimiter used to split the parameter value (default: ',')
    * @returns {string[]} Array of parameter values, or empty array if parameter doesn't exist
    */
-  static getArrayParameter(paramName, delimiter = ',') {
+  static getArrayParameter(paramName, delimiter = ",") {
     const params = new URLSearchParams(globalThis.location.search);
     const value = params.get(paramName);
-    return value ? value.split(delimiter).filter(item => item.trim() !== '') : [];
+    return value
+      ? value.split(delimiter).filter((item) => item.trim() !== "")
+      : [];
   }
 
   /**
@@ -25,12 +29,19 @@ export class URLParameterManager {
    * @param {string} delimiter - The delimiter used to join the parameter values (default: ',')
    * @param {boolean} replaceState - Whether to replace the current history state (default: true)
    */
-  static setArrayParameter(paramName, values, delimiter = ',', replaceState = true) {
+  static setArrayParameter(
+    paramName,
+    values,
+    delimiter = ",",
+    replaceState = true
+  ) {
     const params = new URLSearchParams(globalThis.location.search);
-    
+
     if (values.length > 0) {
       // Filter out empty values and join with delimiter
-      const filteredValues = values.filter(value => value && value.trim() !== '');
+      const filteredValues = values.filter(
+        (value) => value && value.trim() !== ""
+      );
       if (filteredValues.length > 0) {
         params.set(paramName, filteredValues.join(delimiter));
       } else {
@@ -41,11 +52,11 @@ export class URLParameterManager {
     }
 
     const newUrl = `${globalThis.location.pathname}?${params.toString()}`;
-    
+
     if (replaceState) {
-      globalThis.history.replaceState({}, '', newUrl);
+      globalThis.history.replaceState({}, "", newUrl);
     } else {
-      globalThis.history.pushState({}, '', newUrl);
+      globalThis.history.pushState({}, "", newUrl);
     }
   }
 
@@ -67,19 +78,19 @@ export class URLParameterManager {
    */
   static setStringParameter(paramName, value, replaceState = true) {
     const params = new URLSearchParams(globalThis.location.search);
-    
-    if (value && value.trim() !== '') {
+
+    if (value && value.trim() !== "") {
       params.set(paramName, value);
     } else {
       params.delete(paramName);
     }
 
     const newUrl = `${globalThis.location.pathname}?${params.toString()}`;
-    
+
     if (replaceState) {
-      globalThis.history.replaceState({}, '', newUrl);
+      globalThis.history.replaceState({}, "", newUrl);
     } else {
-      globalThis.history.pushState({}, '', newUrl);
+      globalThis.history.pushState({}, "", newUrl);
     }
   }
 
@@ -93,11 +104,11 @@ export class URLParameterManager {
     params.delete(paramName);
 
     const newUrl = `${globalThis.location.pathname}?${params.toString()}`;
-    
+
     if (replaceState) {
-      globalThis.history.replaceState({}, '', newUrl);
+      globalThis.history.replaceState({}, "", newUrl);
     } else {
-      globalThis.history.pushState({}, '', newUrl);
+      globalThis.history.pushState({}, "", newUrl);
     }
   }
 
@@ -107,11 +118,11 @@ export class URLParameterManager {
    */
   static clearAllParameters(replaceState = true) {
     const newUrl = globalThis.location.pathname;
-    
+
     if (replaceState) {
-      globalThis.history.replaceState({}, '', newUrl);
+      globalThis.history.replaceState({}, "", newUrl);
     } else {
-      globalThis.history.pushState({}, '', newUrl);
+      globalThis.history.pushState({}, "", newUrl);
     }
   }
 
@@ -132,11 +143,11 @@ export class URLParameterManager {
   static getAllParameters() {
     const params = new URLSearchParams(globalThis.location.search);
     const result = {};
-    
+
     for (const [key, value] of params.entries()) {
       result[key] = value;
     }
-    
+
     return result;
   }
 
@@ -147,15 +158,17 @@ export class URLParameterManager {
    */
   static batchUpdate(updates, replaceState = true) {
     const params = new URLSearchParams(globalThis.location.search);
-    
+
     Object.entries(updates).forEach(([key, value]) => {
       if (value === null || value === undefined) {
         params.delete(key);
       } else if (Array.isArray(value)) {
         if (value.length > 0) {
-          const filteredValues = value.filter(v => v && v.toString().trim() !== '');
+          const filteredValues = value.filter(
+            (v) => v && v.toString().trim() !== ""
+          );
           if (filteredValues.length > 0) {
-            params.set(key, filteredValues.join(','));
+            params.set(key, filteredValues.join(","));
           } else {
             params.delete(key);
           }
@@ -163,20 +176,20 @@ export class URLParameterManager {
           params.delete(key);
         }
       } else {
-        if (value.toString().trim() !== '') {
+        if (value.toString().trim() !== "") {
           params.set(key, value.toString());
         } else {
           params.delete(key);
         }
       }
     });
-    
+
     const newUrl = `${globalThis.location.pathname}?${params.toString()}`;
-    
+
     if (replaceState) {
-      globalThis.history.replaceState({}, '', newUrl);
+      globalThis.history.replaceState({}, "", newUrl);
     } else {
-      globalThis.history.pushState({}, '', newUrl);
+      globalThis.history.pushState({}, "", newUrl);
     }
   }
 }
@@ -190,7 +203,7 @@ export const URLState = {
    * @returns {string[]} Array of favorite color IDs
    */
   getFavorites() {
-    return URLParameterManager.getArrayParameter('favorites');
+    return URLParameterManager.getArrayParameter(URL_PARAMS.FAVORITES);
   },
 
   /**
@@ -198,7 +211,7 @@ export const URLState = {
    * @param {string[]} favorites - Array of favorite color IDs
    */
   setFavorites(favorites) {
-    URLParameterManager.setArrayParameter('favorites', favorites);
+    URLParameterManager.setArrayParameter(URL_PARAMS.FAVORITES, favorites);
   },
 
   /**
@@ -206,7 +219,7 @@ export const URLState = {
    * @returns {string[]} Array of hidden color IDs
    */
   getHidden() {
-    return URLParameterManager.getArrayParameter('hidden');
+    return URLParameterManager.getArrayParameter(URL_PARAMS.HIDDEN);
   },
 
   /**
@@ -214,7 +227,7 @@ export const URLState = {
    * @param {string[]} hidden - Array of hidden color IDs
    */
   setHidden(hidden) {
-    URLParameterManager.setArrayParameter('hidden', hidden);
+    URLParameterManager.setArrayParameter(URL_PARAMS.HIDDEN, hidden);
   },
 
   /**
@@ -235,7 +248,7 @@ export const URLState = {
    */
   removeFavorite(colorId) {
     const favorites = this.getFavorites();
-    const filtered = favorites.filter(id => id !== colorId);
+    const filtered = favorites.filter((id) => id !== colorId);
     this.setFavorites(filtered);
   },
 
@@ -273,7 +286,7 @@ export const URLState = {
    */
   removeHidden(colorId) {
     const hidden = this.getHidden();
-    const filtered = hidden.filter(id => id !== colorId);
+    const filtered = hidden.filter((id) => id !== colorId);
     this.setHidden(filtered);
   },
 
@@ -345,7 +358,7 @@ export const URLState = {
    */
   removeMultipleFavorites(colorIds) {
     const favorites = this.getFavorites();
-    const newFavorites = favorites.filter(id => !colorIds.includes(id));
+    const newFavorites = favorites.filter((id) => !colorIds.includes(id));
     this.setFavorites(newFavorites);
   },
 
@@ -365,7 +378,7 @@ export const URLState = {
    */
   removeMultipleHidden(colorIds) {
     const hidden = this.getHidden();
-    const newHidden = hidden.filter(id => !colorIds.includes(id));
+    const newHidden = hidden.filter((id) => !colorIds.includes(id));
     this.setHidden(newHidden);
   },
 
@@ -377,5 +390,5 @@ export const URLState = {
    */
   batchUpdate(updates) {
     URLParameterManager.batchUpdate(updates);
-  }
+  },
 };
