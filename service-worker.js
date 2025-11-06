@@ -1,7 +1,7 @@
 // service-worker.js - PWA Service Worker with Smart Caching
 // GitHub Pages compatible with automatic base path detection
 
-const CACHE_VERSION = "v1.1.0";
+const CACHE_VERSION = "v1.2.0";
 const CACHE_NAME = `sw-colors-${CACHE_VERSION}`;
 
 // Auto-detect base path for GitHub Pages vs local development
@@ -21,6 +21,7 @@ const STATIC_ASSETS = [
   `${BASE_PATH}/url-parameter-utilities.js`,
   `${BASE_PATH}/models/ColorModel.js`,
   `${BASE_PATH}/models/AppState.js`,
+  `${BASE_PATH}/views/ColorView.js`,
   `${BASE_PATH}/manifest.json`,
 ];
 
