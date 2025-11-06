@@ -17,7 +17,7 @@ export const CSS_CLASSES = {
   HEADER: "header",
   HEADER_ACTIONS: "header__actions",
   HEADER_BUTTON: "header__button",
-  
+
   // Accordion
   ACCORDION: "accordion",
   ACCORDION_ITEM: "accordion-item",
@@ -25,7 +25,7 @@ export const CSS_CLASSES = {
   ACCORDION_CONTENT: "accordion-content",
   ACCORDION_PANEL: "accordion-panel",
   ACCORDION_ICON: "accordion-icon",
-  
+
   // Color Tiles
   COLOR_TILE: "color-tile",
   COLOR_TILE_ACTIONS: "color-tile__actions",
@@ -39,14 +39,14 @@ export const CSS_CLASSES = {
   COLOR_TILE_COUNT: "color-tile__count",
   COLOR_TILE_ICON_OVERLAY: "color-tile__icon-overlay",
   COLOR_TILES_GRID: "color-tiles-grid",
-  
+
   // Bulk Actions
   BULK_ACTIONS_PANEL: "bulk-actions-panel",
   BULK_ACTIONS_PANEL_CONTAINER: "bulk-actions-panel__container",
   BULK_ACTIONS_PANEL_LABEL: "bulk-actions-panel__label",
   BULK_ACTIONS_FAVORITE_BUTTON: "bulk-actions__favorite-button",
   BULK_ACTIONS_HIDE_BUTTON: "bulk-actions__hide-button",
-  
+
   // Empty State
   EMPTY_MESSAGE: "empty-message",
 };
