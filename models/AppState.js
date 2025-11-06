@@ -84,14 +84,26 @@ export class AppState {
   }
 
   /**
+   * Private helper for bulk operations on a Set
+   * @private
+   * @param {string} setName - Name of the Set property ('favorites' or 'hidden')
+   * @param {string[]} colorIds - Array of color IDs to operate on
+   * @param {string} operation - Operation type ('add' or 'remove')
+   */
+  _bulkOperation(setName, colorIds, operation) {
+    const set = this[setName];
+    for (const id of colorIds) {
+      operation === "add" ? set.add(id) : set.delete(id);
+    }
+    this.syncToURL();
+  }
+
+  /**
    * Add multiple colors to favorites
    * @param {string[]} colorIds - Array of color IDs to add
    */
   addMultipleFavorites(colorIds) {
-    for (const id of colorIds) {
-      this.favorites.add(id);
-    }
-    this.syncToURL();
+    this._bulkOperation("favorites", colorIds, "add");
   }
 
   /**
@@ -99,10 +111,7 @@ export class AppState {
    * @param {string[]} colorIds - Array of color IDs to remove
    */
   removeMultipleFavorites(colorIds) {
-    for (const id of colorIds) {
-      this.favorites.delete(id);
-    }
-    this.syncToURL();
+    this._bulkOperation("favorites", colorIds, "remove");
   }
 
   /**
@@ -110,10 +119,7 @@ export class AppState {
    * @param {string[]} colorIds - Array of color IDs to add
    */
   addMultipleHidden(colorIds) {
-    for (const id of colorIds) {
-      this.hidden.add(id);
-    }
-    this.syncToURL();
+    this._bulkOperation("hidden", colorIds, "add");
   }
 
   /**
@@ -121,10 +127,7 @@ export class AppState {
    * @param {string[]} colorIds - Array of color IDs to remove
    */
   removeMultipleHidden(colorIds) {
-    for (const id of colorIds) {
-      this.hidden.delete(id);
-    }
-    this.syncToURL();
+    this._bulkOperation("hidden", colorIds, "remove");
   }
 
   /**
