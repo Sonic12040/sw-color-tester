@@ -1,11 +1,11 @@
 // service-worker.js - PWA Service Worker with Smart Caching
 // GitHub Pages compatible with automatic base path detection
 
-const CACHE_VERSION = "v1.0.1";
+const CACHE_VERSION = "v1.0.2";
 const CACHE_NAME = `sw-colors-${CACHE_VERSION}`;
 
 // Auto-detect base path for GitHub Pages vs local development
-const isGitHubPages = self.location.hostname.includes("github.io");
+const isGitHubPages = globalThis.location.hostname.includes("github.io");
 const BASE_PATH = isGitHubPages ? "/sw-color-tester" : "";
 
 console.log("[SW] Base path:", BASE_PATH || "(root)");

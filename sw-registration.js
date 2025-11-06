@@ -17,9 +17,10 @@ if ("serviceWorker" in navigator) {
 
   // Register the service worker
   window.addEventListener("load", () => {
+    // Use relative path for GitHub Pages subdirectory compatibility
     navigator.serviceWorker
-      .register("/service-worker.js", {
-        scope: "/",
+      .register("./service-worker.js", {
+        scope: "./",
       })
       .then((registration) => {
         console.log("✅ Service Worker registered:", registration.scope);
