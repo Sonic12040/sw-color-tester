@@ -297,6 +297,7 @@ function toggleAccordionItem(clickedHeader) {
         header.getAttribute("aria-controls")
       );
       otherContent.setAttribute("aria-hidden", "true");
+      otherContent.setAttribute("inert", "");
     }
   }
 
@@ -304,9 +305,11 @@ function toggleAccordionItem(clickedHeader) {
   if (isExpanded) {
     clickedHeader.setAttribute("aria-expanded", "false");
     content.setAttribute("aria-hidden", "true");
+    content.setAttribute("inert", "");
   } else {
     clickedHeader.setAttribute("aria-expanded", "true");
     content.setAttribute("aria-hidden", "false");
+    content.removeAttribute("inert");
   }
 }
 

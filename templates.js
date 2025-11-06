@@ -86,6 +86,7 @@ export function createAccordionItem(
         aria-labelledby="${id}-header"
         aria-hidden="${!isOpen}"
         role="region"
+        ${isOpen ? "" : "inert"}
       >
         <div class="${CSS_CLASSES.ACCORDION_PANEL}">
           ${bulkActionsHTML}
