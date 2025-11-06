@@ -27,21 +27,24 @@ const { generateHSLColor, generateAccessibleText } = TemplateUtils;
 const categoryIdToName = {};
 const categoryNameToId = {};
 
-// --- RENDERING ---
-function renderColors() {
-  const favorites = URLState.getFavorites();
-  const hidden = URLState.getHidden();
-  const container = document.getElementById(ELEMENT_IDS.COLOR_ACCORDION);
+// --- RENDERING HELPER FUNCTIONS ---
 
-  // Get all colors (excluding archived)
+/**
+ * Prepare and filter color data based on favorites and hidden status
+ */
+function prepareColorData(favorites, hidden) {
   const allColors = colorData.filter((c) => !c.archived);
-
-  // Get favorite and hidden colors
   const favoriteColors = allColors.filter((c) => favorites.includes(c.id));
   const hiddenColors = allColors.filter((c) => hidden.includes(c.id));
-
-  // Group colors by family (excluding hidden colors)
   const visibleColors = allColors.filter((c) => !hidden.includes(c.id));
+
+  return { allColors, favoriteColors, hiddenColors, visibleColors };
+}
+
+/**
+ * Group colors by their primary family
+ */
+function groupColorsByFamily(visibleColors) {
   const colorFamilies = {};
 
   for (const color of visibleColors) {
@@ -57,8 +60,14 @@ function renderColors() {
     colorFamilies[primaryFamily].push(color);
   }
 
-  // Sort families alphabetically, but put common color families first
-  const sortedFamilies = Object.keys(colorFamilies).sort((a, b) => {
+  return colorFamilies;
+}
+
+/**
+ * Sort family names by priority order, then alphabetically
+ */
+function sortFamiliesByPriority(familyKeys) {
+  return familyKeys.sort((a, b) => {
     const aIndex = FAMILY_ORDER.indexOf(a);
     const bIndex = FAMILY_ORDER.indexOf(b);
 
@@ -67,35 +76,14 @@ function renderColors() {
     if (bIndex !== -1) return 1;
     return a.localeCompare(b);
   });
+}
 
-  // Build accordion HTML
-  let accordionHTML = "";
-
-  // 1. Favorites section (open by default)
-  const favoritesCount = favoriteColors.length;
-  const favoritesTitle =
-    favoritesCount > 0 ? `Favorites (${favoritesCount})` : "Favorites";
-  accordionHTML += createAccordionItem("favorites", favoritesTitle, true);
-
-  // 2. Hidden section
-  const hiddenCount = hiddenColors.length;
-  const hiddenTitle =
-    hiddenCount > 0 ? `Hidden Colors (${hiddenCount})` : "Hidden Colors";
-  accordionHTML += createAccordionItem("hidden", hiddenTitle);
-
-  // 3. Color family sections (moved before categories)
-  for (const family of sortedFamilies) {
-    const count = colorFamilies[family].length;
-    accordionHTML += createAccordionItem(
-      createGroupId(family, PREFIX.FAMILY),
-      `${family} (${count})`,
-      false,
-      true // Show bulk actions for color families
-    );
-  }
-
-  // 4. Group colors by categories (branded collections)
+/**
+ * Group colors by their branded collection categories
+ */
+function groupColorsByCategory(visibleColors) {
   const colorCategories = {};
+
   for (const color of visibleColors) {
     if (
       color.brandedCollectionNames &&
@@ -110,12 +98,44 @@ function renderColors() {
     }
   }
 
-  // Sort categories alphabetically
-  const sortedCategories = Object.keys(colorCategories).sort((a, b) =>
-    a.localeCompare(b)
-  );
+  return colorCategories;
+}
 
-  // 5. Color category sections (moved after families)
+/**
+ * Build the complete accordion HTML structure
+ */
+function buildAccordionHTML(
+  favoriteCount,
+  hiddenCount,
+  sortedFamilies,
+  colorFamilies,
+  sortedCategories,
+  colorCategories
+) {
+  let accordionHTML = "";
+
+  // 1. Favorites section (open by default)
+  const favoritesTitle =
+    favoriteCount > 0 ? `Favorites (${favoriteCount})` : "Favorites";
+  accordionHTML += createAccordionItem("favorites", favoritesTitle, true);
+
+  // 2. Hidden section
+  const hiddenTitle =
+    hiddenCount > 0 ? `Hidden Colors (${hiddenCount})` : "Hidden Colors";
+  accordionHTML += createAccordionItem("hidden", hiddenTitle);
+
+  // 3. Color family sections
+  for (const family of sortedFamilies) {
+    const count = colorFamilies[family].length;
+    accordionHTML += createAccordionItem(
+      createGroupId(family, PREFIX.FAMILY),
+      `${family} (${count})`,
+      false,
+      true // Show bulk actions for color families
+    );
+  }
+
+  // 4. Color category sections
   for (const category of sortedCategories) {
     const count = colorCategories[category].length;
     const categoryId = createGroupId(category, PREFIX.CATEGORY);
@@ -132,12 +152,17 @@ function renderColors() {
     );
   }
 
-  container.innerHTML = accordionHTML;
+  return accordionHTML;
+}
 
-  // Populate favorites section
+/**
+ * Populate the favorites section with color tiles
+ */
+function populateFavoritesSection(favoriteColors) {
   const favoritesContainer = document.getElementById(
     ELEMENT_IDS.FAVORITES_TILES
   );
+
   if (favoriteColors.length > 0) {
     for (const color of favoriteColors) {
       favoritesContainer.insertAdjacentHTML(
@@ -148,10 +173,15 @@ function renderColors() {
   } else {
     favoritesContainer.innerHTML = `<div class="${CSS_CLASSES.EMPTY_MESSAGE}">No favorite colors yet. Click the heart icon on any color to add it to your favorites.</div>`;
   }
+}
 
-  // Populate hidden section
+/**
+ * Populate the hidden section with family tiles, category tiles, and individual colors
+ */
+function populateHiddenSection(hiddenColors) {
   const hiddenContainer = document.getElementById(ELEMENT_IDS.HIDDEN_TILES);
   hiddenContainer.innerHTML = ""; // Clear existing hidden tiles
+
   const hiddenFamilies = getHiddenFamilies();
   const hiddenCategories = getHiddenCategories();
 
@@ -211,8 +241,18 @@ function renderColors() {
   ) {
     hiddenContainer.innerHTML = `<div class="${CSS_CLASSES.EMPTY_MESSAGE}">No hidden colors. Click the eye icon on any color to hide it.</div>`;
   }
+}
 
-  // Populate color family sections (moved before categories)
+/**
+ * Populate all family and category sections with their color tiles
+ */
+function populateColorSections(
+  sortedFamilies,
+  colorFamilies,
+  sortedCategories,
+  colorCategories
+) {
+  // Populate color family sections
   for (const family of sortedFamilies) {
     const familyId = createGroupId(family, PREFIX.FAMILY);
     const familyContainer = document.getElementById(
@@ -225,7 +265,7 @@ function renderColors() {
     }
   }
 
-  // Populate color category sections (moved after families)
+  // Populate color category sections
   for (const category of sortedCategories) {
     const categoryId = createGroupId(category, PREFIX.CATEGORY);
     const categoryContainer = document.getElementById(
@@ -237,6 +277,50 @@ function renderColors() {
       categoryContainer.insertAdjacentHTML("beforeend", colorTemplate(color));
     }
   }
+}
+
+// --- MAIN RENDERING FUNCTION ---
+function renderColors() {
+  const favorites = URLState.getFavorites();
+  const hidden = URLState.getHidden();
+  const container = document.getElementById(ELEMENT_IDS.COLOR_ACCORDION);
+
+  // Prepare color data
+  const { favoriteColors, hiddenColors, visibleColors } = prepareColorData(
+    favorites,
+    hidden
+  );
+
+  // Group and sort families
+  const colorFamilies = groupColorsByFamily(visibleColors);
+  const sortedFamilies = sortFamiliesByPriority(Object.keys(colorFamilies));
+
+  // Group and sort categories
+  const colorCategories = groupColorsByCategory(visibleColors);
+  const sortedCategories = Object.keys(colorCategories).sort((a, b) =>
+    a.localeCompare(b)
+  );
+
+  // Build and insert accordion HTML
+  const accordionHTML = buildAccordionHTML(
+    favoriteColors.length,
+    hiddenColors.length,
+    sortedFamilies,
+    colorFamilies,
+    sortedCategories,
+    colorCategories
+  );
+  container.innerHTML = accordionHTML;
+
+  // Populate all sections
+  populateFavoritesSection(favoriteColors);
+  populateHiddenSection(hiddenColors);
+  populateColorSections(
+    sortedFamilies,
+    colorFamilies,
+    sortedCategories,
+    colorCategories
+  );
 
   // Add accordion functionality
   setupAccordionBehavior();
