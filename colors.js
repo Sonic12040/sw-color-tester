@@ -73,18 +73,15 @@ function renderColors() {
 
   // 1. Favorites section (open by default)
   const favoritesCount = favoriteColors.length;
-  accordionHTML += createAccordionItem(
-    "favorites",
-    `Favorites${favoritesCount > 0 ? ` (${favoritesCount})` : ""}`,
-    true
-  );
+  const favoritesTitle =
+    favoritesCount > 0 ? `Favorites (${favoritesCount})` : "Favorites";
+  accordionHTML += createAccordionItem("favorites", favoritesTitle, true);
 
   // 2. Hidden section
   const hiddenCount = hiddenColors.length;
-  accordionHTML += createAccordionItem(
-    "hidden",
-    `Hidden Colors${hiddenCount > 0 ? ` (${hiddenCount})` : ""}`
-  );
+  const hiddenTitle =
+    hiddenCount > 0 ? `Hidden Colors (${hiddenCount})` : "Hidden Colors";
+  accordionHTML += createAccordionItem("hidden", hiddenTitle);
 
   // 3. Color family sections (moved before categories)
   for (const family of sortedFamilies) {
@@ -114,7 +111,9 @@ function renderColors() {
   });
 
   // Sort categories alphabetically
-  const sortedCategories = Object.keys(colorCategories).sort();
+  const sortedCategories = Object.keys(colorCategories).sort((a, b) =>
+    a.localeCompare(b)
+  );
 
   // 5. Color category sections (moved after families)
   for (const category of sortedCategories) {
@@ -173,14 +172,14 @@ function renderColors() {
   }
 
   // Add individual hidden colors (excluding those in completely hidden families or categories)
-  const hiddenFamilyNames = hiddenFamilies.map((f) => f.name);
-  const hiddenCategoryNames = hiddenCategories.map((c) => c.name);
+  const hiddenFamilyNames = new Set(hiddenFamilies.map((f) => f.name));
+  const hiddenCategoryNames = new Set(hiddenCategories.map((c) => c.name));
   const individualHiddenColors = hiddenColors.filter((color) => {
     // Check if color belongs to a completely hidden family
     let inHiddenFamily = false;
     if (color.colorFamilyNames && color.colorFamilyNames.length > 0) {
       const primaryFamily = color.colorFamilyNames[0];
-      inHiddenFamily = hiddenFamilyNames.includes(primaryFamily);
+      inHiddenFamily = hiddenFamilyNames.has(primaryFamily);
     }
 
     // Check if color belongs to any completely hidden category
@@ -190,7 +189,7 @@ function renderColors() {
       color.brandedCollectionNames.length > 0
     ) {
       inHiddenCategory = color.brandedCollectionNames.some((category) =>
-        hiddenCategoryNames.includes(category)
+        hiddenCategoryNames.has(category)
       );
     }
 
@@ -275,7 +274,7 @@ function setupAccordionBehavior() {
           break;
         case "End":
           e.preventDefault();
-          headersArray[headersArray.length - 1].focus();
+          headersArray.at(-1).focus();
           break;
       }
     });
