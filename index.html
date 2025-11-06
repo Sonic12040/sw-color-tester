@@ -5,12 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sherwin Williams Color Explorer</title>
 
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#0066cc" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="SW Colors" />
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link
       rel="icon"
       type="image/png"
-      href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAdgAAAHYBTnsmCAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAKBSURBVFiFtZe9axRBFMafJwQSCxsLwcJCG1sLG2uxsLGwsLGwsLCwsLGwsLCwsLGwsLGwsLCwsLGwsLCwsLGwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLCwsLCwsLGwsLCwsLGwsLCwsLCwsLGwsLCwsLCwsLGwsLCwsLCwsLGwsLCwsLCwsLGwsLGxsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLGwsLCwsLGwsLCwsLGwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsL"
+      href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAdgAAAHYBTnsmCAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAKBSURBVFiFtZe9axRBFMafJwQSCxsLwcJCG1sLG2uxsLGwsLGwsLCwsLGwsLGwsLGwsLGwsLCwsLGwsLCwsLGwsLGwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLCwsLGwsLCwsLCwsLGwsLCwsLCwsLGwsLCwsLCwsLGwsLCwsLCwsLGwsLGxsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLGwsLCwsLGwsLCwsLGwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsLGwsLCwsL"
     />
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -45,6 +55,11 @@
       class="accordion"
       aria-label="Color families accordion"
     ></section>
+
+    <!-- PWA Service Worker Registration -->
+    <script src="sw-registration.js"></script>
+
+    <!-- Main Application -->
     <script type="module" src="colors.js"></script>
   </body>
 </html>

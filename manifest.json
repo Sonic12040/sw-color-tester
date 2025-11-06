@@ -1,0 +1,27 @@
+{
+  "name": "Sherwin Williams Color Explorer",
+  "short_name": "SW Colors",
+  "description": "Explore and favorite Sherwin Williams paint colors",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0066cc",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%230066cc' width='100' height='100'/><text y='75' font-size='70' fill='white' font-family='Arial' text-anchor='middle' x='50'>🎨</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%230066cc' width='100' height='100'/><text y='75' font-size='70' fill='white' font-family='Arial' text-anchor='middle' x='50'>🎨</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["lifestyle", "utilities"],
+  "prefer_related_applications": false
+}
