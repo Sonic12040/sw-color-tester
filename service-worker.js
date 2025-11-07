@@ -1,7 +1,7 @@
 // service-worker.js - PWA Service Worker with Smart Caching
 // GitHub Pages compatible with automatic base path detection
 
-const CACHE_VERSION = "v1.5.0";
+const CACHE_VERSION = "v1.6.0";
 const CACHE_NAME = `sw-colors-${CACHE_VERSION}`;
 
 // Auto-detect base path for GitHub Pages vs local development
@@ -16,14 +16,30 @@ const STATIC_ASSETS = [
   `${BASE_PATH}/index.html`,
   `${BASE_PATH}/styles.css`,
   `${BASE_PATH}/app.js`,
+  // Models
   `${BASE_PATH}/models/ColorModel.js`,
   `${BASE_PATH}/models/AppState.js`,
+  // Views
   `${BASE_PATH}/views/ColorView.js`,
+  // Controllers
   `${BASE_PATH}/controllers/ColorController.js`,
+  // Commands (Command Pattern implementation)
+  `${BASE_PATH}/commands/ColorCommand.js`,
+  `${BASE_PATH}/commands/ToggleFavoriteCommand.js`,
+  `${BASE_PATH}/commands/ToggleHiddenCommand.js`,
+  `${BASE_PATH}/commands/BulkFavoriteCommand.js`,
+  `${BASE_PATH}/commands/BulkHideCommand.js`,
+  `${BASE_PATH}/commands/UnhideGroupCommand.js`,
+  `${BASE_PATH}/commands/ClearFavoritesCommand.js`,
+  `${BASE_PATH}/commands/ClearHiddenCommand.js`,
+  `${BASE_PATH}/commands/index.js`,
+  // Utils
   `${BASE_PATH}/utils/config.js`,
   `${BASE_PATH}/utils/templates.js`,
   `${BASE_PATH}/utils/url-parameter-utilities.js`,
+  // PWA
   `${BASE_PATH}/manifest.json`,
+  `${BASE_PATH}/favicon.svg`,
 ];
 
 // Large file that needs special handling
