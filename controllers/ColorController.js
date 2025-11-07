@@ -1,20 +1,42 @@
 /**
  * ColorController - Controller Layer
  * Handles user interactions and coordinates Model & View
+ * Implements Dependency Inversion Principle via Command Pattern
  * Responsibilities:
  * - Handle user events
+ * - Delegate to Commands (business logic)
  * - Orchestrate rendering
- * - Coordinate Model and View
  * - Application initialization
  */
 
 import { CSS_CLASSES, ELEMENT_IDS, DATA_ATTRIBUTES } from "../utils/config.js";
+import {
+  ToggleFavoriteCommand,
+  ToggleHiddenCommand,
+  BulkFavoriteCommand,
+  BulkHideCommand,
+  UnhideGroupCommand,
+  ClearFavoritesCommand,
+  ClearHiddenCommand,
+} from "../commands/index.js";
 
 export class ColorController {
   constructor(model, state, view) {
     this.model = model;
     this.state = state;
     this.view = view;
+  }
+
+  /**
+   * Execute a command and re-render if state changed
+   * @private
+   * @param {ColorCommand} command - Command to execute
+   */
+  _executeCommand(command) {
+    const stateChanged = command.execute();
+    if (stateChanged) {
+      this.render();
+    }
   }
 
   /**
@@ -189,80 +211,48 @@ export class ColorController {
     }
   }
 
-  // --- EVENT HANDLERS ---
-
-  /**
-   * Private helper to unhide a group of colors (family or category)
-   * @private
-   * @param {string} groupType - Either 'family' or 'category'
-   * @param {string} groupName - Name of the group to unhide
-   */
-  _unhideGroup(groupType, groupName) {
-    const getColors =
-      groupType === "family"
-        ? this.model.getFamilyColors.bind(this.model)
-        : this.model.getCategoryColors.bind(this.model);
-
-    const colors = getColors(groupName);
-    const colorIds = colors.map((color) => color.id);
-    this.state.removeMultipleHidden(colorIds);
-    this.render();
-  }
+  // --- EVENT HANDLERS (Delegate to Commands) ---
 
   /**
    * Handle individual color favorite button click
    */
   handleFavoriteButton(colorId) {
-    this.state.toggleFavorite(colorId);
-    this.render();
+    const command = new ToggleFavoriteCommand(this.model, this.state, colorId);
+    this._executeCommand(command);
   }
 
   /**
    * Handle individual color hide button click
    */
   handleHideButton(colorId) {
-    this.state.toggleHidden(colorId);
-    this.render();
+    const command = new ToggleHiddenCommand(this.model, this.state, colorId);
+    this._executeCommand(command);
   }
 
   /**
    * Handle bulk favorite button click (family/category)
    */
   handleBulkFavoriteButton(groupId, groupName) {
-    const groupColors = this.model.getColorsForId(groupId, () => groupName);
-    const favorites = this.state.getFavorites();
-
-    // Check if all colors are already favorited
-    const allFavorited = groupColors.every((color) =>
-      favorites.includes(color.id)
+    const command = new BulkFavoriteCommand(
+      this.model,
+      this.state,
+      groupId,
+      groupName
     );
-    const colorIds = groupColors.map((color) => color.id);
-
-    if (allFavorited) {
-      this.state.removeMultipleFavorites(colorIds);
-    } else {
-      this.state.addMultipleFavorites(colorIds);
-    }
-    this.render();
+    this._executeCommand(command);
   }
 
   /**
    * Handle bulk hide button click (family/category)
    */
   handleBulkHideButton(groupId, groupName) {
-    const groupColors = this.model.getColorsForId(groupId, () => groupName);
-    const hidden = this.state.getHidden();
-
-    // Check if all colors are already hidden
-    const allHidden = groupColors.every((color) => hidden.includes(color.id));
-    const colorIds = groupColors.map((color) => color.id);
-
-    if (allHidden) {
-      this.state.removeMultipleHidden(colorIds);
-    } else {
-      this.state.addMultipleHidden(colorIds);
-    }
-    this.render();
+    const command = new BulkHideCommand(
+      this.model,
+      this.state,
+      groupId,
+      groupName
+    );
+    this._executeCommand(command);
   }
 
   /**
@@ -270,9 +260,21 @@ export class ColorController {
    */
   handleUnhideButton(familyName, categoryName) {
     if (familyName) {
-      this._unhideGroup("family", familyName);
+      const command = new UnhideGroupCommand(
+        this.model,
+        this.state,
+        "family",
+        familyName
+      );
+      this._executeCommand(command);
     } else if (categoryName) {
-      this._unhideGroup("category", categoryName);
+      const command = new UnhideGroupCommand(
+        this.model,
+        this.state,
+        "category",
+        categoryName
+      );
+      this._executeCommand(command);
     }
   }
 
@@ -280,29 +282,41 @@ export class ColorController {
    * Handle family tile click (unhide entire family)
    */
   handleFamilyTileClick(familyName) {
-    this._unhideGroup("family", familyName);
+    const command = new UnhideGroupCommand(
+      this.model,
+      this.state,
+      "family",
+      familyName
+    );
+    this._executeCommand(command);
   }
 
   /**
    * Handle category tile click (unhide entire category)
    */
   handleCategoryTileClick(categoryName) {
-    this._unhideGroup("category", categoryName);
+    const command = new UnhideGroupCommand(
+      this.model,
+      this.state,
+      "category",
+      categoryName
+    );
+    this._executeCommand(command);
   }
 
   /**
    * Handle clear all favorites button click
    */
   handleClearFavorites() {
-    this.state.clearFavorites();
-    this.render();
+    const command = new ClearFavoritesCommand(this.model, this.state);
+    this._executeCommand(command);
   }
 
   /**
    * Handle clear all hidden button click
    */
   handleClearHidden() {
-    this.state.clearHidden();
-    this.render();
+    const command = new ClearHiddenCommand(this.model, this.state);
+    this._executeCommand(command);
   }
 }
