@@ -20,11 +20,11 @@ export const CSS_CLASSES = {
 
   // Accordion
   ACCORDION: "accordion",
-  ACCORDION_ITEM: "accordion-item",
-  ACCORDION_HEADER: "accordion-header",
-  ACCORDION_CONTENT: "accordion-content",
-  ACCORDION_PANEL: "accordion-panel",
-  ACCORDION_ICON: "accordion-icon",
+  ACCORDION_ITEM: "accordion__item",
+  ACCORDION_HEADER: "accordion__header",
+  ACCORDION_CONTENT: "accordion__content",
+  ACCORDION_PANEL: "accordion__panel",
+  ACCORDION_ICON: "accordion__icon",
 
   // Color Tiles
   COLOR_TILE: "color-tile",
@@ -38,7 +38,7 @@ export const CSS_CLASSES = {
   COLOR_TILE_CATEGORY: "color-tile--category",
   COLOR_TILE_COUNT: "color-tile__count",
   COLOR_TILE_ICON_OVERLAY: "color-tile__icon-overlay",
-  COLOR_TILES_GRID: "color-tiles-grid",
+  COLOR_TILES_GRID: "color-tiles__grid",
 
   // Bulk Actions
   BULK_ACTIONS_PANEL: "bulk-actions-panel",
