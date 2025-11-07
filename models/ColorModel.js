@@ -241,4 +241,39 @@ export class ColorModel {
   getHiddenCategories(hiddenIds, favoriteIds = []) {
     return this.getHiddenGroups("category", hiddenIds, favoriteIds);
   }
+
+  /**
+   * Get all color IDs for a specific family
+   * @param {string} familyName - Name of the family
+   * @param {string[]} favoriteIds - Array of favorite color IDs to exclude
+   * @returns {string[]} Array of color IDs in the family
+   */
+  getColorIdsForFamily(familyName, favoriteIds = []) {
+    const activeColors = this.getActiveColors();
+    return activeColors
+      .filter((color) => {
+        const families = color.colorFamilyNames || [];
+        const primaryFamily = families.length > 0 ? families[0] : null;
+        return primaryFamily === familyName && !favoriteIds.includes(color.id);
+      })
+      .map((color) => color.id);
+  }
+
+  /**
+   * Get all color IDs for a specific category
+   * @param {string} categoryName - Name of the category
+   * @param {string[]} favoriteIds - Array of favorite color IDs to exclude
+   * @returns {string[]} Array of color IDs in the category
+   */
+  getColorIdsForCategory(categoryName, favoriteIds = []) {
+    const activeColors = this.getActiveColors();
+    return activeColors
+      .filter((color) => {
+        const categories = color.brandedCollectionNames || [];
+        return (
+          categories.includes(categoryName) && !favoriteIds.includes(color.id)
+        );
+      })
+      .map((color) => color.id);
+  }
 }

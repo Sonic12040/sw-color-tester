@@ -12,7 +12,7 @@ import { ELEMENT_IDS } from "./utils/config.js";
 
 // Initialize MVC components
 const colorModel = new ColorModel(colorData);
-const appState = new AppState();
+const appState = new AppState(colorModel);
 const colorView = new ColorView(ELEMENT_IDS.COLOR_ACCORDION);
 const colorController = new ColorController(colorModel, appState, colorView);
 
