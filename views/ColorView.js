@@ -51,6 +51,9 @@ export class ColorView {
     this.favoriteIds = favoriteColors.map((c) => c.id);
     this.hiddenIds = hiddenColors.map((c) => c.id);
 
+    // Save accordion state before rebuilding
+    const expandedSections = this._saveAccordionState();
+
     // Build and insert accordion HTML
     const accordionHTML = this.buildAccordionHTML(
       favoriteColors.length,
@@ -74,6 +77,78 @@ export class ColorView {
 
     // Setup accordion interaction
     this.setupAccordionBehavior();
+
+    // Restore accordion state after rebuilding
+    this._restoreAccordionState(expandedSections);
+  }
+
+  /**
+   * Save which accordion sections are currently expanded and their scroll positions
+   * @private
+   * @returns {Map<string, {expanded: boolean, scrollTop: number}>} Map of section states
+   */
+  _saveAccordionState() {
+    const sectionStates = new Map();
+    const headers = this.container.querySelectorAll(
+      `.${CSS_CLASSES.ACCORDION_HEADER}`
+    );
+
+    for (const header of headers) {
+      const sectionId = header.getAttribute("aria-controls");
+      if (sectionId) {
+        const content = document.getElementById(sectionId);
+        const isExpanded = header.getAttribute("aria-expanded") === "true";
+        const scrollTop = content ? content.scrollTop : 0;
+
+        sectionStates.set(sectionId, {
+          expanded: isExpanded,
+          scrollTop: scrollTop,
+        });
+      }
+    }
+
+    return sectionStates;
+  }
+
+  /**
+   * Restore accordion state and scroll positions after re-rendering
+   * @private
+   * @param {Map<string, {expanded: boolean, scrollTop: number}>} sectionStates - Map of section states
+   */
+  _restoreAccordionState(sectionStates) {
+    if (!sectionStates || sectionStates.size === 0) return;
+
+    // Use requestAnimationFrame to ensure DOM has settled before restoring state
+    requestAnimationFrame(() => {
+      const headers = this.container.querySelectorAll(
+        `.${CSS_CLASSES.ACCORDION_HEADER}`
+      );
+
+      for (const header of headers) {
+        const sectionId = header.getAttribute("aria-controls");
+        const state = sectionStates.get(sectionId);
+
+        if (sectionId && state) {
+          const content = document.getElementById(sectionId);
+
+          if (content) {
+            // Restore expanded state
+            if (state.expanded) {
+              header.setAttribute("aria-expanded", "true");
+              content.setAttribute("aria-hidden", "false");
+              content.removeAttribute("inert");
+            }
+
+            // Restore scroll position (needs another frame to ensure content is rendered)
+            if (state.scrollTop > 0) {
+              requestAnimationFrame(() => {
+                content.scrollTop = state.scrollTop;
+              });
+            }
+          }
+        }
+      }
+    });
   }
 
   /**
