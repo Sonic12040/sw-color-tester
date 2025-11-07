@@ -15,11 +15,11 @@ export class ColorModel {
   }
 
   /**
-   * Get all active (non-archived) colors
+   * Get all active (non-archived, non-ignored) colors
    * @returns {Array} Array of active colors
    */
   getActiveColors() {
-    return this.colorData.filter((c) => !c.archived);
+    return this.colorData.filter((c) => !c.archived && !c.ignore);
   }
 
   /**
