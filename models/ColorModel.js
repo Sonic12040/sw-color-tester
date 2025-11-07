@@ -43,13 +43,16 @@ export class ColorModel {
   }
 
   /**
-   * Get visible (non-hidden) colors
+   * Get visible colors (excluding hidden and favorited colors)
    * @param {string[]} hiddenIds - Array of hidden color IDs
+   * @param {string[]} favoriteIds - Array of favorite color IDs
    * @returns {Array} Array of visible color objects
    */
-  getVisibleColors(hiddenIds) {
+  getVisibleColors(hiddenIds, favoriteIds = []) {
     const activeColors = this.getActiveColors();
-    return activeColors.filter((c) => !hiddenIds.includes(c.id));
+    return activeColors.filter(
+      (c) => !hiddenIds.includes(c.id) && !favoriteIds.includes(c.id)
+    );
   }
 
   /**
@@ -170,17 +173,22 @@ export class ColorModel {
 
   /**
    * Generic function to find groups (families or categories) where ALL colors are hidden
+   * Excludes favorited colors from consideration
    * @param {string} groupType - Either 'family' or 'category'
    * @param {string[]} hiddenIds - Array of hidden color IDs
+   * @param {string[]} favoriteIds - Array of favorite color IDs
    * @returns {Array<{name: string, count: number}>} Array of hidden groups with their color counts
    */
-  getHiddenGroups(groupType, hiddenIds) {
+  getHiddenGroups(groupType, hiddenIds, favoriteIds = []) {
     const allGroups = {};
     const propertyName =
       groupType === "family" ? "colorFamilyNames" : "brandedCollectionNames";
 
-    // Get all groups and their colors
+    // Get all groups and their colors (excluding favorited colors)
     for (const color of this.getActiveColors()) {
+      // Skip favorited colors - they shouldn't be counted
+      if (favoriteIds.includes(color.id)) continue;
+
       const groupNames = color[propertyName];
       if (!groupNames || groupNames.length === 0) continue;
 
@@ -217,18 +225,20 @@ export class ColorModel {
   /**
    * Find all color families where ALL colors are hidden
    * @param {string[]} hiddenIds - Array of hidden color IDs
+   * @param {string[]} favoriteIds - Array of favorite color IDs
    * @returns {Array<{name: string, count: number}>} Array of hidden families
    */
-  getHiddenFamilies(hiddenIds) {
-    return this.getHiddenGroups("family", hiddenIds);
+  getHiddenFamilies(hiddenIds, favoriteIds = []) {
+    return this.getHiddenGroups("family", hiddenIds, favoriteIds);
   }
 
   /**
    * Find all color categories where ALL colors are hidden
    * @param {string[]} hiddenIds - Array of hidden color IDs
+   * @param {string[]} favoriteIds - Array of favorite color IDs
    * @returns {Array<{name: string, count: number}>} Array of hidden categories
    */
-  getHiddenCategories(hiddenIds) {
-    return this.getHiddenGroups("category", hiddenIds);
+  getHiddenCategories(hiddenIds, favoriteIds = []) {
+    return this.getHiddenGroups("category", hiddenIds, favoriteIds);
   }
 }

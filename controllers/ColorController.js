@@ -58,7 +58,7 @@ export class ColorController {
     // Get color data from model
     const favoriteColors = this.model.getFavoriteColors(favorites);
     const hiddenColors = this.model.getHiddenColors(hidden);
-    const visibleColors = this.model.getVisibleColors(hidden);
+    const visibleColors = this.model.getVisibleColors(hidden, favorites);
 
     // Group and sort
     const colorFamilies = this.model.groupByFamily(visibleColors);
@@ -71,9 +71,9 @@ export class ColorController {
       a.localeCompare(b)
     );
 
-    // Get hidden groups
-    const hiddenFamilies = this.model.getHiddenFamilies(hidden);
-    const hiddenCategories = this.model.getHiddenCategories(hidden);
+    // Get hidden groups (excluding favorited colors)
+    const hiddenFamilies = this.model.getHiddenFamilies(hidden, favorites);
+    const hiddenCategories = this.model.getHiddenCategories(hidden, favorites);
 
     // Render via view
     this.view.render({
