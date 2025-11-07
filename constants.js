@@ -41,11 +41,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 47.835418590154376,
-      A: 47.49565254108684,
-      B: -7.211106812729673,
-    },
+    lab: { L: 47.835418590154376, A: 47.49565254108684, B: -7.211106812729673 },
   },
   {
     colorNumber: "6855",
@@ -86,11 +82,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 54.99074941332417,
-      A: 45.448863493875834,
-      B: 3.693186908760304,
-    },
+    lab: { L: 54.99074941332417, A: 45.448863493875834, B: 3.693186908760304 },
   },
   {
     colorNumber: "6862",
@@ -135,11 +127,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 41.97695959605812,
-      A: 46.97331629647117,
-      B: 12.367056123165487,
-    },
+    lab: { L: 41.97695959605812, A: 46.97331629647117, B: 12.367056123165487 },
   },
   {
     colorNumber: "6861",
@@ -180,11 +168,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 38.25117647979208,
-      A: 49.19386717006372,
-      B: 17.143239966244884,
-    },
+    lab: { L: 38.25117647979208, A: 49.19386717006372, B: 17.143239966244884 },
   },
   {
     colorNumber: "6866",
@@ -199,7 +183,7 @@ export const colorData = [
     isInterior: true,
     name: "Heartthrob",
     lrv: 10.552,
-    brandedCollectionNames: ["2018 Unity"],
+    brandedCollectionNames: ["Sunbaked Hues", "2018 Unity"],
     colorFamilyNames: ["Red"],
     brandKey: "SW",
     red: 168,
@@ -225,11 +209,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 38.75867957789912,
-      A: 49.61997023991041,
-      B: 26.67861126008849,
-    },
+    lab: { L: 38.75867957789912, A: 49.61997023991041, B: 26.67861126008849 },
   },
   {
     colorNumber: "6868",
@@ -270,11 +250,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 43.04120901050996,
-      A: 57.087033797224294,
-      B: 33.414952423098654,
-    },
+    lab: { L: 43.04120901050996, A: 57.087033797224294, B: 33.414952423098654 },
   },
   {
     colorNumber: "6871",
@@ -315,11 +291,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 39.47087696042032,
-      A: 51.98570182942577,
-      B: 27.15252296105105,
-    },
+    lab: { L: 39.47087696042032, A: 51.98570182942577, B: 27.15252296105105 },
   },
   {
     colorNumber: "6869",
@@ -360,11 +332,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 45.492143726592786,
-      A: 53.95112725681034,
-      B: 34.08867484359015,
-    },
+    lab: { L: 45.492143726592786, A: 53.95112725681034, B: 34.08867484359015 },
   },
   {
     colorNumber: "6884",
@@ -405,11 +373,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 53.073585688244094,
-      A: 48.97739745895585,
-      B: 49.449881388900494,
-    },
+    lab: { L: 53.073585688244094, A: 48.97739745895585, B: 49.449881388900494 },
   },
   {
     colorNumber: "6885",
@@ -450,11 +414,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 59.64096034901594,
-      A: 41.02061054884643,
-      B: 46.89652468468506,
-    },
+    lab: { L: 59.64096034901594, A: 41.02061054884643, B: 46.89652468468506 },
   },
   {
     colorNumber: "6886",
@@ -495,11 +455,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 60.6108411150792,
-      A: 40.373703658830806,
-      B: 51.448554141314396,
-    },
+    lab: { L: 60.6108411150792, A: 40.373703658830806, B: 51.448554141314396 },
   },
   {
     colorNumber: "6887",
@@ -540,11 +496,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 65.39783969958756,
-      A: 34.09859789823755,
-      B: 59.535193681079775,
-    },
+    lab: { L: 65.39783969958756, A: 34.09859789823755, B: 59.535193681079775 },
   },
   {
     colorNumber: "6892",
@@ -585,11 +537,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 66.10121994537343,
-      A: 31.489023229290815,
-      B: 61.68369775912731,
-    },
+    lab: { L: 66.10121994537343, A: 31.489023229290815, B: 61.68369775912731 },
   },
   {
     colorNumber: "6890",
@@ -630,11 +578,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 72.7644718374485,
-      A: 23.566657176290306,
-      B: 58.24231929817226,
-    },
+    lab: { L: 72.7644718374485, A: 23.566657176290306, B: 58.24231929817226 },
   },
   {
     colorNumber: "6904",
@@ -675,11 +619,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 75.7938102414827,
-      A: 17.6438623378109,
-      B: 74.84960747155749,
-    },
+    lab: { L: 75.7938102414827, A: 17.6438623378109, B: 74.84960747155749 },
   },
   {
     colorNumber: "6905",
@@ -720,11 +660,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 78.90071534329832,
-      A: 13.700677892568569,
-      B: 81.27230777226251,
-    },
+    lab: { L: 78.90071534329832, A: 13.700677892568569, B: 81.27230777226251 },
   },
   {
     colorNumber: "6902",
@@ -765,11 +701,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 84.28770342267164,
-      A: 4.766791908177693,
-      B: 66.63249860179373,
-    },
+    lab: { L: 84.28770342267164, A: 4.766791908177693, B: 66.63249860179373 },
   },
   {
     colorNumber: "6907",
@@ -810,11 +742,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 83.21711666821015,
-      A: 5.7336954960079956,
-      B: 84.4412369334336,
-    },
+    lab: { L: 83.21711666821015, A: 5.7336954960079956, B: 84.4412369334336 },
   },
   {
     colorNumber: "6909",
@@ -855,11 +783,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 87.72178251368845,
-      A: -0.6328950029365066,
-      B: 64.03197938283691,
-    },
+    lab: { L: 87.72178251368845, A: -0.6328950029365066, B: 64.03197938283691 },
   },
   {
     colorNumber: "6910",
@@ -900,11 +824,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 86.0221037115855,
-      A: 0.9703169480343998,
-      B: 73.64145976535417,
-    },
+    lab: { L: 86.0221037115855, A: 0.9703169480343998, B: 73.64145976535417 },
   },
   {
     colorNumber: "6911",
@@ -945,11 +865,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 83.8546889605638,
-      A: 3.765267497815361,
-      B: 84.83897520676584,
-    },
+    lab: { L: 83.8546889605638, A: 3.765267497815361, B: 84.83897520676584 },
   },
   {
     colorNumber: "6918",
@@ -990,11 +906,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 73.90342700388001,
-      A: -9.435992336664423,
-      B: 63.84366258870495,
-    },
+    lab: { L: 73.90342700388001, A: -9.435992336664423, B: 63.84366258870495 },
   },
   {
     colorNumber: "6920",
@@ -1035,11 +947,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 74.89206395404459,
-      A: -24.095884274148105,
-      B: 72.75688464394676,
-    },
+    lab: { L: 74.89206395404459, A: -24.095884274148105, B: 72.75688464394676 },
   },
   {
     colorNumber: "6921",
@@ -1080,11 +988,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 70.95434297717338,
-      A: -29.82396251348518,
-      B: 65.33888740156554,
-    },
+    lab: { L: 70.95434297717338, A: -29.82396251348518, B: 65.33888740156554 },
   },
   {
     colorNumber: "6924",
@@ -1125,11 +1029,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 51.10630897417663,
-      A: -42.26525948468654,
-      B: 45.037019592037666,
-    },
+    lab: { L: 51.10630897417663, A: -42.26525948468654, B: 45.037019592037666 },
   },
   {
     colorNumber: "6925",
@@ -1175,11 +1075,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 51.691287149868,
-      A: -42.74399959471118,
-      B: 33.22403718245107,
-    },
+    lab: { L: 51.691287149868, A: -42.74399959471118, B: 33.22403718245107 },
   },
   {
     colorNumber: "6926",
@@ -1220,11 +1116,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 49.51547122200955,
-      A: -40.66214943643229,
-      B: 20.10889840631198,
-    },
+    lab: { L: 49.51547122200955, A: -40.66214943643229, B: 20.10889840631198 },
   },
   {
     colorNumber: "6927",
@@ -1265,11 +1157,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 41.93475847952849,
-      A: -39.41105754414526,
-      B: 17.90013033708814,
-    },
+    lab: { L: 41.93475847952849, A: -39.41105754414526, B: 17.90013033708814 },
   },
   {
     colorNumber: "6987",
@@ -1670,11 +1558,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 32.84194549945695,
-      A: 0.8748686969899111,
-      B: -35.95703003001728,
-    },
+    lab: { L: 32.84194549945695, A: 0.8748686969899111, B: -35.95703003001728 },
   },
   {
     colorNumber: "6967",
@@ -1715,11 +1599,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 34.297151322028576,
-      A: 3.417388570664648,
-      B: -34.825749350628,
-    },
+    lab: { L: 34.297151322028576, A: 3.417388570664648, B: -34.825749350628 },
   },
   {
     colorNumber: "6971",
@@ -1760,11 +1640,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 33.32412643277536,
-      A: 9.612145921260584,
-      B: -31.362230897662425,
-    },
+    lab: { L: 33.32412643277536, A: 9.612145921260584, B: -31.362230897662425 },
   },
   {
     colorNumber: "6983",
@@ -1850,11 +1726,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 39.07878982982414,
-      A: 18.91665991629596,
-      B: -25.14522615252358,
-    },
+    lab: { L: 39.07878982982414, A: 18.91665991629596, B: -25.14522615252358 },
   },
   {
     colorNumber: "6981",
@@ -1940,11 +1812,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 72.9049580132195,
-      A: 0.886031339305704,
-      B: 5.468842384906392,
-    },
+    lab: { L: 72.9049580132195, A: 0.886031339305704, B: 5.468842384906392 },
   },
   {
     colorNumber: "6072",
@@ -1985,11 +1853,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 74.65680010884131,
-      A: 1.9973690458565119,
-      B: 6.981565575602944,
-    },
+    lab: { L: 74.65680010884131, A: 1.9973690458565119, B: 6.981565575602944 },
   },
   {
     colorNumber: "7016",
@@ -2081,11 +1945,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 74.09995410799804,
-      A: 1.1007451118055234,
-      B: 7.239776139252041,
-    },
+    lab: { L: 74.09995410799804, A: 1.1007451118055234, B: 7.239776139252041 },
   },
   {
     colorNumber: "7638",
@@ -2171,11 +2031,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 75.02614503433173,
-      A: 1.592632361405777,
-      B: 10.805125604215915,
-    },
+    lab: { L: 75.02614503433173, A: 1.592632361405777, B: 10.805125604215915 },
   },
   {
     colorNumber: "7037",
@@ -2222,18 +2078,11 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 73.32194074967782,
-      A: 2.3030611640336707,
-      B: 9.96965550970974,
-    },
+    lab: { L: 73.32194074967782, A: 2.3030611640336707, B: 9.96965550970974 },
   },
   {
     colorNumber: "7009",
-    coordinatingColors: {
-      coord1ColorId: "2944",
-      coord2ColorId: "2935",
-    },
+    coordinatingColors: { coord1ColorId: "2944", coord2ColorId: "2935" },
     description: ["Diluted", "Wan", "Brilliant", "Radiant"],
     id: "bright-2690",
     isExterior: true,
@@ -2285,10 +2134,7 @@ export const colorData = [
   },
   {
     colorNumber: "7008",
-    coordinatingColors: {
-      coord1ColorId: "2996",
-      coord2ColorId: "11203",
-    },
+    coordinatingColors: { coord1ColorId: "2996", coord2ColorId: "11203" },
     description: ["Diluted", "Wan", "Dazzling"],
     id: "bright-2689",
     isExterior: true,
@@ -2313,8 +2159,8 @@ export const colorData = [
       "2021 Encounter",
     ],
     colorFamilyNames: [
-      "White & Pastel",
       "Designer Color Collection",
+      "White & Pastel",
       "Living Well",
     ],
     brandKey: "SW",
@@ -2341,18 +2187,11 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 92.67721718692383,
-      A: -0.7208304020300815,
-      B: 5.192624485852093,
-    },
+    lab: { L: 92.67721718692383, A: -0.7208304020300815, B: 5.192624485852093 },
   },
   {
     colorNumber: "7004",
-    coordinatingColors: {
-      coord1ColorId: "2947",
-      coord2ColorId: "11337",
-    },
+    coordinatingColors: { coord1ColorId: "2947", coord2ColorId: "11337" },
     description: ["Dull", "Dazzling"],
     id: "bright-2685",
     isExterior: true,
@@ -2371,8 +2210,8 @@ export const colorData = [
       "Finest Whites",
     ],
     colorFamilyNames: [
-      "White & Pastel",
       "Designer Color Collection",
+      "White & Pastel",
       "Living Well",
     ],
     brandKey: "SW",
@@ -2399,18 +2238,11 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 92.79835793624746,
-      A: 0.1321585351015675,
-      B: 2.765137273729845,
-    },
+    lab: { L: 92.79835793624746, A: 0.1321585351015675, B: 2.765137273729845 },
   },
   {
     colorNumber: "6385",
-    coordinatingColors: {
-      coord1ColorId: "11203",
-      coord2ColorId: "11321",
-    },
+    coordinatingColors: { coord1ColorId: "11203", coord2ColorId: "11321" },
     description: ["Subdued", "Muted", "Dazzling"],
     id: "bright-2071",
     isExterior: true,
@@ -2430,8 +2262,8 @@ export const colorData = [
       "Finest Whites",
     ],
     colorFamilyNames: [
-      "White & Pastel",
       "Designer Color Collection",
+      "White & Pastel",
       "Living Well",
     ],
     brandKey: "SW",
@@ -2458,11 +2290,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 92.81200509993181,
-      A: -0.3540941642046769,
-      B: 7.497470880787738,
-    },
+    lab: { L: 92.81200509993181, A: -0.3540941642046769, B: 7.497470880787738 },
   },
   {
     colorNumber: "7568",
@@ -2510,11 +2338,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 87.27866828945507,
-      A: 0.02801514884459566,
-      B: 8.833353281331613,
-    },
+    lab: { L: 87.27866828945507, A: 0.02801514884459566, B: 8.833353281331613 },
   },
   {
     colorNumber: "6133",
@@ -2560,11 +2384,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 89.15133573831507,
-      A: 0.1342407065167972,
-      B: 12.115633659470838,
-    },
+    lab: { L: 89.15133573831507, A: 0.1342407065167972, B: 12.115633659470838 },
   },
   {
     colorNumber: "7571",
@@ -2616,11 +2436,7 @@ export const colorData = [
     ],
     ignore: true,
     archived: false,
-    lab: {
-      L: 90.00384345331219,
-      A: 0.9550229076400463,
-      B: 10.74576506569629,
-    },
+    lab: { L: 90.00384345331219, A: 0.9550229076400463, B: 10.74576506569629 },
   },
   {
     colorNumber: "6060",
@@ -2706,18 +2522,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 32.44545659240057,
-      A: 14.765242345091467,
-      B: 14.642968496245212,
-    },
+    lab: { L: 32.44545659240057, A: 14.765242345091467, B: 14.642968496245212 },
   },
   {
     colorNumber: "0035",
-    coordinatingColors: {
-      coord1ColorId: "2864",
-      coord2ColorId: "11326",
-    },
+    coordinatingColors: { coord1ColorId: "2864", coord2ColorId: "11326" },
     description: ["Soft", "Brilliant", "Radiant"],
     id: "1578",
     isExterior: true,
@@ -2753,11 +2562,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.09397151126262,
-      A: 3.2363777796525217,
-      B: 13.80675552613182,
-    },
+    lab: { L: 88.09397151126262, A: 3.2363777796525217, B: 13.80675552613182 },
   },
   {
     colorNumber: "7691",
@@ -2798,11 +2603,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.20548668808642,
-      A: 3.2124128479651404,
-      B: 23.35836168160572,
-    },
+    lab: { L: 82.20548668808642, A: 3.2124128479651404, B: 23.35836168160572 },
   },
   {
     colorNumber: "7027",
@@ -2843,11 +2644,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 30.665901865341105,
-      A: 4.93795831682689,
-      B: 11.204490605942341,
-    },
+    lab: { L: 30.665901865341105, A: 4.93795831682689, B: 11.204490605942341 },
   },
   {
     colorNumber: "7520",
@@ -2888,11 +2685,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 36.65813345486705,
-      A: 8.27089578897247,
-      B: 12.247240979294993,
-    },
+    lab: { L: 36.65813345486705, A: 8.27089578897247, B: 12.247240979294993 },
   },
   {
     colorNumber: "7517",
@@ -2933,18 +2726,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.37774917163304,
-      A: 1.676605854684654,
-      B: 10.060804068197648,
-    },
+    lab: { L: 83.37774917163304, A: 1.676605854684654, B: 10.060804068197648 },
   },
   {
     colorNumber: "0039",
-    coordinatingColors: {
-      coord1ColorId: "2860",
-      coord2ColorId: "3011",
-    },
+    coordinatingColors: { coord1ColorId: "2860", coord2ColorId: "3011" },
     description: ["Subdued", "Muted", "Bright", "Glowing"],
     id: "1582",
     isExterior: true,
@@ -2979,11 +2765,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 65.46495410635444,
-      A: 14.019110499343125,
-      B: 21.0898948612529,
-    },
+    lab: { L: 65.46495410635444, A: 14.019110499343125, B: 21.0898948612529 },
   },
   {
     colorNumber: "6040",
@@ -3024,11 +2806,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 44.72460712068806,
-      A: 4.4560926750031316,
-      B: 5.406267326101322,
-    },
+    lab: { L: 44.72460712068806, A: 4.4560926750031316, B: 5.406267326101322 },
   },
   {
     colorNumber: "7054",
@@ -3069,11 +2847,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 38.77693235616811,
-      A: 1.3530167269997229,
-      B: 10.145382775576827,
-    },
+    lab: { L: 38.77693235616811, A: 1.3530167269997229, B: 10.145382775576827 },
   },
   {
     colorNumber: "6034",
@@ -3088,7 +2862,7 @@ export const colorData = [
     isInterior: true,
     name: "Dark Auburn",
     lrv: 4.981,
-    brandedCollectionNames: [],
+    brandedCollectionNames: ["Restorative Darks"],
     colorFamilyNames: ["Red"],
     brandKey: "SW",
     red: 90,
@@ -3114,11 +2888,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 26.59303588772483,
-      A: 16.21248155432342,
-      B: 8.926521842042568,
-    },
+    lab: { L: 26.59303588772483, A: 16.21248155432342, B: 8.926521842042568 },
   },
   {
     colorNumber: "9501",
@@ -3153,11 +2923,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.03626495405673,
-      A: -0.8844964179756665,
-      B: 6.863729161734589,
-    },
+    lab: { L: 87.03626495405673, A: -0.8844964179756665, B: 6.863729161734589 },
   },
   {
     colorNumber: "9500",
@@ -3192,11 +2958,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 97.03456709940156,
-      A: -1.2081512479104606,
-      B: 2.267893261329368,
-    },
+    lab: { L: 97.03456709940156, A: -1.2081512479104606, B: 2.267893261329368 },
   },
   {
     colorNumber: "9502",
@@ -3231,11 +2993,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.5629024480632,
-      A: -0.5153097487669567,
-      B: 8.065733392926887,
-    },
+    lab: { L: 88.5629024480632, A: -0.5153097487669567, B: 8.065733392926887 },
   },
   {
     colorNumber: "9503",
@@ -3273,11 +3031,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 95.54843290411438,
-      A: -0.378099011140387,
-      B: 5.277639140252677,
-    },
+    lab: { L: 95.54843290411438, A: -0.378099011140387, B: 5.277639140252677 },
   },
   {
     colorNumber: "9504",
@@ -3315,11 +3069,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 93.40175938390975,
-      A: -0.5511874157241858,
-      B: 4.6990221744176,
-    },
+    lab: { L: 93.40175938390975, A: -0.5511874157241858, B: 4.6990221744176 },
   },
   {
     colorNumber: "9505",
@@ -3410,7 +3160,10 @@ export const colorData = [
     isInterior: true,
     name: "Cream and Sugar",
     lrv: 63.724,
-    brandedCollectionNames: ["Designer Color Collection - Form + Function"],
+    brandedCollectionNames: [
+      "Foundational Neutrals",
+      "Designer Color Collection - Form + Function",
+    ],
     colorFamilyNames: ["Designer Color Collection"],
     brandKey: "SW",
     red: 221,
@@ -3435,11 +3188,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.7053238436002,
-      A: 1.254603993378678,
-      B: 12.672863342133244,
-    },
+    lab: { L: 83.7053238436002, A: 1.254603993378678, B: 12.672863342133244 },
   },
   {
     colorNumber: "9508",
@@ -3474,11 +3223,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.44353438236529,
-      A: 0.5155848012377562,
-      B: 15.255640673255044,
-    },
+    lab: { L: 81.44353438236529, A: 0.5155848012377562, B: 15.255640673255044 },
   },
   {
     colorNumber: "9509",
@@ -3513,11 +3258,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.30602495109444,
-      A: 0.3603473288695258,
-      B: 12.857724053352237,
-    },
+    lab: { L: 85.30602495109444, A: 0.3603473288695258, B: 12.857724053352237 },
   },
   {
     colorNumber: "6840",
@@ -3558,11 +3299,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 47.835418590154376,
-      A: 47.49565254108684,
-      B: -7.211106812729673,
-    },
+    lab: { L: 47.835418590154376, A: 47.49565254108684, B: -7.211106812729673 },
   },
   {
     colorNumber: "9510",
@@ -3675,11 +3412,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.81497605277724,
-      A: 0.2506687596078305,
-      B: 13.585543811643586,
-    },
+    lab: { L: 78.81497605277724, A: 0.2506687596078305, B: 13.585543811643586 },
   },
   {
     colorNumber: "9513",
@@ -3714,11 +3447,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.02899400481266,
-      A: 0.8043540929283388,
-      B: 15.288684793762396,
-    },
+    lab: { L: 69.02899400481266, A: 0.8043540929283388, B: 15.288684793762396 },
   },
   {
     colorNumber: "9514",
@@ -3753,11 +3482,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 55.11972209297785,
-      A: 0.5612802698892194,
-      B: 9.8702484291052,
-    },
+    lab: { L: 55.11972209297785, A: 0.5612802698892194, B: 9.8702484291052 },
   },
   {
     colorNumber: "9515",
@@ -3792,11 +3517,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 33.784752945007604,
-      A: 1.7845864489257068,
-      B: 9.21885346592044,
-    },
+    lab: { L: 33.784752945007604, A: 1.7845864489257068, B: 9.21885346592044 },
   },
   {
     colorNumber: "9516",
@@ -3831,11 +3552,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.9403201119188,
-      A: -0.15422615316096344,
-      B: 8.306867583333988,
-    },
+    lab: { L: 82.9403201119188, A: -0.15422615316096344, B: 8.306867583333988 },
   },
   {
     colorNumber: "9517",
@@ -3993,11 +3710,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 54.99074941332417,
-      A: 45.448863493875834,
-      B: 3.693186908760304,
-    },
+    lab: { L: 54.99074941332417, A: 45.448863493875834, B: 3.693186908760304 },
   },
   {
     colorNumber: "9520",
@@ -4032,11 +3745,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 33.40775624004482,
-      A: 0.18656609438180705,
-      B: 8.002781824052008,
-    },
+    lab: { L: 33.40775624004482, A: 0.18656609438180705, B: 8.002781824052008 },
   },
   {
     colorNumber: "9521",
@@ -4071,11 +3780,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.31726004707582,
-      A: -0.6741349412124342,
-      B: 8.739368735929531,
-    },
+    lab: { L: 80.31726004707582, A: -0.6741349412124342, B: 8.739368735929531 },
   },
   {
     colorNumber: "9522",
@@ -4110,11 +3815,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 71.2261523427472,
-      A: -0.7331468016372744,
-      B: 11.801826760912327,
-    },
+    lab: { L: 71.2261523427472, A: -0.7331468016372744, B: 11.801826760912327 },
   },
   {
     colorNumber: "9523",
@@ -4188,11 +3889,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 50.11828540880538,
-      A: -2.449713808568843,
-      B: 8.378358222052773,
-    },
+    lab: { L: 50.11828540880538, A: -2.449713808568843, B: 8.378358222052773 },
   },
   {
     colorNumber: "9525",
@@ -4227,11 +3924,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 38.63990317613619,
-      A: -1.062013453450611,
-      B: 8.6545587439118,
-    },
+    lab: { L: 38.63990317613619, A: -1.062013453450611, B: 8.6545587439118 },
   },
   {
     colorNumber: "9526",
@@ -4305,11 +3998,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 64.53902225402733,
-      A: -0.8604073918251354,
-      B: 15.4741223480255,
-    },
+    lab: { L: 64.53902225402733, A: -0.8604073918251354, B: 15.4741223480255 },
   },
   {
     colorNumber: "9528",
@@ -4344,11 +4033,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 55.5141028798475,
-      A: -0.0937779630061919,
-      B: 16.784742706807165,
-    },
+    lab: { L: 55.5141028798475, A: -0.0937779630061919, B: 16.784742706807165 },
   },
   {
     colorNumber: "9529",
@@ -4383,11 +4068,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 47.13320073204029,
-      A: 1.3722888303066005,
-      B: 17.79465383215565,
-    },
+    lab: { L: 47.13320073204029, A: 1.3722888303066005, B: 17.79465383215565 },
   },
   {
     colorNumber: "6862",
@@ -4432,11 +4113,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 41.97695959605812,
-      A: 46.97331629647117,
-      B: 12.367056123165487,
-    },
+    lab: { L: 41.97695959605812, A: 46.97331629647117, B: 12.367056123165487 },
   },
   {
     colorNumber: "9530",
@@ -4471,11 +4148,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 33.81887052382043,
-      A: 0.9629221784656361,
-      B: 21.044716095602524,
-    },
+    lab: { L: 33.81887052382043, A: 0.9629221784656361, B: 21.044716095602524 },
   },
   {
     colorNumber: "9531",
@@ -4588,11 +4261,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 59.61508051743752,
-      A: 0.6302053024382914,
-      B: 20.322490708306606,
-    },
+    lab: { L: 59.61508051743752, A: 0.6302053024382914, B: 20.322490708306606 },
   },
   {
     colorNumber: "9534",
@@ -4666,11 +4335,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 39.112448215357354,
-      A: 0.5448251815544924,
-      B: 14.9072092248973,
-    },
+    lab: { L: 39.112448215357354, A: 0.5448251815544924, B: 14.9072092248973 },
   },
   {
     colorNumber: "9536",
@@ -4705,11 +4370,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.74407186392509,
-      A: 2.9739946852503363,
-      B: 17.527857808193193,
-    },
+    lab: { L: 74.74407186392509, A: 2.9739946852503363, B: 17.527857808193193 },
   },
   {
     colorNumber: "9537",
@@ -4744,11 +4405,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 65.94119488465597,
-      A: 3.3113135793105264,
-      B: 20.922677034963133,
-    },
+    lab: { L: 65.94119488465597, A: 3.3113135793105264, B: 20.922677034963133 },
   },
   {
     colorNumber: "9538",
@@ -4783,11 +4440,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 58.72710413043467,
-      A: 3.4445804411104564,
-      B: 21.97391252858627,
-    },
+    lab: { L: 58.72710413043467, A: 3.4445804411104564, B: 21.97391252858627 },
   },
   {
     colorNumber: "9539",
@@ -4822,11 +4475,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 50.69919397809677,
-      A: 4.376375105533292,
-      B: 22.254814635609875,
-    },
+    lab: { L: 50.69919397809677, A: 4.376375105533292, B: 22.254814635609875 },
   },
   {
     colorNumber: "6861",
@@ -4867,11 +4516,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 38.25117647979208,
-      A: 49.19386717006372,
-      B: 17.143239966244884,
-    },
+    lab: { L: 38.25117647979208, A: 49.19386717006372, B: 17.143239966244884 },
   },
   {
     colorNumber: "9540",
@@ -4906,11 +4551,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 42.46215662644262,
-      A: 5.576895661662418,
-      B: 22.085446531331698,
-    },
+    lab: { L: 42.46215662644262, A: 5.576895661662418, B: 22.085446531331698 },
   },
   {
     colorNumber: "9541",
@@ -4921,6 +4562,7 @@ export const colorData = [
     name: "White Snow",
     lrv: 90.331,
     brandedCollectionNames: [
+      "Foundational Neutrals",
       "Designer Color Collection - Minimal + Modern",
       "Designer Color Collection - Pure + Pristine",
     ],
@@ -5032,11 +4674,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 92.8735448635701,
-      A: -1.0440041756079599,
-      B: 1.805553221305467,
-    },
+    lab: { L: 92.8735448635701, A: -1.0440041756079599, B: 1.805553221305467 },
   },
   {
     colorNumber: "9544",
@@ -5074,11 +4712,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 92.89841297720758,
-      A: -0.8681023241643437,
-      B: 1.321206842676248,
-    },
+    lab: { L: 92.89841297720758, A: -0.8681023241643437, B: 1.321206842676248 },
   },
   {
     colorNumber: "9545",
@@ -5194,11 +4828,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.76627488691422,
-      A: 0.14700078580592857,
-      B: 5.09824485677659,
-    },
+    lab: { L: 80.76627488691422, A: 0.14700078580592857, B: 5.09824485677659 },
   },
   {
     colorNumber: "9548",
@@ -5233,11 +4863,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.8677236233902,
-      A: -1.2593514599097966,
-      B: 3.470622447392646,
-    },
+    lab: { L: 81.8677236233902, A: -1.2593514599097966, B: 3.470622447392646 },
   },
   {
     colorNumber: "9549",
@@ -5291,7 +4917,7 @@ export const colorData = [
     isInterior: true,
     name: "Heartthrob",
     lrv: 10.552,
-    brandedCollectionNames: ["2018 Unity"],
+    brandedCollectionNames: ["Sunbaked Hues", "2018 Unity"],
     colorFamilyNames: ["Red"],
     brandKey: "SW",
     red: 168,
@@ -5317,11 +4943,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 38.75867957789912,
-      A: 49.61997023991041,
-      B: 26.67861126008849,
-    },
+    lab: { L: 38.75867957789912, A: 49.61997023991041, B: 26.67861126008849 },
   },
   {
     colorNumber: "9550",
@@ -5356,11 +4978,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.28103006228098,
-      A: 0.6626771303896439,
-      B: 3.5838369182649155,
-    },
+    lab: { L: 82.28103006228098, A: 0.6626771303896439, B: 3.5838369182649155 },
   },
   {
     colorNumber: "9551",
@@ -5395,11 +5013,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.38139696831338,
-      A: -0.9078951734282636,
-      B: 3.578403826074017,
-    },
+    lab: { L: 83.38139696831338, A: -0.9078951734282636, B: 3.578403826074017 },
   },
   {
     colorNumber: "9552",
@@ -5473,11 +5087,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 72.50085733543979,
-      A: -0.9266096622703168,
-      B: 4.834414775657003,
-    },
+    lab: { L: 72.50085733543979, A: -0.9266096622703168, B: 4.834414775657003 },
   },
   {
     colorNumber: "9554",
@@ -5590,11 +5200,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.68344188871382,
-      A: -1.033634756663404,
-      B: 0.7259411573332653,
-    },
+    lab: { L: 89.68344188871382, A: -1.033634756663404, B: 0.7259411573332653 },
   },
   {
     colorNumber: "9557",
@@ -5629,11 +5235,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.1142022575534,
-      A: -0.7130187241418673,
-      B: 0.8656924790041653,
-    },
+    lab: { L: 80.1142022575534, A: -0.7130187241418673, B: 0.8656924790041653 },
   },
   {
     colorNumber: "9558",
@@ -5752,11 +5354,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 43.04120901050996,
-      A: 57.087033797224294,
-      B: 33.414952423098654,
-    },
+    lab: { L: 43.04120901050996, A: 57.087033797224294, B: 33.414952423098654 },
   },
   {
     colorNumber: "9560",
@@ -5830,11 +5428,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.7646115908353,
-      A: -0.7315066339054765,
-      B: 3.079219378158826,
-    },
+    lab: { L: 83.7646115908353, A: -0.7315066339054765, B: 3.079219378158826 },
   },
   {
     colorNumber: "9562",
@@ -5869,11 +5463,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 79.49333665536612,
-      A: -0.3812008507140807,
-      B: 2.112096011942266,
-    },
+    lab: { L: 79.49333665536612, A: -0.3812008507140807, B: 2.112096011942266 },
   },
   {
     colorNumber: "9563",
@@ -5986,11 +5576,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 38.59916101474805,
-      A: -0.4196287840543267,
-      B: 1.144127758600133,
-    },
+    lab: { L: 38.59916101474805, A: -0.4196287840543267, B: 1.144127758600133 },
   },
   {
     colorNumber: "9566",
@@ -6064,11 +5650,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 76.07716811079662,
-      A: 0.17043836209801322,
-      B: 6.304841457628263,
-    },
+    lab: { L: 76.07716811079662, A: 0.17043836209801322, B: 6.304841457628263 },
   },
   {
     colorNumber: "9568",
@@ -6187,11 +5769,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 39.47087696042032,
-      A: 51.98570182942577,
-      B: 27.15252296105105,
-    },
+    lab: { L: 39.47087696042032, A: 51.98570182942577, B: 27.15252296105105 },
   },
   {
     colorNumber: "9570",
@@ -6226,11 +5804,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 39.329424261794735,
-      A: 0.6304602797433945,
-      B: 4.736504889848536,
-    },
+    lab: { L: 39.329424261794735, A: 0.6304602797433945, B: 4.736504889848536 },
   },
   {
     colorNumber: "9571",
@@ -6265,11 +5839,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.67165102417141,
-      A: -0.5569287914802268,
-      B: 3.669635314475461,
-    },
+    lab: { L: 86.67165102417141, A: -0.5569287914802268, B: 3.669635314475461 },
   },
   {
     colorNumber: "9572",
@@ -6304,11 +5874,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 71.10730304855099,
-      A: 1.241586574229292,
-      B: 4.470299573660719,
-    },
+    lab: { L: 71.10730304855099, A: 1.241586574229292, B: 4.470299573660719 },
   },
   {
     colorNumber: "9573",
@@ -6343,11 +5909,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.42144125986636,
-      A: 0.887099412104353,
-      B: 4.375649353425626,
-    },
+    lab: { L: 68.42144125986636, A: 0.887099412104353, B: 4.375649353425626 },
   },
   {
     colorNumber: "9574",
@@ -6382,11 +5944,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 47.01256429999577,
-      A: 0.5623711095187889,
-      B: 2.070018998978007,
-    },
+    lab: { L: 47.01256429999577, A: 0.5623711095187889, B: 2.070018998978007 },
   },
   {
     colorNumber: "9575",
@@ -6421,11 +5979,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 34.85430042846559,
-      A: 3.5105463805585324,
-      B: 1.9312490760439172,
-    },
+    lab: { L: 34.85430042846559, A: 3.5105463805585324, B: 1.9312490760439172 },
   },
   {
     colorNumber: "9576",
@@ -6460,11 +6014,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.60106732750855,
-      A: 1.5530900970598949,
-      B: 5.562194831917866,
-    },
+    lab: { L: 83.60106732750855, A: 1.5530900970598949, B: 5.562194831917866 },
   },
   {
     colorNumber: "9577",
@@ -6499,11 +6049,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.32509385982823,
-      A: 1.0977465419674814,
-      B: 8.24693529903775,
-    },
+    lab: { L: 80.32509385982823, A: 1.0977465419674814, B: 8.24693529903775 },
   },
   {
     colorNumber: "9578",
@@ -6538,11 +6084,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.99484877191959,
-      A: 2.0558086871005354,
-      B: 7.123519105747955,
-    },
+    lab: { L: 67.99484877191959, A: 2.0558086871005354, B: 7.123519105747955 },
   },
   {
     colorNumber: "9579",
@@ -6577,11 +6119,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 55.6268933608883,
-      A: 3.148426626760681,
-      B: 7.178093913333994,
-    },
+    lab: { L: 55.6268933608883, A: 3.148426626760681, B: 7.178093913333994 },
   },
   {
     colorNumber: "6561",
@@ -6661,11 +6199,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 26.40560690426055,
-      A: 4.285853515209492,
-      B: 5.0296550589339795,
-    },
+    lab: { L: 26.40560690426055, A: 4.285853515209492, B: 5.0296550589339795 },
   },
   {
     colorNumber: "9581",
@@ -6703,11 +6237,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 93.0276588478911,
-      A: -0.7204890441787071,
-      B: 5.188348656014186,
-    },
+    lab: { L: 93.0276588478911, A: -0.7204890441787071, B: 5.188348656014186 },
   },
   {
     colorNumber: "9582",
@@ -6745,11 +6275,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 93.34834416616542,
-      A: -0.544187888862957,
-      B: 2.5234142994829734,
-    },
+    lab: { L: 93.34834416616542, A: -0.544187888862957, B: 2.5234142994829734 },
   },
   {
     colorNumber: "9583",
@@ -6760,6 +6286,7 @@ export const colorData = [
     name: "Sanctuary",
     lrv: 76.439,
     brandedCollectionNames: [
+      "Foundational Neutrals",
       "Designer Color Collection - Warm + Welcoming",
       "Designer Color Collection - Pure + Pristine",
     ],
@@ -6787,11 +6314,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.96399760229708,
-      A: -0.2093118963283347,
-      B: 4.85878868084193,
-    },
+    lab: { L: 89.96399760229708, A: -0.2093118963283347, B: 4.85878868084193 },
   },
   {
     colorNumber: "9584",
@@ -6829,11 +6352,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.88017426165642,
-      A: -0.3787023213785434,
-      B: 5.361695559076529,
-    },
+    lab: { L: 88.88017426165642, A: -0.3787023213785434, B: 5.361695559076529 },
   },
   {
     colorNumber: "9585",
@@ -6871,11 +6390,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.33479398365346,
-      A: 0.13623415516372805,
-      B: 4.988164915067506,
-    },
+    lab: { L: 89.33479398365346, A: 0.13623415516372805, B: 4.988164915067506 },
   },
   {
     colorNumber: "9586",
@@ -6927,7 +6442,10 @@ export const colorData = [
     isInterior: true,
     name: "Mushroom",
     lrv: 57.439,
-    brandedCollectionNames: ["Designer Color Collection - Warm + Welcoming"],
+    brandedCollectionNames: [
+      "Foundational Neutrals",
+      "Designer Color Collection - Warm + Welcoming",
+    ],
     colorFamilyNames: ["Designer Color Collection"],
     brandKey: "SW",
     red: 208,
@@ -6952,11 +6470,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.5582916823925,
-      A: 0.40818080347793106,
-      B: 9.116194227088382,
-    },
+    lab: { L: 80.5582916823925, A: 0.40818080347793106, B: 9.116194227088382 },
   },
   {
     colorNumber: "9588",
@@ -6991,11 +6505,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.01269454739,
-      A: 0.5508266996998579,
-      B: 7.535823098035821,
-    },
+    lab: { L: 78.01269454739, A: 0.5508266996998579, B: 7.535823098035821 },
   },
   {
     colorNumber: "9589",
@@ -7030,11 +6540,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.48403747762057,
-      A: 0.32117340896153923,
-      B: 5.654355017898194,
-    },
+    lab: { L: 85.48403747762057, A: 0.32117340896153923, B: 5.654355017898194 },
   },
   {
     colorNumber: "6562",
@@ -7075,11 +6581,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.03589218081513,
-      A: 14.87867555471578,
-      B: -2.874096377588531,
-    },
+    lab: { L: 81.03589218081513, A: 14.87867555471578, B: -2.874096377588531 },
   },
   {
     colorNumber: "9590",
@@ -7114,11 +6616,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.52294168489017,
-      A: 0.6934414397143929,
-      B: 6.910316099384284,
-    },
+    lab: { L: 84.52294168489017, A: 0.6934414397143929, B: 6.910316099384284 },
   },
   {
     colorNumber: "9591",
@@ -7153,11 +6651,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 72.92493063374643,
-      A: 0.6079157309976657,
-      B: 8.800674692136301,
-    },
+    lab: { L: 72.92493063374643, A: 0.6079157309976657, B: 8.800674692136301 },
   },
   {
     colorNumber: "9592",
@@ -7192,11 +6686,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.13740341371015,
-      A: 0.25362382914007053,
-      B: 8.767482287273953,
-    },
+    lab: { L: 69.13740341371015, A: 0.25362382914007053, B: 8.767482287273953 },
   },
   {
     colorNumber: "9593",
@@ -7231,11 +6721,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 54.00988012748293,
-      A: -0.8537934213191933,
-      B: 8.803554325609998,
-    },
+    lab: { L: 54.00988012748293, A: -0.8537934213191933, B: 8.803554325609998 },
   },
   {
     colorNumber: "9594",
@@ -7309,11 +6795,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 41.91597059306759,
-      A: -0.79624318095875,
-      B: 4.81791166199057,
-    },
+    lab: { L: 41.91597059306759, A: -0.79624318095875, B: 4.81791166199057 },
   },
   {
     colorNumber: "9596",
@@ -7348,11 +6830,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.17589199934088,
-      A: 0.20295488621580038,
-      B: 7.509234908820428,
-    },
+    lab: { L: 73.17589199934088, A: 0.20295488621580038, B: 7.509234908820428 },
   },
   {
     colorNumber: "9597",
@@ -7387,11 +6865,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 66.75138368800313,
-      A: -0.3209853728362022,
-      B: 8.044287601371902,
-    },
+    lab: { L: 66.75138368800313, A: -0.3209853728362022, B: 8.044287601371902 },
   },
   {
     colorNumber: "9598",
@@ -7426,11 +6900,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 51.115218583970076,
-      A: 0.4711958582503395,
-      B: 7.532961690203188,
-    },
+    lab: { L: 51.115218583970076, A: 0.4711958582503395, B: 7.532961690203188 },
   },
   {
     colorNumber: "9599",
@@ -7440,7 +6910,10 @@ export const colorData = [
     isInterior: true,
     name: "Limestone",
     lrv: 13.114,
-    brandedCollectionNames: ["Designer Color Collection - Warm + Welcoming"],
+    brandedCollectionNames: [
+      "Restorative Darks",
+      "Designer Color Collection - Warm + Welcoming",
+    ],
     colorFamilyNames: ["Designer Color Collection"],
     brandKey: "SW",
     red: 106,
@@ -7465,11 +6938,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 42.9798867053794,
-      A: 0.2404993818918011,
-      B: 5.793020166884421,
-    },
+    lab: { L: 42.9798867053794, A: 0.2404993818918011, B: 5.793020166884421 },
   },
   {
     colorNumber: "6563",
@@ -7510,11 +6979,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.62492003811874,
-      A: 21.219991462421206,
-      B: -2.768856599760716,
-    },
+    lab: { L: 68.62492003811874, A: 21.219991462421206, B: -2.768856599760716 },
   },
   {
     colorNumber: "9600",
@@ -7524,7 +6989,10 @@ export const colorData = [
     isInterior: true,
     name: "Armory",
     lrv: 4.818,
-    brandedCollectionNames: ["Designer Color Collection - Warm + Welcoming"],
+    brandedCollectionNames: [
+      "Foundational Neutrals",
+      "Designer Color Collection - Warm + Welcoming",
+    ],
     colorFamilyNames: ["Designer Color Collection"],
     brandKey: "SW",
     red: 65,
@@ -7549,11 +7017,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 26.12078825360492,
-      A: 1.499377703643362,
-      B: 1.2249220736645916,
-    },
+    lab: { L: 26.12078825360492, A: 1.499377703643362, B: 1.2249220736645916 },
   },
   {
     colorNumber: "9601",
@@ -7588,11 +7052,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.15029675724263,
-      A: 1.2516264716268544,
-      B: 7.707369196236069,
-    },
+    lab: { L: 82.15029675724263, A: 1.2516264716268544, B: 7.707369196236069 },
   },
   {
     colorNumber: "9602",
@@ -7627,11 +7087,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.38423515898226,
-      A: 2.5176819759840097,
-      B: 10.61560377428239,
-    },
+    lab: { L: 73.38423515898226, A: 2.5176819759840097, B: 10.61560377428239 },
   },
   {
     colorNumber: "9603",
@@ -7666,11 +7122,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 59.395711341128475,
-      A: 0.693034189541919,
-      B: 9.186913618768378,
-    },
+    lab: { L: 59.395711341128475, A: 0.693034189541919, B: 9.186913618768378 },
   },
   {
     colorNumber: "9604",
@@ -7705,11 +7157,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 36.414956234362265,
-      A: 3.939888097310301,
-      B: 9.913006601507114,
-    },
+    lab: { L: 36.414956234362265, A: 3.939888097310301, B: 9.913006601507114 },
   },
   {
     colorNumber: "9605",
@@ -7719,7 +7167,10 @@ export const colorData = [
     isInterior: true,
     name: "Clove",
     lrv: 5.055,
-    brandedCollectionNames: ["Designer Color Collection - Warm + Welcoming"],
+    brandedCollectionNames: [
+      "Foundational Neutrals",
+      "Designer Color Collection - Warm + Welcoming",
+    ],
     colorFamilyNames: ["Designer Color Collection"],
     brandKey: "SW",
     red: 69,
@@ -7744,11 +7195,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 26.75161139838903,
-      A: 2.007556838201557,
-      B: 4.162507346084499,
-    },
+    lab: { L: 26.75161139838903, A: 2.007556838201557, B: 4.162507346084499 },
   },
   {
     colorNumber: "9606",
@@ -7783,11 +7230,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 79.85906168516253,
-      A: 0.5745680418918209,
-      B: 8.630864317108578,
-    },
+    lab: { L: 79.85906168516253, A: 0.5745680418918209, B: 8.630864317108578 },
   },
   {
     colorNumber: "9607",
@@ -7822,11 +7265,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 59.9970862784391,
-      A: 1.5349500177666564,
-      B: 10.65558887693121,
-    },
+    lab: { L: 59.9970862784391, A: 1.5349500177666564, B: 10.65558887693121 },
   },
   {
     colorNumber: "9608",
@@ -7861,11 +7300,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 53.04778708017815,
-      A: 1.7919544368151796,
-      B: 10.38225651155087,
-    },
+    lab: { L: 53.04778708017815, A: 1.7919544368151796, B: 10.38225651155087 },
   },
   {
     colorNumber: "9609",
@@ -7900,11 +7335,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 44.90467618757028,
-      A: 2.9398191958309727,
-      B: 10.480589621449255,
-    },
+    lab: { L: 44.90467618757028, A: 2.9398191958309727, B: 10.480589621449255 },
   },
   {
     colorNumber: "6564",
@@ -7945,11 +7376,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 59.17707188038287,
-      A: 25.574086492356486,
-      B: -2.164324358389269,
-    },
+    lab: { L: 59.17707188038287, A: 25.574086492356486, B: -2.164324358389269 },
   },
   {
     colorNumber: "9610",
@@ -8023,11 +7450,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 77.51998444716385,
-      A: 1.359714151920377,
-      B: 10.090342288786047,
-    },
+    lab: { L: 77.51998444716385, A: 1.359714151920377, B: 10.090342288786047 },
   },
   {
     colorNumber: "9612",
@@ -8062,11 +7485,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.08805130275313,
-      A: 2.048749176374709,
-      B: 11.170942442547705,
-    },
+    lab: { L: 68.08805130275313, A: 2.048749176374709, B: 11.170942442547705 },
   },
   {
     colorNumber: "9613",
@@ -8101,11 +7520,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 55.44377551970216,
-      A: 0.3281960585142518,
-      B: 9.17562665694791,
-    },
+    lab: { L: 55.44377551970216, A: 0.3281960585142518, B: 9.17562665694791 },
   },
   {
     colorNumber: "9614",
@@ -8140,11 +7555,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 49.17348655836824,
-      A: 0.5446977250341822,
-      B: 8.843335600805545,
-    },
+    lab: { L: 49.17348655836824, A: 0.5446977250341822, B: 8.843335600805545 },
   },
   {
     colorNumber: "9615",
@@ -8179,11 +7590,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 37.993186642252596,
-      A: 1.6998942003097206,
-      B: 9.021216063013615,
-    },
+    lab: { L: 37.993186642252596, A: 1.6998942003097206, B: 9.021216063013615 },
   },
   {
     colorNumber: "9616",
@@ -8218,11 +7625,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.73679713095302,
-      A: 0.20088909552401502,
-      B: 8.415871520037776,
-    },
+    lab: { L: 83.73679713095302, A: 0.20088909552401502, B: 8.415871520037776 },
   },
   {
     colorNumber: "9617",
@@ -8257,11 +7660,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.76910609959566,
-      A: 1.8270007618186312,
-      B: 12.470958021585288,
-    },
+    lab: { L: 78.76910609959566, A: 1.8270007618186312, B: 12.470958021585288 },
   },
   {
     colorNumber: "9618",
@@ -8296,11 +7695,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 59.99918230193654,
-      A: 3.0488375330287587,
-      B: 12.978275395529337,
-    },
+    lab: { L: 59.99918230193654, A: 3.0488375330287587, B: 12.978275395529337 },
   },
   {
     colorNumber: "9619",
@@ -8335,11 +7730,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 53.69527294814688,
-      A: 2.8401735158176677,
-      B: 11.345921611124865,
-    },
+    lab: { L: 53.69527294814688, A: 2.8401735158176677, B: 11.345921611124865 },
   },
   {
     colorNumber: "6565",
@@ -8380,11 +7771,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 44.341413459440446,
-      A: 27.73325870749349,
-      B: -3.236418752995518,
-    },
+    lab: { L: 44.341413459440446, A: 27.73325870749349, B: -3.236418752995518 },
   },
   {
     colorNumber: "9620",
@@ -8419,11 +7806,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 36.826009997054754,
-      A: 0.645388745346337,
-      B: 4.79399925408146,
-    },
+    lab: { L: 36.826009997054754, A: 0.645388745346337, B: 4.79399925408146 },
   },
   {
     colorNumber: "9621",
@@ -8587,11 +7970,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 92.14780777453726,
-      A: -1.027768882838953,
-      B: 0.7213689028240156,
-    },
+    lab: { L: 92.14780777453726, A: -1.027768882838953, B: 0.7213689028240156 },
   },
   {
     colorNumber: "9625",
@@ -8626,11 +8005,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.48640611630515,
-      A: -0.8932572949869599,
-      B: 5.721776206733575,
-    },
+    lab: { L: 89.48640611630515, A: -0.8932572949869599, B: 5.721776206733575 },
   },
   {
     colorNumber: "9626",
@@ -8665,11 +8040,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.3801050017846,
-      A: -1.064014986281614,
-      B: 2.9167910749641868,
-    },
+    lab: { L: 89.3801050017846, A: -1.064014986281614, B: 2.9167910749641868 },
   },
   {
     colorNumber: "9627",
@@ -8743,11 +8114,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.27476323475533,
-      A: -0.5567633266148064,
-      B: 4.792828891785361,
-    },
+    lab: { L: 85.27476323475533, A: -0.5567633266148064, B: 4.792828891785361 },
   },
   {
     colorNumber: "9629",
@@ -8782,11 +8149,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.8952653172703,
-      A: -1.2608810769116907,
-      B: 4.588754916901339,
-    },
+    lab: { L: 81.8952653172703, A: -1.2608810769116907, B: 4.588754916901339 },
   },
   {
     colorNumber: "6841",
@@ -8831,11 +8194,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 39.11757166065936,
-      A: 41.69248477396359,
-      B: -6.62042304654249,
-    },
+    lab: { L: 39.11757166065936, A: 41.69248477396359, B: -6.62042304654249 },
   },
   {
     colorNumber: "9630",
@@ -8870,11 +8229,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.51103488829828,
-      A: -1.946414942346819,
-      B: 3.2150194652309283,
-    },
+    lab: { L: 83.51103488829828, A: -1.946414942346819, B: 3.2150194652309283 },
   },
   {
     colorNumber: "9631",
@@ -8909,11 +8264,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.36296618430963,
-      A: -2.5580408981619174,
-      B: 0.747564375305787,
-    },
+    lab: { L: 89.36296618430963, A: -2.5580408981619174, B: 0.747564375305787 },
   },
   {
     colorNumber: "9632",
@@ -8987,11 +8338,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 77.85167831365432,
-      A: -4.248607304655594,
-      B: -2.045382017489672,
-    },
+    lab: { L: 77.85167831365432, A: -4.248607304655594, B: -2.045382017489672 },
   },
   {
     colorNumber: "9634",
@@ -9026,11 +8373,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.99746746241884,
-      A: -6.5319047131160985,
-      B: -4.60950278075325,
-    },
+    lab: { L: 60.99746746241884, A: -6.5319047131160985, B: -4.60950278075325 },
   },
   {
     colorNumber: "9635",
@@ -9065,11 +8408,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 47.77028782903242,
-      A: -6.500728052530325,
-      B: -5.320641854783492,
-    },
+    lab: { L: 47.77028782903242, A: -6.500728052530325, B: -5.320641854783492 },
   },
   {
     colorNumber: "9636",
@@ -9182,11 +8521,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.34344861561706,
-      A: -2.510260964456501,
-      B: 0.2811265036221311,
-    },
+    lab: { L: 68.34344861561706, A: -2.510260964456501, B: 0.2811265036221311 },
   },
   {
     colorNumber: "9639",
@@ -9271,11 +8606,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 36.59933683069231,
-      A: 43.299039271756044,
-      B: -2.202318195133901,
-    },
+    lab: { L: 36.59933683069231, A: 43.299039271756044, B: -2.202318195133901 },
   },
   {
     colorNumber: "9640",
@@ -9285,7 +8616,10 @@ export const colorData = [
     isInterior: true,
     name: "Sea Mariner",
     lrv: 6.678,
-    brandedCollectionNames: ["Designer Color Collection - Rustic + Refined"],
+    brandedCollectionNames: [
+      "Restorative Darks",
+      "Designer Color Collection - Rustic + Refined",
+    ],
     colorFamilyNames: ["Designer Color Collection"],
     brandKey: "SW",
     red: 67,
@@ -9349,11 +8683,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.16850003328655,
-      A: -2.69046329683853,
-      B: -0.9490130577466394,
-    },
+    lab: { L: 87.16850003328655, A: -2.69046329683853, B: -0.9490130577466394 },
   },
   {
     colorNumber: "9642",
@@ -9388,11 +8718,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.12318142629837,
-      A: -1.5942026601848402,
-      B: 1.130479231870929,
-    },
+    lab: { L: 78.12318142629837, A: -1.5942026601848402, B: 1.130479231870929 },
   },
   {
     colorNumber: "9643",
@@ -9432,11 +8758,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.47252348155943,
-      A: -4.77592906408214,
-      B: 0.08080797834479903,
-    },
+    lab: { L: 70.47252348155943, A: -4.77592906408214, B: 0.08080797834479903 },
   },
   {
     colorNumber: "9644",
@@ -9510,11 +8832,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 30.39238097138675,
-      A: -2.754236403234467,
-      B: -2.303344113675476,
-    },
+    lab: { L: 30.39238097138675, A: -2.754236403234467, B: -2.303344113675476 },
   },
   {
     colorNumber: "9646",
@@ -9588,11 +8906,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 75.89329318020972,
-      A: -2.506462815525523,
-      B: 7.073070078757127,
-    },
+    lab: { L: 75.89329318020972, A: -2.506462815525523, B: 7.073070078757127 },
   },
   {
     colorNumber: "9648",
@@ -9627,11 +8941,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.06112694296866,
-      A: -3.0698690669486717,
-      B: 8.791757067167328,
-    },
+    lab: { L: 68.06112694296866, A: -3.0698690669486717, B: 8.791757067167328 },
   },
   {
     colorNumber: "9649",
@@ -9666,11 +8976,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 55.831125438177025,
-      A: -3.03630248528608,
-      B: 6.188787220001757,
-    },
+    lab: { L: 55.831125438177025, A: -3.03630248528608, B: 6.188787220001757 },
   },
   {
     colorNumber: "6568",
@@ -9711,11 +9017,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.394633176337,
-      A: 9.635180413403166,
-      B: -0.914168620599698,
-    },
+    lab: { L: 87.394633176337, A: 9.635180413403166, B: -0.914168620599698 },
   },
   {
     colorNumber: "9650",
@@ -9750,11 +9052,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 44.49922952502877,
-      A: -5.881076641137795,
-      B: 3.0477636562608046,
-    },
+    lab: { L: 44.49922952502877, A: -5.881076641137795, B: 3.0477636562608046 },
   },
   {
     colorNumber: "9651",
@@ -9789,11 +9087,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.10871119808624,
-      A: -3.5134402739280257,
-      B: 3.248058847359925,
-    },
+    lab: { L: 82.10871119808624, A: -3.5134402739280257, B: 3.248058847359925 },
   },
   {
     colorNumber: "9652",
@@ -9828,11 +9122,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 76.45201091475539,
-      A: -4.995394583285961,
-      B: 6.211112857613044,
-    },
+    lab: { L: 76.45201091475539, A: -4.995394583285961, B: 6.211112857613044 },
   },
   {
     colorNumber: "9653",
@@ -9867,11 +9157,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 72.21407468386217,
-      A: -5.938642118102965,
-      B: 5.417038688249143,
-    },
+    lab: { L: 72.21407468386217, A: -5.938642118102965, B: 5.417038688249143 },
   },
   {
     colorNumber: "9654",
@@ -9906,11 +9192,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 52.55969717783529,
-      A: -5.334265626377343,
-      B: 3.064992416812662,
-    },
+    lab: { L: 52.55969717783529, A: -5.334265626377343, B: 3.064992416812662 },
   },
   {
     colorNumber: "9655",
@@ -9984,11 +9266,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.64328308754608,
-      A: -3.503562295127549,
-      B: 4.333054989818463,
-    },
+    lab: { L: 84.64328308754608, A: -3.503562295127549, B: 4.333054989818463 },
   },
   {
     colorNumber: "9657",
@@ -10023,11 +9301,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.64370651947648,
-      A: -5.755113417375057,
-      B: 3.0529332137162246,
-    },
+    lab: { L: 81.64370651947648, A: -5.755113417375057, B: 3.0529332137162246 },
   },
   {
     colorNumber: "9658",
@@ -10067,11 +9341,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.91671336888821,
-      A: -6.70242064141835,
-      B: 2.262339040316119,
-    },
+    lab: { L: 74.91671336888821, A: -6.70242064141835, B: 2.262339040316119 },
   },
   {
     colorNumber: "9659",
@@ -10106,11 +9376,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 66.521727020778,
-      A: -8.10367109187149,
-      B: 2.50501904754461,
-    },
+    lab: { L: 66.521727020778, A: -8.10367109187149, B: 2.50501904754461 },
   },
   {
     colorNumber: "6569",
@@ -10156,11 +9422,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.48967247776459,
-      A: 16.629887180533153,
-      B: -2.155123626447586,
-    },
+    lab: { L: 81.48967247776459, A: 16.629887180533153, B: -2.155123626447586 },
   },
   {
     colorNumber: "9660",
@@ -10172,6 +9434,7 @@ export const colorData = [
     lrv: 7.293,
     brandedCollectionNames: [
       "Rejuvenation",
+      "Restorative Darks",
       "Designer Color Collection - Rustic + Refined",
     ],
     colorFamilyNames: ["Designer Color Collection"],
@@ -10198,11 +9461,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 32.32815144398232,
-      A: -3.5050041129036646,
-      B: -4.55038144388229,
-    },
+    lab: { L: 32.32815144398232, A: -3.5050041129036646, B: -4.55038144388229 },
   },
   {
     colorNumber: "9661",
@@ -10242,11 +9501,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.59409350040991,
-      A: 0.7605024346751255,
-      B: 10.13948712458783,
-    },
+    lab: { L: 89.59409350040991, A: 0.7605024346751255, B: 10.13948712458783 },
   },
   {
     colorNumber: "9662",
@@ -10281,11 +9536,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 92.66122106196984,
-      A: -0.1407215847705201,
-      B: 14.08839747366657,
-    },
+    lab: { L: 92.66122106196984, A: -0.1407215847705201, B: 14.08839747366657 },
   },
   {
     colorNumber: "9663",
@@ -10320,11 +9571,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.4356103271751,
-      A: 1.8799373305418143,
-      B: 24.12642572023156,
-    },
+    lab: { L: 89.4356103271751, A: 1.8799373305418143, B: 24.12642572023156 },
   },
   {
     colorNumber: "9664",
@@ -10359,11 +9606,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.05495804357498,
-      A: 5.284010881133394,
-      B: 35.26784455848273,
-    },
+    lab: { L: 85.05495804357498, A: 5.284010881133394, B: 35.26784455848273 },
   },
   {
     colorNumber: "9665",
@@ -10398,11 +9641,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.41048448175852,
-      A: 2.6295248029055696,
-      B: 56.61363354741125,
-    },
+    lab: { L: 84.41048448175852, A: 2.6295248029055696, B: 56.61363354741125 },
   },
   {
     colorNumber: "9666",
@@ -10437,11 +9676,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 92.81083420651197,
-      A: -2.0651240837529783,
-      B: 7.985828395264671,
-    },
+    lab: { L: 92.81083420651197, A: -2.0651240837529783, B: 7.985828395264671 },
   },
   {
     colorNumber: "9667",
@@ -10481,11 +9716,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 92.73840509952012,
-      A: -2.9742875978177596,
-      B: 13.09520571291296,
-    },
+    lab: { L: 92.73840509952012, A: -2.9742875978177596, B: 13.09520571291296 },
   },
   {
     colorNumber: "9668",
@@ -10520,11 +9751,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.88596610338153,
-      A: -5.168896374127763,
-      B: 21.747404256396052,
-    },
+    lab: { L: 87.88596610338153, A: -5.168896374127763, B: 21.747404256396052 },
   },
   {
     colorNumber: "9669",
@@ -10559,11 +9786,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 66.51623953794616,
-      A: -8.766703685665789,
-      B: 26.901756883385342,
-    },
+    lab: { L: 66.51623953794616, A: -8.766703685665789, B: 26.901756883385342 },
   },
   {
     colorNumber: "6570",
@@ -10682,11 +9905,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 93.30325873020115,
-      A: -2.4000230851563553,
-      B: 2.421383061412219,
-    },
+    lab: { L: 93.30325873020115, A: -2.4000230851563553, B: 2.421383061412219 },
   },
   {
     colorNumber: "9672",
@@ -10721,11 +9940,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.72289577347779,
-      A: -5.730435197137673,
-      B: 6.305718579578068,
-    },
+    lab: { L: 86.72289577347779, A: -5.730435197137673, B: 6.305718579578068 },
   },
   {
     colorNumber: "9673",
@@ -10760,11 +9975,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.53460742983924,
-      A: -9.04118741626958,
-      B: 14.803825183337405,
-    },
+    lab: { L: 80.53460742983924, A: -9.04118741626958, B: 14.803825183337405 },
   },
   {
     colorNumber: "9674",
@@ -10877,11 +10088,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 92.3007717075541,
-      A: -2.2444425664939205,
-      B: 3.0288822661685977,
-    },
+    lab: { L: 92.3007717075541, A: -2.2444425664939205, B: 3.0288822661685977 },
   },
   {
     colorNumber: "9677",
@@ -10916,11 +10123,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.9411285853016,
-      A: -4.329435217436006,
-      B: 3.467068814624197,
-    },
+    lab: { L: 86.9411285853016, A: -4.329435217436006, B: 3.467068814624197 },
   },
   {
     colorNumber: "9678",
@@ -10955,11 +10158,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.24607406359728,
-      A: -7.733163434018309,
-      B: 6.335649784224984,
-    },
+    lab: { L: 80.24607406359728, A: -7.733163434018309, B: 6.335649784224984 },
   },
   {
     colorNumber: "9679",
@@ -11039,11 +10238,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 59.95454926496838,
-      A: 31.915705808752914,
-      B: -2.009740550183703,
-    },
+    lab: { L: 59.95454926496838, A: 31.915705808752914, B: -2.009740550183703 },
   },
   {
     colorNumber: "9680",
@@ -11237,11 +10432,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 41.52239391907759,
-      A: -2.801452510177993,
-      B: -21.5599873404412,
-    },
+    lab: { L: 41.52239391907759, A: -2.801452510177993, B: -21.5599873404412 },
   },
   {
     colorNumber: "9685",
@@ -11368,7 +10559,10 @@ export const colorData = [
     isInterior: true,
     name: "Modern Lavender",
     lrv: 40.468,
-    brandedCollectionNames: ["Designer Color Collection - Classic + Collected"],
+    brandedCollectionNames: [
+      "Frosted Tints",
+      "Designer Color Collection - Classic + Collected",
+    ],
     colorFamilyNames: ["Designer Color Collection"],
     brandKey: "SW",
     red: 168,
@@ -11393,11 +10587,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.70313303410889,
-      A: 1.0462575947766117,
-      B: -4.869274590273731,
-    },
+    lab: { L: 69.70313303410889, A: 1.0462575947766117, B: -4.869274590273731 },
   },
   {
     colorNumber: "9689",
@@ -11432,11 +10622,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 37.64468009157651,
-      A: 5.9057647793005765,
-      B: -8.323670322696774,
-    },
+    lab: { L: 37.64468009157651, A: 5.9057647793005765, B: -8.323670322696774 },
   },
   {
     colorNumber: "6572",
@@ -11516,11 +10702,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 25.42274266175243,
-      A: 1.6509613668402312,
-      B: -8.503105462665083,
-    },
+    lab: { L: 25.42274266175243, A: 1.6509613668402312, B: -8.503105462665083 },
   },
   {
     colorNumber: "9691",
@@ -11555,11 +10737,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 90.56772278454213,
-      A: 1.1589593999225545,
-      B: 3.1437195039270227,
-    },
+    lab: { L: 90.56772278454213, A: 1.1589593999225545, B: 3.1437195039270227 },
   },
   {
     colorNumber: "9692",
@@ -11594,11 +10772,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 90.55896398966954,
-      A: 5.973261241897898,
-      B: 2.695431712892926,
-    },
+    lab: { L: 90.55896398966954, A: 5.973261241897898, B: 2.695431712892926 },
   },
   {
     colorNumber: "9693",
@@ -11633,11 +10807,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.39450799894477,
-      A: 13.130710680314461,
-      B: 3.2174283407073956,
-    },
+    lab: { L: 84.39450799894477, A: 13.130710680314461, B: 3.2174283407073956 },
   },
   {
     colorNumber: "9694",
@@ -11672,11 +10842,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 49.93239085213399,
-      A: 37.13779603155071,
-      B: 19.875801616548326,
-    },
+    lab: { L: 49.93239085213399, A: 37.13779603155071, B: 19.875801616548326 },
   },
   {
     colorNumber: "9695",
@@ -11716,11 +10882,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 32.85276866528874,
-      A: 34.79940122096481,
-      B: 15.261577529275161,
-    },
+    lab: { L: 32.85276866528874, A: 34.79940122096481, B: 15.261577529275161 },
   },
   {
     colorNumber: "9696",
@@ -11755,11 +10917,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 91.70504505373127,
-      A: 1.3339998544934506,
-      B: 4.839550660808012,
-    },
+    lab: { L: 91.70504505373127, A: 1.3339998544934506, B: 4.839550660808012 },
   },
   {
     colorNumber: "9697",
@@ -11794,11 +10952,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 90.17677721455202,
-      A: 5.371472169476976,
-      B: 6.869725802543769,
-    },
+    lab: { L: 90.17677721455202, A: 5.371472169476976, B: 6.869725802543769 },
   },
   {
     colorNumber: "9698",
@@ -11833,11 +10987,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.7240648445094,
-      A: 2.894740583058164,
-      B: 10.902834007880347,
-    },
+    lab: { L: 89.7240648445094, A: 2.894740583058164, B: 10.902834007880347 },
   },
   {
     colorNumber: "9699",
@@ -11872,11 +11022,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.94185726161646,
-      A: 27.12445777099476,
-      B: 23.569713919507596,
-    },
+    lab: { L: 73.94185726161646, A: 27.12445777099476, B: 23.569713919507596 },
   },
   {
     colorNumber: "6573",
@@ -11960,11 +11106,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 57.90931783312125,
-      A: 37.495059479876915,
-      B: 23.007404801069864,
-    },
+    lab: { L: 57.90931783312125, A: 37.495059479876915, B: 23.007404801069864 },
   },
   {
     colorNumber: "6566",
@@ -12005,11 +11147,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 33.09219293747832,
-      A: 34.03990750753075,
-      B: -3.952112618208603,
-    },
+    lab: { L: 33.09219293747832, A: 34.03990750753075, B: -3.952112618208603 },
   },
   {
     colorNumber: "6575",
@@ -12050,11 +11188,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.1692722464356,
-      A: 11.565404722140016,
-      B: 0.38374742861435607,
-    },
+    lab: { L: 87.1692722464356, A: 11.565404722140016, B: 0.38374742861435607 },
   },
   {
     colorNumber: "6576",
@@ -12095,11 +11229,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.03512666748863,
-      A: 18.45388045084112,
-      B: 0.8682555062588859,
-    },
+    lab: { L: 82.03512666748863, A: 18.45388045084112, B: 0.8682555062588859 },
   },
   {
     colorNumber: "6577",
@@ -12140,11 +11270,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.08582835525789,
-      A: 32.49462636410178,
-      B: 4.921592989230472,
-    },
+    lab: { L: 69.08582835525789, A: 32.49462636410178, B: 4.921592989230472 },
   },
   {
     colorNumber: "6578",
@@ -12185,11 +11311,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 61.91867100636554,
-      A: 35.97869252982666,
-      B: 6.253087770475574,
-    },
+    lab: { L: 61.91867100636554, A: 35.97869252982666, B: 6.253087770475574 },
   },
   {
     colorNumber: "6579",
@@ -12234,11 +11356,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 45.85867209630585,
-      A: 43.45714674336898,
-      B: 6.830765750527701,
-    },
+    lab: { L: 45.85867209630585, A: 43.45714674336898, B: 6.830765750527701 },
   },
   {
     colorNumber: "6843",
@@ -12283,11 +11401,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 43.753204766385046,
-      A: 45.786862262506446,
-      B: 4.348560166518567,
-    },
+    lab: { L: 43.753204766385046, A: 45.786862262506446, B: 4.348560166518567 },
   },
   {
     colorNumber: "6580",
@@ -12328,11 +11442,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 37.123317710436886,
-      A: 45.08187142981443,
-      B: 7.003554603387785,
-    },
+    lab: { L: 37.123317710436886, A: 45.08187142981443, B: 7.003554603387785 },
   },
   {
     colorNumber: "6582",
@@ -12373,11 +11483,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.85007874981483,
-      A: 11.596350637391284,
-      B: 1.5064124823622294,
-    },
+    lab: { L: 86.85007874981483, A: 11.596350637391284, B: 1.5064124823622294 },
   },
   {
     colorNumber: "6583",
@@ -12418,11 +11524,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.13199872668419,
-      A: 20.61641871386405,
-      B: 0.6383734858605328,
-    },
+    lab: { L: 81.13199872668419, A: 20.61641871386405, B: 0.6383734858605328 },
   },
   {
     colorNumber: "6584",
@@ -12463,11 +11565,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.0821752516431,
-      A: 35.651247063954614,
-      B: 5.362443434799213,
-    },
+    lab: { L: 70.0821752516431, A: 35.651247063954614, B: 5.362443434799213 },
   },
   {
     colorNumber: "6585",
@@ -12508,11 +11606,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 61.9511315612573,
-      A: 41.35866144691258,
-      B: 8.749769808136666,
-    },
+    lab: { L: 61.9511315612573, A: 41.35866144691258, B: 8.749769808136666 },
   },
   {
     colorNumber: "6860",
@@ -12553,11 +11647,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 50.53794038427253,
-      A: 50.24286934899003,
-      B: 10.954310027825166,
-    },
+    lab: { L: 50.53794038427253, A: 50.24286934899003, B: 10.954310027825166 },
   },
   {
     colorNumber: "6586",
@@ -12598,11 +11688,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 48.02683843638522,
-      A: 47.073128605105985,
-      B: 12.614420980901386,
-    },
+    lab: { L: 48.02683843638522, A: 47.073128605105985, B: 12.614420980901386 },
   },
   {
     colorNumber: "6587",
@@ -12647,11 +11733,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 40.53541451663322,
-      A: 45.58064771940348,
-      B: 12.087241729137787,
-    },
+    lab: { L: 40.53541451663322, A: 45.58064771940348, B: 12.087241729137787 },
   },
   {
     colorNumber: "6589",
@@ -12692,11 +11774,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.66586311210406,
-      A: 10.377239930999039,
-      B: 2.7030389273452693,
-    },
+    lab: { L: 87.66586311210406, A: 10.377239930999039, B: 2.7030389273452693 },
   },
   {
     colorNumber: "6590",
@@ -12737,11 +11815,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.24076791807748,
-      A: 17.505503388847654,
-      B: 3.8614666389781283,
-    },
+    lab: { L: 82.24076791807748, A: 17.505503388847654, B: 3.8614666389781283 },
   },
   {
     colorNumber: "6591",
@@ -12782,11 +11856,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.39146277431547,
-      A: 35.09561698473029,
-      B: 9.180534272188833,
-    },
+    lab: { L: 70.39146277431547, A: 35.09561698473029, B: 9.180534272188833 },
   },
   {
     colorNumber: "6592",
@@ -12827,11 +11897,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 57.67098855337899,
-      A: 43.60956383789954,
-      B: 15.299580181044536,
-    },
+    lab: { L: 57.67098855337899, A: 43.60956383789954, B: 15.299580181044536 },
   },
   {
     colorNumber: "6593",
@@ -12872,11 +11938,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 47.22627780359302,
-      A: 45.65634517648215,
-      B: 19.931706323699615,
-    },
+    lab: { L: 47.22627780359302, A: 45.65634517648215, B: 19.931706323699615 },
   },
   {
     colorNumber: "7588",
@@ -12917,11 +11979,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 38.063481614503864,
-      A: 48.54791121328733,
-      B: 23.18105873409323,
-    },
+    lab: { L: 38.063481614503864, A: 48.54791121328733, B: 23.18105873409323 },
   },
   {
     colorNumber: "6594",
@@ -12966,11 +12024,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 38.2483501070236,
-      A: 42.74167808514043,
-      B: 20.040586548952334,
-    },
+    lab: { L: 38.2483501070236, A: 42.74167808514043, B: 20.040586548952334 },
   },
   {
     colorNumber: "6596",
@@ -13011,11 +12065,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.48219237621339,
-      A: 14.92215504742428,
-      B: 6.735038400497029,
-    },
+    lab: { L: 83.48219237621339, A: 14.92215504742428, B: 6.735038400497029 },
   },
   {
     colorNumber: "6597",
@@ -13056,11 +12106,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.45092211683864,
-      A: 22.013458145536458,
-      B: 9.191406315201057,
-    },
+    lab: { L: 78.45092211683864, A: 22.013458145536458, B: 9.191406315201057 },
   },
   {
     colorNumber: "6598",
@@ -13101,11 +12147,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.66221553980104,
-      A: 34.6161161630571,
-      B: 15.387161971700912,
-    },
+    lab: { L: 69.66221553980104, A: 34.6161161630571, B: 15.387161971700912 },
   },
   {
     colorNumber: "6599",
@@ -13146,11 +12188,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 58.32076399153374,
-      A: 42.084725355906016,
-      B: 18.531376543413703,
-    },
+    lab: { L: 58.32076399153374, A: 42.084725355906016, B: 18.531376543413703 },
   },
   {
     colorNumber: "6600",
@@ -13191,11 +12229,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 47.082043265411556,
-      A: 42.63976049116253,
-      B: 20.824359408755765,
-    },
+    lab: { L: 47.082043265411556, A: 42.63976049116253, B: 20.824359408755765 },
   },
   {
     colorNumber: "6601",
@@ -13236,11 +12270,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 39.53005023679178,
-      A: 44.243427887656146,
-      B: 26.83427899657972,
-    },
+    lab: { L: 39.53005023679178, A: 44.243427887656146, B: 26.83427899657972 },
   },
   {
     colorNumber: "7587",
@@ -13285,11 +12315,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 41.05618294435478,
-      A: 37.69073770351136,
-      B: 20.05635164853442,
-    },
+    lab: { L: 41.05618294435478, A: 37.69073770351136, B: 20.05635164853442 },
   },
   {
     colorNumber: "6603",
@@ -13330,11 +12356,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.04502383538976,
-      A: 12.278687043591862,
-      B: 8.457747501298885,
-    },
+    lab: { L: 85.04502383538976, A: 12.278687043591862, B: 8.457747501298885 },
   },
   {
     colorNumber: "6604",
@@ -13375,11 +12397,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 77.28927862202633,
-      A: 22.79411039941759,
-      B: 12.963980367688755,
-    },
+    lab: { L: 77.28927862202633, A: 22.79411039941759, B: 12.963980367688755 },
   },
   {
     colorNumber: "6605",
@@ -13420,11 +12438,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.29158627850022,
-      A: 32.65637292558726,
-      B: 20.156923656571646,
-    },
+    lab: { L: 70.29158627850022, A: 32.65637292558726, B: 20.156923656571646 },
   },
   {
     colorNumber: "6606",
@@ -13465,11 +12479,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.59878364225618,
-      A: 37.52552208968141,
-      B: 22.801548685068383,
-    },
+    lab: { L: 60.59878364225618, A: 37.52552208968141, B: 22.801548685068383 },
   },
   {
     colorNumber: "6607",
@@ -13514,11 +12524,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 44.77049940123612,
-      A: 43.3029299724807,
-      B: 24.859702706228692,
-    },
+    lab: { L: 44.77049940123612, A: 43.3029299724807, B: 24.859702706228692 },
   },
   {
     colorNumber: "6608",
@@ -13559,11 +12565,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 39.503150709557175,
-      A: 41.81792138223667,
-      B: 26.678487553961496,
-    },
+    lab: { L: 39.503150709557175, A: 41.81792138223667, B: 26.678487553961496 },
   },
   {
     colorNumber: "7600",
@@ -13609,11 +12611,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 36.18455480983053,
-      A: 36.48424570863307,
-      B: 21.913123646528465,
-    },
+    lab: { L: 36.18455480983053, A: 36.48424570863307, B: 21.913123646528465 },
   },
   {
     colorNumber: "6288",
@@ -13654,11 +12652,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.0250326858669,
-      A: 7.279774890634805,
-      B: 0.40095604607750523,
-    },
+    lab: { L: 84.0250326858669, A: 7.279774890634805, B: 0.40095604607750523 },
   },
   {
     colorNumber: "6289",
@@ -13834,11 +12828,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 43.74528496529153,
-      A: 24.31917511744969,
-      B: -0.5264076595193456,
-    },
+    lab: { L: 43.74528496529153, A: 24.31917511744969, B: -0.5264076595193456 },
   },
   {
     colorNumber: "6293",
@@ -13879,11 +12869,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 30.08891194341254,
-      A: 28.77753494675206,
-      B: -4.778535226054004,
-    },
+    lab: { L: 30.08891194341254, A: 28.77753494675206, B: -4.778535226054004 },
   },
   {
     colorNumber: "7577",
@@ -13924,11 +12910,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 26.29632894853966,
-      A: 14.66864306824367,
-      B: -0.918389818874843,
-    },
+    lab: { L: 26.29632894853966, A: 14.66864306824367, B: -0.918389818874843 },
   },
   {
     colorNumber: "6295",
@@ -13969,11 +12951,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.52753624224378,
-      A: 7.073189298830329,
-      B: 2.0026454476740785,
-    },
+    lab: { L: 86.52753624224378, A: 7.073189298830329, B: 2.0026454476740785 },
   },
   {
     colorNumber: "6296",
@@ -14014,11 +12992,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 79.12851289360631,
-      A: 10.953718900094888,
-      B: 1.785773794440293,
-    },
+    lab: { L: 79.12851289360631, A: 10.953718900094888, B: 1.785773794440293 },
   },
   {
     colorNumber: "6297",
@@ -14059,11 +13033,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.89975278376977,
-      A: 15.795054112034524,
-      B: 3.7110622308767383,
-    },
+    lab: { L: 68.89975278376977, A: 15.795054112034524, B: 3.7110622308767383 },
   },
   {
     colorNumber: "9001",
@@ -14104,11 +13074,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 58.21419315386488,
-      A: 18.820377093384188,
-      B: 3.209960254849342,
-    },
+    lab: { L: 58.21419315386488, A: 18.820377093384188, B: 3.209960254849342 },
   },
   {
     colorNumber: "6298",
@@ -14149,11 +13115,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 50.768513997634955,
-      A: 21.820492183150407,
-      B: 2.72762922329286,
-    },
+    lab: { L: 50.768513997634955, A: 21.820492183150407, B: 2.72762922329286 },
   },
   {
     colorNumber: "6299",
@@ -14194,11 +13156,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 42.00641653688583,
-      A: 23.715280590961065,
-      B: 2.398250008913805,
-    },
+    lab: { L: 42.00641653688583, A: 23.715280590961065, B: 2.398250008913805 },
   },
   {
     colorNumber: "6300",
@@ -14239,11 +13197,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 27.75969107755847,
-      A: 22.928056748001467,
-      B: 2.817252087657307,
-    },
+    lab: { L: 27.75969107755847, A: 22.928056748001467, B: 2.817252087657307 },
   },
   {
     colorNumber: "6302",
@@ -14289,11 +13243,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.89073688103446,
-      A: 8.709679913635748,
-      B: 4.288885247682095,
-    },
+    lab: { L: 85.89073688103446, A: 8.709679913635748, B: 4.288885247682095 },
   },
   {
     colorNumber: "6303",
@@ -14334,11 +13284,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 77.28604443338432,
-      A: 13.501577967637068,
-      B: 5.636629653884251,
-    },
+    lab: { L: 77.28604443338432, A: 13.501577967637068, B: 5.636629653884251 },
   },
   {
     colorNumber: "6304",
@@ -14379,11 +13325,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 65.418088395123,
-      A: 18.061423935199716,
-      B: 7.036079001296391,
-    },
+    lab: { L: 65.418088395123, A: 18.061423935199716, B: 7.036079001296391 },
   },
   {
     colorNumber: "9002",
@@ -14424,11 +13366,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 53.9155856631144,
-      A: 21.323707168776963,
-      B: 6.815554821136871,
-    },
+    lab: { L: 53.9155856631144, A: 21.323707168776963, B: 6.815554821136871 },
   },
   {
     colorNumber: "6305",
@@ -14469,11 +13407,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 46.289637967830004,
-      A: 25.1664783545445,
-      B: 7.592705217021467,
-    },
+    lab: { L: 46.289637967830004, A: 25.1664783545445, B: 7.592705217021467 },
   },
   {
     colorNumber: "6306",
@@ -14514,11 +13448,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 39.321660196944435,
-      A: 25.215383012058943,
-      B: 7.169448024815694,
-    },
+    lab: { L: 39.321660196944435, A: 25.215383012058943, B: 7.169448024815694 },
   },
   {
     colorNumber: "6307",
@@ -14559,11 +13489,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 31.545512905555732,
-      A: 25.928290646908327,
-      B: 6.560796166657812,
-    },
+    lab: { L: 31.545512905555732, A: 25.928290646908327, B: 6.560796166657812 },
   },
   {
     colorNumber: "6309",
@@ -14609,11 +13535,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.6261984111868,
-      A: 8.854485949068014,
-      B: 3.785821892492214,
-    },
+    lab: { L: 86.6261984111868, A: 8.854485949068014, B: 3.785821892492214 },
   },
   {
     colorNumber: "6310",
@@ -14659,11 +13581,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.11960557604543,
-      A: 14.641600004700106,
-      B: 5.5152166898022825,
-    },
+    lab: { L: 80.11960557604543, A: 14.641600004700106, B: 5.5152166898022825 },
   },
   {
     colorNumber: "6311",
@@ -14709,11 +13627,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 64.45687733479143,
-      A: 26.72869425131458,
-      B: 9.225782882529042,
-    },
+    lab: { L: 64.45687733479143, A: 26.72869425131458, B: 9.225782882529042 },
   },
   {
     colorNumber: "9003",
@@ -14754,11 +13668,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 55.643141364560876,
-      A: 29.432114211974003,
-      B: 9.572906556066997,
-    },
+    lab: { L: 55.643141364560876, A: 29.432114211974003, B: 9.572906556066997 },
   },
   {
     colorNumber: "6312",
@@ -14799,11 +13709,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 49.28976235547171,
-      A: 32.77344518979075,
-      B: 10.407715552995512,
-    },
+    lab: { L: 49.28976235547171, A: 32.77344518979075, B: 10.407715552995512 },
   },
   {
     colorNumber: "6313",
@@ -14844,11 +13750,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 41.168180100941136,
-      A: 33.66394828421343,
-      B: 9.505175417515465,
-    },
+    lab: { L: 41.168180100941136, A: 33.66394828421343, B: 9.505175417515465 },
   },
   {
     colorNumber: "6314",
@@ -14889,11 +13791,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 34.98030765898662,
-      A: 33.351847829105495,
-      B: 11.186859777155478,
-    },
+    lab: { L: 34.98030765898662, A: 33.351847829105495, B: 11.186859777155478 },
   },
   {
     colorNumber: "6316",
@@ -14939,11 +13837,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.05627884460446,
-      A: 9.641999530457356,
-      B: 5.20581708179737,
-    },
+    lab: { L: 85.05627884460446, A: 9.641999530457356, B: 5.20581708179737 },
   },
   {
     colorNumber: "6317",
@@ -14984,11 +13878,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.09492203864102,
-      A: 14.941709388702984,
-      B: 9.051455322467493,
-    },
+    lab: { L: 78.09492203864102, A: 14.941709388702984, B: 9.051455322467493 },
   },
   {
     colorNumber: "6318",
@@ -15034,11 +13924,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 65.06770435799898,
-      A: 23.26728189334448,
-      B: 12.31283827393832,
-    },
+    lab: { L: 65.06770435799898, A: 23.26728189334448, B: 12.31283827393832 },
   },
   {
     colorNumber: "9004",
@@ -15079,11 +13965,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.05757712299328,
-      A: 25.727784445882527,
-      B: 13.625874022275841,
-    },
+    lab: { L: 60.05757712299328, A: 25.727784445882527, B: 13.625874022275841 },
   },
   {
     colorNumber: "6319",
@@ -15124,11 +14006,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 52.82612223337745,
-      A: 29.998581605401586,
-      B: 14.900031398575365,
-    },
+    lab: { L: 52.82612223337745, A: 29.998581605401586, B: 14.900031398575365 },
   },
   {
     colorNumber: "6320",
@@ -15169,11 +14047,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 44.31782138989776,
-      A: 31.79274311815061,
-      B: 17.111411613017104,
-    },
+    lab: { L: 44.31782138989776, A: 31.79274311815061, B: 17.111411613017104 },
   },
   {
     colorNumber: "6321",
@@ -15219,11 +14093,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 35.536833181677366,
-      A: 37.01643504632998,
-      B: 18.51387102782346,
-    },
+    lab: { L: 35.536833181677366, A: 37.01643504632998, B: 18.51387102782346 },
   },
   {
     colorNumber: "6323",
@@ -15269,11 +14139,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.11299579698787,
-      A: 7.87178228438129,
-      B: 9.533974792881672,
-    },
+    lab: { L: 85.11299579698787, A: 7.87178228438129, B: 9.533974792881672 },
   },
   {
     colorNumber: "6324",
@@ -15314,11 +14180,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 77.40447511076508,
-      A: 14.726916813358471,
-      B: 12.940705638810378,
-    },
+    lab: { L: 77.40447511076508, A: 14.726916813358471, B: 12.940705638810378 },
   },
   {
     colorNumber: "6325",
@@ -15364,11 +14226,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 64.85035048251216,
-      A: 22.031157892139497,
-      B: 17.622715306447212,
-    },
+    lab: { L: 64.85035048251216, A: 22.031157892139497, B: 17.622715306447212 },
   },
   {
     colorNumber: "9005",
@@ -15409,11 +14267,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 57.92126935154488,
-      A: 26.05248130048665,
-      B: 17.46655006230513,
-    },
+    lab: { L: 57.92126935154488, A: 26.05248130048665, B: 17.46655006230513 },
   },
   {
     colorNumber: "6326",
@@ -15428,7 +14282,7 @@ export const colorData = [
     isInterior: true,
     name: "Henna Shade",
     lrv: 20.179,
-    brandedCollectionNames: [],
+    brandedCollectionNames: ["Sunbaked Hues"],
     colorFamilyNames: ["Red"],
     brandKey: "SW",
     red: 179,
@@ -15499,11 +14353,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 45.659591838063434,
-      A: 28.60462004551495,
-      B: 18.31088119744293,
-    },
+    lab: { L: 45.659591838063434, A: 28.60462004551495, B: 18.31088119744293 },
   },
   {
     colorNumber: "6328",
@@ -15549,11 +14399,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 32.162493381628416,
-      A: 28.977736849356617,
-      B: 18.56482873997787,
-    },
+    lab: { L: 32.162493381628416, A: 28.977736849356617, B: 18.56482873997787 },
   },
   {
     colorNumber: "6330",
@@ -15599,11 +14445,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.48693685753346,
-      A: 8.252683294989405,
-      B: 9.689452610196557,
-    },
+    lab: { L: 84.48693685753346, A: 8.252683294989405, B: 9.689452610196557 },
   },
   {
     colorNumber: "6331",
@@ -15644,11 +14486,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 77.52885053864834,
-      A: 13.67854905751048,
-      B: 13.643116085193618,
-    },
+    lab: { L: 77.52885053864834, A: 13.67854905751048, B: 13.643116085193618 },
   },
   {
     colorNumber: "6332",
@@ -15668,7 +14506,7 @@ export const colorData = [
     isInterior: true,
     name: "Coral Island",
     lrv: 35.52,
-    brandedCollectionNames: ["2017 Holistic"],
+    brandedCollectionNames: ["2017 Holistic", "Sunbaked Hues"],
     colorFamilyNames: ["Red"],
     brandKey: "SW",
     red: 206,
@@ -15694,11 +14532,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 66.21490854598781,
-      A: 20.054593073979497,
-      B: 17.84623139472119,
-    },
+    lab: { L: 66.21490854598781, A: 20.054593073979497, B: 17.84623139472119 },
   },
   {
     colorNumber: "9006",
@@ -15739,11 +14573,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 55.354477551953806,
-      A: 23.93286965768443,
-      B: 18.361943495572163,
-    },
+    lab: { L: 55.354477551953806, A: 23.93286965768443, B: 18.361943495572163 },
   },
   {
     colorNumber: "6333",
@@ -15784,11 +14614,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 48.20439860208387,
-      A: 28.905474502991968,
-      B: 19.529323299823698,
-    },
+    lab: { L: 48.20439860208387, A: 28.905474502991968, B: 19.529323299823698 },
   },
   {
     colorNumber: "6334",
@@ -15834,11 +14660,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 38.30555059865429,
-      A: 30.661234460383657,
-      B: 22.110925570373286,
-    },
+    lab: { L: 38.30555059865429, A: 30.661234460383657, B: 22.110925570373286 },
   },
   {
     colorNumber: "6335",
@@ -15879,11 +14701,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 33.60844772574889,
-      A: 31.241046312810273,
-      B: 24.389840662114914,
-    },
+    lab: { L: 33.60844772574889, A: 31.241046312810273, B: 24.389840662114914 },
   },
   {
     colorNumber: "6869",
@@ -15924,11 +14742,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 45.492143726592786,
-      A: 53.95112725681034,
-      B: 34.08867484359015,
-    },
+    lab: { L: 45.492143726592786, A: 53.95112725681034, B: 34.08867484359015 },
   },
   {
     colorNumber: "6884",
@@ -15969,11 +14783,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 53.073585688244094,
-      A: 48.97739745895585,
-      B: 49.449881388900494,
-    },
+    lab: { L: 53.073585688244094, A: 48.97739745895585, B: 49.449881388900494 },
   },
   {
     colorNumber: "6885",
@@ -16014,11 +14824,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 59.64096034901594,
-      A: 41.02061054884643,
-      B: 46.89652468468506,
-    },
+    lab: { L: 59.64096034901594, A: 41.02061054884643, B: 46.89652468468506 },
   },
   {
     colorNumber: "6886",
@@ -16059,11 +14865,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.6108411150792,
-      A: 40.373703658830806,
-      B: 51.448554141314396,
-    },
+    lab: { L: 60.6108411150792, A: 40.373703658830806, B: 51.448554141314396 },
   },
   {
     colorNumber: "6887",
@@ -16104,11 +14906,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 65.39783969958756,
-      A: 34.09859789823755,
-      B: 59.535193681079775,
-    },
+    lab: { L: 65.39783969958756, A: 34.09859789823755, B: 59.535193681079775 },
   },
   {
     colorNumber: "6892",
@@ -16149,11 +14947,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 66.10121994537343,
-      A: 31.489023229290815,
-      B: 61.68369775912731,
-    },
+    lab: { L: 66.10121994537343, A: 31.489023229290815, B: 61.68369775912731 },
   },
   {
     colorNumber: "6890",
@@ -16194,11 +14988,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 72.7644718374485,
-      A: 23.566657176290306,
-      B: 58.24231929817226,
-    },
+    lab: { L: 72.7644718374485, A: 23.566657176290306, B: 58.24231929817226 },
   },
   {
     colorNumber: "6610",
@@ -16239,11 +15029,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.21570784690384,
-      A: 9.364418125980045,
-      B: 11.189363868189384,
-    },
+    lab: { L: 86.21570784690384, A: 9.364418125980045, B: 11.189363868189384 },
   },
   {
     colorNumber: "6611",
@@ -16284,11 +15070,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 79.58530311661904,
-      A: 18.647677647759096,
-      B: 16.75861993823615,
-    },
+    lab: { L: 79.58530311661904, A: 18.647677647759096, B: 16.75861993823615 },
   },
   {
     colorNumber: "6612",
@@ -16329,11 +15111,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.50109934813453,
-      A: 28.515816623438607,
-      B: 23.902733617325378,
-    },
+    lab: { L: 69.50109934813453, A: 28.515816623438607, B: 23.902733617325378 },
   },
   {
     colorNumber: "6613",
@@ -16374,11 +15152,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 61.48768733529171,
-      A: 34.35074614395295,
-      B: 25.091571729251626,
-    },
+    lab: { L: 61.48768733529171, A: 34.35074614395295, B: 25.091571729251626 },
   },
   {
     colorNumber: "6614",
@@ -16419,11 +15193,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 53.74945352073166,
-      A: 38.626227670289445,
-      B: 25.892563490775377,
-    },
+    lab: { L: 53.74945352073166, A: 38.626227670289445, B: 25.892563490775377 },
   },
   {
     colorNumber: "6615",
@@ -16442,7 +15212,12 @@ export const colorData = [
     isInterior: true,
     name: "Peppery",
     lrv: 16.941,
-    brandedCollectionNames: ["Retro Revival", "Rustic Sun", "2023 Origin"],
+    brandedCollectionNames: [
+      "Retro Revival",
+      "Sunbaked Hues",
+      "Rustic Sun",
+      "2023 Origin",
+    ],
     colorFamilyNames: ["Orange"],
     brandKey: "SW",
     red: 184,
@@ -16468,11 +15243,42 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 48.19684429445596,
-      A: 39.23195982520866,
-      B: 28.780630397376406,
-    },
+    lab: { L: 48.19684429445596, A: 39.23195982520866, B: 28.780630397376406 },
+  },
+  {
+    colorNumber: "1084",
+    description: ["Diluted", "Wan", "Dusky", "Fairly Dark"],
+    id: "0",
+    isExterior: true,
+    isInterior: true,
+    name: "Bison",
+    lrv: 0,
+    brandedCollectionNames: [],
+    colorFamilyNames: ["NA"],
+    brandKey: "SW",
+    red: 112,
+    green: 87,
+    blue: 73,
+    hue: 0.05982905982905986,
+    saturation: 0.21081081081081082,
+    lightness: 0.3627450980392157,
+    hex: "#705749",
+    isDark: true,
+    similarColors: [
+      "2826",
+      "1630",
+      "1755",
+      "1776",
+      "11270",
+      "1833",
+      "1798",
+      "1791",
+      "1769",
+      "11271",
+    ],
+    ignore: false,
+    archived: false,
+    lab: { L: 39.14327029849811, A: 8.11621807348309, B: 12.074584431749003 },
   },
   {
     colorNumber: "7589",
@@ -16513,11 +15319,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 45.68261972783582,
-      A: 45.08036681351052,
-      B: 29.765936348163645,
-    },
+    lab: { L: 45.68261972783582, A: 45.08036681351052, B: 29.765936348163645 },
   },
   {
     colorNumber: "6617",
@@ -16558,11 +15360,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.04009264126779,
-      A: 8.638111438777907,
-      B: 10.91535879957155,
-    },
+    lab: { L: 86.04009264126779, A: 8.638111438777907, B: 10.91535879957155 },
   },
   {
     colorNumber: "6618",
@@ -16603,11 +15401,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.91227372155168,
-      A: 14.790617143321915,
-      B: 17.88027126619669,
-    },
+    lab: { L: 81.91227372155168, A: 14.790617143321915, B: 17.88027126619669 },
   },
   {
     colorNumber: "6619",
@@ -16648,11 +15442,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.60294086717987,
-      A: 26.286603908115048,
-      B: 23.97986186555312,
-    },
+    lab: { L: 69.60294086717987, A: 26.286603908115048, B: 23.97986186555312 },
   },
   {
     colorNumber: "6620",
@@ -16693,11 +15483,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 61.36870153174257,
-      A: 37.078282082535274,
-      B: 30.103021667750784,
-    },
+    lab: { L: 61.36870153174257, A: 37.078282082535274, B: 30.103021667750784 },
   },
   {
     colorNumber: "6621",
@@ -16738,11 +15524,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 52.56087684957711,
-      A: 39.20845393399547,
-      B: 32.91627696034924,
-    },
+    lab: { L: 52.56087684957711, A: 39.20845393399547, B: 32.91627696034924 },
   },
   {
     colorNumber: "6622",
@@ -16783,11 +15565,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 45.6135348342512,
-      A: 41.222648120428914,
-      B: 34.68187793012155,
-    },
+    lab: { L: 45.6135348342512, A: 41.222648120428914, B: 34.68187793012155 },
   },
   {
     colorNumber: "6881",
@@ -16828,11 +15606,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 47.972808958045306,
-      A: 44.75966609248366,
-      B: 37.330610336553164,
-    },
+    lab: { L: 47.972808958045306, A: 44.75966609248366, B: 37.330610336553164 },
   },
   {
     colorNumber: "6624",
@@ -16873,11 +15647,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.92722652503261,
-      A: 9.38039231509874,
-      B: 13.963897563229978,
-    },
+    lab: { L: 85.92722652503261, A: 9.38039231509874, B: 13.963897563229978 },
   },
   {
     colorNumber: "6625",
@@ -16918,11 +15688,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.6735114949113,
-      A: 15.379264982006147,
-      B: 20.945443563375953,
-    },
+    lab: { L: 80.6735114949113, A: 15.379264982006147, B: 20.945443563375953 },
   },
   {
     colorNumber: "6626",
@@ -16963,11 +15729,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.38618758670597,
-      A: 25.44896372152333,
-      B: 31.596529830609832,
-    },
+    lab: { L: 68.38618758670597, A: 25.44896372152333, B: 31.596529830609832 },
   },
   {
     colorNumber: "6627",
@@ -17008,11 +15770,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 61.12013637428038,
-      A: 31.406803308101416,
-      B: 35.63871620413701,
-    },
+    lab: { L: 61.12013637428038, A: 31.406803308101416, B: 35.63871620413701 },
   },
   {
     colorNumber: "6628",
@@ -17053,11 +15811,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 52.959308936362675,
-      A: 35.83204718189037,
-      B: 38.27009972053745,
-    },
+    lab: { L: 52.959308936362675, A: 35.83204718189037, B: 38.27009972053745 },
   },
   {
     colorNumber: "6629",
@@ -17102,11 +15856,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 46.79196157088187,
-      A: 36.5246444098794,
-      B: 31.417457012272564,
-    },
+    lab: { L: 46.79196157088187, A: 36.5246444098794, B: 31.417457012272564 },
   },
   {
     colorNumber: "7599",
@@ -17147,11 +15897,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 37.978536006264335,
-      A: 33.75203032538385,
-      B: 27.268454049595782,
-    },
+    lab: { L: 37.978536006264335, A: 33.75203032538385, B: 27.268454049595782 },
   },
   {
     colorNumber: "6631",
@@ -17192,11 +15938,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.70463368985789,
-      A: 8.103460925074247,
-      B: 14.006752686917157,
-    },
+    lab: { L: 86.70463368985789, A: 8.103460925074247, B: 14.006752686917157 },
   },
   {
     colorNumber: "6632",
@@ -17237,11 +15979,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.75141828221739,
-      A: 13.777822863737132,
-      B: 21.91331498936051,
-    },
+    lab: { L: 81.75141828221739, A: 13.777822863737132, B: 21.91331498936051 },
   },
   {
     colorNumber: "6633",
@@ -17282,11 +16020,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 71.15912773725228,
-      A: 23.047800129855965,
-      B: 35.29514288541811,
-    },
+    lab: { L: 71.15912773725228, A: 23.047800129855965, B: 35.29514288541811 },
   },
   {
     colorNumber: "6634",
@@ -17327,11 +16061,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 61.37618893627949,
-      A: 29.65784967268481,
-      B: 38.0715701919968,
-    },
+    lab: { L: 61.37618893627949, A: 29.65784967268481, B: 38.0715701919968 },
   },
   {
     colorNumber: "6635",
@@ -17372,11 +16102,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 53.67531526610804,
-      A: 34.39554867176386,
-      B: 41.75595330433168,
-    },
+    lab: { L: 53.67531526610804, A: 34.39554867176386, B: 41.75595330433168 },
   },
   {
     colorNumber: "6636",
@@ -17417,11 +16143,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 51.225140704345066,
-      A: 33.29369012726957,
-      B: 35.92140401542182,
-    },
+    lab: { L: 51.225140704345066, A: 33.29369012726957, B: 35.92140401542182 },
   },
   {
     colorNumber: "6883",
@@ -17462,11 +16184,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 49.87514925287316,
-      A: 41.82013187358269,
-      B: 42.21106271391095,
-    },
+    lab: { L: 49.87514925287316, A: 41.82013187358269, B: 42.21106271391095 },
   },
   {
     colorNumber: "6638",
@@ -17507,11 +16225,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.54238331616315,
-      A: 6.8070370781808105,
-      B: 20.104693785453563,
-    },
+    lab: { L: 86.54238331616315, A: 6.8070370781808105, B: 20.104693785453563 },
   },
   {
     colorNumber: "6639",
@@ -17552,11 +16266,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.9803596354477,
-      A: 11.052525652384016,
-      B: 25.723086887048517,
-    },
+    lab: { L: 82.9803596354477, A: 11.052525652384016, B: 25.723086887048517 },
   },
   {
     colorNumber: "9007",
@@ -17597,11 +16307,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 79.07203658793928,
-      A: 15.495971279956999,
-      B: 30.452107129450855,
-    },
+    lab: { L: 79.07203658793928, A: 15.495971279956999, B: 30.452107129450855 },
   },
   {
     colorNumber: "6640",
@@ -17642,11 +16348,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 75.909634706853,
-      A: 19.884286781929607,
-      B: 36.84068894942809,
-    },
+    lab: { L: 75.909634706853, A: 19.884286781929607, B: 36.84068894942809 },
   },
   {
     colorNumber: "6641",
@@ -17687,11 +16389,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.85701244399664,
-      A: 25.21441605934266,
-      B: 40.788575451179824,
-    },
+    lab: { L: 68.85701244399664, A: 25.21441605934266, B: 40.788575451179824 },
   },
   {
     colorNumber: "6642",
@@ -17732,11 +16430,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 58.520636258122096,
-      A: 27.70317372871872,
-      B: 43.28342203748139,
-    },
+    lab: { L: 58.520636258122096, A: 27.70317372871872, B: 43.28342203748139 },
   },
   {
     colorNumber: "6643",
@@ -17777,11 +16471,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 55.40081476242263,
-      A: 29.072156907907043,
-      B: 41.016723775540854,
-    },
+    lab: { L: 55.40081476242263, A: 29.072156907907043, B: 41.016723775540854 },
   },
   {
     colorNumber: "6652",
@@ -17822,11 +16512,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.70980524302385,
-      A: 5.759624834095423,
-      B: 22.431870245676457,
-    },
+    lab: { L: 86.70980524302385, A: 5.759624834095423, B: 22.431870245676457 },
   },
   {
     colorNumber: "6653",
@@ -17867,11 +16553,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.3690183996395,
-      A: 9.138040442980945,
-      B: 32.014555337184916,
-    },
+    lab: { L: 83.3690183996395, A: 9.138040442980945, B: 32.014555337184916 },
   },
   {
     colorNumber: "6654",
@@ -17912,11 +16594,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 77.7599528391387,
-      A: 14.107145510581676,
-      B: 38.093944829100025,
-    },
+    lab: { L: 77.7599528391387, A: 14.107145510581676, B: 38.093944829100025 },
   },
   {
     colorNumber: "6655",
@@ -17957,11 +16635,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 71.1782945618965,
-      A: 19.886332475238966,
-      B: 43.594110624630346,
-    },
+    lab: { L: 71.1782945618965, A: 19.886332475238966, B: 43.594110624630346 },
   },
   {
     colorNumber: "6656",
@@ -18002,11 +16676,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 64.64525990943483,
-      A: 23.58670308388944,
-      B: 44.617247086150414,
-    },
+    lab: { L: 64.64525990943483, A: 23.58670308388944, B: 44.617247086150414 },
   },
   {
     colorNumber: "6657",
@@ -18047,11 +16717,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 61.68772185863938,
-      A: 25.170395074986864,
-      B: 47.5390945132242,
-    },
+    lab: { L: 61.68772185863938, A: 25.170395074986864, B: 47.5390945132242 },
   },
   {
     colorNumber: "7703",
@@ -18096,11 +16762,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 47.78630864292178,
-      A: 26.79711344859703,
-      B: 33.952610972127125,
-    },
+    lab: { L: 47.78630864292178, A: 26.79711344859703, B: 33.952610972127125 },
   },
   {
     colorNumber: "6659",
@@ -18141,11 +16803,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.98502384341563,
-      A: 3.4384461454931015,
-      B: 23.144204725693562,
-    },
+    lab: { L: 87.98502384341563, A: 3.4384461454931015, B: 23.144204725693562 },
   },
   {
     colorNumber: "6660",
@@ -18186,11 +16844,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.20310689866928,
-      A: 6.281367407969974,
-      B: 30.821509597177954,
-    },
+    lab: { L: 85.20310689866928, A: 6.281367407969974, B: 30.821509597177954 },
   },
   {
     colorNumber: "9008",
@@ -18231,11 +16885,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.02703164634043,
-      A: 9.017403961219472,
-      B: 34.6727466660548,
-    },
+    lab: { L: 83.02703164634043, A: 9.017403961219472, B: 34.6727466660548 },
   },
   {
     colorNumber: "6661",
@@ -18276,11 +16926,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.74102725649414,
-      A: 12.090384576130042,
-      B: 38.82547949049189,
-    },
+    lab: { L: 78.74102725649414, A: 12.090384576130042, B: 38.82547949049189 },
   },
   {
     colorNumber: "6662",
@@ -18321,11 +16967,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.27002053671374,
-      A: 15.898457876020567,
-      B: 45.88921682566338,
-    },
+    lab: { L: 74.27002053671374, A: 15.898457876020567, B: 45.88921682566338 },
   },
   {
     colorNumber: "6663",
@@ -18366,11 +17008,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.53073200769174,
-      A: 19.579888027451197,
-      B: 48.771630035562374,
-    },
+    lab: { L: 68.53073200769174, A: 19.579888027451197, B: 48.771630035562374 },
   },
   {
     colorNumber: "6664",
@@ -18411,11 +17049,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 61.574507895351346,
-      A: 24.546216257089192,
-      B: 53.42596985357437,
-    },
+    lab: { L: 61.574507895351346, A: 24.546216257089192, B: 53.42596985357437 },
   },
   {
     colorNumber: "6337",
@@ -18456,11 +17090,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.95860423819266,
-      A: 6.5791126895660135,
-      B: 12.349584616819765,
-    },
+    lab: { L: 85.95860423819266, A: 6.5791126895660135, B: 12.349584616819765 },
   },
   {
     colorNumber: "6338",
@@ -18501,11 +17131,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.34600281185449,
-      A: 12.161296250866261,
-      B: 17.510873491017808,
-    },
+    lab: { L: 78.34600281185449, A: 12.161296250866261, B: 17.510873491017808 },
   },
   {
     colorNumber: "6339",
@@ -18546,11 +17172,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.50789669530083,
-      A: 21.001878231823312,
-      B: 24.48477727953162,
-    },
+    lab: { L: 68.50789669530083, A: 21.001878231823312, B: 24.48477727953162 },
   },
   {
     colorNumber: "9009",
@@ -18596,11 +17218,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 63.18790903659611,
-      A: 22.279352869698787,
-      B: 25.95150156331001,
-    },
+    lab: { L: 63.18790903659611, A: 22.279352869698787, B: 25.95150156331001 },
   },
   {
     colorNumber: "6340",
@@ -18641,11 +17259,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 57.602156547852886,
-      A: 25.583997763519772,
-      B: 27.31315976528438,
-    },
+    lab: { L: 57.602156547852886, A: 25.583997763519772, B: 27.31315976528438 },
   },
   {
     colorNumber: "6341",
@@ -18686,11 +17300,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 50.35157719160949,
-      A: 26.439891129255045,
-      B: 26.54642817580872,
-    },
+    lab: { L: 50.35157719160949, A: 26.439891129255045, B: 26.54642817580872 },
   },
   {
     colorNumber: "6342",
@@ -18735,11 +17345,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 41.315273513508146,
-      A: 30.71544472240134,
-      B: 27.979399391116445,
-    },
+    lab: { L: 41.315273513508146, A: 30.71544472240134, B: 27.979399391116445 },
   },
   {
     colorNumber: "6344",
@@ -18780,11 +17386,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.02054145720824,
-      A: 7.043372618804222,
-      B: 13.652948250025233,
-    },
+    lab: { L: 85.02054145720824, A: 7.043372618804222, B: 13.652948250025233 },
   },
   {
     colorNumber: "6345",
@@ -18825,11 +17427,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.30039447891721,
-      A: 11.639545774083604,
-      B: 21.217244335128104,
-    },
+    lab: { L: 78.30039447891721, A: 11.639545774083604, B: 21.217244335128104 },
   },
   {
     colorNumber: "6346",
@@ -18870,11 +17468,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.66043687263469,
-      A: 19.532824153939256,
-      B: 26.610981484016637,
-    },
+    lab: { L: 69.66043687263469, A: 19.532824153939256, B: 26.610981484016637 },
   },
   {
     colorNumber: "6347",
@@ -18915,11 +17509,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 58.656855596727596,
-      A: 25.076631889901392,
-      B: 29.30571940318012,
-    },
+    lab: { L: 58.656855596727596, A: 25.076631889901392, B: 29.30571940318012 },
   },
   {
     colorNumber: "6348",
@@ -18964,11 +17554,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 51.91976380878087,
-      A: 27.352134975684393,
-      B: 30.98693248569576,
-    },
+    lab: { L: 51.91976380878087, A: 27.352134975684393, B: 30.98693248569576 },
   },
   {
     colorNumber: "6349",
@@ -18987,7 +17573,7 @@ export const colorData = [
     isInterior: true,
     name: "Pennywise",
     lrv: 14.921,
-    brandedCollectionNames: ["Enriched Earth"],
+    brandedCollectionNames: ["Enriched Earth", "Sunbaked Hues"],
     colorFamilyNames: ["Orange"],
     brandKey: "SW",
     red: 162,
@@ -19013,11 +17599,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 45.589498614830646,
-      A: 27.665098770122466,
-      B: 30.5773337228744,
-    },
+    lab: { L: 45.589498614830646, A: 27.665098770122466, B: 30.5773337228744 },
   },
   {
     colorNumber: "7598",
@@ -19062,11 +17644,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 41.03573915657508,
-      A: 26.700638121345044,
-      B: 23.263737786402107,
-    },
+    lab: { L: 41.03573915657508, A: 26.700638121345044, B: 23.263737786402107 },
   },
   {
     colorNumber: "6351",
@@ -19107,11 +17685,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.01966741154078,
-      A: 7.098398690364272,
-      B: 16.466578783553043,
-    },
+    lab: { L: 84.01966741154078, A: 7.098398690364272, B: 16.466578783553043 },
   },
   {
     colorNumber: "6352",
@@ -19156,11 +17730,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 76.16986881763754,
-      A: 11.777870484717123,
-      B: 23.046195446944594,
-    },
+    lab: { L: 76.16986881763754, A: 11.777870484717123, B: 23.046195446944594 },
   },
   {
     colorNumber: "9010",
@@ -19201,11 +17771,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 71.67083473676283,
-      A: 15.759815371902075,
-      B: 26.581608484137618,
-    },
+    lab: { L: 71.67083473676283, A: 15.759815371902075, B: 26.581608484137618 },
   },
   {
     colorNumber: "6353",
@@ -19246,11 +17812,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.22975583047288,
-      A: 18.645025851551367,
-      B: 30.325453096263068,
-    },
+    lab: { L: 67.22975583047288, A: 18.645025851551367, B: 30.325453096263068 },
   },
   {
     colorNumber: "6354",
@@ -19265,7 +17827,7 @@ export const colorData = [
     isInterior: true,
     name: "Armagnac",
     lrv: 27.814,
-    brandedCollectionNames: [],
+    brandedCollectionNames: ["Sunbaked Hues"],
     colorFamilyNames: ["Orange"],
     brandKey: "SW",
     red: 195,
@@ -19291,11 +17853,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 59.65893440286038,
-      A: 21.665996605838846,
-      B: 32.20759376937714,
-    },
+    lab: { L: 59.65893440286038, A: 21.665996605838846, B: 32.20759376937714 },
   },
   {
     colorNumber: "6355",
@@ -19340,11 +17898,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 52.75527533024386,
-      A: 24.714397779129982,
-      B: 35.309558136978644,
-    },
+    lab: { L: 52.75527533024386, A: 24.714397779129982, B: 35.309558136978644 },
   },
   {
     colorNumber: "6356",
@@ -19389,11 +17943,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 48.239493759669614,
-      A: 24.48945121302448,
-      B: 32.764859977644136,
-    },
+    lab: { L: 48.239493759669614, A: 24.48945121302448, B: 32.764859977644136 },
   },
   {
     colorNumber: "6358",
@@ -19434,11 +17984,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.24809821143458,
-      A: 6.174287483742214,
-      B: 16.628342616800996,
-    },
+    lab: { L: 85.24809821143458, A: 6.174287483742214, B: 16.628342616800996 },
   },
   {
     colorNumber: "6359",
@@ -19453,7 +17999,7 @@ export const colorData = [
     isInterior: true,
     name: "Sociable",
     lrv: 56.548,
-    brandedCollectionNames: ["Living Well"],
+    brandedCollectionNames: ["Sunbaked Hues", "Living Well"],
     colorFamilyNames: ["Orange", "Living Well"],
     brandKey: "SW",
     red: 232,
@@ -19479,11 +18025,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 79.81291666552582,
-      A: 10.150029922965043,
-      B: 23.336455543405023,
-    },
+    lab: { L: 79.81291666552582, A: 10.150029922965043, B: 23.336455543405023 },
   },
   {
     colorNumber: "9011",
@@ -19524,11 +18066,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.11829137004666,
-      A: 14.687670184091505,
-      B: 32.63751971564523,
-    },
+    lab: { L: 74.11829137004666, A: 14.687670184091505, B: 32.63751971564523 },
   },
   {
     colorNumber: "6360",
@@ -19569,11 +18107,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.09428536072936,
-      A: 17.366245935430236,
-      B: 34.168619794394495,
-    },
+    lab: { L: 68.09428536072936, A: 17.366245935430236, B: 34.168619794394495 },
   },
   {
     colorNumber: "6361",
@@ -19614,11 +18148,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 63.77614926408167,
-      A: 19.665842291769707,
-      B: 34.919752402628475,
-    },
+    lab: { L: 63.77614926408167, A: 19.665842291769707, B: 34.919752402628475 },
   },
   {
     colorNumber: "6362",
@@ -19659,11 +18189,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 56.31499230125736,
-      A: 22.01342819082852,
-      B: 36.54168562202176,
-    },
+    lab: { L: 56.31499230125736, A: 22.01342819082852, B: 36.54168562202176 },
   },
   {
     colorNumber: "6363",
@@ -19708,11 +18234,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 52.179436935553326,
-      A: 22.747697786415998,
-      B: 36.65363987202299,
-    },
+    lab: { L: 52.179436935553326, A: 22.747697786415998, B: 36.65363987202299 },
   },
   {
     colorNumber: "6365",
@@ -19753,11 +18275,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.07750375997236,
-      A: 4.284870459645262,
-      B: 18.560893216934062,
-    },
+    lab: { L: 88.07750375997236, A: 4.284870459645262, B: 18.560893216934062 },
   },
   {
     colorNumber: "6366",
@@ -19798,11 +18316,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.6905194394169,
-      A: 5.960974307765321,
-      B: 30.799090236267833,
-    },
+    lab: { L: 83.6905194394169, A: 5.960974307765321, B: 30.799090236267833 },
   },
   {
     colorNumber: "6367",
@@ -19843,11 +18357,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.22328741901005,
-      A: 13.293561101885176,
-      B: 37.496815404468386,
-    },
+    lab: { L: 74.22328741901005, A: 13.293561101885176, B: 37.496815404468386 },
   },
   {
     colorNumber: "6368",
@@ -19888,11 +18398,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.03639939719285,
-      A: 16.759462310589612,
-      B: 40.4273367499828,
-    },
+    lab: { L: 68.03639939719285, A: 16.759462310589612, B: 40.4273367499828 },
   },
   {
     colorNumber: "6369",
@@ -19933,11 +18439,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 61.74891114769346,
-      A: 17.45699528125594,
-      B: 42.232331159156324,
-    },
+    lab: { L: 61.74891114769346, A: 17.45699528125594, B: 42.232331159156324 },
   },
   {
     colorNumber: "6370",
@@ -19978,11 +18480,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 54.816875358791606,
-      A: 20.67833558438825,
-      B: 41.43536599479685,
-    },
+    lab: { L: 54.816875358791606, A: 20.67833558438825, B: 41.43536599479685 },
   },
   {
     colorNumber: "7709",
@@ -20023,11 +18521,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 51.7605247272095,
-      A: 23.845776808952223,
-      B: 39.887636914027226,
-    },
+    lab: { L: 51.7605247272095, A: 23.845776808952223, B: 39.887636914027226 },
   },
   {
     colorNumber: "6372",
@@ -20068,11 +18562,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.80098425968559,
-      A: 4.62233797610867,
-      B: 22.0070762240653,
-    },
+    lab: { L: 86.80098425968559, A: 4.62233797610867, B: 22.0070762240653 },
   },
   {
     colorNumber: "6373",
@@ -20113,11 +18603,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.28561415443744,
-      A: 7.958127552318784,
-      B: 32.24258064106109,
-    },
+    lab: { L: 81.28561415443744, A: 7.958127552318784, B: 32.24258064106109 },
   },
   {
     colorNumber: "9012",
@@ -20158,11 +18644,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 77.85762235834984,
-      A: 10.19022244391965,
-      B: 35.48424731215132,
-    },
+    lab: { L: 77.85762235834984, A: 10.19022244391965, B: 35.48424731215132 },
   },
   {
     colorNumber: "6374",
@@ -20203,11 +18685,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.82068529155022,
-      A: 12.43130040444279,
-      B: 41.8928190062104,
-    },
+    lab: { L: 74.82068529155022, A: 12.43130040444279, B: 41.8928190062104 },
   },
   {
     colorNumber: "6375",
@@ -20248,11 +18726,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.50800769255326,
-      A: 16.080761404729248,
-      B: 42.30668136758131,
-    },
+    lab: { L: 67.50800769255326, A: 16.080761404729248, B: 42.30668136758131 },
   },
   {
     colorNumber: "6376",
@@ -20293,11 +18767,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.961386968932786,
-      A: 18.45743318503773,
-      B: 50.13339895804778,
-    },
+    lab: { L: 60.961386968932786, A: 18.45743318503773, B: 50.13339895804778 },
   },
   {
     colorNumber: "6377",
@@ -20338,11 +18808,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 57.016627496760734,
-      A: 15.7320713996284,
-      B: 43.385873689391666,
-    },
+    lab: { L: 57.016627496760734, A: 15.7320713996284, B: 43.385873689391666 },
   },
   {
     colorNumber: "6379",
@@ -20383,11 +18849,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.5070595354206,
-      A: 2.5865180992898917,
-      B: 20.05631056742201,
-    },
+    lab: { L: 89.5070595354206, A: 2.5865180992898917, B: 20.05631056742201 },
   },
   {
     colorNumber: "6380",
@@ -20428,11 +18890,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.40811910586957,
-      A: 6.763960976198192,
-      B: 29.559620212455464,
-    },
+    lab: { L: 82.40811910586957, A: 6.763960976198192, B: 29.559620212455464 },
   },
   {
     colorNumber: "7682",
@@ -20473,11 +18931,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 79.88433055654713,
-      A: 8.015512122752588,
-      B: 34.512760319253346,
-    },
+    lab: { L: 79.88433055654713, A: 8.015512122752588, B: 34.512760319253346 },
   },
   {
     colorNumber: "6381",
@@ -20518,11 +18972,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.53433164162115,
-      A: 10.387154377293427,
-      B: 39.08973149589416,
-    },
+    lab: { L: 73.53433164162115, A: 10.387154377293427, B: 39.08973149589416 },
   },
   {
     colorNumber: "6382",
@@ -20563,11 +19013,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.0922328146333,
-      A: 13.335093828227896,
-      B: 43.7139777830462,
-    },
+    lab: { L: 69.0922328146333, A: 13.335093828227896, B: 43.7139777830462 },
   },
   {
     colorNumber: "6383",
@@ -20608,11 +19054,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 64.86528471802319,
-      A: 14.481897030101054,
-      B: 46.482970079560225,
-    },
+    lab: { L: 64.86528471802319, A: 14.481897030101054, B: 46.482970079560225 },
   },
   {
     colorNumber: "6384",
@@ -20653,11 +19095,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 57.946377319738446,
-      A: 16.130405150477422,
-      B: 46.47603119012365,
-    },
+    lab: { L: 57.946377319738446, A: 16.130405150477422, B: 46.47603119012365 },
   },
   {
     colorNumber: "6904",
@@ -20698,11 +19136,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 75.7938102414827,
-      A: 17.6438623378109,
-      B: 74.84960747155749,
-    },
+    lab: { L: 75.7938102414827, A: 17.6438623378109, B: 74.84960747155749 },
   },
   {
     colorNumber: "6905",
@@ -20743,11 +19177,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.90071534329832,
-      A: 13.700677892568569,
-      B: 81.27230777226251,
-    },
+    lab: { L: 78.90071534329832, A: 13.700677892568569, B: 81.27230777226251 },
   },
   {
     colorNumber: "6902",
@@ -20788,11 +19218,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.28770342267164,
-      A: 4.766791908177693,
-      B: 66.63249860179373,
-    },
+    lab: { L: 84.28770342267164, A: 4.766791908177693, B: 66.63249860179373 },
   },
   {
     colorNumber: "6907",
@@ -20833,11 +19259,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.21711666821015,
-      A: 5.7336954960079956,
-      B: 84.4412369334336,
-    },
+    lab: { L: 83.21711666821015, A: 5.7336954960079956, B: 84.4412369334336 },
   },
   {
     colorNumber: "6909",
@@ -20878,11 +19300,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.72178251368845,
-      A: -0.6328950029365066,
-      B: 64.03197938283691,
-    },
+    lab: { L: 87.72178251368845, A: -0.6328950029365066, B: 64.03197938283691 },
   },
   {
     colorNumber: "6910",
@@ -20923,11 +19341,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.0221037115855,
-      A: 0.9703169480343998,
-      B: 73.64145976535417,
-    },
+    lab: { L: 86.0221037115855, A: 0.9703169480343998, B: 73.64145976535417 },
   },
   {
     colorNumber: "6911",
@@ -20968,11 +19382,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.8546889605638,
-      A: 3.765267497815361,
-      B: 84.83897520676584,
-    },
+    lab: { L: 83.8546889605638, A: 3.765267497815361, B: 84.83897520676584 },
   },
   {
     colorNumber: "6666",
@@ -21013,11 +19423,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.17866865225248,
-      A: 4.336479558464001,
-      B: 26.217084512242806,
-    },
+    lab: { L: 87.17866865225248, A: 4.336479558464001, B: 26.217084512242806 },
   },
   {
     colorNumber: "6667",
@@ -21058,11 +19464,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.5918034428326,
-      A: 6.291537255676105,
-      B: 36.73113925804024,
-    },
+    lab: { L: 84.5918034428326, A: 6.291537255676105, B: 36.73113925804024 },
   },
   {
     colorNumber: "6668",
@@ -21103,11 +19505,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.64327216373299,
-      A: 10.597890022831734,
-      B: 43.35718804672079,
-    },
+    lab: { L: 80.64327216373299, A: 10.597890022831734, B: 43.35718804672079 },
   },
   {
     colorNumber: "9013",
@@ -21148,11 +19546,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 77.938360982359,
-      A: 11.35898106460964,
-      B: 45.91165400329547,
-    },
+    lab: { L: 77.938360982359, A: 11.35898106460964, B: 45.91165400329547 },
   },
   {
     colorNumber: "6669",
@@ -21193,11 +19587,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 75.05099048152015,
-      A: 14.431275830493695,
-      B: 48.81402302583633,
-    },
+    lab: { L: 75.05099048152015, A: 14.431275830493695, B: 48.81402302583633 },
   },
   {
     colorNumber: "6670",
@@ -21238,11 +19628,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.57546945644872,
-      A: 17.89945424685979,
-      B: 58.75550746138478,
-    },
+    lab: { L: 68.57546945644872, A: 17.89945424685979, B: 58.75550746138478 },
   },
   {
     colorNumber: "6671",
@@ -21283,11 +19669,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 65.33859565656886,
-      A: 20.04397192316515,
-      B: 57.77203498146986,
-    },
+    lab: { L: 65.33859565656886, A: 20.04397192316515, B: 57.77203498146986 },
   },
   {
     colorNumber: "6673",
@@ -21328,11 +19710,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.27628609052739,
-      A: 0.9853166227227761,
-      B: 25.96546300929534,
-    },
+    lab: { L: 89.27628609052739, A: 0.9853166227227761, B: 25.96546300929534 },
   },
   {
     colorNumber: "6674",
@@ -21373,11 +19751,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.21024987619313,
-      A: 3.8961300531301646,
-      B: 37.32057638363933,
-    },
+    lab: { L: 86.21024987619313, A: 3.8961300531301646, B: 37.32057638363933 },
   },
   {
     colorNumber: "9014",
@@ -21418,11 +19792,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.93690028784462,
-      A: 5.505560355013039,
-      B: 42.10026140016294,
-    },
+    lab: { L: 85.93690028784462, A: 5.505560355013039, B: 42.10026140016294 },
   },
   {
     colorNumber: "6675",
@@ -21463,11 +19833,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.26628061812373,
-      A: 7.263896687505877,
-      B: 47.47703486597228,
-    },
+    lab: { L: 84.26628061812373, A: 7.263896687505877, B: 47.47703486597228 },
   },
   {
     colorNumber: "6676",
@@ -21508,11 +19874,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.38071984938948,
-      A: 10.261163925119664,
-      B: 56.65290327334995,
-    },
+    lab: { L: 80.38071984938948, A: 10.261163925119664, B: 56.65290327334995 },
   },
   {
     colorNumber: "6677",
@@ -21553,11 +19915,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 76.05787982223707,
-      A: 14.876415373484942,
-      B: 61.13572901644504,
-    },
+    lab: { L: 76.05787982223707, A: 14.876415373484942, B: 61.13572901644504 },
   },
   {
     colorNumber: "6678",
@@ -21598,11 +19956,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.24320037043636,
-      A: 18.864435987947957,
-      B: 61.549943935094866,
-    },
+    lab: { L: 69.24320037043636, A: 18.864435987947957, B: 61.549943935094866 },
   },
   {
     colorNumber: "9015",
@@ -21643,11 +19997,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 91.34805370974125,
-      A: 0.6837364754734843,
-      B: 26.811284786258362,
-    },
+    lab: { L: 91.34805370974125, A: 0.6837364754734843, B: 26.811284786258362 },
   },
   {
     colorNumber: "9016",
@@ -21688,11 +20038,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.95087417458234,
-      A: 1.7063827327479797,
-      B: 34.68893132179591,
-    },
+    lab: { L: 89.95087417458234, A: 1.7063827327479797, B: 34.68893132179591 },
   },
   {
     colorNumber: "9017",
@@ -21733,11 +20079,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.85266806128881,
-      A: 0.8015970841826481,
-      B: 40.63850228487374,
-    },
+    lab: { L: 89.85266806128881, A: 0.8015970841826481, B: 40.63850228487374 },
   },
   {
     colorNumber: "9018",
@@ -21778,11 +20120,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.10247734040584,
-      A: 2.4708110778783876,
-      B: 46.051533692011226,
-    },
+    lab: { L: 87.10247734040584, A: 2.4708110778783876, B: 46.051533692011226 },
   },
   {
     colorNumber: "9019",
@@ -21823,11 +20161,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.43341949582008,
-      A: 4.276354872329302,
-      B: 51.31793151237653,
-    },
+    lab: { L: 85.43341949582008, A: 4.276354872329302, B: 51.31793151237653 },
   },
   {
     colorNumber: "9020",
@@ -21868,11 +20202,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.4862163893529,
-      A: 5.469066787105792,
-      B: 60.90418520582772,
-    },
+    lab: { L: 81.4862163893529, A: 5.469066787105792, B: 60.90418520582772 },
   },
   {
     colorNumber: "6903",
@@ -21913,11 +20243,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.0357385305648,
-      A: 6.671860959839792,
-      B: 79.50998098126286,
-    },
+    lab: { L: 83.0357385305648, A: 6.671860959839792, B: 79.50998098126286 },
   },
   {
     colorNumber: "6680",
@@ -21962,11 +20288,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.81242664280026,
-      A: 0.22134126287237654,
-      B: 25.66402227929203,
-    },
+    lab: { L: 89.81242664280026, A: 0.22134126287237654, B: 25.66402227929203 },
   },
   {
     colorNumber: "6681",
@@ -22052,11 +20374,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.58608509859229,
-      A: 2.2658115115990474,
-      B: 38.80510448047918,
-    },
+    lab: { L: 86.58608509859229, A: 2.2658115115990474, B: 38.80510448047918 },
   },
   {
     colorNumber: "6682",
@@ -22097,11 +20415,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.23440815816437,
-      A: 5.862514818661458,
-      B: 48.561262132815244,
-    },
+    lab: { L: 83.23440815816437, A: 5.862514818661458, B: 48.561262132815244 },
   },
   {
     colorNumber: "6683",
@@ -22142,11 +20456,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.73864023837396,
-      A: 9.489914624057628,
-      B: 57.39107648304318,
-    },
+    lab: { L: 78.73864023837396, A: 9.489914624057628, B: 57.39107648304318 },
   },
   {
     colorNumber: "6684",
@@ -22187,11 +20497,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.96429332211136,
-      A: 12.086747427130396,
-      B: 59.30912138777972,
-    },
+    lab: { L: 74.96429332211136, A: 12.086747427130396, B: 59.30912138777972 },
   },
   {
     colorNumber: "6685",
@@ -22232,11 +20538,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.28548329823366,
-      A: 14.455901085292933,
-      B: 58.3657207209189,
-    },
+    lab: { L: 67.28548329823366, A: 14.455901085292933, B: 58.3657207209189 },
   },
   {
     colorNumber: "6687",
@@ -22277,11 +20579,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.9244703130105,
-      A: -1.0508165189753171,
-      B: 27.35051739033494,
-    },
+    lab: { L: 89.9244703130105, A: -1.0508165189753171, B: 27.35051739033494 },
   },
   {
     colorNumber: "6688",
@@ -22322,11 +20620,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.74613207037675,
-      A: 1.3593961954527778,
-      B: 38.99411882638617,
-    },
+    lab: { L: 86.74613207037675, A: 1.3593961954527778, B: 38.99411882638617 },
   },
   {
     colorNumber: "9022",
@@ -22367,11 +20661,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.85883901859567,
-      A: 2.458316141093486,
-      B: 45.28434429701647,
-    },
+    lab: { L: 83.85883901859567, A: 2.458316141093486, B: 45.28434429701647 },
   },
   {
     colorNumber: "6689",
@@ -22412,11 +20702,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.50946385182091,
-      A: 4.707236951573601,
-      B: 54.710974811709036,
-    },
+    lab: { L: 80.50946385182091, A: 4.707236951573601, B: 54.710974811709036 },
   },
   {
     colorNumber: "6690",
@@ -22457,11 +20743,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.51778691398299,
-      A: 7.212803584267958,
-      B: 58.552824350518065,
-    },
+    lab: { L: 74.51778691398299, A: 7.212803584267958, B: 58.552824350518065 },
   },
   {
     colorNumber: "6691",
@@ -22502,11 +20784,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.19348128488807,
-      A: 9.76896111221176,
-      B: 63.87110203244458,
-    },
+    lab: { L: 69.19348128488807, A: 9.76896111221176, B: 63.87110203244458 },
   },
   {
     colorNumber: "6692",
@@ -22547,11 +20825,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 61.39331909808334,
-      A: 13.826974997608488,
-      B: 61.946684093570184,
-    },
+    lab: { L: 61.39331909808334, A: 13.826974997608488, B: 61.946684093570184 },
   },
   {
     colorNumber: "6694",
@@ -22592,11 +20866,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.97174309750912,
-      A: -0.92864013080729,
-      B: 28.45772913192168,
-    },
+    lab: { L: 89.97174309750912, A: -0.92864013080729, B: 28.45772913192168 },
   },
   {
     colorNumber: "6695",
@@ -22637,11 +20907,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.1004027188184,
-      A: 1.1280948262086254,
-      B: 41.99881335474498,
-    },
+    lab: { L: 87.1004027188184, A: 1.1280948262086254, B: 41.99881335474498 },
   },
   {
     colorNumber: "6696",
@@ -22682,11 +20948,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.43965762807674,
-      A: 2.963420066620426,
-      B: 51.71123586588817,
-    },
+    lab: { L: 80.43965762807674, A: 2.963420066620426, B: 51.71123586588817 },
   },
   {
     colorNumber: "6697",
@@ -22727,11 +20989,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.93736369209225,
-      A: 4.826439843544417,
-      B: 56.447800325523275,
-    },
+    lab: { L: 73.93736369209225, A: 4.826439843544417, B: 56.447800325523275 },
   },
   {
     colorNumber: "6698",
@@ -22772,11 +21030,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.73499014527043,
-      A: 5.878031452665855,
-      B: 60.17185975750369,
-    },
+    lab: { L: 69.73499014527043, A: 5.878031452665855, B: 60.17185975750369 },
   },
   {
     colorNumber: "6699",
@@ -22817,11 +21071,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 65.29747267501206,
-      A: 6.4810405890274865,
-      B: 56.957949393203634,
-    },
+    lab: { L: 65.29747267501206, A: 6.4810405890274865, B: 56.957949393203634 },
   },
   {
     colorNumber: "7700",
@@ -22862,11 +21112,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 48.15039138836724,
-      A: 8.258166515562493,
-      B: 30.87755503962256,
-    },
+    lab: { L: 48.15039138836724, A: 8.258166515562493, B: 30.87755503962256 },
   },
   {
     colorNumber: "1668",
@@ -22907,11 +21153,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 92.42612841300678,
-      A: -3.499842118773855,
-      B: 19.935759837817013,
-    },
+    lab: { L: 92.42612841300678, A: -3.499842118773855, B: 19.935759837817013 },
   },
   {
     colorNumber: "1667",
@@ -22952,11 +21194,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 91.75720068787304,
-      A: -4.0860619219971195,
-      B: 27.78683166366447,
-    },
+    lab: { L: 91.75720068787304, A: -4.0860619219971195, B: 27.78683166366447 },
   },
   {
     colorNumber: "1666",
@@ -22997,11 +21235,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 90.36997805883091,
-      A: -2.897576693851933,
-      B: 34.6263163206197,
-    },
+    lab: { L: 90.36997805883091, A: -2.897576693851933, B: 34.6263163206197 },
   },
   {
     colorNumber: "6908",
@@ -23087,11 +21321,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.61063451032679,
-      A: -2.7590143236250197,
-      B: 51.93853934192756,
-    },
+    lab: { L: 84.61063451032679, A: -2.7590143236250197, B: 51.93853934192756 },
   },
   {
     colorNumber: "6914",
@@ -23132,11 +21362,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 76.01488638961864,
-      A: 0.4483195133117013,
-      B: 66.94607750961657,
-    },
+    lab: { L: 76.01488638961864, A: 0.4483195133117013, B: 66.94607750961657 },
   },
   {
     colorNumber: "6915",
@@ -23177,11 +21403,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.22894214737238,
-      A: -0.7006203616756745,
-      B: 72.93534006688614,
-    },
+    lab: { L: 70.22894214737238, A: -0.7006203616756745, B: 72.93534006688614 },
   },
   {
     colorNumber: "6386",
@@ -23222,11 +21444,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.88209336303625,
-      A: 1.756680406561073,
-      B: 15.977845846176653,
-    },
+    lab: { L: 88.88209336303625, A: 1.756680406561073, B: 15.977845846176653 },
   },
   {
     colorNumber: "6387",
@@ -23267,11 +21485,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.3432791077728,
-      A: 5.2680516439136955,
-      B: 25.199140370861485,
-    },
+    lab: { L: 82.3432791077728, A: 5.2680516439136955, B: 25.199140370861485 },
   },
   {
     colorNumber: "9023",
@@ -23312,11 +21526,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.66936783562518,
-      A: 6.388706369414853,
-      B: 28.565032892253207,
-    },
+    lab: { L: 78.66936783562518, A: 6.388706369414853, B: 28.565032892253207 },
   },
   {
     colorNumber: "6388",
@@ -23357,11 +21567,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.24638691082976,
-      A: 8.061700274711203,
-      B: 32.83592600085547,
-    },
+    lab: { L: 73.24638691082976, A: 8.061700274711203, B: 32.83592600085547 },
   },
   {
     colorNumber: "6389",
@@ -23402,11 +21608,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.31753293270376,
-      A: 10.995469996168072,
-      B: 39.793176608178825,
-    },
+    lab: { L: 67.31753293270376, A: 10.995469996168072, B: 39.793176608178825 },
   },
   {
     colorNumber: "6390",
@@ -23447,11 +21649,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 63.19879859272491,
-      A: 11.426841561888113,
-      B: 37.59302385622627,
-    },
+    lab: { L: 63.19879859272491, A: 11.426841561888113, B: 37.59302385622627 },
   },
   {
     colorNumber: "6391",
@@ -23496,11 +21694,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 53.14209150048816,
-      A: 11.749203560274978,
-      B: 38.43885320428877,
-    },
+    lab: { L: 53.14209150048816, A: 11.749203560274978, B: 38.43885320428877 },
   },
   {
     colorNumber: "6127",
@@ -23545,11 +21739,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.76539889722139,
-      A: 2.4634350666532523,
-      B: 19.720482136977324,
-    },
+    lab: { L: 83.76539889722139, A: 2.4634350666532523, B: 19.720482136977324 },
   },
   {
     colorNumber: "6128",
@@ -23590,11 +21780,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.27894926536958,
-      A: 4.907451350259495,
-      B: 25.845200030353244,
-    },
+    lab: { L: 78.27894926536958, A: 4.907451350259495, B: 25.845200030353244 },
   },
   {
     colorNumber: "6129",
@@ -23640,11 +21826,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.81673990262453,
-      A: 6.179827090141754,
-      B: 27.14068335796942,
-    },
+    lab: { L: 73.81673990262453, A: 6.179827090141754, B: 27.14068335796942 },
   },
   {
     colorNumber: "9024",
@@ -23690,11 +21872,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.11688638438156,
-      A: 7.6765904895114705,
-      B: 29.60917357148358,
-    },
+    lab: { L: 70.11688638438156, A: 7.6765904895114705, B: 29.60917357148358 },
   },
   {
     colorNumber: "6130",
@@ -23735,11 +21913,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 65.25720304564805,
-      A: 9.190174254323779,
-      B: 33.29956376961478,
-    },
+    lab: { L: 65.25720304564805, A: 9.190174254323779, B: 33.29956376961478 },
   },
   {
     colorNumber: "6131",
@@ -23780,11 +21954,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 58.01966614017357,
-      A: 9.50837393264986,
-      B: 33.41328978722255,
-    },
+    lab: { L: 58.01966614017357, A: 9.50837393264986, B: 33.41328978722255 },
   },
   {
     colorNumber: "6132",
@@ -23804,7 +21974,7 @@ export const colorData = [
     isInterior: true,
     name: "Relic Bronze",
     lrv: 16.544,
-    brandedCollectionNames: ["Global Garden", "Curiosity"],
+    brandedCollectionNames: ["Global Garden", "Curiosity", "Restorative Darks"],
     colorFamilyNames: ["Yellow"],
     brandKey: "SW",
     red: 144,
@@ -23830,11 +22000,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 47.679557875313144,
-      A: 9.526685972733373,
-      B: 32.5234949905318,
-    },
+    lab: { L: 47.679557875313144, A: 9.526685972733373, B: 32.5234949905318 },
   },
   {
     colorNumber: "6120",
@@ -23875,11 +22041,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.14557311326651,
-      A: 2.1808605200505093,
-      B: 18.080206639537842,
-    },
+    lab: { L: 81.14557311326651, A: 2.1808605200505093, B: 18.080206639537842 },
   },
   {
     colorNumber: "6121",
@@ -23920,11 +22082,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.88979678662025,
-      A: 3.304713770002965,
-      B: 21.00681851268964,
-    },
+    lab: { L: 74.88979678662025, A: 3.304713770002965, B: 21.00681851268964 },
   },
   {
     colorNumber: "6122",
@@ -23965,11 +22123,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 71.08684369597606,
-      A: 4.35034969466308,
-      B: 22.71661423683444,
-    },
+    lab: { L: 71.08684369597606, A: 4.35034969466308, B: 22.71661423683444 },
   },
   {
     colorNumber: "9025",
@@ -24010,11 +22164,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 66.13697606915073,
-      A: 5.526586104555697,
-      B: 24.575870228660058,
-    },
+    lab: { L: 66.13697606915073, A: 5.526586104555697, B: 24.575870228660058 },
   },
   {
     colorNumber: "6123",
@@ -24055,11 +22205,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 62.35076397831797,
-      A: 7.056642483501074,
-      B: 27.100917002404135,
-    },
+    lab: { L: 62.35076397831797, A: 7.056642483501074, B: 27.100917002404135 },
   },
   {
     colorNumber: "6124",
@@ -24100,11 +22246,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 53.66383625622271,
-      A: 8.333669750955842,
-      B: 24.73499976122058,
-    },
+    lab: { L: 53.66383625622271, A: 8.333669750955842, B: 24.73499976122058 },
   },
   {
     colorNumber: "6125",
@@ -24145,11 +22287,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 46.09129711869897,
-      A: 10.192458094217038,
-      B: 24.233822845757114,
-    },
+    lab: { L: 46.09129711869897, A: 10.192458094217038, B: 24.233822845757114 },
   },
   {
     colorNumber: "6393",
@@ -24190,11 +22328,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.28177232393325,
-      A: 0.7384566851171837,
-      B: 21.16999774526105,
-    },
+    lab: { L: 86.28177232393325, A: 0.7384566851171837, B: 21.16999774526105 },
   },
   {
     colorNumber: "6394",
@@ -24235,11 +22369,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 79.90617090577513,
-      A: 3.6431619206406807,
-      B: 30.736651175011964,
-    },
+    lab: { L: 79.90617090577513, A: 3.6431619206406807, B: 30.736651175011964 },
   },
   {
     colorNumber: "9026",
@@ -24280,11 +22410,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.12543905830542,
-      A: 5.314145617743682,
-      B: 35.001739208746876,
-    },
+    lab: { L: 74.12543905830542, A: 5.314145617743682, B: 35.001739208746876 },
   },
   {
     colorNumber: "6395",
@@ -24325,11 +22451,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.64817074335427,
-      A: 7.383516692360425,
-      B: 44.6729626863298,
-    },
+    lab: { L: 67.64817074335427, A: 7.383516692360425, B: 44.6729626863298 },
   },
   {
     colorNumber: "6396",
@@ -24370,11 +22492,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 63.42183052660262,
-      A: 7.3426096915131245,
-      B: 42.38430367779705,
-    },
+    lab: { L: 63.42183052660262, A: 7.3426096915131245, B: 42.38430367779705 },
   },
   {
     colorNumber: "6397",
@@ -24419,11 +22537,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 56.37771934408542,
-      A: 8.640935465597742,
-      B: 43.27461058834763,
-    },
+    lab: { L: 56.37771934408542, A: 8.640935465597742, B: 43.27461058834763 },
   },
   {
     colorNumber: "6398",
@@ -24464,11 +22578,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 49.94446079329366,
-      A: 10.12951064676737,
-      B: 39.576443061957846,
-    },
+    lab: { L: 49.94446079329366, A: 10.12951064676737, B: 39.576443061957846 },
   },
   {
     colorNumber: "6400",
@@ -24514,11 +22624,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.1337134003778,
-      A: 0.47649609445721275,
-      B: 23.908984502081143,
-    },
+    lab: { L: 84.1337134003778, A: 0.47649609445721275, B: 23.908984502081143 },
   },
   {
     colorNumber: "9027",
@@ -24559,11 +22665,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.9039774378179,
-      A: 0.28186062405127776,
-      B: 26.75150405648361,
-    },
+    lab: { L: 80.9039774378179, A: 0.28186062405127776, B: 26.75150405648361 },
   },
   {
     colorNumber: "6401",
@@ -24609,11 +22711,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 76.35010125628033,
-      A: 0.7524039471885624,
-      B: 31.03124141843505,
-    },
+    lab: { L: 76.35010125628033, A: 0.7524039471885624, B: 31.03124141843505 },
   },
   {
     colorNumber: "6402",
@@ -24654,11 +22752,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.68090149533215,
-      A: 2.4539559312925507,
-      B: 38.14379242188841,
-    },
+    lab: { L: 68.68090149533215, A: 2.4539559312925507, B: 38.14379242188841 },
   },
   {
     colorNumber: "6403",
@@ -24699,11 +22793,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 65.24343470537124,
-      A: 2.26273500949159,
-      B: 38.34450874599354,
-    },
+    lab: { L: 65.24343470537124, A: 2.26273500949159, B: 38.34450874599354 },
   },
   {
     colorNumber: "6404",
@@ -24748,11 +22838,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 54.688026879855855,
-      A: 3.477963427440778,
-      B: 37.42713141992383,
-    },
+    lab: { L: 54.688026879855855, A: 3.477963427440778, B: 37.42713141992383 },
   },
   {
     colorNumber: "6405",
@@ -24797,11 +22883,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 52.28844689379055,
-      A: 3.4119391885533146,
-      B: 36.50586333294976,
-    },
+    lab: { L: 52.28844689379055, A: 3.4119391885533146, B: 36.50586333294976 },
   },
   {
     colorNumber: "6407",
@@ -24842,11 +22924,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.8008628302213,
-      A: -0.4779244828849727,
-      B: 21.458534944655796,
-    },
+    lab: { L: 82.8008628302213, A: -0.4779244828849727, B: 21.458534944655796 },
   },
   {
     colorNumber: "6408",
@@ -24892,11 +22970,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.45183970823504,
-      A: 0.728209258259338,
-      B: 27.874189957907536,
-    },
+    lab: { L: 74.45183970823504, A: 0.728209258259338, B: 27.874189957907536 },
   },
   {
     colorNumber: "9028",
@@ -24937,11 +23011,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.37655167651582,
-      A: 1.1890996691594213,
-      B: 28.941205174148642,
-    },
+    lab: { L: 69.37655167651582, A: 1.1890996691594213, B: 28.941205174148642 },
   },
   {
     colorNumber: "6409",
@@ -24982,11 +23052,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 63.5959811697938,
-      A: 2.056443280928577,
-      B: 32.99446195324307,
-    },
+    lab: { L: 63.5959811697938, A: 2.056443280928577, B: 32.99446195324307 },
   },
   {
     colorNumber: "6410",
@@ -25027,11 +23093,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 55.90572627531759,
-      A: 1.9259561376385181,
-      B: 37.33539870921617,
-    },
+    lab: { L: 55.90572627531759, A: 1.9259561376385181, B: 37.33539870921617 },
   },
   {
     colorNumber: "6411",
@@ -25072,11 +23134,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 51.04070757439183,
-      A: 1.5720899029089686,
-      B: 33.79855690659211,
-    },
+    lab: { L: 51.04070757439183, A: 1.5720899029089686, B: 33.79855690659211 },
   },
   {
     colorNumber: "6412",
@@ -25162,11 +23220,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.95049602868477,
-      A: -1.9458008937124904,
-      B: 19.19717441750808,
-    },
+    lab: { L: 84.95049602868477, A: -1.9458008937124904, B: 19.19717441750808 },
   },
   {
     colorNumber: "6415",
@@ -25252,11 +23306,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.45428242725835,
-      A: -2.378964203669176,
-      B: 30.150675056386934,
-    },
+    lab: { L: 73.45428242725835, A: -2.378964203669176, B: 30.150675056386934 },
   },
   {
     colorNumber: "6416",
@@ -25342,11 +23392,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 59.82386935900219,
-      A: -4.946814845753378,
-      B: 34.74068888818761,
-    },
+    lab: { L: 59.82386935900219, A: -4.946814845753378, B: 34.74068888818761 },
   },
   {
     colorNumber: "6418",
@@ -25387,11 +23433,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 54.76335586934586,
-      A: -4.798240602417958,
-      B: 30.819718000747066,
-    },
+    lab: { L: 54.76335586934586, A: -4.798240602417958, B: 30.819718000747066 },
   },
   {
     colorNumber: "6419",
@@ -25432,11 +23474,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 39.8164588182903,
-      A: -5.079051222120823,
-      B: 29.145973965143433,
-    },
+    lab: { L: 39.8164588182903, A: -5.079051222120823, B: 29.145973965143433 },
   },
   {
     colorNumber: "6918",
@@ -25477,11 +23515,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.90342700388001,
-      A: -9.435992336664423,
-      B: 63.84366258870495,
-    },
+    lab: { L: 73.90342700388001, A: -9.435992336664423, B: 63.84366258870495 },
   },
   {
     colorNumber: "6920",
@@ -25522,11 +23556,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.89206395404459,
-      A: -24.095884274148105,
-      B: 72.75688464394676,
-    },
+    lab: { L: 74.89206395404459, A: -24.095884274148105, B: 72.75688464394676 },
   },
   {
     colorNumber: "6921",
@@ -25567,11 +23597,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.95434297717338,
-      A: -29.82396251348518,
-      B: 65.33888740156554,
-    },
+    lab: { L: 70.95434297717338, A: -29.82396251348518, B: 65.33888740156554 },
   },
   {
     colorNumber: "6924",
@@ -25612,11 +23638,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 51.10630897417663,
-      A: -42.26525948468654,
-      B: 45.037019592037666,
-    },
+    lab: { L: 51.10630897417663, A: -42.26525948468654, B: 45.037019592037666 },
   },
   {
     colorNumber: "6925",
@@ -25662,11 +23684,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 51.691287149868,
-      A: -42.74399959471118,
-      B: 33.22403718245107,
-    },
+    lab: { L: 51.691287149868, A: -42.74399959471118, B: 33.22403718245107 },
   },
   {
     colorNumber: "6926",
@@ -25707,11 +23725,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 49.51547122200955,
-      A: -40.66214943643229,
-      B: 20.10889840631198,
-    },
+    lab: { L: 49.51547122200955, A: -40.66214943643229, B: 20.10889840631198 },
   },
   {
     colorNumber: "6927",
@@ -25752,11 +23766,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 41.93475847952849,
-      A: -39.41105754414526,
-      B: 17.90013033708814,
-    },
+    lab: { L: 41.93475847952849, A: -39.41105754414526, B: 17.90013033708814 },
   },
   {
     colorNumber: "6701",
@@ -25842,11 +23852,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.95063918138949,
-      A: -5.649470403646106,
-      B: 38.219213009057555,
-    },
+    lab: { L: 85.95063918138949, A: -5.649470403646106, B: 38.219213009057555 },
   },
   {
     colorNumber: "6703",
@@ -25887,11 +23893,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 79.61597811920913,
-      A: -5.929674318826184,
-      B: 52.24676802142565,
-    },
+    lab: { L: 79.61597811920913, A: -5.929674318826184, B: 52.24676802142565 },
   },
   {
     colorNumber: "9030",
@@ -25932,11 +23934,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 75.91240912139142,
-      A: -6.259977389819927,
-      B: 53.3225057014052,
-    },
+    lab: { L: 75.91240912139142, A: -6.259977389819927, B: 53.3225057014052 },
   },
   {
     colorNumber: "6704",
@@ -25977,11 +23975,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 71.97576719850693,
-      A: -5.7921165053806405,
-      B: 55.45009222658292,
-    },
+    lab: { L: 71.97576719850693, A: -5.7921165053806405, B: 55.45009222658292 },
   },
   {
     colorNumber: "6705",
@@ -26022,11 +24016,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 62.81146419649842,
-      A: -4.751878783313068,
-      B: 58.532392164188906,
-    },
+    lab: { L: 62.81146419649842, A: -4.751878783313068, B: 58.532392164188906 },
   },
   {
     colorNumber: "6706",
@@ -26067,11 +24057,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 57.68662615231055,
-      A: -5.183589388101706,
-      B: 55.31886261475686,
-    },
+    lab: { L: 57.68662615231055, A: -5.183589388101706, B: 55.31886261475686 },
   },
   {
     colorNumber: "6708",
@@ -26112,11 +24098,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 90.14518377866278,
-      A: -6.511124067591467,
-      B: 24.93088473017684,
-    },
+    lab: { L: 90.14518377866278, A: -6.511124067591467, B: 24.93088473017684 },
   },
   {
     colorNumber: "6709",
@@ -26157,11 +24139,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.75114148751338,
-      A: -9.575905382442295,
-      B: 35.45748011844538,
-    },
+    lab: { L: 84.75114148751338, A: -9.575905382442295, B: 35.45748011844538 },
   },
   {
     colorNumber: "9031",
@@ -26207,11 +24185,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.08349850792897,
-      A: -10.638422652898772,
-      B: 38.48072773136138,
-    },
+    lab: { L: 82.08349850792897, A: -10.638422652898772, B: 38.48072773136138 },
   },
   {
     colorNumber: "6710",
@@ -26252,11 +24226,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 77.59306467888247,
-      A: -11.501290956016764,
-      B: 39.11669987772699,
-    },
+    lab: { L: 77.59306467888247, A: -11.501290956016764, B: 39.11669987772699 },
   },
   {
     colorNumber: "6711",
@@ -26297,11 +24267,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.51959964243066,
-      A: -10.524214315864755,
-      B: 44.12762541324997,
-    },
+    lab: { L: 70.51959964243066, A: -10.524214315864755, B: 44.12762541324997 },
   },
   {
     colorNumber: "6712",
@@ -26342,11 +24308,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 61.00253193497913,
-      A: -11.036067012687223,
-      B: 42.17617658437462,
-    },
+    lab: { L: 61.00253193497913, A: -11.036067012687223, B: 42.17617658437462 },
   },
   {
     colorNumber: "6713",
@@ -26392,11 +24354,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 51.93261815455095,
-      A: -7.723816047057575,
-      B: 39.70077617760659,
-    },
+    lab: { L: 51.93261815455095, A: -7.723816047057575, B: 39.70077617760659 },
   },
   {
     colorNumber: "6715",
@@ -26442,11 +24400,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.22155538378449,
-      A: -8.513045737610081,
-      B: 19.528910027363434,
-    },
+    lab: { L: 88.22155538378449, A: -8.513045737610081, B: 19.528910027363434 },
   },
   {
     colorNumber: "6716",
@@ -26487,11 +24441,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.46905239698802,
-      A: -12.69083753655581,
-      B: 30.023705368275344,
-    },
+    lab: { L: 80.46905239698802, A: -12.69083753655581, B: 30.023705368275344 },
   },
   {
     colorNumber: "6717",
@@ -26532,11 +24482,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 72.7946870451335,
-      A: -15.598408219321014,
-      B: 38.81806083763968,
-    },
+    lab: { L: 72.7946870451335, A: -15.598408219321014, B: 38.81806083763968 },
   },
   {
     colorNumber: "9032",
@@ -26577,11 +24523,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.76086746963169,
-      A: -16.934061217499796,
-      B: 39.40489441602837,
-    },
+    lab: { L: 67.76086746963169, A: -16.934061217499796, B: 39.40489441602837 },
   },
   {
     colorNumber: "6718",
@@ -26622,11 +24564,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 65.065335277561,
-      A: -17.453987477018206,
-      B: 40.0140703533535,
-    },
+    lab: { L: 65.065335277561, A: -17.453987477018206, B: 40.0140703533535 },
   },
   {
     colorNumber: "6719",
@@ -26672,11 +24610,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 54.0109508121873,
-      A: -17.71858607282323,
-      B: 42.71382044206491,
-    },
+    lab: { L: 54.0109508121873, A: -17.71858607282323, B: 42.71382044206491 },
   },
   {
     colorNumber: "6720",
@@ -26722,11 +24656,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 48.96715680024485,
-      A: -17.234088770341494,
-      B: 38.25919571499292,
-    },
+    lab: { L: 48.96715680024485, A: -17.234088770341494, B: 38.25919571499292 },
   },
   {
     colorNumber: "6729",
@@ -26767,11 +24697,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.75647283013596,
-      A: -8.4353049841146,
-      B: 10.83351415026974,
-    },
+    lab: { L: 88.75647283013596, A: -8.4353049841146, B: 10.83351415026974 },
   },
   {
     colorNumber: "6730",
@@ -26857,11 +24783,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 77.99198322315138,
-      A: -19.338379589835753,
-      B: 21.1129384497178,
-    },
+    lab: { L: 77.99198322315138, A: -19.338379589835753, B: 21.1129384497178 },
   },
   {
     colorNumber: "6731",
@@ -26902,11 +24824,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.22091242745974,
-      A: -24.920046337047253,
-      B: 26.3715947249044,
-    },
+    lab: { L: 74.22091242745974, A: -24.920046337047253, B: 26.3715947249044 },
   },
   {
     colorNumber: "6732",
@@ -26947,11 +24865,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 65.85928773790388,
-      A: -26.94787075905436,
-      B: 27.165931128983,
-    },
+    lab: { L: 65.85928773790388, A: -26.94787075905436, B: 27.165931128983 },
   },
   {
     colorNumber: "6733",
@@ -27082,11 +24996,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.27283116639829,
-      A: -8.962187642679309,
-      B: 12.350681781272943,
-    },
+    lab: { L: 87.27283116639829, A: -8.962187642679309, B: 12.350681781272943 },
   },
   {
     colorNumber: "6723",
@@ -27172,11 +25082,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 75.01619319857033,
-      A: -15.644826160887304,
-      B: 19.11957227586194,
-    },
+    lab: { L: 75.01619319857033, A: -15.644826160887304, B: 19.11957227586194 },
   },
   {
     colorNumber: "6724",
@@ -27217,11 +25123,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 71.0329005150416,
-      A: -17.922502639184156,
-      B: 23.71798942011032,
-    },
+    lab: { L: 71.0329005150416, A: -17.922502639184156, B: 23.71798942011032 },
   },
   {
     colorNumber: "6725",
@@ -27266,11 +25168,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 62.94131315481938,
-      A: -19.827343822591605,
-      B: 25.5299021681598,
-    },
+    lab: { L: 62.94131315481938, A: -19.827343822591605, B: 25.5299021681598 },
   },
   {
     colorNumber: "6726",
@@ -27311,11 +25209,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 50.55900986201084,
-      A: -20.9128159996293,
-      B: 27.007772061556846,
-    },
+    lab: { L: 50.55900986201084, A: -20.9128159996293, B: 27.007772061556846 },
   },
   {
     colorNumber: "6727",
@@ -27356,11 +25250,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 44.58037239017715,
-      A: -18.748826806508134,
-      B: 24.78250298634592,
-    },
+    lab: { L: 44.58037239017715, A: -18.748826806508134, B: 24.78250298634592 },
   },
   {
     colorNumber: "6736",
@@ -27401,11 +25291,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.72439801772417,
-      A: -11.700797426740461,
-      B: 9.255905711632618,
-    },
+    lab: { L: 87.72439801772417, A: -11.700797426740461, B: 9.255905711632618 },
   },
   {
     colorNumber: "6737",
@@ -27446,11 +25332,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.8641359008107,
-      A: -18.417628004888552,
-      B: 12.946134981804857,
-    },
+    lab: { L: 80.8641359008107, A: -18.417628004888552, B: 12.946134981804857 },
   },
   {
     colorNumber: "6738",
@@ -27491,11 +25373,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.9334902837155,
-      A: -25.503062123726885,
-      B: 15.74590061847989,
-    },
+    lab: { L: 73.9334902837155, A: -25.503062123726885, B: 15.74590061847989 },
   },
   {
     colorNumber: "9035",
@@ -27536,11 +25414,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.37443406780233,
-      A: -27.87158579941995,
-      B: 16.720054043609146,
-    },
+    lab: { L: 67.37443406780233, A: -27.87158579941995, B: 16.720054043609146 },
   },
   {
     colorNumber: "6739",
@@ -27581,11 +25455,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 62.98652366629884,
-      A: -30.08619936068352,
-      B: 17.652239766511602,
-    },
+    lab: { L: 62.98652366629884, A: -30.08619936068352, B: 17.652239766511602 },
   },
   {
     colorNumber: "6740",
@@ -27626,11 +25496,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 50.50755356212787,
-      A: -30.55495408123837,
-      B: 19.967330419021977,
-    },
+    lab: { L: 50.50755356212787, A: -30.55495408123837, B: 19.967330419021977 },
   },
   {
     colorNumber: "6741",
@@ -27716,11 +25582,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.5173996551467,
-      A: -9.103118875623096,
-      B: 6.24402520138716,
-    },
+    lab: { L: 88.5173996551467, A: -9.103118875623096, B: 6.24402520138716 },
   },
   {
     colorNumber: "6744",
@@ -27761,11 +25623,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.14106857927757,
-      A: -15.193269059405045,
-      B: 8.307635248961587,
-    },
+    lab: { L: 83.14106857927757, A: -15.193269059405045, B: 8.307635248961587 },
   },
   {
     colorNumber: "9036",
@@ -27806,11 +25664,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.58227944430918,
-      A: -20.707888276031262,
-      B: 9.042807868504799,
-    },
+    lab: { L: 78.58227944430918, A: -20.707888276031262, B: 9.042807868504799 },
   },
   {
     colorNumber: "6745",
@@ -27851,11 +25705,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.62039047390543,
-      A: -24.590069622597856,
-      B: 10.41842820108303,
-    },
+    lab: { L: 73.62039047390543, A: -24.590069622597856, B: 10.41842820108303 },
   },
   {
     colorNumber: "6746",
@@ -27896,11 +25746,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 63.61727618220422,
-      A: -35.25369995090305,
-      B: 14.001835158279885,
-    },
+    lab: { L: 63.61727618220422, A: -35.25369995090305, B: 14.001835158279885 },
   },
   {
     colorNumber: "6747",
@@ -27991,11 +25837,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 38.41768974956864,
-      A: -35.40775751455064,
-      B: 13.153057164596015,
-    },
+    lab: { L: 38.41768974956864, A: -35.40775751455064, B: 13.153057164596015 },
   },
   {
     colorNumber: "6421",
@@ -28010,7 +25852,7 @@ export const colorData = [
     isInterior: true,
     name: "Celery",
     lrv: 71.303,
-    brandedCollectionNames: ["Living Well"],
+    brandedCollectionNames: ["Frosted Tints", "Living Well"],
     colorFamilyNames: ["Green", "Living Well"],
     brandKey: "SW",
     red: 224,
@@ -28036,11 +25878,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.59884829043128,
-      A: -4.277003878272733,
-      B: 16.09288625566878,
-    },
+    lab: { L: 87.59884829043128, A: -4.277003878272733, B: 16.09288625566878 },
   },
   {
     colorNumber: "6422",
@@ -28081,11 +25919,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.12577156835228,
-      A: -6.450487281492001,
-      B: 22.297934318761747,
-    },
+    lab: { L: 80.12577156835228, A: -6.450487281492001, B: 22.297934318761747 },
   },
   {
     colorNumber: "9037",
@@ -28126,11 +25960,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.25236009874263,
-      A: -6.890848242133152,
-      B: 24.17515534913437,
-    },
+    lab: { L: 74.25236009874263, A: -6.890848242133152, B: 24.17515534913437 },
   },
   {
     colorNumber: "6423",
@@ -28171,11 +26001,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.40471596521402,
-      A: -7.302261412369726,
-      B: 26.0441999547359,
-    },
+    lab: { L: 69.40471596521402, A: -7.302261412369726, B: 26.0441999547359 },
   },
   {
     colorNumber: "6424",
@@ -28216,11 +26042,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.19667910925479,
-      A: -8.437596397233182,
-      B: 29.751055159347285,
-    },
+    lab: { L: 60.19667910925479, A: -8.437596397233182, B: 29.751055159347285 },
   },
   {
     colorNumber: "6425",
@@ -28261,11 +26083,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 46.53700533382754,
-      A: -8.138362842102287,
-      B: 28.21514029655304,
-    },
+    lab: { L: 46.53700533382754, A: -8.138362842102287, B: 28.21514029655304 },
   },
   {
     colorNumber: "6426",
@@ -28306,11 +26124,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 39.64390984123598,
-      A: -7.808347291553747,
-      B: 25.47206026577986,
-    },
+    lab: { L: 39.64390984123598, A: -7.808347291553747, B: 25.47206026577986 },
   },
   {
     colorNumber: "6428",
@@ -28351,11 +26165,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.21573420463496,
-      A: -6.0747952260242215,
-      B: 15.49873843326608,
-    },
+    lab: { L: 87.21573420463496, A: -6.0747952260242215, B: 15.49873843326608 },
   },
   {
     colorNumber: "6429",
@@ -28396,11 +26206,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.08885374779777,
-      A: -8.370983266755506,
-      B: 17.75898776575111,
-    },
+    lab: { L: 81.08885374779777, A: -8.370983266755506, B: 17.75898776575111 },
   },
   {
     colorNumber: "6430",
@@ -28441,11 +26247,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 71.5696623485322,
-      A: -11.005239277281198,
-      B: 22.468764195764447,
-    },
+    lab: { L: 71.5696623485322, A: -11.005239277281198, B: 22.468764195764447 },
   },
   {
     colorNumber: "9038",
@@ -28531,11 +26333,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 58.29748444396826,
-      A: -12.077378998773092,
-      B: 26.54321630326899,
-    },
+    lab: { L: 58.29748444396826, A: -12.077378998773092, B: 26.54321630326899 },
   },
   {
     colorNumber: "6432",
@@ -28621,11 +26419,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 39.659659610864345,
-      A: -11.9176133375683,
-      B: 22.488259462359995,
-    },
+    lab: { L: 39.659659610864345, A: -11.9176133375683, B: 22.488259462359995 },
   },
   {
     colorNumber: "6435",
@@ -28666,11 +26460,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.78325323710304,
-      A: -6.384148439971704,
-      B: 9.330447264493769,
-    },
+    lab: { L: 88.78325323710304, A: -6.384148439971704, B: 9.330447264493769 },
   },
   {
     colorNumber: "6436",
@@ -28711,11 +26501,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.20934527607076,
-      A: -9.558708752516576,
-      B: 14.007420670562531,
-    },
+    lab: { L: 82.20934527607076, A: -9.558708752516576, B: 14.007420670562531 },
   },
   {
     colorNumber: "6437",
@@ -28756,11 +26542,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 71.0925597757519,
-      A: -13.108418603306582,
-      B: 18.480110619906533,
-    },
+    lab: { L: 71.0925597757519, A: -13.108418603306582, B: 18.480110619906533 },
   },
   {
     colorNumber: "9039",
@@ -28891,11 +26673,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 45.75149800478723,
-      A: -13.594168720839573,
-      B: 17.25566469178863,
-    },
+    lab: { L: 45.75149800478723, A: -13.594168720839573, B: 17.25566469178863 },
   },
   {
     colorNumber: "6440",
@@ -28936,11 +26714,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 35.42433631021793,
-      A: -11.36410017216194,
-      B: 10.643779741466286,
-    },
+    lab: { L: 35.42433631021793, A: -11.36410017216194, B: 10.643779741466286 },
   },
   {
     colorNumber: "6442",
@@ -28981,11 +26755,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.5543115659407,
-      A: -8.658589990932219,
-      B: 9.186101617113218,
-    },
+    lab: { L: 86.5543115659407, A: -8.658589990932219, B: 9.186101617113218 },
   },
   {
     colorNumber: "6443",
@@ -29071,11 +26841,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 66.05644410479955,
-      A: -18.385966562731838,
-      B: 18.35643136580265,
-    },
+    lab: { L: 66.05644410479955, A: -18.385966562731838, B: 18.35643136580265 },
   },
   {
     colorNumber: "9040",
@@ -29116,11 +26882,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 58.05878670222043,
-      A: -18.98138206940225,
-      B: 18.229250149897492,
-    },
+    lab: { L: 58.05878670222043, A: -18.98138206940225, B: 18.229250149897492 },
   },
   {
     colorNumber: "6445",
@@ -29206,11 +26968,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 37.57194911653225,
-      A: -18.91387913911974,
-      B: 17.136408554563754,
-    },
+    lab: { L: 37.57194911653225, A: -18.91387913911974, B: 17.136408554563754 },
   },
   {
     colorNumber: "6447",
@@ -29296,11 +27054,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.67726796459435,
-      A: -9.037043615696073,
-      B: 8.014556906763314,
-    },
+    lab: { L: 84.67726796459435, A: -9.037043615696073, B: 8.014556906763314 },
   },
   {
     colorNumber: "6450",
@@ -29386,11 +27140,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.3275830976387,
-      A: -14.038738789737494,
-      B: 12.632638749846748,
-    },
+    lab: { L: 69.3275830976387, A: -14.038738789737494, B: 12.632638749846748 },
   },
   {
     colorNumber: "7742",
@@ -29611,11 +27361,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.8672594754171,
-      A: -7.285187655977799,
-      B: 4.17985854895353,
-    },
+    lab: { L: 83.8672594754171, A: -7.285187655977799, B: 4.17985854895353 },
   },
   {
     colorNumber: "6457",
@@ -29656,11 +27402,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 76.30425113518811,
-      A: -11.061995571601146,
-      B: 4.787415705078191,
-    },
+    lab: { L: 76.30425113518811, A: -11.061995571601146, B: 4.787415705078191 },
   },
   {
     colorNumber: "6458",
@@ -29701,11 +27443,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.83340937690653,
-      A: -13.915984938416226,
-      B: 5.817672439005461,
-    },
+    lab: { L: 68.83340937690653, A: -13.915984938416226, B: 5.817672439005461 },
   },
   {
     colorNumber: "9041",
@@ -29746,11 +27484,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 61.31484815175807,
-      A: -14.21134094416604,
-      B: 5.994768085030544,
-    },
+    lab: { L: 61.31484815175807, A: -14.21134094416604, B: 5.994768085030544 },
   },
   {
     colorNumber: "6459",
@@ -29791,11 +27525,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 51.3693204727754,
-      A: -16.520173722305685,
-      B: 8.152224999369363,
-    },
+    lab: { L: 51.3693204727754, A: -16.520173722305685, B: 8.152224999369363 },
   },
   {
     colorNumber: "6460",
@@ -29881,11 +27611,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 33.711947894201636,
-      A: -13.79667558969913,
-      B: 8.77647662672737,
-    },
+    lab: { L: 33.711947894201636, A: -13.79667558969913, B: 8.77647662672737 },
   },
   {
     colorNumber: "6463",
@@ -29926,11 +27652,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.90309178811562,
-      A: -9.091773397729542,
-      B: 3.012406193975381,
-    },
+    lab: { L: 84.90309178811562, A: -9.091773397729542, B: 3.012406193975381 },
   },
   {
     colorNumber: "6464",
@@ -29971,11 +27693,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.83456624126646,
-      A: -12.797850383132637,
-      B: 3.612961249037583,
-    },
+    lab: { L: 78.83456624126646, A: -12.797850383132637, B: 3.612961249037583 },
   },
   {
     colorNumber: "6465",
@@ -30061,11 +27779,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 64.76106681969522,
-      A: -15.68556590371517,
-      B: 4.256338581821151,
-    },
+    lab: { L: 64.76106681969522, A: -15.68556590371517, B: 4.256338581821151 },
   },
   {
     colorNumber: "6466",
@@ -30106,11 +27820,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 57.28467866835854,
-      A: -17.636696761528682,
-      B: 5.735551699125718,
-    },
+    lab: { L: 57.28467866835854, A: -17.636696761528682, B: 5.735551699125718 },
   },
   {
     colorNumber: "6467",
@@ -30151,11 +27861,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 47.36134913136583,
-      A: -16.687338472483603,
-      B: 5.260311840001819,
-    },
+    lab: { L: 47.36134913136583, A: -16.687338472483603, B: 5.260311840001819 },
   },
   {
     colorNumber: "6468",
@@ -30601,11 +28307,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.19974104381203,
-      A: -18.96379892073852,
-      B: 0.544062662883471,
-    },
+    lab: { L: 81.19974104381203, A: -18.96379892073852, B: 0.544062662883471 },
   },
   {
     colorNumber: "9043",
@@ -30646,11 +28348,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 75.52857479976555,
-      A: -22.79695449111996,
-      B: 1.251649031159352,
-    },
+    lab: { L: 75.52857479976555, A: -22.79695449111996, B: 1.251649031159352 },
   },
   {
     colorNumber: "6752",
@@ -30691,11 +28389,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.42140085556716,
-      A: -27.540688617880228,
-      B: 2.384654266384456,
-    },
+    lab: { L: 70.42140085556716, A: -27.540688617880228, B: 2.384654266384456 },
   },
   {
     colorNumber: "6753",
@@ -30736,11 +28430,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 61.6676237296806,
-      A: -29.55125079797899,
-      B: 2.8464297220554435,
-    },
+    lab: { L: 61.6676237296806, A: -29.55125079797899, B: 2.8464297220554435 },
   },
   {
     colorNumber: "6754",
@@ -30831,11 +28521,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 40.073879046143375,
-      A: -34.27264355763998,
-      B: 8.853689379759178,
-    },
+    lab: { L: 40.073879046143375, A: -34.27264355763998, B: 8.853689379759178 },
   },
   {
     colorNumber: "6757",
@@ -30926,11 +28612,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.55265335818628,
-      A: -18.8344949706542,
-      B: -0.5406343854476248,
-    },
+    lab: { L: 81.55265335818628, A: -18.8344949706542, B: -0.5406343854476248 },
   },
   {
     colorNumber: "9044",
@@ -31206,11 +28888,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.5259431913006,
-      A: -11.370440980293829,
-      B: -3.836458898744133,
-    },
+    lab: { L: 88.5259431913006, A: -11.370440980293829, B: -3.836458898744133 },
   },
   {
     colorNumber: "6765",
@@ -31251,11 +28929,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.260585380264,
-      A: -16.90756645099428,
-      B: -5.559142891876023,
-    },
+    lab: { L: 84.260585380264, A: -16.90756645099428, B: -5.559142891876023 },
   },
   {
     colorNumber: "9045",
@@ -31346,11 +29020,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.46928209078493,
-      A: -24.941767103555,
-      B: -8.981104903299709,
-    },
+    lab: { L: 73.46928209078493, A: -24.941767103555, B: -8.981104903299709 },
   },
   {
     colorNumber: "6767",
@@ -31526,11 +29196,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.1564451885273,
-      A: -9.230079158125237,
-      B: -4.801100103013067,
-    },
+    lab: { L: 87.1564451885273, A: -9.230079158125237, B: -4.801100103013067 },
   },
   {
     colorNumber: "6772",
@@ -31616,11 +29282,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.42858159423565,
-      A: -15.17213022329228,
-      B: -8.960606141714988,
-    },
+    lab: { L: 78.42858159423565, A: -15.17213022329228, B: -8.960606141714988 },
   },
   {
     colorNumber: "6773",
@@ -31851,11 +29513,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.33757502231313,
-      A: -8.493240828968018,
-      B: -5.660708044885432,
-    },
+    lab: { L: 88.33757502231313, A: -8.493240828968018, B: -5.660708044885432 },
   },
   {
     colorNumber: "6779",
@@ -32176,11 +29834,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.39646040830989,
-      A: -12.68749955213444,
-      B: -8.130796996081479,
-    },
+    lab: { L: 86.39646040830989, A: -12.68749955213444, B: -8.130796996081479 },
   },
   {
     colorNumber: "6786",
@@ -32311,11 +29965,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.96002878880431,
-      A: -21.95795490141206,
-      B: -19.13408386294475,
-    },
+    lab: { L: 68.96002878880431, A: -21.95795490141206, B: -19.13408386294475 },
   },
   {
     colorNumber: "6788",
@@ -32761,11 +30411,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 37.08502496806928,
-      A: -6.991958415295263,
-      B: -29.84648419571645,
-    },
+    lab: { L: 37.08502496806928, A: -6.991958415295263, B: -29.84648419571645 },
   },
   {
     colorNumber: "6470",
@@ -32806,11 +30452,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.58590334181226,
-      A: -8.099917195487972,
-      B: 2.2606844588412667,
-    },
+    lab: { L: 82.58590334181226, A: -8.099917195487972, B: 2.2606844588412667 },
   },
   {
     colorNumber: "6471",
@@ -32851,11 +30493,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 75.99748304032227,
-      A: -10.445393311432849,
-      B: 2.161424400371814,
-    },
+    lab: { L: 75.99748304032227, A: -10.445393311432849, B: 2.161424400371814 },
   },
   {
     colorNumber: "9050",
@@ -32941,11 +30579,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 63.78892360774479,
-      A: -14.462044997665458,
-      B: 1.145704412055526,
-    },
+    lab: { L: 63.78892360774479, A: -14.462044997665458, B: 1.145704412055526 },
   },
   {
     colorNumber: "6473",
@@ -33142,6 +30776,7 @@ export const colorData = [
     lrv: 57.174,
     brandedCollectionNames: [
       "2015 Voyage",
+      "Frosted Tints",
       "Coastal Calm",
       "Precious Baby",
       "Teen Space",
@@ -33172,11 +30807,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.23890563786657,
-      A: -8.640976016753344,
-      B: -1.253574061435092,
-    },
+    lab: { L: 80.23890563786657, A: -8.640976016753344, B: -1.253574061435092 },
   },
   {
     colorNumber: "9051",
@@ -33622,11 +31253,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 58.07161916311054,
-      A: -17.833278478559812,
-      B: -7.48919953406999,
-    },
+    lab: { L: 58.07161916311054, A: -17.833278478559812, B: -7.48919953406999 },
   },
   {
     colorNumber: "6488",
@@ -33667,11 +31294,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 47.12564656752241,
-      A: -18.49172069162114,
-      B: -8.272092050103508,
-    },
+    lab: { L: 47.12564656752241, A: -18.49172069162114, B: -8.272092050103508 },
   },
   {
     colorNumber: "6489",
@@ -33802,11 +31425,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.93456856372978,
-      A: -10.365744873827909,
-      B: -5.74322668730296,
-    },
+    lab: { L: 81.93456856372978, A: -10.365744873827909, B: -5.74322668730296 },
   },
   {
     colorNumber: "9053",
@@ -34122,11 +31741,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.6758271645143,
-      A: -6.841216581664367,
-      B: -5.7410212061214105,
-    },
+    lab: { L: 78.6758271645143, A: -6.841216581664367, B: -5.7410212061214105 },
   },
   {
     colorNumber: "9056",
@@ -34212,11 +31827,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.7653324761432,
-      A: -9.803691171323125,
-      B: -8.542215108062901,
-    },
+    lab: { L: 67.7653324761432, A: -9.803691171323125, B: -8.542215108062901 },
   },
   {
     colorNumber: "9058",
@@ -34392,11 +32003,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.22494271022644,
-      A: -6.828363506987567,
-      B: -4.568315742295792,
-    },
+    lab: { L: 86.22494271022644, A: -6.828363506987567, B: -4.568315742295792 },
   },
   {
     colorNumber: "6499",
@@ -34437,11 +32044,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.05138359602043,
-      A: -8.827950790974592,
-      B: -6.945095247642019,
-    },
+    lab: { L: 80.05138359602043, A: -8.827950790974592, B: -6.945095247642019 },
   },
   {
     colorNumber: "9061",
@@ -34482,11 +32085,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 75.1056243525866,
-      A: -9.7881630271624,
-      B: -9.013953729918045,
-    },
+    lab: { L: 75.1056243525866, A: -9.7881630271624, B: -9.013953729918045 },
   },
   {
     colorNumber: "6500",
@@ -34712,11 +32311,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.50055940962126,
-      A: -6.754879599648489,
-      B: -5.659521873046658,
-    },
+    lab: { L: 85.50055940962126, A: -6.754879599648489, B: -5.659521873046658 },
   },
   {
     colorNumber: "6506",
@@ -34757,11 +32352,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 79.10677032584759,
-      A: -7.633140633554303,
-      B: -10.52434214535689,
-    },
+    lab: { L: 79.10677032584759, A: -7.633140633554303, B: -10.52434214535689 },
   },
   {
     colorNumber: "6507",
@@ -34802,11 +32393,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.48510234329683,
-      A: -9.54252722395993,
-      B: -14.829837725790874,
-    },
+    lab: { L: 69.48510234329683, A: -9.54252722395993, B: -14.829837725790874 },
   },
   {
     colorNumber: "9062",
@@ -34847,11 +32434,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 62.29376407638206,
-      A: -9.816366968076473,
-      B: -16.34821984788244,
-    },
+    lab: { L: 62.29376407638206, A: -9.816366968076473, B: -16.34821984788244 },
   },
   {
     colorNumber: "6508",
@@ -35072,11 +32655,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 32.84194549945695,
-      A: 0.8748686969899111,
-      B: -35.95703003001728,
-    },
+    lab: { L: 32.84194549945695, A: 0.8748686969899111, B: -35.95703003001728 },
   },
   {
     colorNumber: "6967",
@@ -35117,11 +32696,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 34.297151322028576,
-      A: 3.417388570664648,
-      B: -34.825749350628,
-    },
+    lab: { L: 34.297151322028576, A: 3.417388570664648, B: -34.825749350628 },
   },
   {
     colorNumber: "6971",
@@ -35162,11 +32737,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 33.32412643277536,
-      A: 9.612145921260584,
-      B: -31.362230897662425,
-    },
+    lab: { L: 33.32412643277536, A: 9.612145921260584, B: -31.362230897662425 },
   },
   {
     colorNumber: "6983",
@@ -35252,11 +32823,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 39.07878982982414,
-      A: 18.91665991629596,
-      B: -25.14522615252358,
-    },
+    lab: { L: 39.07878982982414, A: 18.91665991629596, B: -25.14522615252358 },
   },
   {
     colorNumber: "6981",
@@ -35347,11 +32914,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.09625689576647,
-      A: -7.381265924357949,
-      B: -7.517969782700451,
-    },
+    lab: { L: 87.09625689576647, A: -7.381265924357949, B: -7.517969782700451 },
   },
   {
     colorNumber: "6800",
@@ -35847,11 +33410,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 56.82708282984947,
-      A: -4.141518029782743,
-      B: -19.00382346738865,
-    },
+    lab: { L: 56.82708282984947, A: -4.141518029782743, B: -19.00382346738865 },
   },
   {
     colorNumber: "6530",
@@ -35986,11 +33545,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.58177511611996,
-      A: -3.067765898631114,
-      B: -6.629001245451005,
-    },
+    lab: { L: 86.58177511611996, A: -3.067765898631114, B: -6.629001245451005 },
   },
   {
     colorNumber: "6807",
@@ -36076,11 +33631,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 71.80732788949715,
-      A: -2.958090299785221,
-      B: -17.80691037676889,
-    },
+    lab: { L: 71.80732788949715, A: -2.958090299785221, B: -17.80691037676889 },
   },
   {
     colorNumber: "6809",
@@ -36166,11 +33717,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 55.2483103327762,
-      A: -1.255220039359184,
-      B: -25.47039256687036,
-    },
+    lab: { L: 55.2483103327762, A: -1.255220039359184, B: -25.47039256687036 },
   },
   {
     colorNumber: "6810",
@@ -36256,11 +33803,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 28.732574186414,
-      A: 3.2246694076345506,
-      B: -32.52906276774028,
-    },
+    lab: { L: 28.732574186414, A: 3.2246694076345506, B: -32.52906276774028 },
   },
   {
     colorNumber: "6813",
@@ -36320,7 +33863,7 @@ export const colorData = [
     isInterior: true,
     name: "Breathtaking",
     lrv: 63.186,
-    brandedCollectionNames: ["ABC's and 123's", "Living Well"],
+    brandedCollectionNames: ["Frosted Tints", "ABC's and 123's", "Living Well"],
     colorFamilyNames: ["Purple", "Living Well"],
     brandKey: "SW",
     red: 199,
@@ -36391,11 +33934,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 79.48322734499867,
-      A: 1.632592698530888,
-      B: -13.597043009407383,
-    },
+    lab: { L: 79.48322734499867, A: 1.632592698530888, B: -13.597043009407383 },
   },
   {
     colorNumber: "6815",
@@ -36436,11 +33975,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 72.76618287558381,
-      A: 3.407740702275619,
-      B: -18.43882084966726,
-    },
+    lab: { L: 72.76618287558381, A: 3.407740702275619, B: -18.43882084966726 },
   },
   {
     colorNumber: "6816",
@@ -36481,11 +34016,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 63.285452636454934,
-      A: 5.498815444436367,
-      B: -24.21795306584169,
-    },
+    lab: { L: 63.285452636454934, A: 5.498815444436367, B: -24.21795306584169 },
   },
   {
     colorNumber: "6817",
@@ -36526,11 +34057,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 48.90574362054758,
-      A: 8.290947309142705,
-      B: -28.932333331684635,
-    },
+    lab: { L: 48.90574362054758, A: 8.290947309142705, B: -28.932333331684635 },
   },
   {
     colorNumber: "6818",
@@ -36616,11 +34143,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.44380625297754,
-      A: 4.024847092525929,
-      B: -4.670854241626787,
-    },
+    lab: { L: 87.44380625297754, A: 4.024847092525929, B: -4.670854241626787 },
   },
   {
     colorNumber: "6821",
@@ -36661,11 +34184,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.69754364317849,
-      A: 5.7890058236188535,
-      B: -9.161042490359804,
-    },
+    lab: { L: 82.69754364317849, A: 5.7890058236188535, B: -9.161042490359804 },
   },
   {
     colorNumber: "6822",
@@ -36706,11 +34225,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.96023895665648,
-      A: 9.362418315602305,
-      B: -14.96383385234472,
-    },
+    lab: { L: 74.96023895665648, A: 9.362418315602305, B: -14.96383385234472 },
   },
   {
     colorNumber: "9067",
@@ -36751,11 +34266,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.57467349388082,
-      A: 10.28468249320108,
-      B: -16.061484075140164,
-    },
+    lab: { L: 69.57467349388082, A: 10.28468249320108, B: -16.061484075140164 },
   },
   {
     colorNumber: "6823",
@@ -36841,11 +34352,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 46.81773834420426,
-      A: 13.834523431421552,
-      B: -24.4554914379856,
-    },
+    lab: { L: 46.81773834420426, A: 13.834523431421552, B: -24.4554914379856 },
   },
   {
     colorNumber: "6825",
@@ -36931,11 +34438,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.2238181230426,
-      A: 2.645534599371002,
-      B: -4.0495258570712345,
-    },
+    lab: { L: 88.2238181230426, A: 2.645534599371002, B: -4.0495258570712345 },
   },
   {
     colorNumber: "6828",
@@ -36976,11 +34479,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.9634780540295,
-      A: 7.329894105603973,
-      B: -9.174611504067553,
-    },
+    lab: { L: 81.9634780540295, A: 7.329894105603973, B: -9.174611504067553 },
   },
   {
     colorNumber: "6829",
@@ -37066,11 +34565,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.86040993336796,
-      A: 13.623080204031856,
-      B: -16.55431357808439,
-    },
+    lab: { L: 68.86040993336796, A: 13.623080204031856, B: -16.55431357808439 },
   },
   {
     colorNumber: "6830",
@@ -37156,11 +34651,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 46.90245919150156,
-      A: 19.99594712875574,
-      B: -23.041030992010203,
-    },
+    lab: { L: 46.90245919150156, A: 19.99594712875574, B: -23.041030992010203 },
   },
   {
     colorNumber: "6832",
@@ -37201,11 +34692,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 35.3879254434684,
-      A: 20.293015565022525,
-      B: -22.303083535621237,
-    },
+    lab: { L: 35.3879254434684, A: 20.293015565022525, B: -22.303083535621237 },
   },
   {
     colorNumber: "6834",
@@ -37246,11 +34733,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.43742522287414,
-      A: 5.176125883089688,
-      B: -3.681947227688065,
-    },
+    lab: { L: 88.43742522287414, A: 5.176125883089688, B: -3.681947227688065 },
   },
   {
     colorNumber: "6835",
@@ -37291,11 +34774,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.27899234181167,
-      A: 9.989474100360663,
-      B: -7.029778477560233,
-    },
+    lab: { L: 82.27899234181167, A: 9.989474100360663, B: -7.029778477560233 },
   },
   {
     colorNumber: "6836",
@@ -37336,11 +34815,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.81284400539242,
-      A: 16.251036851441803,
-      B: -11.2727401485772,
-    },
+    lab: { L: 70.81284400539242, A: 16.251036851441803, B: -11.2727401485772 },
   },
   {
     colorNumber: "6837",
@@ -37381,11 +34856,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 59.69040713951661,
-      A: 19.01936424624784,
-      B: -13.065379587678883,
-    },
+    lab: { L: 59.69040713951661, A: 19.01936424624784, B: -13.065379587678883 },
   },
   {
     colorNumber: "9069",
@@ -37426,11 +34897,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 52.83569504074278,
-      A: 18.36371580948709,
-      B: -13.783232241987653,
-    },
+    lab: { L: 52.83569504074278, A: 18.36371580948709, B: -13.783232241987653 },
   },
   {
     colorNumber: "6838",
@@ -37471,11 +34938,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 42.91964908674098,
-      A: 20.57175437120995,
-      B: -14.769172639056304,
-    },
+    lab: { L: 42.91964908674098, A: 20.57175437120995, B: -14.769172639056304 },
   },
   {
     colorNumber: "6839",
@@ -37561,11 +35024,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.1265463415866,
-      A: -5.160260183587173,
-      B: -5.129299036621893,
-    },
+    lab: { L: 85.1265463415866, A: -5.160260183587173, B: -5.129299036621893 },
   },
   {
     colorNumber: "6513",
@@ -37606,11 +35065,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 79.6477107101018,
-      A: -5.358147274381608,
-      B: -7.499651597661239,
-    },
+    lab: { L: 79.6477107101018, A: -5.358147274381608, B: -7.499651597661239 },
   },
   {
     colorNumber: "6514",
@@ -37786,11 +35241,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 45.45167144492502,
-      A: -8.062624932926587,
-      B: -19.10389315059824,
-    },
+    lab: { L: 45.45167144492502, A: -8.062624932926587, B: -19.10389315059824 },
   },
   {
     colorNumber: "6517",
@@ -37831,11 +35282,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 34.71004290378703,
-      A: -8.27672342905289,
-      B: -20.59997807447076,
-    },
+    lab: { L: 34.71004290378703, A: -8.27672342905289, B: -20.59997807447076 },
   },
   {
     colorNumber: "6519",
@@ -37876,11 +35323,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.99027303177718,
-      A: -2.938190047328648,
-      B: -3.255770686043724,
-    },
+    lab: { L: 85.99027303177718, A: -2.938190047328648, B: -3.255770686043724 },
   },
   {
     colorNumber: "6520",
@@ -37921,11 +35364,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 79.04957328892223,
-      A: -4.62438249344893,
-      B: -8.39470717561641,
-    },
+    lab: { L: 79.04957328892223, A: -4.62438249344893, B: -8.39470717561641 },
   },
   {
     colorNumber: "6521",
@@ -38191,11 +35630,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.68901642055452,
-      A: -2.231468834055006,
-      B: -4.134862958607366,
-    },
+    lab: { L: 84.68901642055452, A: -2.231468834055006, B: -4.134862958607366 },
   },
   {
     colorNumber: "6534",
@@ -38255,7 +35690,7 @@ export const colorData = [
     isInterior: true,
     name: "Solitude",
     lrv: 37.752,
-    brandedCollectionNames: [],
+    brandedCollectionNames: ["Frosted Tints"],
     colorFamilyNames: ["Purple"],
     brandKey: "SW",
     red: 153,
@@ -38461,11 +35896,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 31.34456491749397,
-      A: 4.972067851608475,
-      B: -22.608634767270996,
-    },
+    lab: { L: 31.34456491749397, A: 4.972067851608475, B: -22.608634767270996 },
   },
   {
     colorNumber: "6540",
@@ -38776,11 +36207,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 26.446964040289316,
-      A: 7.634878023229652,
-      B: -18.06674941766223,
-    },
+    lab: { L: 26.446964040289316, A: 7.634878023229652, B: -18.06674941766223 },
   },
   {
     colorNumber: "6547",
@@ -38821,11 +36248,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.06297969059868,
-      A: 2.261749874472363,
-      B: -1.986600548827111,
-    },
+    lab: { L: 86.06297969059868, A: 2.261749874472363, B: -1.986600548827111 },
   },
   {
     colorNumber: "6548",
@@ -38840,7 +36263,7 @@ export const colorData = [
     isInterior: true,
     name: "Grape Mist",
     lrv: 54.023,
-    brandedCollectionNames: ["Living Well"],
+    brandedCollectionNames: ["Frosted Tints", "Living Well"],
     colorFamilyNames: ["Purple", "Living Well"],
     brandKey: "SW",
     red: 197,
@@ -38911,11 +36334,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 64.98354120929193,
-      A: 5.436108607708324,
-      B: -6.89676714747629,
-    },
+    lab: { L: 64.98354120929193, A: 5.436108607708324, B: -6.89676714747629 },
   },
   {
     colorNumber: "9074",
@@ -38956,11 +36375,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 58.483179823982,
-      A: 5.615478141194563,
-      B: -8.224573415925018,
-    },
+    lab: { L: 58.483179823982, A: 5.615478141194563, B: -8.224573415925018 },
   },
   {
     colorNumber: "6550",
@@ -39001,11 +36416,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 51.36161779620484,
-      A: 7.451670015971024,
-      B: -11.515772014647375,
-    },
+    lab: { L: 51.36161779620484, A: 7.451670015971024, B: -11.515772014647375 },
   },
   {
     colorNumber: "6551",
@@ -39046,11 +36457,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 41.29016129170351,
-      A: 7.919889286299636,
-      B: -13.21188635270384,
-    },
+    lab: { L: 41.29016129170351, A: 7.919889286299636, B: -13.21188635270384 },
   },
   {
     colorNumber: "6552",
@@ -39091,11 +36498,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 25.535177057046212,
-      A: 11.33897522374977,
-      B: -19.46596810065955,
-    },
+    lab: { L: 25.535177057046212, A: 11.33897522374977, B: -19.46596810065955 },
   },
   {
     colorNumber: "6554",
@@ -39110,7 +36513,7 @@ export const colorData = [
     isInterior: true,
     name: "Lite Lavender",
     lrv: 71.398,
-    brandedCollectionNames: ["2022 Dreamland", "Living Well"],
+    brandedCollectionNames: ["Frosted Tints", "2022 Dreamland", "Living Well"],
     colorFamilyNames: ["Purple", "Living Well"],
     brandKey: "SW",
     red: 224,
@@ -39181,11 +36584,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.0694855613507,
-      A: 5.984527540905004,
-      B: -4.612135380689586,
-    },
+    lab: { L: 81.0694855613507, A: 5.984527540905004, B: -4.612135380689586 },
   },
   {
     colorNumber: "6556",
@@ -39226,11 +36625,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.60765336788438,
-      A: 8.259883339534035,
-      B: -8.083898103717392,
-    },
+    lab: { L: 68.60765336788438, A: 8.259883339534035, B: -8.083898103717392 },
   },
   {
     colorNumber: "9075",
@@ -39271,11 +36666,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.10044419130776,
-      A: 9.455005832750496,
-      B: -9.719662375759675,
-    },
+    lab: { L: 60.10044419130776, A: 9.455005832750496, B: -9.719662375759675 },
   },
   {
     colorNumber: "6557",
@@ -39316,11 +36707,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 47.42589321245386,
-      A: 11.15018377222954,
-      B: -12.164480359332863,
-    },
+    lab: { L: 47.42589321245386, A: 11.15018377222954, B: -12.164480359332863 },
   },
   {
     colorNumber: "6558",
@@ -39496,11 +36883,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 76.54779080459497,
-      A: 8.132909176739755,
-      B: -1.5969600791929217,
-    },
+    lab: { L: 76.54779080459497, A: 8.132909176739755, B: -1.5969600791929217 },
   },
   {
     colorNumber: "6283",
@@ -39631,11 +37014,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 47.93850499581284,
-      A: 16.690514755279107,
-      B: -3.454555663691705,
-    },
+    lab: { L: 47.93850499581284, A: 16.690514755279107, B: -3.454555663691705 },
   },
   {
     colorNumber: "6285",
@@ -39676,11 +37055,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 42.54008026731818,
-      A: 17.993639683015704,
-      B: -4.955204608042241,
-    },
+    lab: { L: 42.54008026731818, A: 17.993639683015704, B: -4.955204608042241 },
   },
   {
     colorNumber: "6286",
@@ -39766,11 +37141,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 79.95293036374595,
-      A: 6.361108931103699,
-      B: 4.554408930894138,
-    },
+    lab: { L: 79.95293036374595, A: 6.361108931103699, B: 4.554408930894138 },
   },
   {
     colorNumber: "6023",
@@ -39811,11 +37182,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.81017950006495,
-      A: 8.166624238040098,
-      B: 5.85504267474799,
-    },
+    lab: { L: 73.81017950006495, A: 8.166624238040098, B: 5.85504267474799 },
   },
   {
     colorNumber: "6024",
@@ -39856,11 +37223,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.00451255514625,
-      A: 9.447144476329994,
-      B: 5.25008564572742,
-    },
+    lab: { L: 67.00451255514625, A: 9.447144476329994, B: 5.25008564572742 },
   },
   {
     colorNumber: "9077",
@@ -39901,11 +37264,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 59.10792287327962,
-      A: 10.058489991370767,
-      B: 4.356410313683923,
-    },
+    lab: { L: 59.10792287327962, A: 10.058489991370767, B: 4.356410313683923 },
   },
   {
     colorNumber: "6025",
@@ -39991,11 +37350,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 40.87545919243876,
-      A: 12.58686128535927,
-      B: 2.3168135960195846,
-    },
+    lab: { L: 40.87545919243876, A: 12.58686128535927, B: 2.3168135960195846 },
   },
   {
     colorNumber: "6027",
@@ -40036,11 +37391,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 29.736925078022928,
-      A: 15.247795100976042,
-      B: 4.915157712096574,
-    },
+    lab: { L: 29.736925078022928, A: 15.247795100976042, B: 4.915157712096574 },
   },
   {
     colorNumber: "6029",
@@ -40081,11 +37432,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.64817458827618,
-      A: 4.206807912983724,
-      B: 4.867945317351641,
-    },
+    lab: { L: 81.64817458827618, A: 4.206807912983724, B: 4.867945317351641 },
   },
   {
     colorNumber: "6030",
@@ -40126,11 +37473,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.56199704991512,
-      A: 5.585689600122179,
-      B: 4.882484946437415,
-    },
+    lab: { L: 73.56199704991512, A: 5.585689600122179, B: 4.882484946437415 },
   },
   {
     colorNumber: "6031",
@@ -40171,11 +37514,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.59114471434785,
-      A: 7.042247759450948,
-      B: 6.069821333522141,
-    },
+    lab: { L: 67.59114471434785, A: 7.042247759450948, B: 6.069821333522141 },
   },
   {
     colorNumber: "9078",
@@ -40216,11 +37555,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 58.69004793996717,
-      A: 8.075669160680087,
-      B: 6.581603314017159,
-    },
+    lab: { L: 58.69004793996717, A: 8.075669160680087, B: 6.581603314017159 },
   },
   {
     colorNumber: "6032",
@@ -40261,11 +37596,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 49.74357409565148,
-      A: 10.049927678882021,
-      B: 7.508253618675131,
-    },
+    lab: { L: 49.74357409565148, A: 10.049927678882021, B: 7.508253618675131 },
   },
   {
     colorNumber: "6033",
@@ -40306,11 +37637,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 42.85426342239663,
-      A: 10.144323748241145,
-      B: 7.047756888548051,
-    },
+    lab: { L: 42.85426342239663, A: 10.144323748241145, B: 7.047756888548051 },
   },
   {
     colorNumber: "6043",
@@ -40351,11 +37678,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.5169189342211,
-      A: 3.5173246811803227,
-      B: 5.738419131184114,
-    },
+    lab: { L: 81.5169189342211, A: 3.5173246811803227, B: 5.738419131184114 },
   },
   {
     colorNumber: "6044",
@@ -40396,11 +37719,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.26072938827242,
-      A: 5.118393309855751,
-      B: 7.559783586485613,
-    },
+    lab: { L: 74.26072938827242, A: 5.118393309855751, B: 7.559783586485613 },
   },
   {
     colorNumber: "6045",
@@ -40441,11 +37760,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.93400842858951,
-      A: 6.60787272697716,
-      B: 8.808689281423332,
-    },
+    lab: { L: 67.93400842858951, A: 6.60787272697716, B: 8.808689281423332 },
   },
   {
     colorNumber: "9079",
@@ -40486,11 +37801,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 58.499721553885095,
-      A: 8.63556712244523,
-      B: 9.199188828196348,
-    },
+    lab: { L: 58.499721553885095, A: 8.63556712244523, B: 9.199188828196348 },
   },
   {
     colorNumber: "6046",
@@ -40531,11 +37842,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 51.88115231142375,
-      A: 10.269219372906257,
-      B: 11.232673777892188,
-    },
+    lab: { L: 51.88115231142375, A: 10.269219372906257, B: 11.232673777892188 },
   },
   {
     colorNumber: "6047",
@@ -40576,11 +37883,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 44.25166295875644,
-      A: 10.43288759770894,
-      B: 10.925275238668974,
-    },
+    lab: { L: 44.25166295875644, A: 10.43288759770894, B: 10.925275238668974 },
   },
   {
     colorNumber: "6048",
@@ -40621,11 +37924,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 27.27414306210509,
-      A: 13.704085108204783,
-      B: 13.127189370929981,
-    },
+    lab: { L: 27.27414306210509, A: 13.704085108204783, B: 13.127189370929981 },
   },
   {
     colorNumber: "6050",
@@ -40666,11 +37965,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.61025173392527,
-      A: 5.352829097750589,
-      B: 7.532231483886931,
-    },
+    lab: { L: 81.61025173392527, A: 5.352829097750589, B: 7.532231483886931 },
   },
   {
     colorNumber: "6051",
@@ -40716,11 +38011,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 75.28664992298529,
-      A: 7.766280840769191,
-      B: 9.676932560271778,
-    },
+    lab: { L: 75.28664992298529, A: 7.766280840769191, B: 9.676932560271778 },
   },
   {
     colorNumber: "6052",
@@ -40761,11 +38052,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.74507463200743,
-      A: 9.31925855328669,
-      B: 10.968480742452824,
-    },
+    lab: { L: 69.74507463200743, A: 9.31925855328669, B: 10.968480742452824 },
   },
   {
     colorNumber: "9080",
@@ -40857,11 +38144,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 50.82887307881907,
-      A: 16.77340084670448,
-      B: 13.416200632389508,
-    },
+    lab: { L: 50.82887307881907, A: 16.77340084670448, B: 13.416200632389508 },
   },
   {
     colorNumber: "6054",
@@ -40947,11 +38230,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 27.784361903664532,
-      A: 15.56035584991039,
-      B: 11.284641385016304,
-    },
+    lab: { L: 27.784361903664532, A: 15.56035584991039, B: 11.284641385016304 },
   },
   {
     colorNumber: "6057",
@@ -40998,11 +38277,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.61759688310465,
-      A: 4.858346934192959,
-      B: 9.008804766715839,
-    },
+    lab: { L: 82.61759688310465, A: 4.858346934192959, B: 9.008804766715839 },
   },
   {
     colorNumber: "6058",
@@ -41043,11 +38318,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 76.22253939071642,
-      A: 6.9053413574205464,
-      B: 11.032343705372693,
-    },
+    lab: { L: 76.22253939071642, A: 6.9053413574205464, B: 11.032343705372693 },
   },
   {
     colorNumber: "6059",
@@ -41088,11 +38359,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.18932498566409,
-      A: 8.35948055923974,
-      B: 12.918252194028623,
-    },
+    lab: { L: 69.18932498566409, A: 8.35948055923974, B: 12.918252194028623 },
   },
   {
     colorNumber: "9081",
@@ -41138,11 +38405,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 61.52603164276178,
-      A: 9.61429073059028,
-      B: 13.06433738269992,
-    },
+    lab: { L: 61.52603164276178, A: 9.61429073059028, B: 13.06433738269992 },
   },
   {
     colorNumber: "6061",
@@ -41188,11 +38451,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 46.30281360971541,
-      A: 11.761828568753629,
-      B: 14.517147030721599,
-    },
+    lab: { L: 46.30281360971541, A: 11.761828568753629, B: 14.517147030721599 },
   },
   {
     colorNumber: "6064",
@@ -41233,11 +38492,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.10177453707692,
-      A: 2.4552716278476994,
-      B: 6.450620066851687,
-    },
+    lab: { L: 83.10177453707692, A: 2.4552716278476994, B: 6.450620066851687 },
   },
   {
     colorNumber: "6065",
@@ -41278,11 +38533,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 76.27455011469812,
-      A: 4.070757526856705,
-      B: 9.40857843735099,
-    },
+    lab: { L: 76.27455011469812, A: 4.070757526856705, B: 9.40857843735099 },
   },
   {
     colorNumber: "6066",
@@ -41323,11 +38574,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.21630253063789,
-      A: 5.410994252727674,
-      B: 11.220830446101182,
-    },
+    lab: { L: 69.21630253063789, A: 5.410994252727674, B: 11.220830446101182 },
   },
   {
     colorNumber: "9082",
@@ -41368,11 +38615,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.05645584936026,
-      A: 6.710936965651893,
-      B: 12.574976155564265,
-    },
+    lab: { L: 60.05645584936026, A: 6.710936965651893, B: 12.574976155564265 },
   },
   {
     colorNumber: "6067",
@@ -41413,11 +38656,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 53.43222766356496,
-      A: 8.358190171189438,
-      B: 12.848057939785962,
-    },
+    lab: { L: 53.43222766356496, A: 8.358190171189438, B: 12.848057939785962 },
   },
   {
     colorNumber: "6068",
@@ -41503,11 +38742,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 24.507845572985175,
-      A: 10.23971158912207,
-      B: 13.742795150449227,
-    },
+    lab: { L: 24.507845572985175, A: 10.23971158912207, B: 13.742795150449227 },
   },
   {
     colorNumber: "6085",
@@ -41548,11 +38783,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.09675072195435,
-      A: 2.9030393209061867,
-      B: 8.881264378383413,
-    },
+    lab: { L: 81.09675072195435, A: 2.9030393209061867, B: 8.881264378383413 },
   },
   {
     colorNumber: "6086",
@@ -41593,11 +38824,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.496033785697,
-      A: 4.710594416329483,
-      B: 10.27656991106296,
-    },
+    lab: { L: 73.496033785697, A: 4.710594416329483, B: 10.27656991106296 },
   },
   {
     colorNumber: "6087",
@@ -41638,11 +38865,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 66.9786461518469,
-      A: 5.4671316711382705,
-      B: 11.304184535418882,
-    },
+    lab: { L: 66.9786461518469, A: 5.4671316711382705, B: 11.304184535418882 },
   },
   {
     colorNumber: "9083",
@@ -41683,11 +38906,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 56.62324191026521,
-      A: 6.986427853022059,
-      B: 12.201689893576306,
-    },
+    lab: { L: 56.62324191026521, A: 6.986427853022059, B: 12.201689893576306 },
   },
   {
     colorNumber: "6088",
@@ -41728,11 +38947,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 50.23022745296079,
-      A: 8.091391807456771,
-      B: 14.693041814200647,
-    },
+    lab: { L: 50.23022745296079, A: 8.091391807456771, B: 14.693041814200647 },
   },
   {
     colorNumber: "6089",
@@ -41773,11 +38988,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 41.10549420962409,
-      A: 8.960807216682632,
-      B: 16.113080806198322,
-    },
+    lab: { L: 41.10549420962409, A: 8.960807216682632, B: 16.113080806198322 },
   },
   {
     colorNumber: "6090",
@@ -41863,11 +39074,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.19910874640821,
-      A: 1.946751962724369,
-      B: 6.854813685868444,
-    },
+    lab: { L: 81.19910874640821, A: 1.946751962724369, B: 6.854813685868444 },
   },
   {
     colorNumber: "6079",
@@ -41908,11 +39115,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.12719967211052,
-      A: 2.7782946407265974,
-      B: 8.413566888991575,
-    },
+    lab: { L: 74.12719967211052, A: 2.7782946407265974, B: 8.413566888991575 },
   },
   {
     colorNumber: "6080",
@@ -41953,11 +39156,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.72864150114468,
-      A: 3.441044456686193,
-      B: 9.349243280519293,
-    },
+    lab: { L: 68.72864150114468, A: 3.441044456686193, B: 9.349243280519293 },
   },
   {
     colorNumber: "9084",
@@ -41998,11 +39197,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.18239842699967,
-      A: 4.062419480064083,
-      B: 10.981681963322432,
-    },
+    lab: { L: 60.18239842699967, A: 4.062419480064083, B: 10.981681963322432 },
   },
   {
     colorNumber: "6081",
@@ -42043,11 +39238,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 52.177199183153306,
-      A: 6.308405147888719,
-      B: 13.915200922143377,
-    },
+    lab: { L: 52.177199183153306, A: 6.308405147888719, B: 13.915200922143377 },
   },
   {
     colorNumber: "6082",
@@ -42088,11 +39279,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 44.100825578376885,
-      A: 6.39365541821979,
-      B: 11.819983925446365,
-    },
+    lab: { L: 44.100825578376885, A: 6.39365541821979, B: 11.819983925446365 },
   },
   {
     colorNumber: "6083",
@@ -42107,7 +39294,7 @@ export const colorData = [
     isInterior: true,
     name: "Sable",
     lrv: 7.846,
-    brandedCollectionNames: ["Teen Space"],
+    brandedCollectionNames: ["Restorative Darks", "Teen Space"],
     colorFamilyNames: ["Orange"],
     brandKey: "SW",
     red: 95,
@@ -42133,11 +39320,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 33.6138744868344,
-      A: 6.47087861369855,
-      B: 10.355444854170626,
-    },
+    lab: { L: 33.6138744868344, A: 6.47087861369855, B: 10.355444854170626 },
   },
   {
     colorNumber: "9085",
@@ -42178,11 +39361,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.03730373984651,
-      A: 2.7020837529811437,
-      B: 8.249983188204357,
-    },
+    lab: { L: 81.03730373984651, A: 2.7020837529811437, B: 8.249983188204357 },
   },
   {
     colorNumber: "9086",
@@ -42228,11 +39407,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.72642414182891,
-      A: 3.7235118494113872,
-      B: 9.314967339154956,
-    },
+    lab: { L: 74.72642414182891, A: 3.7235118494113872, B: 9.314967339154956 },
   },
   {
     colorNumber: "9087",
@@ -42273,11 +39448,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.57920187033878,
-      A: 3.713691866394253,
-      B: 11.15742699612774,
-    },
+    lab: { L: 69.57920187033878, A: 3.713691866394253, B: 11.15742699612774 },
   },
   {
     colorNumber: "9088",
@@ -42318,11 +39489,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.84756016810441,
-      A: 5.032573290292996,
-      B: 13.681421492186473,
-    },
+    lab: { L: 60.84756016810441, A: 5.032573290292996, B: 13.681421492186473 },
   },
   {
     colorNumber: "9089",
@@ -42363,11 +39530,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 52.25656373977222,
-      A: 6.5816806280893925,
-      B: 14.621409831012432,
-    },
+    lab: { L: 52.25656373977222, A: 6.5816806280893925, B: 14.621409831012432 },
   },
   {
     colorNumber: "9090",
@@ -42408,11 +39571,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 42.30709962422423,
-      A: 7.225878857108848,
-      B: 14.729312458133215,
-    },
+    lab: { L: 42.30709962422423, A: 7.225878857108848, B: 14.729312458133215 },
   },
   {
     colorNumber: "9091",
@@ -42453,11 +39612,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 33.96787525288159,
-      A: 6.0057319426690405,
-      B: 12.115869611671071,
-    },
+    lab: { L: 33.96787525288159, A: 6.0057319426690405, B: 12.115869611671071 },
   },
   {
     colorNumber: "6092",
@@ -42498,11 +39653,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.66134154414065,
-      A: 3.672432118450364,
-      B: 10.266821233224777,
-    },
+    lab: { L: 81.66134154414065, A: 3.672432118450364, B: 10.266821233224777 },
   },
   {
     colorNumber: "6093",
@@ -42543,11 +39694,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.40382459343304,
-      A: 5.211935315054261,
-      B: 12.713618493162349,
-    },
+    lab: { L: 74.40382459343304, A: 5.211935315054261, B: 12.713618493162349 },
   },
   {
     colorNumber: "6094",
@@ -42588,11 +39735,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.89193578287146,
-      A: 6.863907181732576,
-      B: 15.23244384789233,
-    },
+    lab: { L: 68.89193578287146, A: 6.863907181732576, B: 15.23244384789233 },
   },
   {
     colorNumber: "9092",
@@ -42633,11 +39776,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 57.436438081545035,
-      A: 8.293486297603735,
-      B: 17.43626992346874,
-    },
+    lab: { L: 57.436438081545035, A: 8.293486297603735, B: 17.43626992346874 },
   },
   {
     colorNumber: "6095",
@@ -42678,11 +39817,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 50.83818489808107,
-      A: 10.151900833586469,
-      B: 19.716146069091334,
-    },
+    lab: { L: 50.83818489808107, A: 10.151900833586469, B: 19.716146069091334 },
   },
   {
     colorNumber: "6096",
@@ -42723,11 +39858,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 42.56135338162882,
-      A: 10.96144154236034,
-      B: 22.394081745383644,
-    },
+    lab: { L: 42.56135338162882, A: 10.96144154236034, B: 22.394081745383644 },
   },
   {
     colorNumber: "6097",
@@ -42768,11 +39899,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 33.60551486521409,
-      A: 10.629714958723724,
-      B: 22.303222842448257,
-    },
+    lab: { L: 33.60551486521409, A: 10.629714958723724, B: 22.303222842448257 },
   },
   {
     colorNumber: "6099",
@@ -42813,11 +39940,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.53532624071582,
-      A: 3.377335170774931,
-      B: 11.303697319428153,
-    },
+    lab: { L: 80.53532624071582, A: 3.377335170774931, B: 11.303697319428153 },
   },
   {
     colorNumber: "6100",
@@ -42862,11 +39985,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.97126560912751,
-      A: 4.775184668438515,
-      B: 14.266735620365424,
-    },
+    lab: { L: 73.97126560912751, A: 4.775184668438515, B: 14.266735620365424 },
   },
   {
     colorNumber: "6101",
@@ -42907,11 +40026,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.57011053995649,
-      A: 5.408238915273699,
-      B: 15.8441986179239,
-    },
+    lab: { L: 68.57011053995649, A: 5.408238915273699, B: 15.8441986179239 },
   },
   {
     colorNumber: "9093",
@@ -42952,11 +40067,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.76342624075545,
-      A: 6.0793450581099755,
-      B: 16.429055013740303,
-    },
+    lab: { L: 60.76342624075545, A: 6.0793450581099755, B: 16.429055013740303 },
   },
   {
     colorNumber: "6102",
@@ -42997,11 +40108,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 53.05577616704292,
-      A: 6.410825226990269,
-      B: 16.92428423944998,
-    },
+    lab: { L: 53.05577616704292, A: 6.410825226990269, B: 16.92428423944998 },
   },
   {
     colorNumber: "6103",
@@ -43042,11 +40149,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 44.24796103943436,
-      A: 6.573771330416866,
-      B: 16.85253590082508,
-    },
+    lab: { L: 44.24796103943436, A: 6.573771330416866, B: 16.85253590082508 },
   },
   {
     colorNumber: "6104",
@@ -43087,11 +40190,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 35.676667020418655,
-      A: 5.804379465011639,
-      B: 14.528901837974606,
-    },
+    lab: { L: 35.676667020418655, A: 5.804379465011639, B: 14.528901837974606 },
   },
   {
     colorNumber: "9094",
@@ -43132,11 +40231,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.46597983176241,
-      A: 4.163897056357446,
-      B: 12.682420985973963,
-    },
+    lab: { L: 81.46597983176241, A: 4.163897056357446, B: 12.682420985973963 },
   },
   {
     colorNumber: "9095",
@@ -43177,11 +40272,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 76.09257976989882,
-      A: 5.817374301197942,
-      B: 16.272336189679315,
-    },
+    lab: { L: 76.09257976989882, A: 5.817374301197942, B: 16.272336189679315 },
   },
   {
     colorNumber: "9096",
@@ -43222,11 +40313,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.73240490974139,
-      A: 6.491072805401621,
-      B: 17.875161401841577,
-    },
+    lab: { L: 70.73240490974139, A: 6.491072805401621, B: 17.875161401841577 },
   },
   {
     colorNumber: "9097",
@@ -43267,11 +40354,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 64.41413705920843,
-      A: 6.615572778297551,
-      B: 20.517456724483463,
-    },
+    lab: { L: 64.41413705920843, A: 6.615572778297551, B: 20.517456724483463 },
   },
   {
     colorNumber: "9098",
@@ -43312,11 +40395,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 46.32999902744056,
-      A: 9.70776462365064,
-      B: 21.623546121670877,
-    },
+    lab: { L: 46.32999902744056, A: 9.70776462365064, B: 21.623546121670877 },
   },
   {
     colorNumber: "9099",
@@ -43357,11 +40436,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 37.64101144509606,
-      A: 9.808161853275266,
-      B: 21.044421510748712,
-    },
+    lab: { L: 37.64101144509606, A: 9.808161853275266, B: 21.044421510748712 },
   },
   {
     colorNumber: "9100",
@@ -43447,11 +40522,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.33571612276805,
-      A: 3.274349615326133,
-      B: 15.698076250091763,
-    },
+    lab: { L: 81.33571612276805, A: 3.274349615326133, B: 15.698076250091763 },
   },
   {
     colorNumber: "9102",
@@ -43492,11 +40563,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 75.16942382097481,
-      A: 4.757710046924101,
-      B: 18.72614546568927,
-    },
+    lab: { L: 75.16942382097481, A: 4.757710046924101, B: 18.72614546568927 },
   },
   {
     colorNumber: "9103",
@@ -43537,11 +40604,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.17117585679358,
-      A: 6.0091459875435955,
-      B: 20.042501286352454,
-    },
+    lab: { L: 69.17117585679358, A: 6.0091459875435955, B: 20.042501286352454 },
   },
   {
     colorNumber: "9104",
@@ -43586,11 +40649,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 65.24611180938275,
-      A: 6.640713138552135,
-      B: 23.913814711531025,
-    },
+    lab: { L: 65.24611180938275, A: 6.640713138552135, B: 23.913814711531025 },
   },
   {
     colorNumber: "9105",
@@ -43631,11 +40690,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 57.37802444843848,
-      A: 9.159286368674636,
-      B: 23.646973248636183,
-    },
+    lab: { L: 57.37802444843848, A: 9.159286368674636, B: 23.646973248636183 },
   },
   {
     colorNumber: "9106",
@@ -43676,11 +40731,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 49.39437837025382,
-      A: 10.26428653108824,
-      B: 26.96863839398117,
-    },
+    lab: { L: 49.39437837025382, A: 10.26428653108824, B: 26.96863839398117 },
   },
   {
     colorNumber: "9107",
@@ -43766,11 +40817,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.42428368482953,
-      A: 2.6149796880290954,
-      B: 13.82100815774001,
-    },
+    lab: { L: 80.42428368482953, A: 2.6149796880290954, B: 13.82100815774001 },
   },
   {
     colorNumber: "6107",
@@ -43811,11 +40858,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.45069935571881,
-      A: 3.9641507203259096,
-      B: 15.685900511675666,
-    },
+    lab: { L: 73.45069935571881, A: 3.9641507203259096, B: 15.685900511675666 },
   },
   {
     colorNumber: "6108",
@@ -43856,11 +40899,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.74177043731049,
-      A: 4.870928485773751,
-      B: 17.973030225761555,
-    },
+    lab: { L: 67.74177043731049, A: 4.870928485773751, B: 17.973030225761555 },
   },
   {
     colorNumber: "9108",
@@ -43901,11 +40940,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.03703696430125,
-      A: 6.107121283499495,
-      B: 18.23109271025647,
-    },
+    lab: { L: 60.03703696430125, A: 6.107121283499495, B: 18.23109271025647 },
   },
   {
     colorNumber: "6109",
@@ -43946,11 +40981,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 55.95842202519552,
-      A: 6.748221639134854,
-      B: 20.457800244376866,
-    },
+    lab: { L: 55.95842202519552, A: 6.748221639134854, B: 20.457800244376866 },
   },
   {
     colorNumber: "6110",
@@ -43991,11 +41022,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 47.56581128077259,
-      A: 8.151915945772137,
-      B: 21.523755492097507,
-    },
+    lab: { L: 47.56581128077259, A: 8.151915945772137, B: 21.523755492097507 },
   },
   {
     colorNumber: "6111",
@@ -44036,11 +41063,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 38.93347476054621,
-      A: 6.784628526600472,
-      B: 17.876751568828265,
-    },
+    lab: { L: 38.93347476054621, A: 6.784628526600472, B: 17.876751568828265 },
   },
   {
     colorNumber: "9109",
@@ -44089,11 +41112,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.10701248216847,
-      A: 1.4629390052736113,
-      B: 9.390638083755864,
-    },
+    lab: { L: 85.10701248216847, A: 1.4629390052736113, B: 9.390638083755864 },
   },
   {
     colorNumber: "9110",
@@ -44134,11 +41153,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 77.84983989350025,
-      A: 2.5832321296839766,
-      B: 12.772405306927048,
-    },
+    lab: { L: 77.84983989350025, A: 2.5832321296839766, B: 12.772405306927048 },
   },
   {
     colorNumber: "9111",
@@ -44179,11 +41194,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 71.75550014637768,
-      A: 3.140182099936495,
-      B: 14.311884540955333,
-    },
+    lab: { L: 71.75550014637768, A: 3.140182099936495, B: 14.311884540955333 },
   },
   {
     colorNumber: "9112",
@@ -44224,11 +41235,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 64.24443623147535,
-      A: 4.604049713702096,
-      B: 16.30293654566115,
-    },
+    lab: { L: 64.24443623147535, A: 4.604049713702096, B: 16.30293654566115 },
   },
   {
     colorNumber: "9113",
@@ -44269,11 +41276,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 57.3168886946161,
-      A: 5.963560334625029,
-      B: 19.493340648761293,
-    },
+    lab: { L: 57.3168886946161, A: 5.963560334625029, B: 19.493340648761293 },
   },
   {
     colorNumber: "9114",
@@ -44314,11 +41317,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 51.28804780350181,
-      A: 5.40749381117378,
-      B: 19.63149504030508,
-    },
+    lab: { L: 51.28804780350181, A: 5.40749381117378, B: 19.63149504030508 },
   },
   {
     colorNumber: "9115",
@@ -44359,11 +41358,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 36.618639156481564,
-      A: 5.8956989999778555,
-      B: 18.30903379518527,
-    },
+    lab: { L: 36.618639156481564, A: 5.8956989999778555, B: 18.30903379518527 },
   },
   {
     colorNumber: "6141",
@@ -44404,11 +41399,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.03422316806537,
-      A: 1.7012744534705693,
-      B: 13.994328426057766,
-    },
+    lab: { L: 82.03422316806537, A: 1.7012744534705693, B: 13.994328426057766 },
   },
   {
     colorNumber: "6142",
@@ -44449,11 +41440,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 75.49580009087107,
-      A: 3.1007136839391047,
-      B: 16.97968598373134,
-    },
+    lab: { L: 75.49580009087107, A: 3.1007136839391047, B: 16.97968598373134 },
   },
   {
     colorNumber: "6143",
@@ -44494,11 +41481,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.4880345502955,
-      A: 3.718304728695443,
-      B: 18.558600408240267,
-    },
+    lab: { L: 70.4880345502955, A: 3.718304728695443, B: 18.558600408240267 },
   },
   {
     colorNumber: "9116",
@@ -44539,11 +41522,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 62.95568478626694,
-      A: 3.817967345928097,
-      B: 17.81192097956412,
-    },
+    lab: { L: 62.95568478626694, A: 3.817967345928097, B: 17.81192097956412 },
   },
   {
     colorNumber: "6144",
@@ -44629,11 +41608,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 48.69200518468661,
-      A: 4.762874578777887,
-      B: 17.132607101679355,
-    },
+    lab: { L: 48.69200518468661, A: 4.762874578777887, B: 17.132607101679355 },
   },
   {
     colorNumber: "6146",
@@ -44674,11 +41649,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 37.81043685876652,
-      A: 7.329691559110535,
-      B: 18.164537424320336,
-    },
+    lab: { L: 37.81043685876652, A: 7.329691559110535, B: 18.164537424320336 },
   },
   {
     colorNumber: "6148",
@@ -44768,11 +41739,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 76.3536531670432,
-      A: 0.6444740268262139,
-      B: 13.81200596711951,
-    },
+    lab: { L: 76.3536531670432, A: 0.6444740268262139, B: 13.81200596711951 },
   },
   {
     colorNumber: "6150",
@@ -44787,7 +41754,7 @@ export const colorData = [
     isInterior: true,
     name: "Universal Khaki",
     lrv: 40.478,
-    brandedCollectionNames: [],
+    brandedCollectionNames: ["Foundational Neutrals"],
     colorFamilyNames: ["Yellow"],
     brandKey: "SW",
     red: 184,
@@ -44813,11 +41780,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.92437510575563,
-      A: 1.6316999270420962,
-      B: 13.832661938005808,
-    },
+    lab: { L: 69.92437510575563, A: 1.6316999270420962, B: 13.832661938005808 },
   },
   {
     colorNumber: "9117",
@@ -44858,11 +41821,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 62.15065237216902,
-      A: 2.3021292287136452,
-      B: 13.79699053657577,
-    },
+    lab: { L: 62.15065237216902, A: 2.3021292287136452, B: 13.79699053657577 },
   },
   {
     colorNumber: "6151",
@@ -44903,11 +41862,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 53.99559924333006,
-      A: 2.2141947301962395,
-      B: 13.51301234548965,
-    },
+    lab: { L: 53.99559924333006, A: 2.2141947301962395, B: 13.51301234548965 },
   },
   {
     colorNumber: "6152",
@@ -44948,11 +41903,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 45.337691679879924,
-      A: 2.88311695740745,
-      B: 12.307862203230101,
-    },
+    lab: { L: 45.337691679879924, A: 2.88311695740745, B: 12.307862203230101 },
   },
   {
     colorNumber: "6153",
@@ -45038,11 +41989,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.76133288558225,
-      A: 1.0161830060185228,
-      B: 17.55209951690253,
-    },
+    lab: { L: 83.76133288558225, A: 1.0161830060185228, B: 17.55209951690253 },
   },
   {
     colorNumber: "6135",
@@ -45083,11 +42030,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 76.47656382458926,
-      A: 2.0796768927988096,
-      B: 22.15089797054246,
-    },
+    lab: { L: 76.47656382458926, A: 2.0796768927988096, B: 22.15089797054246 },
   },
   {
     colorNumber: "6136",
@@ -45128,11 +42071,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 72.82076348947272,
-      A: 2.174659111212729,
-      B: 22.386422223533152,
-    },
+    lab: { L: 72.82076348947272, A: 2.174659111212729, B: 22.386422223533152 },
   },
   {
     colorNumber: "9118",
@@ -45173,11 +42112,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.29399564664088,
-      A: 1.9025839884223572,
-      B: 22.54966637406175,
-    },
+    lab: { L: 68.29399564664088, A: 1.9025839884223572, B: 22.54966637406175 },
   },
   {
     colorNumber: "6137",
@@ -45218,11 +42153,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 62.892661220388874,
-      A: 3.154923713895308,
-      B: 22.188323658160634,
-    },
+    lab: { L: 62.892661220388874, A: 3.154923713895308, B: 22.188323658160634 },
   },
   {
     colorNumber: "6138",
@@ -45263,11 +42194,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 55.460776569913534,
-      A: 4.440680037940126,
-      B: 22.550183214800157,
-    },
+    lab: { L: 55.460776569913534, A: 4.440680037940126, B: 22.550183214800157 },
   },
   {
     colorNumber: "6139",
@@ -45308,11 +42235,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 45.106665841398446,
-      A: 4.480341390314335,
-      B: 23.87754553437723,
-    },
+    lab: { L: 45.106665841398446, A: 4.480341390314335, B: 23.87754553437723 },
   },
   {
     colorNumber: "9119",
@@ -45353,11 +42276,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.89375629816722,
-      A: 0.2762442513917218,
-      B: 14.52862388423577,
-    },
+    lab: { L: 83.89375629816722, A: 0.2762442513917218, B: 14.52862388423577 },
   },
   {
     colorNumber: "9120",
@@ -45398,11 +42317,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 76.63092003694258,
-      A: 1.4995914003279598,
-      B: 18.03293313730221,
-    },
+    lab: { L: 76.63092003694258, A: 1.4995914003279598, B: 18.03293313730221 },
   },
   {
     colorNumber: "9121",
@@ -45443,11 +42358,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 72.67204547898606,
-      A: 1.8181316358309996,
-      B: 18.89424951990666,
-    },
+    lab: { L: 72.67204547898606, A: 1.8181316358309996, B: 18.89424951990666 },
   },
   {
     colorNumber: "9122",
@@ -45488,11 +42399,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 66.29187741689411,
-      A: 1.7008510510208574,
-      B: 18.602221799273355,
-    },
+    lab: { L: 66.29187741689411, A: 1.7008510510208574, B: 18.602221799273355 },
   },
   {
     colorNumber: "9123",
@@ -45578,11 +42485,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 49.93378206858918,
-      A: 3.144647716793292,
-      B: 17.667876315032427,
-    },
+    lab: { L: 49.93378206858918, A: 3.144647716793292, B: 17.667876315032427 },
   },
   {
     colorNumber: "9125",
@@ -45623,11 +42526,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 36.85722479110569,
-      A: 3.292769949988339,
-      B: 18.558306926506273,
-    },
+    lab: { L: 36.85722479110569, A: 3.292769949988339, B: 18.558306926506273 },
   },
   {
     colorNumber: "6155",
@@ -45713,11 +42612,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 77.270953934004,
-      A: 1.3118097644019833,
-      B: 15.70004092988908,
-    },
+    lab: { L: 77.270953934004, A: 1.3118097644019833, B: 15.70004092988908 },
   },
   {
     colorNumber: "6157",
@@ -45758,11 +42653,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 71.99691208112318,
-      A: 2.257508270710029,
-      B: 17.38925270796301,
-    },
+    lab: { L: 71.99691208112318, A: 2.257508270710029, B: 17.38925270796301 },
   },
   {
     colorNumber: "7544",
@@ -45803,11 +42694,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 65.37611924365272,
-      A: 1.2494329633297996,
-      B: 15.606327931432995,
-    },
+    lab: { L: 65.37611924365272, A: 1.2494329633297996, B: 15.606327931432995 },
   },
   {
     colorNumber: "6158",
@@ -45893,11 +42780,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 47.6571656803779,
-      A: 2.2161984198697526,
-      B: 14.416958869845065,
-    },
+    lab: { L: 47.6571656803779, A: 2.2161984198697526, B: 14.416958869845065 },
   },
   {
     colorNumber: "6160",
@@ -45938,11 +42821,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 35.12284696078424,
-      A: 1.7006993104541623,
-      B: 13.015158188975363,
-    },
+    lab: { L: 35.12284696078424, A: 1.7006993104541623, B: 13.015158188975363 },
   },
   {
     colorNumber: "6169",
@@ -45987,11 +42866,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.36783658670149,
-      A: -1.0564134381170764,
-      B: 7.444274164631914,
-    },
+    lab: { L: 82.36783658670149, A: -1.0564134381170764, B: 7.444274164631914 },
   },
   {
     colorNumber: "6170",
@@ -46032,11 +42907,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 75.2497987581426,
-      A: -0.5030838041037988,
-      B: 8.35293041270071,
-    },
+    lab: { L: 75.2497987581426, A: -0.5030838041037988, B: 8.35293041270071 },
   },
   {
     colorNumber: "6171",
@@ -46077,11 +42948,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.00490519049697,
-      A: -0.8672761731704504,
-      B: 8.350496966536024,
-    },
+    lab: { L: 70.00490519049697, A: -0.8672761731704504, B: 8.350496966536024 },
   },
   {
     colorNumber: "9126",
@@ -46257,11 +43124,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 35.22940402798546,
-      A: 0.5343062431328593,
-      B: 10.00693824905693,
-    },
+    lab: { L: 35.22940402798546, A: 0.5343062431328593, B: 10.00693824905693 },
   },
   {
     colorNumber: "6162",
@@ -46347,11 +43210,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 76.12699787508298,
-      A: -1.855703867324976,
-      B: 11.249605296571573,
-    },
+    lab: { L: 76.12699787508298, A: -1.855703867324976, B: 11.249605296571573 },
   },
   {
     colorNumber: "6164",
@@ -46482,11 +43341,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 55.13287229848835,
-      A: -1.1953288350259883,
-      B: 9.851302990357969,
-    },
+    lab: { L: 55.13287229848835, A: -1.1953288350259883, B: 9.851302990357969 },
   },
   {
     colorNumber: "6166",
@@ -46527,11 +43382,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 43.52844679361096,
-      A: -1.417400522583545,
-      B: 9.599658559758616,
-    },
+    lab: { L: 43.52844679361096, A: -1.417400522583545, B: 9.599658559758616 },
   },
   {
     colorNumber: "6167",
@@ -46546,7 +43397,7 @@ export const colorData = [
     isInterior: true,
     name: "Garden Gate",
     lrv: 9.922,
-    brandedCollectionNames: [],
+    brandedCollectionNames: ["Restorative Darks"],
     colorFamilyNames: ["Green"],
     brandKey: "SW",
     red: 94,
@@ -46572,11 +43423,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 37.85239350415322,
-      A: -0.9746800671281142,
-      B: 9.998932657016013,
-    },
+    lab: { L: 37.85239350415322, A: -0.9746800671281142, B: 9.998932657016013 },
   },
   {
     colorNumber: "6176",
@@ -46591,7 +43438,7 @@ export const colorData = [
     isInterior: true,
     name: "Liveable Green",
     lrv: 61.194,
-    brandedCollectionNames: ["Living Well"],
+    brandedCollectionNames: ["Frosted Tints", "Living Well"],
     colorFamilyNames: ["Green", "Living Well"],
     brandKey: "SW",
     red: 206,
@@ -46617,11 +43464,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.34574040233004,
-      A: -2.979221832218215,
-      B: 8.44758742828986,
-    },
+    lab: { L: 82.34574040233004, A: -2.979221832218215, B: 8.44758742828986 },
   },
   {
     colorNumber: "6177",
@@ -46707,11 +43550,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.10034680478957,
-      A: -4.268475200198352,
-      B: 11.191790571196547,
-    },
+    lab: { L: 70.10034680478957, A: -4.268475200198352, B: 11.191790571196547 },
   },
   {
     colorNumber: "9128",
@@ -46752,11 +43591,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 62.842477232241166,
-      A: -5.04966462033024,
-      B: 12.371145788692095,
-    },
+    lab: { L: 62.842477232241166, A: -5.04966462033024, B: 12.371145788692095 },
   },
   {
     colorNumber: "6179",
@@ -46887,11 +43722,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 33.98777392133139,
-      A: -5.829637963837397,
-      B: 13.722726834425657,
-    },
+    lab: { L: 33.98777392133139, A: -5.829637963837397, B: 13.722726834425657 },
   },
   {
     colorNumber: "6190",
@@ -46932,11 +43763,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.10478366421849,
-      A: -2.8188082364068445,
-      B: 5.687261840543845,
-    },
+    lab: { L: 84.10478366421849, A: -2.8188082364068445, B: 5.687261840543845 },
   },
   {
     colorNumber: "6191",
@@ -46977,11 +43804,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 77.14475503718499,
-      A: -3.3955939673200874,
-      B: 6.175653990102359,
-    },
+    lab: { L: 77.14475503718499, A: -3.3955939673200874, B: 6.175653990102359 },
   },
   {
     colorNumber: "6192",
@@ -47022,11 +43845,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.11271322799747,
-      A: -5.83837410873167,
-      B: 8.462354380571991,
-    },
+    lab: { L: 67.11271322799747, A: -5.83837410873167, B: 8.462354380571991 },
   },
   {
     colorNumber: "9129",
@@ -47067,11 +43886,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 61.74636303690656,
-      A: -6.301110461166992,
-      B: 8.484639638286318,
-    },
+    lab: { L: 61.74636303690656, A: -6.301110461166992, B: 8.484639638286318 },
   },
   {
     colorNumber: "6193",
@@ -47112,11 +43927,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 54.81361976119888,
-      A: -8.332478297812585,
-      B: 8.076293899542964,
-    },
+    lab: { L: 54.81361976119888, A: -8.332478297812585, B: 8.076293899542964 },
   },
   {
     colorNumber: "6194",
@@ -47157,11 +43968,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 45.07157123937282,
-      A: -7.4626065239385975,
-      B: 6.278395883940369,
-    },
+    lab: { L: 45.07157123937282, A: -7.4626065239385975, B: 6.278395883940369 },
   },
   {
     colorNumber: "6195",
@@ -47202,11 +44009,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 34.21202402191407,
-      A: -8.199018610074937,
-      B: 5.194334481753094,
-    },
+    lab: { L: 34.21202402191407, A: -8.199018610074937, B: 5.194334481753094 },
   },
   {
     colorNumber: "6183",
@@ -47251,11 +44054,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.30768873261451,
-      A: -1.4304291006752567,
-      B: 5.068681000452258,
-    },
+    lab: { L: 83.30768873261451, A: -1.4304291006752567, B: 5.068681000452258 },
   },
   {
     colorNumber: "6184",
@@ -47296,11 +44095,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 76.9346184487844,
-      A: -2.685454865478054,
-      B: 6.423906901894716,
-    },
+    lab: { L: 76.9346184487844, A: -2.685454865478054, B: 6.423906901894716 },
   },
   {
     colorNumber: "6185",
@@ -47345,11 +44140,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.9414244726345,
-      A: -2.730984126601277,
-      B: 6.553089647487109,
-    },
+    lab: { L: 69.9414244726345, A: -2.730984126601277, B: 6.553089647487109 },
   },
   {
     colorNumber: "9130",
@@ -47442,11 +44233,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 52.750962728908576,
-      A: -4.957601190954897,
-      B: 8.048821013516893,
-    },
+    lab: { L: 52.750962728908576, A: -4.957601190954897, B: 8.048821013516893 },
   },
   {
     colorNumber: "6187",
@@ -47491,11 +44278,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 43.632019897141596,
-      A: -4.552097977423397,
-      B: 6.650847492425993,
-    },
+    lab: { L: 43.632019897141596, A: -4.552097977423397, B: 6.650847492425993 },
   },
   {
     colorNumber: "6188",
@@ -47536,11 +44319,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 33.89836205794534,
-      A: -3.3099247635287044,
-      B: 5.466123990948047,
-    },
+    lab: { L: 33.89836205794534, A: -3.3099247635287044, B: 5.466123990948047 },
   },
   {
     colorNumber: "6197",
@@ -47585,11 +44364,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.73690617357511,
-      A: -1.6149943408234613,
-      B: 4.480321256551223,
-    },
+    lab: { L: 80.73690617357511, A: -1.6149943408234613, B: 4.480321256551223 },
   },
   {
     colorNumber: "6198",
@@ -47634,11 +44409,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.5021483002079,
-      A: -1.4608169396509996,
-      B: 5.204865683328341,
-    },
+    lab: { L: 73.5021483002079, A: -1.4608169396509996, B: 5.204865683328341 },
   },
   {
     colorNumber: "6199",
@@ -47653,7 +44424,7 @@ export const colorData = [
     isInterior: true,
     name: "Rare Gray",
     lrv: 37.756,
-    brandedCollectionNames: ["Midnight Mystery"],
+    brandedCollectionNames: ["Midnight Mystery", "Foundational Neutrals"],
     colorFamilyNames: ["Green"],
     brandKey: "SW",
     red: 166,
@@ -47679,11 +44450,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.83301177273528,
-      A: -2.0242012332428727,
-      B: 5.683795520921553,
-    },
+    lab: { L: 67.83301177273528, A: -2.0242012332428727, B: 5.683795520921553 },
   },
   {
     colorNumber: "9131",
@@ -47769,11 +44536,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 52.56283843614429,
-      A: -1.9009241112901143,
-      B: 6.66255541702554,
-    },
+    lab: { L: 52.56283843614429, A: -1.9009241112901143, B: 6.66255541702554 },
   },
   {
     colorNumber: "6201",
@@ -47814,11 +44577,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 45.43937804426519,
-      A: -1.5659978039164746,
-      B: 5.728636366102813,
-    },
+    lab: { L: 45.43937804426519, A: -1.5659978039164746, B: 5.728636366102813 },
   },
   {
     colorNumber: "6202",
@@ -47859,11 +44618,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 42.09553892958805,
-      A: -1.987421742275175,
-      B: 5.670671940103711,
-    },
+    lab: { L: 42.09553892958805, A: -1.987421742275175, B: 5.670671940103711 },
   },
   {
     colorNumber: "6204",
@@ -47952,11 +44707,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.20748173702847,
-      A: -3.20057512263755,
-      B: 3.401635785371493,
-    },
+    lab: { L: 78.20748173702847, A: -3.20057512263755, B: 3.401635785371493 },
   },
   {
     colorNumber: "6206",
@@ -48001,11 +44752,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 72.29753986376326,
-      A: -3.616643438765832,
-      B: 4.481066697571934,
-    },
+    lab: { L: 72.29753986376326, A: -3.616643438765832, B: 4.481066697571934 },
   },
   {
     colorNumber: "9132",
@@ -48097,11 +44844,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 52.82216020917437,
-      A: -4.220037829938573,
-      B: 4.649416421464414,
-    },
+    lab: { L: 52.82216020917437, A: -4.220037829938573, B: 4.649416421464414 },
   },
   {
     colorNumber: "6208",
@@ -48147,11 +44890,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 40.95474477611955,
-      A: -3.41944412505521,
-      B: 4.578157349272005,
-    },
+    lab: { L: 40.95474477611955, A: -3.41944412505521, B: 4.578157349272005 },
   },
   {
     colorNumber: "6209",
@@ -48240,11 +44979,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.38108641312847,
-      A: -5.234496984165671,
-      B: 2.671870510586838,
-    },
+    lab: { L: 81.38108641312847, A: -5.234496984165671, B: 2.671870510586838 },
   },
   {
     colorNumber: "6212",
@@ -48285,11 +45020,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.59664301763598,
-      A: -6.553560991566565,
-      B: 2.885603766441025,
-    },
+    lab: { L: 74.59664301763598, A: -6.553560991566565, B: 2.885603766441025 },
   },
   {
     colorNumber: "6213",
@@ -48304,7 +45035,7 @@ export const colorData = [
     isInterior: true,
     name: "Halcyon Green",
     lrv: 38.535,
-    brandedCollectionNames: ["Assistance"],
+    brandedCollectionNames: ["Frosted Tints", "Assistance"],
     colorFamilyNames: ["Green"],
     brandKey: "SW",
     red: 155,
@@ -48330,11 +45061,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.2604861673879,
-      A: -6.826855396433129,
-      B: 2.31407198082878,
-    },
+    lab: { L: 68.2604861673879, A: -6.826855396433129, B: 2.31407198082878 },
   },
   {
     colorNumber: "9133",
@@ -48420,11 +45147,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 57.44391598131163,
-      A: -7.92056155900206,
-      B: 1.5324437962099813,
-    },
+    lab: { L: 57.44391598131163, A: -7.92056155900206, B: 1.5324437962099813 },
   },
   {
     colorNumber: "6215",
@@ -48465,11 +45188,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 45.64576874196942,
-      A: -8.025597288257469,
-      B: 1.082178810742751,
-    },
+    lab: { L: 45.64576874196942, A: -8.025597288257469, B: 1.082178810742751 },
   },
   {
     colorNumber: "6216",
@@ -48529,7 +45248,7 @@ export const colorData = [
     isInterior: true,
     name: "Tradewind",
     lrv: 60.691,
-    brandedCollectionNames: ["Living Well - Inspire"],
+    brandedCollectionNames: ["Frosted Tints", "Living Well - Inspire"],
     colorFamilyNames: ["Blue", "Living Well"],
     brandKey: "SW",
     red: 194,
@@ -48645,11 +45364,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.0654007296572,
-      A: -6.278834039492642,
-      B: -3.890893982117838,
-    },
+    lab: { L: 70.0654007296572, A: -6.278834039492642, B: -3.890893982117838 },
   },
   {
     colorNumber: "9134",
@@ -48829,11 +45544,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 38.0402149887507,
-      A: -6.706107413292139,
-      B: -3.5471867302432236,
-    },
+    lab: { L: 38.0402149887507, A: -6.706107413292139, B: -3.5471867302432236 },
   },
   {
     colorNumber: "6225",
@@ -48874,11 +45585,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.66038318991986,
-      A: -4.49389447829418,
-      B: -3.2510242961789615,
-    },
+    lab: { L: 80.66038318991986, A: -4.49389447829418, B: -3.2510242961789615 },
   },
   {
     colorNumber: "6226",
@@ -48919,11 +45626,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.17621656922687,
-      A: -5.283363570708632,
-      B: -5.270517974927791,
-    },
+    lab: { L: 73.17621656922687, A: -5.283363570708632, B: -5.270517974927791 },
   },
   {
     colorNumber: "6227",
@@ -48964,11 +45667,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.29072470872688,
-      A: -5.667827280804838,
-      B: -5.443941111530948,
-    },
+    lab: { L: 68.29072470872688, A: -5.667827280804838, B: -5.443941111530948 },
   },
   {
     colorNumber: "9135",
@@ -49054,11 +45753,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 50.47548411841774,
-      A: -8.618335506740848,
-      B: -7.203773800739266,
-    },
+    lab: { L: 50.47548411841774, A: -8.618335506740848, B: -7.203773800739266 },
   },
   {
     colorNumber: "6229",
@@ -49099,11 +45794,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 39.77402064485159,
-      A: -7.818168308845797,
-      B: -7.764677646354457,
-    },
+    lab: { L: 39.77402064485159, A: -7.818168308845797, B: -7.764677646354457 },
   },
   {
     colorNumber: "6230",
@@ -49193,11 +45884,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.24443003356258,
-      A: -3.044019789730734,
-      B: -1.069905645375635,
-    },
+    lab: { L: 84.24443003356258, A: -3.044019789730734, B: -1.069905645375635 },
   },
   {
     colorNumber: "9137",
@@ -49238,11 +45925,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 77.85167831365432,
-      A: -4.248607304655594,
-      B: -2.045382017489672,
-    },
+    lab: { L: 77.85167831365432, A: -4.248607304655594, B: -2.045382017489672 },
   },
   {
     colorNumber: "9138",
@@ -49336,11 +46019,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 64.8224475801547,
-      A: -4.369914275177578,
-      B: -5.045667535095055,
-    },
+    lab: { L: 64.8224475801547, A: -4.369914275177578, B: -5.045667535095055 },
   },
   {
     colorNumber: "9140",
@@ -49386,11 +46065,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 53.78765117068842,
-      A: -5.714349301393973,
-      B: -6.837356240401826,
-    },
+    lab: { L: 53.78765117068842, A: -5.714349301393973, B: -6.837356240401826 },
   },
   {
     colorNumber: "9141",
@@ -49431,11 +46106,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 42.69431895574552,
-      A: -5.305142346899605,
-      B: -8.184894801722331,
-    },
+    lab: { L: 42.69431895574552, A: -5.305142346899605, B: -8.184894801722331 },
   },
   {
     colorNumber: "9142",
@@ -49476,11 +46147,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 27.563019066084316,
-      A: -9.4924430749124,
-      B: -11.290867877006406,
-    },
+    lab: { L: 27.563019066084316, A: -9.4924430749124, B: -11.290867877006406 },
   },
   {
     colorNumber: "6232",
@@ -49540,7 +46207,7 @@ export const colorData = [
     isInterior: true,
     name: "Samovar Silver",
     lrv: 50.613,
-    brandedCollectionNames: ["2022 Opus", "Living Well"],
+    brandedCollectionNames: ["Frosted Tints", "2022 Opus", "Living Well"],
     colorFamilyNames: ["Blue", "Living Well"],
     brandKey: "SW",
     red: 184,
@@ -49611,11 +46278,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 71.32349866390331,
-      A: -2.258365822496944,
-      B: -1.373998759759898,
-    },
+    lab: { L: 71.32349866390331, A: -2.258365822496944, B: -1.373998759759898 },
   },
   {
     colorNumber: "9143",
@@ -49656,11 +46319,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 62.67808840794196,
-      A: -2.261152879900752,
-      B: -2.573841641542862,
-    },
+    lab: { L: 62.67808840794196, A: -2.261152879900752, B: -2.573841641542862 },
   },
   {
     colorNumber: "6235",
@@ -49836,11 +46495,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.71789776988719,
-      A: -3.988961594109053,
-      B: -5.284826073678239,
-    },
+    lab: { L: 85.71789776988719, A: -3.988961594109053, B: -5.284826073678239 },
   },
   {
     colorNumber: "9145",
@@ -49934,11 +46589,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 72.03885790478154,
-      A: -4.989026148466468,
-      B: -8.644901364842816,
-    },
+    lab: { L: 72.03885790478154, A: -4.989026148466468, B: -8.644901364842816 },
   },
   {
     colorNumber: "9147",
@@ -50142,6 +46793,7 @@ export const colorData = [
       "Pottery Barn Teen",
       "west elm",
       "Rejuvenation",
+      "Frosted Tints",
       "2024 Blues & Greens",
     ],
     colorFamilyNames: ["Blue", "Living Well"],
@@ -50214,11 +46866,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.66106815673685,
-      A: -3.034232954994387,
-      B: -7.935855610447895,
-    },
+    lab: { L: 74.66106815673685, A: -3.034232954994387, B: -7.935855610447895 },
   },
   {
     colorNumber: "6241",
@@ -50265,11 +46913,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.36548725187484,
-      A: -2.948264046010396,
-      B: -9.198408434367078,
-    },
+    lab: { L: 68.36548725187484, A: -2.948264046010396, B: -9.198408434367078 },
   },
   {
     colorNumber: "9151",
@@ -50819,11 +47463,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.40632913758118,
-      A: 1.8942453688539085,
-      B: 1.2241945549528177,
-    },
+    lab: { L: 81.40632913758118, A: 1.8942453688539085, B: 1.2241945549528177 },
   },
   {
     colorNumber: "6275",
@@ -50864,11 +47504,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 75.17715023209342,
-      A: 1.754576303001354,
-      B: 0.6132301074736501,
-    },
+    lab: { L: 75.17715023209342, A: 1.754576303001354, B: 0.6132301074736501 },
   },
   {
     colorNumber: "6276",
@@ -51134,11 +47770,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.40632913758118,
-      A: 1.8942453688539085,
-      B: 1.2241945549528177,
-    },
+    lab: { L: 81.40632913758118, A: 1.8942453688539085, B: 1.2241945549528177 },
   },
   {
     colorNumber: "7079",
@@ -51179,11 +47811,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.52421189311261,
-      A: 2.1120613144887668,
-      B: 0.7416912319040847,
-    },
+    lab: { L: 74.52421189311261, A: 2.1120613144887668, B: 0.7416912319040847 },
   },
   {
     colorNumber: "7080",
@@ -51224,11 +47852,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.39576124601055,
-      A: 2.8749686361922433,
-      B: 1.018838643049702,
-    },
+    lab: { L: 68.39576124601055, A: 2.8749686361922433, B: 1.018838643049702 },
   },
   {
     colorNumber: "9155",
@@ -51269,11 +47893,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.78307441140947,
-      A: 2.76289769542859,
-      B: 0.38362726865441843,
-    },
+    lab: { L: 60.78307441140947, A: 2.76289769542859, B: 0.38362726865441843 },
   },
   {
     colorNumber: "7081",
@@ -51314,11 +47934,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 52.97674808728421,
-      A: 2.654102464142938,
-      B: -0.2830326086199486,
-    },
+    lab: { L: 52.97674808728421, A: 2.654102464142938, B: -0.2830326086199486 },
   },
   {
     colorNumber: "7082",
@@ -51359,11 +47975,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 41.48420936657019,
-      A: 3.585034844445917,
-      B: -1.2781827903706966,
-    },
+    lab: { L: 41.48420936657019, A: 3.585034844445917, B: -1.2781827903706966 },
   },
   {
     colorNumber: "7083",
@@ -51494,11 +48106,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 72.63057749082716,
-      A: 2.1553936537437313,
-      B: -1.546106867717345,
-    },
+    lab: { L: 72.63057749082716, A: 2.1553936537437313, B: -1.546106867717345 },
   },
   {
     colorNumber: "6262",
@@ -51539,11 +48147,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.4013737223547,
-      A: 2.21723427367837,
-      B: -2.729088165021132,
-    },
+    lab: { L: 67.4013737223547, A: 2.21723427367837, B: -2.729088165021132 },
   },
   {
     colorNumber: "9156",
@@ -51629,11 +48233,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 47.4559760219268,
-      A: 3.3862002073079545,
-      B: -4.432241893103583,
-    },
+    lab: { L: 47.4559760219268, A: 3.3862002073079545, B: -4.432241893103583 },
   },
   {
     colorNumber: "6264",
@@ -51674,11 +48274,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 38.47002389870708,
-      A: 3.523475519346814,
-      B: -4.598717175136214,
-    },
+    lab: { L: 38.47002389870708, A: 3.523475519346814, B: -4.598717175136214 },
   },
   {
     colorNumber: "6265",
@@ -51723,11 +48319,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 30.546244330906482,
-      A: 4.624602497624696,
-      B: -7.141055771659898,
-    },
+    lab: { L: 30.546244330906482, A: 4.624602497624696, B: -7.141055771659898 },
   },
   {
     colorNumber: "6267",
@@ -51858,11 +48450,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.2768583376071,
-      A: 3.790248319450351,
-      B: -1.5569918513361536,
-    },
+    lab: { L: 69.2768583376071, A: 3.790248319450351, B: -1.5569918513361536 },
   },
   {
     colorNumber: "9157",
@@ -51993,11 +48581,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 40.47468611741903,
-      A: 6.406471859344675,
-      B: -1.5104699690129397,
-    },
+    lab: { L: 40.47468611741903, A: 6.406471859344675, B: -1.5104699690129397 },
   },
   {
     colorNumber: "6272",
@@ -52012,7 +48596,11 @@ export const colorData = [
     isInterior: true,
     name: "Plum Brown",
     lrv: 6.018,
-    brandedCollectionNames: ["Midnight Mystery", "Global Garden"],
+    brandedCollectionNames: [
+      "Midnight Mystery",
+      "Global Garden",
+      "Restorative Darks",
+    ],
     colorFamilyNames: ["Purple"],
     brandKey: "SW",
     red: 78,
@@ -52083,11 +48671,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.44526636691421,
-      A: 4.007368677348633,
-      B: 1.9908863173883962,
-    },
+    lab: { L: 80.44526636691421, A: 4.007368677348633, B: 1.9908863173883962 },
   },
   {
     colorNumber: "6016",
@@ -52128,11 +48712,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.82578945675526,
-      A: 5.517905539692447,
-      B: 1.4136458341181823,
-    },
+    lab: { L: 73.82578945675526, A: 5.517905539692447, B: 1.4136458341181823 },
   },
   {
     colorNumber: "6017",
@@ -52173,11 +48753,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.38388730647877,
-      A: 6.154922948653107,
-      B: 1.0637463521870894,
-    },
+    lab: { L: 68.38388730647877, A: 6.154922948653107, B: 1.0637463521870894 },
   },
   {
     colorNumber: "9158",
@@ -52218,11 +48794,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.04301926350932,
-      A: 6.1472264335983295,
-      B: 1.6379074577584696,
-    },
+    lab: { L: 60.04301926350932, A: 6.1472264335983295, B: 1.6379074577584696 },
   },
   {
     colorNumber: "6018",
@@ -52263,11 +48835,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 53.3962368729142,
-      A: 6.095808289727723,
-      B: 0.9999507185227907,
-    },
+    lab: { L: 53.3962368729142, A: 6.095808289727723, B: 0.9999507185227907 },
   },
   {
     colorNumber: "6019",
@@ -52308,11 +48876,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 40.993094381180185,
-      A: 8.254368017414166,
-      B: 1.1636580487526582,
-    },
+    lab: { L: 40.993094381180185, A: 8.254368017414166, B: 1.1636580487526582 },
   },
   {
     colorNumber: "6020",
@@ -52353,11 +48917,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 23.82553654914529,
-      A: 13.355188831719932,
-      B: 4.800717753527062,
-    },
+    lab: { L: 23.82553654914529, A: 13.355188831719932, B: 4.800717753527062 },
   },
   {
     colorNumber: "6008",
@@ -52398,11 +48958,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.87307361344887,
-      A: 1.8830212840989513,
-      B: 2.3370210926424884,
-    },
+    lab: { L: 82.87307361344887, A: 1.8830212840989513, B: 2.3370210926424884 },
   },
   {
     colorNumber: "6009",
@@ -52443,11 +48999,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 75.01558262125404,
-      A: 4.246310422791333,
-      B: 1.5171158349321479,
-    },
+    lab: { L: 75.01558262125404, A: 4.246310422791333, B: 1.5171158349321479 },
   },
   {
     colorNumber: "6010",
@@ -52488,11 +49040,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.10528708721873,
-      A: 4.717815673490944,
-      B: 2.8611023005475467,
-    },
+    lab: { L: 68.10528708721873, A: 4.717815673490944, B: 2.8611023005475467 },
   },
   {
     colorNumber: "9159",
@@ -52533,11 +49081,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 61.63114801011909,
-      A: 4.625367739648389,
-      B: 2.2597641291243864,
-    },
+    lab: { L: 61.63114801011909, A: 4.625367739648389, B: 2.2597641291243864 },
   },
   {
     colorNumber: "6011",
@@ -52578,11 +49122,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 51.59420087608548,
-      A: 4.83654713936521,
-      B: 3.5991720887061485,
-    },
+    lab: { L: 51.59420087608548, A: 4.83654713936521, B: 3.5991720887061485 },
   },
   {
     colorNumber: "6012",
@@ -52623,11 +49163,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 42.293545056174565,
-      A: 4.822431911565339,
-      B: 3.0349733230481957,
-    },
+    lab: { L: 42.293545056174565, A: 4.822431911565339, B: 3.0349733230481957 },
   },
   {
     colorNumber: "6013",
@@ -52668,11 +49204,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 27.118361807093038,
-      A: 7.44375316283924,
-      B: 2.83143333134942,
-    },
+    lab: { L: 27.118361807093038, A: 7.44375316283924, B: 2.83143333134942 },
   },
   {
     colorNumber: "6036",
@@ -52713,11 +49245,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.29524325845756,
-      A: 2.9814088558796636,
-      B: 4.995756543621255,
-    },
+    lab: { L: 80.29524325845756, A: 2.9814088558796636, B: 4.995756543621255 },
   },
   {
     colorNumber: "6037",
@@ -52758,11 +49286,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.1697323801613,
-      A: 3.785623823165607,
-      B: 5.367420461774652,
-    },
+    lab: { L: 73.1697323801613, A: 3.785623823165607, B: 5.367420461774652 },
   },
   {
     colorNumber: "6038",
@@ -52803,11 +49327,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 66.10450502835486,
-      A: 3.8836277015597,
-      B: 5.489829148728864,
-    },
+    lab: { L: 66.10450502835486, A: 3.8836277015597, B: 5.489829148728864 },
   },
   {
     colorNumber: "9160",
@@ -52848,11 +49368,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.80106581264927,
-      A: 3.9660558756343667,
-      B: 5.591542338776989,
-    },
+    lab: { L: 60.80106581264927, A: 3.9660558756343667, B: 5.591542338776989 },
   },
   {
     colorNumber: "6039",
@@ -52893,11 +49409,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 53.87116518617785,
-      A: 4.261508929105151,
-      B: 5.195787188850831,
-    },
+    lab: { L: 53.87116518617785, A: 4.261508929105151, B: 5.195787188850831 },
   },
   {
     colorNumber: "6041",
@@ -52938,11 +49450,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 30.178212035305464,
-      A: 6.821590663766003,
-      B: 7.96881279271423,
-    },
+    lab: { L: 30.178212035305464, A: 6.821590663766003, B: 7.96881279271423 },
   },
   {
     colorNumber: "7661",
@@ -52987,11 +49495,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.06802713099607,
-      A: -1.0450982568419032,
-      B: 0.73485324624043,
-    },
+    lab: { L: 85.06802713099607, A: -1.0450982568419032, B: 0.73485324624043 },
   },
   {
     colorNumber: "7662",
@@ -53527,11 +50031,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 44.04531365511616,
-      A: -1.1177459378822752,
-      B: -4.8422017472179,
-    },
+    lab: { L: 44.04531365511616, A: -1.1177459378822752, B: -4.8422017472179 },
   },
   {
     colorNumber: "7615",
@@ -53920,6 +50420,7 @@ export const colorData = [
     name: "Passive",
     lrv: 59.885,
     brandedCollectionNames: [
+      "Foundational Neutrals",
       "Pottery Barn Kids",
       "Living Well",
       "Pottery Barn Teen",
@@ -53951,11 +50452,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.8921209009834,
-      A: -0.8909810862436363,
-      B: 1.3586573750263842,
-    },
+    lab: { L: 81.8921209009834, A: -0.8909810862436363, B: 1.3586573750263842 },
   },
   {
     colorNumber: "7065",
@@ -54091,11 +50588,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 61.43118852330767,
-      A: -1.50022223009727,
-      B: 1.8443373654076556,
-    },
+    lab: { L: 61.43118852330767, A: -1.50022223009727, B: 1.8443373654076556 },
   },
   {
     colorNumber: "7067",
@@ -54328,11 +50821,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.29033611414155,
-      A: -2.169668500377364,
-      B: 2.673433839316064,
-    },
+    lab: { L: 73.29033611414155, A: -2.169668500377364, B: 2.673433839316064 },
   },
   {
     colorNumber: "7059",
@@ -54378,11 +50867,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.99258139958769,
-      A: -2.747316723908877,
-      B: 3.1094434878361943,
-    },
+    lab: { L: 67.99258139958769, A: -2.747316723908877, B: 3.1094434878361943 },
   },
   {
     colorNumber: "9164",
@@ -54423,11 +50908,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.96992413389667,
-      A: -2.069867090927213,
-      B: 3.433346244201263,
-    },
+    lab: { L: 60.96992413389667, A: -2.069867090927213, B: 3.433346244201263 },
   },
   {
     colorNumber: "7060",
@@ -54468,11 +50949,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 52.10375656782601,
-      A: -1.938417572900808,
-      B: 4.220090929575671,
-    },
+    lab: { L: 52.10375656782601, A: -1.938417572900808, B: 4.220090929575671 },
   },
   {
     colorNumber: "7061",
@@ -54513,11 +50990,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 42.4393568359611,
-      A: -2.010160570814601,
-      B: 3.116277763872377,
-    },
+    lab: { L: 42.4393568359611, A: -2.010160570814601, B: 3.116277763872377 },
   },
   {
     colorNumber: "7749",
@@ -54558,11 +51031,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 30.232485094307513,
-      A: -4.619754101759077,
-      B: 6.49632413178205,
-    },
+    lab: { L: 30.232485094307513, A: -4.619754101759077, B: 6.49632413178205 },
   },
   {
     colorNumber: "9165",
@@ -54642,7 +51111,7 @@ export const colorData = [
       "Top 50 Exterior Colors",
       "Finest Whites",
     ],
-    colorFamilyNames: ["Neutral", "Designer Color Collection", "Living Well"],
+    colorFamilyNames: ["Designer Color Collection", "Neutral", "Living Well"],
     brandKey: "SW",
     red: 220,
     green: 216,
@@ -54897,11 +51366,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 45.33403164929535,
-      A: -3.5116333979282044,
-      B: 1.303359183483077,
-    },
+    lab: { L: 45.33403164929535, A: -3.5116333979282044, B: 1.303359183483077 },
   },
   {
     colorNumber: "7653",
@@ -54946,11 +51411,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.9450967908326,
-      A: -1.5992112899685385,
-      B: 3.3314316628665797,
-    },
+    lab: { L: 83.9450967908326, A: -1.5992112899685385, B: 3.3314316628665797 },
   },
   {
     colorNumber: "7654",
@@ -55036,11 +51497,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.8677236233902,
-      A: -1.2593514599097966,
-      B: 3.470622447392646,
-    },
+    lab: { L: 81.8677236233902, A: -1.2593514599097966, B: 3.470622447392646 },
   },
   {
     colorNumber: "7657",
@@ -55171,11 +51628,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.18536790248272,
-      A: -0.5737832336190074,
-      B: 2.690673149086509,
-    },
+    lab: { L: 69.18536790248272, A: -0.5737832336190074, B: 2.690673149086509 },
   },
   {
     colorNumber: "7655",
@@ -55216,11 +51669,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 65.70840205073179,
-      A: -1.1277355937079903,
-      B: 3.113098490926469,
-    },
+    lab: { L: 65.70840205073179, A: -1.1277355937079903, B: 3.113098490926469 },
   },
   {
     colorNumber: "6001",
@@ -55261,11 +51710,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.63673005398877,
-      A: 1.1901919405241101,
-      B: 2.094778824799759,
-    },
+    lab: { L: 81.63673005398877, A: 1.1901919405241101, B: 2.094778824799759 },
   },
   {
     colorNumber: "6002",
@@ -55306,11 +51751,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 75.04505287050051,
-      A: 1.0386046198357368,
-      B: 1.500245704181391,
-    },
+    lab: { L: 75.04505287050051, A: 1.0386046198357368, B: 1.500245704181391 },
   },
   {
     colorNumber: "6003",
@@ -55351,11 +51792,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.18814220093897,
-      A: 1.2362102269874997,
-      B: 2.1712526027800827,
-    },
+    lab: { L: 69.18814220093897, A: 1.2362102269874997, B: 2.1712526027800827 },
   },
   {
     colorNumber: "9167",
@@ -55396,11 +51833,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 62.93502003882551,
-      A: 1.8225640562289924,
-      B: 3.0075230013489884,
-    },
+    lab: { L: 62.93502003882551, A: 1.8225640562289924, B: 3.0075230013489884 },
   },
   {
     colorNumber: "6004",
@@ -55445,11 +51878,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 52.2903810610661,
-      A: 2.6806340426377417,
-      B: 3.4085229267428074,
-    },
+    lab: { L: 52.2903810610661, A: 2.6806340426377417, B: 3.4085229267428074 },
   },
   {
     colorNumber: "6005",
@@ -55490,11 +51919,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 43.41962155079923,
-      A: 2.5775150866203522,
-      B: 2.826006799889802,
-    },
+    lab: { L: 43.41962155079923, A: 2.5775150866203522, B: 2.826006799889802 },
   },
   {
     colorNumber: "7505",
@@ -55535,11 +51960,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 40.15012931654476,
-      A: 2.472125508112155,
-      B: 4.74516985383876,
-    },
+    lab: { L: 40.15012931654476, A: 2.472125508112155, B: 4.74516985383876 },
   },
   {
     colorNumber: "7022",
@@ -55586,11 +52007,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 79.86596799545329,
-      A: 1.030715457292275,
-      B: 4.861475580198871,
-    },
+    lab: { L: 79.86596799545329, A: 1.030715457292275, B: 4.861475580198871 },
   },
   {
     colorNumber: "7023",
@@ -55631,11 +52048,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 72.9049580132195,
-      A: 0.886031339305704,
-      B: 5.468842384906392,
-    },
+    lab: { L: 72.9049580132195, A: 0.886031339305704, B: 5.468842384906392 },
   },
   {
     colorNumber: "7024",
@@ -55680,11 +52093,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.41604313755168,
-      A: 1.2811195755460525,
-      B: 5.69289191722393,
-    },
+    lab: { L: 67.41604313755168, A: 1.2811195755460525, B: 5.69289191722393 },
   },
   {
     colorNumber: "9168",
@@ -55725,11 +52134,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 59.90134899244545,
-      A: 1.5384450357809887,
-      B: 6.505624303895452,
-    },
+    lab: { L: 59.90134899244545, A: 1.5384450357809887, B: 6.505624303895452 },
   },
   {
     colorNumber: "7025",
@@ -55770,11 +52175,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 51.98983520308887,
-      A: 2.637932353373562,
-      B: 7.6813406638607695,
-    },
+    lab: { L: 51.98983520308887, A: 2.637932353373562, B: 7.6813406638607695 },
   },
   {
     colorNumber: "7026",
@@ -55815,11 +52216,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 43.08581924865977,
-      A: 2.374671905711001,
-      B: 7.823869359473945,
-    },
+    lab: { L: 43.08581924865977, A: 2.374671905711001, B: 7.823869359473945 },
   },
   {
     colorNumber: "6071",
@@ -55860,11 +52257,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.44491179964419,
-      A: 1.2047375627860513,
-      B: 5.452386724767777,
-    },
+    lab: { L: 82.44491179964419, A: 1.2047375627860513, B: 5.452386724767777 },
   },
   {
     colorNumber: "6072",
@@ -55905,11 +52298,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.65680010884131,
-      A: 1.9973690458565119,
-      B: 6.981565575602944,
-    },
+    lab: { L: 74.65680010884131, A: 1.9973690458565119, B: 6.981565575602944 },
   },
   {
     colorNumber: "6073",
@@ -55950,11 +52339,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.66123981440182,
-      A: 2.2368589557547613,
-      B: 7.714891559275916,
-    },
+    lab: { L: 70.66123981440182, A: 2.2368589557547613, B: 7.714891559275916 },
   },
   {
     colorNumber: "9169",
@@ -55995,11 +52380,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 61.464720584879245,
-      A: 3.2791255740916014,
-      B: 7.699754385920499,
-    },
+    lab: { L: 61.464720584879245, A: 3.2791255740916014, B: 7.699754385920499 },
   },
   {
     colorNumber: "6074",
@@ -56040,11 +52421,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 54.16049703221111,
-      A: 3.5704035513039467,
-      B: 7.365280813634967,
-    },
+    lab: { L: 54.16049703221111, A: 3.5704035513039467, B: 7.365280813634967 },
   },
   {
     colorNumber: "6075",
@@ -56085,11 +52462,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 45.005677543086804,
-      A: 3.8621679878195203,
-      B: 5.808082402533088,
-    },
+    lab: { L: 45.005677543086804, A: 3.8621679878195203, B: 5.808082402533088 },
   },
   {
     colorNumber: "7510",
@@ -56130,11 +52503,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 33.294083359127164,
-      A: 5.487303220643391,
-      B: 6.68246054791084,
-    },
+    lab: { L: 33.294083359127164, A: 5.487303220643391, B: 6.68246054791084 },
   },
   {
     colorNumber: "7029",
@@ -56183,11 +52552,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.90209216934174,
-      A: 0.32840366406722277,
-      B: 5.706971294908714,
-    },
+    lab: { L: 81.90209216934174, A: 0.32840366406722277, B: 5.706971294908714 },
   },
   {
     colorNumber: "7030",
@@ -56237,11 +52602,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.46703342040787,
-      A: 1.0986877073598245,
-      B: 7.232112675762736,
-    },
+    lab: { L: 74.46703342040787, A: 1.0986877073598245, B: 7.232112675762736 },
   },
   {
     colorNumber: "7031",
@@ -56282,11 +52643,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.19824873723857,
-      A: 1.7284973710627871,
-      B: 8.183153851638703,
-    },
+    lab: { L: 67.19824873723857, A: 1.7284973710627871, B: 8.183153851638703 },
   },
   {
     colorNumber: "7504",
@@ -56327,11 +52684,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 61.21434223343891,
-      A: 2.009411061044686,
-      B: 9.017082726901915,
-    },
+    lab: { L: 61.21434223343891, A: 2.009411061044686, B: 9.017082726901915 },
   },
   {
     colorNumber: "7032",
@@ -56372,11 +52725,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 52.3790658551944,
-      A: 2.3712718660307552,
-      B: 10.008828825000226,
-    },
+    lab: { L: 52.3790658551944, A: 2.3712718660307552, B: 10.008828825000226 },
   },
   {
     colorNumber: "7033",
@@ -56417,11 +52766,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 44.733550332803425,
-      A: 2.261094463454072,
-      B: 9.61312175338438,
-    },
+    lab: { L: 44.733550332803425, A: 2.261094463454072, B: 9.61312175338438 },
   },
   {
     colorNumber: "7034",
@@ -56462,11 +52807,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 33.79360906733862,
-      A: 3.4198486562848354,
-      B: 12.431122958939145,
-    },
+    lab: { L: 33.79360906733862, A: 3.4198486562848354, B: 12.431122958939145 },
   },
   {
     colorNumber: "7015",
@@ -56514,11 +52855,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.96982755845701,
-      A: -0.5596943793815812,
-      B: 4.846426025847395,
-    },
+    lab: { L: 80.96982755845701, A: -0.5596943793815812, B: 4.846426025847395 },
   },
   {
     colorNumber: "7016",
@@ -56615,11 +52952,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.6619632846744,
-      A: 0.16653035889180323,
-      B: 5.276692358279211,
-    },
+    lab: { L: 68.6619632846744, A: 0.16653035889180323, B: 5.276692358279211 },
   },
   {
     colorNumber: "9170",
@@ -56660,11 +52993,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 63.42216285886009,
-      A: 0.3548344505521772,
-      B: 4.838366329878974,
-    },
+    lab: { L: 63.42216285886009, A: 0.3548344505521772, B: 4.838366329878974 },
   },
   {
     colorNumber: "7018",
@@ -56709,11 +53038,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 57.79426815215649,
-      A: 0.9323686675984932,
-      B: 4.53134608177066,
-    },
+    lab: { L: 57.79426815215649, A: 0.9323686675984932, B: 4.53134608177066 },
   },
   {
     colorNumber: "7019",
@@ -56759,11 +53084,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 48.73581130294103,
-      A: 0.9574971527112619,
-      B: 3.4400568596356873,
-    },
+    lab: { L: 48.73581130294103, A: 0.9574971527112619, B: 3.4400568596356873 },
   },
   {
     colorNumber: "7020",
@@ -56808,11 +53129,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 31.09144961027203,
-      A: 1.7498231297504163,
-      B: 4.655497711118029,
-    },
+    lab: { L: 31.09144961027203, A: 1.7498231297504163, B: 4.655497711118029 },
   },
   {
     colorNumber: "7043",
@@ -56857,11 +53174,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.23473466763481,
-      A: 0.8768572035934286,
-      B: 6.487285388188813,
-    },
+    lab: { L: 80.23473466763481, A: 0.8768572035934286, B: 6.487285388188813 },
   },
   {
     colorNumber: "7044",
@@ -56902,11 +53215,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.09995410799804,
-      A: 1.1007451118055234,
-      B: 7.239776139252041,
-    },
+    lab: { L: 74.09995410799804, A: 1.1007451118055234, B: 7.239776139252041 },
   },
   {
     colorNumber: "7045",
@@ -56947,11 +53256,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 66.19254288501526,
-      A: 0.6030602635507809,
-      B: 7.803018405564721,
-    },
+    lab: { L: 66.19254288501526, A: 0.6030602635507809, B: 7.803018405564721 },
   },
   {
     colorNumber: "9171",
@@ -56992,11 +53297,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.03722554913965,
-      A: 0.25140702092402156,
-      B: 7.825301892762226,
-    },
+    lab: { L: 60.03722554913965, A: 0.25140702092402156, B: 7.825301892762226 },
   },
   {
     colorNumber: "7046",
@@ -57041,11 +53342,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 51.51014311877903,
-      A: 0.46876298835579755,
-      B: 7.521475631704533,
-    },
+    lab: { L: 51.51014311877903, A: 0.46876298835579755, B: 7.521475631704533 },
   },
   {
     colorNumber: "7047",
@@ -57086,11 +53383,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 42.75656607457876,
-      A: 1.0649303076377126,
-      B: 6.092835928653384,
-    },
+    lab: { L: 42.75656607457876, A: 1.0649303076377126, B: 6.092835928653384 },
   },
   {
     colorNumber: "7048",
@@ -57139,11 +53432,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 34.22453487396554,
-      A: 0.4287822984401224,
-      B: 4.114941262269034,
-    },
+    lab: { L: 34.22453487396554, A: 0.4287822984401224, B: 4.114941262269034 },
   },
   {
     colorNumber: "7050",
@@ -57184,11 +53473,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.39086013316192,
-      A: -0.5331896824369853,
-      B: 7.088441984290528,
-    },
+    lab: { L: 81.39086013316192, A: -0.5331896824369853, B: 7.088441984290528 },
   },
   {
     colorNumber: "7051",
@@ -57229,11 +53514,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.3956183181749,
-      A: 0.6003675539333897,
-      B: 8.763270001800038,
-    },
+    lab: { L: 74.3956183181749, A: 0.6003675539333897, B: 8.763270001800038 },
   },
   {
     colorNumber: "7052",
@@ -57274,11 +53555,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.45224078466286,
-      A: 0.4675404158340779,
-      B: 9.43852752874086,
-    },
+    lab: { L: 68.45224078466286, A: 0.4675404158340779, B: 9.43852752874086 },
   },
   {
     colorNumber: "9172",
@@ -57319,11 +53596,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 58.94821126067811,
-      A: 0.4743171585318562,
-      B: 8.527274111323702,
-    },
+    lab: { L: 58.94821126067811, A: 0.4743171585318562, B: 8.527274111323702 },
   },
   {
     colorNumber: "7053",
@@ -57364,11 +53637,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 53.12421102727242,
-      A: 0.5134494949146085,
-      B: 8.708693993601813,
-    },
+    lab: { L: 53.12421102727242, A: 0.5134494949146085, B: 8.708693993601813 },
   },
   {
     colorNumber: "7055",
@@ -57409,11 +53678,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 32.805925682139346,
-      A: 1.189849873464488,
-      B: 9.700559350628158,
-    },
+    lab: { L: 32.805925682139346, A: 1.189849873464488, B: 9.700559350628158 },
   },
   {
     colorNumber: "7541",
@@ -57454,11 +53719,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.4121746084873,
-      A: 0.23463191707795428,
-      B: 9.545647647867117,
-    },
+    lab: { L: 83.4121746084873, A: 0.23463191707795428, B: 9.545647647867117 },
   },
   {
     colorNumber: "7638",
@@ -57544,11 +53805,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.43473310133919,
-      A: -0.6636469857959626,
-      B: 8.985900631597744,
-    },
+    lab: { L: 70.43473310133919, A: -0.6636469857959626, B: 8.985900631597744 },
   },
   {
     colorNumber: "7639",
@@ -57589,11 +53846,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.05546216441817,
-      A: 0.305723700140037,
-      B: 9.969820253510653,
-    },
+    lab: { L: 68.05546216441817, A: 0.305723700140037, B: 9.969820253510653 },
   },
   {
     colorNumber: "7640",
@@ -57634,11 +53887,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 66.13255637027255,
-      A: 0.3971330693864905,
-      B: 7.148414581867124,
-    },
+    lab: { L: 66.13255637027255, A: 0.3971330693864905, B: 7.148414581867124 },
   },
   {
     colorNumber: "7746",
@@ -57679,11 +53928,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 64.43310528088001,
-      A: -0.5228957051848226,
-      B: 7.445272280605009,
-    },
+    lab: { L: 64.43310528088001, A: -0.5228957051848226, B: 7.445272280605009 },
   },
   {
     colorNumber: "7743",
@@ -57776,11 +54021,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 76.79180606543886,
-      A: 1.3656390978250554,
-      B: 10.111011983694418,
-    },
+    lab: { L: 76.79180606543886, A: 1.3656390978250554, B: 10.111011983694418 },
   },
   {
     colorNumber: "7506",
@@ -57821,11 +54062,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 75.02614503433173,
-      A: 1.592632361405777,
-      B: 10.805125604215915,
-    },
+    lab: { L: 75.02614503433173, A: 1.592632361405777, B: 10.805125604215915 },
   },
   {
     colorNumber: "7507",
@@ -57866,11 +54103,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.15258249794236,
-      A: 2.2742101017851346,
-      B: 11.827713511474492,
-    },
+    lab: { L: 68.15258249794236, A: 2.2742101017851346, B: 11.827713511474492 },
   },
   {
     colorNumber: "7633",
@@ -57911,11 +54144,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 66.55030780934057,
-      A: 2.0046441683797545,
-      B: 10.041631045791345,
-    },
+    lab: { L: 66.55030780934057, A: 2.0046441683797545, B: 10.041631045791345 },
   },
   {
     colorNumber: "7513",
@@ -57930,7 +54159,10 @@ export const colorData = [
     isInterior: true,
     name: "Sanderling",
     lrv: 31.376,
-    brandedCollectionNames: ["Senior Living Cool Foundations"],
+    brandedCollectionNames: [
+      "Foundational Neutrals",
+      "Senior Living Cool Foundations",
+    ],
     colorFamilyNames: ["Neutral"],
     brandKey: "SW",
     red: 167,
@@ -57956,11 +54188,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 62.77892428916789,
-      A: 3.539566990286791,
-      B: 12.469390642319444,
-    },
+    lab: { L: 62.77892428916789, A: 3.539566990286791, B: 12.469390642319444 },
   },
   {
     colorNumber: "7508",
@@ -58001,11 +54229,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 58.62626526308567,
-      A: 3.9424381497755734,
-      B: 11.580522062321208,
-    },
+    lab: { L: 58.62626526308567, A: 3.9424381497755734, B: 11.580522062321208 },
   },
   {
     colorNumber: "7514",
@@ -58046,11 +54270,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 49.73314460086269,
-      A: 2.9933722467885837,
-      B: 9.71261822317533,
-    },
+    lab: { L: 49.73314460086269, A: 2.9933722467885837, B: 9.71261822317533 },
   },
   {
     colorNumber: "7036",
@@ -58099,11 +54319,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.66266228729744,
-      A: 0.9323417946453527,
-      B: 8.740843564545763,
-    },
+    lab: { L: 80.66266228729744, A: 0.9323417946453527, B: 8.740843564545763 },
   },
   {
     colorNumber: "7037",
@@ -58150,11 +54366,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.32194074967782,
-      A: 2.3030611640336707,
-      B: 9.96965550970974,
-    },
+    lab: { L: 73.32194074967782, A: 2.3030611640336707, B: 9.96965550970974 },
   },
   {
     colorNumber: "7038",
@@ -58195,11 +54407,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.42812376339614,
-      A: 2.4417280353908333,
-      B: 11.333528485468914,
-    },
+    lab: { L: 67.42812376339614, A: 2.4417280353908333, B: 11.333528485468914 },
   },
   {
     colorNumber: "9174",
@@ -58240,11 +54448,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.73989837961467,
-      A: 3.101436478619324,
-      B: 11.200832660668848,
-    },
+    lab: { L: 60.73989837961467, A: 3.101436478619324, B: 11.200832660668848 },
   },
   {
     colorNumber: "7039",
@@ -58330,11 +54534,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 42.8755387527912,
-      A: 2.99051860520394,
-      B: 10.577493993736041,
-    },
+    lab: { L: 42.8755387527912, A: 2.99051860520394, B: 10.577493993736041 },
   },
   {
     colorNumber: "7041",
@@ -58375,11 +54575,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 30.643210779787488,
-      A: 4.790514691745878,
-      B: 11.809584970489084,
-    },
+    lab: { L: 30.643210779787488, A: 4.790514691745878, B: 11.809584970489084 },
   },
   {
     colorNumber: "7511",
@@ -58420,11 +54616,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.09631963726936,
-      A: 2.410325550817105,
-      B: 9.327967874788378,
-    },
+    lab: { L: 78.09631963726936, A: 2.410325550817105, B: 9.327967874788378 },
   },
   {
     colorNumber: "7524",
@@ -58469,11 +54661,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 76.37635209073531,
-      A: 2.6948600861035343,
-      B: 11.166057529793294,
-    },
+    lab: { L: 76.37635209073531, A: 2.6948600861035343, B: 11.166057529793294 },
   },
   {
     colorNumber: "7512",
@@ -58514,11 +54702,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.82932981398572,
-      A: 2.3414941627446506,
-      B: 11.080612929747558,
-    },
+    lab: { L: 74.82932981398572, A: 2.3414941627446506, B: 11.080612929747558 },
   },
   {
     colorNumber: "7501",
@@ -58559,11 +54743,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 64.73750422392595,
-      A: 3.9642644320260767,
-      B: 10.808985066474829,
-    },
+    lab: { L: 64.73750422392595, A: 3.9642644320260767, B: 10.808985066474829 },
   },
   {
     colorNumber: "7502",
@@ -58604,11 +54784,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 59.98608236482123,
-      A: 4.862578518714466,
-      B: 11.285902559547445,
-    },
+    lab: { L: 59.98608236482123, A: 4.862578518714466, B: 11.285902559547445 },
   },
   {
     colorNumber: "7509",
@@ -58649,11 +54825,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 48.16305117157185,
-      A: 4.650468183903911,
-      B: 12.230222079157649,
-    },
+    lab: { L: 48.16305117157185, A: 4.650468183903911, B: 12.230222079157649 },
   },
   {
     colorNumber: "6258",
@@ -58816,7 +54988,7 @@ export const colorData = [
     isInterior: true,
     name: "Inkwell",
     lrv: 3.628,
-    brandedCollectionNames: ["Free Spirit", "paradox"],
+    brandedCollectionNames: ["Foundational Neutrals", "Free Spirit", "paradox"],
     colorFamilyNames: ["ColorID", "Neutral"],
     brandKey: "SW",
     red: 49,
@@ -59028,11 +55200,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 24.380833887943133,
-      A: 5.374523120720759,
-      B: 3.4079922046612365,
-    },
+    lab: { L: 24.380833887943133, A: 5.374523120720759, B: 3.4079922046612365 },
   },
   {
     colorNumber: "6006",
@@ -59047,7 +55215,7 @@ export const colorData = [
     isInterior: true,
     name: "Black Bean",
     lrv: 3.681,
-    brandedCollectionNames: ["2019 Raconteur", "west elm"],
+    brandedCollectionNames: ["Restorative Darks", "2019 Raconteur", "west elm"],
     colorFamilyNames: ["Neutral"],
     brandKey: "SW",
     red: 64,
@@ -59073,11 +55241,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 22.552925516551603,
-      A: 5.264474988979556,
-      B: 4.094154310256204,
-    },
+    lab: { L: 22.552925516551603, A: 5.264474988979556, B: 4.094154310256204 },
   },
   {
     colorNumber: "7630",
@@ -59118,11 +55282,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 19.170406997502226,
-      A: 6.851477316142496,
-      B: 1.1774290032338763,
-    },
+    lab: { L: 19.170406997502226, A: 6.851477316142496, B: 1.1774290032338763 },
   },
   {
     colorNumber: "9175",
@@ -59208,11 +55368,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 21.58089038466551,
-      A: 1.809078812369025,
-      B: -2.2127964765728203,
-    },
+    lab: { L: 21.58089038466551, A: 1.809078812369025, B: -2.2127964765728203 },
   },
   {
     colorNumber: "6988",
@@ -59253,11 +55409,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 23.63320145442122,
-      A: 2.8708580334174396,
-      B: -2.490146731191134,
-    },
+    lab: { L: 23.63320145442122, A: 2.8708580334174396, B: -2.490146731191134 },
   },
   {
     colorNumber: "6279",
@@ -59523,11 +55675,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 36.86738068230347,
-      A: 0.4682220939153936,
-      B: -7.721497039202507,
-    },
+    lab: { L: 36.86738068230347, A: 0.4682220939153936, B: -7.721497039202507 },
   },
   {
     colorNumber: "6244",
@@ -59621,18 +55769,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 21.39874160318429,
-      A: -0.117857249286063,
-      B: -9.364048194096542,
-    },
+    lab: { L: 21.39874160318429, A: -0.117857249286063, B: -9.364048194096542 },
   },
   {
     colorNumber: "7551",
-    coordinatingColors: {
-      coord1ColorId: "11344",
-      coord2ColorId: "11359",
-    },
+    coordinatingColors: { coord1ColorId: "11344", coord2ColorId: "11359" },
     description: ["Subdued", "Muted", "Dazzling"],
     id: "2857",
     isExterior: true,
@@ -59679,18 +55820,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 93.4536901172398,
-      A: -0.37833165603462504,
-      B: 5.303349716928407,
-    },
+    lab: { L: 93.4536901172398, A: -0.37833165603462504, B: 5.303349716928407 },
   },
   {
     colorNumber: "7009",
-    coordinatingColors: {
-      coord1ColorId: "2944",
-      coord2ColorId: "2935",
-    },
+    coordinatingColors: { coord1ColorId: "2944", coord2ColorId: "2935" },
     description: ["Diluted", "Wan", "Brilliant", "Radiant"],
     id: "2690",
     isExterior: true,
@@ -59742,10 +55876,7 @@ export const colorData = [
   },
   {
     colorNumber: "7013",
-    coordinatingColors: {
-      coord1ColorId: "11370",
-      coord2ColorId: "11339",
-    },
+    coordinatingColors: { coord1ColorId: "11370", coord2ColorId: "11339" },
     description: ["Subdued", "Muted", "Brilliant", "Radiant"],
     id: "2694",
     isExterior: true,
@@ -59783,11 +55914,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 91.15715744702986,
-      A: 0.1592367871441902,
-      B: 7.161755651017132,
-    },
+    lab: { L: 91.15715744702986, A: 0.1592367871441902, B: 7.161755651017132 },
   },
   {
     colorNumber: "7042",
@@ -59812,8 +55939,8 @@ export const colorData = [
       "Finest Whites",
     ],
     colorFamilyNames: [
-      "White & Pastel",
       "Designer Color Collection",
+      "White & Pastel",
       "Living Well",
     ],
     brandKey: "SW",
@@ -59840,18 +55967,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.0649139617993,
-      A: 0.3288041336736991,
-      B: 6.707801680412229,
-    },
+    lab: { L: 89.0649139617993, A: 0.3288041336736991, B: 6.707801680412229 },
   },
   {
     colorNumber: "7010",
-    coordinatingColors: {
-      coord1ColorId: "2856",
-      coord2ColorId: "2854",
-    },
+    coordinatingColors: { coord1ColorId: "2856", coord2ColorId: "2854" },
     description: ["Diluted", "Wan", "Brilliant", "Radiant"],
     id: "2691",
     isExterior: true,
@@ -59865,8 +55985,8 @@ export const colorData = [
       "Finest Whites",
     ],
     colorFamilyNames: [
-      "Designer Color Collection",
       "White & Pastel",
+      "Designer Color Collection",
       "Living Well",
     ],
     brandKey: "SW",
@@ -59901,10 +56021,7 @@ export const colorData = [
   },
   {
     colorNumber: "7011",
-    coordinatingColors: {
-      coord1ColorId: "2732",
-      coord2ColorId: "2762",
-    },
+    coordinatingColors: { coord1ColorId: "2732", coord2ColorId: "2762" },
     description: ["Diluted", "Wan", "Brilliant", "Radiant"],
     id: "2692",
     isExterior: true,
@@ -59942,18 +56059,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.50860031968507,
-      A: -0.7005764808938886,
-      B: 7.452424981119932,
-    },
+    lab: { L: 88.50860031968507, A: -0.7005764808938886, B: 7.452424981119932 },
   },
   {
     colorNumber: "7637",
-    coordinatingColors: {
-      coord1ColorId: "2732",
-      coord2ColorId: "2096",
-    },
+    coordinatingColors: { coord1ColorId: "2732", coord2ColorId: "2096" },
     description: ["Diluted", "Wan", "Brilliant", "Radiant"],
     id: "2943",
     isExterior: true,
@@ -60001,10 +56111,7 @@ export const colorData = [
   },
   {
     colorNumber: "7005",
-    coordinatingColors: {
-      coord1ColorId: "2974",
-      coord2ColorId: "11334",
-    },
+    coordinatingColors: { coord1ColorId: "2974", coord2ColorId: "11334" },
     description: ["Dull", "Dazzling"],
     id: "2686",
     isExterior: true,
@@ -60061,18 +56168,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 93.32382089992872,
-      A: -0.7172600066725487,
-      B: 3.007759691972911,
-    },
+    lab: { L: 93.32382089992872, A: -0.7172600066725487, B: 3.007759691972911 },
   },
   {
     colorNumber: "7008",
-    coordinatingColors: {
-      coord1ColorId: "2996",
-      coord2ColorId: "11203",
-    },
+    coordinatingColors: { coord1ColorId: "2996", coord2ColorId: "11203" },
     description: ["Diluted", "Wan", "Dazzling"],
     id: "2689",
     isExterior: true,
@@ -60097,8 +56197,8 @@ export const colorData = [
       "2021 Encounter",
     ],
     colorFamilyNames: [
-      "White & Pastel",
       "Designer Color Collection",
+      "White & Pastel",
       "Living Well",
     ],
     brandKey: "SW",
@@ -60125,18 +56225,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 92.67721718692383,
-      A: -0.7208304020300815,
-      B: 5.192624485852093,
-    },
+    lab: { L: 92.67721718692383, A: -0.7208304020300815, B: 5.192624485852093 },
   },
   {
     colorNumber: "7566",
-    coordinatingColors: {
-      coord1ColorId: "2873",
-      coord2ColorId: "11236",
-    },
+    coordinatingColors: { coord1ColorId: "2873", coord2ColorId: "11236" },
     description: ["Subdued", "Muted", "Dazzling"],
     id: "2872",
     isExterior: true,
@@ -60155,7 +56248,7 @@ export const colorData = [
       "Top 50 Exterior Colors",
       "Finest Whites",
     ],
-    colorFamilyNames: ["White & Pastel", "Designer Color Collection"],
+    colorFamilyNames: ["Designer Color Collection", "White & Pastel"],
     brandKey: "SW",
     red: 243,
     green: 238,
@@ -60180,11 +56273,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 94.20537100178353,
-      A: -0.2034265017253345,
-      B: 5.898663645535507,
-    },
+    lab: { L: 94.20537100178353, A: -0.2034265017253345, B: 5.898663645535507 },
   },
   {
     colorNumber: "7570",
@@ -60236,11 +56325,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.90796652493029,
-      A: 0.3184457762104298,
-      B: 5.634088011841576,
-    },
+    lab: { L: 86.90796652493029, A: 0.3184457762104298, B: 5.634088011841576 },
   },
   {
     colorNumber: "7634",
@@ -60281,11 +56366,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.38968824642664,
-      A: 1.021272262115569,
-      B: 4.82879476997935,
-    },
+    lab: { L: 82.38968824642664, A: 1.021272262115569, B: 4.82879476997935 },
   },
   {
     colorNumber: "7647",
@@ -60337,11 +56418,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.60953102279561,
-      A: -0.2116732558975487,
-      B: 3.810949651007678,
-    },
+    lab: { L: 84.60953102279561, A: -0.2116732558975487, B: 3.810949651007678 },
   },
   {
     colorNumber: "7671",
@@ -60382,18 +56459,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.765746604777,
-      A: -0.3854248328113985,
-      B: 3.2092773019266607,
-    },
+    lab: { L: 82.765746604777, A: -0.3854248328113985, B: 3.2092773019266607 },
   },
   {
     colorNumber: "7757",
-    coordinatingColors: {
-      coord1ColorId: "1844",
-      coord2ColorId: "1901",
-    },
+    coordinatingColors: { coord1ColorId: "1844", coord2ColorId: "1901" },
     description: ["Diluted", "Wan", "Dazzling"],
     id: "11056",
     isExterior: false,
@@ -60442,10 +56512,7 @@ export const colorData = [
   },
   {
     colorNumber: "7004",
-    coordinatingColors: {
-      coord1ColorId: "2947",
-      coord2ColorId: "11337",
-    },
+    coordinatingColors: { coord1ColorId: "2947", coord2ColorId: "11337" },
     description: ["Dull", "Dazzling"],
     id: "2685",
     isExterior: true,
@@ -60464,8 +56531,8 @@ export const colorData = [
       "Finest Whites",
     ],
     colorFamilyNames: [
-      "White & Pastel",
       "Designer Color Collection",
+      "White & Pastel",
       "Living Well",
     ],
     brandKey: "SW",
@@ -60492,18 +56559,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 92.79835793624746,
-      A: 0.1321585351015675,
-      B: 2.765137273729845,
-    },
+    lab: { L: 92.79835793624746, A: 0.1321585351015675, B: 2.765137273729845 },
   },
   {
     colorNumber: "7003",
-    coordinatingColors: {
-      coord1ColorId: "2873",
-      coord2ColorId: "2925",
-    },
+    coordinatingColors: { coord1ColorId: "2873", coord2ColorId: "2925" },
     description: ["Diluted", "Wan", "Brilliant", "Radiant"],
     id: "2684",
     isExterior: true,
@@ -60536,11 +56596,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 90.0649903543638,
-      A: 0.3048461850030382,
-      B: 4.49068704213591,
-    },
+    lab: { L: 90.0649903543638, A: 0.3048461850030382, B: 4.49068704213591 },
   },
   {
     colorNumber: "7028",
@@ -60581,11 +56637,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.67610733241622,
-      A: 0.4774430341632496,
-      B: 4.015836649139493,
-    },
+    lab: { L: 88.67610733241622, A: 0.4774430341632496, B: 4.015836649139493 },
   },
   {
     colorNumber: "7014",
@@ -60633,11 +56685,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.62355940184302,
-      A: 0.3047551224944489,
-      B: 3.4043571683230356,
-    },
+    lab: { L: 88.62355940184302, A: 0.3047551224944489, B: 3.4043571683230356 },
   },
   {
     colorNumber: "7646",
@@ -60737,10 +56785,7 @@ export const colorData = [
   },
   {
     colorNumber: "7006",
-    coordinatingColors: {
-      coord1ColorId: "11328",
-      coord2ColorId: "11360",
-    },
+    coordinatingColors: { coord1ColorId: "11328", coord2ColorId: "11360" },
     description: ["Dull", "Dazzling"],
     id: "2687",
     isExterior: true,
@@ -60763,7 +56808,7 @@ export const colorData = [
       "Top 50 Interior Colors",
       "Finest Whites",
     ],
-    colorFamilyNames: ["White & Pastel", "Designer Color Collection"],
+    colorFamilyNames: ["Designer Color Collection", "White & Pastel"],
     brandKey: "SW",
     red: 238,
     green: 239,
@@ -60788,18 +56833,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 94.2484605077967,
-      A: -1.2154453677621913,
-      B: 2.2825610189856516,
-    },
+    lab: { L: 94.2484605077967, A: -1.2154453677621913, B: 2.2825610189856516 },
   },
   {
     colorNumber: "7007",
-    coordinatingColors: {
-      coord1ColorId: "2956",
-      coord2ColorId: "11320",
-    },
+    coordinatingColors: { coord1ColorId: "2956", coord2ColorId: "11320" },
     description: ["Washed out", "Dazzling"],
     id: "2688",
     isExterior: true,
@@ -60868,8 +56906,8 @@ export const colorData = [
       "Finest Whites",
     ],
     colorFamilyNames: [
-      "White & Pastel",
       "Designer Color Collection",
+      "White & Pastel",
       "Living Well",
     ],
     brandKey: "SW",
@@ -60941,11 +56979,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.97670537022799,
-      A: -1.0353488250476328,
-      B: 0.727275653235937,
-    },
+    lab: { L: 88.97670537022799, A: -1.0353488250476328, B: 0.727275653235937 },
   },
   {
     colorNumber: "7063",
@@ -60990,11 +57024,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.67245776540558,
-      A: -0.8765310723630737,
-      B: 1.33502083840229,
-    },
+    lab: { L: 88.67245776540558, A: -0.8765310723630737, B: 1.33502083840229 },
   },
   {
     colorNumber: "6231",
@@ -61320,11 +57350,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.73543408332166,
-      A: -1.2407597875946363,
-      B: 4.499370284923998,
-    },
+    lab: { L: 89.73543408332166, A: -1.2407597875946363, B: 4.499370284923998 },
   },
   {
     colorNumber: "6168",
@@ -61365,11 +57391,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.10481978018323,
-      A: -0.8985399105274072,
-      B: 4.626589891685895,
-    },
+    lab: { L: 89.10481978018323, A: -0.8985399105274072, B: 4.626589891685895 },
   },
   {
     colorNumber: "7049",
@@ -61410,11 +57432,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.08067548719444,
-      A: -1.06939635540515,
-      B: 5.1165488344094845,
-    },
+    lab: { L: 89.08067548719444, A: -1.06939635540515, B: 5.1165488344094845 },
   },
   {
     colorNumber: "6070",
@@ -61468,10 +57486,7 @@ export const colorData = [
   },
   {
     colorNumber: "7626",
-    coordinatingColors: {
-      coord1ColorId: "1937",
-      coord2ColorId: "11343",
-    },
+    coordinatingColors: { coord1ColorId: "1937", coord2ColorId: "11343" },
     description: ["Diluted", "Wan", "Brilliant", "Radiant"],
     id: "2932",
     isExterior: true,
@@ -61508,18 +57523,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.71212698626601,
-      A: 0.30534555117911477,
-      B: 4.494543692742581,
-    },
+    lab: { L: 89.71212698626601, A: 0.30534555117911477, B: 4.494543692742581 },
   },
   {
     colorNumber: "7636",
-    coordinatingColors: {
-      coord1ColorId: "2711",
-      coord2ColorId: "1761",
-    },
+    coordinatingColors: { coord1ColorId: "2711", coord2ColorId: "1761" },
     description: ["Dull", "Brilliant", "Radiant"],
     id: "2942",
     isExterior: true,
@@ -61537,8 +57545,8 @@ export const colorData = [
       "Finest Whites",
     ],
     colorFamilyNames: [
-      "White & Pastel",
       "Designer Color Collection",
+      "White & Pastel",
       "Living Well",
     ],
     brandKey: "SW",
@@ -61623,18 +57631,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.32699588142596,
-      A: 0.31580495783578577,
-      B: 5.614240903370882,
-    },
+    lab: { L: 88.32699588142596, A: 0.31580495783578577, B: 5.614240903370882 },
   },
   {
     colorNumber: "7627",
-    coordinatingColors: {
-      coord1ColorId: "2732",
-      coord2ColorId: "2734",
-    },
+    coordinatingColors: { coord1ColorId: "2732", coord2ColorId: "2734" },
     description: ["Diluted", "Wan", "Brilliant", "Radiant"],
     id: "2933",
     isExterior: true,
@@ -61673,11 +57674,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.74122481737365,
-      A: 0.31324661786152896,
-      B: 5.594797945869767,
-    },
+    lab: { L: 89.74122481737365, A: 0.31324661786152896, B: 5.594797945869767 },
   },
   {
     colorNumber: "7631",
@@ -61703,8 +57700,8 @@ export const colorData = [
       "Finest Whites",
     ],
     colorFamilyNames: [
-      "Designer Color Collection",
       "White & Pastel",
+      "Designer Color Collection",
       "Living Well",
     ],
     brandKey: "SW",
@@ -61731,18 +57728,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.20949328540006,
-      A: 0.13871588931119172,
-      B: 5.014388052380303,
-    },
+    lab: { L: 87.20949328540006, A: 0.13871588931119172, B: 5.014388052380303 },
   },
   {
     colorNumber: "7628",
-    coordinatingColors: {
-      coord1ColorId: "1692",
-      coord2ColorId: "1689",
-    },
+    coordinatingColors: { coord1ColorId: "1692", coord2ColorId: "1689" },
     description: ["Dull", "Brilliant", "Radiant"],
     id: "2934",
     isExterior: true,
@@ -61779,18 +57769,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.57656325289862,
-      A: 0.4880831593386259,
-      B: 5.145776849634376,
-    },
+    lab: { L: 86.57656325289862, A: 0.4880831593386259, B: 5.145776849634376 },
   },
   {
     colorNumber: "7100",
-    coordinatingColors: {
-      coord1ColorId: "11332",
-      coord2ColorId: "2842",
-    },
+    coordinatingColors: { coord1ColorId: "11332", coord2ColorId: "2842" },
     description: ["Subdued", "Muted", "Dazzling"],
     id: "2765",
     isExterior: true,
@@ -61823,18 +57806,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 94.30101204206771,
-      A: 0.46804479277878785,
-      B: 3.961948487883893,
-    },
+    lab: { L: 94.30101204206771, A: 0.46804479277878785, B: 3.961948487883893 },
   },
   {
     colorNumber: "7000",
-    coordinatingColors: {
-      coord1ColorId: "1744",
-      coord2ColorId: "11260",
-    },
+    coordinatingColors: { coord1ColorId: "1744", coord2ColorId: "11260" },
     description: ["Subdued", "Muted", "Dazzling"],
     id: "2681",
     isExterior: true,
@@ -61867,11 +57843,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 93.70250279052365,
-      A: 0.9791691365394484,
-      B: 3.6041870004699605,
-    },
+    lab: { L: 93.70250279052365, A: 0.9791691365394484, B: 3.6041870004699605 },
   },
   {
     colorNumber: "6028",
@@ -61912,11 +57884,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.30431977705292,
-      A: 2.033444800649653,
-      B: 4.023010618356593,
-    },
+    lab: { L: 88.30431977705292, A: 2.033444800649653, B: 4.023010618356593 },
   },
   {
     colorNumber: "6063",
@@ -61957,11 +57925,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.60976444066927,
-      A: 1.6946681292163146,
-      B: 5.000793045146801,
-    },
+    lab: { L: 88.60976444066927, A: 1.6946681292163146, B: 5.000793045146801 },
   },
   {
     colorNumber: "6077",
@@ -62002,11 +57966,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.17713122118916,
-      A: 1.3487018654406158,
-      B: 4.881682762319728,
-    },
+    lab: { L: 88.17713122118916, A: 1.3487018654406158, B: 4.881682762319728 },
   },
   {
     colorNumber: "6035",
@@ -62047,11 +58007,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.84699095001201,
-      A: 1.519079581546734,
-      B: 4.394374574954729,
-    },
+    lab: { L: 87.84699095001201, A: 1.519079581546734, B: 4.394374574954729 },
   },
   {
     colorNumber: "7021",
@@ -62092,18 +58048,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.98069443947753,
-      A: 0.8273838084483232,
-      B: 4.155950479727366,
-    },
+    lab: { L: 86.98069443947753, A: 0.8273838084483232, B: 4.155950479727366 },
   },
   {
     colorNumber: "7103",
-    coordinatingColors: {
-      coord1ColorId: "11264",
-      coord2ColorId: "11265",
-    },
+    coordinatingColors: { coord1ColorId: "11264", coord2ColorId: "11265" },
     description: ["Fairly Colorful", "Moderately Colorful", "Dazzling"],
     id: "2768",
     isExterior: true,
@@ -62144,10 +58093,7 @@ export const colorData = [
   },
   {
     colorNumber: "6385",
-    coordinatingColors: {
-      coord1ColorId: "11203",
-      coord2ColorId: "11321",
-    },
+    coordinatingColors: { coord1ColorId: "11203", coord2ColorId: "11321" },
     description: ["Subdued", "Muted", "Dazzling"],
     id: "2071",
     isExterior: true,
@@ -62167,8 +58113,8 @@ export const colorData = [
       "Finest Whites",
     ],
     colorFamilyNames: [
-      "White & Pastel",
       "Designer Color Collection",
+      "White & Pastel",
       "Living Well",
     ],
     brandKey: "SW",
@@ -62195,18 +58141,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 92.81200509993181,
-      A: -0.3540941642046769,
-      B: 7.497470880787738,
-    },
+    lab: { L: 92.81200509993181, A: -0.3540941642046769, B: 7.497470880787738 },
   },
   {
     colorNumber: "7012",
-    coordinatingColors: {
-      coord1ColorId: "2855",
-      coord2ColorId: "2034",
-    },
+    coordinatingColors: { coord1ColorId: "2855", coord2ColorId: "2034" },
     description: ["Subdued", "Muted", "Brilliant", "Radiant"],
     id: "2693",
     isExterior: true,
@@ -62262,10 +58201,7 @@ export const colorData = [
   },
   {
     colorNumber: "9180",
-    coordinatingColors: {
-      coord1ColorId: "2693",
-      coord2ColorId: "1843",
-    },
+    coordinatingColors: { coord1ColorId: "2693", coord2ColorId: "1843" },
     description: ["Subdued", "Muted", "Brilliant", "Radiant"],
     id: "11363",
     isExterior: true,
@@ -62303,11 +58239,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.83096331425013,
-      A: 0.5692974579810106,
-      B: 9.54106183709622,
-    },
+    lab: { L: 88.83096331425013, A: 0.5692974579810106, B: 9.54106183709622 },
   },
   {
     colorNumber: "7568",
@@ -62355,11 +58287,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.27866828945507,
-      A: 0.02801514884459566,
-      B: 8.833353281331613,
-    },
+    lab: { L: 87.27866828945507, A: 0.02801514884459566, B: 8.833353281331613 },
   },
   {
     colorNumber: "7531",
@@ -62400,11 +58328,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.26609378845787,
-      A: 0.7894995091939916,
-      B: 10.276834391091882,
-    },
+    lab: { L: 84.26609378845787, A: 0.7894995091939916, B: 10.276834391091882 },
   },
   {
     colorNumber: "7555",
@@ -62445,18 +58369,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.26066030523849,
-      A: 1.9127319007020138,
-      B: 11.759178193776387,
-    },
+    lab: { L: 85.26066030523849, A: 1.9127319007020138, B: 11.759178193776387 },
   },
   {
     colorNumber: "7105",
-    coordinatingColors: {
-      coord1ColorId: "2881",
-      coord2ColorId: "11371",
-    },
+    coordinatingColors: { coord1ColorId: "2881", coord2ColorId: "11371" },
     description: ["Gleaming", "Forceful", "Dazzling"],
     id: "2770",
     isExterior: true,
@@ -62489,18 +58406,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 94.64546646514881,
-      A: -0.1497744994779504,
-      B: 9.16229591867257,
-    },
+    lab: { L: 94.64546646514881, A: -0.1497744994779504, B: 9.16229591867257 },
   },
   {
     colorNumber: "7106",
-    coordinatingColors: {
-      coord1ColorId: "11306",
-      coord2ColorId: "11236",
-    },
+    coordinatingColors: { coord1ColorId: "11306", coord2ColorId: "11236" },
     description: ["Gleaming", "Forceful", "Dazzling"],
     id: "2771",
     isExterior: true,
@@ -62533,11 +58443,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 94.40652422683446,
-      A: 0.2294834688237879,
-      B: 10.383814154119065,
-    },
+    lab: { L: 94.40652422683446, A: 0.2294834688237879, B: 10.383814154119065 },
   },
   {
     colorNumber: "7557",
@@ -62578,11 +58484,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 92.73634332947822,
-      A: 0.587023242637208,
-      B: 10.549566373289544,
-    },
+    lab: { L: 92.73634332947822, A: 0.587023242637208, B: 10.549566373289544 },
   },
   {
     colorNumber: "7556",
@@ -62623,11 +58525,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 92.39801379664998,
-      A: 0.4735077590944936,
-      B: 12.146204476794464,
-    },
+    lab: { L: 92.39801379664998, A: 0.4735077590944936, B: 12.146204476794464 },
   },
   {
     colorNumber: "7559",
@@ -62668,11 +58566,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 91.42461874764679,
-      A: 0.8344550190877431,
-      B: 12.301184548589772,
-    },
+    lab: { L: 91.42461874764679, A: 0.8344550190877431, B: 12.301184548589772 },
   },
   {
     colorNumber: "6371",
@@ -62713,11 +58607,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 90.81652778963567,
-      A: 1.0966888582611967,
-      B: 14.04377522851017,
-    },
+    lab: { L: 90.81652778963567, A: 1.0966888582611967, B: 14.04377522851017 },
   },
   {
     colorNumber: "7573",
@@ -62763,11 +58653,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.36618856596735,
-      A: 1.4912068968362946,
-      B: 14.294875380068529,
-    },
+    lab: { L: 87.36618856596735, A: 1.4912068968362946, B: 14.294875380068529 },
   },
   {
     colorNumber: "7562",
@@ -62808,11 +58694,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 94.90953389800184,
-      A: -0.3555552726502431,
-      B: 7.460805580876362,
-    },
+    lab: { L: 94.90953389800184, A: -0.3555552726502431, B: 7.460805580876362 },
   },
   {
     colorNumber: "6154",
@@ -62903,11 +58785,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 92.04126122525894,
-      A: -0.8427879553760675,
-      B: 8.97273414355444,
-    },
+    lab: { L: 92.04126122525894, A: -0.8427879553760675, B: 8.97273414355444 },
   },
   {
     colorNumber: "7564",
@@ -62998,11 +58876,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.15133573831507,
-      A: 0.1342407065167972,
-      B: 12.115633659470838,
-    },
+    lab: { L: 89.15133573831507, A: 0.1342407065167972, B: 12.115633659470838 },
   },
   {
     colorNumber: "6119",
@@ -63053,11 +58927,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.1703082436183,
-      A: 0.49753556883619376,
-      B: 12.272320428481631,
-    },
+    lab: { L: 88.1703082436183, A: 0.49753556883619376, B: 12.272320428481631 },
   },
   {
     colorNumber: "7575",
@@ -63098,18 +58968,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.43705699550448,
-      A: 1.1560641637392566,
-      B: 14.271709043188086,
-    },
+    lab: { L: 84.43705699550448, A: 1.1560641637392566, B: 14.271709043188086 },
   },
   {
     colorNumber: "8917",
-    coordinatingColors: {
-      coord1ColorId: "2706",
-      coord2ColorId: "11336",
-    },
+    coordinatingColors: { coord1ColorId: "2706", coord2ColorId: "11336" },
     description: ["Subdued", "Muted", "Dazzling"],
     id: "11364",
     isExterior: true,
@@ -63124,8 +58987,8 @@ export const colorData = [
       "Finest Whites",
     ],
     colorFamilyNames: [
-      "White & Pastel",
       "Designer Color Collection",
+      "White & Pastel",
       "Living Well",
     ],
     brandKey: "SW",
@@ -63197,11 +59060,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 91.57122290596523,
-      A: 1.6536968034603916,
-      B: 10.957871833531652,
-    },
+    lab: { L: 91.57122290596523, A: 1.6536968034603916, B: 10.957871833531652 },
   },
   {
     colorNumber: "6378",
@@ -63242,11 +59101,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 91.86506279120219,
-      A: 1.4542408111013483,
-      B: 10.335246731600002,
-    },
+    lab: { L: 91.86506279120219, A: 1.4542408111013483, B: 10.335246731600002 },
   },
   {
     colorNumber: "7571",
@@ -63298,11 +59153,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 90.00384345331219,
-      A: 0.9550229076400463,
-      B: 10.74576506569629,
-    },
+    lab: { L: 90.00384345331219, A: 0.9550229076400463, B: 10.74576506569629 },
   },
   {
     colorNumber: "6126",
@@ -63348,11 +59199,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.25073247562162,
-      A: 0.8560898119781002,
-      B: 12.397635934558293,
-    },
+    lab: { L: 88.25073247562162, A: 0.8560898119781002, B: 12.397635934558293 },
   },
   {
     colorNumber: "7572",
@@ -63398,11 +59245,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.74386046523189,
-      A: 2.1053590378646847,
-      B: 12.338876498143158,
-    },
+    lab: { L: 86.74386046523189, A: 2.1053590378646847, B: 12.338876498143158 },
   },
   {
     colorNumber: "7574",
@@ -63448,18 +59291,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.90798156086579,
-      A: 0.9815749571546739,
-      B: 14.675755820383829,
-    },
+    lab: { L: 86.90798156086579, A: 0.9815749571546739, B: 14.675755820383829 },
   },
   {
     colorNumber: "7104",
-    coordinatingColors: {
-      coord1ColorId: "2228",
-      coord2ColorId: "2231",
-    },
+    coordinatingColors: { coord1ColorId: "2228", coord2ColorId: "2231" },
     description: ["Soft", "Dazzling"],
     id: "2769",
     isExterior: true,
@@ -63492,11 +59328,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 94.76098559780279,
-      A: 0.6605836492922235,
-      B: 6.7391143466803305,
-    },
+    lab: { L: 94.76098559780279, A: 0.6605836492922235, B: 6.7391143466803305 },
   },
   {
     colorNumber: "7558",
@@ -63537,11 +59369,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 92.68034381824111,
-      A: 0.3941577001229102,
-      B: 9.939237084502327,
-    },
+    lab: { L: 92.68034381824111, A: 0.3941577001229102, B: 9.939237084502327 },
   },
   {
     colorNumber: "6112",
@@ -63587,11 +59415,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.77452545357343,
-      A: 1.832860584355056,
-      B: 10.541931176382047,
-    },
+    lab: { L: 88.77452545357343, A: 1.832860584355056, B: 10.541931176382047 },
   },
   {
     colorNumber: "6350",
@@ -63637,11 +59461,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.91410834866063,
-      A: 2.390800882141164,
-      B: 11.287363954013552,
-    },
+    lab: { L: 88.91410834866063, A: 2.390800882141164, B: 11.287363954013552 },
   },
   {
     colorNumber: "6357",
@@ -63682,11 +59502,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 90.28953133864344,
-      A: 2.3323207525202116,
-      B: 10.140117058803977,
-    },
+    lab: { L: 90.28953133864344, A: 2.3323207525202116, B: 10.140117058803977 },
   },
   {
     colorNumber: "7553",
@@ -63732,11 +59548,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.83356301200502,
-      A: 2.724706746625838,
-      B: 10.358676550327338,
-    },
+    lab: { L: 86.83356301200502, A: 2.724706746625838, B: 10.358676550327338 },
   },
   {
     colorNumber: "7537",
@@ -63782,11 +59594,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.93791828839203,
-      A: 1.734992505907751,
-      B: 15.01312241050401,
-    },
+    lab: { L: 84.93791828839203, A: 1.734992505907751, B: 15.01312241050401 },
   },
   {
     colorNumber: "7554",
@@ -63840,11 +59648,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.99250400327213,
-      A: 1.0771438134183908,
-      B: 9.149482446697576,
-    },
+    lab: { L: 89.99250400327213, A: 1.0771438134183908, B: 9.149482446697576 },
   },
   {
     colorNumber: "6147",
@@ -63891,11 +59695,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 90.15516372360426,
-      A: 0.3462564819296521,
-      B: 7.792056998804919,
-    },
+    lab: { L: 90.15516372360426, A: 0.3462564819296521, B: 7.792056998804919 },
   },
   {
     colorNumber: "6140",
@@ -63941,11 +59741,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.95631040622995,
-      A: 1.2434341384792158,
-      B: 8.681750666649023,
-    },
+    lab: { L: 88.95631040622995, A: 1.2434341384792158, B: 8.681750666649023 },
   },
   {
     colorNumber: "6105",
@@ -63993,11 +59789,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.16918334728777,
-      A: 0.894183645765878,
-      B: 8.572599426751925,
-    },
+    lab: { L: 88.16918334728777, A: 0.894183645765878, B: 8.572599426751925 },
   },
   {
     colorNumber: "7516",
@@ -64038,11 +59830,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.06187994740137,
-      A: 1.0668673411045049,
-      B: 8.123717640061411,
-    },
+    lab: { L: 86.06187994740137, A: 1.0668673411045049, B: 8.123717640061411 },
   },
   {
     colorNumber: "7552",
@@ -64083,11 +59871,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.97437911770346,
-      A: 1.6035323046755812,
-      B: 8.82987664424788,
-    },
+    lab: { L: 87.97437911770346, A: 1.6035323046755812, B: 8.82987664424788 },
   },
   {
     colorNumber: "7596",
@@ -64128,18 +59912,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.3741506466361,
-      A: 2.6967602767122845,
-      B: 9.27584364175964,
-    },
+    lab: { L: 85.3741506466361, A: 2.6967602767122845, B: 9.27584364175964 },
   },
   {
     colorNumber: "7001",
-    coordinatingColors: {
-      coord1ColorId: "2711",
-      coord2ColorId: "2820",
-    },
+    coordinatingColors: { coord1ColorId: "2711", coord2ColorId: "2820" },
     description: ["Diluted", "Wan", "Dazzling"],
     id: "2682",
     isExterior: true,
@@ -64179,18 +59956,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 92.50286836427281,
-      A: 0.13273790047407807,
-      B: 4.950288296211869,
-    },
+    lab: { L: 92.50286836427281, A: 0.13273790047407807, B: 4.950288296211869 },
   },
   {
     colorNumber: "7102",
-    coordinatingColors: {
-      coord1ColorId: "2861",
-      coord2ColorId: "11306",
-    },
+    coordinatingColors: { coord1ColorId: "2861", coord2ColorId: "11306" },
     description: ["Fairly Colorful", "Moderately Colorful", "Dazzling"],
     id: "2767",
     isExterior: true,
@@ -64223,18 +59993,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 94.57828300429237,
-      A: -0.03687838623978035,
-      B: 5.40982743915992,
-    },
+    lab: { L: 94.57828300429237, A: -0.03687838623978035, B: 5.40982743915992 },
   },
   {
     colorNumber: "7002",
-    coordinatingColors: {
-      coord1ColorId: "2687",
-      coord2ColorId: "3045",
-    },
+    coordinatingColors: { coord1ColorId: "2687", coord2ColorId: "3045" },
     description: ["Subdued", "Muted", "Dazzling"],
     id: "2683",
     isExterior: true,
@@ -64267,18 +60030,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 92.2582260578115,
-      A: 0.4872194139555752,
-      B: 6.169624812099439,
-    },
+    lab: { L: 92.2582260578115, A: 0.4872194139555752, B: 6.169624812099439 },
   },
   {
     colorNumber: "7101",
-    coordinatingColors: {
-      coord1ColorId: "11266",
-      coord2ColorId: "11179",
-    },
+    coordinatingColors: { coord1ColorId: "11266", coord2ColorId: "11179" },
     description: ["Subdued", "Muted", "Brilliant", "Radiant"],
     id: "2766",
     isExterior: true,
@@ -64311,11 +60067,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 91.55589176760628,
-      A: 0.48888655239082146,
-      B: 6.17999608680988,
-    },
+    lab: { L: 91.55589176760628, A: 0.48888655239082146, B: 6.17999608680988 },
   },
   {
     colorNumber: "6084",
@@ -64356,11 +60108,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.5856891861533,
-      A: 1.5274301932215462,
-      B: 5.4917613732900605,
-    },
+    lab: { L: 88.5856891861533, A: 1.5274301932215462, B: 5.4917613732900605 },
   },
   {
     colorNumber: "6091",
@@ -64401,11 +60149,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.97060540266472,
-      A: 1.54319846315365,
-      B: 6.592326332877185,
-    },
+    lab: { L: 88.97060540266472, A: 1.54319846315365, B: 6.592326332877185 },
   },
   {
     colorNumber: "6098",
@@ -64451,11 +60195,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.41207102420807,
-      A: 0.5152820440809114,
-      B: 7.334049075055393,
-    },
+    lab: { L: 88.41207102420807, A: 0.5152820440809114, B: 7.334049075055393 },
   },
   {
     colorNumber: "6665",
@@ -64496,11 +60236,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 90.62686578664992,
-      A: 1.8183327758939938,
-      B: 14.308185123380856,
-    },
+    lab: { L: 90.62686578664992, A: 1.8183327758939938, B: 14.308185123380856 },
   },
   {
     colorNumber: "6658",
@@ -64541,11 +60277,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 90.89739651779416,
-      A: 1.455438628988892,
-      B: 14.169552255059248,
-    },
+    lab: { L: 90.89739651779416, A: 1.455438628988892, B: 14.169552255059248 },
   },
   {
     colorNumber: "6644",
@@ -64586,11 +60318,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 90.90398434330088,
-      A: 1.7052466495718344,
-      B: 12.082283953385087,
-    },
+    lab: { L: 90.90398434330088, A: 1.7052466495718344, B: 12.082283953385087 },
   },
   {
     colorNumber: "6336",
@@ -64636,11 +60364,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.48533742880741,
-      A: 3.682174096395041,
-      B: 8.454752436461321,
-    },
+    lab: { L: 89.48533742880741, A: 3.682174096395041, B: 8.454752436461321 },
   },
   {
     colorNumber: "6329",
@@ -64690,11 +60414,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.49796755966806,
-      A: 3.971476736513324,
-      B: 6.363977068838778,
-    },
+    lab: { L: 89.49796755966806, A: 3.971476736513324, B: 6.363977068838778 },
   },
   {
     colorNumber: "6322",
@@ -64745,11 +60465,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 90.47515576445763,
-      A: 3.609703274500775,
-      B: 6.220502179151111,
-    },
+    lab: { L: 90.47515576445763, A: 3.609703274500775, B: 6.220502179151111 },
   },
   {
     colorNumber: "6876",
@@ -64790,11 +60506,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.4182105395927,
-      A: 10.473038550985637,
-      B: 8.84570045397124,
-    },
+    lab: { L: 86.4182105395927, A: 10.473038550985637, B: 8.84570045397124 },
   },
   {
     colorNumber: "6413",
@@ -64890,11 +60602,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.82591858026964,
-      A: -1.5578663080419997,
-      B: 13.71461312530129,
-    },
+    lab: { L: 88.82591858026964, A: -1.5578663080419997, B: 13.71461312530129 },
   },
   {
     colorNumber: "6399",
@@ -64940,11 +60648,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.23658373890586,
-      A: -1.353447737986957,
-      B: 14.317581760876298,
-    },
+    lab: { L: 89.23658373890586, A: -1.353447737986957, B: 14.317581760876298 },
   },
   {
     colorNumber: "6392",
@@ -65075,11 +60779,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 91.9817489206713,
-      A: -2.267352985939941,
-      B: 19.84511744636208,
-    },
+    lab: { L: 91.9817489206713, A: -2.267352985939941, B: 19.84511744636208 },
   },
   {
     colorNumber: "6901",
@@ -65120,11 +60820,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.65780125304744,
-      A: -0.1631452623850338,
-      B: 50.60894642549918,
-    },
+    lab: { L: 87.65780125304744, A: -0.1631452623850338, B: 50.60894642549918 },
   },
   {
     colorNumber: "6161",
@@ -65165,11 +60861,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.8944317681111,
-      A: -1.7584185717145484,
-      B: 5.993053238601687,
-    },
+    lab: { L: 87.8944317681111, A: -1.7584185717145484, B: 5.993053238601687 },
   },
   {
     colorNumber: "6434",
@@ -65210,11 +60902,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 91.35592150297956,
-      A: -3.7977168517722704,
-      B: 6.325981361656496,
-    },
+    lab: { L: 91.35592150297956, A: -3.7977168517722704, B: 6.325981361656496 },
   },
   {
     colorNumber: "6441",
@@ -65255,11 +60943,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 90.8077058170673,
-      A: -4.652201900339881,
-      B: 5.4976187223642725,
-    },
+    lab: { L: 90.8077058170673, A: -4.652201900339881, B: 5.4976187223642725 },
   },
   {
     colorNumber: "6175",
@@ -65300,11 +60984,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.47022945094753,
-      A: -2.938019146458304,
-      B: 8.29854413076314,
-    },
+    lab: { L: 89.47022945094753, A: -2.938019146458304, B: 8.29854413076314 },
   },
   {
     colorNumber: "6420",
@@ -65390,11 +61070,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 90.0619147088128,
-      A: -3.754770343314451,
-      B: 10.733919910850197,
-    },
+    lab: { L: 90.0619147088128, A: -3.754770343314451, B: 10.733919910850197 },
   },
   {
     colorNumber: "6928",
@@ -65440,11 +61116,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.4345042031479,
-      A: -12.648605781114652,
-      B: 15.417760748708641,
-    },
+    lab: { L: 89.4345042031479, A: -12.648605781114652, B: 15.417760748708641 },
   },
   {
     colorNumber: "6476",
@@ -65530,11 +61202,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.39868774262939,
-      A: -2.440383821171954,
-      B: 3.547444735110905,
-    },
+    lab: { L: 88.39868774262939, A: -2.440383821171954, B: 3.547444735110905 },
   },
   {
     colorNumber: "6210",
@@ -65575,11 +61243,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.05520896347981,
-      A: -3.9605984159230556,
-      B: 2.477431676902886,
-    },
+    lab: { L: 88.05520896347981, A: -3.9605984159230556, B: 2.477431676902886 },
   },
   {
     colorNumber: "6455",
@@ -65620,11 +61284,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.89850624827909,
-      A: -5.161699340913373,
-      B: 3.709979096597049,
-    },
+    lab: { L: 88.89850624827909, A: -5.161699340913373, B: 3.709979096597049 },
   },
   {
     colorNumber: "6462",
@@ -65665,11 +61325,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.41548624410389,
-      A: -5.981645345326026,
-      B: 2.8775930666064653,
-    },
+    lab: { L: 89.41548624410389, A: -5.981645345326026, B: 2.8775930666064653 },
   },
   {
     colorNumber: "6749",
@@ -65710,11 +61366,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 91.39430917755199,
-      A: -8.26235865607755,
-      B: 2.092972168394791,
-    },
+    lab: { L: 91.39430917755199, A: -8.26235865607755, B: 2.092972168394791 },
   },
   {
     colorNumber: "6937",
@@ -65845,11 +61497,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 91.3833103215742,
-      A: -2.847818670796254,
-      B: -0.4561350834499711,
-    },
+    lab: { L: 91.3833103215742, A: -2.847818670796254, B: -0.4561350834499711 },
   },
   {
     colorNumber: "6217",
@@ -65935,11 +61583,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 90.5345201303817,
-      A: -5.156089735998459,
-      B: -1.24242600555311,
-    },
+    lab: { L: 90.5345201303817, A: -5.156089735998459, B: -1.24242600555311 },
   },
   {
     colorNumber: "6784",
@@ -65980,11 +61624,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 90.26788182777474,
-      A: -6.207445499547381,
-      B: -3.243522131490195,
-    },
+    lab: { L: 90.26788182777474, A: -6.207445499547381, B: -3.243522131490195 },
   },
   {
     colorNumber: "6798",
@@ -66160,11 +61800,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.46159497825822,
-      A: -2.041810241190267,
-      B: 0.3755760558345367,
-    },
+    lab: { L: 89.46159497825822, A: -2.041810241190267, B: 0.3755760558345367 },
   },
   {
     colorNumber: "6238",
@@ -66258,10 +61894,7 @@ export const colorData = [
   },
   {
     colorNumber: "6000",
-    coordinatingColors: {
-      coord1ColorId: "2762",
-      coord2ColorId: "2949",
-    },
+    coordinatingColors: { coord1ColorId: "2762", coord2ColorId: "2949" },
     description: ["Washed out", "Brilliant", "Radiant"],
     id: "1687",
     isExterior: true,
@@ -66433,11 +62066,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.8233350967189,
-      A: 2.574338326930714,
-      B: 5.865027859617267,
-    },
+    lab: { L: 88.8233350967189, A: 2.574338326930714, B: 5.865027859617267 },
   },
   {
     colorNumber: "6049",
@@ -66478,11 +62107,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.1394272849845,
-      A: 2.745321060734607,
-      B: 5.38375728565359,
-    },
+    lab: { L: 88.1394272849845, A: 2.745321060734607, B: 5.38375728565359 },
   },
   {
     colorNumber: "6042",
@@ -66523,11 +62148,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.75377940927144,
-      A: 2.7330836790314117,
-      B: 4.279407943671454,
-    },
+    lab: { L: 87.75377940927144, A: 2.7330836790314117, B: 4.279407943671454 },
   },
   {
     colorNumber: "6021",
@@ -66568,11 +62189,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.36876548619941,
-      A: 2.726715957736825,
-      B: 3.1743702714650324,
-    },
+    lab: { L: 87.36876548619941, A: 2.726715957736825, B: 3.1743702714650324 },
   },
   {
     colorNumber: "6007",
@@ -66613,11 +62230,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.02399310323383,
-      A: 2.5468576434619083,
-      B: 2.5535188299071754,
-    },
+    lab: { L: 88.02399310323383, A: 2.5468576434619083, B: 2.5535188299071754 },
   },
   {
     colorNumber: "7077",
@@ -66658,11 +62271,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.69793747186256,
-      A: 0.8253056085326671,
-      B: 1.9349655566963886,
-    },
+    lab: { L: 88.69793747186256, A: 0.8253056085326671, B: 1.9349655566963886 },
   },
   {
     colorNumber: "6973",
@@ -66703,11 +62312,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 75.48298482846437,
-      A: 14.37399940119427,
-      B: -12.979922565861157,
-    },
+    lab: { L: 75.48298482846437, A: 14.37399940119427, B: -12.979922565861157 },
   },
   {
     colorNumber: "7586",
@@ -66753,11 +62358,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 32.27157328033047,
-      A: 34.379130282212536,
-      B: 15.712139789087177,
-    },
+    lab: { L: 32.27157328033047, A: 34.379130282212536, B: 15.712139789087177 },
   },
   {
     colorNumber: "7582",
@@ -66803,11 +62404,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 32.62687215769191,
-      A: 32.20796898217995,
-      B: 18.062173026907658,
-    },
+    lab: { L: 32.62687215769191, A: 32.20796898217995, B: 18.062173026907658 },
   },
   {
     colorNumber: "7583",
@@ -66853,11 +62450,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 31.491476285397084,
-      A: 32.83127793983817,
-      B: 11.92901435791962,
-    },
+    lab: { L: 31.491476285397084, A: 32.83127793983817, B: 11.92901435791962 },
   },
   {
     colorNumber: "7585",
@@ -66898,11 +62491,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 26.464936890059462,
-      A: 27.788889061995224,
-      B: 13.78241619990568,
-    },
+    lab: { L: 26.464936890059462, A: 27.788889061995224, B: 13.78241619990568 },
   },
   {
     colorNumber: "7592",
@@ -66952,11 +62541,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 30.760712235329414,
-      A: 27.71217647105395,
-      B: 15.913732176910965,
-    },
+    lab: { L: 30.760712235329414, A: 27.71217647105395, B: 15.913732176910965 },
   },
   {
     colorNumber: "7593",
@@ -67006,11 +62591,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 29.12444059460222,
-      A: 26.63532272829869,
-      B: 18.759883023891298,
-    },
+    lab: { L: 29.12444059460222, A: 26.63532272829869, B: 18.759883023891298 },
   },
   {
     colorNumber: "7591",
@@ -67096,11 +62677,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 41.848612364430075,
-      A: 17.391762114823127,
-      B: 5.113622109713544,
-    },
+    lab: { L: 41.848612364430075, A: 17.391762114823127, B: 5.113622109713544 },
   },
   {
     colorNumber: "7578",
@@ -67146,11 +62723,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 30.547057381459737,
-      A: 27.72223676648028,
-      B: 7.759707845454155,
-    },
+    lab: { L: 30.547057381459737, A: 27.72223676648028, B: 7.759707845454155 },
   },
   {
     colorNumber: "7584",
@@ -67236,11 +62809,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 33.04839272219116,
-      A: 18.55390929626788,
-      B: 10.50170754701526,
-    },
+    lab: { L: 33.04839272219116, A: 18.55390929626788, B: 10.50170754701526 },
   },
   {
     colorNumber: "7595",
@@ -67281,11 +62850,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 27.644468912744003,
-      A: 16.8280219227889,
-      B: 7.8157650385690225,
-    },
+    lab: { L: 27.644468912744003, A: 16.8280219227889, B: 7.8157650385690225 },
   },
   {
     colorNumber: "7580",
@@ -67332,11 +62897,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 28.95235698837473,
-      A: 10.943325167579038,
-      B: 4.308623324594684,
-    },
+    lab: { L: 28.95235698837473, A: 10.943325167579038, B: 4.308623324594684 },
   },
   {
     colorNumber: "2704",
@@ -67377,11 +62938,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 24.78534908747895,
-      A: 15.500388193812942,
-      B: 0.1796988792438059,
-    },
+    lab: { L: 24.78534908747895, A: 15.500388193812942, B: 0.1796988792438059 },
   },
   {
     colorNumber: "9182",
@@ -67396,7 +62953,7 @@ export const colorData = [
     isInterior: true,
     name: "Rojo Marrón",
     lrv: 3.827,
-    brandedCollectionNames: ["Timeless Color Wall"],
+    brandedCollectionNames: ["Restorative Darks", "Timeless Color Wall"],
     colorFamilyNames: ["Timeless Color"],
     brandKey: "SW",
     red: 75,
@@ -67422,11 +62979,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 22.8960859593697,
-      A: 11.31262220246057,
-      B: 9.498930155757579,
-    },
+    lab: { L: 22.8960859593697, A: 11.31262220246057, B: 9.498930155757579 },
   },
   {
     colorNumber: "6076",
@@ -67467,11 +63020,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 25.914495090404102,
-      A: 7.390584903897157,
-      B: 9.036507774375513,
-    },
+    lab: { L: 25.914495090404102, A: 7.390584903897157, B: 9.036507774375513 },
   },
   {
     colorNumber: "9183",
@@ -67516,11 +63065,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 27.00611315719746,
-      A: 4.482924524796427,
-      B: 9.86591797734363,
-    },
+    lab: { L: 27.00611315719746, A: 4.482924524796427, B: 9.86591797734363 },
   },
   {
     colorNumber: "7515",
@@ -67566,11 +63111,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 41.412730009818084,
-      A: 3.9442872299062515,
-      B: 9.091560673527843,
-    },
+    lab: { L: 41.412730009818084, A: 3.9442872299062515, B: 9.091560673527843 },
   },
   {
     colorNumber: "7545",
@@ -67663,11 +63204,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 28.381162110147308,
-      A: 1.344560895594843,
-      B: 4.567961453281422,
-    },
+    lab: { L: 28.381162110147308, A: 1.344560895594843, B: 4.567961453281422 },
   },
   {
     colorNumber: "7645",
@@ -67708,11 +63245,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 35.46819769129022,
-      A: 0.23053322432828316,
-      B: 4.675752352152007,
-    },
+    lab: { L: 35.46819769129022, A: 0.23053322432828316, B: 4.675752352152007 },
   },
   {
     colorNumber: "7062",
@@ -67728,6 +63261,7 @@ export const colorData = [
     name: "Rock Bottom",
     lrv: 7.035,
     brandedCollectionNames: [
+      "Restorative Darks",
       "Urban Organic",
       "Naturalist",
       "2024 Deeps & Darks",
@@ -67803,11 +63337,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 31.03765707756959,
-      A: -4.825325263033031,
-      B: 5.730504223223198,
-    },
+    lab: { L: 31.03765707756959, A: -4.825325263033031, B: 5.730504223223198 },
   },
   {
     colorNumber: "7750",
@@ -67893,11 +63423,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 34.40921890252455,
-      A: -5.144316992756331,
-      B: 6.8068773698678475,
-    },
+    lab: { L: 34.40921890252455, A: -5.144316992756331, B: 6.8068773698678475 },
   },
   {
     colorNumber: "6174",
@@ -68361,11 +63887,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 71.78796275754534,
-      A: -4.664906742749553,
-      B: -6.80812764590828,
-    },
+    lab: { L: 71.78796275754534, A: -4.664906742749553, B: -6.80812764590828 },
   },
   {
     colorNumber: "7608",
@@ -68451,11 +63973,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.446372185033326,
-      A: -4.96295372601907,
-      B: -8.27962458519318,
-    },
+    lab: { L: 60.446372185033326, A: -4.96295372601907, B: -8.27962458519318 },
   },
   {
     colorNumber: "7606",
@@ -68541,11 +64059,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 55.86323266493598,
-      A: -11.8846620080863,
-      B: -14.818577771471265,
-    },
+    lab: { L: 55.86323266493598, A: -11.8846620080863, B: -14.818577771471265 },
   },
   {
     colorNumber: "7610",
@@ -68631,11 +64145,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 49.76025744806594,
-      A: -9.80235911184657,
-      B: -10.682402148255687,
-    },
+    lab: { L: 49.76025744806594, A: -9.80235911184657, B: -10.682402148255687 },
   },
   {
     colorNumber: "7621",
@@ -68682,11 +64192,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.01370814594694,
-      A: -3.9187464675273787,
-      B: 2.066739822554209,
-    },
+    lab: { L: 74.01370814594694, A: -3.9187464675273787, B: 2.066739822554209 },
   },
   {
     colorNumber: "7616",
@@ -68731,11 +64237,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.06406276499506,
-      A: -4.672557492263807,
-      B: -2.197093908537129,
-    },
+    lab: { L: 70.06406276499506, A: -4.672557492263807, B: -2.197093908537129 },
   },
   {
     colorNumber: "7613",
@@ -68783,11 +64285,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.4363609400902,
-      A: -6.273510479453126,
-      B: -3.8875999957614926,
-    },
+    lab: { L: 70.4363609400902, A: -6.273510479453126, B: -3.8875999957614926 },
   },
   {
     colorNumber: "7611",
@@ -68873,11 +64371,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 57.4955402231347,
-      A: -12.293151690936977,
-      B: -8.858198036829524,
-    },
+    lab: { L: 57.4955402231347, A: -12.293151690936977, B: -8.858198036829524 },
   },
   {
     colorNumber: "7617",
@@ -68918,11 +64412,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 49.05886991081728,
-      A: -8.067716891053067,
-      B: -5.186228384090796,
-    },
+    lab: { L: 49.05886991081728, A: -8.067716891053067, B: -5.186228384090796 },
   },
   {
     colorNumber: "7619",
@@ -69143,11 +64633,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 62.95392760187126,
-      A: 0.15506616997390532,
-      B: 3.003425405576343,
-    },
+    lab: { L: 62.95392760187126, A: 0.15506616997390532, B: 3.003425405576343 },
   },
   {
     colorNumber: "7669",
@@ -69237,11 +64723,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.99169991302392,
-      A: 0.1710669160708833,
-      B: 0.6474482305744322,
-    },
+    lab: { L: 60.99169991302392, A: 0.1710669160708833, B: 0.6474482305744322 },
   },
   {
     colorNumber: "7629",
@@ -69282,11 +64764,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 47.38494921438523,
-      A: 4.2714087096945015,
-      B: 0.2901307003167375,
-    },
+    lab: { L: 47.38494921438523, A: 4.2714087096945015, B: 0.2901307003167375 },
   },
   {
     colorNumber: "7632",
@@ -69309,7 +64787,11 @@ export const colorData = [
       "2021 Sanctuary",
       "Top 50 Interior Colors",
     ],
-    colorFamilyNames: ["Color Forecast", "Timeless Color", "Living Well"],
+    colorFamilyNames: [
+      "Colormix® Trend Forecast",
+      "Timeless Color",
+      "Living Well",
+    ],
     brandKey: "SW",
     red: 214,
     green: 206,
@@ -69334,11 +64816,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.1146428480668,
-      A: 0.8654168767846526,
-      B: 6.4378713664669185,
-    },
+    lab: { L: 83.1146428480668, A: 0.8654168767846526, B: 6.4378713664669185 },
   },
   {
     colorNumber: "7641",
@@ -69379,11 +64857,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 77.92376020301197,
-      A: 0.33711744512665565,
-      B: 5.76834933291781,
-    },
+    lab: { L: 77.92376020301197, A: 0.33711744512665565, B: 5.76834933291781 },
   },
   {
     colorNumber: "1015",
@@ -69430,11 +64904,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 77.59209006419512,
-      A: 0.35833639968602116,
-      B: 6.910999506902904,
-    },
+    lab: { L: 77.59209006419512, A: 0.35833639968602116, B: 6.910999506902904 },
   },
   {
     colorNumber: "7643",
@@ -69480,11 +64950,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.89338732611414,
-      A: 0.1624575968355857,
-      B: 5.2414531469158865,
-    },
+    lab: { L: 70.89338732611414, A: 0.1624575968355857, B: 5.2414531469158865 },
   },
   {
     colorNumber: "7642",
@@ -69499,7 +64965,12 @@ export const colorData = [
     isInterior: true,
     name: "Pavestone",
     lrv: 32.347,
-    brandedCollectionNames: ["Dreamer", "Timeless Color Wall", "Cool Neutrals"],
+    brandedCollectionNames: [
+      "Foundational Neutrals",
+      "Dreamer",
+      "Timeless Color Wall",
+      "Cool Neutrals",
+    ],
     colorFamilyNames: ["Timeless Color"],
     brandKey: "SW",
     red: 160,
@@ -69525,11 +64996,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 63.5402384105971,
-      A: 0.7533765347068622,
-      B: 6.155394728973063,
-    },
+    lab: { L: 63.5402384105971, A: 0.7533765347068622, B: 6.155394728973063 },
   },
   {
     colorNumber: "7503",
@@ -69570,11 +65037,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 62.93719685138409,
-      A: 2.9260129872530904,
-      B: 8.717095930431285,
-    },
+    lab: { L: 62.93719685138409, A: 2.9260129872530904, B: 8.717095930431285 },
   },
   {
     colorNumber: "7635",
@@ -69615,11 +65078,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 65.88077516119252,
-      A: 2.79249891342237,
-      B: 6.263139888958524,
-    },
+    lab: { L: 65.88077516119252, A: 2.79249891342237, B: 6.263139888958524 },
   },
   {
     colorNumber: "7567",
@@ -69667,11 +65126,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.61204460866878,
-      A: 0.9115385817650701,
-      B: 8.65031441778652,
-    },
+    lab: { L: 84.61204460866878, A: 0.9115385817650701, B: 8.65031441778652 },
   },
   {
     colorNumber: "7547",
@@ -69716,11 +65171,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 77.86060277374676,
-      A: 1.1971987562804376,
-      B: 10.586368925082912,
-    },
+    lab: { L: 77.86060277374676, A: 1.1971987562804376, B: 10.586368925082912 },
   },
   {
     colorNumber: "7548",
@@ -69761,11 +65212,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.77496165343423,
-      A: 2.1558776528299295,
-      B: 13.418878116608312,
-    },
+    lab: { L: 70.77496165343423, A: 2.1558776528299295, B: 13.418878116608312 },
   },
   {
     colorNumber: "7534",
@@ -69810,11 +65257,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.37492710108766,
-      A: 2.912709335086916,
-      B: 15.503798357669062,
-    },
+    lab: { L: 68.37492710108766, A: 2.912709335086916, B: 15.503798357669062 },
   },
   {
     colorNumber: "7549",
@@ -69855,11 +65298,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 65.24340511311658,
-      A: 2.48785202458518,
-      B: 14.323114649794144,
-    },
+    lab: { L: 65.24340511311658, A: 2.48785202458518, B: 14.323114649794144 },
   },
   {
     colorNumber: "7535",
@@ -69903,11 +65342,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.11876006179668,
-      A: 3.4005391254999795,
-      B: 14.869659731820239,
-    },
+    lab: { L: 60.11876006179668, A: 3.4005391254999795, B: 14.869659731820239 },
   },
   {
     colorNumber: "7550",
@@ -69993,11 +65428,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.14987728848409,
-      A: 1.3523369449799927,
-      B: 13.932577065695838,
-    },
+    lab: { L: 80.14987728848409, A: 1.3523369449799927, B: 13.932577065695838 },
   },
   {
     colorNumber: "7527",
@@ -70042,11 +65473,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.21285304201994,
-      A: 2.5780901869423833,
-      B: 12.759317639478107,
-    },
+    lab: { L: 78.21285304201994, A: 2.5780901869423833, B: 12.759317639478107 },
   },
   {
     colorNumber: "7532",
@@ -70092,11 +65519,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.4065491214732,
-      A: 1.8311364089206306,
-      B: 12.483554486260417,
-    },
+    lab: { L: 78.4065491214732, A: 1.8311364089206306, B: 12.483554486260417 },
   },
   {
     colorNumber: "7530",
@@ -70142,11 +65565,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.7893342652395,
-      A: 2.3395910590719438,
-      B: 13.947410993154751,
-    },
+    lab: { L: 73.7893342652395, A: 2.3395910590719438, B: 13.947410993154751 },
   },
   {
     colorNumber: "7528",
@@ -70187,11 +65606,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.04821588521729,
-      A: 1.8045049387531154,
-      B: 14.311047169146974,
-    },
+    lab: { L: 74.04821588521729, A: 1.8045049387531154, B: 14.311047169146974 },
   },
   {
     colorNumber: "7533",
@@ -70232,11 +65647,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 72.29612254532442,
-      A: 2.212944628657787,
-      B: 14.523762571921338,
-    },
+    lab: { L: 72.29612254532442, A: 2.212944628657787, B: 14.523762571921338 },
   },
   {
     colorNumber: "7731",
@@ -70277,11 +65688,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 62.124353478434216,
-      A: 1.661466930281963,
-      B: 19.38676126420418,
-    },
+    lab: { L: 62.124353478434216, A: 1.661466930281963, B: 19.38676126420418 },
   },
   {
     colorNumber: "7565",
@@ -70371,11 +65778,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.64554251217527,
-      A: 1.0454326233857447,
-      B: 12.046228074320675,
-    },
+    lab: { L: 83.64554251217527, A: 1.0454326233857447, B: 12.046228074320675 },
   },
   {
     colorNumber: "7542",
@@ -70416,11 +65819,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.1183666503283,
-      A: 0.6679408894081917,
-      B: 10.952731812834159,
-    },
+    lab: { L: 78.1183666503283, A: 0.6679408894081917, B: 10.952731812834159 },
   },
   {
     colorNumber: "7543",
@@ -70461,11 +65860,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 72.25676047770474,
-      A: 0.4583815132384039,
-      B: 13.327212571588444,
-    },
+    lab: { L: 72.25676047770474, A: 0.4583815132384039, B: 13.327212571588444 },
   },
   {
     colorNumber: "7546",
@@ -70506,11 +65901,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.64664639454209,
-      A: 1.5844629725423887,
-      B: 12.74942863132189,
-    },
+    lab: { L: 67.64664639454209, A: 1.5844629725423887, B: 12.74942863132189 },
   },
   {
     colorNumber: "7744",
@@ -70551,11 +65942,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.09181938231076,
-      A: 0.1934880443551501,
-      B: 10.764151438205216,
-    },
+    lab: { L: 60.09181938231076, A: 0.1934880443551501, B: 10.764151438205216 },
   },
   {
     colorNumber: "7737",
@@ -70650,11 +66037,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 90.25474497310768,
-      A: 2.294247166305108,
-      B: 9.03352366036354,
-    },
+    lab: { L: 90.25474497310768, A: 2.294247166305108, B: 9.03352366036354 },
   },
   {
     colorNumber: "7711",
@@ -70700,11 +66083,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.7968805614487,
-      A: 4.622499026707471,
-      B: 12.205146162403269,
-    },
+    lab: { L: 84.7968805614487, A: 4.622499026707471, B: 12.205146162403269 },
   },
   {
     colorNumber: "7712",
@@ -70745,11 +66124,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.0190934518301,
-      A: 5.0442946824690305,
-      B: 12.434735444024048,
-    },
+    lab: { L: 82.0190934518301, A: 5.0442946824690305, B: 12.434735444024048 },
   },
   {
     colorNumber: "7713",
@@ -70790,11 +66165,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.17619541846479,
-      A: 5.488103488693275,
-      B: 16.22260218868874,
-    },
+    lab: { L: 74.17619541846479, A: 5.488103488693275, B: 16.22260218868874 },
   },
   {
     colorNumber: "7715",
@@ -70839,11 +66210,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 58.71680245761212,
-      A: 10.304804406234213,
-      B: 18.169082727427742,
-    },
+    lab: { L: 58.71680245761212, A: 10.304804406234213, B: 18.169082727427742 },
   },
   {
     colorNumber: "7705",
@@ -70933,11 +66300,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 50.943393009203916,
-      A: 18.97964397162255,
-      B: 28.221469430487268,
-    },
+    lab: { L: 50.943393009203916, A: 18.97964397162255, B: 28.221469430487268 },
   },
   {
     colorNumber: "7526",
@@ -70983,11 +66346,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.7628765784253,
-      A: 1.3493721904347389,
-      B: 11.0176534207159,
-    },
+    lab: { L: 84.7628765784253, A: 1.3493721904347389, B: 11.0176534207159 },
   },
   {
     colorNumber: "7719",
@@ -71033,11 +66392,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.25569150567163,
-      A: 3.512643302616747,
-      B: 13.59532424993466,
-    },
+    lab: { L: 80.25569150567163, A: 3.512643302616747, B: 13.59532424993466 },
   },
   {
     colorNumber: "7518",
@@ -71082,11 +66437,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.97126560912751,
-      A: 4.775184668438515,
-      B: 14.266735620365424,
-    },
+    lab: { L: 73.97126560912751, A: 4.775184668438515, B: 14.266735620365424 },
   },
   {
     colorNumber: "7519",
@@ -71132,11 +66483,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 64.02520844984122,
-      A: 5.442074831585542,
-      B: 14.882333750062893,
-    },
+    lab: { L: 64.02520844984122, A: 5.442074831585542, B: 14.882333750062893 },
   },
   {
     colorNumber: "7521",
@@ -71180,11 +66527,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 62.94402685438408,
-      A: 5.5930470195305615,
-      B: 16.148736023601494,
-    },
+    lab: { L: 62.94402685438408, A: 5.5930470195305615, B: 16.148736023601494 },
   },
   {
     colorNumber: "7522",
@@ -71225,11 +66568,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 56.4028141742363,
-      A: 7.111856430400243,
-      B: 18.803722495339482,
-    },
+    lab: { L: 56.4028141742363, A: 7.111856430400243, B: 18.803722495339482 },
   },
   {
     colorNumber: "7525",
@@ -71274,11 +66613,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 50.152882436725505,
-      A: 6.264176674701694,
-      B: 12.765386210117423,
-    },
+    lab: { L: 50.152882436725505, A: 6.264176674701694, B: 12.765386210117423 },
   },
   {
     colorNumber: "7688",
@@ -71293,7 +66628,11 @@ export const colorData = [
     isInterior: true,
     name: "Sundew",
     lrv: 62.886,
-    brandedCollectionNames: ["Living Well", "Timeless Color Wall"],
+    brandedCollectionNames: [
+      "Sunbaked Hues",
+      "Living Well",
+      "Timeless Color Wall",
+    ],
     colorFamilyNames: ["Timeless Color", "Living Well"],
     brandKey: "SW",
     red: 225,
@@ -71319,11 +66658,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.29847234821976,
-      A: 2.1433100861411036,
-      B: 17.975862722593195,
-    },
+    lab: { L: 83.29847234821976, A: 2.1433100861411036, B: 17.975862722593195 },
   },
   {
     colorNumber: "7716",
@@ -71364,11 +66699,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.61816801098259,
-      A: 3.088885445534595,
-      B: 17.877722556088038,
-    },
+    lab: { L: 80.61816801098259, A: 3.088885445534595, B: 17.877722556088038 },
   },
   {
     colorNumber: "7704",
@@ -71409,11 +66740,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 75.79921938117106,
-      A: 7.6148180911118635,
-      B: 17.52449254173356,
-    },
+    lab: { L: 75.79921938117106, A: 7.6148180911118635, B: 17.52449254173356 },
   },
   {
     colorNumber: "7714",
@@ -71457,11 +66784,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.50936839644734,
-      A: 6.57423589271805,
-      B: 18.00503718265172,
-    },
+    lab: { L: 68.50936839644734, A: 6.57423589271805, B: 18.00503718265172 },
   },
   {
     colorNumber: "7538",
@@ -71502,11 +66825,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.39467693424055,
-      A: 5.473061499942977,
-      B: 18.691855485035514,
-    },
+    lab: { L: 69.39467693424055, A: 5.473061499942977, B: 18.691855485035514 },
   },
   {
     colorNumber: "7724",
@@ -71547,11 +66866,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 64.92645924337623,
-      A: 7.261574623338429,
-      B: 19.585628873859307,
-    },
+    lab: { L: 64.92645924337623, A: 7.261574623338429, B: 19.585628873859307 },
   },
   {
     colorNumber: "7725",
@@ -71592,11 +66907,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 59.72295749032091,
-      A: 9.360491409822814,
-      B: 21.83870898819349,
-    },
+    lab: { L: 59.72295749032091, A: 9.360491409822814, B: 21.83870898819349 },
   },
   {
     colorNumber: "7717",
@@ -71642,11 +66953,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.27285585403011,
-      A: 6.998801450649738,
-      B: 21.851455044028633,
-    },
+    lab: { L: 74.27285585403011, A: 6.998801450649738, B: 21.851455044028633 },
   },
   {
     colorNumber: "7694",
@@ -71692,11 +66999,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 72.357826344621,
-      A: 4.97395731434136,
-      B: 23.436748985128087,
-    },
+    lab: { L: 72.357826344621, A: 4.97395731434136, B: 23.436748985128087 },
   },
   {
     colorNumber: "7720",
@@ -71740,11 +67043,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 69.74454957194493,
-      A: 8.389040135063198,
-      B: 20.919735146500184,
-    },
+    lab: { L: 69.74454957194493, A: 8.389040135063198, B: 20.919735146500184 },
   },
   {
     colorNumber: "7718",
@@ -71785,11 +67084,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 62.23407966995575,
-      A: 13.034311027421419,
-      B: 24.895580389383774,
-    },
+    lab: { L: 62.23407966995575, A: 13.034311027421419, B: 24.895580389383774 },
   },
   {
     colorNumber: "7702",
@@ -71882,11 +67177,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 51.73718690982156,
-      A: 23.317567861050215,
-      B: 24.287852215159756,
-    },
+    lab: { L: 51.73718690982156, A: 23.317567861050215, B: 24.287852215159756 },
   },
   {
     colorNumber: "7707",
@@ -71981,11 +67272,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.78190606645185,
-      A: 4.691017193055869,
-      B: 17.82347039288208,
-    },
+    lab: { L: 82.78190606645185, A: 4.691017193055869, B: 17.82347039288208 },
   },
   {
     colorNumber: "6114",
@@ -72026,11 +67313,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 75.82455592739888,
-      A: 7.327325840741638,
-      B: 21.897414285628216,
-    },
+    lab: { L: 75.82455592739888, A: 7.327325840741638, B: 21.897414285628216 },
   },
   {
     colorNumber: "6115",
@@ -72076,11 +67359,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.69785761219954,
-      A: 9.044688700106773,
-      B: 23.38592183424386,
-    },
+    lab: { L: 70.69785761219954, A: 9.044688700106773, B: 23.38592183424386 },
   },
   {
     colorNumber: "9186",
@@ -72121,11 +67400,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 65.8412517760796,
-      A: 10.51949413739356,
-      B: 26.51054339409431,
-    },
+    lab: { L: 65.8412517760796, A: 10.51949413739356, B: 26.51054339409431 },
   },
   {
     colorNumber: "6116",
@@ -72171,11 +67446,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 61.7544963737909,
-      A: 12.421803832486034,
-      B: 28.10688153466756,
-    },
+    lab: { L: 61.7544963737909, A: 12.421803832486034, B: 28.10688153466756 },
   },
   {
     colorNumber: "6117",
@@ -72220,11 +67491,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 54.376194600787414,
-      A: 12.654392530412395,
-      B: 26.41438923320416,
-    },
+    lab: { L: 54.376194600787414, A: 12.654392530412395, B: 26.41438923320416 },
   },
   {
     colorNumber: "6118",
@@ -72270,11 +67537,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 45.26995128829596,
-      A: 13.09371423807415,
-      B: 27.849544632894276,
-    },
+    lab: { L: 45.26995128829596, A: 13.09371423807415, B: 27.849544632894276 },
   },
   {
     colorNumber: "7723",
@@ -72319,11 +67582,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.12714900644663,
-      A: 3.8841423449186285,
-      B: 16.4837758696871,
-    },
+    lab: { L: 81.12714900644663, A: 3.8841423449186285, B: 16.4837758696871 },
   },
   {
     colorNumber: "7689",
@@ -72364,11 +67623,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 77.08748054632653,
-      A: 3.5484808840833826,
-      B: 18.196190337454652,
-    },
+    lab: { L: 77.08748054632653, A: 3.5484808840833826, B: 18.196190337454652 },
   },
   {
     colorNumber: "7536",
@@ -72414,11 +67669,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.61806636491197,
-      A: 4.176698786010514,
-      B: 16.283602398519225,
-    },
+    lab: { L: 74.61806636491197, A: 4.176698786010514, B: 16.283602398519225 },
   },
   {
     colorNumber: "7539",
@@ -72459,11 +67710,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.55886469984746,
-      A: 3.972936355387202,
-      B: 19.21629417348367,
-    },
+    lab: { L: 70.55886469984746, A: 3.972936355387202, B: 19.21629417348367 },
   },
   {
     colorNumber: "7690",
@@ -72504,11 +67751,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 71.03996859254434,
-      A: 4.490560080740114,
-      B: 18.81721706148749,
-    },
+    lab: { L: 71.03996859254434, A: 4.490560080740114, B: 18.81721706148749 },
   },
   {
     colorNumber: "7540",
@@ -72549,11 +67792,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 64.21562307386118,
-      A: 4.1769418941731695,
-      B: 19.61400967308964,
-    },
+    lab: { L: 64.21562307386118, A: 4.1769418941731695, B: 19.61400967308964 },
   },
   {
     colorNumber: "7523",
@@ -72594,11 +67833,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 41.759321637614306,
-      A: 9.652754643935557,
-      B: 19.46289950937341,
-    },
+    lab: { L: 41.759321637614306, A: 9.652754643935557, B: 19.46289950937341 },
   },
   {
     colorNumber: "6672",
@@ -72639,11 +67874,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 91.73199270844964,
-      A: 0.5255583513074091,
-      B: 13.2691219098535,
-    },
+    lab: { L: 91.73199270844964, A: 0.5255583513074091, B: 13.2691219098535 },
   },
   {
     colorNumber: "7560",
@@ -72684,11 +67915,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.58777551834271,
-      A: 3.3521619768387967,
-      B: 15.98527541628345,
-    },
+    lab: { L: 89.58777551834271, A: 3.3521619768387967, B: 15.98527541628345 },
   },
   {
     colorNumber: "7722",
@@ -72729,11 +67956,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.84466003397726,
-      A: 3.8234592319851823,
-      B: 19.028824113965538,
-    },
+    lab: { L: 85.84466003397726, A: 3.8234592319851823, B: 19.028824113965538 },
   },
   {
     colorNumber: "7721",
@@ -72774,11 +67997,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.39310257860764,
-      A: 4.959784385050126,
-      B: 19.465414651417024,
-    },
+    lab: { L: 85.39310257860764, A: 4.959784385050126, B: 19.465414651417024 },
   },
   {
     colorNumber: "7677",
@@ -72819,11 +68038,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.7214821183297,
-      A: 11.073816056154929,
-      B: 30.895674104320747,
-    },
+    lab: { L: 78.7214821183297, A: 11.073816056154929, B: 30.895674104320747 },
   },
   {
     colorNumber: "7679",
@@ -72864,11 +68079,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.65725852681729,
-      A: 10.018772455527902,
-      B: 29.718412074447453,
-    },
+    lab: { L: 73.65725852681729, A: 10.018772455527902, B: 29.718412074447453 },
   },
   {
     colorNumber: "7680",
@@ -72909,11 +68120,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 65.90777871279865,
-      A: 9.265932332613747,
-      B: 26.015602077912536,
-    },
+    lab: { L: 65.90777871279865, A: 9.265932332613747, B: 26.015602077912536 },
   },
   {
     colorNumber: "7676",
@@ -72954,11 +68161,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.94042920145058,
-      A: 1.743574711843665,
-      B: 15.935727017713642,
-    },
+    lab: { L: 89.94042920145058, A: 1.743574711843665, B: 15.935727017713642 },
   },
   {
     colorNumber: "7681",
@@ -72999,11 +68202,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 91.38751351868662,
-      A: 1.5901237571924187,
-      B: 19.076858200917158,
-    },
+    lab: { L: 91.38751351868662, A: 1.5901237571924187, B: 19.076858200917158 },
   },
   {
     colorNumber: "7686",
@@ -73044,11 +68243,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.4348031918587,
-      A: 3.6679495581581345,
-      B: 22.075898195938095,
-    },
+    lab: { L: 89.4348031918587, A: 3.6679495581581345, B: 22.075898195938095 },
   },
   {
     colorNumber: "7684",
@@ -73089,11 +68284,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.63898003165879,
-      A: 2.3681552049478194,
-      B: 21.193117037686406,
-    },
+    lab: { L: 86.63898003165879, A: 2.3681552049478194, B: 21.193117037686406 },
   },
   {
     colorNumber: "7687",
@@ -73134,11 +68325,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.04153892825057,
-      A: 5.6599820536634144,
-      B: 23.719111501528456,
-    },
+    lab: { L: 82.04153892825057, A: 5.6599820536634144, B: 23.719111501528456 },
   },
   {
     colorNumber: "7693",
@@ -73184,11 +68371,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 71.26878965479322,
-      A: 6.427171292870682,
-      B: 26.838408202887408,
-    },
+    lab: { L: 71.26878965479322, A: 6.427171292870682, B: 26.838408202887408 },
   },
   {
     colorNumber: "7695",
@@ -73229,11 +68412,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 66.46522822496529,
-      A: 6.989142340727561,
-      B: 23.972456316887914,
-    },
+    lab: { L: 66.46522822496529, A: 6.989142340727561, B: 23.972456316887914 },
   },
   {
     colorNumber: "7561",
@@ -73338,7 +68517,7 @@ export const colorData = [
     isInterior: true,
     name: "Lemon Chiffon",
     lrv: 79.295,
-    brandedCollectionNames: ["Timeless Color Wall"],
+    brandedCollectionNames: ["Sunbaked Hues", "Timeless Color Wall"],
     colorFamilyNames: ["Timeless Color"],
     brandKey: "SW",
     red: 245,
@@ -73454,11 +68633,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.9514749714454,
-      A: 0.5380538911948785,
-      B: 32.7594278232743,
-    },
+    lab: { L: 88.9514749714454, A: 0.5380538911948785, B: 32.7594278232743 },
   },
   {
     colorNumber: "7685",
@@ -73503,11 +68678,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.2396465192713,
-      A: 4.995643719161613,
-      B: 32.28861545256913,
-    },
+    lab: { L: 80.2396465192713, A: 4.995643719161613, B: 32.28861545256913 },
   },
   {
     colorNumber: "7692",
@@ -73548,11 +68719,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 77.9552767863574,
-      A: 4.950103730608724,
-      B: 27.52788640897952,
-    },
+    lab: { L: 77.9552767863574, A: 4.950103730608724, B: 27.52788640897952 },
   },
   {
     colorNumber: "7683",
@@ -73593,11 +68760,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.54598561406945,
-      A: 1.4564156306954845,
-      B: 16.934448897014565,
-    },
+    lab: { L: 89.54598561406945, A: 1.4564156306954845, B: 16.934448897014565 },
   },
   {
     colorNumber: "7678",
@@ -73642,11 +68805,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 88.13312815175226,
-      A: 1.4742578465795075,
-      B: 16.994425221937238,
-    },
+    lab: { L: 88.13312815175226, A: 1.4742578465795075, B: 16.994425221937238 },
   },
   {
     colorNumber: "7698",
@@ -73661,7 +68820,11 @@ export const colorData = [
     isInterior: true,
     name: "Straw Harvest",
     lrv: 59.031,
-    brandedCollectionNames: ["Living Well", "Timeless Color Wall"],
+    brandedCollectionNames: [
+      "Sunbaked Hues",
+      "Living Well",
+      "Timeless Color Wall",
+    ],
     colorFamilyNames: ["Timeless Color", "Living Well"],
     brandKey: "SW",
     red: 219,
@@ -73687,11 +68850,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.27946490543391,
-      A: 0.821878579641333,
-      B: 21.448169879909962,
-    },
+    lab: { L: 81.27946490543391, A: 0.821878579641333, B: 21.448169879909962 },
   },
   {
     colorNumber: "7696",
@@ -73736,11 +68895,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.93726162531361,
-      A: 2.8002428436703086,
-      B: 18.86666354841715,
-    },
+    lab: { L: 80.93726162531361, A: 2.8002428436703086, B: 18.86666354841715 },
   },
   {
     colorNumber: "7697",
@@ -73781,11 +68936,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.64050145979995,
-      A: 4.130010242063498,
-      B: 23.05288609532985,
-    },
+    lab: { L: 73.64050145979995, A: 4.130010242063498, B: 23.05288609532985 },
   },
   {
     colorNumber: "7699",
@@ -73826,11 +68977,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 65.38138870830437,
-      A: 5.029909592069837,
-      B: 31.173906391566963,
-    },
+    lab: { L: 65.38138870830437, A: 5.029909592069837, B: 31.173906391566963 },
   },
   {
     colorNumber: "7732",
@@ -73961,11 +69108,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.66203541496684,
-      A: -1.1556397984162081,
-      B: 24.3266292014777,
-    },
+    lab: { L: 67.66203541496684, A: -1.1556397984162081, B: 24.3266292014777 },
   },
   {
     colorNumber: "7726",
@@ -74006,11 +69149,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 62.3150950130339,
-      A: -4.868452660201916,
-      B: 22.284174459106755,
-    },
+    lab: { L: 62.3150950130339, A: -4.868452660201916, B: 22.284174459106755 },
   },
   {
     colorNumber: "7734",
@@ -74186,11 +69325,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 79.337168218216,
-      A: -0.5488235622607696,
-      B: 12.167203067568689,
-    },
+    lab: { L: 79.337168218216, A: -0.5488235622607696, B: 12.167203067568689 },
   },
   {
     colorNumber: "7727",
@@ -74231,11 +69366,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 72.3824124461056,
-      A: -2.8158593861846715,
-      B: 17.276116965890242,
-    },
+    lab: { L: 72.3824124461056, A: -2.8158593861846715, B: 17.276116965890242 },
   },
   {
     colorNumber: "7747",
@@ -74321,11 +69452,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 64.99139571945672,
-      A: -4.212751272710369,
-      B: 16.60456573720477,
-    },
+    lab: { L: 64.99139571945672, A: -4.212751272710369, B: 16.60456573720477 },
   },
   {
     colorNumber: "7741",
@@ -74366,11 +69493,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.05910559551498,
-      A: -4.15877656021385,
-      B: 8.363092259342885,
-    },
+    lab: { L: 70.05910559551498, A: -4.15877656021385, B: 8.363092259342885 },
   },
   {
     colorNumber: "7748",
@@ -74411,11 +69534,7 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 62.47832466383518,
-      A: -3.0205803300377143,
-      B: 11.32145518137011,
-    },
+    lab: { L: 62.47832466383518, A: -3.0205803300377143, B: 11.32145518137011 },
   },
   {
     colorNumber: "7739",
@@ -74464,10 +69583,7 @@ export const colorData = [
   },
   {
     colorNumber: "0001",
-    coordinatingColors: {
-      coord1ColorId: "11290",
-      coord2ColorId: "11296",
-    },
+    coordinatingColors: { coord1ColorId: "11290", coord2ColorId: "11296" },
     description: ["Dull", "Fairly Bright"],
     id: "1544",
     isExterior: true,
@@ -74502,18 +69618,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 52.21493460383789,
-      A: 10.134855710703993,
-      B: 9.947165373259704,
-    },
+    lab: { L: 52.21493460383789, A: 10.134855710703993, B: 9.947165373259704 },
   },
   {
     colorNumber: "0002",
-    coordinatingColors: {
-      coord1ColorId: "1596",
-      coord2ColorId: "1544",
-    },
+    coordinatingColors: { coord1ColorId: "1596", coord2ColorId: "1544" },
     description: ["Dull", "Bright", "Glowing"],
     id: "1545",
     isExterior: true,
@@ -74550,18 +69659,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 71.52499539558997,
-      A: 4.311030888844658,
-      B: 9.0296695573725,
-    },
+    lab: { L: 71.52499539558997, A: 4.311030888844658, B: 9.0296695573725 },
   },
   {
     colorNumber: "0003",
-    coordinatingColors: {
-      coord1ColorId: "1599",
-      coord2ColorId: "11351",
-    },
+    coordinatingColors: { coord1ColorId: "1599", coord2ColorId: "11351" },
     description: ["Subdued", "Muted", "Bright", "Glowing"],
     id: "1546",
     isExterior: true,
@@ -74598,18 +69700,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.54198503354091,
-      A: 11.947234850874121,
-      B: 12.615753891108096,
-    },
+    lab: { L: 68.54198503354091, A: 11.947234850874121, B: 12.615753891108096 },
   },
   {
     colorNumber: "0004",
-    coordinatingColors: {
-      coord1ColorId: "2952",
-      coord2ColorId: "11335",
-    },
+    coordinatingColors: { coord1ColorId: "2952", coord2ColorId: "11335" },
     description: ["Dull", "Fairly Bright"],
     id: "1547",
     isExterior: true,
@@ -74644,18 +69739,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 50.24421715334296,
-      A: 18.230640378143036,
-      B: 6.04775170939289,
-    },
+    lab: { L: 50.24421715334296, A: 18.230640378143036, B: 6.04775170939289 },
   },
   {
     colorNumber: "0005",
-    coordinatingColors: {
-      coord1ColorId: "11364",
-      coord2ColorId: "11356",
-    },
+    coordinatingColors: { coord1ColorId: "11364", coord2ColorId: "11356" },
     description: ["Dull", "Dusky", "Fairly Dark"],
     id: "1548",
     isExterior: true,
@@ -74690,18 +69778,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 39.80584753340781,
-      A: 8.35250306029775,
-      B: 2.4944019531270345,
-    },
+    lab: { L: 39.80584753340781, A: 8.35250306029775, B: 2.4944019531270345 },
   },
   {
     colorNumber: "0006",
-    coordinatingColors: {
-      coord1ColorId: "2857",
-      coord2ColorId: "2823",
-    },
+    coordinatingColors: { coord1ColorId: "2857", coord2ColorId: "2823" },
     description: ["Diluted", "Wan", "Moderately Bright"],
     id: "1549",
     isExterior: true,
@@ -74737,18 +69818,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 41.57341849768794,
-      A: 22.73094205961343,
-      B: 12.88592324454234,
-    },
+    lab: { L: 41.57341849768794, A: 22.73094205961343, B: 12.88592324454234 },
   },
   {
     colorNumber: "0007",
-    coordinatingColors: {
-      coord1ColorId: "11345",
-      coord2ColorId: "11352",
-    },
+    coordinatingColors: { coord1ColorId: "11345", coord2ColorId: "11352" },
     description: ["Subdued", "Muted", "Fairly Bright"],
     id: "1550",
     isExterior: true,
@@ -74784,18 +69858,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 54.25488919434247,
-      A: 18.290117317281805,
-      B: 24.15075659049024,
-    },
+    lab: { L: 54.25488919434247, A: 18.290117317281805, B: 24.15075659049024 },
   },
   {
     colorNumber: "0008",
-    coordinatingColors: {
-      coord1ColorId: "2729",
-      coord2ColorId: "2845",
-    },
+    coordinatingColors: { coord1ColorId: "2729", coord2ColorId: "2845" },
     description: ["Soft", "Dusky", "Fairly Dark"],
     id: "1551",
     isExterior: true,
@@ -74803,6 +69870,7 @@ export const colorData = [
     name: "Cajun Red",
     lrv: 9.727,
     brandedCollectionNames: [
+      "Sunbaked Hues",
       "Historic Interior Color Wall",
       "Victorian (1830s-1910s)",
     ],
@@ -74830,18 +69898,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 37.41774013395034,
-      A: 30.275703218840267,
-      B: 26.36304585745144,
-    },
+    lab: { L: 37.41774013395034, A: 30.275703218840267, B: 26.36304585745144 },
   },
   {
     colorNumber: "0009",
-    coordinatingColors: {
-      coord1ColorId: "11299",
-      coord2ColorId: "11362",
-    },
+    coordinatingColors: { coord1ColorId: "11299", coord2ColorId: "11362" },
     description: ["Fairly Colorful", "Moderately Colorful", "Fairly Bright"],
     id: "1552",
     isExterior: true,
@@ -74876,18 +69937,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 63.07716217642998,
-      A: 14.356275031742637,
-      B: 31.620913193421686,
-    },
+    lab: { L: 63.07716217642998, A: 14.356275031742637, B: 31.620913193421686 },
   },
   {
     colorNumber: "0010",
-    coordinatingColors: {
-      coord1ColorId: "2071",
-      coord2ColorId: "2852",
-    },
+    coordinatingColors: { coord1ColorId: "2071", coord2ColorId: "2852" },
     description: ["Subdued", "Muted", "Bright", "Glowing"],
     id: "1553",
     isExterior: true,
@@ -74923,18 +69977,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.53918878866104,
-      A: 8.627744406315696,
-      B: 20.553446654253804,
-    },
+    lab: { L: 67.53918878866104, A: 8.627744406315696, B: 20.553446654253804 },
   },
   {
     colorNumber: "0011",
-    coordinatingColors: {
-      coord1ColorId: "1629",
-      coord2ColorId: "2103",
-    },
+    coordinatingColors: { coord1ColorId: "1629", coord2ColorId: "2103" },
     description: ["Subdued", "Muted", "Pale"],
     id: "1554",
     isExterior: true,
@@ -74970,18 +70017,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 75.92266805393344,
-      A: 1.6550132606825696,
-      B: 17.560512700720675,
-    },
+    lab: { L: 75.92266805393344, A: 1.6550132606825696, B: 17.560512700720675 },
   },
   {
     colorNumber: "0012",
-    coordinatingColors: {
-      coord1ColorId: "2881",
-      coord2ColorId: "11238",
-    },
+    coordinatingColors: { coord1ColorId: "2881", coord2ColorId: "11238" },
     description: ["Fairly Colorful", "Moderately Colorful", "Fairly Bright"],
     id: "1555",
     isExterior: false,
@@ -75017,18 +70057,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.4719327939379,
-      A: 5.9581710834512025,
-      B: 30.25670635081754,
-    },
+    lab: { L: 67.4719327939379, A: 5.9581710834512025, B: 30.25670635081754 },
   },
   {
     colorNumber: "0013",
-    coordinatingColors: {
-      coord1ColorId: "2943",
-      coord2ColorId: "1561",
-    },
+    coordinatingColors: { coord1ColorId: "2943", coord2ColorId: "1561" },
     description: ["Dull", "Bright", "Glowing"],
     id: "1556",
     isExterior: true,
@@ -75064,18 +70097,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.89338243015092,
-      A: -6.400980643467391,
-      B: 16.703037451405535,
-    },
+    lab: { L: 70.89338243015092, A: -6.400980643467391, B: 16.703037451405535 },
   },
   {
     colorNumber: "0014",
-    coordinatingColors: {
-      coord1ColorId: "1856",
-      coord2ColorId: "3051",
-    },
+    coordinatingColors: { coord1ColorId: "1856", coord2ColorId: "3051" },
     description: ["Dull", "Moderately Bright"],
     id: "1557",
     isExterior: true,
@@ -75111,18 +70137,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 55.93665984712332,
-      A: -1.917400935408986,
-      B: 18.484197391936608,
-    },
+    lab: { L: 55.93665984712332, A: -1.917400935408986, B: 18.484197391936608 },
   },
   {
     colorNumber: "0015",
-    coordinatingColors: {
-      coord1ColorId: "2832",
-      coord2ColorId: "1795",
-    },
+    coordinatingColors: { coord1ColorId: "2832", coord2ColorId: "1795" },
     description: ["Washed out", "Moderately Bright"],
     id: "1558",
     isExterior: true,
@@ -75159,18 +70178,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 53.71752006436188,
-      A: -12.08518873083586,
-      B: 8.14848445299836,
-    },
+    lab: { L: 53.71752006436188, A: -12.08518873083586, B: 8.14848445299836 },
   },
   {
     colorNumber: "0016",
-    coordinatingColors: {
-      coord1ColorId: "3037",
-      coord2ColorId: "11271",
-    },
+    coordinatingColors: { coord1ColorId: "3037", coord2ColorId: "11271" },
     description: ["Dull", "Dusky", "Fairly Dark"],
     id: "1559",
     isExterior: true,
@@ -75206,18 +70218,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 35.55790029406254,
-      A: -9.86026697430864,
-      B: 3.981167165455679,
-    },
+    lab: { L: 35.55790029406254, A: -9.86026697430864, B: 3.981167165455679 },
   },
   {
     colorNumber: "0017",
-    coordinatingColors: {
-      coord1ColorId: "1806",
-      coord2ColorId: "2926",
-    },
+    coordinatingColors: { coord1ColorId: "1806", coord2ColorId: "2926" },
     description: ["Dull", "Fairly Bright"],
     id: "1560",
     isExterior: true,
@@ -75253,18 +70258,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 65.37816410255992,
-      A: -9.99553577979162,
-      B: 1.3322606477268684,
-    },
+    lab: { L: 65.37816410255992, A: -9.99553577979162, B: 1.3322606477268684 },
   },
   {
     colorNumber: "0018",
-    coordinatingColors: {
-      coord1ColorId: "11346",
-      coord2ColorId: "11351",
-    },
+    coordinatingColors: { coord1ColorId: "11346", coord2ColorId: "11351" },
     description: ["Dull", "Moderately Bright"],
     id: "1561",
     isExterior: true,
@@ -75307,10 +70305,7 @@ export const colorData = [
   },
   {
     colorNumber: "0019",
-    coordinatingColors: {
-      coord1ColorId: "11289",
-      coord2ColorId: "11322",
-    },
+    coordinatingColors: { coord1ColorId: "11289", coord2ColorId: "11322" },
     description: ["Dull", "Bright", "Glowing"],
     id: "1562",
     isExterior: true,
@@ -75347,18 +70342,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.8522913113957,
-      A: -9.757556919124555,
-      B: -1.5768314748452195,
-    },
+    lab: { L: 73.8522913113957, A: -9.757556919124555, B: -1.5768314748452195 },
   },
   {
     colorNumber: "0020",
-    coordinatingColors: {
-      coord1ColorId: "2057",
-      coord2ColorId: "2067",
-    },
+    coordinatingColors: { coord1ColorId: "2057", coord2ColorId: "2067" },
     description: ["Dull", "Fairly Bright"],
     id: "1563",
     isExterior: true,
@@ -75401,10 +70389,7 @@ export const colorData = [
   },
   {
     colorNumber: "0021",
-    coordinatingColors: {
-      coord1ColorId: "2758",
-      coord2ColorId: "11337",
-    },
+    coordinatingColors: { coord1ColorId: "2758", coord2ColorId: "11337" },
     description: ["Washed out", "Pale"],
     id: "1564",
     isExterior: true,
@@ -75442,18 +70427,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 74.79836304988436,
-      A: 3.17887619547208,
-      B: 2.2712515476003503,
-    },
+    lab: { L: 74.79836304988436, A: 3.17887619547208, B: 2.2712515476003503 },
   },
   {
     colorNumber: "0022",
-    coordinatingColors: {
-      coord1ColorId: "2723",
-      coord2ColorId: "2725",
-    },
+    coordinatingColors: { coord1ColorId: "2723", coord2ColorId: "2725" },
     description: ["Washed out", "Moderately Bright"],
     id: "1565",
     isExterior: true,
@@ -75488,18 +70466,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 46.41808623862988,
-      A: 8.501693533959076,
-      B: 2.5479921426427854,
-    },
+    lab: { L: 46.41808623862988, A: 8.501693533959076, B: 2.5479921426427854 },
   },
   {
     colorNumber: "0023",
-    coordinatingColors: {
-      coord1ColorId: "2872",
-      coord2ColorId: "2241",
-    },
+    coordinatingColors: { coord1ColorId: "2872", coord2ColorId: "2241" },
     description: ["Washed out", "Bright", "Glowing"],
     id: "1566",
     isExterior: true,
@@ -75534,18 +70505,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 64.35720639630497,
-      A: 0.9538603356684106,
-      B: 6.798553747473868,
-    },
+    lab: { L: 64.35720639630497, A: 0.9538603356684106, B: 6.798553747473868 },
   },
   {
     colorNumber: "0024",
-    coordinatingColors: {
-      coord1ColorId: "2717",
-      coord2ColorId: "2890",
-    },
+    coordinatingColors: { coord1ColorId: "2717", coord2ColorId: "2890" },
     description: ["Dull", "Fairly Bright"],
     id: "1567",
     isExterior: true,
@@ -75580,18 +70544,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 57.94098986390897,
-      A: 2.5990006656851916,
-      B: 11.704597532145321,
-    },
+    lab: { L: 57.94098986390897, A: 2.5990006656851916, B: 11.704597532145321 },
   },
   {
     colorNumber: "0025",
-    coordinatingColors: {
-      coord1ColorId: "2702",
-      coord2ColorId: "2705",
-    },
+    coordinatingColors: { coord1ColorId: "2702", coord2ColorId: "2705" },
     description: [
       "Fairly Colorful",
       "Moderately Colorful",
@@ -75633,18 +70590,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 64.607327074496,
-      A: 22.79409661566978,
-      B: 14.462973791867984,
-    },
+    lab: { L: 64.607327074496, A: 22.79409661566978, B: 14.462973791867984 },
   },
   {
     colorNumber: "0026",
-    coordinatingColors: {
-      coord1ColorId: "2682",
-      coord2ColorId: "2004",
-    },
+    coordinatingColors: { coord1ColorId: "2682", coord2ColorId: "2004" },
     description: ["Soft", "Pale"],
     id: "1569",
     isExterior: true,
@@ -75680,18 +70630,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.98998890327184,
-      A: 15.304431468752266,
-      B: 12.010932779023854,
-    },
+    lab: { L: 78.98998890327184, A: 15.304431468752266, B: 12.010932779023854 },
   },
   {
     colorNumber: "0027",
-    coordinatingColors: {
-      coord1ColorId: "2864",
-      coord2ColorId: "2025",
-    },
+    coordinatingColors: { coord1ColorId: "2864", coord2ColorId: "2025" },
     description: ["Soft", "Brilliant", "Radiant"],
     id: "1570",
     isExterior: true,
@@ -75727,18 +70670,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.73007894128752,
-      A: 7.276102302018527,
-      B: 14.30144321309963,
-    },
+    lab: { L: 84.73007894128752, A: 7.276102302018527, B: 14.30144321309963 },
   },
   {
     colorNumber: "0028",
-    coordinatingColors: {
-      coord1ColorId: "11296",
-      coord2ColorId: "1991",
-    },
+    coordinatingColors: { coord1ColorId: "11296", coord2ColorId: "1991" },
     description: ["Gleaming", "Forceful", "Brilliant", "Radiant"],
     id: "1571",
     isExterior: true,
@@ -75774,18 +70710,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.05753942377791,
-      A: 5.1063777851634296,
-      B: 18.985492851835637,
-    },
+    lab: { L: 85.05753942377791, A: 5.1063777851634296, B: 18.985492851835637 },
   },
   {
     colorNumber: "0029",
-    coordinatingColors: {
-      coord1ColorId: "2869",
-      coord2ColorId: "11230",
-    },
+    coordinatingColors: { coord1ColorId: "2869", coord2ColorId: "11230" },
     description: ["Dull", "Pale"],
     id: "1572",
     isExterior: true,
@@ -75821,18 +70750,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.80403447297778,
-      A: -4.2974809981845,
-      B: 12.457134694628014,
-    },
+    lab: { L: 81.80403447297778, A: -4.2974809981845, B: 12.457134694628014 },
   },
   {
     colorNumber: "0030",
-    coordinatingColors: {
-      coord1ColorId: "2987",
-      coord2ColorId: "11366",
-    },
+    coordinatingColors: { coord1ColorId: "2987", coord2ColorId: "11366" },
     description: ["Rich", "Vibrant", "Pale"],
     id: "1573",
     isExterior: false,
@@ -75867,18 +70789,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.62552711957893,
-      A: 7.589469011624772,
-      B: 35.83386476538997,
-    },
+    lab: { L: 81.62552711957893, A: 7.589469011624772, B: 35.83386476538997 },
   },
   {
     colorNumber: "0031",
-    coordinatingColors: {
-      coord1ColorId: "2857",
-      coord2ColorId: "1575",
-    },
+    coordinatingColors: { coord1ColorId: "2857", coord2ColorId: "1575" },
     description: ["Washed out", "Bright", "Glowing"],
     id: "1574",
     isExterior: true,
@@ -75925,10 +70840,7 @@ export const colorData = [
   },
   {
     colorNumber: "0032",
-    coordinatingColors: {
-      coord1ColorId: "2860",
-      coord2ColorId: "1614",
-    },
+    coordinatingColors: { coord1ColorId: "2860", coord2ColorId: "1614" },
     description: ["Dull", "Dusky", "Fairly Dark"],
     id: "1575",
     isExterior: true,
@@ -75964,18 +70876,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 42.08836148204786,
-      A: -4.294781539098485,
-      B: -7.871500037226697,
-    },
+    lab: { L: 42.08836148204786, A: -4.294781539098485, B: -7.871500037226697 },
   },
   {
     colorNumber: "0033",
-    coordinatingColors: {
-      coord1ColorId: "2696",
-      coord2ColorId: "2757",
-    },
+    coordinatingColors: { coord1ColorId: "2696", coord2ColorId: "2757" },
     description: ["Subdued", "Muted", "Moderately Bright"],
     id: "1576",
     isExterior: true,
@@ -76010,18 +70915,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 42.23602467665195,
-      A: 29.366656098371692,
-      B: 17.120123502192776,
-    },
+    lab: { L: 42.23602467665195, A: 29.366656098371692, B: 17.120123502192776 },
   },
   {
     colorNumber: "0034",
-    coordinatingColors: {
-      coord1ColorId: "2955",
-      coord2ColorId: "2975",
-    },
+    coordinatingColors: { coord1ColorId: "2955", coord2ColorId: "2975" },
     description: ["Subdued", "Muted", "Bright", "Glowing"],
     id: "1577",
     isExterior: true,
@@ -76058,18 +70956,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 63.68107059667932,
-      A: 16.477882221056895,
-      B: 15.22203461255085,
-    },
+    lab: { L: 63.68107059667932, A: 16.477882221056895, B: 15.22203461255085 },
   },
   {
     colorNumber: "0036",
-    coordinatingColors: {
-      coord1ColorId: "1583",
-      coord2ColorId: "11304",
-    },
+    coordinatingColors: { coord1ColorId: "1583", coord2ColorId: "11304" },
     description: ["Fairly Colorful", "Moderately Colorful", "Pale"],
     id: "1579",
     isExterior: false,
@@ -76105,18 +70996,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 79.91779423491482,
-      A: 3.2456643148585096,
-      B: 17.408700004790578,
-    },
+    lab: { L: 79.91779423491482, A: 3.2456643148585096, B: 17.408700004790578 },
   },
   {
     colorNumber: "0037",
-    coordinatingColors: {
-      coord1ColorId: "2716",
-      coord2ColorId: "2012",
-    },
+    coordinatingColors: { coord1ColorId: "2716", coord2ColorId: "2012" },
     description: ["Dull", "Bright", "Glowing"],
     id: "1580",
     isExterior: true,
@@ -76155,18 +71039,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 66.88570444138804,
-      A: 1.945197058363879,
-      B: 8.849574678474315,
-    },
+    lab: { L: 66.88570444138804, A: 1.945197058363879, B: 8.849574678474315 },
   },
   {
     colorNumber: "0038",
-    coordinatingColors: {
-      coord1ColorId: "2837",
-      coord2ColorId: "11178",
-    },
+    coordinatingColors: { coord1ColorId: "2837", coord2ColorId: "11178" },
     description: ["Dull", "Moderately Bright"],
     id: "1581",
     isExterior: true,
@@ -76202,18 +71079,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 48.819270770790126,
-      A: 2.436301167227206,
-      B: 10.153273818410158,
-    },
+    lab: { L: 48.819270770790126, A: 2.436301167227206, B: 10.153273818410158 },
   },
   {
     colorNumber: "0040",
-    coordinatingColors: {
-      coord1ColorId: "2853",
-      coord2ColorId: "2819",
-    },
+    coordinatingColors: { coord1ColorId: "2853", coord2ColorId: "2819" },
     description: ["Subdued", "Muted", "Moderately Bright"],
     id: "1583",
     isExterior: true,
@@ -76250,18 +71120,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 48.94075641793731,
-      A: 26.09122715605111,
-      B: 21.659157329069746,
-    },
+    lab: { L: 48.94075641793731, A: 26.09122715605111, B: 21.659157329069746 },
   },
   {
     colorNumber: "0041",
-    coordinatingColors: {
-      coord1ColorId: "1808",
-      coord2ColorId: "1832",
-    },
+    coordinatingColors: { coord1ColorId: "1808", coord2ColorId: "1832" },
     description: ["Dull", "Leaden"],
     id: "1584",
     isExterior: true,
@@ -76298,18 +71161,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 29.80241156511677,
-      A: -8.95139271589257,
-      B: 4.491828279412157,
-    },
+    lab: { L: 29.80241156511677, A: -8.95139271589257, B: 4.491828279412157 },
   },
   {
     colorNumber: "0042",
-    coordinatingColors: {
-      coord1ColorId: "11299",
-      coord2ColorId: "1846",
-    },
+    coordinatingColors: { coord1ColorId: "11299", coord2ColorId: "1846" },
     description: ["Diluted", "Wan", "Fairly Bright"],
     id: "1585",
     isExterior: true,
@@ -76344,18 +71200,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 66.3218587567025,
-      A: -1.794004262375748,
-      B: 20.22353394515408,
-    },
+    lab: { L: 66.3218587567025, A: -1.794004262375748, B: 20.22353394515408 },
   },
   {
     colorNumber: "0043",
-    coordinatingColors: {
-      coord1ColorId: "2693",
-      coord2ColorId: "1909",
-    },
+    coordinatingColors: { coord1ColorId: "2693", coord2ColorId: "1909" },
     description: ["Subdued", "Muted", "Fairly Bright"],
     id: "1586",
     isExterior: true,
@@ -76391,18 +71240,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 61.44141224401264,
-      A: 4.532935500974,
-      B: 30.728795656175322,
-    },
+    lab: { L: 61.44141224401264, A: 4.532935500974, B: 30.728795656175322 },
   },
   {
     colorNumber: "0044",
-    coordinatingColors: {
-      coord1ColorId: "1813",
-      coord2ColorId: "1671",
-    },
+    coordinatingColors: { coord1ColorId: "1813", coord2ColorId: "1671" },
     description: ["Gleaming", "Forceful", "Pale"],
     id: "1587",
     isExterior: true,
@@ -76438,18 +71280,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 79.88624500994791,
-      A: 8.26172847590656,
-      B: 31.368934488198107,
-    },
+    lab: { L: 79.88624500994791, A: 8.26172847590656, B: 31.368934488198107 },
   },
   {
     colorNumber: "0045",
-    coordinatingColors: {
-      coord1ColorId: "2693",
-      coord2ColorId: "3055",
-    },
+    coordinatingColors: { coord1ColorId: "2693", coord2ColorId: "3055" },
     description: ["Subdued", "Muted", "Moderately Bright"],
     id: "1588",
     isExterior: true,
@@ -76491,18 +71326,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 47.2575075912446,
-      A: 14.506915602777227,
-      B: 26.534689508616417,
-    },
+    lab: { L: 47.2575075912446, A: 14.506915602777227, B: 26.534689508616417 },
   },
   {
     colorNumber: "0046",
-    coordinatingColors: {
-      coord1ColorId: "2842",
-      coord2ColorId: "11237",
-    },
+    coordinatingColors: { coord1ColorId: "2842", coord2ColorId: "11237" },
     description: ["Soft", "Brilliant", "Radiant"],
     id: "1589",
     isExterior: true,
@@ -76539,18 +71367,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 91.54887651735625,
-      A: 1.4983811602699015,
-      B: 11.447078359211837,
-    },
+    lab: { L: 91.54887651735625, A: 1.4983811602699015, B: 11.447078359211837 },
   },
   {
     colorNumber: "0047",
-    coordinatingColors: {
-      coord1ColorId: "2943",
-      coord2ColorId: "2945",
-    },
+    coordinatingColors: { coord1ColorId: "2943", coord2ColorId: "2945" },
     description: ["Washed out", "Moderately Bright"],
     id: "1590",
     isExterior: true,
@@ -76585,18 +71406,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 52.26587504577262,
-      A: -8.553970250845255,
-      B: 0.8057446061825457,
-    },
+    lab: { L: 52.26587504577262, A: -8.553970250845255, B: 0.8057446061825457 },
   },
   {
     colorNumber: "0048",
-    coordinatingColors: {
-      coord1ColorId: "2986",
-      coord2ColorId: "11280",
-    },
+    coordinatingColors: { coord1ColorId: "2986", coord2ColorId: "11280" },
     description: ["Diluted", "Wan", "Dusky", "Fairly Dark"],
     id: "1591",
     isExterior: true,
@@ -76639,10 +71453,7 @@ export const colorData = [
   },
   {
     colorNumber: "0049",
-    coordinatingColors: {
-      coord1ColorId: "1581",
-      coord2ColorId: "2951",
-    },
+    coordinatingColors: { coord1ColorId: "1581", coord2ColorId: "2951" },
     description: ["Dull", "Bright", "Glowing"],
     id: "1592",
     isExterior: true,
@@ -76678,18 +71489,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 72.65419365897445,
-      A: -0.666543185369517,
-      B: 8.927521970440155,
-    },
+    lab: { L: 72.65419365897445, A: -0.666543185369517, B: 8.927521970440155 },
   },
   {
     colorNumber: "0050",
-    coordinatingColors: {
-      coord1ColorId: "11281",
-      coord2ColorId: "11209",
-    },
+    coordinatingColors: { coord1ColorId: "11281", coord2ColorId: "11209" },
     description: ["Subdued", "Muted", "Dazzling"],
     id: "1593",
     isExterior: true,
@@ -76727,18 +71531,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 92.81200509993181,
-      A: -0.3540941642046769,
-      B: 7.497470880787738,
-    },
+    lab: { L: 92.81200509993181, A: -0.3540941642046769, B: 7.497470880787738 },
   },
   {
     colorNumber: "0051",
-    coordinatingColors: {
-      coord1ColorId: "11364",
-      coord2ColorId: "11311",
-    },
+    coordinatingColors: { coord1ColorId: "11364", coord2ColorId: "11311" },
     description: ["Gleaming", "Forceful", "Brilliant", "Radiant"],
     id: "1594",
     isExterior: false,
@@ -76774,18 +71571,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.91938435179064,
-      A: 1.5974276295777634,
-      B: 16.427663140734474,
-    },
+    lab: { L: 89.91938435179064, A: 1.5974276295777634, B: 16.427663140734474 },
   },
   {
     colorNumber: "0052",
-    coordinatingColors: {
-      coord1ColorId: "2872",
-      coord2ColorId: "11347",
-    },
+    coordinatingColors: { coord1ColorId: "2872", coord2ColorId: "11347" },
     description: ["Washed out", "Pale"],
     id: "1595",
     isExterior: true,
@@ -76824,18 +71614,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.30897229482886,
-      A: -2.6533916217678644,
-      B: 4.099988466288518,
-    },
+    lab: { L: 82.30897229482886, A: -2.6533916217678644, B: 4.099988466288518 },
   },
   {
     colorNumber: "0053",
-    coordinatingColors: {
-      coord1ColorId: "1599",
-      coord2ColorId: "1580",
-    },
+    coordinatingColors: { coord1ColorId: "1599", coord2ColorId: "1580" },
     description: ["Subdued", "Muted", "Brilliant", "Radiant"],
     id: "1596",
     isExterior: true,
@@ -76872,18 +71655,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 89.59840327770851,
-      A: 1.190526791123414,
-      B: 6.457281189035458,
-    },
+    lab: { L: 89.59840327770851, A: 1.190526791123414, B: 6.457281189035458 },
   },
   {
     colorNumber: "0054",
-    coordinatingColors: {
-      coord1ColorId: "2872",
-      coord2ColorId: "11259",
-    },
+    coordinatingColors: { coord1ColorId: "2872", coord2ColorId: "11259" },
     description: ["Dull", "Pale"],
     id: "1597",
     isExterior: true,
@@ -76919,18 +71695,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 77.80257414854523,
-      A: 1.4164693698753839,
-      B: 6.154665607896881,
-    },
+    lab: { L: 77.80257414854523, A: 1.4164693698753839, B: 6.154665607896881 },
   },
   {
     colorNumber: "0055",
-    coordinatingColors: {
-      coord1ColorId: "2942",
-      coord2ColorId: "11254",
-    },
+    coordinatingColors: { coord1ColorId: "2942", coord2ColorId: "11254" },
     description: ["Washed out", "Pale"],
     id: "1598",
     isExterior: true,
@@ -76984,10 +71753,7 @@ export const colorData = [
   },
   {
     colorNumber: "0056",
-    coordinatingColors: {
-      coord1ColorId: "11274",
-      coord2ColorId: "11186",
-    },
+    coordinatingColors: { coord1ColorId: "11274", coord2ColorId: "11186" },
     description: ["Subdued", "Muted", "Pale"],
     id: "1599",
     isExterior: true,
@@ -77025,18 +71791,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 77.97266881868399,
-      A: 6.4068885320518465,
-      B: 12.493229342175027,
-    },
+    lab: { L: 77.97266881868399, A: 6.4068885320518465, B: 12.493229342175027 },
   },
   {
     colorNumber: "0057",
-    coordinatingColors: {
-      coord1ColorId: "2683",
-      coord2ColorId: "11353",
-    },
+    coordinatingColors: { coord1ColorId: "2683", coord2ColorId: "11353" },
     description: ["Soft", "Moderately Bright"],
     id: "1600",
     isExterior: true,
@@ -77072,18 +71831,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 39.50377011657402,
-      A: 39.23312891102015,
-      B: 27.15853702203971,
-    },
+    lab: { L: 39.50377011657402, A: 39.23312891102015, B: 27.15853702203971 },
   },
   {
     colorNumber: "0058",
-    coordinatingColors: {
-      coord1ColorId: "11364",
-      coord2ColorId: "11351",
-    },
+    coordinatingColors: { coord1ColorId: "11364", coord2ColorId: "11351" },
     description: ["Gleaming", "Forceful", "Brilliant", "Radiant"],
     id: "1601",
     isExterior: false,
@@ -77119,18 +71871,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.36747985649411,
-      A: 15.893390705942478,
-      B: 13.882687338060329,
-    },
+    lab: { L: 81.36747985649411, A: 15.893390705942478, B: 13.882687338060329 },
   },
   {
     colorNumber: "0059",
-    coordinatingColors: {
-      coord1ColorId: "11348",
-      coord2ColorId: "11331",
-    },
+    coordinatingColors: { coord1ColorId: "11348", coord2ColorId: "11331" },
     description: ["Dull", "Pale"],
     id: "1602",
     isExterior: true,
@@ -77170,18 +71915,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.75535382023833,
-      A: -4.221387420513589,
-      B: 6.343106004373422,
-    },
+    lab: { L: 82.75535382023833, A: -4.221387420513589, B: 6.343106004373422 },
   },
   {
     colorNumber: "0060",
-    coordinatingColors: {
-      coord1ColorId: "2870",
-      coord2ColorId: "2844",
-    },
+    coordinatingColors: { coord1ColorId: "2870", coord2ColorId: "2844" },
     description: ["Diluted", "Wan", "Moderately Bright"],
     id: "1603",
     isExterior: true,
@@ -77226,10 +71964,7 @@ export const colorData = [
   },
   {
     colorNumber: "0061",
-    coordinatingColors: {
-      coord1ColorId: "11346",
-      coord2ColorId: "2705",
-    },
+    coordinatingColors: { coord1ColorId: "11346", coord2ColorId: "2705" },
     description: ["Diluted", "Wan", "Fairly Bright"],
     id: "1604",
     isExterior: false,
@@ -77264,18 +71999,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 55.530615746817276,
-      A: 19.956796027690014,
-      B: 7.997663912206487,
-    },
+    lab: { L: 55.530615746817276, A: 19.956796027690014, B: 7.997663912206487 },
   },
   {
     colorNumber: "0062",
-    coordinatingColors: {
-      coord1ColorId: "11370",
-      coord2ColorId: "11236",
-    },
+    coordinatingColors: { coord1ColorId: "11370", coord2ColorId: "11236" },
     description: ["Dull", "Pale"],
     id: "1605",
     isExterior: true,
@@ -77313,18 +72041,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 76.17024034502086,
-      A: 4.414540820953161,
-      B: 2.148451842082566,
-    },
+    lab: { L: 76.17024034502086, A: 4.414540820953161, B: 2.148451842082566 },
   },
   {
     colorNumber: "0063",
-    coordinatingColors: {
-      coord1ColorId: "2071",
-      coord2ColorId: "2837",
-    },
+    coordinatingColors: { coord1ColorId: "2071", coord2ColorId: "2837" },
     description: ["Diluted", "Wan", "Pale"],
     id: "1606",
     isExterior: true,
@@ -77369,10 +72090,7 @@ export const colorData = [
   },
   {
     colorNumber: "0064",
-    coordinatingColors: {
-      coord1ColorId: "2872",
-      coord2ColorId: "11210",
-    },
+    coordinatingColors: { coord1ColorId: "2872", coord2ColorId: "11210" },
     description: ["Intense", "Dark", "Dim"],
     id: "1607",
     isExterior: false,
@@ -77417,10 +72135,7 @@ export const colorData = [
   },
   {
     colorNumber: "0065",
-    coordinatingColors: {
-      coord1ColorId: "2689",
-      coord2ColorId: "11264",
-    },
+    coordinatingColors: { coord1ColorId: "2689", coord2ColorId: "11264" },
     description: ["Dull", "Dusky", "Fairly Dark"],
     id: "1608",
     isExterior: true,
@@ -77455,18 +72170,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 35.16480408911152,
-      A: -7.97050347210726,
-      B: 8.470669224732008,
-    },
+    lab: { L: 35.16480408911152, A: -7.97050347210726, B: 8.470669224732008 },
   },
   {
     colorNumber: "0066",
-    coordinatingColors: {
-      coord1ColorId: "11193",
-      coord2ColorId: "2734",
-    },
+    coordinatingColors: { coord1ColorId: "11193", coord2ColorId: "2734" },
     description: ["Dull", "Bright", "Glowing"],
     id: "1609",
     isExterior: true,
@@ -77502,18 +72210,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 71.36322392289763,
-      A: -5.046514792784562,
-      B: 8.598470263527226,
-    },
+    lab: { L: 71.36322392289763, A: -5.046514792784562, B: 8.598470263527226 },
   },
   {
     colorNumber: "0067",
-    coordinatingColors: {
-      coord1ColorId: "11293",
-      coord2ColorId: "11240",
-    },
+    coordinatingColors: { coord1ColorId: "11293", coord2ColorId: "11240" },
     description: ["Rich", "Vibrant", "Pale"],
     id: "1610",
     isExterior: true,
@@ -77549,18 +72250,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.34295981515925,
-      A: 5.981648475249457,
-      B: 26.984220046132634,
-    },
+    lab: { L: 84.34295981515925, A: 5.981648475249457, B: 26.984220046132634 },
   },
   {
     colorNumber: "0068",
-    coordinatingColors: {
-      coord1ColorId: "2694",
-      coord2ColorId: "11231",
-    },
+    coordinatingColors: { coord1ColorId: "2694", coord2ColorId: "11231" },
     description: ["Washed out", "Pale"],
     id: "1611",
     isExterior: true,
@@ -77599,18 +72293,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 81.0935183721371,
-      A: -4.896743127622505,
-      B: 2.7893385887358235,
-    },
+    lab: { L: 81.0935183721371, A: -4.896743127622505, B: 2.7893385887358235 },
   },
   {
     colorNumber: "0069",
-    coordinatingColors: {
-      coord1ColorId: "2876",
-      coord2ColorId: "2809",
-    },
+    coordinatingColors: { coord1ColorId: "2876", coord2ColorId: "2809" },
     description: [
       "Fairly Colorful",
       "Moderately Colorful",
@@ -77652,18 +72339,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 68.35147510704645,
-      A: 15.118524018141787,
-      B: 19.10783202329245,
-    },
+    lab: { L: 68.35147510704645, A: 15.118524018141787, B: 19.10783202329245 },
   },
   {
     colorNumber: "0070",
-    coordinatingColors: {
-      coord1ColorId: "1834",
-      coord2ColorId: "1838",
-    },
+    coordinatingColors: { coord1ColorId: "1834", coord2ColorId: "1838" },
     description: ["Subdued", "Muted", "Pale"],
     id: "1613",
     isExterior: true,
@@ -77701,18 +72381,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.77400323339965,
-      A: 7.926650936545043,
-      B: 8.510776070356641,
-    },
+    lab: { L: 80.77400323339965, A: 7.926650936545043, B: 8.510776070356641 },
   },
   {
     colorNumber: "0071",
-    coordinatingColors: {
-      coord1ColorId: "2690",
-      coord2ColorId: "1642",
-    },
+    coordinatingColors: { coord1ColorId: "2690", coord2ColorId: "1642" },
     description: ["Dull", "Bright", "Glowing"],
     id: "1614",
     isExterior: true,
@@ -77750,18 +72423,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 67.23017366101256,
-      A: 12.15037353752585,
-      B: 3.39046810178667,
-    },
+    lab: { L: 67.23017366101256, A: 12.15037353752585, B: 3.39046810178667 },
   },
   {
     colorNumber: "0072",
-    coordinatingColors: {
-      coord1ColorId: "11345",
-      coord2ColorId: "11352",
-    },
+    coordinatingColors: { coord1ColorId: "11345", coord2ColorId: "11352" },
     description: ["Diluted", "Wan", "Dusky", "Fairly Dark"],
     id: "1615",
     isExterior: false,
@@ -77796,18 +72462,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 30.834851172936226,
-      A: 16.224401862391936,
-      B: 2.643275863762684,
-    },
+    lab: { L: 30.834851172936226, A: 16.224401862391936, B: 2.643275863762684 },
   },
   {
     colorNumber: "0073",
-    coordinatingColors: {
-      coord1ColorId: "11217",
-      coord2ColorId: "11312",
-    },
+    coordinatingColors: { coord1ColorId: "11217", coord2ColorId: "11312" },
     description: ["Gleaming", "Forceful", "Pale"],
     id: "1616",
     isExterior: false,
@@ -77847,18 +72506,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 83.87337418406415,
-      A: -5.420474906648209,
-      B: 39.50418731892766,
-    },
+    lab: { L: 83.87337418406415, A: -5.420474906648209, B: 39.50418731892766 },
   },
   {
     colorNumber: "0074",
-    coordinatingColors: {
-      coord1ColorId: "2952",
-      coord2ColorId: "2980",
-    },
+    coordinatingColors: { coord1ColorId: "2952", coord2ColorId: "2980" },
     description: ["Dull", "Fairly Bright"],
     id: "1617",
     isExterior: true,
@@ -77894,18 +72546,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.178800170901155,
-      A: 14.327364961935984,
-      B: -8.36526802373232,
-    },
+    lab: { L: 60.178800170901155, A: 14.327364961935984, B: -8.36526802373232 },
   },
   {
     colorNumber: "0075",
-    coordinatingColors: {
-      coord1ColorId: "2687",
-      coord2ColorId: "1620",
-    },
+    coordinatingColors: { coord1ColorId: "2687", coord2ColorId: "1620" },
     description: ["Subdued", "Muted", "Bright", "Glowing"],
     id: "1618",
     isExterior: true,
@@ -77949,10 +72594,7 @@ export const colorData = [
   },
   {
     colorNumber: "0076",
-    coordinatingColors: {
-      coord1ColorId: "2868",
-      coord2ColorId: "11297",
-    },
+    coordinatingColors: { coord1ColorId: "2868", coord2ColorId: "11297" },
     description: ["Subdued", "Muted", "Pale"],
     id: "1619",
     isExterior: true,
@@ -77988,18 +72630,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 76.82983474023453,
-      A: 13.150336615643077,
-      B: 5.498200054633129,
-    },
+    lab: { L: 76.82983474023453, A: 13.150336615643077, B: 5.498200054633129 },
   },
   {
     colorNumber: "0077",
-    coordinatingColors: {
-      coord1ColorId: "2952",
-      coord2ColorId: "11360",
-    },
+    coordinatingColors: { coord1ColorId: "2952", coord2ColorId: "11360" },
     description: ["Washed out", "Fairly Bright"],
     id: "1620",
     isExterior: true,
@@ -78035,18 +72670,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 56.26150913175769,
-      A: -0.5932672704109243,
-      B: 2.806473093918971,
-    },
+    lab: { L: 56.26150913175769, A: -0.5932672704109243, B: 2.806473093918971 },
   },
   {
     colorNumber: "0078",
-    coordinatingColors: {
-      coord1ColorId: "2872",
-      coord2ColorId: "2873",
-    },
+    coordinatingColors: { coord1ColorId: "2872", coord2ColorId: "2873" },
     description: ["Rich", "Vibrant", "Pale"],
     id: "1621",
     isExterior: false,
@@ -78082,18 +72710,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 85.78054267129481,
-      A: 2.5121843218015028,
-      B: 30.478574527339774,
-    },
+    lab: { L: 85.78054267129481, A: 2.5121843218015028, B: 30.478574527339774 },
   },
   {
     colorNumber: "0079",
-    coordinatingColors: {
-      coord1ColorId: "2864",
-      coord2ColorId: "1761",
-    },
+    coordinatingColors: { coord1ColorId: "2864", coord2ColorId: "1761" },
     description: ["Subdued", "Muted", "Bright", "Glowing"],
     id: "1622",
     isExterior: true,
@@ -78130,18 +72751,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 71.84904526137848,
-      A: 8.504149463441191,
-      B: 13.467693322079555,
-    },
+    lab: { L: 71.84904526137848, A: 8.504149463441191, B: 13.467693322079555 },
   },
   {
     colorNumber: "0080",
-    coordinatingColors: {
-      coord1ColorId: "2942",
-      coord2ColorId: "2741",
-    },
+    coordinatingColors: { coord1ColorId: "2942", coord2ColorId: "2741" },
     description: [
       "Fairly Colorful",
       "Moderately Colorful",
@@ -78181,18 +72795,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 58.24638354906838,
-      A: 37.17649255373623,
-      B: 10.69518769739004,
-    },
+    lab: { L: 58.24638354906838, A: 37.17649255373623, B: 10.69518769739004 },
   },
   {
     colorNumber: "2801",
-    coordinatingColors: {
-      coord1ColorId: "1645",
-      coord2ColorId: "1643",
-    },
+    coordinatingColors: { coord1ColorId: "1645", coord2ColorId: "1643" },
     description: ["Diluted", "Wan", "Leaden"],
     id: "1624",
     isExterior: true,
@@ -78228,18 +72835,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 20.988183903612594,
-      A: 15.847500971553908,
-      B: 6.86737115345254,
-    },
+    lab: { L: 20.988183903612594, A: 15.847500971553908, B: 6.86737115345254 },
   },
   {
     colorNumber: "2802",
-    coordinatingColors: {
-      coord1ColorId: "2961",
-      coord2ColorId: "1637",
-    },
+    coordinatingColors: { coord1ColorId: "2961", coord2ColorId: "1637" },
     description: ["Subdued", "Muted", "Leaden"],
     id: "1625",
     isExterior: true,
@@ -78275,18 +72875,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 26.2142945613233,
-      A: 22.793585159853496,
-      B: 11.915560507816314,
-    },
+    lab: { L: 26.2142945613233, A: 22.793585159853496, B: 11.915560507816314 },
   },
   {
     colorNumber: "2803",
-    coordinatingColors: {
-      coord1ColorId: "2817",
-      coord2ColorId: "1631",
-    },
+    coordinatingColors: { coord1ColorId: "2817", coord2ColorId: "1631" },
     description: [
       "Fairly Colorful",
       "Moderately Colorful",
@@ -78326,18 +72919,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 44.13206464814299,
-      A: 23.49791709330362,
-      B: 24.974161143231722,
-    },
+    lab: { L: 44.13206464814299, A: 23.49791709330362, B: 24.974161143231722 },
   },
   {
     colorNumber: "2804",
-    coordinatingColors: {
-      coord1ColorId: "1628",
-      coord2ColorId: "1639",
-    },
+    coordinatingColors: { coord1ColorId: "1628", coord2ColorId: "1639" },
     description: ["Diluted", "Wan", "Fairly Bright"],
     id: "1627",
     isExterior: true,
@@ -78373,18 +72959,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 59.812146663901885,
-      A: 11.612063577324527,
-      B: 18.05446524669767,
-    },
+    lab: { L: 59.812146663901885, A: 11.612063577324527, B: 18.05446524669767 },
   },
   {
     colorNumber: "2805",
-    coordinatingColors: {
-      coord1ColorId: "2822",
-      coord2ColorId: "1634",
-    },
+    coordinatingColors: { coord1ColorId: "2822", coord2ColorId: "1634" },
     description: ["Diluted", "Wan", "Bright", "Glowing"],
     id: "1628",
     isExterior: true,
@@ -78420,18 +72999,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 72.9495384774721,
-      A: 3.7230272151360655,
-      B: 12.206949666343503,
-    },
+    lab: { L: 72.9495384774721, A: 3.7230272151360655, B: 12.206949666343503 },
   },
   {
     colorNumber: "2806",
-    coordinatingColors: {
-      coord1ColorId: "2844",
-      coord2ColorId: "3040",
-    },
+    coordinatingColors: { coord1ColorId: "2844", coord2ColorId: "3040" },
     description: ["Diluted", "Wan", "Dusky", "Fairly Dark"],
     id: "1629",
     isExterior: true,
@@ -78466,18 +73038,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 43.58966421701427,
-      A: 8.847156551562097,
-      B: 17.78932299715308,
-    },
+    lab: { L: 43.58966421701427, A: 8.847156551562097, B: 17.78932299715308 },
   },
   {
     colorNumber: "2807",
-    coordinatingColors: {
-      coord1ColorId: "3001",
-      coord2ColorId: "2904",
-    },
+    coordinatingColors: { coord1ColorId: "3001", coord2ColorId: "2904" },
     description: ["Diluted", "Wan", "Dusky", "Fairly Dark"],
     id: "1630",
     isExterior: true,
@@ -78513,18 +73078,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 37.3562362145575,
-      A: 9.176258771679684,
-      B: 14.50861477066917,
-    },
+    lab: { L: 37.3562362145575, A: 9.176258771679684, B: 14.50861477066917 },
   },
   {
     colorNumber: "2808",
-    coordinatingColors: {
-      coord1ColorId: "3019",
-      coord2ColorId: "3011",
-    },
+    coordinatingColors: { coord1ColorId: "3019", coord2ColorId: "3011" },
     description: ["Dull", "Dusky", "Fairly Dark"],
     id: "1631",
     isExterior: true,
@@ -78559,18 +73117,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 34.28525803323564,
-      A: 5.844662761161967,
-      B: 8.770590901847363,
-    },
+    lab: { L: 34.28525803323564, A: 5.844662761161967, B: 8.770590901847363 },
   },
   {
     colorNumber: "2809",
-    coordinatingColors: {
-      coord1ColorId: "2853",
-      coord2ColorId: "1659",
-    },
+    coordinatingColors: { coord1ColorId: "2853", coord2ColorId: "1659" },
     description: ["Dull", "Leaden"],
     id: "1632",
     isExterior: true,
@@ -78605,18 +73156,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 23.8415046578149,
-      A: -5.048582948891961,
-      B: -0.2893546377934708,
-    },
+    lab: { L: 23.8415046578149, A: -5.048582948891961, B: -0.2893546377934708 },
   },
   {
     colorNumber: "2810",
-    coordinatingColors: {
-      coord1ColorId: "1642",
-      coord2ColorId: "1641",
-    },
+    coordinatingColors: { coord1ColorId: "1642", coord2ColorId: "1641" },
     description: ["Dull", "Dusky", "Fairly Dark"],
     id: "1633",
     isExterior: true,
@@ -78660,10 +73204,7 @@ export const colorData = [
   },
   {
     colorNumber: "2811",
-    coordinatingColors: {
-      coord1ColorId: "2813",
-      coord2ColorId: "2821",
-    },
+    coordinatingColors: { coord1ColorId: "2813", coord2ColorId: "2821" },
     description: ["Washed out", "Moderately Bright"],
     id: "1634",
     isExterior: true,
@@ -78698,18 +73239,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 53.49591026436053,
-      A: -8.688770982368254,
-      B: 4.386979903546417,
-    },
+    lab: { L: 53.49591026436053, A: -8.688770982368254, B: 4.386979903546417 },
   },
   {
     colorNumber: "2812",
-    coordinatingColors: {
-      coord1ColorId: "2833",
-      coord2ColorId: "1665",
-    },
+    coordinatingColors: { coord1ColorId: "2833", coord2ColorId: "1665" },
     description: ["Dull", "Fairly Bright"],
     id: "1635",
     isExterior: true,
@@ -78744,18 +73278,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 64.08622352071227,
-      A: -8.63025168679793,
-      B: 15.768503563647851,
-    },
+    lab: { L: 64.08622352071227, A: -8.63025168679793, B: 15.768503563647851 },
   },
   {
     colorNumber: "2813",
-    coordinatingColors: {
-      coord1ColorId: "2875",
-      coord2ColorId: "2851",
-    },
+    coordinatingColors: { coord1ColorId: "2875", coord2ColorId: "2851" },
     description: [
       "Fairly Colorful",
       "Moderately Colorful",
@@ -78796,18 +73323,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 71.66608270977125,
-      A: 4.832170884589204,
-      B: 27.886564244273092,
-    },
+    lab: { L: 71.66608270977125, A: 4.832170884589204, B: 27.886564244273092 },
   },
   {
     colorNumber: "2814",
-    coordinatingColors: {
-      coord1ColorId: "2995",
-      coord2ColorId: "2931",
-    },
+    coordinatingColors: { coord1ColorId: "2995", coord2ColorId: "2931" },
     description: ["Subdued", "Muted", "Moderately Bright"],
     id: "1637",
     isExterior: true,
@@ -78842,18 +73362,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 56.75233639921039,
-      A: 7.879356175379937,
-      B: 27.808488659020835,
-    },
+    lab: { L: 56.75233639921039, A: 7.879356175379937, B: 27.808488659020835 },
   },
   {
     colorNumber: "2815",
-    coordinatingColors: {
-      coord1ColorId: "2848",
-      coord2ColorId: "2936",
-    },
+    coordinatingColors: { coord1ColorId: "2848", coord2ColorId: "2936" },
     description: ["Dull", "Fairly Bright"],
     id: "1638",
     isExterior: true,
@@ -78889,18 +73402,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 57.570482730748424,
-      A: 0.2646560060180492,
-      B: 18.56355106297245,
-    },
+    lab: { L: 57.570482730748424, A: 0.2646560060180492, B: 18.56355106297245 },
   },
   {
     colorNumber: "2816",
-    coordinatingColors: {
-      coord1ColorId: "2847",
-      coord2ColorId: "2897",
-    },
+    coordinatingColors: { coord1ColorId: "2847", coord2ColorId: "2897" },
     description: ["Dull", "Dusky", "Fairly Dark"],
     id: "1639",
     isExterior: true,
@@ -78935,18 +73441,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 38.06960710272258,
-      A: -6.004533191645011,
-      B: 9.580063564117447,
-    },
+    lab: { L: 38.06960710272258, A: -6.004533191645011, B: 9.580063564117447 },
   },
   {
     colorNumber: "2817",
-    coordinatingColors: {
-      coord1ColorId: "2831",
-      coord2ColorId: "2929",
-    },
+    coordinatingColors: { coord1ColorId: "2831", coord2ColorId: "2929" },
     description: ["Fairly Colorful", "Moderately Colorful", "Fairly Bright"],
     id: "1640",
     isExterior: true,
@@ -78982,18 +73481,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 60.63758921405031,
-      A: 16.448106670824746,
-      B: 37.634404409515255,
-    },
+    lab: { L: 60.63758921405031, A: 16.448106670824746, B: 37.634404409515255 },
   },
   {
     colorNumber: "2818",
-    coordinatingColors: {
-      coord1ColorId: "2941",
-      coord2ColorId: "2886",
-    },
+    coordinatingColors: { coord1ColorId: "2941", coord2ColorId: "2886" },
     description: ["Washed out", "Fairly Bright"],
     id: "1641",
     isExterior: true,
@@ -79028,18 +73520,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 53.58546655913207,
-      A: 4.975086077384727,
-      B: 3.024893774375248,
-    },
+    lab: { L: 53.58546655913207, A: 4.975086077384727, B: 3.024893774375248 },
   },
   {
     colorNumber: "2819",
-    coordinatingColors: {
-      coord1ColorId: "2969",
-      coord2ColorId: "2901",
-    },
+    coordinatingColors: { coord1ColorId: "2969", coord2ColorId: "2901" },
     description: ["Washed out", "Moderately Bright"],
     id: "1642",
     isExterior: true,
@@ -79083,10 +73568,7 @@ export const colorData = [
   },
   {
     colorNumber: "2820",
-    coordinatingColors: {
-      coord1ColorId: "2840",
-      coord2ColorId: "2930",
-    },
+    coordinatingColors: { coord1ColorId: "2840", coord2ColorId: "2930" },
     description: ["Dull", "Moderately Bright"],
     id: "1643",
     isExterior: true,
@@ -79121,18 +73603,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 52.26378195549049,
-      A: 1.5785223066962506,
-      B: 12.755112103141354,
-    },
+    lab: { L: 52.26378195549049, A: 1.5785223066962506, B: 12.755112103141354 },
   },
   {
     colorNumber: "2821",
-    coordinatingColors: {
-      coord1ColorId: "2846",
-      coord2ColorId: "2936",
-    },
+    coordinatingColors: { coord1ColorId: "2846", coord2ColorId: "2936" },
     description: ["Washed out", "Bright", "Glowing"],
     id: "1644",
     isExterior: true,
@@ -79167,18 +73642,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 66.92733459136305,
-      A: -1.097026069301954,
-      B: 6.605264139732769,
-    },
+    lab: { L: 66.92733459136305, A: -1.097026069301954, B: 6.605264139732769 },
   },
   {
     colorNumber: "2822",
-    coordinatingColors: {
-      coord1ColorId: "2816",
-      coord2ColorId: "2891",
-    },
+    coordinatingColors: { coord1ColorId: "2816", coord2ColorId: "2891" },
     description: ["Diluted", "Wan", "Pale"],
     id: "1645",
     isExterior: true,
@@ -79215,18 +73683,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 76.90863921299689,
-      A: 1.5415257098786994,
-      B: 13.55107077909814,
-    },
+    lab: { L: 76.90863921299689, A: 1.5415257098786994, B: 13.55107077909814 },
   },
   {
     colorNumber: "2823",
-    coordinatingColors: {
-      coord1ColorId: "3025",
-      coord2ColorId: "3011",
-    },
+    coordinatingColors: { coord1ColorId: "3025", coord2ColorId: "3011" },
     description: ["Diluted", "Wan", "Moderately Bright"],
     id: "1646",
     isExterior: true,
@@ -79261,18 +73722,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 54.77479713780272,
-      A: 6.904839812596375,
-      B: 18.21823578659496,
-    },
+    lab: { L: 54.77479713780272, A: 6.904839812596375, B: 18.21823578659496 },
   },
   {
     colorNumber: "2824",
-    coordinatingColors: {
-      coord1ColorId: "2829",
-      coord2ColorId: "2980",
-    },
+    coordinatingColors: { coord1ColorId: "2829", coord2ColorId: "2980" },
     description: ["Subdued", "Muted", "Moderately Bright"],
     id: "1647",
     isExterior: true,
@@ -79307,18 +73761,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 50.735218632488255,
-      A: 9.240951427057498,
-      B: 26.464412921843707,
-    },
+    lab: { L: 50.735218632488255, A: 9.240951427057498, B: 26.464412921843707 },
   },
   {
     colorNumber: "2826",
-    coordinatingColors: {
-      coord1ColorId: "1652",
-      coord2ColorId: "3048",
-    },
+    coordinatingColors: { coord1ColorId: "1652", coord2ColorId: "3048" },
     description: ["Dull", "Fairly Bright"],
     id: "1649",
     isExterior: true,
@@ -79361,10 +73808,7 @@ export const colorData = [
   },
   {
     colorNumber: "2827",
-    coordinatingColors: {
-      coord1ColorId: "2851",
-      coord2ColorId: "2999",
-    },
+    coordinatingColors: { coord1ColorId: "2851", coord2ColorId: "2999" },
     description: ["Dull", "Fairly Bright"],
     id: "1650",
     isExterior: true,
@@ -79399,18 +73843,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 62.38161658845213,
-      A: 3.196623965511347,
-      B: 15.282636378135251,
-    },
+    lab: { L: 62.38161658845213, A: 3.196623965511347, B: 15.282636378135251 },
   },
   {
     colorNumber: "2828",
-    coordinatingColors: {
-      coord1ColorId: "2831",
-      coord2ColorId: "3016",
-    },
+    coordinatingColors: { coord1ColorId: "2831", coord2ColorId: "3016" },
     description: ["Subdued", "Muted", "Pale"],
     id: "1651",
     isExterior: true,
@@ -79447,18 +73884,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 75.82649131402452,
-      A: 6.038928516163999,
-      B: 18.613306898966652,
-    },
+    lab: { L: 75.82649131402452, A: 6.038928516163999, B: 18.613306898966652 },
   },
   {
     colorNumber: "2829",
-    coordinatingColors: {
-      coord1ColorId: "1644",
-      coord2ColorId: "3005",
-    },
+    coordinatingColors: { coord1ColorId: "1644", coord2ColorId: "3005" },
     description: [
       "Fairly Colorful",
       "Moderately Colorful",
@@ -79508,10 +73938,7 @@ export const colorData = [
   },
   {
     colorNumber: "2831",
-    coordinatingColors: {
-      coord1ColorId: "2872",
-      coord2ColorId: "2810",
-    },
+    coordinatingColors: { coord1ColorId: "2872", coord2ColorId: "2810" },
     description: ["Rich", "Vibrant", "Bright", "Glowing"],
     id: "1653",
     isExterior: true,
@@ -79546,18 +73973,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 78.01006962495795,
-      A: 10.45464787046707,
-      B: 40.89184670759758,
-    },
+    lab: { L: 78.01006962495795, A: 10.45464787046707, B: 40.89184670759758 },
   },
   {
     colorNumber: "2832",
-    coordinatingColors: {
-      coord1ColorId: "2972",
-      coord2ColorId: "2898",
-    },
+    coordinatingColors: { coord1ColorId: "2972", coord2ColorId: "2898" },
     description: ["Washed out", "Pale"],
     id: "1654",
     isExterior: true,
@@ -79601,10 +74021,7 @@ export const colorData = [
   },
   {
     colorNumber: "2833",
-    coordinatingColors: {
-      coord1ColorId: "2864",
-      coord2ColorId: "3045",
-    },
+    coordinatingColors: { coord1ColorId: "2864", coord2ColorId: "3045" },
     description: [
       "Fairly Colorful",
       "Moderately Colorful",
@@ -79645,18 +74062,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 87.22013795390356,
-      A: 0.6800485845836479,
-      B: 15.652421571990915,
-    },
+    lab: { L: 87.22013795390356, A: 0.6800485845836479, B: 15.652421571990915 },
   },
   {
     colorNumber: "2834",
-    coordinatingColors: {
-      coord1ColorId: "2869",
-      coord2ColorId: "2928",
-    },
+    coordinatingColors: { coord1ColorId: "2869", coord2ColorId: "2928" },
     description: ["Soft", "Pale"],
     id: "1656",
     isExterior: true,
@@ -79692,18 +74102,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 80.81924385106547,
-      A: 4.710473850782049,
-      B: 27.809682239961475,
-    },
+    lab: { L: 80.81924385106547, A: 4.710473850782049, B: 27.809682239961475 },
   },
   {
     colorNumber: "2835",
-    coordinatingColors: {
-      coord1ColorId: "2961",
-      coord2ColorId: "2928",
-    },
+    coordinatingColors: { coord1ColorId: "2961", coord2ColorId: "2928" },
     description: ["Diluted", "Wan", "Fairly Bright"],
     id: "1657",
     isExterior: true,
@@ -79738,18 +74141,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 62.434216688971475,
-      A: 6.551347389817497,
-      B: 17.699298511541638,
-    },
+    lab: { L: 62.434216688971475, A: 6.551347389817497, B: 17.699298511541638 },
   },
   {
     colorNumber: "2836",
-    coordinatingColors: {
-      coord1ColorId: "2902",
-      coord2ColorId: "3052",
-    },
+    coordinatingColors: { coord1ColorId: "2902", coord2ColorId: "3052" },
     description: ["Dull", "Moderately Bright"],
     id: "1658",
     isExterior: true,
@@ -79784,18 +74180,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 46.77102666437381,
-      A: 8.989189060183033,
-      B: 12.120430974037188,
-    },
+    lab: { L: 46.77102666437381, A: 8.989189060183033, B: 12.120430974037188 },
   },
   {
     colorNumber: "2837",
-    coordinatingColors: {
-      coord1ColorId: "2837",
-      coord2ColorId: "2841",
-    },
+    coordinatingColors: { coord1ColorId: "2837", coord2ColorId: "2841" },
     description: ["Subdued", "Muted", "Dusky", "Fairly Dark"],
     id: "1659",
     isExterior: true,
@@ -79839,10 +74228,7 @@ export const colorData = [
   },
   {
     colorNumber: "2838",
-    coordinatingColors: {
-      coord1ColorId: "2836",
-      coord2ColorId: "1664",
-    },
+    coordinatingColors: { coord1ColorId: "2836", coord2ColorId: "1664" },
     description: ["Subdued", "Muted", "Dark", "Dim"],
     id: "1660",
     isExterior: true,
@@ -79878,18 +74264,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 19.05574785356368,
-      A: 12.487522634216736,
-      B: 8.83243148369507,
-    },
+    lab: { L: 19.05574785356368, A: 12.487522634216736, B: 8.83243148369507 },
   },
   {
     colorNumber: "2839",
-    coordinatingColors: {
-      coord1ColorId: "1663",
-      coord2ColorId: "2826",
-    },
+    coordinatingColors: { coord1ColorId: "1663", coord2ColorId: "2826" },
     description: ["Soft", "Dusky", "Fairly Dark"],
     id: "1661",
     isExterior: true,
@@ -79897,6 +74276,7 @@ export const colorData = [
     name: "Roycroft Copper Red",
     lrv: 7.032,
     brandedCollectionNames: [
+      "Restorative Darks",
       "Historic Exterior Color Wall",
       "Arts & Crafts (1880s-1910s)",
     ],
@@ -79924,18 +74304,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 32.0270992178413,
-      A: 28.376726307991596,
-      B: 23.386810968556016,
-    },
+    lab: { L: 32.0270992178413, A: 28.376726307991596, B: 23.386810968556016 },
   },
   {
     colorNumber: "2840",
-    coordinatingColors: {
-      coord1ColorId: "2981",
-      coord2ColorId: "2900",
-    },
+    coordinatingColors: { coord1ColorId: "2981", coord2ColorId: "2900" },
     description: ["Dull", "Fairly Bright"],
     id: "1662",
     isExterior: true,
@@ -79970,18 +74343,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 58.3101879508704,
-      A: 2.9380487937725186,
-      B: 7.643170423573187,
-    },
+    lab: { L: 58.3101879508704, A: 2.9380487937725186, B: 7.643170423573187 },
   },
   {
     colorNumber: "2841",
-    coordinatingColors: {
-      coord1ColorId: "2836",
-      coord2ColorId: "3055",
-    },
+    coordinatingColors: { coord1ColorId: "2836", coord2ColorId: "3055" },
     description: ["Dull", "Moderately Bright"],
     id: "1663",
     isExterior: true,
@@ -80024,10 +74390,7 @@ export const colorData = [
   },
   {
     colorNumber: "2842",
-    coordinatingColors: {
-      coord1ColorId: "1659",
-      coord2ColorId: "3046",
-    },
+    coordinatingColors: { coord1ColorId: "1659", coord2ColorId: "3046" },
     description: ["Diluted", "Wan", "Fairly Bright"],
     id: "1664",
     isExterior: true,
@@ -80071,10 +74434,7 @@ export const colorData = [
   },
   {
     colorNumber: "2843",
-    coordinatingColors: {
-      coord1ColorId: "1668",
-      coord2ColorId: "3024",
-    },
+    coordinatingColors: { coord1ColorId: "1668", coord2ColorId: "3024" },
     description: ["Diluted", "Wan", "Dusky", "Fairly Dark"],
     id: "1665",
     isExterior: true,
@@ -80109,18 +74469,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 45.68889184679987,
-      A: 2.2726101907806218,
-      B: 16.38005550250943,
-    },
+    lab: { L: 45.68889184679987, A: 2.2726101907806218, B: 16.38005550250943 },
   },
   {
     colorNumber: "2844",
-    coordinatingColors: {
-      coord1ColorId: "1671",
-      coord2ColorId: "1641",
-    },
+    coordinatingColors: { coord1ColorId: "1671", coord2ColorId: "1641" },
     description: ["Dull", "Pale"],
     id: "1666",
     isExterior: true,
@@ -80157,18 +74510,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 76.70264116573199,
-      A: -0.3618071296105363,
-      B: 6.672568922883237,
-    },
+    lab: { L: 76.70264116573199, A: -0.3618071296105363, B: 6.672568922883237 },
   },
   {
     colorNumber: "2845",
-    coordinatingColors: {
-      coord1ColorId: "1656",
-      coord2ColorId: "1669",
-    },
+    coordinatingColors: { coord1ColorId: "1656", coord2ColorId: "1669" },
     description: ["Dull", "Fairly Bright"],
     id: "1667",
     isExterior: true,
@@ -80211,10 +74557,7 @@ export const colorData = [
   },
   {
     colorNumber: "2846",
-    coordinatingColors: {
-      coord1ColorId: "2975",
-      coord2ColorId: "1661",
-    },
+    coordinatingColors: { coord1ColorId: "2975", coord2ColorId: "1661" },
     description: ["Washed out", "Dusky", "Fairly Dark"],
     id: "1668",
     isExterior: true,
@@ -80251,18 +74594,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 35.689914189857014,
-      A: -0.946107151611919,
-      B: 6.867633697238951,
-    },
+    lab: { L: 35.689914189857014, A: -0.946107151611919, B: 6.867633697238951 },
   },
   {
     colorNumber: "2847",
-    coordinatingColors: {
-      coord1ColorId: "3024",
-      coord2ColorId: "1659",
-    },
+    coordinatingColors: { coord1ColorId: "3024", coord2ColorId: "1659" },
     description: ["Dull", "Leaden"],
     id: "1669",
     isExterior: true,
@@ -80307,10 +74643,7 @@ export const colorData = [
   },
   {
     colorNumber: "2848",
-    coordinatingColors: {
-      coord1ColorId: "1664",
-      coord2ColorId: "2901",
-    },
+    coordinatingColors: { coord1ColorId: "1664", coord2ColorId: "2901" },
     description: ["Washed out", "Dusky", "Fairly Dark"],
     id: "1670",
     isExterior: true,
@@ -80354,10 +74687,7 @@ export const colorData = [
   },
   {
     colorNumber: "2849",
-    coordinatingColors: {
-      coord1ColorId: "1672",
-      coord2ColorId: "1660",
-    },
+    coordinatingColors: { coord1ColorId: "1672", coord2ColorId: "1660" },
     description: ["Washed out", "Moderately Bright"],
     id: "1671",
     isExterior: true,
@@ -80400,10 +74730,7 @@ export const colorData = [
   },
   {
     colorNumber: "2850",
-    coordinatingColors: {
-      coord1ColorId: "2972",
-      coord2ColorId: "1656",
-    },
+    coordinatingColors: { coord1ColorId: "2972", coord2ColorId: "1656" },
     description: ["Washed out", "Pale"],
     id: "1672",
     isExterior: true,
@@ -80447,10 +74774,7 @@ export const colorData = [
   },
   {
     colorNumber: "2851",
-    coordinatingColors: {
-      coord1ColorId: "1655",
-      coord2ColorId: "1647",
-    },
+    coordinatingColors: { coord1ColorId: "1655", coord2ColorId: "1647" },
     description: ["Dull", "Moderately Bright"],
     id: "1673",
     isExterior: true,
@@ -80494,10 +74818,7 @@ export const colorData = [
   },
   {
     colorNumber: "2853",
-    coordinatingColors: {
-      coord1ColorId: "1655",
-      coord2ColorId: "1665",
-    },
+    coordinatingColors: { coord1ColorId: "1655", coord2ColorId: "1665" },
     description: ["Soft", "Bright", "Glowing"],
     id: "1675",
     isExterior: true,
@@ -80532,18 +74853,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 73.65725852681729,
-      A: 10.018772455527902,
-      B: 29.718412074447453,
-    },
+    lab: { L: 73.65725852681729, A: 10.018772455527902, B: 29.718412074447453 },
   },
   {
     colorNumber: "2854",
-    coordinatingColors: {
-      coord1ColorId: "1652",
-      coord2ColorId: "1683",
-    },
+    coordinatingColors: { coord1ColorId: "1652", coord2ColorId: "1683" },
     description: ["Fairly Colorful", "Moderately Colorful", "Fairly Bright"],
     id: "1676",
     isExterior: true,
@@ -80581,18 +74895,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 57.49332664940387,
-      A: 23.998395086622104,
-      B: 25.974628801248457,
-    },
+    lab: { L: 57.49332664940387, A: 23.998395086622104, B: 25.974628801248457 },
   },
   {
     colorNumber: "2855",
-    coordinatingColors: {
-      coord1ColorId: "2861",
-      coord2ColorId: "3016",
-    },
+    coordinatingColors: { coord1ColorId: "2861", coord2ColorId: "3016" },
     description: ["Dull", "Fairly Bright"],
     id: "1677",
     isExterior: true,
@@ -80627,18 +74934,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 58.62626526308567,
-      A: 3.9424381497755734,
-      B: 11.580522062321208,
-    },
+    lab: { L: 58.62626526308567, A: 3.9424381497755734, B: 11.580522062321208 },
   },
   {
     colorNumber: "2856",
-    coordinatingColors: {
-      coord1ColorId: "1664",
-      coord2ColorId: "1683",
-    },
+    coordinatingColors: { coord1ColorId: "1664", coord2ColorId: "1683" },
     description: ["Diluted", "Wan", "Dusky", "Fairly Dark"],
     id: "1678",
     isExterior: true,
@@ -80673,18 +74973,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 32.31916149403057,
-      A: 9.780186441820298,
-      B: 11.770642349415771,
-    },
+    lab: { L: 32.31916149403057, A: 9.780186441820298, B: 11.770642349415771 },
   },
   {
     colorNumber: "2857",
-    coordinatingColors: {
-      coord1ColorId: "2857",
-      coord2ColorId: "2138",
-    },
+    coordinatingColors: { coord1ColorId: "2857", coord2ColorId: "2138" },
     description: ["Rich", "Vibrant", "Pale"],
     id: "1679",
     isExterior: true,
@@ -80721,18 +75014,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 84.62397550188048,
-      A: 3.9311703946804943,
-      B: 28.376490153637256,
-    },
+    lab: { L: 84.62397550188048, A: 3.9311703946804943, B: 28.376490153637256 },
   },
   {
     colorNumber: "2858",
-    coordinatingColors: {
-      coord1ColorId: "1633",
-      coord2ColorId: "1635",
-    },
+    coordinatingColors: { coord1ColorId: "1633", coord2ColorId: "1635" },
     description: ["Soft", "Bright", "Glowing"],
     id: "1680",
     isExterior: true,
@@ -80767,18 +75053,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.13065813076085,
-      A: 14.909032468757854,
-      B: 36.28741411155596,
-    },
+    lab: { L: 70.13065813076085, A: 14.909032468757854, B: 36.28741411155596 },
   },
   {
     colorNumber: "2859",
-    coordinatingColors: {
-      coord1ColorId: "1651",
-      coord2ColorId: "1626",
-    },
+    coordinatingColors: { coord1ColorId: "1651", coord2ColorId: "1626" },
     description: ["Subdued", "Muted", "Pale"],
     id: "1681",
     isExterior: true,
@@ -80816,18 +75095,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 82.0190934518301,
-      A: 5.0442946824690305,
-      B: 12.434735444024048,
-    },
+    lab: { L: 82.0190934518301, A: 5.0442946824690305, B: 12.434735444024048 },
   },
   {
     colorNumber: "2860",
-    coordinatingColors: {
-      coord1ColorId: "2933",
-      coord2ColorId: "1673",
-    },
+    coordinatingColors: { coord1ColorId: "2933", coord2ColorId: "1673" },
     description: ["Dull", "Bright", "Glowing"],
     id: "1682",
     isExterior: true,
@@ -80862,18 +75134,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 70.88879855743413,
-      A: -2.500608235499746,
-      B: 13.480823647665186,
-    },
+    lab: { L: 70.88879855743413, A: -2.500608235499746, B: 13.480823647665186 },
   },
   {
     colorNumber: "2861",
-    coordinatingColors: {
-      coord1ColorId: "2864",
-      coord2ColorId: "1944",
-    },
+    coordinatingColors: { coord1ColorId: "2864", coord2ColorId: "1944" },
     description: ["Dull", "Moderately Bright"],
     id: "1683",
     isExterior: true,
@@ -80916,10 +75181,7 @@ export const colorData = [
   },
   {
     colorNumber: "2863",
-    coordinatingColors: {
-      coord1ColorId: "2942",
-      coord2ColorId: "2980",
-    },
+    coordinatingColors: { coord1ColorId: "2942", coord2ColorId: "2980" },
     description: ["Dull", "Bright", "Glowing"],
     id: "1685",
     isExterior: true,
@@ -80955,18 +75217,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 65.65973981359086,
-      A: -7.315635841016577,
-      B: -7.773014085085217,
-    },
+    lab: { L: 65.65973981359086, A: -7.315635841016577, B: -7.773014085085217 },
   },
   {
     colorNumber: "2865",
-    coordinatingColors: {
-      coord1ColorId: "2872",
-      coord2ColorId: "2145",
-    },
+    coordinatingColors: { coord1ColorId: "2872", coord2ColorId: "2145" },
     description: ["Vivid", "Sparkling", "Pale"],
     id: "3146",
     isExterior: true,
@@ -80974,6 +75229,7 @@ export const colorData = [
     name: "Classical Yellow",
     lrv: 68.944,
     brandedCollectionNames: [
+      "Sunbaked Hues",
       "Precious Baby",
       "Historic Exterior Color Wall",
       "Colonial Revival (1870s-1900s)",
@@ -81002,18 +75258,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: false,
-    lab: {
-      L: 86.56349963624362,
-      A: 3.8780808963793656,
-      B: 37.28824634745453,
-    },
+    lab: { L: 86.56349963624362, A: 3.8780808963793656, B: 37.28824634745453 },
   },
   {
     colorNumber: "2825",
-    coordinatingColors: {
-      coord1ColorId: "2857",
-      coord2ColorId: "2907",
-    },
+    coordinatingColors: { coord1ColorId: "2857", coord2ColorId: "2907" },
     description: ["Dull", "Bright", "Glowing"],
     id: "1648",
     isExterior: true,
@@ -81045,18 +75294,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 75.18835037645874,
-      A: -9.961622998936548,
-      B: 10.25716813945099,
-    },
+    lab: { L: 75.18835037645874, A: -9.961622998936548, B: 10.25716813945099 },
   },
   {
     colorNumber: "2852",
-    coordinatingColors: {
-      coord1ColorId: "2994",
-      coord2ColorId: "2210",
-    },
+    coordinatingColors: { coord1ColorId: "2994", coord2ColorId: "2210" },
     description: ["Dull", "Bright", "Glowing"],
     id: "1674",
     isExterior: true,
@@ -81088,18 +75330,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 72.87408166847825,
-      A: -7.503482962641361,
-      B: 16.236124378294914,
-    },
+    lab: { L: 72.87408166847825, A: -7.503482962641361, B: 16.236124378294914 },
   },
   {
     colorNumber: "2862",
-    coordinatingColors: {
-      coord1ColorId: "2686",
-      coord2ColorId: "1795",
-    },
+    coordinatingColors: { coord1ColorId: "2686", coord2ColorId: "1795" },
     description: ["Dull", "Bright", "Glowing"],
     id: "1684",
     isExterior: true,
@@ -81131,18 +75366,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 69.66690382218499,
-      A: -13.351627686610911,
-      B: 5.390303633852289,
-    },
+    lab: { L: 69.66690382218499, A: -13.351627686610911, B: 5.390303633852289 },
   },
   {
     colorNumber: "2864",
-    coordinatingColors: {
-      coord1ColorId: "2692",
-      coord2ColorId: "2927",
-    },
+    coordinatingColors: { coord1ColorId: "2692", coord2ColorId: "2927" },
     description: ["Subdued", "Muted", "Moderately Bright"],
     id: "1686",
     isExterior: true,
@@ -81182,10 +75410,7 @@ export const colorData = [
   },
   {
     colorNumber: "2901",
-    coordinatingColors: {
-      coord1ColorId: "1890",
-      coord2ColorId: "2697",
-    },
+    coordinatingColors: { coord1ColorId: "1890", coord2ColorId: "2697" },
     description: ["Fairly Colorful", "Moderately Colorful", "Leaden"],
     id: "3072",
     isExterior: true,
@@ -81225,10 +75450,7 @@ export const colorData = [
   },
   {
     colorNumber: "2902",
-    coordinatingColors: {
-      coord1ColorId: "2682",
-      coord2ColorId: "11353",
-    },
+    coordinatingColors: { coord1ColorId: "2682", coord2ColorId: "11353" },
     description: ["Soft", "Dusky", "Fairly Dark"],
     id: "3071",
     isExterior: true,
@@ -81260,18 +75482,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 29.11906429160191,
-      A: 39.86050827308943,
-      B: 6.002204158243796,
-    },
+    lab: { L: 29.11906429160191, A: 39.86050827308943, B: 6.002204158243796 },
   },
   {
     colorNumber: "2903",
-    coordinatingColors: {
-      coord1ColorId: "2744",
-      coord2ColorId: "2974",
-    },
+    coordinatingColors: { coord1ColorId: "2744", coord2ColorId: "2974" },
     description: ["Gleaming", "Forceful", "Dusky", "Fairly Dark"],
     id: "3067",
     isExterior: true,
@@ -81303,18 +75518,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 31.2444555386924,
-      A: 46.893262815220496,
-      B: 18.041712682523126,
-    },
+    lab: { L: 31.2444555386924, A: 46.893262815220496, B: 18.041712682523126 },
   },
   {
     colorNumber: "2904",
-    coordinatingColors: {
-      coord1ColorId: "2973",
-      coord2ColorId: "2975",
-    },
+    coordinatingColors: { coord1ColorId: "2973", coord2ColorId: "2975" },
     description: ["Rich", "Vibrant", "Dusky", "Fairly Dark"],
     id: "3058",
     isExterior: true,
@@ -81346,18 +75554,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 28.77549248296463,
-      A: 46.830472144006514,
-      B: 25.744366488290993,
-    },
+    lab: { L: 28.77549248296463, A: 46.830472144006514, B: 25.744366488290993 },
   },
   {
     colorNumber: "2905",
-    coordinatingColors: {
-      coord1ColorId: "2686",
-      coord2ColorId: "11359",
-    },
+    coordinatingColors: { coord1ColorId: "2686", coord2ColorId: "11359" },
     description: ["Rich", "Vibrant", "Leaden"],
     id: "3069",
     isExterior: true,
@@ -81389,18 +75590,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 27.412901528138455,
-      A: 44.58022410545453,
-      B: 21.84209006425921,
-    },
+    lab: { L: 27.412901528138455, A: 44.58022410545453, B: 21.84209006425921 },
   },
   {
     colorNumber: "2906",
-    coordinatingColors: {
-      coord1ColorId: "2687",
-      coord2ColorId: "2678",
-    },
+    coordinatingColors: { coord1ColorId: "2687", coord2ColorId: "2678" },
     description: ["Gleaming", "Forceful", "Leaden"],
     id: "3070",
     isExterior: true,
@@ -81432,18 +75626,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 24.708816042709124,
-      A: 38.476113325797115,
-      B: 17.81122701311607,
-    },
+    lab: { L: 24.708816042709124, A: 38.476113325797115, B: 17.81122701311607 },
   },
   {
     colorNumber: "2907",
-    coordinatingColors: {
-      coord1ColorId: "2684",
-      coord2ColorId: "2757",
-    },
+    coordinatingColors: { coord1ColorId: "2684", coord2ColorId: "2757" },
     description: ["Intense", "Dusky", "Fairly Dark"],
     id: "3057",
     isExterior: true,
@@ -81475,18 +75662,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 37.66259399322274,
-      A: 62.28559665757519,
-      B: 40.87381601725869,
-    },
+    lab: { L: 37.66259399322274, A: 62.28559665757519, B: 40.87381601725869 },
   },
   {
     colorNumber: "2908",
-    coordinatingColors: {
-      coord1ColorId: "2745",
-      coord2ColorId: "11343",
-    },
+    coordinatingColors: { coord1ColorId: "2745", coord2ColorId: "11343" },
     description: ["Vivid", "Sparkling", "Dusky", "Fairly Dark"],
     id: "3063",
     isExterior: true,
@@ -81518,18 +75698,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 33.18681424475027,
-      A: 53.91393009132081,
-      B: 33.69325999949616,
-    },
+    lab: { L: 33.18681424475027, A: 53.91393009132081, B: 33.69325999949616 },
   },
   {
     colorNumber: "2909",
-    coordinatingColors: {
-      coord1ColorId: "2967",
-      coord2ColorId: "2970",
-    },
+    coordinatingColors: { coord1ColorId: "2967", coord2ColorId: "2970" },
     description: ["Intense", "Dusky", "Fairly Dark"],
     id: "3059",
     isExterior: true,
@@ -81561,18 +75734,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 31.178066273253606,
-      A: 54.47341266054634,
-      B: 39.55386956354128,
-    },
+    lab: { L: 31.178066273253606, A: 54.47341266054634, B: 39.55386956354128 },
   },
   {
     colorNumber: "2910",
-    coordinatingColors: {
-      coord1ColorId: "2973",
-      coord2ColorId: "2979",
-    },
+    coordinatingColors: { coord1ColorId: "2973", coord2ColorId: "2979" },
     description: ["Intense", "Dusky", "Fairly Dark"],
     id: "3064",
     isExterior: true,
@@ -81604,18 +75770,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 35.54207582078532,
-      A: 59.61996506248346,
-      B: 49.87276376150055,
-    },
+    lab: { L: 35.54207582078532, A: 59.61996506248346, B: 49.87276376150055 },
   },
   {
     colorNumber: "2911",
-    coordinatingColors: {
-      coord1ColorId: "2687",
-      coord2ColorId: "2978",
-    },
+    coordinatingColors: { coord1ColorId: "2687", coord2ColorId: "2978" },
     description: ["Intense", "Leaden"],
     id: "3061",
     isExterior: true,
@@ -81647,18 +75806,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 30.14986968209633,
-      A: 53.382669872507755,
-      B: 43.794401161499835,
-    },
+    lab: { L: 30.14986968209633, A: 53.382669872507755, B: 43.794401161499835 },
   },
   {
     colorNumber: "2912",
-    coordinatingColors: {
-      coord1ColorId: "2686",
-      coord2ColorId: "2949",
-    },
+    coordinatingColors: { coord1ColorId: "2686", coord2ColorId: "2949" },
     description: ["Intense", "Leaden"],
     id: "3060",
     isExterior: true,
@@ -81690,18 +75842,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 27.16305337582999,
-      A: 49.92774724876969,
-      B: 40.13385158302708,
-    },
+    lab: { L: 27.16305337582999, A: 49.92774724876969, B: 40.13385158302708 },
   },
   {
     colorNumber: "2913",
-    coordinatingColors: {
-      coord1ColorId: "2857",
-      coord2ColorId: "2948",
-    },
+    coordinatingColors: { coord1ColorId: "2857", coord2ColorId: "2948" },
     description: ["Gleaming", "Forceful", "Dusky", "Fairly Dark"],
     id: "3062",
     isExterior: true,
@@ -81733,18 +75878,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 32.05731157633907,
-      A: 46.7266541818136,
-      B: 28.74725147555376,
-    },
+    lab: { L: 32.05731157633907, A: 46.7266541818136, B: 28.74725147555376 },
   },
   {
     colorNumber: "2914",
-    coordinatingColors: {
-      coord1ColorId: "1939",
-      coord2ColorId: "2754",
-    },
+    coordinatingColors: { coord1ColorId: "1939", coord2ColorId: "2754" },
     description: ["Gleaming", "Forceful", "Leaden"],
     id: "3068",
     isExterior: true,
@@ -81776,18 +75914,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 27.32705074589986,
-      A: 42.39642466184715,
-      B: 26.116082287282193,
-    },
+    lab: { L: 27.32705074589986, A: 42.39642466184715, B: 26.116082287282193 },
   },
   {
     colorNumber: "2916",
-    coordinatingColors: {
-      coord1ColorId: "1834",
-      coord2ColorId: "2838",
-    },
+    coordinatingColors: { coord1ColorId: "1834", coord2ColorId: "2838" },
     description: ["Soft", "Dusky", "Fairly Dark"],
     id: "3065",
     isExterior: true,
@@ -81819,18 +75950,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 35.65714582264791,
-      A: 34.96249141563812,
-      B: 28.47340795096658,
-    },
+    lab: { L: 35.65714582264791, A: 34.96249141563812, B: 28.47340795096658 },
   },
   {
     colorNumber: "2917",
-    coordinatingColors: {
-      coord1ColorId: "2689",
-      coord2ColorId: "11360",
-    },
+    coordinatingColors: { coord1ColorId: "2689", coord2ColorId: "11360" },
     description: ["Soft", "Moderately Bright"],
     id: "3066",
     isExterior: true,
@@ -81862,18 +75986,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 41.22822874268015,
-      A: 31.528594045573122,
-      B: 29.07535275104578,
-    },
+    lab: { L: 41.22822874268015, A: 31.528594045573122, B: 29.07535275104578 },
   },
   {
     colorNumber: "2920",
-    coordinatingColors: {
-      coord1ColorId: "11364",
-      coord2ColorId: "11361",
-    },
+    coordinatingColors: { coord1ColorId: "11364", coord2ColorId: "11361" },
     description: ["Soft", "Moderately Bright"],
     id: "3150",
     isExterior: true,
@@ -81913,10 +76030,7 @@ export const colorData = [
   },
   {
     colorNumber: "2921",
-    coordinatingColors: {
-      coord1ColorId: "2860",
-      coord2ColorId: "11368",
-    },
+    coordinatingColors: { coord1ColorId: "2860", coord2ColorId: "11368" },
     description: [
       "Fairly Colorful",
       "Moderately Colorful",
@@ -81952,18 +76066,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 45.00011228335154,
-      A: 16.616312982943747,
-      B: 27.625298486230843,
-    },
+    lab: { L: 45.00011228335154, A: 16.616312982943747, B: 27.625298486230843 },
   },
   {
     colorNumber: "2923",
-    coordinatingColors: {
-      coord1ColorId: "1834",
-      coord2ColorId: "2193",
-    },
+    coordinatingColors: { coord1ColorId: "1834", coord2ColorId: "2193" },
     description: ["Subdued", "Muted", "Leaden"],
     id: "3074",
     isExterior: true,
@@ -81995,18 +76102,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 25.27243631591668,
-      A: 9.791564733765801,
-      B: 12.819727554311267,
-    },
+    lab: { L: 25.27243631591668, A: 9.791564733765801, B: 12.819727554311267 },
   },
   {
     colorNumber: "2924",
-    coordinatingColors: {
-      coord1ColorId: "2687",
-      coord2ColorId: "11224",
-    },
+    coordinatingColors: { coord1ColorId: "2687", coord2ColorId: "11224" },
     description: ["Subdued", "Muted", "Dark", "Dim"],
     id: "3075",
     isExterior: true,
@@ -82038,18 +76138,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 18.062511334187008,
-      A: 8.907367929636866,
-      B: 10.784785388536767,
-    },
+    lab: { L: 18.062511334187008, A: 8.907367929636866, B: 10.784785388536767 },
   },
   {
     colorNumber: "2926",
-    coordinatingColors: {
-      coord1ColorId: "2932",
-      coord2ColorId: "2468",
-    },
+    coordinatingColors: { coord1ColorId: "2932", coord2ColorId: "2468" },
     description: ["Dull", "Leaden"],
     id: "3078",
     isExterior: true,
@@ -82081,18 +76174,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 22.921617490828915,
-      A: 2.5851737775011987,
-      B: 7.955976944477195,
-    },
+    lab: { L: 22.921617490828915, A: 2.5851737775011987, B: 7.955976944477195 },
   },
   {
     colorNumber: "2927",
-    coordinatingColors: {
-      coord1ColorId: "2709",
-      coord2ColorId: "11245",
-    },
+    coordinatingColors: { coord1ColorId: "2709", coord2ColorId: "11245" },
     description: ["Diluted", "Wan", "Dark", "Dim"],
     id: "3073",
     isExterior: true,
@@ -82124,18 +76210,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 13.490444773731806,
-      A: 4.703736577076456,
-      B: 6.303921304480991,
-    },
+    lab: { L: 13.490444773731806, A: 4.703736577076456, B: 6.303921304480991 },
   },
   {
     colorNumber: "2929",
-    coordinatingColors: {
-      coord1ColorId: "1792",
-      coord2ColorId: "1793",
-    },
+    coordinatingColors: { coord1ColorId: "1792", coord2ColorId: "1793" },
     description: ["Dull", "Leaden"],
     id: "3077",
     isExterior: true,
@@ -82175,10 +76254,7 @@ export const colorData = [
   },
   {
     colorNumber: "2930",
-    coordinatingColors: {
-      coord1ColorId: "2769",
-      coord2ColorId: "1802",
-    },
+    coordinatingColors: { coord1ColorId: "2769", coord2ColorId: "1802" },
     description: ["Subdued", "Muted", "Leaden"],
     id: "3076",
     isExterior: true,
@@ -82218,10 +76294,7 @@ export const colorData = [
   },
   {
     colorNumber: "2932",
-    coordinatingColors: {
-      coord1ColorId: "11364",
-      coord2ColorId: "2321",
-    },
+    coordinatingColors: { coord1ColorId: "11364", coord2ColorId: "2321" },
     description: ["Soft", "Leaden"],
     id: "3152",
     isExterior: true,
@@ -82261,10 +76334,7 @@ export const colorData = [
   },
   {
     colorNumber: "2933",
-    coordinatingColors: {
-      coord1ColorId: "2690",
-      coord2ColorId: "2229",
-    },
+    coordinatingColors: { coord1ColorId: "2690", coord2ColorId: "2229" },
     description: ["Subdued", "Muted", "Leaden"],
     id: "3153",
     isExterior: true,
@@ -82304,10 +76374,7 @@ export const colorData = [
   },
   {
     colorNumber: "2934",
-    coordinatingColors: {
-      coord1ColorId: "2703",
-      coord2ColorId: "11348",
-    },
+    coordinatingColors: { coord1ColorId: "2703", coord2ColorId: "11348" },
     description: ["Vivid", "Sparkling", "Dark", "Dim"],
     id: "3154",
     isExterior: true,
@@ -82347,10 +76414,7 @@ export const colorData = [
   },
   {
     colorNumber: "2935",
-    coordinatingColors: {
-      coord1ColorId: "2747",
-      coord2ColorId: "2686",
-    },
+    coordinatingColors: { coord1ColorId: "2747", coord2ColorId: "2686" },
     description: ["Intense", "Very Dark", "Somber"],
     id: "3155",
     isExterior: true,
@@ -82390,10 +76454,7 @@ export const colorData = [
   },
   {
     colorNumber: "2936",
-    coordinatingColors: {
-      coord1ColorId: "2682",
-      coord2ColorId: "2260",
-    },
+    coordinatingColors: { coord1ColorId: "2682", coord2ColorId: "2260" },
     description: ["Subdued", "Muted", "Dark", "Dim"],
     id: "3080",
     isExterior: true,
@@ -82433,10 +76494,7 @@ export const colorData = [
   },
   {
     colorNumber: "2937",
-    coordinatingColors: {
-      coord1ColorId: "1688",
-      coord2ColorId: "1691",
-    },
+    coordinatingColors: { coord1ColorId: "1688", coord2ColorId: "1691" },
     description: ["Intense", "Dark", "Dim"],
     id: "3156",
     isExterior: true,
@@ -82468,18 +76526,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 32.08120477331972,
-      A: -22.30924375970822,
-      B: -5.195652369723447,
-    },
+    lab: { L: 32.08120477331972, A: -22.30924375970822, B: -5.195652369723447 },
   },
   {
     colorNumber: "2938",
-    coordinatingColors: {
-      coord1ColorId: "2745",
-      coord2ColorId: "2748",
-    },
+    coordinatingColors: { coord1ColorId: "2745", coord2ColorId: "2748" },
     description: ["Intense", "Leaden"],
     id: "3147",
     isExterior: true,
@@ -82519,10 +76570,7 @@ export const colorData = [
   },
   {
     colorNumber: "2939",
-    coordinatingColors: {
-      coord1ColorId: "2770",
-      coord2ColorId: "2065",
-    },
+    coordinatingColors: { coord1ColorId: "2770", coord2ColorId: "2065" },
     description: ["Fairly Colorful", "Moderately Colorful", "Leaden"],
     id: "3142",
     isExterior: true,
@@ -82562,10 +76610,7 @@ export const colorData = [
   },
   {
     colorNumber: "2940",
-    coordinatingColors: {
-      coord1ColorId: "2823",
-      coord2ColorId: "2724",
-    },
+    coordinatingColors: { coord1ColorId: "2823", coord2ColorId: "2724" },
     description: ["Intense", "Leaden"],
     id: "3143",
     isExterior: true,
@@ -82597,18 +76642,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 29.459456143905307,
-      A: 6.258330059382838,
-      B: -39.51877378977508,
-    },
+    lab: { L: 29.459456143905307, A: 6.258330059382838, B: -39.51877378977508 },
   },
   {
     colorNumber: "2941",
-    coordinatingColors: {
-      coord1ColorId: "2689",
-      coord2ColorId: "11283",
-    },
+    coordinatingColors: { coord1ColorId: "2689", coord2ColorId: "11283" },
     description: ["Intense", "Leaden"],
     id: "3144",
     isExterior: true,
@@ -82648,10 +76686,7 @@ export const colorData = [
   },
   {
     colorNumber: "2942",
-    coordinatingColors: {
-      coord1ColorId: "2703",
-      coord2ColorId: "2705",
-    },
+    coordinatingColors: { coord1ColorId: "2703", coord2ColorId: "2705" },
     description: ["Soft", "Dark", "Dim"],
     id: "3145",
     isExterior: true,
@@ -82683,18 +76718,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 7.690753937671779,
-      A: 7.576258506678299,
-      B: -19.67617210395471,
-    },
+    lab: { L: 7.690753937671779, A: 7.576258506678299, B: -19.67617210395471 },
   },
   {
     colorNumber: "6014",
-    coordinatingColors: {
-      coord1ColorId: "2682",
-      coord2ColorId: "2826",
-    },
+    coordinatingColors: { coord1ColorId: "2682", coord2ColorId: "2826" },
     description: ["Dull", "Brilliant", "Radiant"],
     id: "1701",
     isExterior: true,
@@ -82726,18 +76754,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 87.33954934249171,
-      A: 2.723812370687473,
-      B: 2.0667596008433042,
-    },
+    lab: { L: 87.33954934249171, A: 2.723812370687473, B: 2.0667596008433042 },
   },
   {
     colorNumber: "6266",
-    coordinatingColors: {
-      coord1ColorId: "1697",
-      coord2ColorId: "1772",
-    },
+    coordinatingColors: { coord1ColorId: "1697", coord2ColorId: "1772" },
     description: ["Washed out", "Brilliant", "Radiant"],
     id: "1952",
     isExterior: true,
@@ -82769,18 +76790,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 87.9632662032105,
-      A: 0.8374278118127854,
-      B: 0.8372007186999264,
-    },
+    lab: { L: 87.9632662032105, A: 0.8374278118127854, B: 0.8372007186999264 },
   },
   {
     colorNumber: "6273",
-    coordinatingColors: {
-      coord1ColorId: "2685",
-      coord2ColorId: "1930",
-    },
+    coordinatingColors: { coord1ColorId: "2685", coord2ColorId: "1930" },
     description: ["Dull", "Brilliant", "Radiant"],
     id: "1959",
     isExterior: true,
@@ -82812,18 +76826,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 88.09169658001484,
-      A: 1.344052245377425,
-      B: 1.5697285728238253,
-    },
+    lab: { L: 88.09169658001484, A: 1.344052245377425, B: 1.5697285728238253 },
   },
   {
     colorNumber: "6280",
-    coordinatingColors: {
-      coord1ColorId: "1982",
-      coord2ColorId: "1754",
-    },
+    coordinatingColors: { coord1ColorId: "1982", coord2ColorId: "1754" },
     description: ["Dull", "Brilliant", "Radiant"],
     id: "1966",
     isExterior: true,
@@ -82855,18 +76862,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 89.98722736126788,
-      A: 2.027660665387565,
-      B: 0.7085685731837765,
-    },
+    lab: { L: 89.98722736126788, A: 2.027660665387565, B: 0.7085685731837765 },
   },
   {
     colorNumber: "6287",
-    coordinatingColors: {
-      coord1ColorId: "1738",
-      coord2ColorId: "1643",
-    },
+    coordinatingColors: { coord1ColorId: "1738", coord2ColorId: "1643" },
     description: ["Diluted", "Wan", "Brilliant", "Radiant"],
     id: "1973",
     isExterior: true,
@@ -82898,18 +76898,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 89.70047711805056,
-      A: 3.7399385471972857,
-      B: 2.4279963843223618,
-    },
+    lab: { L: 89.70047711805056, A: 3.7399385471972857, B: 2.4279963843223618 },
   },
   {
     colorNumber: "6294",
-    coordinatingColors: {
-      coord1ColorId: "2816",
-      coord2ColorId: "2991",
-    },
+    coordinatingColors: { coord1ColorId: "2816", coord2ColorId: "2991" },
     description: ["Diluted", "Wan", "Brilliant", "Radiant"],
     id: "1980",
     isExterior: true,
@@ -82941,18 +76934,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 88.7449034278429,
-      A: 4.265434042876548,
-      B: 2.070491245901551,
-    },
+    lab: { L: 88.7449034278429, A: 4.265434042876548, B: 2.070491245901551 },
   },
   {
     colorNumber: "6301",
-    coordinatingColors: {
-      coord1ColorId: "1847",
-      coord2ColorId: "3005",
-    },
+    coordinatingColors: { coord1ColorId: "1847", coord2ColorId: "3005" },
     description: ["Subdued", "Muted", "Dazzling"],
     id: "1987",
     isExterior: true,
@@ -82984,18 +76970,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 90.51552146748642,
-      A: 4.086019479856873,
-      B: 3.65029339069336,
-    },
+    lab: { L: 90.51552146748642, A: 4.086019479856873, B: 3.65029339069336 },
   },
   {
     colorNumber: "6308",
-    coordinatingColors: {
-      coord1ColorId: "3021",
-      coord2ColorId: "2923",
-    },
+    coordinatingColors: { coord1ColorId: "3021", coord2ColorId: "2923" },
     description: ["Subdued", "Muted", "Brilliant", "Radiant"],
     id: "1994",
     isExterior: true,
@@ -83027,18 +77006,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 89.64284852166962,
-      A: 4.9577986412135955,
-      B: 3.4239884052185587,
-    },
+    lab: { L: 89.64284852166962, A: 4.9577986412135955, B: 3.4239884052185587 },
   },
   {
     colorNumber: "6315",
-    coordinatingColors: {
-      coord1ColorId: "2701",
-      coord2ColorId: "2741",
-    },
+    coordinatingColors: { coord1ColorId: "2701", coord2ColorId: "2741" },
     description: [
       "Fairly Colorful",
       "Moderately Colorful",
@@ -83075,18 +77047,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 89.65078398230305,
-      A: 4.810251368112695,
-      B: 5.020441532088116,
-    },
+    lab: { L: 89.65078398230305, A: 4.810251368112695, B: 5.020441532088116 },
   },
   {
     colorNumber: "6448",
-    coordinatingColors: {
-      coord1ColorId: "3052",
-      coord2ColorId: "2741",
-    },
+    coordinatingColors: { coord1ColorId: "3052", coord2ColorId: "2741" },
     description: ["Diluted", "Wan", "Brilliant", "Radiant"],
     id: "2134",
     isExterior: true,
@@ -83118,18 +77083,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 89.8495034913074,
-      A: -4.323693120245331,
-      B: 6.7205481904409226,
-    },
+    lab: { L: 89.8495034913074, A: -4.323693120245331, B: 6.7205481904409226 },
   },
   {
     colorNumber: "6469",
-    coordinatingColors: {
-      coord1ColorId: "2101",
-      coord2ColorId: "2791",
-    },
+    coordinatingColors: { coord1ColorId: "2101", coord2ColorId: "2791" },
     description: ["Dull", "Brilliant", "Radiant"],
     id: "2155",
     isExterior: true,
@@ -83161,18 +77119,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 88.49737480259526,
-      A: -5.324251783996148,
-      B: 3.110438955866246,
-    },
+    lab: { L: 88.49737480259526, A: -5.324251783996148, B: 3.110438955866246 },
   },
   {
     colorNumber: "6483",
-    coordinatingColors: {
-      coord1ColorId: "1900",
-      coord2ColorId: "2085",
-    },
+    coordinatingColors: { coord1ColorId: "1900", coord2ColorId: "2085" },
     description: ["Subdued", "Muted", "Brilliant", "Radiant"],
     id: "2169",
     isExterior: true,
@@ -83212,10 +77163,7 @@ export const colorData = [
   },
   {
     colorNumber: "6490",
-    coordinatingColors: {
-      coord1ColorId: "2812",
-      coord2ColorId: "1686",
-    },
+    coordinatingColors: { coord1ColorId: "2812", coord2ColorId: "1686" },
     description: ["Dull", "Brilliant", "Radiant"],
     id: "2177",
     isExterior: true,
@@ -83255,10 +77203,7 @@ export const colorData = [
   },
   {
     colorNumber: "6518",
-    coordinatingColors: {
-      coord1ColorId: "2768",
-      coord2ColorId: "1970",
-    },
+    coordinatingColors: { coord1ColorId: "2768", coord2ColorId: "1970" },
     description: ["Washed out", "Brilliant", "Radiant"],
     id: "2205",
     isExterior: true,
@@ -83298,10 +77243,7 @@ export const colorData = [
   },
   {
     colorNumber: "6532",
-    coordinatingColors: {
-      coord1ColorId: "2685",
-      coord2ColorId: "2395",
-    },
+    coordinatingColors: { coord1ColorId: "2685", coord2ColorId: "2395" },
     description: ["Dull", "Brilliant", "Radiant"],
     id: "2219",
     isExterior: true,
@@ -83341,10 +77283,7 @@ export const colorData = [
   },
   {
     colorNumber: "6539",
-    coordinatingColors: {
-      coord1ColorId: "1689",
-      coord2ColorId: "1712",
-    },
+    coordinatingColors: { coord1ColorId: "1689", coord2ColorId: "1712" },
     description: ["Washed out", "Brilliant", "Radiant"],
     id: "2226",
     isExterior: true,
@@ -83384,10 +77323,7 @@ export const colorData = [
   },
   {
     colorNumber: "6546",
-    coordinatingColors: {
-      coord1ColorId: "1984",
-      coord2ColorId: "1836",
-    },
+    coordinatingColors: { coord1ColorId: "1984", coord2ColorId: "1836" },
     description: ["Washed out", "Brilliant", "Radiant"],
     id: "2233",
     isExterior: true,
@@ -83427,10 +77363,7 @@ export const colorData = [
   },
   {
     colorNumber: "6553",
-    coordinatingColors: {
-      coord1ColorId: "2822",
-      coord2ColorId: "1560",
-    },
+    coordinatingColors: { coord1ColorId: "2822", coord2ColorId: "1560" },
     description: ["Dull", "Dazzling"],
     id: "2240",
     isExterior: true,
@@ -83462,18 +77395,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 92.17113336528459,
-      A: 0.6536363494918929,
-      B: 1.313217163401137,
-    },
+    lab: { L: 92.17113336528459, A: 0.6536363494918929, B: 1.313217163401137 },
   },
   {
     colorNumber: "6560",
-    coordinatingColors: {
-      coord1ColorId: "2687",
-      coord2ColorId: "2243",
-    },
+    coordinatingColors: { coord1ColorId: "2687", coord2ColorId: "2243" },
     description: ["Diluted", "Wan", "Dazzling"],
     id: "2247",
     isExterior: true,
@@ -83505,18 +77431,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 91.78409674160793,
-      A: 3.7190416618779754,
-      B: 1.3183785814914861,
-    },
+    lab: { L: 91.78409674160793, A: 3.7190416618779754, B: 1.3183785814914861 },
   },
   {
     colorNumber: "6567",
-    coordinatingColors: {
-      coord1ColorId: "2064",
-      coord2ColorId: "2415",
-    },
+    coordinatingColors: { coord1ColorId: "2064", coord2ColorId: "2415" },
     description: ["Subdued", "Muted", "Dazzling"],
     id: "2254",
     isExterior: true,
@@ -83548,18 +77467,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 91.0165914978866,
-      A: 5.096016309414974,
-      B: 0.7228450868028702,
-    },
+    lab: { L: 91.0165914978866, A: 5.096016309414974, B: 0.7228450868028702 },
   },
   {
     colorNumber: "6574",
-    coordinatingColors: {
-      coord1ColorId: "2695",
-      coord2ColorId: "1544",
-    },
+    coordinatingColors: { coord1ColorId: "2695", coord2ColorId: "1544" },
     description: ["Subdued", "Muted", "Dazzling"],
     id: "2261",
     isExterior: true,
@@ -83591,18 +77503,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 91.26381483732544,
-      A: 4.579410195683586,
-      B: 1.083204145775385,
-    },
+    lab: { L: 91.26381483732544, A: 4.579410195683586, B: 1.083204145775385 },
   },
   {
     colorNumber: "6581",
-    coordinatingColors: {
-      coord1ColorId: "1883",
-      coord2ColorId: "1704",
-    },
+    coordinatingColors: { coord1ColorId: "1883", coord2ColorId: "1704" },
     description: ["Subdued", "Muted", "Dazzling"],
     id: "2268",
     isExterior: true,
@@ -83634,18 +77539,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 90.23150598037432,
-      A: 6.145608056016605,
-      B: 2.2096298070755305,
-    },
+    lab: { L: 90.23150598037432, A: 6.145608056016605, B: 2.2096298070755305 },
   },
   {
     colorNumber: "6588",
-    coordinatingColors: {
-      coord1ColorId: "2681",
-      coord2ColorId: "2909",
-    },
+    coordinatingColors: { coord1ColorId: "2681", coord2ColorId: "2909" },
     description: ["Fairly Colorful", "Moderately Colorful", "Dazzling"],
     id: "2275",
     isExterior: true,
@@ -83677,18 +77575,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 89.96038335403294,
-      A: 6.496761154351772,
-      B: 2.3402394082045808,
-    },
+    lab: { L: 89.96038335403294, A: 6.496761154351772, B: 2.3402394082045808 },
   },
   {
     colorNumber: "6595",
-    coordinatingColors: {
-      coord1ColorId: "2043",
-      coord2ColorId: "2006",
-    },
+    coordinatingColors: { coord1ColorId: "2043", coord2ColorId: "2006" },
     description: ["Fairly Colorful", "Moderately Colorful", "Dazzling"],
     id: "2282",
     isExterior: true,
@@ -83720,18 +77611,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 89.99276471700357,
-      A: 6.511982220569312,
-      B: 3.4470195578324203,
-    },
+    lab: { L: 89.99276471700357, A: 6.511982220569312, B: 3.4470195578324203 },
   },
   {
     colorNumber: "6602",
-    coordinatingColors: {
-      coord1ColorId: "2685",
-      coord2ColorId: "2542",
-    },
+    coordinatingColors: { coord1ColorId: "2685", coord2ColorId: "2542" },
     description: ["Soft", "Brilliant", "Radiant"],
     id: "2289",
     isExterior: true,
@@ -83763,18 +77647,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 89.3792403730848,
-      A: 6.733652438505766,
-      B: 5.1844845620929725,
-    },
+    lab: { L: 89.3792403730848, A: 6.733652438505766, B: 5.1844845620929725 },
   },
   {
     colorNumber: "6609",
-    coordinatingColors: {
-      coord1ColorId: "1731",
-      coord2ColorId: "1734",
-    },
+    coordinatingColors: { coord1ColorId: "1731", coord2ColorId: "1734" },
     description: ["Soft", "Dazzling"],
     id: "2296",
     isExterior: true,
@@ -83806,18 +77683,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 90.7755538338627,
-      A: 4.850027775595899,
-      B: 7.218242012953047,
-    },
+    lab: { L: 90.7755538338627, A: 4.850027775595899, B: 7.218242012953047 },
   },
   {
     colorNumber: "6616",
-    coordinatingColors: {
-      coord1ColorId: "2830",
-      coord2ColorId: "1547",
-    },
+    coordinatingColors: { coord1ColorId: "2830", coord2ColorId: "1547" },
     description: ["Soft", "Dazzling"],
     id: "2303",
     isExterior: true,
@@ -83849,18 +77719,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 91.2929574694523,
-      A: 3.9793108578270453,
-      B: 7.439455450590393,
-    },
+    lab: { L: 91.2929574694523, A: 3.9793108578270453, B: 7.439455450590393 },
   },
   {
     colorNumber: "6623",
-    coordinatingColors: {
-      coord1ColorId: "1658",
-      coord2ColorId: "2025",
-    },
+    coordinatingColors: { coord1ColorId: "1658", coord2ColorId: "2025" },
     description: [
       "Fairly Colorful",
       "Moderately Colorful",
@@ -83897,18 +77760,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 90.53202184802787,
-      A: 3.7975839789364807,
-      B: 6.836257576054994,
-    },
+    lab: { L: 90.53202184802787, A: 3.7975839789364807, B: 6.836257576054994 },
   },
   {
     colorNumber: "6630",
-    coordinatingColors: {
-      coord1ColorId: "1833",
-      coord2ColorId: "2986",
-    },
+    coordinatingColors: { coord1ColorId: "1833", coord2ColorId: "2986" },
     description: ["Soft", "Brilliant", "Radiant"],
     id: "2317",
     isExterior: true,
@@ -83940,18 +77796,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 90.49688347810488,
-      A: 3.354176449597235,
-      B: 9.41235838925456,
-    },
+    lab: { L: 90.49688347810488, A: 3.354176449597235, B: 9.41235838925456 },
   },
   {
     colorNumber: "6637",
-    coordinatingColors: {
-      coord1ColorId: "2825",
-      coord2ColorId: "1659",
-    },
+    coordinatingColors: { coord1ColorId: "2825", coord2ColorId: "1659" },
     description: ["Soft", "Brilliant", "Radiant"],
     id: "2324",
     isExterior: true,
@@ -83983,18 +77832,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 89.61742128683903,
-      A: 3.970596927843406,
-      B: 11.296793118159233,
-    },
+    lab: { L: 89.61742128683903, A: 3.970596927843406, B: 11.296793118159233 },
   },
   {
     colorNumber: "6645",
-    coordinatingColors: {
-      coord1ColorId: "2687",
-      coord2ColorId: "1769",
-    },
+    coordinatingColors: { coord1ColorId: "2687", coord2ColorId: "1769" },
     description: ["Rich", "Vibrant", "Brilliant", "Radiant"],
     id: "2332",
     isExterior: true,
@@ -84026,18 +77868,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 87.01503321368759,
-      A: 5.636844529890439,
-      B: 21.283720734729705,
-    },
+    lab: { L: 87.01503321368759, A: 5.636844529890439, B: 21.283720734729705 },
   },
   {
     colorNumber: "6646",
-    coordinatingColors: {
-      coord1ColorId: "2707",
-      coord2ColorId: "3045",
-    },
+    coordinatingColors: { coord1ColorId: "2707", coord2ColorId: "3045" },
     description: ["Vivid", "Sparkling", "Pale"],
     id: "2333",
     isExterior: true,
@@ -84069,18 +77904,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 83.73291342295504,
-      A: 9.402260447766652,
-      B: 28.85298975205586,
-    },
+    lab: { L: 83.73291342295504, A: 9.402260447766652, B: 28.85298975205586 },
   },
   {
     colorNumber: "6647",
-    coordinatingColors: {
-      coord1ColorId: "2877",
-      coord2ColorId: "1789",
-    },
+    coordinatingColors: { coord1ColorId: "2877", coord2ColorId: "1789" },
     description: ["Rich", "Vibrant", "Pale"],
     id: "2334",
     isExterior: true,
@@ -84112,18 +77940,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 76.66868788875406,
-      A: 17.150483792043538,
-      B: 36.72301386303731,
-    },
+    lab: { L: 76.66868788875406, A: 17.150483792043538, B: 36.72301386303731 },
   },
   {
     colorNumber: "6648",
-    coordinatingColors: {
-      coord1ColorId: "2071",
-      coord2ColorId: "2719",
-    },
+    coordinatingColors: { coord1ColorId: "2071", coord2ColorId: "2719" },
     description: ["Rich", "Vibrant", "Bright", "Glowing"],
     id: "2335",
     isExterior: true,
@@ -84155,18 +77976,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 70.26838771915577,
-      A: 23.5145652492057,
-      B: 41.52336277599395,
-    },
+    lab: { L: 70.26838771915577, A: 23.5145652492057, B: 41.52336277599395 },
   },
   {
     colorNumber: "6649",
-    coordinatingColors: {
-      coord1ColorId: "2065",
-      coord2ColorId: "1852",
-    },
+    coordinatingColors: { coord1ColorId: "2065", coord2ColorId: "1852" },
     description: ["Gleaming", "Forceful", "Fairly Bright"],
     id: "2336",
     isExterior: true,
@@ -84198,18 +78012,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 64.82737871968226,
-      A: 26.84469101810366,
-      B: 43.97308004700541,
-    },
+    lab: { L: 64.82737871968226, A: 26.84469101810366, B: 43.97308004700541 },
   },
   {
     colorNumber: "6650",
-    coordinatingColors: {
-      coord1ColorId: "2693",
-      coord2ColorId: "2901",
-    },
+    coordinatingColors: { coord1ColorId: "2693", coord2ColorId: "2901" },
     description: ["Gleaming", "Forceful", "Fairly Bright"],
     id: "2337",
     isExterior: true,
@@ -84241,18 +78048,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 59.38119838366768,
-      A: 30.217342134479797,
-      B: 47.96005201223284,
-    },
+    lab: { L: 59.38119838366768, A: 30.217342134479797, B: 47.96005201223284 },
   },
   {
     colorNumber: "6651",
-    coordinatingColors: {
-      coord1ColorId: "2686",
-      coord2ColorId: "3013",
-    },
+    coordinatingColors: { coord1ColorId: "2686", coord2ColorId: "3013" },
     description: ["Gleaming", "Forceful", "Brilliant", "Radiant"],
     id: "2338",
     isExterior: true,
@@ -84284,18 +78084,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 91.00018520198495,
-      A: 1.964302942079721,
-      B: 13.805351779106555,
-    },
+    lab: { L: 91.00018520198495, A: 1.964302942079721, B: 13.805351779106555 },
   },
   {
     colorNumber: "6707",
-    coordinatingColors: {
-      coord1ColorId: "1789",
-      coord2ColorId: "2375",
-    },
+    coordinatingColors: { coord1ColorId: "1789", coord2ColorId: "2375" },
     description: ["Gleaming", "Forceful", "Brilliant", "Radiant"],
     id: "2394",
     isExterior: true,
@@ -84327,18 +78120,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 93.07254851268246,
-      A: -3.4855545321544334,
-      B: 17.22383878866822,
-    },
+    lab: { L: 93.07254851268246, A: -3.4855545321544334, B: 17.22383878866822 },
   },
   {
     colorNumber: "6714",
-    coordinatingColors: {
-      coord1ColorId: "2872",
-      coord2ColorId: "2243",
-    },
+    coordinatingColors: { coord1ColorId: "2872", coord2ColorId: "2243" },
     description: [
       "Fairly Colorful",
       "Moderately Colorful",
@@ -84375,18 +78161,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 92.4644902928992,
-      A: -5.93466238279089,
-      B: 12.63336539604698,
-    },
+    lab: { L: 92.4644902928992, A: -5.93466238279089, B: 12.63336539604698 },
   },
   {
     colorNumber: "6721",
-    coordinatingColors: {
-      coord1ColorId: "2726",
-      coord2ColorId: "2895",
-    },
+    coordinatingColors: { coord1ColorId: "2726", coord2ColorId: "2895" },
     description: ["Subdued", "Muted", "Brilliant", "Radiant"],
     id: "2408",
     isExterior: true,
@@ -84418,17 +78197,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 91.6989804162146,
-      A: -5.8336359095246255,
-      B: 8.893530912752823,
-    },
+    lab: { L: 91.6989804162146, A: -5.8336359095246255, B: 8.893530912752823 },
   },
   {
     colorNumber: "6728",
-    coordinatingColors: {
-      coord2ColorId: "1871",
-    },
+    coordinatingColors: { coord2ColorId: "1871" },
     description: ["Subdued", "Muted", "Brilliant", "Radiant"],
     id: "2415",
     isExterior: true,
@@ -84460,18 +78233,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 92.12862093415463,
-      A: -5.637254637040123,
-      B: 10.57749217469166,
-    },
+    lab: { L: 92.12862093415463, A: -5.637254637040123, B: 10.57749217469166 },
   },
   {
     colorNumber: "6735",
-    coordinatingColors: {
-      coord1ColorId: "2686",
-      coord2ColorId: "2884",
-    },
+    coordinatingColors: { coord1ColorId: "2686", coord2ColorId: "2884" },
     description: ["Diluted", "Wan", "Brilliant", "Radiant"],
     id: "2422",
     isExterior: true,
@@ -84503,18 +78269,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 91.5278615535442,
-      A: -6.521327069494653,
-      B: 7.5781003572498395,
-    },
+    lab: { L: 91.5278615535442, A: -6.521327069494653, B: 7.5781003572498395 },
   },
   {
     colorNumber: "6742",
-    coordinatingColors: {
-      coord1ColorId: "2713",
-      coord2ColorId: "2853",
-    },
+    coordinatingColors: { coord1ColorId: "2713", coord2ColorId: "2853" },
     description: ["Diluted", "Wan", "Brilliant", "Radiant"],
     id: "2429",
     isExterior: true,
@@ -84546,18 +78305,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 91.83040459471538,
-      A: -6.500602740876548,
-      B: 5.400593298034018,
-    },
+    lab: { L: 91.83040459471538, A: -6.500602740876548, B: 5.400593298034018 },
   },
   {
     colorNumber: "6756",
-    coordinatingColors: {
-      coord1ColorId: "2854",
-      coord2ColorId: "3027",
-    },
+    coordinatingColors: { coord1ColorId: "2854", coord2ColorId: "3027" },
     description: ["Subdued", "Muted", "Brilliant", "Radiant"],
     id: "2443",
     isExterior: true,
@@ -84589,18 +78341,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 92.37723919993925,
-      A: -6.713347889589938,
-      B: 0.9605365563402746,
-    },
+    lab: { L: 92.37723919993925, A: -6.713347889589938, B: 0.9605365563402746 },
   },
   {
     colorNumber: "6763",
-    coordinatingColors: {
-      coord1ColorId: "2872",
-      coord2ColorId: "1844",
-    },
+    coordinatingColors: { coord1ColorId: "2872", coord2ColorId: "1844" },
     description: ["Subdued", "Muted", "Brilliant", "Radiant"],
     id: "2450",
     isExterior: true,
@@ -84640,10 +78385,7 @@ export const colorData = [
   },
   {
     colorNumber: "6770",
-    coordinatingColors: {
-      coord1ColorId: "2872",
-      coord2ColorId: "2228",
-    },
+    coordinatingColors: { coord1ColorId: "2872", coord2ColorId: "2228" },
     description: ["Subdued", "Muted", "Brilliant", "Radiant"],
     id: "2457",
     isExterior: true,
@@ -84675,17 +78417,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 90.2313743121303,
-      A: -8.193719119709119,
-      B: -2.805086381843047,
-    },
+    lab: { L: 90.2313743121303, A: -8.193719119709119, B: -2.805086381843047 },
   },
   {
     colorNumber: "6777",
-    coordinatingColors: {
-      coord1ColorId: "2958",
-    },
+    coordinatingColors: { coord1ColorId: "2958" },
     description: ["Diluted", "Wan", "Brilliant", "Radiant"],
     id: "2464",
     isExterior: true,
@@ -84725,10 +78461,7 @@ export const colorData = [
   },
   {
     colorNumber: "6791",
-    coordinatingColors: {
-      coord1ColorId: "2708",
-      coord2ColorId: "2047",
-    },
+    coordinatingColors: { coord1ColorId: "2708", coord2ColorId: "2047" },
     description: ["Diluted", "Wan", "Brilliant", "Radiant"],
     id: "2478",
     isExterior: true,
@@ -84768,10 +78501,7 @@ export const colorData = [
   },
   {
     colorNumber: "6805",
-    coordinatingColors: {
-      coord1ColorId: "2907",
-      coord2ColorId: "2936",
-    },
+    coordinatingColors: { coord1ColorId: "2907", coord2ColorId: "2936" },
     description: ["Dull", "Brilliant", "Radiant"],
     id: "2492",
     isExterior: true,
@@ -84811,10 +78541,7 @@ export const colorData = [
   },
   {
     colorNumber: "6812",
-    coordinatingColors: {
-      coord1ColorId: "2687",
-      coord2ColorId: "2901",
-    },
+    coordinatingColors: { coord1ColorId: "2687", coord2ColorId: "2901" },
     description: ["Dull", "Brilliant", "Radiant"],
     id: "2499",
     isExterior: true,
@@ -84854,10 +78581,7 @@ export const colorData = [
   },
   {
     colorNumber: "6819",
-    coordinatingColors: {
-      coord1ColorId: "2230",
-      coord2ColorId: "3010",
-    },
+    coordinatingColors: { coord1ColorId: "2230", coord2ColorId: "3010" },
     description: ["Washed out", "Dazzling"],
     id: "2506",
     isExterior: true,
@@ -84889,18 +78613,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 91.4686132846419,
-      A: 0.8470591032628261,
-      B: -0.2609768403024404,
-    },
+    lab: { L: 91.4686132846419, A: 0.8470591032628261, B: -0.2609768403024404 },
   },
   {
     colorNumber: "6826",
-    coordinatingColors: {
-      coord1ColorId: "2898",
-      coord2ColorId: "1547",
-    },
+    coordinatingColors: { coord1ColorId: "2898", coord2ColorId: "1547" },
     description: ["Dull", "Dazzling"],
     id: "2513",
     isExterior: true,
@@ -84932,18 +78649,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 91.37018038556317,
-      A: 2.034357776627582,
-      B: -0.386653662935621,
-    },
+    lab: { L: 91.37018038556317, A: 2.034357776627582, B: -0.386653662935621 },
   },
   {
     colorNumber: "6833",
-    coordinatingColors: {
-      coord1ColorId: "2750",
-      coord2ColorId: "2761",
-    },
+    coordinatingColors: { coord1ColorId: "2750", coord2ColorId: "2761" },
     description: ["Diluted", "Wan", "Dazzling"],
     id: "2520",
     isExterior: true,
@@ -84975,18 +78685,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 92.252735151217,
-      A: 2.694237445369785,
-      B: 0.947606107797272,
-    },
+    lab: { L: 92.252735151217, A: 2.694237445369785, B: 0.947606107797272 },
   },
   {
     colorNumber: "6844",
-    coordinatingColors: {
-      coord1ColorId: "2885",
-      coord2ColorId: "2883",
-    },
+    coordinatingColors: { coord1ColorId: "2885", coord2ColorId: "2883" },
     description: [
       "Fairly Colorful",
       "Moderately Colorful",
@@ -85031,10 +78734,7 @@ export const colorData = [
   },
   {
     colorNumber: "6845",
-    coordinatingColors: {
-      coord1ColorId: "1693",
-      coord2ColorId: "2275",
-    },
+    coordinatingColors: { coord1ColorId: "1693", coord2ColorId: "2275" },
     description: [
       "Fairly Colorful",
       "Moderately Colorful",
@@ -85071,18 +78771,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 80.57721497199267,
-      A: 19.251924714069112,
-      B: -6.199731745751036,
-    },
+    lab: { L: 80.57721497199267, A: 19.251924714069112, B: -6.199731745751036 },
   },
   {
     colorNumber: "6846",
-    coordinatingColors: {
-      coord1ColorId: "1748",
-      coord2ColorId: "1742",
-    },
+    coordinatingColors: { coord1ColorId: "1748", coord2ColorId: "1742" },
     description: ["Fairly Colorful", "Moderately Colorful", "Pale"],
     id: "2533",
     isExterior: true,
@@ -85122,10 +78815,7 @@ export const colorData = [
   },
   {
     colorNumber: "6847",
-    coordinatingColors: {
-      coord1ColorId: "2573",
-      coord2ColorId: "2576",
-    },
+    coordinatingColors: { coord1ColorId: "2573", coord2ColorId: "2576" },
     description: [
       "Fairly Colorful",
       "Moderately Colorful",
@@ -85170,10 +78860,7 @@ export const colorData = [
   },
   {
     colorNumber: "6848",
-    coordinatingColors: {
-      coord1ColorId: "2583",
-      coord2ColorId: "2867",
-    },
+    coordinatingColors: { coord1ColorId: "2583", coord2ColorId: "2867" },
     description: ["Soft", "Brilliant", "Radiant"],
     id: "2535",
     isExterior: true,
@@ -85205,18 +78892,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 84.2683283243361,
-      A: 14.603189864001997,
-      B: -1.2419225635723619,
-    },
+    lab: { L: 84.2683283243361, A: 14.603189864001997, B: -1.2419225635723619 },
   },
   {
     colorNumber: "6849",
-    coordinatingColors: {
-      coord1ColorId: "1890",
-      coord2ColorId: "1979",
-    },
+    coordinatingColors: { coord1ColorId: "1890", coord2ColorId: "1979" },
     description: ["Soft", "Pale"],
     id: "2536",
     isExterior: true,
@@ -85248,18 +78928,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 75.26036173132624,
-      A: 25.373105632912505,
-      B: -5.415807083841595,
-    },
+    lab: { L: 75.26036173132624, A: 25.373105632912505, B: -5.415807083841595 },
   },
   {
     colorNumber: "6850",
-    coordinatingColors: {
-      coord1ColorId: "2341",
-      coord2ColorId: "2061",
-    },
+    coordinatingColors: { coord1ColorId: "2341", coord2ColorId: "2061" },
     description: ["Soft", "Pale"],
     id: "2537",
     isExterior: true,
@@ -85291,18 +78964,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 66.47086095404381,
-      A: 35.73522173018673,
-      B: -2.916580700898175,
-    },
+    lab: { L: 66.47086095404381, A: 35.73522173018673, B: -2.916580700898175 },
   },
   {
     colorNumber: "6851",
-    coordinatingColors: {
-      coord1ColorId: "1630",
-      coord2ColorId: "2054",
-    },
+    coordinatingColors: { coord1ColorId: "1630", coord2ColorId: "2054" },
     description: ["Soft", "Bright", "Glowing"],
     id: "2538",
     isExterior: true,
@@ -85342,10 +79008,7 @@ export const colorData = [
   },
   {
     colorNumber: "6852",
-    coordinatingColors: {
-      coord1ColorId: "1549",
-      coord2ColorId: "2012",
-    },
+    coordinatingColors: { coord1ColorId: "1549", coord2ColorId: "2012" },
     description: ["Soft", "Brilliant", "Radiant"],
     id: "2539",
     isExterior: true,
@@ -85377,18 +79040,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 83.31798984771031,
-      A: 16.574939518537445,
-      B: -1.02005251918178,
-    },
+    lab: { L: 83.31798984771031, A: 16.574939518537445, B: -1.02005251918178 },
   },
   {
     colorNumber: "6853",
-    coordinatingColors: {
-      coord1ColorId: "1683",
-      coord2ColorId: "1616",
-    },
+    coordinatingColors: { coord1ColorId: "1683", coord2ColorId: "1616" },
     description: ["Soft", "Pale"],
     id: "2540",
     isExterior: true,
@@ -85420,18 +79076,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 73.8828024598581,
-      A: 27.926119760754375,
-      B: -1.3706692682577737,
-    },
+    lab: { L: 73.8828024598581, A: 27.926119760754375, B: -1.3706692682577737 },
   },
   {
     colorNumber: "6854",
-    coordinatingColors: {
-      coord1ColorId: "2769",
-      coord2ColorId: "2565",
-    },
+    coordinatingColors: { coord1ColorId: "2769", coord2ColorId: "2565" },
     description: ["Soft", "Bright", "Glowing"],
     id: "2541",
     isExterior: true,
@@ -85463,18 +79112,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 62.89593283880153,
-      A: 40.40851492935788,
-      B: 1.4864371335153281,
-    },
+    lab: { L: 62.89593283880153, A: 40.40851492935788, B: 1.4864371335153281 },
   },
   {
     colorNumber: "6856",
-    coordinatingColors: {
-      coord1ColorId: "1691",
-      coord2ColorId: "1714",
-    },
+    coordinatingColors: { coord1ColorId: "1691", coord2ColorId: "1714" },
     description: ["Soft", "Brilliant", "Radiant"],
     id: "2543",
     isExterior: true,
@@ -85506,18 +79148,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 84.81555525690887,
-      A: 15.150770769501776,
-      B: 0.6663968840455947,
-    },
+    lab: { L: 84.81555525690887, A: 15.150770769501776, B: 0.6663968840455947 },
   },
   {
     colorNumber: "6857",
-    coordinatingColors: {
-      coord1ColorId: "2918",
-      coord2ColorId: "2503",
-    },
+    coordinatingColors: { coord1ColorId: "2918", coord2ColorId: "2503" },
     description: ["Gleaming", "Forceful", "Pale"],
     id: "2544",
     isExterior: true,
@@ -85549,18 +79184,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 72.26723362965359,
-      A: 33.216683308566694,
-      B: 4.099667023342102,
-    },
+    lab: { L: 72.26723362965359, A: 33.216683308566694, B: 4.099667023342102 },
   },
   {
     colorNumber: "6858",
-    coordinatingColors: {
-      coord1ColorId: "2587",
-      coord2ColorId: "2563",
-    },
+    coordinatingColors: { coord1ColorId: "2587", coord2ColorId: "2563" },
     description: ["Gleaming", "Forceful", "Bright", "Glowing"],
     id: "2545",
     isExterior: true,
@@ -85592,18 +79220,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 62.26060412656636,
-      A: 45.13883043840894,
-      B: 10.468673039744768,
-    },
+    lab: { L: 62.26060412656636, A: 45.13883043840894, B: 10.468673039744768 },
   },
   {
     colorNumber: "6859",
-    coordinatingColors: {
-      coord1ColorId: "2186",
-      coord2ColorId: "2483",
-    },
+    coordinatingColors: { coord1ColorId: "2186", coord2ColorId: "2483" },
     description: ["Soft", "Fairly Bright"],
     id: "2546",
     isExterior: true,
@@ -85635,18 +79256,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 47.909182707777276,
-      A: 56.42171085905584,
-      B: 21.940096803491993,
-    },
+    lab: { L: 47.909182707777276, A: 56.42171085905584, B: 21.940096803491993 },
   },
   {
     colorNumber: "6863",
-    coordinatingColors: {
-      coord1ColorId: "1652",
-      coord2ColorId: "1668",
-    },
+    coordinatingColors: { coord1ColorId: "1652", coord2ColorId: "1668" },
     description: ["Soft", "Moderately Bright"],
     id: "2550",
     isExterior: true,
@@ -85678,18 +79292,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 42.021545388190745,
-      A: 49.210106943273715,
-      B: 24.97166254058987,
-    },
+    lab: { L: 42.021545388190745, A: 49.210106943273715, B: 24.97166254058987 },
   },
   {
     colorNumber: "6864",
-    coordinatingColors: {
-      coord1ColorId: "2832",
-      coord2ColorId: "3016",
-    },
+    coordinatingColors: { coord1ColorId: "2832", coord2ColorId: "3016" },
     description: ["Soft", "Moderately Bright"],
     id: "2551",
     isExterior: true,
@@ -85721,18 +79328,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 41.104255879459295,
-      A: 50.50216198951193,
-      B: 31.672035762081197,
-    },
+    lab: { L: 41.104255879459295, A: 50.50216198951193, B: 31.672035762081197 },
   },
   {
     colorNumber: "6865",
-    coordinatingColors: {
-      coord1ColorId: "2729",
-      coord2ColorId: "3000",
-    },
+    coordinatingColors: { coord1ColorId: "2729", coord2ColorId: "3000" },
     description: ["Soft", "Moderately Bright"],
     id: "2552",
     isExterior: true,
@@ -85764,18 +79364,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 42.61348396724502,
-      A: 51.53136412870207,
-      B: 27.12097211040816,
-    },
+    lab: { L: 42.61348396724502, A: 51.53136412870207, B: 27.12097211040816 },
   },
   {
     colorNumber: "6867",
-    coordinatingColors: {
-      coord1ColorId: "2937",
-      coord2ColorId: "2948",
-    },
+    coordinatingColors: { coord1ColorId: "2937", coord2ColorId: "2948" },
     description: ["Gleaming", "Forceful", "Fairly Bright"],
     id: "2554",
     isExterior: true,
@@ -85807,18 +79400,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 48.403944486843514,
-      A: 56.57566706919665,
-      B: 38.58374913421419,
-    },
+    lab: { L: 48.403944486843514, A: 56.57566706919665, B: 38.58374913421419 },
   },
   {
     colorNumber: "6870",
-    coordinatingColors: {
-      coord1ColorId: "2701",
-      coord2ColorId: "2355",
-    },
+    coordinatingColors: { coord1ColorId: "2701", coord2ColorId: "2355" },
     description: ["Soft", "Fairly Bright"],
     id: "2557",
     isExterior: true,
@@ -85850,18 +79436,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 46.93545030454778,
-      A: 48.580191760281,
-      B: 29.262525043990284,
-    },
+    lab: { L: 46.93545030454778, A: 48.580191760281, B: 29.262525043990284 },
   },
   {
     colorNumber: "6872",
-    coordinatingColors: {
-      coord1ColorId: "2689",
-      coord2ColorId: "2982",
-    },
+    coordinatingColors: { coord1ColorId: "2689", coord2ColorId: "2982" },
     description: ["Gleaming", "Forceful", "Brilliant", "Radiant"],
     id: "2559",
     isExterior: true,
@@ -85893,18 +79472,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 81.28600261757074,
-      A: 17.393366615327142,
-      B: 10.014298451519155,
-    },
+    lab: { L: 81.28600261757074, A: 17.393366615327142, B: 10.014298451519155 },
   },
   {
     colorNumber: "6873",
-    coordinatingColors: {
-      coord1ColorId: "2925",
-      coord2ColorId: "2907",
-    },
+    coordinatingColors: { coord1ColorId: "2925", coord2ColorId: "2907" },
     description: ["Rich", "Vibrant", "Pale"],
     id: "2560",
     isExterior: true,
@@ -85936,18 +79508,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 71.94057477161557,
-      A: 30.974299712250964,
-      B: 16.935028430778054,
-    },
+    lab: { L: 71.94057477161557, A: 30.974299712250964, B: 16.935028430778054 },
   },
   {
     colorNumber: "6874",
-    coordinatingColors: {
-      coord1ColorId: "2859",
-      coord2ColorId: "2906",
-    },
+    coordinatingColors: { coord1ColorId: "2859", coord2ColorId: "2906" },
     description: ["Rich", "Vibrant", "Bright", "Glowing"],
     id: "2561",
     isExterior: true,
@@ -85979,18 +79544,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 62.017998334937545,
-      A: 42.34835265793713,
-      B: 26.116930297419838,
-    },
+    lab: { L: 62.017998334937545, A: 42.34835265793713, B: 26.116930297419838 },
   },
   {
     colorNumber: "6875",
-    coordinatingColors: {
-      coord1ColorId: "2818",
-      coord2ColorId: "2821",
-    },
+    coordinatingColors: { coord1ColorId: "2818", coord2ColorId: "2821" },
     description: ["Gleaming", "Forceful", "Fairly Bright"],
     id: "2562",
     isExterior: true,
@@ -86022,18 +79580,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 52.001492092735106,
-      A: 51.9823062839237,
-      B: 35.06561175397379,
-    },
+    lab: { L: 52.001492092735106, A: 51.9823062839237, B: 35.06561175397379 },
   },
   {
     colorNumber: "6877",
-    coordinatingColors: {
-      coord1ColorId: "1548",
-      coord2ColorId: "1553",
-    },
+    coordinatingColors: { coord1ColorId: "1548", coord2ColorId: "1553" },
     description: ["Gleaming", "Forceful", "Brilliant", "Radiant"],
     id: "2564",
     isExterior: true,
@@ -86065,18 +79616,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 80.91183895914068,
-      A: 17.086291991281975,
-      B: 12.702983984851347,
-    },
+    lab: { L: 80.91183895914068, A: 17.086291991281975, B: 12.702983984851347 },
   },
   {
     colorNumber: "6878",
-    coordinatingColors: {
-      coord1ColorId: "2966",
-      coord2ColorId: "2954",
-    },
+    coordinatingColors: { coord1ColorId: "2966", coord2ColorId: "2954" },
     description: ["Rich", "Vibrant", "Pale"],
     id: "2565",
     isExterior: true,
@@ -86108,18 +79652,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 69.12040180064776,
-      A: 33.45456994301954,
-      B: 23.512959552299307,
-    },
+    lab: { L: 69.12040180064776, A: 33.45456994301954, B: 23.512959552299307 },
   },
   {
     colorNumber: "6879",
-    coordinatingColors: {
-      coord1ColorId: "2946",
-      coord2ColorId: "2951",
-    },
+    coordinatingColors: { coord1ColorId: "2946", coord2ColorId: "2951" },
     description: ["Gleaming", "Forceful", "Fairly Bright"],
     id: "2566",
     isExterior: true,
@@ -86151,18 +79688,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 57.41949108819658,
-      A: 46.51106211203565,
-      B: 35.790708211353326,
-    },
+    lab: { L: 57.41949108819658, A: 46.51106211203565, B: 35.790708211353326 },
   },
   {
     colorNumber: "6880",
-    coordinatingColors: {
-      coord1ColorId: "1699",
-      coord2ColorId: "1609",
-    },
+    coordinatingColors: { coord1ColorId: "1699", coord2ColorId: "1609" },
     description: ["Gleaming", "Forceful", "Fairly Bright"],
     id: "2567",
     isExterior: true,
@@ -86194,18 +79724,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 53.72124067707952,
-      A: 48.988735210407974,
-      B: 42.6392153541863,
-    },
+    lab: { L: 53.72124067707952, A: 48.988735210407974, B: 42.6392153541863 },
   },
   {
     colorNumber: "6882",
-    coordinatingColors: {
-      coord1ColorId: "1860",
-      coord2ColorId: "2999",
-    },
+    coordinatingColors: { coord1ColorId: "1860", coord2ColorId: "2999" },
     description: ["Gleaming", "Forceful", "Moderately Bright"],
     id: "2569",
     isExterior: true,
@@ -86237,18 +79760,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 50.90554115559749,
-      A: 51.53724781018754,
-      B: 47.13303197837448,
-    },
+    lab: { L: 50.90554115559749, A: 51.53724781018754, B: 47.13303197837448 },
   },
   {
     colorNumber: "6888",
-    coordinatingColors: {
-      coord1ColorId: "1643",
-      coord2ColorId: "1803",
-    },
+    coordinatingColors: { coord1ColorId: "1643", coord2ColorId: "1803" },
     description: ["Vivid", "Sparkling", "Pale"],
     id: "2575",
     isExterior: true,
@@ -86280,18 +79796,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 83.14198425546148,
-      A: 9.769690403963194,
-      B: 31.193102994359577,
-    },
+    lab: { L: 83.14198425546148, A: 9.769690403963194, B: 31.193102994359577 },
   },
   {
     colorNumber: "6889",
-    coordinatingColors: {
-      coord1ColorId: "2698",
-      coord2ColorId: "1721",
-    },
+    coordinatingColors: { coord1ColorId: "2698", coord2ColorId: "1721" },
     description: ["Vivid", "Sparkling", "Bright", "Glowing"],
     id: "2576",
     isExterior: true,
@@ -86323,18 +79832,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 77.02044103733624,
-      A: 17.79133138601402,
-      B: 48.48141043073011,
-    },
+    lab: { L: 77.02044103733624, A: 17.79133138601402, B: 48.48141043073011 },
   },
   {
     colorNumber: "6891",
-    coordinatingColors: {
-      coord1ColorId: "2692",
-      coord2ColorId: "2712",
-    },
+    coordinatingColors: { coord1ColorId: "2692", coord2ColorId: "2712" },
     description: ["Vivid", "Sparkling", "Fairly Bright"],
     id: "2578",
     isExterior: true,
@@ -86366,18 +79868,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 67.85432171082846,
-      A: 30.985563083834265,
-      B: 62.752146075229035,
-    },
+    lab: { L: 67.85432171082846, A: 30.985563083834265, B: 62.752146075229035 },
   },
   {
     colorNumber: "6893",
-    coordinatingColors: {
-      coord1ColorId: "2926",
-      coord2ColorId: "2927",
-    },
+    coordinatingColors: { coord1ColorId: "2926", coord2ColorId: "2927" },
     description: ["Vivid", "Sparkling", "Fairly Bright"],
     id: "2580",
     isExterior: true,
@@ -86409,18 +79904,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 66.18642070556817,
-      A: 33.016342996246564,
-      B: 59.510181981946474,
-    },
+    lab: { L: 66.18642070556817, A: 33.016342996246564, B: 59.510181981946474 },
   },
   {
     colorNumber: "6894",
-    coordinatingColors: {
-      coord1ColorId: "2967",
-      coord2ColorId: "2462",
-    },
+    coordinatingColors: { coord1ColorId: "2967", coord2ColorId: "2462" },
     description: ["Vivid", "Sparkling", "Fairly Bright"],
     id: "2581",
     isExterior: true,
@@ -86452,18 +79940,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 69.32033973384556,
-      A: 28.074550913674557,
-      B: 71.9855059396141,
-    },
+    lab: { L: 69.32033973384556, A: 28.074550913674557, B: 71.9855059396141 },
   },
   {
     colorNumber: "6895",
-    coordinatingColors: {
-      coord1ColorId: "2689",
-      coord2ColorId: "3052",
-    },
+    coordinatingColors: { coord1ColorId: "2689", coord2ColorId: "3052" },
     description: ["Intense", "Moderately Bright"],
     id: "2582",
     isExterior: true,
@@ -86495,18 +79976,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 70.66875268902423,
-      A: 26.179462985833513,
-      B: 74.64088026664946,
-    },
+    lab: { L: 70.66875268902423, A: 26.179462985833513, B: 74.64088026664946 },
   },
   {
     colorNumber: "6897",
-    coordinatingColors: {
-      coord1ColorId: "2986",
-      coord2ColorId: "2990",
-    },
+    coordinatingColors: { coord1ColorId: "2986", coord2ColorId: "2990" },
     description: ["Intense", "Pale"],
     id: "2584",
     isExterior: true,
@@ -86538,18 +80012,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 83.04904110565136,
-      A: 7.980463568076301,
-      B: 51.81919421105623,
-    },
+    lab: { L: 83.04904110565136, A: 7.980463568076301, B: 51.81919421105623 },
   },
   {
     colorNumber: "6898",
-    coordinatingColors: {
-      coord1ColorId: "1923",
-      coord2ColorId: "2975",
-    },
+    coordinatingColors: { coord1ColorId: "1923", coord2ColorId: "2975" },
     description: ["Intense", "Bright", "Glowing"],
     id: "2585",
     isExterior: true,
@@ -86581,18 +80048,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 79.29917566740329,
-      A: 13.172578578110993,
-      B: 59.579578397988286,
-    },
+    lab: { L: 79.29917566740329, A: 13.172578578110993, B: 59.579578397988286 },
   },
   {
     colorNumber: "6899",
-    coordinatingColors: {
-      coord1ColorId: "2836",
-      coord2ColorId: "3049",
-    },
+    coordinatingColors: { coord1ColorId: "2836", coord2ColorId: "3049" },
     description: ["Intense", "Fairly Bright"],
     id: "2586",
     isExterior: true,
@@ -86624,18 +80084,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 76.00482552410526,
-      A: 18.659120630314717,
-      B: 68.3557229982286,
-    },
+    lab: { L: 76.00482552410526, A: 18.659120630314717, B: 68.3557229982286 },
   },
   {
     colorNumber: "6906",
-    coordinatingColors: {
-      coord1ColorId: "1846",
-      coord2ColorId: "2813",
-    },
+    coordinatingColors: { coord1ColorId: "1846", coord2ColorId: "2813" },
     description: ["Intense", "Fairly Bright"],
     id: "2592",
     isExterior: true,
@@ -86667,18 +80120,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 82.24104461104591,
-      A: 7.796388902323925,
-      B: 83.7647567627698,
-    },
+    lab: { L: 82.24104461104591, A: 7.796388902323925, B: 83.7647567627698 },
   },
   {
     colorNumber: "6912",
-    coordinatingColors: {
-      coord1ColorId: "1552",
-      coord2ColorId: "2983",
-    },
+    coordinatingColors: { coord1ColorId: "1552", coord2ColorId: "2983" },
     description: ["Rich", "Vibrant", "Brilliant", "Radiant"],
     id: "2598",
     isExterior: true,
@@ -86710,18 +80156,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 91.22769850623824,
-      A: -3.4669222486132245,
-      B: 30.15401781818916,
-    },
+    lab: { L: 91.22769850623824, A: -3.4669222486132245, B: 30.15401781818916 },
   },
   {
     colorNumber: "6916",
-    coordinatingColors: {
-      coord1ColorId: "1784",
-      coord2ColorId: "2922",
-    },
+    coordinatingColors: { coord1ColorId: "1784", coord2ColorId: "2922" },
     description: ["Gleaming", "Forceful", "Pale"],
     id: "2602",
     isExterior: true,
@@ -86753,18 +80192,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 85.24131720773993,
-      A: -5.6332701049262575,
-      B: 38.28128419953434,
-    },
+    lab: { L: 85.24131720773993, A: -5.6332701049262575, B: 38.28128419953434 },
   },
   {
     colorNumber: "6917",
-    coordinatingColors: {
-      coord1ColorId: "1825",
-      coord2ColorId: "1808",
-    },
+    coordinatingColors: { coord1ColorId: "1825", coord2ColorId: "1808" },
     description: ["Gleaming", "Forceful", "Bright", "Glowing"],
     id: "2603",
     isExterior: true,
@@ -86796,18 +80228,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 79.38068874640136,
-      A: -7.213929602574609,
-      B: 54.7063052154227,
-    },
+    lab: { L: 79.38068874640136, A: -7.213929602574609, B: 54.7063052154227 },
   },
   {
     colorNumber: "6919",
-    coordinatingColors: {
-      coord1ColorId: "2971",
-      coord2ColorId: "2163",
-    },
+    coordinatingColors: { coord1ColorId: "2971", coord2ColorId: "2163" },
     description: ["Gleaming", "Forceful", "Moderately Bright"],
     id: "2605",
     isExterior: true,
@@ -86839,18 +80264,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 69.21414296063638,
-      A: -14.504186303982092,
-      B: 64.11869955913724,
-    },
+    lab: { L: 69.21414296063638, A: -14.504186303982092, B: 64.11869955913724 },
   },
   {
     colorNumber: "6922",
-    coordinatingColors: {
-      coord1ColorId: "1631",
-      coord2ColorId: "2042",
-    },
+    coordinatingColors: { coord1ColorId: "1631", coord2ColorId: "2042" },
     description: ["Soft", "Moderately Bright"],
     id: "2608",
     isExterior: true,
@@ -86882,18 +80300,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 69.11819427365661,
-      A: -34.15168039876626,
-      B: 58.73283717376487,
-    },
+    lab: { L: 69.11819427365661, A: -34.15168039876626, B: 58.73283717376487 },
   },
   {
     colorNumber: "6923",
-    coordinatingColors: {
-      coord1ColorId: "1920",
-      coord2ColorId: "2756",
-    },
+    coordinatingColors: { coord1ColorId: "1920", coord2ColorId: "2756" },
     description: [
       "Fairly Colorful",
       "Moderately Colorful",
@@ -86937,10 +80348,7 @@ export const colorData = [
   },
   {
     colorNumber: "6929",
-    coordinatingColors: {
-      coord1ColorId: "1917",
-      coord2ColorId: "2494",
-    },
+    coordinatingColors: { coord1ColorId: "1917", coord2ColorId: "2494" },
     description: ["Fairly Colorful", "Moderately Colorful", "Pale"],
     id: "2615",
     isExterior: true,
@@ -86980,10 +80388,7 @@ export const colorData = [
   },
   {
     colorNumber: "6930",
-    coordinatingColors: {
-      coord1ColorId: "2167",
-      coord2ColorId: "2087",
-    },
+    coordinatingColors: { coord1ColorId: "2167", coord2ColorId: "2087" },
     description: ["Subdued", "Muted", "Fairly Bright"],
     id: "2616",
     isExterior: true,
@@ -87015,18 +80420,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 72.21781383652119,
-      A: -31.280085145188984,
-      B: 35.04936910152854,
-    },
+    lab: { L: 72.21781383652119, A: -31.280085145188984, B: 35.04936910152854 },
   },
   {
     colorNumber: "6931",
-    coordinatingColors: {
-      coord1ColorId: "2686",
-      coord2ColorId: "2650",
-    },
+    coordinatingColors: { coord1ColorId: "2686", coord2ColorId: "2650" },
     description: [
       "Fairly Colorful",
       "Moderately Colorful",
@@ -87062,18 +80460,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 61.48975190704377,
-      A: -40.21821810216408,
-      B: 45.082365541687444,
-    },
+    lab: { L: 61.48975190704377, A: -40.21821810216408, B: 45.082365541687444 },
   },
   {
     colorNumber: "6932",
-    coordinatingColors: {
-      coord1ColorId: "2883",
-      coord2ColorId: "2969",
-    },
+    coordinatingColors: { coord1ColorId: "2883", coord2ColorId: "2969" },
     description: ["Subdued", "Muted", "Brilliant", "Radiant"],
     id: "2618",
     isExterior: true,
@@ -87105,18 +80496,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 88.88857600899397,
-      A: -14.868608665688676,
-      B: 9.846608833823577,
-    },
+    lab: { L: 88.88857600899397, A: -14.868608665688676, B: 9.846608833823577 },
   },
   {
     colorNumber: "6933",
-    coordinatingColors: {
-      coord1ColorId: "1882",
-      coord2ColorId: "1821",
-    },
+    coordinatingColors: { coord1ColorId: "1882", coord2ColorId: "1821" },
     description: ["Fairly Colorful", "Moderately Colorful", "Pale"],
     id: "2619",
     isExterior: true,
@@ -87156,10 +80540,7 @@ export const colorData = [
   },
   {
     colorNumber: "6934",
-    coordinatingColors: {
-      coord1ColorId: "2742",
-      coord2ColorId: "1676",
-    },
+    coordinatingColors: { coord1ColorId: "2742", coord2ColorId: "1676" },
     description: ["Subdued", "Muted", "Bright", "Glowing"],
     id: "2620",
     isExterior: true,
@@ -87191,18 +80572,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 72.07622452718992,
-      A: -33.444901307340345,
-      B: 24.27990874622086,
-    },
+    lab: { L: 72.07622452718992, A: -33.444901307340345, B: 24.27990874622086 },
   },
   {
     colorNumber: "6935",
-    coordinatingColors: {
-      coord1ColorId: "1840",
-      coord2ColorId: "1886",
-    },
+    coordinatingColors: { coord1ColorId: "1840", coord2ColorId: "1886" },
     description: ["Subdued", "Muted", "Moderately Bright"],
     id: "2621",
     isExterior: true,
@@ -87234,17 +80608,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 61.030039410866564,
-      A: -42.87742705065367,
-      B: 36.1990669539331,
-    },
+    lab: { L: 61.030039410866564, A: -42.87742705065367, B: 36.1990669539331 },
   },
   {
     colorNumber: "6936",
-    coordinatingColors: {
-      coord2ColorId: "2983",
-    },
+    coordinatingColors: { coord2ColorId: "2983" },
     description: [
       "Fairly Colorful",
       "Moderately Colorful",
@@ -87289,10 +80657,7 @@ export const colorData = [
   },
   {
     colorNumber: "6938",
-    coordinatingColors: {
-      coord1ColorId: "3000",
-      coord2ColorId: "3024",
-    },
+    coordinatingColors: { coord1ColorId: "3000", coord2ColorId: "3024" },
     description: ["Fairly Colorful", "Moderately Colorful", "Fairly Bright"],
     id: "2624",
     isExterior: true,
@@ -87324,18 +80689,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 71.61879815368606,
-      A: -37.99675637924699,
-      B: -0.960937205310719,
-    },
+    lab: { L: 71.61879815368606, A: -37.99675637924699, B: -0.960937205310719 },
   },
   {
     colorNumber: "6939",
-    coordinatingColors: {
-      coord1ColorId: "2950",
-      coord2ColorId: "2356",
-    },
+    coordinatingColors: { coord1ColorId: "2950", coord2ColorId: "2356" },
     description: ["Intense", "Dusky", "Fairly Dark"],
     id: "2625",
     isExterior: true,
@@ -87367,18 +80725,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 59.4984171653919,
-      A: -38.587331430591846,
-      B: -2.205161548586787,
-    },
+    lab: { L: 59.4984171653919, A: -38.587331430591846, B: -2.205161548586787 },
   },
   {
     colorNumber: "6940",
-    coordinatingColors: {
-      coord1ColorId: "2867",
-      coord2ColorId: "2970",
-    },
+    coordinatingColors: { coord1ColorId: "2867", coord2ColorId: "2970" },
     description: ["Intense", "Dusky", "Fairly Dark"],
     id: "2626",
     isExterior: true,
@@ -87410,18 +80761,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 59.2551949728697,
-      A: -33.737954925798064,
-      B: -9.926013773640928,
-    },
+    lab: { L: 59.2551949728697, A: -33.737954925798064, B: -9.926013773640928 },
   },
   {
     colorNumber: "6944",
-    coordinatingColors: {
-      coord1ColorId: "1663",
-      coord2ColorId: "2916",
-    },
+    coordinatingColors: { coord1ColorId: "1663", coord2ColorId: "2916" },
     description: [
       "Fairly Colorful",
       "Moderately Colorful",
@@ -87466,10 +80810,7 @@ export const colorData = [
   },
   {
     colorNumber: "6945",
-    coordinatingColors: {
-      coord1ColorId: "2866",
-      coord2ColorId: "2983",
-    },
+    coordinatingColors: { coord1ColorId: "2866", coord2ColorId: "2983" },
     description: [
       "Fairly Colorful",
       "Moderately Colorful",
@@ -87506,18 +80847,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 79.50099403420428,
-      A: -25.43350219333329,
-      B: -8.033407054162623,
-    },
+    lab: { L: 79.50099403420428, A: -25.43350219333329, B: -8.033407054162623 },
   },
   {
     colorNumber: "6946",
-    coordinatingColors: {
-      coord1ColorId: "1566",
-      coord2ColorId: "1972",
-    },
+    coordinatingColors: { coord1ColorId: "1566", coord2ColorId: "1972" },
     description: ["Intense", "Dusky", "Fairly Dark"],
     id: "2632",
     isExterior: true,
@@ -87557,10 +80891,7 @@ export const colorData = [
   },
   {
     colorNumber: "6947",
-    coordinatingColors: {
-      coord1ColorId: "2743",
-      coord2ColorId: "1556",
-    },
+    coordinatingColors: { coord1ColorId: "2743", coord2ColorId: "1556" },
     description: ["Intense", "Leaden"],
     id: "2633",
     isExterior: true,
@@ -87600,10 +80931,7 @@ export const colorData = [
   },
   {
     colorNumber: "6948",
-    coordinatingColors: {
-      coord1ColorId: "1965",
-      coord2ColorId: "2689",
-    },
+    coordinatingColors: { coord1ColorId: "1965", coord2ColorId: "2689" },
     description: ["Fairly Colorful", "Moderately Colorful", "Pale"],
     id: "2634",
     isExterior: true,
@@ -87643,10 +80971,7 @@ export const colorData = [
   },
   {
     colorNumber: "6949",
-    coordinatingColors: {
-      coord1ColorId: "2035",
-      coord2ColorId: "2033",
-    },
+    coordinatingColors: { coord1ColorId: "2035", coord2ColorId: "2033" },
     description: ["Soft", "Bright", "Glowing"],
     id: "2635",
     isExterior: true,
@@ -87686,10 +81011,7 @@ export const colorData = [
   },
   {
     colorNumber: "6951",
-    coordinatingColors: {
-      coord1ColorId: "2072",
-      coord2ColorId: "2362",
-    },
+    coordinatingColors: { coord1ColorId: "2072", coord2ColorId: "2362" },
     description: ["Intense", "Leaden"],
     id: "2637",
     isExterior: true,
@@ -87729,10 +81051,7 @@ export const colorData = [
   },
   {
     colorNumber: "6952",
-    coordinatingColors: {
-      coord1ColorId: "2855",
-      coord2ColorId: "1749",
-    },
+    coordinatingColors: { coord1ColorId: "2855", coord2ColorId: "1749" },
     description: ["Soft", "Pale"],
     id: "2638",
     isExterior: true,
@@ -87764,18 +81083,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 83.5223710550205,
-      A: -12.18115790155333,
-      B: -13.022149596060606,
-    },
+    lab: { L: 83.5223710550205, A: -12.18115790155333, B: -13.022149596060606 },
   },
   {
     colorNumber: "6953",
-    coordinatingColors: {
-      coord1ColorId: "2339",
-      coord2ColorId: "2334",
-    },
+    coordinatingColors: { coord1ColorId: "2339", coord2ColorId: "2334" },
     description: ["Gleaming", "Forceful", "Bright", "Glowing"],
     id: "2639",
     isExterior: true,
@@ -87815,10 +81127,7 @@ export const colorData = [
   },
   {
     colorNumber: "6954",
-    coordinatingColors: {
-      coord1ColorId: "2786",
-      coord2ColorId: "3012",
-    },
+    coordinatingColors: { coord1ColorId: "2786", coord2ColorId: "3012" },
     description: ["Intense", "Dusky", "Fairly Dark"],
     id: "2640",
     isExterior: true,
@@ -87858,10 +81167,7 @@ export const colorData = [
   },
   {
     colorNumber: "6955",
-    coordinatingColors: {
-      coord1ColorId: "2911",
-      coord2ColorId: "3032",
-    },
+    coordinatingColors: { coord1ColorId: "2911", coord2ColorId: "3032" },
     description: ["Intense", "Dusky", "Fairly Dark"],
     id: "2641",
     isExterior: true,
@@ -87893,18 +81199,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 56.11146116363756,
-      A: -18.770714683021772,
-      B: -28.9216728714792,
-    },
+    lab: { L: 56.11146116363756, A: -18.770714683021772, B: -28.9216728714792 },
   },
   {
     colorNumber: "6956",
-    coordinatingColors: {
-      coord1ColorId: "2828",
-      coord2ColorId: "2059",
-    },
+    coordinatingColors: { coord1ColorId: "2828", coord2ColorId: "2059" },
     description: ["Soft", "Pale"],
     id: "2642",
     isExterior: true,
@@ -87944,10 +81243,7 @@ export const colorData = [
   },
   {
     colorNumber: "6960",
-    coordinatingColors: {
-      coord1ColorId: "2810",
-      coord2ColorId: "2718",
-    },
+    coordinatingColors: { coord1ColorId: "2810", coord2ColorId: "2718" },
     description: [
       "Fairly Colorful",
       "Moderately Colorful",
@@ -87992,10 +81288,7 @@ export const colorData = [
   },
   {
     colorNumber: "6961",
-    coordinatingColors: {
-      coord1ColorId: "2190",
-      coord2ColorId: "2124",
-    },
+    coordinatingColors: { coord1ColorId: "2190", coord2ColorId: "2124" },
     description: ["Fairly Colorful", "Moderately Colorful", "Pale"],
     id: "2647",
     isExterior: true,
@@ -88027,18 +81320,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 73.0952516218994,
-      A: -5.199914016276342,
-      B: -20.803549370507035,
-    },
+    lab: { L: 73.0952516218994, A: -5.199914016276342, B: -20.803549370507035 },
   },
   {
     colorNumber: "6962",
-    coordinatingColors: {
-      coord1ColorId: "2266",
-      coord2ColorId: "2270",
-    },
+    coordinatingColors: { coord1ColorId: "2266", coord2ColorId: "2270" },
     description: ["Fairly Colorful", "Moderately Colorful", "Fairly Bright"],
     id: "2648",
     isExterior: true,
@@ -88078,10 +81364,7 @@ export const colorData = [
   },
   {
     colorNumber: "6963",
-    coordinatingColors: {
-      coord1ColorId: "2698",
-      coord2ColorId: "1735",
-    },
+    coordinatingColors: { coord1ColorId: "2698", coord2ColorId: "1735" },
     description: ["Subdued", "Muted", "Moderately Bright"],
     id: "2649",
     isExterior: true,
@@ -88113,18 +81396,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 49.482355322123,
-      A: 0.6839376041695711,
-      B: -32.21898802445096,
-    },
+    lab: { L: 49.482355322123, A: 0.6839376041695711, B: -32.21898802445096 },
   },
   {
     colorNumber: "6964",
-    coordinatingColors: {
-      coord1ColorId: "1620",
-      coord2ColorId: "1680",
-    },
+    coordinatingColors: { coord1ColorId: "1620", coord2ColorId: "1680" },
     description: ["Intense", "Leaden"],
     id: "2650",
     isExterior: true,
@@ -88164,10 +81440,7 @@ export const colorData = [
   },
   {
     colorNumber: "6969",
-    coordinatingColors: {
-      coord1ColorId: "2982",
-      coord2ColorId: "2066",
-    },
+    coordinatingColors: { coord1ColorId: "2982", coord2ColorId: "2066" },
     description: ["Subdued", "Muted", "Pale"],
     id: "2655",
     isExterior: true,
@@ -88207,10 +81480,7 @@ export const colorData = [
   },
   {
     colorNumber: "6970",
-    coordinatingColors: {
-      coord1ColorId: "1650",
-      coord2ColorId: "3002",
-    },
+    coordinatingColors: { coord1ColorId: "1650", coord2ColorId: "3002" },
     description: ["Diluted", "Wan", "Fairly Bright"],
     id: "2656",
     isExterior: true,
@@ -88242,18 +81512,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 54.65755778417795,
-      A: 7.27112600676122,
-      B: -28.02590148391122,
-    },
+    lab: { L: 54.65755778417795, A: 7.27112600676122, B: -28.02590148391122 },
   },
   {
     colorNumber: "6972",
-    coordinatingColors: {
-      coord1ColorId: "1943",
-      coord2ColorId: "2825",
-    },
+    coordinatingColors: { coord1ColorId: "1943", coord2ColorId: "2825" },
     description: ["Diluted", "Wan", "Brilliant", "Radiant"],
     id: "2658",
     isExterior: true,
@@ -88285,18 +81548,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 86.53984518600745,
-      A: 7.960295195174105,
-      B: -4.900871760605385,
-    },
+    lab: { L: 86.53984518600745, A: 7.960295195174105, B: -4.900871760605385 },
   },
   {
     colorNumber: "6974",
-    coordinatingColors: {
-      coord1ColorId: "1803",
-      coord2ColorId: "1800",
-    },
+    coordinatingColors: { coord1ColorId: "1803", coord2ColorId: "1800" },
     description: ["Diluted", "Wan", "Bright", "Glowing"],
     id: "2660",
     isExterior: true,
@@ -88328,18 +81584,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 60.39255936197054,
-      A: 21.06829157559842,
-      B: -19.408956394005305,
-    },
+    lab: { L: 60.39255936197054, A: 21.06829157559842, B: -19.408956394005305 },
   },
   {
     colorNumber: "6975",
-    coordinatingColors: {
-      coord1ColorId: "1578",
-      coord2ColorId: "1649",
-    },
+    coordinatingColors: { coord1ColorId: "1578", coord2ColorId: "1649" },
     description: ["Diluted", "Wan", "Fairly Bright"],
     id: "2661",
     isExterior: true,
@@ -88371,18 +81620,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 54.25110802808213,
-      A: 22.964104639606685,
-      B: -20.30498252356281,
-    },
+    lab: { L: 54.25110802808213, A: 22.964104639606685, B: -20.30498252356281 },
   },
   {
     colorNumber: "6976",
-    coordinatingColors: {
-      coord1ColorId: "1628",
-      coord2ColorId: "2071",
-    },
+    coordinatingColors: { coord1ColorId: "1628", coord2ColorId: "2071" },
     description: ["Subdued", "Muted", "Brilliant", "Radiant"],
     id: "2662",
     isExterior: true,
@@ -88414,18 +81656,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 84.60202505865072,
-      A: 11.965036944779461,
-      B: -5.08501309799021,
-    },
+    lab: { L: 84.60202505865072, A: 11.965036944779461, B: -5.08501309799021 },
   },
   {
     colorNumber: "6977",
-    coordinatingColors: {
-      coord1ColorId: "2297",
-      coord2ColorId: "3014",
-    },
+    coordinatingColors: { coord1ColorId: "2297", coord2ColorId: "3014" },
     description: ["Subdued", "Muted", "Pale"],
     id: "2663",
     isExterior: true,
@@ -88457,18 +81692,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 74.70552515047444,
-      A: 19.93542634301615,
-      B: -11.878515424512393,
-    },
+    lab: { L: 74.70552515047444, A: 19.93542634301615, B: -11.878515424512393 },
   },
   {
     colorNumber: "6978",
-    coordinatingColors: {
-      coord1ColorId: "2847",
-      coord2ColorId: "2849",
-    },
+    coordinatingColors: { coord1ColorId: "2847", coord2ColorId: "2849" },
     description: ["Diluted", "Wan", "Bright", "Glowing"],
     id: "2664",
     isExterior: true,
@@ -88500,18 +81728,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 61.2712796135158,
-      A: 27.751551213404834,
-      B: -15.638012731031093,
-    },
+    lab: { L: 61.2712796135158, A: 27.751551213404834, B: -15.638012731031093 },
   },
   {
     colorNumber: "6979",
-    coordinatingColors: {
-      coord1ColorId: "1738",
-      coord2ColorId: "1782",
-    },
+    coordinatingColors: { coord1ColorId: "1738", coord2ColorId: "1782" },
     description: ["Subdued", "Muted", "Moderately Bright"],
     id: "2665",
     isExterior: true,
@@ -88543,18 +81764,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 43.42936578200469,
-      A: 35.70030641543037,
-      B: -14.935138538033787,
-    },
+    lab: { L: 43.42936578200469, A: 35.70030641543037, B: -14.935138538033787 },
   },
   {
     colorNumber: "6980",
-    coordinatingColors: {
-      coord1ColorId: "1862",
-      coord2ColorId: "1850",
-    },
+    coordinatingColors: { coord1ColorId: "1862", coord2ColorId: "1850" },
     description: ["Diluted", "Wan", "Moderately Bright"],
     id: "2666",
     isExterior: true,
@@ -88594,10 +81808,7 @@ export const colorData = [
   },
   {
     colorNumber: "6984",
-    coordinatingColors: {
-      coord1ColorId: "2687",
-      coord2ColorId: "2079",
-    },
+    coordinatingColors: { coord1ColorId: "2687", coord2ColorId: "2079" },
     description: [
       "Fairly Colorful",
       "Moderately Colorful",
@@ -88634,18 +81845,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 88.12344409410075,
-      A: -16.550023034585582,
-      B: 5.523932392408937,
-    },
+    lab: { L: 88.12344409410075, A: -16.550023034585582, B: 5.523932392408937 },
   },
   {
     colorNumber: "6985",
-    coordinatingColors: {
-      coord1ColorId: "2999",
-      coord2ColorId: "2879",
-    },
+    coordinatingColors: { coord1ColorId: "2999", coord2ColorId: "2879" },
     description: ["Fairly Colorful", "Moderately Colorful", "Pale"],
     id: "2671",
     isExterior: true,
@@ -88677,17 +81881,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 81.94953099926943,
-      A: -27.79588456198523,
-      B: 7.399356037592075,
-    },
+    lab: { L: 81.94953099926943, A: -27.79588456198523, B: 7.399356037592075 },
   },
   {
     colorNumber: "6986",
-    coordinatingColors: {
-      coord2ColorId: "3004",
-    },
+    coordinatingColors: { coord2ColorId: "3004" },
     description: [
       "Fairly Colorful",
       "Moderately Colorful",
@@ -88732,10 +81930,7 @@ export const colorData = [
   },
   {
     colorNumber: "6995",
-    coordinatingColors: {
-      coord1ColorId: "1602",
-      coord2ColorId: "2947",
-    },
+    coordinatingColors: { coord1ColorId: "1602", coord2ColorId: "2947" },
     description: ["Washed out", "Dazzling"],
     id: "3085",
     isExterior: true,
@@ -88775,10 +81970,7 @@ export const colorData = [
   },
   {
     colorNumber: "7107",
-    coordinatingColors: {
-      coord1ColorId: "1673",
-      coord2ColorId: "1849",
-    },
+    coordinatingColors: { coord1ColorId: "1673", coord2ColorId: "1849" },
     description: ["Fairly Colorful", "Moderately Colorful", "Dazzling"],
     id: "2772",
     isExterior: true,
@@ -88810,18 +82002,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 93.31886023761105,
-      A: 4.217017184926119,
-      B: 2.0452820150059114,
-    },
+    lab: { L: 93.31886023761105, A: 4.217017184926119, B: 2.0452820150059114 },
   },
   {
     colorNumber: "7108",
-    coordinatingColors: {
-      coord1ColorId: "2973",
-      coord2ColorId: "2525",
-    },
+    coordinatingColors: { coord1ColorId: "2973", coord2ColorId: "2525" },
     description: ["Fairly Colorful", "Moderately Colorful", "Dazzling"],
     id: "2773",
     isExterior: true,
@@ -88853,18 +82038,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 92.50601401507167,
-      A: 5.25507213866555,
-      B: 2.4268000934013267,
-    },
+    lab: { L: 92.50601401507167, A: 5.25507213866555, B: 2.4268000934013267 },
   },
   {
     colorNumber: "7109",
-    coordinatingColors: {
-      coord1ColorId: "2687",
-      coord2ColorId: "1569",
-    },
+    coordinatingColors: { coord1ColorId: "2687", coord2ColorId: "1569" },
     description: ["Soft", "Dazzling"],
     id: "2774",
     isExterior: true,
@@ -88896,18 +82074,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 91.53142383377202,
-      A: 7.1635284521544,
-      B: 2.587640736967134,
-    },
+    lab: { L: 91.53142383377202, A: 7.1635284521544, B: 2.587640736967134 },
   },
   {
     colorNumber: "7110",
-    coordinatingColors: {
-      coord1ColorId: "2863",
-      coord2ColorId: "2885",
-    },
+    coordinatingColors: { coord1ColorId: "2863", coord2ColorId: "2885" },
     description: ["Soft", "Dazzling"],
     id: "2775",
     isExterior: true,
@@ -88939,18 +82110,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 92.67898744107536,
-      A: 4.24230599286618,
-      B: 4.241878493884843,
-    },
+    lab: { L: 92.67898744107536, A: 4.24230599286618, B: 4.241878493884843 },
   },
   {
     colorNumber: "7111",
-    coordinatingColors: {
-      coord1ColorId: "2686",
-      coord2ColorId: "2012",
-    },
+    coordinatingColors: { coord1ColorId: "2686", coord2ColorId: "2012" },
     description: ["Gleaming", "Forceful", "Dazzling"],
     id: "2776",
     isExterior: true,
@@ -88982,18 +82146,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 91.14037280507264,
-      A: 6.701564928521419,
-      B: 5.159777494695272,
-    },
+    lab: { L: 91.14037280507264, A: 6.701564928521419, B: 5.159777494695272 },
   },
   {
     colorNumber: "7112",
-    coordinatingColors: {
-      coord1ColorId: "2016",
-      coord2ColorId: "2314",
-    },
+    coordinatingColors: { coord1ColorId: "2016", coord2ColorId: "2314" },
     description: ["Fairly Colorful", "Moderately Colorful", "Dazzling"],
     id: "2777",
     isExterior: true,
@@ -89025,18 +82182,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 93.34159367079556,
-      A: 2.3594209468250638,
-      B: 5.190345973421251,
-    },
+    lab: { L: 93.34159367079556, A: 2.3594209468250638, B: 5.190345973421251 },
   },
   {
     colorNumber: "7113",
-    coordinatingColors: {
-      coord1ColorId: "2018",
-      coord2ColorId: "2051",
-    },
+    coordinatingColors: { coord1ColorId: "2018", coord2ColorId: "2051" },
     description: ["Gleaming", "Forceful", "Dazzling"],
     id: "2778",
     isExterior: true,
@@ -89068,18 +82218,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 92.09959028837952,
-      A: 4.480378254558104,
-      B: 7.065285683404432,
-    },
+    lab: { L: 92.09959028837952, A: 4.480378254558104, B: 7.065285683404432 },
   },
   {
     colorNumber: "7114",
-    coordinatingColors: {
-      coord1ColorId: "1922",
-      coord2ColorId: "2163",
-    },
+    coordinatingColors: { coord1ColorId: "1922", coord2ColorId: "2163" },
     description: ["Soft", "Dazzling"],
     id: "2779",
     isExterior: true,
@@ -89111,18 +82254,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 93.96997391409076,
-      A: 1.8628509997806186,
-      B: 6.636611823684535,
-    },
+    lab: { L: 93.96997391409076, A: 1.8628509997806186, B: 6.636611823684535 },
   },
   {
     colorNumber: "7115",
-    coordinatingColors: {
-      coord1ColorId: "1662",
-      coord2ColorId: "1544",
-    },
+    coordinatingColors: { coord1ColorId: "1662", coord2ColorId: "1544" },
     description: ["Rich", "Vibrant", "Dazzling"],
     id: "2780",
     isExterior: true,
@@ -89154,18 +82290,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 92.33468854203778,
-      A: 3.686257791940317,
-      B: 9.497970243041088,
-    },
+    lab: { L: 92.33468854203778, A: 3.686257791940317, B: 9.497970243041088 },
   },
   {
     colorNumber: "7116",
-    coordinatingColors: {
-      coord1ColorId: "2866",
-      coord2ColorId: "2909",
-    },
+    coordinatingColors: { coord1ColorId: "2866", coord2ColorId: "2909" },
     description: ["Soft", "Dazzling"],
     id: "2781",
     isExterior: true,
@@ -89197,18 +82326,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 93.82192105130899,
-      A: 1.0301104849430032,
-      B: 7.970521345556403,
-    },
+    lab: { L: 93.82192105130899, A: 1.0301104849430032, B: 7.970521345556403 },
   },
   {
     colorNumber: "7117",
-    coordinatingColors: {
-      coord1ColorId: "2326",
-      coord2ColorId: "1595",
-    },
+    coordinatingColors: { coord1ColorId: "2326", coord2ColorId: "1595" },
     description: ["Rich", "Vibrant", "Dazzling"],
     id: "2782",
     isExterior: true,
@@ -89240,18 +82362,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 92.5140958170111,
-      A: 2.709120677826582,
-      B: 11.315427561680714,
-    },
+    lab: { L: 92.5140958170111, A: 2.709120677826582, B: 11.315427561680714 },
   },
   {
     colorNumber: "7118",
-    coordinatingColors: {
-      coord1ColorId: "2025",
-      coord2ColorId: "2340",
-    },
+    coordinatingColors: { coord1ColorId: "2025", coord2ColorId: "2340" },
     description: ["Rich", "Vibrant", "Brilliant", "Radiant"],
     id: "2783",
     isExterior: true,
@@ -89283,18 +82398,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 93.02392274964872,
-      A: 1.5856684913361785,
-      B: 13.609329702353246,
-    },
+    lab: { L: 93.02392274964872, A: 1.5856684913361785, B: 13.609329702353246 },
   },
   {
     colorNumber: "7119",
-    coordinatingColors: {
-      coord1ColorId: "2817",
-      coord2ColorId: "2362",
-    },
+    coordinatingColors: { coord1ColorId: "2817", coord2ColorId: "2362" },
     description: ["Gleaming", "Forceful", "Dazzling"],
     id: "2784",
     isExterior: true,
@@ -89334,9 +82442,7 @@ export const colorData = [
   },
   {
     colorNumber: "7120",
-    coordinatingColors: {
-      coord1ColorId: "1818",
-    },
+    coordinatingColors: { coord1ColorId: "1818" },
     description: ["Rich", "Vibrant", "Dazzling"],
     id: "2785",
     isExterior: true,
@@ -89368,18 +82474,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 93.50569279002198,
-      A: 0.667363533545573,
-      B: 12.726395743926865,
-    },
+    lab: { L: 93.50569279002198, A: 0.667363533545573, B: 12.726395743926865 },
   },
   {
     colorNumber: "7121",
-    coordinatingColors: {
-      coord1ColorId: "2689",
-      coord2ColorId: "2396",
-    },
+    coordinatingColors: { coord1ColorId: "2689", coord2ColorId: "2396" },
     description: ["Rich", "Vibrant", "Brilliant", "Radiant"],
     id: "2786",
     isExterior: true,
@@ -89419,10 +82518,7 @@ export const colorData = [
   },
   {
     colorNumber: "7122",
-    coordinatingColors: {
-      coord1ColorId: "2962",
-      coord2ColorId: "2528",
-    },
+    coordinatingColors: { coord1ColorId: "2962", coord2ColorId: "2528" },
     description: ["Gleaming", "Forceful", "Dazzling"],
     id: "2787",
     isExterior: true,
@@ -89454,18 +82550,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 94.85981771340899,
-      A: -1.099098173607982,
-      B: 12.064706710910755,
-    },
+    lab: { L: 94.85981771340899, A: -1.099098173607982, B: 12.064706710910755 },
   },
   {
     colorNumber: "7123",
-    coordinatingColors: {
-      coord1ColorId: "3049",
-      coord2ColorId: "3038",
-    },
+    coordinatingColors: { coord1ColorId: "3049", coord2ColorId: "3038" },
     description: ["Rich", "Vibrant", "Brilliant", "Radiant"],
     id: "2788",
     isExterior: true,
@@ -89497,18 +82586,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 94.24535616984093,
-      A: -1.106005451151082,
-      B: 15.853609513557277,
-    },
+    lab: { L: 94.24535616984093, A: -1.106005451151082, B: 15.853609513557277 },
   },
   {
     colorNumber: "7124",
-    coordinatingColors: {
-      coord1ColorId: "2972",
-      coord2ColorId: "3015",
-    },
+    coordinatingColors: { coord1ColorId: "2972", coord2ColorId: "3015" },
     description: ["Gleaming", "Forceful", "Dazzling"],
     id: "2789",
     isExterior: true,
@@ -89548,10 +82630,7 @@ export const colorData = [
   },
   {
     colorNumber: "7125",
-    coordinatingColors: {
-      coord1ColorId: "2436",
-      coord2ColorId: "2461",
-    },
+    coordinatingColors: { coord1ColorId: "2436", coord2ColorId: "2461" },
     description: ["Rich", "Vibrant", "Brilliant", "Radiant"],
     id: "2790",
     isExterior: true,
@@ -89583,18 +82662,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 94.18270302018573,
-      A: -1.550261148575427,
-      B: 17.31357940840672,
-    },
+    lab: { L: 94.18270302018573, A: -1.550261148575427, B: 17.31357940840672 },
   },
   {
     colorNumber: "7126",
-    coordinatingColors: {
-      coord1ColorId: "1668",
-      coord2ColorId: "1638",
-    },
+    coordinatingColors: { coord1ColorId: "1668", coord2ColorId: "1638" },
     description: ["Subdued", "Muted", "Dazzling"],
     id: "2791",
     isExterior: true,
@@ -89626,18 +82698,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 94.03220009698964,
-      A: -2.7557539971630463,
-      B: 6.637787092568592,
-    },
+    lab: { L: 94.03220009698964, A: -2.7557539971630463, B: 6.637787092568592 },
   },
   {
     colorNumber: "7127",
-    coordinatingColors: {
-      coord1ColorId: "2687",
-      coord2ColorId: "2884",
-    },
+    coordinatingColors: { coord1ColorId: "2687", coord2ColorId: "2884" },
     description: ["Subdued", "Muted", "Brilliant", "Radiant"],
     id: "2792",
     isExterior: true,
@@ -89669,18 +82734,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 93.14236701806117,
-      A: -3.9359519194785975,
-      B: 8.961120104356501,
-    },
+    lab: { L: 93.14236701806117, A: -3.9359519194785975, B: 8.961120104356501 },
   },
   {
     colorNumber: "7128",
-    coordinatingColors: {
-      coord1ColorId: "2867",
-      coord2ColorId: "2087",
-    },
+    coordinatingColors: { coord1ColorId: "2867", coord2ColorId: "2087" },
     description: ["Subdued", "Muted", "Dazzling"],
     id: "2793",
     isExterior: true,
@@ -89712,18 +82770,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 94.31419505083534,
-      A: -4.615845765783999,
-      B: 5.452164080039035,
-    },
+    lab: { L: 94.31419505083534, A: -4.615845765783999, B: 5.452164080039035 },
   },
   {
     colorNumber: "7129",
-    coordinatingColors: {
-      coord1ColorId: "2981",
-      coord2ColorId: "2643",
-    },
+    coordinatingColors: { coord1ColorId: "2981", coord2ColorId: "2643" },
     description: ["Diluted", "Wan", "Dazzling"],
     id: "2794",
     isExterior: true,
@@ -89755,18 +82806,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 94.12665742358212,
-      A: -5.050138489851308,
-      B: 1.5069010366982383,
-    },
+    lab: { L: 94.12665742358212, A: -5.050138489851308, B: 1.5069010366982383 },
   },
   {
     colorNumber: "7130",
-    coordinatingColors: {
-      coord1ColorId: "1936",
-      coord2ColorId: "2012",
-    },
+    coordinatingColors: { coord1ColorId: "1936", coord2ColorId: "2012" },
     description: ["Subdued", "Muted", "Dazzling"],
     id: "2795",
     isExterior: true,
@@ -89798,18 +82842,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 93.56669695746743,
-      A: -6.042135932840253,
-      B: 1.1761655801522108,
-    },
+    lab: { L: 93.56669695746743, A: -6.042135932840253, B: 1.1761655801522108 },
   },
   {
     colorNumber: "7131",
-    coordinatingColors: {
-      coord1ColorId: "1909",
-      coord2ColorId: "1905",
-    },
+    coordinatingColors: { coord1ColorId: "1909", coord2ColorId: "1905" },
     description: ["Diluted", "Wan", "Dazzling"],
     id: "2796",
     isExterior: true,
@@ -89849,10 +82886,7 @@ export const colorData = [
   },
   {
     colorNumber: "7132",
-    coordinatingColors: {
-      coord1ColorId: "2768",
-      coord2ColorId: "2538",
-    },
+    coordinatingColors: { coord1ColorId: "2768", coord2ColorId: "2538" },
     description: ["Subdued", "Muted", "Brilliant", "Radiant"],
     id: "2797",
     isExterior: true,
@@ -89892,10 +82926,7 @@ export const colorData = [
   },
   {
     colorNumber: "7133",
-    coordinatingColors: {
-      coord1ColorId: "2824",
-      coord2ColorId: "1762",
-    },
+    coordinatingColors: { coord1ColorId: "2824", coord2ColorId: "1762" },
     description: ["Diluted", "Wan", "Dazzling"],
     id: "2798",
     isExterior: true,
@@ -89935,10 +82966,7 @@ export const colorData = [
   },
   {
     colorNumber: "7134",
-    coordinatingColors: {
-      coord1ColorId: "2989",
-      coord2ColorId: "2996",
-    },
+    coordinatingColors: { coord1ColorId: "2989", coord2ColorId: "2996" },
     description: ["Subdued", "Muted", "Brilliant", "Radiant"],
     id: "2799",
     isExterior: true,
@@ -89970,18 +82998,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 91.69368417908261,
-      A: -4.390139718731034,
-      B: -3.175252377804205,
-    },
+    lab: { L: 91.69368417908261, A: -4.390139718731034, B: -3.175252377804205 },
   },
   {
     colorNumber: "7135",
-    coordinatingColors: {
-      coord1ColorId: "2962",
-      coord2ColorId: "2430",
-    },
+    coordinatingColors: { coord1ColorId: "2962", coord2ColorId: "2430" },
     description: ["Diluted", "Wan", "Dazzling"],
     id: "2800",
     isExterior: true,
@@ -90021,10 +83042,7 @@ export const colorData = [
   },
   {
     colorNumber: "7136",
-    coordinatingColors: {
-      coord1ColorId: "1601",
-      coord2ColorId: "2957",
-    },
+    coordinatingColors: { coord1ColorId: "1601", coord2ColorId: "2957" },
     description: ["Diluted", "Wan", "Brilliant", "Radiant"],
     id: "2801",
     isExterior: true,
@@ -90056,18 +83074,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 90.60809361274232,
-      A: -1.03842143078553,
-      B: -4.224442607836143,
-    },
+    lab: { L: 90.60809361274232, A: -1.03842143078553, B: -4.224442607836143 },
   },
   {
     colorNumber: "7137",
-    coordinatingColors: {
-      coord1ColorId: "2971",
-      coord2ColorId: "2655",
-    },
+    coordinatingColors: { coord1ColorId: "2971", coord2ColorId: "2655" },
     description: ["Diluted", "Wan", "Brilliant", "Radiant"],
     id: "2802",
     isExterior: true,
@@ -90107,10 +83118,7 @@ export const colorData = [
   },
   {
     colorNumber: "7138",
-    coordinatingColors: {
-      coord1ColorId: "2500",
-      coord2ColorId: "2395",
-    },
+    coordinatingColors: { coord1ColorId: "2500", coord2ColorId: "2395" },
     description: ["Dull", "Dazzling"],
     id: "2803",
     isExterior: true,
@@ -90150,10 +83158,7 @@ export const colorData = [
   },
   {
     colorNumber: "7139",
-    coordinatingColors: {
-      coord1ColorId: "2689",
-      coord2ColorId: "2436",
-    },
+    coordinatingColors: { coord1ColorId: "2689", coord2ColorId: "2436" },
     description: ["Dull", "Dazzling"],
     id: "2804",
     isExterior: true,
@@ -90185,18 +83190,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 90.09187321556065,
-      A: 1.4531940098441165,
-      B: -3.902555149355136,
-    },
+    lab: { L: 90.09187321556065, A: 1.4531940098441165, B: -3.902555149355136 },
   },
   {
     colorNumber: "7140",
-    coordinatingColors: {
-      coord1ColorId: "2882",
-      coord2ColorId: "2963",
-    },
+    coordinatingColors: { coord1ColorId: "2882", coord2ColorId: "2963" },
     description: ["Washed out", "Dazzling"],
     id: "2805",
     isExterior: true,
@@ -90236,10 +83234,7 @@ export const colorData = [
   },
   {
     colorNumber: "7141",
-    coordinatingColors: {
-      coord1ColorId: "2872",
-      coord2ColorId: "2395",
-    },
+    coordinatingColors: { coord1ColorId: "2872", coord2ColorId: "2395" },
     description: ["Dull", "Dazzling"],
     id: "2806",
     isExterior: true,
@@ -90271,17 +83266,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 92.17583259851696,
-      A: 2.742216101476902,
-      B: -2.323242225462052,
-    },
+    lab: { L: 92.17583259851696, A: 2.742216101476902, B: -2.323242225462052 },
   },
   {
     colorNumber: "7576",
-    coordinatingColors: {
-      coord2ColorId: "2259",
-    },
+    coordinatingColors: { coord2ColorId: "2259" },
     description: ["Diluted", "Wan", "Bright", "Glowing"],
     id: "2882",
     isExterior: true,
@@ -90313,18 +83302,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 69.12360875601523,
-      A: 17.38147446834104,
-      B: -2.6505508594217853,
-    },
+    lab: { L: 69.12360875601523, A: 17.38147446834104, B: -2.6505508594217853 },
   },
   {
     colorNumber: "7581",
-    coordinatingColors: {
-      coord1ColorId: "2760",
-      coord2ColorId: "1950",
-    },
+    coordinatingColors: { coord1ColorId: "2760", coord2ColorId: "1950" },
     description: ["Fairly Colorful", "Moderately Colorful", "Pale"],
     id: "2887",
     isExterior: true,
@@ -90356,18 +83338,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 71.5845503462095,
-      A: 16.203472316286827,
-      B: 17.13783194360925,
-    },
+    lab: { L: 71.5845503462095, A: 16.203472316286827, B: 17.13783194360925 },
   },
   {
     colorNumber: "7590",
-    coordinatingColors: {
-      coord1ColorId: "2675",
-      coord2ColorId: "2959",
-    },
+    coordinatingColors: { coord1ColorId: "2675", coord2ColorId: "2959" },
     description: ["Soft", "Moderately Bright"],
     id: "2896",
     isExterior: true,
@@ -90399,18 +83374,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 42.61353425399826,
-      A: 50.637792621563925,
-      B: 33.060388245226825,
-    },
+    lab: { L: 42.61353425399826, A: 50.637792621563925, B: 33.060388245226825 },
   },
   {
     colorNumber: "7597",
-    coordinatingColors: {
-      coord1ColorId: "2823",
-      coord2ColorId: "1873",
-    },
+    coordinatingColors: { coord1ColorId: "2823", coord2ColorId: "1873" },
     description: ["Subdued", "Muted", "Pale"],
     id: "2903",
     isExterior: true,
@@ -90442,18 +83410,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 73.65015468335034,
-      A: 9.696304407977474,
-      B: 15.012236638333443,
-    },
+    lab: { L: 73.65015468335034, A: 9.696304407977474, B: 15.012236638333443 },
   },
   {
     colorNumber: "7706",
-    coordinatingColors: {
-      coord1ColorId: "1582",
-      coord2ColorId: "1880",
-    },
+    coordinatingColors: { coord1ColorId: "1582", coord2ColorId: "1880" },
     description: ["Gleaming", "Forceful", "Pale"],
     id: "3012",
     isExterior: true,
@@ -90485,18 +83446,11 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 78.2304737453372,
-      A: 12.816214226674061,
-      B: 21.687324052374457,
-    },
+    lab: { L: 78.2304737453372, A: 12.816214226674061, B: 21.687324052374457 },
   },
   {
     colorNumber: "7708",
-    coordinatingColors: {
-      coord1ColorId: "1777",
-      coord2ColorId: "2196",
-    },
+    coordinatingColors: { coord1ColorId: "1777", coord2ColorId: "2196" },
     description: ["Soft", "Bright", "Glowing"],
     id: "3014",
     isExterior: true,
@@ -90528,10 +83482,6 @@ export const colorData = [
     ],
     ignore: false,
     archived: true,
-    lab: {
-      L: 68.15041807560891,
-      A: 16.467477171041743,
-      B: 29.340315936648743,
-    },
+    lab: { L: 68.15041807560891, A: 16.467477171041743, B: 29.340315936648743 },
   },
 ];
