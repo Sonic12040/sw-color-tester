@@ -99,6 +99,7 @@ export const CSS_CLASSES = {
   MODAL_VALUE: "modal__value",
   MODAL_ACCORDION_TRIGGER: "modal__accordion-trigger",
   MODAL_ACCORDION_TITLE: "modal__accordion-title",
+  MODAL_ACCORDION_HINT: "modal__accordion-hint",
   MODAL_ACCORDION_ICON: "modal__accordion-icon",
   MODAL_ACCORDION_PANEL: "modal__accordion-panel",
   MODAL_ACTIONS: "modal__actions",
