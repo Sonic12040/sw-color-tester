@@ -257,7 +257,10 @@ async function staleWhileRevalidate(request) {
   const requestKey = request.url;
   if (pendingRequests.has(requestKey)) {
     // Return the existing promise to avoid duplicate requests
-    return cachedResponse || pendingRequests.get(requestKey);
+    // Clone the cached response to avoid "already used" errors
+    return cachedResponse
+      ? cachedResponse.clone()
+      : pendingRequests.get(requestKey);
   }
 
   // Fetch from network in background with timeout
@@ -266,7 +269,8 @@ async function staleWhileRevalidate(request) {
       // Handle 304 Not Modified - no body to process
       if (networkResponse.status === 304) {
         console.log("[SW] File not modified (304):", request.url);
-        return cachedResponse || networkResponse;
+        // Clone cached response to avoid "already used" errors
+        return cachedResponse ? cachedResponse.clone() : networkResponse;
       }
 
       if (networkResponse.ok) {
@@ -292,11 +296,13 @@ async function staleWhileRevalidate(request) {
 
         return networkResponse;
       }
-      return cachedResponse || networkResponse;
+      // Clone cached response to avoid "already used" errors
+      return cachedResponse ? cachedResponse.clone() : networkResponse;
     })
     .catch((error) => {
       console.error("[SW] Fetch failed:", request.url, error);
-      return cachedResponse;
+      // Clone cached response to avoid "already used" errors
+      return cachedResponse ? cachedResponse.clone() : null;
     })
     .finally(() => {
       // Clean up pending request
@@ -306,8 +312,8 @@ async function staleWhileRevalidate(request) {
   // Store pending request
   pendingRequests.set(requestKey, fetchPromise);
 
-  // Return cached response immediately if available
-  return cachedResponse || fetchPromise;
+  // Return cached response immediately if available (clone to avoid "already used" errors)
+  return cachedResponse ? cachedResponse.clone() : fetchPromise;
 }
 
 /**

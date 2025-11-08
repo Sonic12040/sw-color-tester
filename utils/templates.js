@@ -214,7 +214,8 @@ export function colorTemplate(color, options = {}) {
     CSS_CLASSES.COLOR_TILE_LRV
   }--${lrvClass}" title="Light Reflectance Value">LRV ${lrvValue}</span>
         </div>
-        <button aria-label="View details for ${color.name}" 
+        <button type="button"
+                aria-label="View details for ${color.name}" 
                 class="${CSS_CLASSES.COLOR_TILE_VIEW_BUTTON} ${
     CSS_CLASSES.COLOR_TILE_BUTTON
   }" 
