@@ -151,6 +151,30 @@ export class ColorController {
         if (closeButton) {
           closeButton.focus();
         }
+
+        // Set up accordion functionality
+        const accordionTrigger = modal.querySelector(
+          ".modal__accordion-trigger"
+        );
+        const accordionPanel = modal.querySelector(".modal__accordion-panel");
+
+        if (accordionTrigger && accordionPanel) {
+          accordionTrigger.addEventListener("click", () => {
+            const isExpanded =
+              accordionTrigger.getAttribute("aria-expanded") === "true";
+
+            // Toggle expanded state
+            accordionTrigger.setAttribute("aria-expanded", !isExpanded);
+            accordionPanel.setAttribute("aria-hidden", isExpanded);
+
+            // Toggle inert attribute for accessibility
+            if (isExpanded) {
+              accordionPanel.setAttribute("inert", "");
+            } else {
+              accordionPanel.removeAttribute("inert");
+            }
+          });
+        }
       }
     });
 
