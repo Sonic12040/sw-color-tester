@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Integration Test - Numeric Encoding in AppState</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+        background: #f5f5f5;
+      }
+      h1 {
+        color: #2c3e50;
+      }
+      .test-section {
+        background: white;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .pass {
+        color: #27ae60;
+        font-weight: bold;
+      }
+      .fail {
+        color: #e74c3c;
+        font-weight: bold;
+      }
+      pre {
+        background: #f8f8f8;
+        padding: 10px;
+        border-radius: 4px;
+        overflow-x: auto;
+      }
+      button {
+        background: #3498db;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        font-size: 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin: 10px 5px;
+      }
+      button:hover {
+        background: #2980b9;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Integration Test - Numeric Encoding in AppState</h1>
+
+    <div class="test-section">
+      <h2>Test Results</h2>
+      <div id="results"></div>
+    </div>
+
+    <div class="test-section">
+      <h2>Manual Tests</h2>
+      <button onclick="testFavorites()">Test Favorites Encoding</button>
+      <button onclick="testHidden()">Test Hidden Encoding</button>
+      <button onclick="testMixed()">Test Mixed (Favorites + Hidden)</button>
+      <button onclick="testConsolidation()">
+        Test Consolidation + Encoding
+      </button>
+      <button onclick="clearURL()">Clear URL</button>
+    </div>
+
+    <div class="test-section">
+      <h2>Current URL</h2>
+      <pre id="currentUrl"></pre>
+    </div>
+
+    <script type="module">
+      import { colorData } from "./constants.js";
+      import { ColorModel } from "./models/ColorModel.js";
+      import { AppState } from "./models/AppState.js";
+      import { compressIds, decompressIds } from "./utils/numeric-encoding.js";
+
+      const colorModel = new ColorModel(colorData);
+      const appState = new AppState(colorModel);
+
+      let testsPassed = 0;
+      let testsFailed = 0;
+
+      function log(message, isPass) {
+        const resultsDiv = document.getElementById("results");
+        const p = document.createElement("p");
+        p.className = isPass ? "pass" : "fail";
+        p.textContent = (isPass ? "✅ PASS: " : "❌ FAIL: ") + message;
+        resultsDiv.appendChild(p);
+        if (isPass) testsPassed++;
+        else testsFailed++;
+      }
+
+      function updateCurrentUrl() {
+        document.getElementById("currentUrl").textContent =
+          window.location.href;
+      }
+
+      window.testFavorites = function () {
+        console.log("Testing favorites encoding...");
+
+        // Clear first
+        appState.favorites.clear();
+        appState.hidden.clear();
+
+        // Add some favorites
+        const testIds = ["1000", "2000", "3000", "bright-1000", "bright-2000"];
+        for (const id of testIds) {
+          appState.favorites.add(id);
+        }
+
+        console.log("Favorites Set size:", appState.favorites.size);
+        console.log("Favorites Set contents:", Array.from(appState.favorites));
+
+        appState.syncToURL();
+
+        // Check URL contains compressed data
+        const url = new URL(globalThis.location.href);
+        const favParam = url.searchParams.get("favorites");
+        console.log("Favorites param:", favParam);
+        console.log("Full URL:", globalThis.location.href);
+
+        if (!favParam) {
+          log("Favorites parameter not found in URL", false);
+          updateCurrentUrl();
+          return;
+        }
+
+        // Verify it's compressed (should be shorter than comma-separated)
+        const uncompressed = testIds.join(",");
+        const compressionRatio = favParam.length / uncompressed.length;
+        console.log(
+          `Compression ratio: ${(compressionRatio * 100).toFixed(1)}%`
+        );
+
+        if (compressionRatio < 1) {
+          log(
+            `Favorites compressed successfully (${(
+              compressionRatio * 100
+            ).toFixed(1)}% of original size)`,
+            true
+          );
+        } else {
+          log(
+            `Favorites compression ineffective (${(
+              compressionRatio * 100
+            ).toFixed(1)}%)`,
+            false
+          );
+        }
+
+        // Test decompression
+        const decompressed = decompressIds(favParam);
+        if (
+          JSON.stringify(decompressed.sort()) === JSON.stringify(testIds.sort())
+        ) {
+          log("Favorites decompress correctly", true);
+        } else {
+          log("Favorites decompression mismatch", false);
+          console.log("Expected:", testIds);
+          console.log("Got:", decompressed);
+        }
+
+        // Test round-trip through AppState
+        appState.loadFromURL();
+        const roundTrip = appState.getFavorites().sort();
+        if (JSON.stringify(roundTrip) === JSON.stringify(testIds.sort())) {
+          log("Favorites round-trip through AppState successful", true);
+        } else {
+          log("Favorites round-trip failed", false);
+          console.log("Expected:", testIds.sort());
+          console.log("Got:", roundTrip);
+        }
+
+        updateCurrentUrl();
+      };
+
+      window.testHidden = function () {
+        console.log("Testing hidden encoding...");
+
+        // Clear favorites first
+        appState.favorites.clear();
+        appState.hidden.clear();
+
+        // Add some hidden
+        const testIds = ["5000", "6000", "7000", "bright-5000"];
+        for (const id of testIds) {
+          appState.hidden.add(id);
+        }
+        appState.syncToURL();
+
+        // Check URL contains compressed data
+        const url = new URL(globalThis.location.href);
+        const hiddenParam = url.searchParams.get("hidden");
+        console.log("Hidden param:", hiddenParam);
+
+        if (!hiddenParam) {
+          log("Hidden parameter not found in URL", false);
+          updateCurrentUrl();
+          return;
+        }
+
+        // Test decompression
+        const decompressed = decompressIds(hiddenParam);
+        if (
+          JSON.stringify(decompressed.sort()) === JSON.stringify(testIds.sort())
+        ) {
+          log("Hidden decompress correctly", true);
+        } else {
+          log("Hidden decompression mismatch", false);
+        }
+
+        // Test round-trip
+        appState.loadFromURL();
+        const roundTrip = appState.getHidden().sort();
+        if (JSON.stringify(roundTrip) === JSON.stringify(testIds.sort())) {
+          log("Hidden round-trip successful", true);
+        } else {
+          log("Hidden round-trip failed", false);
+        }
+
+        updateCurrentUrl();
+      };
+
+      window.testMixed = function () {
+        console.log("Testing mixed favorites + hidden...");
+
+        appState.favorites.clear();
+        appState.hidden.clear();
+
+        const favIds = ["1000", "2000", "3000"];
+        const hiddenIds = ["4000", "5000", "bright-1000"];
+
+        for (const id of favIds) {
+          appState.favorites.add(id);
+        }
+        for (const id of hiddenIds) {
+          appState.hidden.add(id);
+        }
+        appState.syncToURL();
+
+        // Check URL contains compressed data
+        const url = new URL(globalThis.location.href);
+        const favParam = url.searchParams.get("favorites");
+        const hiddenParam = url.searchParams.get("hidden");
+
+        if (favParam && hiddenParam) {
+          log("Both parameters present in URL", true);
+        } else {
+          log("Missing parameters in URL", false);
+        }
+
+        // Test round-trip
+        appState.loadFromURL();
+        const favRoundTrip = appState.getFavorites().sort();
+        const hiddenRoundTrip = appState.getHidden().sort();
+
+        if (
+          JSON.stringify(favRoundTrip) === JSON.stringify(favIds.sort()) &&
+          JSON.stringify(hiddenRoundTrip) === JSON.stringify(hiddenIds.sort())
+        ) {
+          log("Mixed state round-trip successful", true);
+        } else {
+          log("Mixed state round-trip failed", false);
+        }
+
+        updateCurrentUrl();
+      };
+
+      window.testConsolidation = function () {
+        console.log("Testing consolidation + encoding...");
+
+        appState.favorites.clear();
+        appState.hidden.clear();
+
+        // Get all colors in "Red" family
+        const redFamilyColors = colorModel.getColorIdsForFamily("Red", []);
+        console.log(`Red family has ${redFamilyColors.length} colors`);
+
+        // Add them all to favorites
+        for (const id of redFamilyColors) {
+          appState.favorites.add(id);
+        }
+        appState.syncToURL();
+
+        const url = new URL(globalThis.location.href);
+        const favParam = url.searchParams.get("favorites");
+        console.log("Favorites param after consolidation:", favParam);
+
+        // Decompress and check for "family:Red"
+        const decompressed = decompressIds(favParam);
+        console.log("Decompressed:", decompressed);
+
+        if (decompressed.includes("family:Red")) {
+          log("Consolidation works - contains 'family:Red'", true);
+        } else {
+          log("Consolidation may have failed - no 'family:Red' found", false);
+          console.log("Decompressed IDs:", decompressed);
+        }
+
+        // Test that it decompresses back to all red colors
+        // First clear the state to simulate a fresh load
+        appState.favorites.clear();
+        appState.hidden.clear();
+
+        // Now load from URL (which should expand family:Red)
+        appState.loadFromURL();
+        const favorites = appState.getFavorites();
+        const sortedOriginal = redFamilyColors.sort();
+        const sortedRoundTrip = favorites.sort();
+
+        console.log("Original count:", redFamilyColors.length);
+        console.log("Round-trip count:", favorites.length);
+        console.log("Original sample:", sortedOriginal.slice(0, 5));
+        console.log("Round-trip sample:", sortedRoundTrip.slice(0, 5));
+
+        if (
+          JSON.stringify(sortedOriginal) === JSON.stringify(sortedRoundTrip)
+        ) {
+          log(
+            `Consolidation round-trip successful (${redFamilyColors.length} colors)`,
+            true
+          );
+        } else {
+          log("Consolidation round-trip failed", false);
+          console.log("Expected count:", redFamilyColors.length);
+          console.log("Got count:", favorites.length);
+
+          // Show differences
+          const missing = sortedOriginal.filter(
+            (id) => !sortedRoundTrip.includes(id)
+          );
+          const extra = sortedRoundTrip.filter(
+            (id) => !sortedOriginal.includes(id)
+          );
+          if (missing.length > 0)
+            console.log("Missing IDs:", missing.slice(0, 10));
+          if (extra.length > 0) console.log("Extra IDs:", extra.slice(0, 10));
+        }
+
+        updateCurrentUrl();
+      };
+
+      window.clearURL = function () {
+        appState.favorites.clear();
+        appState.hidden.clear();
+        appState.syncToURL();
+        updateCurrentUrl();
+        log("URL cleared", true);
+      };
+
+      // Run automated tests on load
+      updateCurrentUrl();
+      log("Integration test page loaded", true);
+      log(
+        "ColorModel initialized with " +
+          colorModel.getActiveColors().length +
+          " colors",
+        true
+      );
+      log("AppState initialized", true);
+
+      // Display summary
+      setTimeout(() => {
+        const resultsDiv = document.getElementById("results");
+        const summary = document.createElement("p");
+        summary.style.fontSize = "18px";
+        summary.style.fontWeight = "bold";
+        summary.style.marginTop = "20px";
+        summary.textContent = `Summary: ${testsPassed} passed, ${testsFailed} failed`;
+        resultsDiv.appendChild(summary);
+      }, 100);
+    </script>
+  </body>
+</html>

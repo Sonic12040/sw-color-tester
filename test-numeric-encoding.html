@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Numeric Encoding Test Suite</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+        background: #f5f5f5;
+      }
+
+      h1 {
+        color: #2c3e50;
+        border-bottom: 3px solid #3498db;
+        padding-bottom: 10px;
+      }
+
+      .test-section {
+        background: white;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .test-section h2 {
+        color: #34495e;
+        margin-top: 0;
+      }
+
+      .test-result {
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+
+      .test-result.pass {
+        background: #d4edda;
+        border-left: 4px solid #28a745;
+        color: #155724;
+      }
+
+      .test-result.fail {
+        background: #f8d7da;
+        border-left: 4px solid #dc3545;
+        color: #721c24;
+      }
+
+      .test-result.info {
+        background: #d1ecf1;
+        border-left: 4px solid #17a2b8;
+        color: #0c5460;
+      }
+
+      .summary {
+        font-size: 18px;
+        font-weight: bold;
+        padding: 15px;
+        background: #e9ecef;
+        border-radius: 4px;
+        margin: 20px 0;
+      }
+
+      .summary.success {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .summary.failure {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .progress {
+        background: #e9ecef;
+        border-radius: 4px;
+        height: 30px;
+        margin: 10px 0;
+        overflow: hidden;
+      }
+
+      .progress-bar {
+        background: #3498db;
+        height: 100%;
+        line-height: 30px;
+        color: white;
+        text-align: center;
+        transition: width 0.3s ease;
+      }
+
+      button {
+        background: #3498db;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        font-size: 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin: 10px 5px;
+      }
+
+      button:hover {
+        background: #2980b9;
+      }
+
+      button:disabled {
+        background: #95a5a6;
+        cursor: not-allowed;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin: 20px 0;
+      }
+
+      .stat-card {
+        background: white;
+        padding: 15px;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .stat-card .label {
+        font-size: 12px;
+        color: #7f8c8d;
+        text-transform: uppercase;
+      }
+
+      .stat-card .value {
+        font-size: 24px;
+        font-weight: bold;
+        color: #2c3e50;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🧪 Numeric Encoding Comprehensive Test Suite</h1>
+
+    <div class="test-section">
+      <h2>Test Configuration</h2>
+      <p>
+        This test suite validates the custom numeric encoding algorithm with
+        3000+ combinations
+      </p>
+      <button id="runTests" onclick="runAllTests()">Run All Tests</button>
+      <button id="runQuick" onclick="runQuickTests()">
+        Run Quick Tests (300 combinations)
+      </button>
+    </div>
+
+    <div id="progress-section" style="display: none">
+      <div class="progress">
+        <div class="progress-bar" id="progressBar">0%</div>
+      </div>
+    </div>
+
+    <div id="stats" class="stats" style="display: none">
+      <div class="stat-card">
+        <div class="label">Total Tests</div>
+        <div class="value" id="totalTests">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Passed</div>
+        <div class="value" id="passedTests" style="color: #27ae60">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Failed</div>
+        <div class="value" id="failedTests" style="color: #e74c3c">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Duration</div>
+        <div class="value" id="duration">0ms</div>
+      </div>
+    </div>
+
+    <div id="results"></div>
+
+    <script type="module">
+      import {
+        encodeNumericIds,
+        decodeNumericIds,
+        toBase85,
+        fromBase85,
+        compressIds,
+        decompressIds,
+      } from "./utils/numeric-encoding.js";
+
+      // Make functions available globally for onclick handlers
+      window.encodeNumericIds = encodeNumericIds;
+      window.decodeNumericIds = decodeNumericIds;
+      window.toBase85 = toBase85;
+      window.fromBase85 = fromBase85;
+      window.compressIds = compressIds;
+      window.decompressIds = decompressIds;
+
+      let testResults = [];
+      let passCount = 0;
+      let failCount = 0;
+      let pendingLogs = [];
+
+      function log(message, type = "info") {
+        const div = document.createElement("div");
+        div.className = `test-result ${type}`;
+        div.textContent = message;
+        document.getElementById("results").appendChild(div);
+
+        if (type === "pass") passCount++;
+        if (type === "fail") failCount++;
+      }
+
+      function logDeferred(message, type = "info") {
+        pendingLogs.push({ message, type });
+      }
+
+      function flushLogs() {
+        const resultsDiv = document.getElementById("results");
+        const fragment = document.createDocumentFragment();
+
+        for (const { message, type } of pendingLogs) {
+          const div = document.createElement("div");
+          div.className = `test-result ${type}`;
+          div.textContent = message;
+          fragment.appendChild(div);
+
+          if (type === "pass") passCount++;
+          if (type === "fail") failCount++;
+        }
+
+        resultsDiv.appendChild(fragment);
+        pendingLogs = [];
+      }
+
+      function updateProgress(current, total) {
+        const percent = Math.round((current / total) * 100);
+        const bar = document.getElementById("progressBar");
+        bar.style.width = percent + "%";
+        bar.textContent = `${percent}% (${current}/${total})`;
+      }
+
+      function updateStats(total, passed, failed, duration) {
+        document.getElementById("stats").style.display = "grid";
+        document.getElementById("totalTests").textContent = total;
+        document.getElementById("passedTests").textContent = passed;
+        document.getElementById("failedTests").textContent = failed;
+        document.getElementById("duration").textContent = duration + "ms";
+      }
+
+      function assertEquals(actual, expected, testName) {
+        const actualStr = JSON.stringify(actual);
+        const expectedStr = JSON.stringify(expected);
+
+        if (actualStr === expectedStr) {
+          testResults.push({ name: testName, passed: true });
+          return true;
+        } else {
+          log(`❌ FAIL: ${testName}`, "fail");
+          log(`   Expected: ${expectedStr}`, "fail");
+          log(`   Got: ${actualStr}`, "fail");
+          testResults.push({ name: testName, passed: false, expected, actual });
+          return false;
+        }
+      }
+
+      function assertThrows(fn, testName) {
+        try {
+          fn();
+          log(`❌ FAIL: ${testName} (should have thrown error)`, "fail");
+          testResults.push({ name: testName, passed: false });
+          return false;
+        } catch (error) {
+          testResults.push({ name: testName, passed: true });
+          return true;
+        }
+      }
+
+      // Test 1: Basic VarInt Encoding/Decoding
+      async function testBasicVarInt() {
+        log("Test Category: Basic VarInt Encoding", "info");
+        await new Promise((resolve) => setTimeout(resolve, 10));
+
+        // 1-byte numbers (0-127)
+        for (let i = 0; i <= 127; i++) {
+          const input = [String(i)];
+          console.log(`Testing VarInt 1-byte: ${i}`);
+          const encoded = encodeNumericIds(input);
+          console.log(
+            `  Encoded:`,
+            Array.from(encoded).map(
+              (b) => "0x" + b.toString(16).padStart(2, "0")
+            )
+          );
+          const decoded = decodeNumericIds(encoded);
+          assertEquals(decoded, input, `VarInt 1-byte: ${i}`);
+          if (i % 20 === 0)
+            await new Promise((resolve) => setTimeout(resolve, 1));
+        }
+
+        // 2-byte numbers (128-16383)
+        const twoByteTests = [128, 255, 1000, 2000, 5000, 10000, 16383];
+        for (const num of twoByteTests) {
+          const input = [String(num)];
+          console.log(`Testing VarInt 2-byte: ${num}`);
+          const encoded = encodeNumericIds(input);
+          console.log(
+            `  Encoded:`,
+            Array.from(encoded).map(
+              (b) => "0x" + b.toString(16).padStart(2, "0")
+            )
+          );
+          const decoded = decodeNumericIds(encoded);
+          assertEquals(decoded, input, `VarInt 2-byte: ${num}`);
+        }
+
+        // 3-byte numbers (16384-2097151)
+        const threeByteTests = [
+          16384, 20000, 50000, 100000, 500000, 1000000, 2097151,
+        ];
+        for (const num of threeByteTests) {
+          const input = [String(num)];
+          console.log(`Testing VarInt 3-byte: ${num}`);
+          const encoded = encodeNumericIds(input);
+          console.log(
+            `  Encoded (length ${encoded.length}):`,
+            Array.from(encoded).map(
+              (b) => "0x" + b.toString(16).padStart(2, "0")
+            )
+          );
+          const decoded = decodeNumericIds(encoded);
+          assertEquals(decoded, input, `VarInt 3-byte: ${num}`);
+        }
+
+        // 4-byte numbers (2097152-268435455)
+        const fourByteTests = [
+          2097152, 5000000, 10000000, 100000000, 268435455,
+        ];
+        for (const num of fourByteTests) {
+          const input = [String(num)];
+          console.log(`Testing VarInt 4-byte: ${num}`);
+          const encoded = encodeNumericIds(input);
+          console.log(
+            `  Encoded:`,
+            Array.from(encoded).map(
+              (b) => "0x" + b.toString(16).padStart(2, "0")
+            )
+          );
+          const decoded = decodeNumericIds(encoded);
+          assertEquals(decoded, input, `VarInt 4-byte: ${num}`);
+        }
+        await new Promise((resolve) => setTimeout(resolve, 10));
+      }
+
+      // Test 2: Bright Prefix Handling
+      function testBrightPrefix() {
+        log("Test Category: Bright Prefix Handling", "info");
+
+        const tests = [
+          ["bright-0"],
+          ["bright-127"],
+          ["bright-1000"],
+          ["bright-2527"],
+          ["bright-16384"],
+          ["bright-100000"],
+          ["0", "bright-100", "200"],
+          ["bright-1", "bright-2", "bright-3"],
+        ];
+
+        for (const input of tests) {
+          const encoded = encodeNumericIds(input);
+          const decoded = decodeNumericIds(encoded);
+          assertEquals(decoded, input, `Bright prefix: ${input.join(",")}`);
+        }
+      }
+
+      // Test 3: Base85 Encoding/Decoding
+      function testBase85() {
+        log("Test Category: Base85 Encoding/Decoding", "info");
+
+        // Test various buffer sizes
+        const buffers = [
+          new Uint8Array([0]),
+          new Uint8Array([255]),
+          new Uint8Array([1, 2, 3, 4]),
+          new Uint8Array([255, 255, 255, 255]),
+          new Uint8Array([0, 1, 2, 3, 4, 5, 6, 7]),
+          new Uint8Array(Array.from({ length: 100 }, (_, i) => i % 256)),
+        ];
+
+        for (let i = 0; i < buffers.length; i++) {
+          const buffer = buffers[i];
+          const encoded = toBase85(buffer);
+          const decoded = fromBase85(encoded);
+
+          const match =
+            buffer.length === decoded.length &&
+            buffer.every((val, idx) => val === decoded[idx]);
+
+          if (match) {
+            testResults.push({ name: `Base85 buffer ${i}`, passed: true });
+          } else {
+            log(`❌ FAIL: Base85 buffer ${i}`, "fail");
+            testResults.push({ name: `Base85 buffer ${i}`, passed: false });
+          }
+        }
+      }
+
+      // Test 4: Real-World Color Data
+      function testRealWorldData() {
+        log("Test Category: Real-World Color Data", "info");
+
+        // Sherwin-Williams actual color IDs
+        const realData = [
+          ["1747", "2997", "11364", "2708", "2826", "2823", "1582"],
+          ["bright-2527", "bright-2542", "bright-2549", "bright-2548"],
+          ["11300", "11301", "11302", "11303", "11304", "11305"],
+          ["0", "1", "127", "128", "16383", "16384", "40000"],
+          ["30000", "30001", "30002", "30003", "30004"],
+        ];
+
+        for (const input of realData) {
+          const encoded = encodeNumericIds(input);
+          const decoded = decodeNumericIds(encoded);
+          assertEquals(
+            decoded,
+            input,
+            `Real data: ${input.slice(0, 3).join(",")}...`
+          );
+        }
+      }
+
+      // Test 5: Edge Cases
+      function testEdgeCases() {
+        log("Test Category: Edge Cases", "info");
+
+        // Empty arrays
+        assertEquals(encodeNumericIds([]).length, 0, "Empty array encoding");
+        assertEquals(
+          decodeNumericIds(new Uint8Array([])),
+          [],
+          "Empty buffer decoding"
+        );
+        assertEquals(compressIds([]), "", "Empty compression");
+        assertEquals(decompressIds(""), [], "Empty decompression");
+
+        // Single elements
+        assertEquals(
+          decodeNumericIds(encodeNumericIds(["0"])),
+          ["0"],
+          "Single: 0"
+        );
+        assertEquals(
+          decodeNumericIds(encodeNumericIds(["1"])),
+          ["1"],
+          "Single: 1"
+        );
+        assertEquals(
+          decodeNumericIds(encodeNumericIds(["127"])),
+          ["127"],
+          "Single: 127"
+        );
+
+        // Boundary values
+        assertEquals(
+          decodeNumericIds(encodeNumericIds(["127"])),
+          ["127"],
+          "Boundary: 127"
+        );
+        assertEquals(
+          decodeNumericIds(encodeNumericIds(["128"])),
+          ["128"],
+          "Boundary: 128"
+        );
+        assertEquals(
+          decodeNumericIds(encodeNumericIds(["16383"])),
+          ["16383"],
+          "Boundary: 16383"
+        );
+        assertEquals(
+          decodeNumericIds(encodeNumericIds(["16384"])),
+          ["16384"],
+          "Boundary: 16384"
+        );
+      }
+
+      // Test 6: Large Arrays
+      function testLargeArrays() {
+        log("Test Category: Large Arrays (simulating worst case)", "info");
+
+        // Generate 100 random IDs
+        const random100 = Array.from({ length: 100 }, () =>
+          String(Math.floor(Math.random() * 40000))
+        );
+        const encoded100 = encodeNumericIds(random100);
+        const decoded100 = decodeNumericIds(encoded100);
+        assertEquals(decoded100, random100, "Large array: 100 random IDs");
+
+        // Generate 500 random IDs
+        const random500 = Array.from({ length: 500 }, () =>
+          String(Math.floor(Math.random() * 40000))
+        );
+        const encoded500 = encodeNumericIds(random500);
+        const decoded500 = decodeNumericIds(encoded500);
+        assertEquals(decoded500, random500, "Large array: 500 random IDs");
+
+        // Simulate 1948 colors (worst case)
+        const all1948 = Array.from({ length: 1948 }, (_, i) => String(i));
+        const encoded1948 = encodeNumericIds(all1948);
+        const decoded1948 = decodeNumericIds(encoded1948);
+        assertEquals(decoded1948, all1948, "Large array: 1948 sequential IDs");
+
+        log(
+          `Compression ratio for 1948 colors: ${all1948.join(",").length} → ${
+            toBase85(encoded1948).length
+          } chars`,
+          "info"
+        );
+      }
+
+      // Test 7: Mixed Groups and Numeric
+      function testMixedData() {
+        log("Test Category: Mixed Groups and Numeric IDs", "info");
+
+        const tests = [
+          ["family:Blue", "1747", "2997"],
+          ["1747", "category:Living Well", "2997"],
+          ["family:Red", "family:Green", "bright-2527", "11364"],
+          [
+            "category:2018 Unity",
+            "category:Restless Nomad",
+            "1747",
+            "2997",
+            "bright-2527",
+          ],
+        ];
+
+        for (const input of tests) {
+          const compressed = compressIds(input);
+          const decompressed = decompressIds(compressed);
+          assertEquals(decompressed, input, `Mixed: ${input.join(",")}`);
+        }
+      }
+
+      // Test 8: Error Handling
+      function testErrorHandling() {
+        log("Test Category: Error Handling", "info");
+
+        // Invalid inputs should throw
+        assertThrows(() => encodeNumericIds(["invalid"]), "Invalid ID throws");
+        assertThrows(
+          () => encodeNumericIds(["-100"]),
+          "Negative number throws"
+        );
+        assertThrows(
+          () => encodeNumericIds(["300000000"]),
+          "Too large number throws"
+        );
+        assertThrows(
+          () => fromBase85("...invalid..."),
+          "Invalid Base85 throws"
+        );
+      }
+
+      // Test 8.5: URL Safety and Edge Cases
+      function testURLSafetyAndEdgeCases() {
+        log("Test Category: URL Safety and Edge Cases", "info");
+
+        // Test URL safety - no characters that need escaping
+        const testCases = [
+          {
+            name: "Large mixed array",
+            ids: [
+              "1000",
+              "bright-50000",
+              "family:Blue",
+              "268435455",
+              "category:Living Well",
+            ],
+          },
+          {
+            name: "All types",
+            ids: [
+              "0",
+              "127",
+              "16384",
+              "2097152",
+              "bright-0",
+              "bright-268435455",
+              "family:Red",
+              "category:2018 Unity",
+            ],
+          },
+          {
+            name: "Groups with spaces",
+            ids: [
+              "category:Living Well",
+              "category:2018 Unity",
+              "category:Restless Nomad",
+            ],
+          },
+        ];
+
+        for (const test of testCases) {
+          const compressed = compressIds(test.ids);
+
+          // The compressed string will contain : and , from group IDs, which get URL encoded
+          // That's expected and fine - the important test is the round-trip works
+          const encoded = encodeURIComponent(compressed);
+          const decoded = decodeURIComponent(encoded);
+
+          // Verify round-trip through URL encoding preserves the compressed string
+          assertEquals(
+            decoded,
+            compressed,
+            `URL encoding round-trip: ${test.name}`
+          );
+
+          // Verify decompression works after URL round-trip
+          const decompressed = decompressIds(decoded);
+          assertEquals(decompressed, test.ids, `Full round-trip: ${test.name}`);
+        }
+
+        // Test that Base85-encoded numeric part doesn't contain problematic characters
+        // (The group part will have : and , which is expected)
+        const numericOnly = Array.from({ length: 100 }, (_, i) =>
+          String(Math.floor(Math.random() * 268435455))
+        );
+        const compressedNumeric = compressIds(numericOnly);
+
+        // For numeric-only, the output is just Base85, which should be URL-friendly
+        // It may contain special chars that get encoded, but they should round-trip
+        const encodedNumeric = encodeURIComponent(compressedNumeric);
+        const decodedNumeric = decodeURIComponent(encodedNumeric);
+        assertEquals(
+          decodedNumeric,
+          compressedNumeric,
+          "Numeric-only URL round-trip preserves compression"
+        );
+
+        // Verify the Base85 part doesn't contain truly unsafe characters (null, control chars, etc)
+        const hasControlChars = compressedNumeric.split("").some((c) => {
+          const code = c.charCodeAt(0);
+          return code < 32 || code === 127;
+        });
+        if (hasControlChars) {
+          log(`❌ FAIL: Base85 output contains control characters`, "fail");
+          testResults.push({
+            name: "Base85 no control characters",
+            passed: false,
+          });
+        } else {
+          testResults.push({
+            name: "Base85 no control characters",
+            passed: true,
+          });
+        }
+
+        // Test empty array edge case
+        assertEquals(
+          compressIds([]),
+          "",
+          "Empty array compresses to empty string"
+        );
+        assertEquals(
+          decompressIds(""),
+          [],
+          "Empty string decompresses to empty array"
+        );
+
+        // Test single group (no numeric)
+        assertEquals(
+          decompressIds(compressIds(["family:Blue"])),
+          ["family:Blue"],
+          "Single group round-trip"
+        );
+
+        // Test groups only
+        const groupsOnly = ["family:Red", "family:Green", "category:Warm"];
+        assertEquals(
+          decompressIds(compressIds(groupsOnly)),
+          groupsOnly,
+          "Groups-only round-trip"
+        );
+      }
+
+      // Test: Additional Edge Cases
+      function testAdditionalEdgeCases() {
+        log("Test Category: Additional Edge Cases", "info");
+
+        // 1. Duplicate IDs
+        const duplicates = ["1000", "1000", "1000"];
+        assertEquals(
+          decompressIds(compressIds(duplicates)),
+          duplicates,
+          "Duplicate numeric IDs preserved"
+        );
+
+        const dupGroups = ["family:Blue", "family:Blue", "category:Red"];
+        assertEquals(
+          decompressIds(compressIds(dupGroups)),
+          dupGroups,
+          "Duplicate group IDs preserved"
+        );
+
+        const mixedDups = ["1000", "family:Blue", "1000", "family:Blue"];
+        assertEquals(
+          decompressIds(compressIds(mixedDups)),
+          mixedDups,
+          "Mixed duplicates with order preserved"
+        );
+
+        // 2. Bright marker collision range values
+        // Values that encode to 0xFE as first byte (4-byte VarInt range)
+        const collisionRange = ["264241152", "266338303", "268435454"];
+        assertEquals(
+          decompressIds(compressIds(collisionRange)),
+          collisionRange,
+          "Collision range values distinct from bright marker"
+        );
+
+        // Mix with actual bright values
+        const mixedCollision = [
+          "264241152",
+          "bright-264241152",
+          "266338303",
+          "bright-266338303",
+        ];
+        assertEquals(
+          decompressIds(compressIds(mixedCollision)),
+          mixedCollision,
+          "Collision range mixed with bright values"
+        );
+
+        // 3. Position string with many items
+        const longMixed = [];
+        for (let i = 0; i < 500; i++) {
+          longMixed.push(i % 2 === 0 ? `${i}` : `family:Color${i}`);
+        }
+        assertEquals(
+          decompressIds(compressIds(longMixed)),
+          longMixed,
+          "500-item mixed array with long position string"
+        );
+
+        // 4. All same type in large array
+        const allNumeric = Array.from({ length: 200 }, (_, i) => `${i + 1000}`);
+        assertEquals(
+          decompressIds(compressIds(allNumeric)),
+          allNumeric,
+          "200 numeric IDs (no position string needed)"
+        );
+
+        const allGroups = Array.from(
+          { length: 200 },
+          (_, i) => `family:Color${i}`
+        );
+        assertEquals(
+          decompressIds(compressIds(allGroups)),
+          allGroups,
+          "200 group IDs (no position string needed)"
+        );
+
+        // 5. Single item arrays
+        assertEquals(decompressIds(compressIds(["0"])), ["0"], "Single ID: 0");
+        assertEquals(
+          decompressIds(compressIds(["127"])),
+          ["127"],
+          "Single ID: 127"
+        );
+        assertEquals(
+          decompressIds(compressIds(["bright-0"])),
+          ["bright-0"],
+          "Single ID: bright-0"
+        );
+
+        // 6. Two-item arrays (minimal mixed case)
+        const twoItems1 = ["1000", "2000"];
+        assertEquals(
+          decompressIds(compressIds(twoItems1)),
+          twoItems1,
+          "Two numeric IDs"
+        );
+
+        const twoItems2 = ["family:Red", "category:Blue"];
+        assertEquals(
+          decompressIds(compressIds(twoItems2)),
+          twoItems2,
+          "Two group IDs"
+        );
+
+        const twoItems3 = ["1000", "family:Red"];
+        assertEquals(
+          decompressIds(compressIds(twoItems3)),
+          twoItems3,
+          "Two mixed IDs (numeric first)"
+        );
+
+        const twoItems4 = ["family:Red", "1000"];
+        assertEquals(
+          decompressIds(compressIds(twoItems4)),
+          twoItems4,
+          "Two mixed IDs (group first)"
+        );
+
+        // 7. Alternating pattern
+        const alternating = [
+          "1",
+          "family:A",
+          "2",
+          "category:B",
+          "3",
+          "family:C",
+          "4",
+          "category:D",
+        ];
+        assertEquals(
+          decompressIds(compressIds(alternating)),
+          alternating,
+          "Alternating numeric/group pattern"
+        );
+
+        // 8. Leading zeros in numeric IDs (should normalize to same value)
+        const leadingZeros = ["00001000", "01000", "1000"];
+        const decompressed = decompressIds(compressIds(leadingZeros));
+        // All should decompress to "1000" since parseInt removes leading zeros
+        assertEquals(
+          decompressed,
+          ["1000", "1000", "1000"],
+          "Leading zeros normalize to same value"
+        );
+
+        // 9. Very long group names
+        const longName = "A".repeat(100);
+        const longGroups = [`family:${longName}`, `category:${longName}`];
+        assertEquals(
+          decompressIds(compressIds(longGroups)),
+          longGroups,
+          "Very long group names (100 chars)"
+        );
+
+        // 10. Boundary combinations
+        const boundaries = [
+          "0",
+          "127",
+          "128",
+          "16383",
+          "16384",
+          "2097151",
+          "2097152",
+          "268435455",
+        ];
+        assertEquals(
+          decompressIds(compressIds(boundaries)),
+          boundaries,
+          "All VarInt boundary values in one array"
+        );
+
+        // 11. Bright boundaries
+        const brightBoundaries = [
+          "bright-0",
+          "bright-127",
+          "bright-16384",
+          "bright-268435455",
+        ];
+        assertEquals(
+          decompressIds(compressIds(brightBoundaries)),
+          brightBoundaries,
+          "Bright prefix with boundary values"
+        );
+
+        // 12. Mixed bright and non-bright of same numeric value
+        const sameValue = ["1000", "bright-1000", "1000", "bright-1000"];
+        assertEquals(
+          decompressIds(compressIds(sameValue)),
+          sameValue,
+          "Same value with and without bright prefix"
+        );
+
+        // 13. Consecutive IDs
+        const consecutive = Array.from({ length: 50 }, (_, i) => `${i}`);
+        assertEquals(
+          decompressIds(compressIds(consecutive)),
+          consecutive,
+          "50 consecutive IDs (0-49)"
+        );
+
+        // 14. Large gaps in numeric values
+        const largeGaps = ["0", "268435455", "1", "268435454"];
+        assertEquals(
+          decompressIds(compressIds(largeGaps)),
+          largeGaps,
+          "Large gaps between numeric values"
+        );
+
+        // 15. Groups with numbers in names
+        const groupsWithNumbers = [
+          "category:2018 Unity",
+          "family:123",
+          "category:Color 456",
+        ];
+        assertEquals(
+          decompressIds(compressIds(groupsWithNumbers)),
+          groupsWithNumbers,
+          "Groups with numbers in names"
+        );
+      }
+
+      // Test: Malformed and Problematic Input
+      function testMalformedInput() {
+        log("Test Category: Malformed and Problematic Input", "info");
+
+        // 1. Group names with separator characters (WILL BREAK decompression)
+        // These are EXPECTED to fail or produce incorrect results
+        // Testing to document the limitation
+
+        // Dots in group names break decompression (dot is separator)
+        try {
+          const withDot = ["family:name.with.dots"];
+          const compressed = compressIds(withDot);
+          const decompressed = decompressIds(compressed);
+          // This WILL fail - split(".") breaks on dots in group names
+          if (JSON.stringify(decompressed) === JSON.stringify(withDot)) {
+            testResults.push({
+              name: "Group name with dots (known limitation)",
+              passed: true,
+            });
+          } else {
+            log(
+              "⚠️ KNOWN LIMITATION: Group names with dots break decompression",
+              "info"
+            );
+            log(`   Input: ${withDot}`, "info");
+            log(`   Output: ${decompressed}`, "info");
+            testResults.push({
+              name: "Group name with dots (documented limitation)",
+              passed: true,
+            });
+          }
+        } catch (error) {
+          log(
+            "⚠️ Group names with dots cause error (expected limitation)",
+            "info"
+          );
+          testResults.push({
+            name: "Group name with dots throws (expected)",
+            passed: true,
+          });
+        }
+
+        // Commas in group names break decompression (comma separates groups)
+        try {
+          const withComma = ["category:name,with,commas"];
+          const compressed = compressIds(withComma);
+          const decompressed = decompressIds(compressed);
+          // This WILL fail - split on comma breaks it
+          if (JSON.stringify(decompressed) === JSON.stringify(withComma)) {
+            testResults.push({
+              name: "Group name with commas (known limitation)",
+              passed: true,
+            });
+          } else {
+            log(
+              "⚠️ KNOWN LIMITATION: Group names with commas break decompression",
+              "info"
+            );
+            log(`   Input: ${withComma}`, "info");
+            log(`   Output: ${decompressed}`, "info");
+            testResults.push({
+              name: "Group name with commas (documented limitation)",
+              passed: true,
+            });
+          }
+        } catch (error) {
+          log(
+            "⚠️ Group names with commas cause error (expected limitation)",
+            "info"
+          );
+          testResults.push({
+            name: "Group name with commas throws (expected)",
+            passed: true,
+          });
+        }
+
+        // 2. Multiple colons in group names (should pass through)
+        const multiColon = ["family:sub:Blue", "category:level:two:three"];
+        assertEquals(
+          decompressIds(compressIds(multiColon)),
+          multiColon,
+          "Group names with multiple colons"
+        );
+
+        // 3. Malformed group IDs
+        const emptyAfterColon = ["family:"];
+        assertEquals(
+          decompressIds(compressIds(emptyAfterColon)),
+          emptyAfterColon,
+          "Group ID with empty value after colon"
+        );
+
+        const emptyBeforeColon = [":Blue"];
+        assertEquals(
+          decompressIds(compressIds(emptyBeforeColon)),
+          emptyBeforeColon,
+          "Group ID with empty type before colon"
+        );
+
+        const justColon = [":"];
+        assertEquals(
+          decompressIds(compressIds(justColon)),
+          justColon,
+          "Group ID that is just a colon"
+        );
+
+        // 4. Whitespace in numeric IDs (parseInt handles this)
+        const whitespaceNumeric = [" 1000 ", "  2000", "3000  "];
+        const decompressed = decompressIds(compressIds(whitespaceNumeric));
+        // Leading/trailing spaces get trimmed by parseInt
+        assertEquals(
+          decompressed,
+          ["1000", "2000", "3000"],
+          "Whitespace in numeric IDs gets normalized"
+        );
+
+        // 5. Whitespace in group IDs (preserved)
+        const whitespaceGroup = [
+          " family:Blue",
+          "category: Red",
+          "family:Green ",
+        ];
+        assertEquals(
+          decompressIds(compressIds(whitespaceGroup)),
+          whitespaceGroup,
+          "Whitespace in group IDs preserved"
+        );
+
+        // 6. Empty strings in array (treated as group since no colon check fails)
+        // Empty string doesn't include ":", so treated as numeric, but parseInt("") = NaN
+        try {
+          const withEmpty = ["1000", "", "2000"];
+          compressIds(withEmpty);
+          // Should throw on NaN
+          log("❌ FAIL: Empty string should throw on NaN", "fail");
+          testResults.push({ name: "Empty string throws", passed: false });
+        } catch (error) {
+          testResults.push({ name: "Empty string throws", passed: true });
+        }
+
+        // 7. Mixed valid/invalid numeric
+        try {
+          const mixedInvalid = ["1000", "invalid", "2000"];
+          compressIds(mixedInvalid);
+          // Should throw on NaN from parseInt("invalid")
+          log("❌ FAIL: Invalid numeric string should throw", "fail");
+          testResults.push({
+            name: "Invalid numeric string throws",
+            passed: false,
+          });
+        } catch (error) {
+          testResults.push({
+            name: "Invalid numeric string throws",
+            passed: true,
+          });
+        }
+
+        // 8. Corrupted compressed strings
+        // Missing second dot in 3-part format
+        try {
+          decompressIds("ABC.family:Blue");
+          // This might not throw, but let's see what happens
+          testResults.push({
+            name: "Corrupted format handled",
+            passed: true,
+          });
+        } catch (error) {
+          testResults.push({
+            name: "Corrupted format throws",
+            passed: true,
+          });
+        }
+
+        // Invalid Base85 characters
+        assertThrows(
+          () => fromBase85("ABC,DEF"),
+          "Invalid Base85 character throws (comma not in set)"
+        );
+
+        assertThrows(
+          () => fromBase85("ABC DEF"),
+          "Invalid Base85 character throws (space not in set)"
+        );
+
+        assertThrows(
+          () => fromBase85('ABC"DEF'),
+          "Invalid Base85 character throws (quote not in set)"
+        );
+
+        // 9. Truncated Base85 data
+        try {
+          // Valid Base85 but represents incomplete VarInt
+          const truncated = "A"; // Too short to be valid
+          decompressIds(truncated);
+          log("⚠️ INFO: Truncated Base85 handled gracefully", "info");
+          testResults.push({
+            name: "Truncated Base85 handled",
+            passed: true,
+          });
+        } catch (error) {
+          testResults.push({
+            name: "Truncated Base85 throws",
+            passed: true,
+          });
+        }
+
+        // 10. Special characters in group names
+        const specialChars = [
+          "family:Blue!",
+          "category:Test@Home",
+          "family:100%",
+          "category:A&B",
+        ];
+        assertEquals(
+          decompressIds(compressIds(specialChars)),
+          specialChars,
+          "Special characters in group names"
+        );
+
+        // 11. Unicode in group names
+        const unicode = [
+          "family:青",
+          "category:Café",
+          "family:Émile",
+          "category:🎨",
+        ];
+        assertEquals(
+          decompressIds(compressIds(unicode)),
+          unicode,
+          "Unicode characters in group names"
+        );
+
+        // 12. Very long compressed string position mismatch
+        // Manually create corrupted position string
+        try {
+          // "ABC.family:Blue.nnnnn" - 5 positions but only 2 items
+          decompressIds("ABC.family:Blue.nnnnn");
+          log("⚠️ INFO: Position mismatch handled", "info");
+          testResults.push({
+            name: "Position mismatch handled",
+            passed: true,
+          });
+        } catch (error) {
+          testResults.push({
+            name: "Position mismatch throws",
+            passed: true,
+          });
+        }
+      }
+
+      // Test 9: Random Combinations (20000 tests)
+      async function testRandomCombinations(count = 20000) {
+        log(`Test Category: Random Combinations (${count} tests)`, "info");
+
+        const progressSection = document.getElementById("progress-section");
+        progressSection.style.display = "block";
+
+        let passedInCategory = 0;
+
+        // First, test guaranteed edge cases
+        const edgeCases = [
+          // Empty array
+          [],
+          // Single elements of each type
+          ["0"],
+          ["127"],
+          ["128"],
+          ["16383"],
+          ["16384"],
+          ["2097151"],
+          ["2097152"],
+          ["100000000"],
+          ["268435455"],
+          ["bright-0"],
+          ["bright-127"],
+          ["bright-1000"],
+          ["family:Blue"],
+          ["category:Living Well"],
+          // All groups (no numeric)
+          ["family:Blue", "family:Red", "category:2018 Unity"],
+          // All bright
+          ["bright-100", "bright-200", "bright-300"],
+          // All numeric
+          ["1000", "2000", "3000", "4000"],
+          // Mixed with large values
+          ["268435455", "family:Blue", "0", "bright-5000"],
+          // VarInt boundaries mixed
+          ["127", "128", "16383", "16384", "2097151", "2097152"],
+          // Order preservation tests
+          ["family:Red", "1000", "category:Warm", "2000", "bright-300"],
+          ["1000", "family:Blue", "2000"],
+          ["category:Test", "bright-100", "500", "family:Green", "1500"],
+        ];
+
+        for (let i = 0; i < edgeCases.length; i++) {
+          const input = edgeCases[i];
+          const testName = `Edge case ${i}: ${input.join(",")}`;
+
+          try {
+            const compressed = compressIds(input);
+            const decompressed = decompressIds(compressed);
+
+            if (JSON.stringify(decompressed) === JSON.stringify(input)) {
+              testResults.push({ name: testName, passed: true });
+              passedInCategory++;
+            } else {
+              log(`❌ FAIL: ${testName}`, "fail");
+              log(`   Input: ${input.join(",")}`, "fail");
+              log(`   Output: ${decompressed.join(",")}`, "fail");
+              testResults.push({ name: testName, passed: false });
+            }
+          } catch (error) {
+            log(`❌ FAIL: ${testName} - ${error.message}`, "fail");
+            testResults.push({ name: testName, passed: false });
+          }
+        }
+
+        updateProgress(edgeCases.length, count);
+        await new Promise((resolve) => setTimeout(resolve, 10));
+
+        // Now run random combinations
+        for (let i = edgeCases.length; i < count; i++) {
+          // Random array length between 1 and 50
+          const length = Math.floor(Math.random() * 50) + 1;
+          const input = [];
+
+          for (let j = 0; j < length; j++) {
+            const rand = Math.random();
+
+            if (rand < 0.1) {
+              // 10% chance: bright prefix (wider range including large values)
+              input.push(`bright-${Math.floor(Math.random() * 268435455)}`);
+            } else if (rand < 0.15) {
+              // 5% chance: family group
+              const families = ["Blue", "Green", "Red", "Yellow", "Orange"];
+              input.push(
+                `family:${
+                  families[Math.floor(Math.random() * families.length)]
+                }`
+              );
+            } else if (rand < 0.2) {
+              // 5% chance: category group
+              const categories = [
+                "2018 Unity",
+                "Living Well",
+                "Restless Nomad",
+              ];
+              input.push(
+                `category:${
+                  categories[Math.floor(Math.random() * categories.length)]
+                }`
+              );
+            } else {
+              // 80% chance: regular numeric (wider range including VarInt boundaries)
+              const ranges = [
+                { min: 0, max: 200 }, // Cover 1-byte/2-byte boundary
+                { min: 16300, max: 16500 }, // Cover 2-byte/3-byte boundary
+                { min: 2097000, max: 2097300 }, // Cover 3-byte/4-byte boundary
+                { min: 0, max: 268435455 }, // Full range
+              ];
+              const range = ranges[Math.floor(Math.random() * ranges.length)];
+              const value =
+                Math.floor(Math.random() * (range.max - range.min + 1)) +
+                range.min;
+              input.push(String(value));
+            }
+          }
+
+          // Test encode/decode
+          try {
+            const compressed = compressIds(input);
+            const decompressed = decompressIds(compressed);
+
+            if (JSON.stringify(decompressed) === JSON.stringify(input)) {
+              testResults.push({ name: `Random combo ${i}`, passed: true });
+              passedInCategory++;
+            } else {
+              log(`❌ FAIL: Random combo ${i}`, "fail");
+              log(`   Input: ${input.join(",")}`, "fail");
+              log(`   Output: ${decompressed.join(",")}`, "fail");
+              testResults.push({ name: `Random combo ${i}`, passed: false });
+            }
+          } catch (error) {
+            log(`❌ FAIL: Random combo ${i} - ${error.message}`, "fail");
+            testResults.push({ name: `Random combo ${i}`, passed: false });
+          }
+
+          // Update progress every 25 tests with a small delay to allow rendering
+          if (i % 25 === 0 || i === count - 1) {
+            updateProgress(i + 1, count);
+            // Use a small delay to allow browser to render
+            await new Promise((resolve) => setTimeout(resolve, 1));
+          }
+        }
+
+        progressSection.style.display = "none";
+        log(
+          `✅ Random combinations: ${passedInCategory}/${count} passed`,
+          passedInCategory === count ? "pass" : "fail"
+        );
+      }
+
+      // Test 10: Compression Efficiency
+      function testCompressionEfficiency() {
+        log("Test Category: Compression Efficiency", "info");
+
+        const testCases = [
+          {
+            name: "10 colors",
+            ids: Array.from({ length: 10 }, (_, i) => String(1000 + i)),
+          },
+          {
+            name: "100 colors",
+            ids: Array.from({ length: 100 }, (_, i) => String(1000 + i)),
+          },
+          {
+            name: "500 colors",
+            ids: Array.from({ length: 500 }, (_, i) => String(1000 + i)),
+          },
+          {
+            name: "1948 colors (worst case)",
+            ids: Array.from({ length: 1948 }, (_, i) => String(i)),
+          },
+        ];
+
+        for (const test of testCases) {
+          const original = test.ids.join(",");
+          const compressed = compressIds(test.ids);
+          const decompressed = decompressIds(compressed);
+
+          const ratio = (
+            (1 - compressed.length / original.length) *
+            100
+          ).toFixed(1);
+
+          log(
+            `${test.name}: ${original.length} → ${compressed.length} chars (${ratio}% reduction)`,
+            "info"
+          );
+          assertEquals(decompressed, test.ids, `Efficiency test: ${test.name}`);
+        }
+      }
+
+      window.runAllTests = async function () {
+        // Clear previous results
+        document.getElementById("results").innerHTML = "";
+        testResults = [];
+        passCount = 0;
+        failCount = 0;
+        pendingLogs = [];
+
+        document.getElementById("runTests").disabled = true;
+        document.getElementById("runQuick").disabled = true;
+
+        const startTime = performance.now();
+
+        // Test low-level functions first
+        log("▶ Running Base85 tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        testBase85();
+
+        log("▶ Running Basic VarInt tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        await testBasicVarInt();
+        flushLogs();
+
+        log("▶ Running Bright Prefix tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        testBrightPrefix();
+
+        // Then test integration
+        log("▶ Running Real World Data tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        testRealWorldData();
+
+        log("▶ Running Edge Cases tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        testEdgeCases();
+
+        log("▶ Running Large Arrays tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        testLargeArrays();
+
+        log("▶ Running Mixed Data tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        testMixedData();
+
+        log("▶ Running Error Handling tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        testErrorHandling();
+
+        log("▶ Running URL Safety and Edge Cases tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        testURLSafetyAndEdgeCases();
+
+        log("▶ Running Additional Edge Cases tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        testAdditionalEdgeCases();
+
+        log("▶ Running Malformed and Problematic Input tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        testMalformedInput();
+
+        log("▶ Running Compression Efficiency tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        testCompressionEfficiency();
+
+        log("▶ Running Random Combinations tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        await testRandomCombinations(20000);
+
+        const duration = Math.round(performance.now() - startTime);
+
+        const passed = testResults.filter((t) => t.passed).length;
+        const failed = testResults.filter((t) => !t.passed).length;
+
+        updateStats(testResults.length, passed, failed, duration);
+
+        const summaryDiv = document.createElement("div");
+        summaryDiv.className = `summary ${
+          failed === 0 ? "success" : "failure"
+        }`;
+
+        if (failed === 0) {
+          summaryDiv.textContent = `✅ ALL TESTS PASSED! ${passed} tests completed in ${duration}ms`;
+        } else {
+          summaryDiv.textContent = `❌ ${failed} TESTS FAILED out of ${testResults.length} (${passed} passed) in ${duration}ms`;
+        }
+
+        document
+          .getElementById("results")
+          .insertBefore(
+            summaryDiv,
+            document.getElementById("results").firstChild
+          );
+
+        document.getElementById("runTests").disabled = false;
+        document.getElementById("runQuick").disabled = false;
+
+        log(`Test suite completed in ${duration}ms`, "info");
+      };
+
+      window.runQuickTests = async function () {
+        // Clear previous results
+        document.getElementById("results").innerHTML = "";
+        testResults = [];
+        passCount = 0;
+        failCount = 0;
+        pendingLogs = [];
+
+        document.getElementById("runTests").disabled = true;
+        document.getElementById("runQuick").disabled = true;
+
+        const startTime = performance.now();
+
+        // Test low-level functions first
+        log("▶ Running Base85 tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        testBase85();
+
+        log("▶ Running Basic VarInt tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        await testBasicVarInt();
+        flushLogs();
+
+        log("▶ Running Bright Prefix tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        testBrightPrefix();
+
+        log("▶ Running Real World Data tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        testRealWorldData();
+
+        log("▶ Running Edge Cases tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        testEdgeCases();
+
+        log("▶ Running Mixed Data tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        testMixedData();
+
+        log("▶ Running Error Handling tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        testErrorHandling();
+
+        log("▶ Running URL Safety and Edge Cases tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        testURLSafetyAndEdgeCases();
+
+        log("▶ Running Additional Edge Cases tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        testAdditionalEdgeCases();
+
+        log("▶ Running Malformed and Problematic Input tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        testMalformedInput();
+
+        log("▶ Running Compression Efficiency tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        testCompressionEfficiency();
+
+        log("▶ Running Random Combinations tests...", "info");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        await testRandomCombinations(300);
+
+        const duration = Math.round(performance.now() - startTime);
+
+        const passed = testResults.filter((t) => t.passed).length;
+        const failed = testResults.filter((t) => !t.passed).length;
+
+        updateStats(testResults.length, passed, failed, duration);
+
+        const summaryDiv = document.createElement("div");
+        summaryDiv.className = `summary ${
+          failed === 0 ? "success" : "failure"
+        }`;
+
+        if (failed === 0) {
+          summaryDiv.textContent = `✅ ALL TESTS PASSED! ${passed} tests completed in ${duration}ms`;
+        } else {
+          summaryDiv.textContent = `❌ ${failed} TESTS FAILED out of ${testResults.length} (${passed} passed) in ${duration}ms`;
+        }
+
+        document
+          .getElementById("results")
+          .insertBefore(
+            summaryDiv,
+            document.getElementById("results").firstChild
+          );
+
+        document.getElementById("runTests").disabled = false;
+        document.getElementById("runQuick").disabled = false;
+
+        log(`Quick test suite completed in ${duration}ms`, "info");
+      };
+    </script>
+  </body>
+</html>

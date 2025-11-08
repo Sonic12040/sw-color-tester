@@ -7,10 +7,11 @@
  * - Sync state with URL parameters
  * - Provide state query and mutation methods
  * - Consolidate favorites and hidden colors into family/category groups in URLs
+ * - Compress URL parameters using custom numeric encoding
  */
 
-import { URLParameterManager } from "../utils/url-parameter-utilities.js";
 import { URL_PARAMS, PREFIX } from "../utils/config.js";
+import { compressIds, decompressIds } from "../utils/numeric-encoding.js";
 
 export class AppState {
   constructor(colorModel = null) {
@@ -42,25 +43,25 @@ export class AppState {
     if (!this.colorModel) return ids;
 
     const expandedIds = new Set();
-    const favoriteIds = this.getFavorites();
 
     for (const id of ids) {
       if (id.startsWith(`${PREFIX.FAMILY}:`)) {
         // Family group: "family:Red"
         const familyName = id.substring(PREFIX.FAMILY.length + 1);
-        const colorIds = this.colorModel.getColorIdsForFamily(
-          familyName,
-          favoriteIds
-        );
+        // Pass empty array to getColorIdsForFamily to get ALL colors in the family
+        // (don't exclude any during expansion)
+        const colorIds = this.colorModel.getColorIdsForFamily(familyName, []);
         for (const colorId of colorIds) {
           expandedIds.add(colorId);
         }
       } else if (id.startsWith(`${PREFIX.CATEGORY}:`)) {
         // Category group: "category:Living Well"
         const categoryName = id.substring(PREFIX.CATEGORY.length + 1);
+        // Pass empty array to getColorIdsForCategory to get ALL colors in the category
+        // (don't exclude any during expansion)
         const colorIds = this.colorModel.getColorIdsForCategory(
           categoryName,
-          favoriteIds
+          []
         );
         for (const colorId of colorIds) {
           expandedIds.add(colorId);
@@ -151,10 +152,34 @@ export class AppState {
    * Load state from URL parameters
    */
   loadFromURL() {
-    const favoriteIds = URLParameterManager.getArrayParameter(
-      URL_PARAMS.FAVORITES
-    );
-    const hiddenIds = URLParameterManager.getArrayParameter(URL_PARAMS.HIDDEN);
+    // Get compressed parameters from URL
+    const params = new URLSearchParams(globalThis.location.search);
+    const compressedFavorites = params.get(URL_PARAMS.FAVORITES) || "";
+    const compressedHidden = params.get(URL_PARAMS.HIDDEN) || "";
+
+    // Decompress to get array of IDs (may include group identifiers)
+    let favoriteIds = [];
+    let hiddenIds = [];
+
+    try {
+      favoriteIds = compressedFavorites
+        ? decompressIds(compressedFavorites)
+        : [];
+    } catch (error) {
+      console.error("Error decompressing favorites:", error);
+      // Fall back to legacy comma-separated format if decompression fails
+      favoriteIds = compressedFavorites
+        .split(",")
+        .filter((id) => id.trim() !== "");
+    }
+
+    try {
+      hiddenIds = compressedHidden ? decompressIds(compressedHidden) : [];
+    } catch (error) {
+      console.error("Error decompressing hidden:", error);
+      // Fall back to legacy comma-separated format if decompression fails
+      hiddenIds = compressedHidden.split(",").filter((id) => id.trim() !== "");
+    }
 
     // Expand any group identifiers in both favorites and hidden
     const expandedFavoriteIds = this._expandGroupIds(favoriteIds);
@@ -171,13 +196,31 @@ export class AppState {
     const favoriteArray = Array.from(this.favorites);
     const hiddenArray = Array.from(this.hidden);
 
+    // First consolidate into group identifiers where possible
     const consolidatedFavorites = this._consolidateFavoriteIds(favoriteArray);
     const consolidatedHidden = this._consolidateHiddenIds(hiddenArray);
 
-    URLParameterManager.batchUpdate({
-      [URL_PARAMS.FAVORITES]: consolidatedFavorites,
-      [URL_PARAMS.HIDDEN]: consolidatedHidden,
-    });
+    // Then compress the consolidated arrays
+    const compressedFavorites = compressIds(consolidatedFavorites);
+    const compressedHidden = compressIds(consolidatedHidden);
+
+    // Update URL with compressed strings
+    const params = new URLSearchParams(globalThis.location.search);
+
+    if (compressedFavorites) {
+      params.set(URL_PARAMS.FAVORITES, compressedFavorites);
+    } else {
+      params.delete(URL_PARAMS.FAVORITES);
+    }
+
+    if (compressedHidden) {
+      params.set(URL_PARAMS.HIDDEN, compressedHidden);
+    } else {
+      params.delete(URL_PARAMS.HIDDEN);
+    }
+
+    const newUrl = `${globalThis.location.pathname}?${params.toString()}`;
+    globalThis.history.replaceState({}, "", newUrl);
   }
 
   /**
