@@ -1,9 +1,27 @@
-import { APP_VERSION } from "./version.js";
 // service-worker.js - PWA Service Worker with Smart Caching
 // GitHub Pages compatible with automatic base path detection
 
-const CACHE_NAME = `sw-color-tester-cache-v${APP_VERSION}`;
+// Fetch version from version.js dynamically
+let APP_VERSION = "1.0.0"; // Default fallback
+let CACHE_NAME = `sw-color-tester-cache-v${APP_VERSION}`;
 const BUILD_DATE = new Date().toISOString();
+
+// Load version from version.js
+async function loadVersion() {
+  try {
+    const response = await fetch("./version.js");
+    const text = await response.text();
+    // Extract version using regex: export const APP_VERSION = "1.0.0";
+    const match = text.match(/APP_VERSION\s*=\s*["']([^"']+)["']/);
+    if (match && match[1]) {
+      APP_VERSION = match[1];
+      CACHE_NAME = `sw-color-tester-cache-v${APP_VERSION}`;
+      console.log("[SW] Loaded version from version.js:", APP_VERSION);
+    }
+  } catch (error) {
+    console.warn("[SW] Could not load version.js, using default:", APP_VERSION);
+  }
+}
 
 // Auto-detect base path for GitHub Pages vs local development
 const isGitHubPages = globalThis.location.hostname.includes("github.io");
@@ -80,47 +98,51 @@ self.addEventListener("install", (event) => {
   console.log("[SW] Installing service worker version", APP_VERSION);
 
   event.waitUntil(
-    caches
-      .open(CACHE_NAME)
-      .then((cache) => {
-        console.log("[SW] Caching static assets...");
-        // Cache static assets immediately
-        return cache.addAll(STATIC_ASSETS);
-      })
-      .then(() => {
-        // Cache large assets separately (non-blocking)
-        console.log("[SW] Pre-caching large assets...");
-        return caches.open(CACHE_NAME).then((cache) => {
-          return Promise.all(
-            LARGE_ASSETS.map((url) =>
-              fetch(url)
-                .then((response) => {
-                  if (response.ok) {
-                    // Store version info
-                    const etag = response.headers.get("etag");
-                    const lastModified = response.headers.get("last-modified");
-                    fileVersions[url] = { etag, lastModified };
+    loadVersion().then(() => {
+      console.log("[SW] Using version:", APP_VERSION);
+      return caches
+        .open(CACHE_NAME)
+        .then((cache) => {
+          console.log("[SW] Caching static assets...");
+          // Cache static assets immediately
+          return cache.addAll(STATIC_ASSETS);
+        })
+        .then(() => {
+          // Cache large assets separately (non-blocking)
+          console.log("[SW] Pre-caching large assets...");
+          return caches.open(CACHE_NAME).then((cache) => {
+            return Promise.all(
+              LARGE_ASSETS.map((url) =>
+                fetch(url)
+                  .then((response) => {
+                    if (response.ok) {
+                      // Store version info
+                      const etag = response.headers.get("etag");
+                      const lastModified =
+                        response.headers.get("last-modified");
+                      fileVersions[url] = { etag, lastModified };
 
-                    console.log(
-                      `[SW] Cached ${url} (${
-                        etag || lastModified || "no version"
-                      })`
-                    );
-                    return cache.put(url, response);
-                  }
-                })
-                .catch((err) =>
-                  console.error(`[SW] Failed to cache ${url}:`, err)
-                )
-            )
-          );
+                      console.log(
+                        `[SW] Cached ${url} (${
+                          etag || lastModified || "no version"
+                        })`
+                      );
+                      return cache.put(url, response);
+                    }
+                  })
+                  .catch((err) =>
+                    console.error(`[SW] Failed to cache ${url}:`, err)
+                  )
+              )
+            );
+          });
+        })
+        .then(() => {
+          console.log("[SW] Install complete, activating immediately");
+          // Force activation immediately
+          return globalThis.skipWaiting();
         });
-      })
-      .then(() => {
-        console.log("[SW] Install complete, activating immediately");
-        // Force activation immediately
-        return globalThis.skipWaiting();
-      })
+    })
   );
 });
 
