@@ -1592,6 +1592,57 @@
   padding: var(--spacing-4);
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
   margin-top: var(--spacing-6);
+  display: flex;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+}
+
+.modal__action-button {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-3) var(--spacing-4);
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--border-radius-md);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex: 1;
+  min-width: max-content;
+}
+
+.modal__action-button:hover {
+  background: var(--color-bg-tertiary);
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.modal__action-button:active {
+  transform: translateY(0);
+}
+
+.modal__action-button svg {
+  flex-shrink: 0;
+}
+
+.modal__action-button--favorite svg {
+  color: var(--color-accent);
+}
+
+.modal__action-button--share svg {
+  color: var(--color-primary);
+}
+
+.modal__action-button--hide svg {
+  color: var(--color-warning);
+}
+
+.modal__action-button--store svg {
+  color: var(--color-success);
 }
 
 .modal__actions-hint {
@@ -1674,6 +1725,14 @@
   
   .modal__actions {
     padding: var(--spacing-3);
+    flex-direction: column;
+    gap: var(--spacing-2);
+  }
+  
+  .modal__action-button {
+    flex: none;
+    width: 100%;
+    justify-content: center;
   }
 }
 

@@ -329,16 +329,19 @@ export function categoryTileTemplate(categoryName, colorCount) {
 }
 
 /**
- * Creates a color detail modal showing full information about a color
- * @param {Object} color - The color object
+ * Creates the color detail modal with coordinating and similar colors
+ * @param {Object} color - The main color object
  * @param {Object} coordinatingColors - Object with coord1, coord2, and white color objects
  * @param {Array} similarColors - Array of similar color objects
+ * @param {boolean} isFavorited - Whether the color is currently favorited
  * @returns {string} HTML string for the modal
  */
 export function colorDetailModal(
   color,
   coordinatingColors = {},
-  similarColors = []
+  similarColors = [],
+  isFavorited = false,
+  isHidden = false
 ) {
   const backgroundColor = generateHSLColor(
     color.hue,
@@ -666,9 +669,56 @@ export function colorDetailModal(
         
         <!-- Priority 4: Actions (Sticky Footer) -->
         <div class="${CSS_CLASSES.MODAL_ACTIONS}">
-          <p class="${
-            CSS_CLASSES.MODAL_ACTIONS_HINT
-          }">More features coming soon</p>
+          <button type="button" 
+                  class="modal__action-button modal__action-button--favorite" 
+                  ${DATA_ATTRIBUTES.ID}="${color.id}"
+                  aria-label="${
+                    isFavorited ? "Remove from" : "Add to"
+                  } favorites">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="${
+              isFavorited ? "currentColor" : "none"
+            }" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              ${ICONS.HEART}
+            </svg>
+            <span>${isFavorited ? "Favorited" : "Add to Favorites"}</span>
+          </button>
+          <button type="button" 
+                  class="modal__action-button modal__action-button--share"
+                  ${DATA_ATTRIBUTES.ID}="${color.id}"
+                  aria-label="Share color">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+            <span>Share</span>
+          </button>
+          <button type="button" 
+                  class="modal__action-button modal__action-button--hide" 
+                  ${DATA_ATTRIBUTES.ID}="${color.id}"
+                  aria-label="${isHidden ? "Show" : "Hide"} color">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              ${isHidden ? ICONS.EYE : ICONS.EYE_OFF}
+            </svg>
+            <span>${isHidden ? "Hidden" : "Hide Color"}</span>
+          </button>
+          ${
+            color.storeStripLocator
+              ? `
+          <button type="button" 
+                  class="modal__action-button modal__action-button--store"
+                  aria-label="Find ${color.name} in store">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>Store: ${color.storeStripLocator}</span>
+          </button>
+          `
+              : ""
+          }
         </div>
       </div>
     </div>

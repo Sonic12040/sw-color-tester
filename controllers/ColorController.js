@@ -9,7 +9,12 @@
  * - Application initialization
  */
 
-import { CSS_CLASSES, ELEMENT_IDS, DATA_ATTRIBUTES } from "../utils/config.js";
+import {
+  CSS_CLASSES,
+  ELEMENT_IDS,
+  DATA_ATTRIBUTES,
+  ICONS,
+} from "../utils/config.js";
 import { colorDetailModal } from "../utils/templates.js";
 import {
   ToggleFavoriteCommand,
@@ -132,11 +137,19 @@ export class ColorController {
       existingModal.remove();
     }
 
+    // Check if color is favorited or hidden
+    const favorites = this.state.getFavorites();
+    const isFavorited = favorites.includes(colorId);
+    const hidden = this.state.getHidden();
+    const isHidden = hidden.includes(colorId);
+
     // Create and insert modal
     const modalHTML = colorDetailModal(
       color,
       coordinatingColors,
-      similarColors
+      similarColors,
+      isFavorited,
+      isHidden
     );
     document.body.insertAdjacentHTML("beforeend", modalHTML);
 
@@ -175,11 +188,115 @@ export class ColorController {
             }
           });
         }
+
+        // Set up action button handlers
+        const favoriteButton = modal.querySelector(
+          ".modal__action-button--favorite"
+        );
+        const shareButton = modal.querySelector(".modal__action-button--share");
+        const hideButton = modal.querySelector(".modal__action-button--hide");
+        const storeButton = modal.querySelector(".modal__action-button--store");
+
+        if (favoriteButton) {
+          favoriteButton.addEventListener("click", () => {
+            this.handleFavoriteButton(colorId);
+            // Update button UI
+            const currentlyFavorited = this.state
+              .getFavorites()
+              .includes(colorId);
+            const heartSvg = favoriteButton.querySelector("svg");
+            const buttonText = favoriteButton.querySelector("span");
+            if (heartSvg && buttonText) {
+              heartSvg.setAttribute(
+                "fill",
+                currentlyFavorited ? "currentColor" : "none"
+              );
+              buttonText.textContent = currentlyFavorited
+                ? "Favorited"
+                : "Add to Favorites";
+              favoriteButton.setAttribute(
+                "aria-label",
+                `${currentlyFavorited ? "Remove from" : "Add to"} favorites`
+              );
+            }
+          });
+        }
+
+        if (shareButton) {
+          shareButton.addEventListener("click", async () => {
+            await this.handleShare(color);
+          });
+        }
+
+        if (hideButton) {
+          hideButton.addEventListener("click", () => {
+            this.handleHideButton(colorId);
+            // Update button UI
+            const currentlyHidden = this.state.getHidden().includes(colorId);
+            const eyeSvg = hideButton.querySelector("svg");
+            const buttonText = hideButton.querySelector("span");
+            if (eyeSvg && buttonText) {
+              // Update SVG icon
+              eyeSvg.innerHTML = currentlyHidden ? ICONS.EYE : ICONS.EYE_OFF;
+              buttonText.textContent = currentlyHidden
+                ? "Hidden"
+                : "Hide Color";
+              hideButton.setAttribute(
+                "aria-label",
+                `${currentlyHidden ? "Show" : "Hide"} color`
+              );
+            }
+          });
+        }
+
+        if (storeButton) {
+          storeButton.addEventListener("click", () => {
+            alert(
+              `Visit your local Sherwin-Williams store and ask for:\n\n${color.name}\nLocation: ${color.storeStripLocator}`
+            );
+          });
+        }
       }
     });
 
     // Prevent body scrolling
     document.body.style.overflow = "hidden";
+  }
+
+  /**
+   * Share color via Web Share API or copy link
+   */
+  async handleShare(color) {
+    const shareData = {
+      title: `${color.name} - Sherwin-Williams`,
+      text: `Check out this color: ${color.name} (${color.colorNumber})`,
+      url:
+        window.location.origin +
+        window.location.pathname +
+        `?color=${color.id}`,
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        // Fallback: copy to clipboard
+        await navigator.clipboard.writeText(shareData.url);
+        // Provide visual feedback
+        const shareButton = document.querySelector(
+          ".modal__action-button--share span"
+        );
+        if (shareButton) {
+          const originalText = shareButton.textContent;
+          shareButton.textContent = "Link Copied!";
+          setTimeout(() => {
+            shareButton.textContent = originalText;
+          }, 2000);
+        }
+      }
+    } catch (err) {
+      console.error("Error sharing:", err);
+    }
   }
 
   /**
