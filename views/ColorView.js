@@ -231,7 +231,12 @@ export class ColorView {
         );
       }
     } else {
-      favoritesContainer.innerHTML = `<div class="${CSS_CLASSES.EMPTY_MESSAGE}">No favorite colors yet. Click the heart icon on any color to add it to your favorites.</div>`;
+      favoritesContainer.innerHTML = `
+        <div class="${CSS_CLASSES.EMPTY_MESSAGE}">
+          <span class="empty-message__text">No favorite colors yet.</span>
+          <span class="empty-message__hint">Click the heart icon on any color to add it to your favorites.</span>
+        </div>
+      `;
     }
   }
 
@@ -300,7 +305,12 @@ export class ColorView {
       hiddenCategories.length === 0 &&
       individualHiddenColors.length === 0
     ) {
-      hiddenContainer.innerHTML = `<div class="${CSS_CLASSES.EMPTY_MESSAGE}">No hidden colors. Click the eye icon on any color to hide it.</div>`;
+      hiddenContainer.innerHTML = `
+        <div class="${CSS_CLASSES.EMPTY_MESSAGE}">
+          <span class="empty-message__text">No hidden colors.</span>
+          <span class="empty-message__hint">Click the eye icon on any color to hide it.</span>
+        </div>
+      `;
     }
   }
 

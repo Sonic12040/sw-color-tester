@@ -1107,13 +1107,51 @@
   opacity: 0.3;
 }
 
+/* Enhanced empty states with visual elements */
 .empty-message {
   text-align: center;
-  color: var(--color-text-muted);
-  font-style: italic;
+  color: var(--color-text-secondary);
   font-size: var(--font-size-base);
   line-height: var(--line-height-relaxed);
-  padding: var(--spacing-6);
+  padding: var(--spacing-8) var(--spacing-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.empty-message::before {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 64px;
+  background-color: var(--color-surface-tertiary);
+  border-radius: var(--radius-full);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 32px 32px;
+  opacity: 0.6;
+}
+
+/* Favorites empty state icon - heart outline */
+#favorites-tiles .empty-message::before {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>');
+}
+
+/* Hidden colors empty state icon - eye-off */
+#hidden-tiles .empty-message::before {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>');
+}
+
+.empty-message__text {
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-normal);
+}
+
+.empty-message__hint {
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-1);
 }
 
 /* Modal Styles */
