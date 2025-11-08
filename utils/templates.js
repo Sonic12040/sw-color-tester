@@ -383,7 +383,9 @@ export function colorDetailModal(
       ? `
       <div class="${CSS_CLASSES.MODAL_SECTION} modal__section--coordinating">
         <h3 class="${CSS_CLASSES.MODAL_SECTION_TITLE}">Coordinating Colors</h3>
-        <p class="modal__section-description">Colors that work beautifully together</p>
+        <p class="${
+          CSS_CLASSES.MODAL_SECTION_DESCRIPTION
+        }">Colors that work beautifully together</p>
         <div class="${CSS_CLASSES.MODAL_COLOR_GRID}">
           ${coordColors
             .map((c, index) => {
@@ -397,7 +399,7 @@ export function colorDetailModal(
                    c.lightness
                  )}; color: ${generateAccessibleText(c)};"
                  title="${c.name}">
-              <div class="modal__mini-tile-role">${role}</div>
+              <div class="${CSS_CLASSES.MODAL_MINI_TILE_ROLE}">${role}</div>
               <div class="${CSS_CLASSES.MODAL_MINI_TILE_NAME}">${c.name}</div>
               <div class="${CSS_CLASSES.MODAL_MINI_TILE_NUMBER}">SW ${
                 c.colorNumber
@@ -417,7 +419,9 @@ export function colorDetailModal(
       ? `
       <div class="${CSS_CLASSES.MODAL_SECTION} modal__section--similar">
         <h3 class="${CSS_CLASSES.MODAL_SECTION_TITLE}">Similar Colors</h3>
-        <p class="modal__section-description">Explore subtle variations</p>
+        <p class="${
+          CSS_CLASSES.MODAL_SECTION_DESCRIPTION
+        }">Explore subtle variations</p>
         <div class="${CSS_CLASSES.MODAL_COLOR_GRID}">
           ${similarColors
             .slice(0, 6)
@@ -446,7 +450,9 @@ export function colorDetailModal(
                    c.lightness
                  )}; color: ${generateAccessibleText(c)};"
                  title="${c.name}">
-              <div class="modal__mini-tile-role">${differentiator}</div>
+              <div class="${
+                CSS_CLASSES.MODAL_MINI_TILE_ROLE
+              }">${differentiator}</div>
               <div class="${CSS_CLASSES.MODAL_MINI_TILE_NAME}">${c.name}</div>
               <div class="${CSS_CLASSES.MODAL_MINI_TILE_NUMBER}">SW ${
                 c.colorNumber
@@ -541,16 +547,26 @@ export function colorDetailModal(
           <!-- Priority 1: Decision Support -->
           <div class="${CSS_CLASSES.MODAL_SECTION} modal__section--priority-1">
             ${
+              descriptions
+                ? `
+              <div class="${CSS_CLASSES.MODAL_MOOD}">
+                <span class="${CSS_CLASSES.MODAL_MOOD_LABEL}">Mood & Feel:</span>
+                <p class="${CSS_CLASSES.MODAL_MOOD_DESCRIPTION}">${descriptions}</p>
+              </div>
+            `
+                : ""
+            }
+            ${
               lrvContext
                 ? `
-              <div class="modal__decision-support">
-                <div class="modal__lrv-context">
-                  <span class="modal__lrv-label">${lrvLabel}</span>
-                  <p class="modal__lrv-description">${lrvContext}</p>
+              <div class="${CSS_CLASSES.MODAL_DECISION_SUPPORT}">
+                <div class="${CSS_CLASSES.MODAL_LRV_CONTEXT}">
+                  <span class="${CSS_CLASSES.MODAL_LRV_LABEL}">${lrvLabel}</span>
+                  <p class="${CSS_CLASSES.MODAL_LRV_DESCRIPTION}">${lrvContext}</p>
                 </div>
-                <div class="modal__best-for">
-                  <span class="modal__label">Best For:</span>
-                  <p class="modal__value">${bestFor}</p>
+                <div class="${CSS_CLASSES.MODAL_BEST_FOR}">
+                  <span class="${CSS_CLASSES.MODAL_LABEL}">Best For:</span>
+                  <p class="${CSS_CLASSES.MODAL_VALUE}">${bestFor}</p>
                 </div>
               </div>
             `
@@ -564,17 +580,21 @@ export function colorDetailModal(
           
           <!-- Priority 3: Technical Details (Accordion) -->
           <div class="${CSS_CLASSES.MODAL_SECTION} modal__section--technical">
-            <button class="modal__accordion-trigger" 
+            <button class="${CSS_CLASSES.MODAL_ACCORDION_TRIGGER}" 
                     type="button"
                     aria-expanded="false"
                     aria-controls="technical-details-panel"
                     id="technical-details-header">
-              <span class="modal__accordion-title">Technical Details</span>
-              <svg class="modal__accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <span class="${
+                CSS_CLASSES.MODAL_ACCORDION_TITLE
+              }">Technical Details</span>
+              <svg class="${
+                CSS_CLASSES.MODAL_ACCORDION_ICON
+              }" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 ${ICONS.CHEVRON_DOWN}
               </svg>
             </button>
-            <div class="modal__accordion-panel"
+            <div class="${CSS_CLASSES.MODAL_ACCORDION_PANEL}"
                  id="technical-details-panel"
                  aria-labelledby="technical-details-header"
                  aria-hidden="true"
@@ -645,8 +665,10 @@ export function colorDetailModal(
         </div>
         
         <!-- Priority 4: Actions (Sticky Footer) -->
-        <div class="modal__actions">
-          <p class="modal__actions-hint">More features coming soon</p>
+        <div class="${CSS_CLASSES.MODAL_ACTIONS}">
+          <p class="${
+            CSS_CLASSES.MODAL_ACTIONS_HINT
+          }">More features coming soon</p>
         </div>
       </div>
     </div>
