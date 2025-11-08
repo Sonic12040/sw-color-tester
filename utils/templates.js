@@ -395,12 +395,18 @@ export function colorDetailModal(
               // Assign contextual roles to coordinating colors
               const role = coordinatingRoles[index] || "Coordinating";
               return `
-            <div class="${CSS_CLASSES.MODAL_MINI_TILE}" 
+            <div class="${
+              CSS_CLASSES.MODAL_MINI_TILE
+            } modal__mini-tile--clickable" 
+                 ${DATA_ATTRIBUTES.ID}="${c.id}"
                  style="background: ${generateHSLColor(
                    c.hue,
                    c.saturation,
                    c.lightness
                  )}; color: ${generateAccessibleText(c)};"
+                 role="button"
+                 tabindex="0"
+                 aria-label="View ${c.name}"
                  title="${c.name}">
               <div class="${CSS_CLASSES.MODAL_MINI_TILE_ROLE}">${role}</div>
               <div class="${CSS_CLASSES.MODAL_MINI_TILE_NAME}">${c.name}</div>
@@ -446,12 +452,18 @@ export function colorDetailModal(
               }
 
               return `
-            <div class="${CSS_CLASSES.MODAL_MINI_TILE}" 
+            <div class="${
+              CSS_CLASSES.MODAL_MINI_TILE
+            } modal__mini-tile--clickable" 
+                 ${DATA_ATTRIBUTES.ID}="${c.id}"
                  style="background: ${generateHSLColor(
                    c.hue,
                    c.saturation,
                    c.lightness
                  )}; color: ${generateAccessibleText(c)};"
+                 role="button"
+                 tabindex="0"
+                 aria-label="View ${c.name}"
                  title="${c.name}">
               <div class="${
                 CSS_CLASSES.MODAL_MINI_TILE_ROLE

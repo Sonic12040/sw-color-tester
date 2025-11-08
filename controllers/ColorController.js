@@ -256,6 +256,27 @@ export class ColorController {
             );
           });
         }
+
+        // Set up clickable mini tiles (coordinating & similar colors)
+        const clickableTiles = modal.querySelectorAll(
+          ".modal__mini-tile--clickable"
+        );
+        clickableTiles.forEach((tile) => {
+          const handleClick = () => {
+            const tileColorId = tile.getAttribute(DATA_ATTRIBUTES.ID);
+            if (tileColorId) {
+              this.openModal(tileColorId);
+            }
+          };
+
+          tile.addEventListener("click", handleClick);
+          tile.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              handleClick();
+            }
+          });
+        });
       }
     });
 

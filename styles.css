@@ -1398,7 +1398,26 @@
   justify-content: flex-end;
   box-shadow: var(--shadow-md);
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.modal__mini-tile--clickable {
   cursor: pointer;
+}
+
+.modal__mini-tile--clickable:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: var(--shadow-lg);
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.modal__mini-tile--clickable:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.modal__mini-tile--clickable:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .modal__mini-tile:hover {
