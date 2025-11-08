@@ -594,7 +594,7 @@
   gap: var(--spacing-4);
 }
 
-/* Color tile base - Mobile-first responsive design */
+/* Color tile base - Mobile-first responsive design with consistent sizing */
 .color-tile {
   width: 100%;
   min-width: 280px;
@@ -616,28 +616,29 @@
   transform: translateZ(0);
 }
 
-/* Tablet and up */
+/* Tablet and up - maintain consistent min/max approach */
 @media (min-width: 600px) {
   .color-tile {
-    width: calc(50% - var(--spacing-2));
     max-width: 350px;
     padding: var(--spacing-4);
   }
 }
 
-/* Desktop */
+/* Desktop - maintain consistent min/max approach */
 @media (min-width: 900px) {
   .color-tile {
-    width: 280px;
+    min-width: 280px;
+    max-width: 320px;
     min-height: 180px;
     padding: var(--spacing-6);
   }
 }
 
-/* Large desktop */
+/* Large desktop - slightly larger tiles with more breathing room */
 @media (min-width: 1200px) {
   .color-tile {
-    width: 300px;
+    min-width: 300px;
+    max-width: 340px;
     min-height: 200px;
   }
 }
