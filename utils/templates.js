@@ -122,6 +122,14 @@ export function colorTemplate(color, options = {}) {
   const isHidden = hiddenIds.includes(color.id);
   const textColor = generateAccessibleText(color);
 
+  // Badge colors based on isDark
+  const badgeBgColor = color.isDark
+    ? "rgba(255, 255, 255, 0.9)"
+    : "rgba(0, 0, 0, 0.75)";
+  const badgeTextColor = color.isDark
+    ? "rgba(0, 0, 0, 0.9)"
+    : "rgba(255, 255, 255, 0.95)";
+
   const favoriteLabel = isFavorited ? "Unfavorite" : "Favorite";
   const favoriteFill = isFavorited ? textColor : "none";
   const hideLabel = isHidden ? "Unhide" : "Hide";
@@ -151,9 +159,39 @@ export function colorTemplate(color, options = {}) {
   `
     : "";
 
+  // Build badges for interior/exterior use
+  const badges = [];
+  if (color.isInterior && color.isExterior) {
+    badges.push(
+      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_BOTH}" style="background: ${badgeBgColor}; color: ${badgeTextColor};">Interior & Exterior</span>`
+    );
+  } else if (color.isInterior) {
+    badges.push(
+      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_INTERIOR}" style="background: ${badgeBgColor}; color: ${badgeTextColor};">Interior</span>`
+    );
+  } else if (color.isExterior) {
+    badges.push(
+      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_EXTERIOR}" style="background: ${badgeBgColor}; color: ${badgeTextColor};">Exterior</span>`
+    );
+  }
+
+  const badgesHTML =
+    badges.length > 0
+      ? `<div class="${CSS_CLASSES.COLOR_TILE_BADGES}">${badges.join("")}</div>`
+      : "";
+
+  // Format LRV value
+  const lrvValue = color.lrv ? color.lrv.toFixed(1) : "N/A";
+  let lrvClass = "medium";
+  if (color.lrv < 30) {
+    lrvClass = "dark";
+  } else if (color.lrv > 60) {
+    lrvClass = "light";
+  }
+
   return `
     <div class="${CSS_CLASSES.COLOR_TILE}" 
-         aria-label="${color.name}" 
+         ${DATA_ATTRIBUTES.ID}="${color.id}"
          style="background: ${generateHSLColor(
            color.hue,
            color.saturation,
@@ -163,8 +201,33 @@ export function colorTemplate(color, options = {}) {
         ${favoriteButtonHTML}
         ${hideButtonHTML}
       </div>
+      ${badgesHTML}
       <div class="${CSS_CLASSES.COLOR_TILE_INFO}" style="color:${textColor};">
-        <strong>${color.name}</strong><br/>
+        <div class="${CSS_CLASSES.COLOR_TILE_NAME}">
+          <strong>${color.name}</strong>
+        </div>
+        <div class="${CSS_CLASSES.COLOR_TILE_NUMBER}">SW ${
+    color.colorNumber
+  }</div>
+        <div class="${CSS_CLASSES.COLOR_TILE_DETAILS}">
+          <span class="${CSS_CLASSES.COLOR_TILE_LRV} ${
+    CSS_CLASSES.COLOR_TILE_LRV
+  }--${lrvClass}" title="Light Reflectance Value">LRV ${lrvValue}</span>
+          <span class="${CSS_CLASSES.COLOR_TILE_HEX} ${
+    CSS_CLASSES.COLOR_TILE_HEX
+  }--${lrvClass}" title="Hex color code">${color.hex.toUpperCase()}</span>
+        </div>
+        <div class="${CSS_CLASSES.COLOR_TILE_RGB}">
+          RGB(${color.red}, ${color.green}, ${color.blue})
+        </div>
+        <button aria-label="View details for ${color.name}" 
+                class="${CSS_CLASSES.COLOR_TILE_VIEW_BUTTON} ${
+    CSS_CLASSES.COLOR_TILE_BUTTON
+  }" 
+                ${DATA_ATTRIBUTES.ID}="${color.id}"
+                style="color: ${textColor}; border-color: ${textColor};">
+          View Details
+        </button>
       </div>
     </div>
   `;
@@ -238,6 +301,240 @@ export function familyTileTemplate(familyName, colorCount) {
  */
 export function categoryTileTemplate(categoryName, colorCount) {
   return createHiddenGroupTile(categoryName, colorCount, "category");
+}
+
+/**
+ * Creates a color detail modal showing full information about a color
+ * @param {Object} color - The color object
+ * @param {Object} coordinatingColors - Object with coord1, coord2, and white color objects
+ * @param {Array} similarColors - Array of similar color objects
+ * @returns {string} HTML string for the modal
+ */
+export function colorDetailModal(
+  color,
+  coordinatingColors = {},
+  similarColors = []
+) {
+  const textColor = generateAccessibleText(color);
+  const backgroundColor = generateHSLColor(
+    color.hue,
+    color.saturation,
+    color.lightness
+  );
+
+  // Build coordinating colors section
+  const coordColors = [
+    coordinatingColors.coord1,
+    coordinatingColors.coord2,
+    coordinatingColors.white,
+  ].filter(Boolean);
+
+  const coordinatingHTML =
+    coordColors.length > 0
+      ? `
+      <div class="${CSS_CLASSES.MODAL_SECTION}">
+        <h3 class="${CSS_CLASSES.MODAL_SECTION_TITLE}">Coordinating Colors</h3>
+        <div class="${CSS_CLASSES.MODAL_COLOR_GRID}">
+          ${coordColors
+            .map(
+              (c) => `
+            <div class="${CSS_CLASSES.MODAL_MINI_TILE}" 
+                 style="background: ${generateHSLColor(
+                   c.hue,
+                   c.saturation,
+                   c.lightness
+                 )}; color: ${generateAccessibleText(c)};"
+                 title="${c.name}">
+              <div class="${CSS_CLASSES.MODAL_MINI_TILE_NAME}">${c.name}</div>
+              <div class="${CSS_CLASSES.MODAL_MINI_TILE_NUMBER}">SW ${
+                c.colorNumber
+              }</div>
+            </div>
+          `
+            )
+            .join("")}
+        </div>
+      </div>
+    `
+      : "";
+
+  // Build similar colors section
+  const similarHTML =
+    similarColors.length > 0
+      ? `
+      <div class="${CSS_CLASSES.MODAL_SECTION}">
+        <h3 class="${CSS_CLASSES.MODAL_SECTION_TITLE}">Similar Colors</h3>
+        <div class="${CSS_CLASSES.MODAL_COLOR_GRID}">
+          ${similarColors
+            .slice(0, 6)
+            .map(
+              (c) => `
+            <div class="${CSS_CLASSES.MODAL_MINI_TILE}" 
+                 style="background: ${generateHSLColor(
+                   c.hue,
+                   c.saturation,
+                   c.lightness
+                 )}; color: ${generateAccessibleText(c)};"
+                 title="${c.name}">
+              <div class="${CSS_CLASSES.MODAL_MINI_TILE_NAME}">${c.name}</div>
+              <div class="${CSS_CLASSES.MODAL_MINI_TILE_NUMBER}">SW ${
+                c.colorNumber
+              }</div>
+            </div>
+          `
+            )
+            .join("")}
+        </div>
+      </div>
+    `
+      : "";
+
+  // Build color families and collections
+  const families =
+    color.colorFamilyNames && color.colorFamilyNames.length > 0
+      ? color.colorFamilyNames.join(", ")
+      : "None";
+
+  const collections =
+    color.brandedCollectionNames && color.brandedCollectionNames.length > 0
+      ? color.brandedCollectionNames.join(", ")
+      : "None";
+
+  // Build descriptions
+  const descriptions =
+    color.description && color.description.length > 0
+      ? color.description.join(" • ")
+      : "";
+
+  // Build use type badges
+  const useTypes = [];
+  if (color.isInterior) useTypes.push("Interior");
+  if (color.isExterior) useTypes.push("Exterior");
+  const useTypesText =
+    useTypes.length > 0 ? useTypes.join(" & ") : "Not specified";
+
+  const lrvValue = color.lrv ? color.lrv.toFixed(1) : "N/A";
+  let lrvDescription = "";
+  if (color.lrv) {
+    if (color.lrv < 30) {
+      lrvDescription = "(Dark - absorbs light)";
+    } else if (color.lrv > 60) {
+      lrvDescription = "(Light - reflects light)";
+    } else {
+      lrvDescription = "(Medium)";
+    }
+  }
+
+  return `
+    <div class="${
+      CSS_CLASSES.MODAL_OVERLAY
+    }" id="color-detail-modal" aria-modal="true" role="dialog" aria-labelledby="modal-title">
+      <div class="${CSS_CLASSES.MODAL_CONTAINER}">
+        <div class="${
+          CSS_CLASSES.MODAL_HEADER
+        }" style="background: ${backgroundColor}; color: ${textColor};">
+          <div class="${CSS_CLASSES.MODAL_HEADER_CONTENT}">
+            <h2 id="modal-title" class="${CSS_CLASSES.MODAL_TITLE}">${
+    color.name
+  }</h2>
+            <div class="${CSS_CLASSES.MODAL_SUBTITLE}">SW ${
+    color.colorNumber
+  }</div>
+            ${
+              descriptions
+                ? `<div class="${CSS_CLASSES.MODAL_DESCRIPTION}">${descriptions}</div>`
+                : ""
+            }
+          </div>
+          <button class="${
+            CSS_CLASSES.MODAL_CLOSE
+          }" aria-label="Close modal" type="button" style="color: ${textColor};">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        
+        <div class="${CSS_CLASSES.MODAL_BODY}">
+          <div class="${CSS_CLASSES.MODAL_SECTION}">
+            <h3 class="${
+              CSS_CLASSES.MODAL_SECTION_TITLE
+            }">Color Information</h3>
+            <div class="${CSS_CLASSES.MODAL_INFO_GRID}">
+              <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
+                <span class="${
+                  CSS_CLASSES.MODAL_INFO_LABEL
+                }">Color Number:</span>
+                <span class="${CSS_CLASSES.MODAL_INFO_VALUE}">SW ${
+    color.colorNumber
+  }</span>
+              </div>
+              <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
+                <span class="${CSS_CLASSES.MODAL_INFO_LABEL}">LRV:</span>
+                <span class="${
+                  CSS_CLASSES.MODAL_INFO_VALUE
+                }">${lrvValue} ${lrvDescription}</span>
+              </div>
+              <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
+                <span class="${CSS_CLASSES.MODAL_INFO_LABEL}">Hex:</span>
+                <span class="${
+                  CSS_CLASSES.MODAL_INFO_VALUE
+                }">${color.hex.toUpperCase()}</span>
+              </div>
+              <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
+                <span class="${CSS_CLASSES.MODAL_INFO_LABEL}">RGB:</span>
+                <span class="${CSS_CLASSES.MODAL_INFO_VALUE}">rgb(${
+    color.red
+  }, ${color.green}, ${color.blue})</span>
+              </div>
+              <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
+                <span class="${CSS_CLASSES.MODAL_INFO_LABEL}">HSL:</span>
+                <span class="${CSS_CLASSES.MODAL_INFO_VALUE}">hsl(${Math.round(
+    color.hue * 360
+  )}°, ${Math.round(color.saturation * 100)}%, ${Math.round(
+    color.lightness * 100
+  )}%)</span>
+              </div>
+              <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
+                <span class="${CSS_CLASSES.MODAL_INFO_LABEL}">Use:</span>
+                <span class="${
+                  CSS_CLASSES.MODAL_INFO_VALUE
+                }">${useTypesText}</span>
+              </div>
+              <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
+                <span class="${
+                  CSS_CLASSES.MODAL_INFO_LABEL
+                }">Color Family:</span>
+                <span class="${CSS_CLASSES.MODAL_INFO_VALUE}">${families}</span>
+              </div>
+              <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
+                <span class="${
+                  CSS_CLASSES.MODAL_INFO_LABEL
+                }">Collections:</span>
+                <span class="${
+                  CSS_CLASSES.MODAL_INFO_VALUE
+                }">${collections}</span>
+              </div>
+              ${
+                color.storeStripLocator
+                  ? `
+                <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
+                  <span class="${CSS_CLASSES.MODAL_INFO_LABEL}">Store Location:</span>
+                  <span class="${CSS_CLASSES.MODAL_INFO_VALUE}">${color.storeStripLocator}</span>
+                </div>
+              `
+                  : ""
+              }
+            </div>
+          </div>
+          
+          ${coordinatingHTML}
+          ${similarHTML}
+        </div>
+      </div>
+    </div>
+  `;
 }
 
 /**

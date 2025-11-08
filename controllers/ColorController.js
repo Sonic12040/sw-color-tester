@@ -10,6 +10,7 @@
  */
 
 import { CSS_CLASSES, ELEMENT_IDS, DATA_ATTRIBUTES } from "../utils/config.js";
+import { colorDetailModal } from "../utils/templates.js";
 import {
   ToggleFavoriteCommand,
   ToggleHiddenCommand,
@@ -45,7 +46,127 @@ export class ColorController {
   init() {
     this.setupEventListeners();
     this.setupHeaderButtons();
+    this.setupModalListeners();
     this.render();
+  }
+
+  /**
+   * Setup modal event listeners (close button, overlay click, escape key)
+   */
+  setupModalListeners() {
+    // Close modal when clicking overlay
+    document.addEventListener("click", (e) => {
+      if (e.target.classList.contains(CSS_CLASSES.MODAL_OVERLAY)) {
+        this.closeModal();
+      }
+    });
+
+    // Close modal when clicking close button
+    document.addEventListener("click", (e) => {
+      if (e.target.closest(`.${CSS_CLASSES.MODAL_CLOSE}`)) {
+        this.closeModal();
+      }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        this.closeModal();
+      }
+    });
+  }
+
+  /**
+   * Open modal with color details
+   * @param {string} colorId - The ID of the color to display
+   */
+  openModal(colorId) {
+    const allColors = this.model.getActiveColors();
+    const color = allColors.find((c) => c.id === colorId);
+
+    if (!color) {
+      console.error("Color not found:", colorId);
+      return;
+    }
+
+    // Get coordinating colors
+    const coordinatingColors = {};
+    if (color.coordinatingColors) {
+      if (color.coordinatingColors.coord1ColorId) {
+        coordinatingColors.coord1 = allColors.find(
+          (c) => c.id === color.coordinatingColors.coord1ColorId
+        );
+      }
+      if (color.coordinatingColors.coord2ColorId) {
+        coordinatingColors.coord2 = allColors.find(
+          (c) => c.id === color.coordinatingColors.coord2ColorId
+        );
+      }
+      if (color.coordinatingColors.whiteColorId) {
+        coordinatingColors.white = allColors.find(
+          (c) => c.id === color.coordinatingColors.whiteColorId
+        );
+      }
+    }
+
+    // Get similar colors
+    const similarColors = [];
+    if (color.similarColors && Array.isArray(color.similarColors)) {
+      for (const similarId of color.similarColors) {
+        const similarColor = allColors.find((c) => c.id === similarId);
+        if (similarColor) {
+          similarColors.push(similarColor);
+        }
+      }
+    }
+
+    // Remove existing modal if present
+    const existingModal = document.getElementById("color-detail-modal");
+    if (existingModal) {
+      existingModal.remove();
+    }
+
+    // Create and insert modal
+    const modalHTML = colorDetailModal(
+      color,
+      coordinatingColors,
+      similarColors
+    );
+    document.body.insertAdjacentHTML("beforeend", modalHTML);
+
+    // Trigger animation
+    requestAnimationFrame(() => {
+      const modal = document.getElementById("color-detail-modal");
+      if (modal) {
+        modal.classList.add("active");
+
+        // Focus the close button for accessibility
+        const closeButton = modal.querySelector(`.${CSS_CLASSES.MODAL_CLOSE}`);
+        if (closeButton) {
+          closeButton.focus();
+        }
+      }
+    });
+
+    // Prevent body scrolling
+    document.body.style.overflow = "hidden";
+  }
+
+  /**
+   * Close the modal
+   */
+  closeModal() {
+    const modal = document.getElementById("color-detail-modal");
+    if (modal) {
+      modal.classList.remove("active");
+
+      // Remove modal after animation
+      setTimeout(() => {
+        modal.remove();
+        // Restore body scrolling
+        document.body.style.overflow = "";
+      }, 300);
+    }
   }
 
   /**
@@ -129,6 +250,11 @@ export class ColorController {
           const categoryName = element.getAttribute(DATA_ATTRIBUTES.CATEGORY);
           this.handleUnhideButton(familyName, categoryName);
         },
+      },
+      {
+        selector: `.${CSS_CLASSES.COLOR_TILE_VIEW_BUTTON}`,
+        getAttribute: DATA_ATTRIBUTES.ID,
+        handler: (colorId) => this.openModal(colorId),
       },
       {
         selector: `.${CSS_CLASSES.COLOR_TILE_FAMILY}`,

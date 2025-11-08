@@ -33,7 +33,19 @@ export const CSS_CLASSES = {
   COLOR_TILE_FAVORITE_BUTTON: "color-tile__favorite-button",
   COLOR_TILE_HIDE_BUTTON: "color-tile__hide-button",
   COLOR_TILE_UNHIDE_BUTTON: "color-tile__unhide-button",
+  COLOR_TILE_VIEW_BUTTON: "color-tile__view-button",
   COLOR_TILE_INFO: "color-tile__info",
+  COLOR_TILE_NAME: "color-tile__name",
+  COLOR_TILE_NUMBER: "color-tile__number",
+  COLOR_TILE_DETAILS: "color-tile__details",
+  COLOR_TILE_LRV: "color-tile__lrv",
+  COLOR_TILE_HEX: "color-tile__hex",
+  COLOR_TILE_RGB: "color-tile__rgb",
+  COLOR_TILE_BADGES: "color-tile__badges",
+  COLOR_TILE_BADGE: "color-tile__badge",
+  COLOR_TILE_BADGE_INTERIOR: "color-tile__badge--interior",
+  COLOR_TILE_BADGE_EXTERIOR: "color-tile__badge--exterior",
+  COLOR_TILE_BADGE_BOTH: "color-tile__badge--both",
   COLOR_TILE_FAMILY: "color-tile--family",
   COLOR_TILE_CATEGORY: "color-tile--category",
   COLOR_TILE_COUNT: "color-tile__count",
@@ -49,6 +61,27 @@ export const CSS_CLASSES = {
 
   // Empty State
   EMPTY_MESSAGE: "empty-message",
+
+  // Modal
+  MODAL_OVERLAY: "modal-overlay",
+  MODAL_CONTAINER: "modal-container",
+  MODAL_HEADER: "modal-header",
+  MODAL_HEADER_CONTENT: "modal-header__content",
+  MODAL_TITLE: "modal__title",
+  MODAL_SUBTITLE: "modal__subtitle",
+  MODAL_DESCRIPTION: "modal__description",
+  MODAL_CLOSE: "modal__close",
+  MODAL_BODY: "modal__body",
+  MODAL_SECTION: "modal__section",
+  MODAL_SECTION_TITLE: "modal__section-title",
+  MODAL_INFO_GRID: "modal__info-grid",
+  MODAL_INFO_ITEM: "modal__info-item",
+  MODAL_INFO_LABEL: "modal__info-label",
+  MODAL_INFO_VALUE: "modal__info-value",
+  MODAL_COLOR_GRID: "modal__color-grid",
+  MODAL_MINI_TILE: "modal__mini-tile",
+  MODAL_MINI_TILE_NAME: "modal__mini-tile-name",
+  MODAL_MINI_TILE_NUMBER: "modal__mini-tile-number",
 };
 
 // Element IDs

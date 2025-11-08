@@ -1,13 +1,17 @@
 // service-worker.js - PWA Service Worker with Smart Caching
 // GitHub Pages compatible with automatic base path detection
 
-const CACHE_VERSION = "v1.10.0";
+const CACHE_VERSION = "v1.11.0";
 const CACHE_NAME = `sw-colors-${CACHE_VERSION}`;
+const BUILD_DATE = new Date().toISOString();
 
 // Auto-detect base path for GitHub Pages vs local development
 const isGitHubPages = globalThis.location.hostname.includes("github.io");
 const BASE_PATH = isGitHubPages ? "/sw-color-tester" : "";
 
+console.log("[SW] Version:", CACHE_VERSION);
+console.log("[SW] Build Date:", BUILD_DATE);
+console.log("[SW] Environment:", isGitHubPages ? "GitHub Pages" : "Local");
 console.log("[SW] Base path:", BASE_PATH || "(root)");
 
 // Files to cache
@@ -452,8 +456,24 @@ async function simpleHash(str) {
  */
 async function notifyClients(message) {
   const clients = await globalThis.clients.matchAll({ type: "window" });
+
+  // Add version info to message
+  const enrichedMessage = {
+    ...message,
+    version: CACHE_VERSION,
+    buildDate: BUILD_DATE,
+    environment: isGitHubPages ? "GitHub Pages" : "Local",
+  };
+
+  console.log(
+    "[SW] Notifying",
+    clients.length,
+    "client(s):",
+    enrichedMessage.type
+  );
+
   for (const client of clients) {
-    client.postMessage(message);
+    client.postMessage(enrichedMessage);
   }
 }
 
@@ -481,7 +501,14 @@ globalThis.addEventListener("message", (event) => {
       console.log("[SW] Checking for updates...");
       checkAllUpdates()
         .then((updatedFiles) => {
-          event.ports?.[0]?.postMessage({ updatedFiles });
+          const response = {
+            updatedFiles,
+            version: CACHE_VERSION,
+            buildDate: BUILD_DATE,
+            totalFiles: ALL_ASSETS.length,
+            environment: isGitHubPages ? "GitHub Pages" : "Local",
+          };
+          event.ports?.[0]?.postMessage(response);
         })
         .catch((error) => {
           console.error("[SW] Update check failed:", error);
@@ -504,6 +531,17 @@ globalThis.addEventListener("message", (event) => {
             error: error.message,
           });
         });
+      break;
+
+    case "GET_VERSION":
+      // Return current version info
+      event.ports?.[0]?.postMessage({
+        version: CACHE_VERSION,
+        buildDate: BUILD_DATE,
+        environment: isGitHubPages ? "GitHub Pages" : "Local",
+        basePath: BASE_PATH,
+        cachedFiles: ALL_ASSETS.length,
+      });
       break;
 
     default:
