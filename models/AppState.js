@@ -6,7 +6,7 @@
  * - Manage favorites and hidden color state
  * - Sync state with URL parameters
  * - Provide state query and mutation methods
- * - Consolidate hidden colors into family/category groups in URLs
+ * - Consolidate favorites and hidden colors into family/category groups in URLs
  */
 
 import { URLParameterManager } from "../utils/url-parameter-utilities.js";
@@ -75,27 +75,27 @@ export class AppState {
   }
 
   /**
-   * Consolidate color IDs into group identifiers where entire families/categories are hidden
+   * Consolidate color IDs into group identifiers where entire families/categories are selected
    * @private
-   * @param {string[]} hiddenIds - Array of hidden color IDs
-   * @returns {string[]} Array with group identifiers for fully hidden groups
+   * @param {string[]} colorIds - Array of color IDs
+   * @param {string[]} exclusionIds - Array of IDs to exclude from group consideration (e.g., hidden IDs when consolidating favorites)
+   * @returns {string[]} Array with group identifiers for fully selected groups
    */
-  _consolidateHiddenIds(hiddenIds) {
-    if (!this.colorModel || hiddenIds.length === 0) return hiddenIds;
+  _consolidateColorIds(colorIds, exclusionIds = []) {
+    if (!this.colorModel || colorIds.length === 0) return colorIds;
 
-    const favoriteIds = this.getFavorites();
-    const consolidated = new Set(hiddenIds);
+    const consolidated = new Set(colorIds);
 
-    // Check for fully hidden families
-    const hiddenFamilies = this.colorModel.getHiddenFamilies(
-      hiddenIds,
-      favoriteIds
+    // Check for fully selected families
+    const selectedFamilies = this.colorModel.getHiddenFamilies(
+      colorIds,
+      exclusionIds
     );
-    for (const family of hiddenFamilies) {
+    for (const family of selectedFamilies) {
       // Remove individual color IDs for this family
       const familyColorIds = this.colorModel.getColorIdsForFamily(
         family.name,
-        favoriteIds
+        exclusionIds
       );
       for (const colorId of familyColorIds) {
         consolidated.delete(colorId);
@@ -104,16 +104,16 @@ export class AppState {
       consolidated.add(`${PREFIX.FAMILY}:${family.name}`);
     }
 
-    // Check for fully hidden categories
-    const hiddenCategories = this.colorModel.getHiddenCategories(
-      hiddenIds,
-      favoriteIds
+    // Check for fully selected categories
+    const selectedCategories = this.colorModel.getHiddenCategories(
+      colorIds,
+      exclusionIds
     );
-    for (const category of hiddenCategories) {
+    for (const category of selectedCategories) {
       // Remove individual color IDs for this category
       const categoryColorIds = this.colorModel.getColorIdsForCategory(
         category.name,
-        favoriteIds
+        exclusionIds
       );
       for (const colorId of categoryColorIds) {
         consolidated.delete(colorId);
@@ -126,6 +126,28 @@ export class AppState {
   }
 
   /**
+   * Consolidate color IDs into group identifiers where entire families/categories are hidden
+   * @private
+   * @param {string[]} hiddenIds - Array of hidden color IDs
+   * @returns {string[]} Array with group identifiers for fully hidden groups
+   */
+  _consolidateHiddenIds(hiddenIds) {
+    const favoriteIds = this.getFavorites();
+    return this._consolidateColorIds(hiddenIds, favoriteIds);
+  }
+
+  /**
+   * Consolidate color IDs into group identifiers where entire families/categories are favorited
+   * @private
+   * @param {string[]} favoriteIds - Array of favorite color IDs
+   * @returns {string[]} Array with group identifiers for fully favorited groups
+   */
+  _consolidateFavoriteIds(favoriteIds) {
+    const hiddenIds = this.getHidden();
+    return this._consolidateColorIds(favoriteIds, hiddenIds);
+  }
+
+  /**
    * Load state from URL parameters
    */
   loadFromURL() {
@@ -134,12 +156,11 @@ export class AppState {
     );
     const hiddenIds = URLParameterManager.getArrayParameter(URL_PARAMS.HIDDEN);
 
-    // Set favorites first (needed for expansion)
-    this.favorites = new Set(favoriteIds);
-
-    // Expand any group identifiers in the hidden IDs
+    // Expand any group identifiers in both favorites and hidden
+    const expandedFavoriteIds = this._expandGroupIds(favoriteIds);
     const expandedHiddenIds = this._expandGroupIds(hiddenIds);
 
+    this.favorites = new Set(expandedFavoriteIds);
     this.hidden = new Set(expandedHiddenIds);
   }
 
@@ -147,11 +168,14 @@ export class AppState {
    * Sync current state to URL
    */
   syncToURL() {
+    const favoriteArray = Array.from(this.favorites);
     const hiddenArray = Array.from(this.hidden);
+
+    const consolidatedFavorites = this._consolidateFavoriteIds(favoriteArray);
     const consolidatedHidden = this._consolidateHiddenIds(hiddenArray);
 
     URLParameterManager.batchUpdate({
-      [URL_PARAMS.FAVORITES]: Array.from(this.favorites),
+      [URL_PARAMS.FAVORITES]: consolidatedFavorites,
       [URL_PARAMS.HIDDEN]: consolidatedHidden,
     });
   }
