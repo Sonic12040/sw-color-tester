@@ -11,7 +11,11 @@ import { FAMILY_ORDER } from "../utils/config.js";
 
 export class ColorModel {
   constructor(colorData) {
+    console.log("=== COLORMODEL.JS CONSTRUCTOR ===");
     this.colorData = colorData;
+    console.log(
+      `✅ ColorModel constructed with ${this.colorData.length} colors.`
+    );
   }
 
   /**

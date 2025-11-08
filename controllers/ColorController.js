@@ -23,9 +23,11 @@ import {
 
 export class ColorController {
   constructor(model, state, view) {
+    console.log("=== COLORCONTROLLER.JS CONSTRUCTOR ===");
     this.model = model;
     this.state = state;
     this.view = view;
+    console.log("✅ ColorController constructed");
   }
 
   /**
@@ -44,16 +46,19 @@ export class ColorController {
    * Initialize the application
    */
   init() {
+    console.log("--- ColorController.init() ---");
     this.setupEventListeners();
     this.setupHeaderButtons();
     this.setupModalListeners();
     this.render();
+    console.log("✅ ColorController initialized");
   }
 
   /**
    * Setup modal event listeners (close button, overlay click, escape key)
    */
   setupModalListeners() {
+    console.log("--- Setting up modal listeners ---");
     // Close modal when clicking overlay
     document.addEventListener("click", (e) => {
       if (e.target.classList.contains(CSS_CLASSES.MODAL_OVERLAY)) {
@@ -74,6 +79,7 @@ export class ColorController {
         this.closeModal();
       }
     });
+    console.log("✅ Modal listeners set up");
   }
 
   /**
@@ -276,6 +282,7 @@ export class ColorController {
    * Uses strategy pattern with handler registry for extensibility
    */
   setupEventListeners() {
+    console.log("--- Setting up event listeners ---");
     const accordion = document.getElementById(ELEMENT_IDS.COLOR_ACCORDION);
 
     if (!accordion) {
@@ -312,12 +319,14 @@ export class ColorController {
         return; // Handler found and executed, stop searching
       }
     });
+    console.log("✅ Delegated event listener set up for accordion");
   }
 
   /**
    * Setup header button event listeners
    */
   setupHeaderButtons() {
+    console.log("--- Setting up header buttons ---");
     const clearFavBtn = document.getElementById(
       ELEMENT_IDS.CLEAR_FAVORITES_BTN
     );
@@ -335,6 +344,7 @@ export class ColorController {
         this.handleClearHidden();
       });
     }
+    console.log("✅ Header buttons set up");
   }
 
   // --- EVENT HANDLERS (Delegate to Commands) ---

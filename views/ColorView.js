@@ -24,11 +24,13 @@ import {
 
 export class ColorView {
   constructor(containerId) {
+    console.log("=== COLORVIEW.JS CONSTRUCTOR ===");
     this.container = document.getElementById(containerId);
     this.categoryIdToName = {};
     this.categoryNameToId = {};
     this.favoriteIds = [];
     this.hiddenIds = [];
+    console.log("✅ ColorView constructed");
   }
 
   /**
@@ -36,6 +38,7 @@ export class ColorView {
    * @param {Object} renderData - All data needed for rendering
    */
   render(renderData) {
+    console.log("--- ColorView.render() ---");
     const {
       favoriteColors,
       hiddenColors,
@@ -80,6 +83,7 @@ export class ColorView {
 
     // Restore accordion state after rebuilding
     this._restoreAccordionState(expandedSections);
+    console.log("✅ ColorView render complete");
   }
 
   /**

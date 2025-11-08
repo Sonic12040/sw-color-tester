@@ -1,15 +1,15 @@
+import { APP_VERSION } from "./version.js";
 // service-worker.js - PWA Service Worker with Smart Caching
 // GitHub Pages compatible with automatic base path detection
 
-const CACHE_VERSION = "v1.11.0";
-const CACHE_NAME = `sw-colors-${CACHE_VERSION}`;
+const CACHE_NAME = `sw-color-tester-cache-v${APP_VERSION}`;
 const BUILD_DATE = new Date().toISOString();
 
 // Auto-detect base path for GitHub Pages vs local development
 const isGitHubPages = globalThis.location.hostname.includes("github.io");
 const BASE_PATH = isGitHubPages ? "/sw-color-tester" : "";
 
-console.log("[SW] Version:", CACHE_VERSION);
+console.log("[SW] Version:", APP_VERSION);
 console.log("[SW] Build Date:", BUILD_DATE);
 console.log("[SW] Environment:", isGitHubPages ? "GitHub Pages" : "Local");
 console.log("[SW] Base path:", BASE_PATH || "(root)");
@@ -18,15 +18,21 @@ console.log("[SW] Base path:", BASE_PATH || "(root)");
 const STATIC_ASSETS = [
   `${BASE_PATH}/`,
   `${BASE_PATH}/index.html`,
+
   `${BASE_PATH}/styles.css`,
+
   `${BASE_PATH}/app.js`,
+
   // Models
   `${BASE_PATH}/models/ColorModel.js`,
   `${BASE_PATH}/models/AppState.js`,
+
   // Views
   `${BASE_PATH}/views/ColorView.js`,
+
   // Controllers
   `${BASE_PATH}/controllers/ColorController.js`,
+
   // Commands (Command Pattern implementation)
   `${BASE_PATH}/commands/ColorCommand.js`,
   `${BASE_PATH}/commands/ToggleFavoriteCommand.js`,
@@ -37,14 +43,17 @@ const STATIC_ASSETS = [
   `${BASE_PATH}/commands/ClearFavoritesCommand.js`,
   `${BASE_PATH}/commands/ClearHiddenCommand.js`,
   `${BASE_PATH}/commands/index.js`,
+
   // Utils
   `${BASE_PATH}/utils/config.js`,
   `${BASE_PATH}/utils/templates.js`,
   `${BASE_PATH}/utils/url-parameter-utilities.js`,
   `${BASE_PATH}/utils/numeric-encoding.js`,
+
   // PWA
   `${BASE_PATH}/manifest.json`,
   `${BASE_PATH}/favicon.svg`,
+  `${BASE_PATH}/version.js`,
 ];
 
 // Large file that needs special handling
@@ -68,7 +77,7 @@ const NETWORK_TIMEOUT = 10000; // 10 seconds
 // INSTALL EVENT - Called when SW is first registered
 // ============================================
 self.addEventListener("install", (event) => {
-  console.log("[SW] Installing service worker version", CACHE_VERSION);
+  console.log("[SW] Installing service worker version", APP_VERSION);
 
   event.waitUntil(
     caches
@@ -119,7 +128,7 @@ self.addEventListener("install", (event) => {
 // ACTIVATE EVENT - Clean up old caches
 // ============================================
 self.addEventListener("activate", (event) => {
-  console.log("[SW] Activating service worker version", CACHE_VERSION);
+  console.log("[SW] Activating service worker version", APP_VERSION);
 
   event.waitUntil(
     caches
@@ -284,7 +293,7 @@ async function staleWhileRevalidate(request) {
           console.log("[SW] File updated:", request.url);
 
           // Update cache
-          cache.put(request, networkResponse.clone());
+          await cache.put(request, networkResponse.clone());
 
           // Notify all clients about the update
           notifyClients({
@@ -332,7 +341,7 @@ async function cacheFirst(request) {
   try {
     const networkResponse = await fetch(request);
     if (networkResponse.ok) {
-      cache.put(request, networkResponse.clone());
+      await cache.put(request, networkResponse.clone());
     }
     return networkResponse;
   } catch (error) {
@@ -351,7 +360,7 @@ async function networkFirst(request) {
     const networkResponse = await fetch(request);
     if (networkResponse.ok) {
       const cache = await caches.open(CACHE_NAME);
-      cache.put(request, networkResponse.clone());
+      await cache.put(request, networkResponse.clone());
     }
     return networkResponse;
   } catch (error) {
@@ -466,7 +475,7 @@ async function notifyClients(message) {
   // Add version info to message
   const enrichedMessage = {
     ...message,
-    version: CACHE_VERSION,
+    version: APP_VERSION,
     buildDate: BUILD_DATE,
     environment: isGitHubPages ? "GitHub Pages" : "Local",
   };
@@ -509,7 +518,7 @@ globalThis.addEventListener("message", (event) => {
         .then((updatedFiles) => {
           const response = {
             updatedFiles,
-            version: CACHE_VERSION,
+            version: APP_VERSION,
             buildDate: BUILD_DATE,
             totalFiles: ALL_ASSETS.length,
             environment: isGitHubPages ? "GitHub Pages" : "Local",
@@ -542,7 +551,7 @@ globalThis.addEventListener("message", (event) => {
     case "GET_VERSION":
       // Return current version info
       event.ports?.[0]?.postMessage({
-        version: CACHE_VERSION,
+        version: APP_VERSION,
         buildDate: BUILD_DATE,
         environment: isGitHubPages ? "GitHub Pages" : "Local",
         basePath: BASE_PATH,
@@ -570,11 +579,11 @@ async function checkAllUpdates() {
       );
 
       if (response.ok) {
-        const hasChanged = await hasFileChanged(url, response);
+        const hasChanged = await hasFileChanged(url, response.clone());
         if (hasChanged) {
           updatedFiles.push(url);
           const cache = await caches.open(CACHE_NAME);
-          await cache.put(url, response);
+          await cache.put(url, response.clone());
           console.log("[SW] Updated cache for:", url);
         }
       } else {

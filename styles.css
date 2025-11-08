@@ -964,3 +964,23 @@
     padding: var(--spacing-sm);
   }
 }
+
+/* ============================================
+   ACCESSIBILITY - Reduced Motion
+   ============================================ */
+
+/**
+ * Respect user's motion preferences
+ * WCAG 2.1 Level AA - Required for accessibility compliance
+ * Affects users with vestibular disorders, motion sensitivity, or seizure disorders
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
