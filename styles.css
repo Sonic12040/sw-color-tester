@@ -187,6 +187,7 @@
   --z-dropdown: 100;
   --z-sticky: 200;
   --z-overlay: 500;
+  --z-modal-backdrop: 900;
   --z-modal: 1000;
   --z-popover: 1500;
   --z-toast: 2000;
