@@ -858,7 +858,7 @@
   background: var(--btn-hover-bg, var(--button-icon-hover-bg));
 }
 
-/* View Details button - extends button system */
+/* View Details button - extends button system, always visible for discoverability */
 .color-tile__view-button {
   width: auto;
   min-width: 120px;
@@ -879,6 +879,10 @@
   transition: var(--button-transition);
   display: inline-block;
   backdrop-filter: blur(4px);
+  /* Always visible for discoverability - essential user action */
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .color-tile__view-button:hover {
@@ -926,7 +930,7 @@
   text-rendering: optimizeLegibility;
 }
 
-/* Color information section */
+/* Color information section - progressive disclosure for reduced density */
 .color-tile__info {
   position: relative;
   margin-top: auto;
@@ -945,6 +949,7 @@
   margin-bottom: var(--spacing-1);
   line-height: var(--line-height-tight);
   letter-spacing: 0.01em;
+  /* Always visible - primary information */
 }
 
 .color-tile__number {
@@ -954,13 +959,37 @@
   opacity: var(--opacity-95);
   letter-spacing: 0.02em;
   line-height: var(--line-height-tight);
+  /* Always visible - primary information */
 }
 
+/* Secondary details - hidden by default, shown on hover/focus */
 .color-tile__details {
   display: flex;
   gap: var(--spacing-2);
   margin-bottom: var(--spacing-1);
   flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  pointer-events: none;
+}
+
+/* Show details on tile hover or focus-within */
+.color-tile:hover .color-tile__details,
+.color-tile:focus-within .color-tile__details {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* On touch devices, always show details (no hover capability) */
+@media (hover: none) and (pointer: coarse) {
+  .color-tile__details,
+  .color-tile__rgb {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
 }
 
 .color-tile__lrv,
@@ -989,6 +1018,7 @@
   color: var(--neutral-900);
 }
 
+/* RGB values - hidden by default, shown on hover/focus */
 .color-tile__rgb {
   font-size: var(--font-size-xs);
   font-family: 'Roboto Mono', monospace;
@@ -996,8 +1026,18 @@
   margin-top: var(--spacing-1);
   letter-spacing: 0.03em;
   line-height: var(--line-height-tight);
-  /* Full opacity for better readability */
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  pointer-events: none;
+}
+
+/* Show RGB on tile hover or focus-within */
+.color-tile:hover .color-tile__rgb,
+.color-tile:focus-within .color-tile__rgb {
   opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 /* Mobile optimization */
@@ -1014,6 +1054,14 @@
   .color-tile {
     min-width: 100%;
     max-width: 100%;
+  }
+  
+  /* On mobile, always show details since hover doesn't work well on touch */
+  .color-tile__details,
+  .color-tile__rgb {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
   }
   
   .header h1 {
