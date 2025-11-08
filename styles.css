@@ -212,15 +212,6 @@
   --spacing-12: 48px;    /* 6 × base - Extra large spacing */
   --spacing-16: 64px;    /* 8 × base - Maximum spacing */
   
-  /* Legacy aliases for backward compatibility */
-  --spacing-2xs: var(--spacing-1);
-  --spacing-xs: var(--spacing-2);
-  --spacing-sm: var(--spacing-4);
-  --spacing-md: var(--spacing-6);
-  --spacing-lg: var(--spacing-8);
-  --spacing-xl: var(--spacing-10);
-  --spacing-2xl: var(--spacing-12);
-  
   /* ============================================
      BORDER RADIUS
      Aligned to 8px grid
@@ -1074,7 +1065,7 @@
   font-style: italic;
   font-size: var(--font-size-base);
   line-height: var(--line-height-relaxed);
-  padding: var(--spacing-md);
+  padding: var(--spacing-6);
 }
 
 /* Modal Styles */
@@ -1336,86 +1327,86 @@
   
   .modal__info-grid {
     grid-template-columns: 1fr;
-    gap: var(--spacing-xs);
+    gap: var(--spacing-2);
   }
   
   .modal__color-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing-xs);
+    gap: var(--spacing-2);
   }
 }
 
 /* Tablet optimization (600px - 899px) */
 @media (min-width: 600px) and (max-width: 899px) {
   .accordion {
-    padding: 0 var(--spacing-md);
+    padding: 0 var(--spacing-6);
   }
   
   .accordion__header {
-    padding: var(--spacing-sm) var(--spacing-md);
+    padding: var(--spacing-4) var(--spacing-6);
   }
   
   .accordion__panel {
-    padding: var(--spacing-md);
+    padding: var(--spacing-6);
   }
   
   .modal-header {
-    padding: var(--spacing-lg);
+    padding: var(--spacing-8);
   }
   
   .modal__body {
-    padding: var(--spacing-lg);
+    padding: var(--spacing-8);
   }
 }
 
 /* Desktop optimization (900px+) */
 @media (min-width: 900px) {
   .accordion {
-    padding: 0 var(--spacing-lg);
+    padding: 0 var(--spacing-8);
   }
   
   .accordion__header {
-    padding: var(--spacing-md) var(--spacing-lg);
+    padding: var(--spacing-6) var(--spacing-8);
   }
   
   .accordion__panel {
-    padding: var(--spacing-lg);
+    padding: var(--spacing-8);
   }
   
   .bulk-actions-panel {
-    padding: var(--spacing-md);
+    padding: var(--spacing-6);
   }
   
   .bulk-actions-panel__container {
-    gap: var(--spacing-md);
+    gap: var(--spacing-6);
   }
   
   .modal-header {
-    padding: var(--spacing-xl);
+    padding: var(--spacing-10);
   }
   
   .modal__body {
-    padding: var(--spacing-xl);
+    padding: var(--spacing-10);
   }
   
   .modal__section {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-8);
   }
   
   .modal__section-title {
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-6);
   }
   
   .modal__info-grid {
-    gap: var(--spacing-md);
+    gap: var(--spacing-6);
   }
   
   .modal__color-grid {
-    gap: var(--spacing-md);
+    gap: var(--spacing-6);
   }
   
   .modal__mini-tile {
-    padding: var(--spacing-sm);
+    padding: var(--spacing-4);
   }
 }
 
