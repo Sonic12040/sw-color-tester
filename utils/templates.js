@@ -18,6 +18,85 @@ function generateAccessibleText(color) {
 }
 
 /**
+ * Generate HSL visual breakdown bars
+ * @param {Object} color - The color object with hue, saturation, lightness
+ * @returns {string} HTML for the visual HSL breakdown
+ */
+function generateHSLBreakdown(color) {
+  const hue = Math.round(color.hue * 360);
+  const saturation = Math.round(color.saturation * 100);
+  const lightness = Math.round(color.lightness * 100);
+
+  // Generate hue gradient (full color wheel)
+  const hueGradient = `linear-gradient(to right,
+    hsl(0, 100%, 50%),
+    hsl(60, 100%, 50%),
+    hsl(120, 100%, 50%),
+    hsl(180, 100%, 50%),
+    hsl(240, 100%, 50%),
+    hsl(300, 100%, 50%),
+    hsl(360, 100%, 50%)
+  )`;
+
+  // Generate saturation gradient (gray to full color at current hue)
+  const saturationGradient = `linear-gradient(to right,
+    hsl(${hue}, 0%, 50%),
+    hsl(${hue}, 100%, 50%)
+  )`;
+
+  // Generate lightness gradient (black to white through color)
+  const lightnessGradient = `linear-gradient(to right,
+    hsl(${hue}, ${saturation}%, 0%),
+    hsl(${hue}, ${saturation}%, 50%),
+    hsl(${hue}, ${saturation}%, 100%)
+  )`;
+
+  return `
+    <div class="hsl-breakdown">
+      <div class="hsl-breakdown__header">
+        <h4 class="hsl-breakdown__title">HSL Color Breakdown</h4>
+        <p class="hsl-breakdown__description">Visual representation of this color's components</p>
+      </div>
+      <div class="hsl-breakdown__item">
+        <label class="hsl-breakdown__label">
+          <span class="hsl-breakdown__name">Hue</span>
+          <span class="hsl-breakdown__value">${hue}°</span>
+        </label>
+        <div class="hsl-breakdown__bar-container">
+          <div class="hsl-breakdown__bar" style="background: ${hueGradient};" aria-hidden="true">
+            <div class="hsl-breakdown__indicator" style="left: ${(
+              color.hue * 100
+            ).toFixed(1)}%;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="hsl-breakdown__item">
+        <label class="hsl-breakdown__label">
+          <span class="hsl-breakdown__name">Saturation</span>
+          <span class="hsl-breakdown__value">${saturation}%</span>
+        </label>
+        <div class="hsl-breakdown__bar-container">
+          <div class="hsl-breakdown__bar" style="background: ${saturationGradient};" aria-hidden="true">
+            <div class="hsl-breakdown__indicator" style="left: ${saturation}%;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="hsl-breakdown__item">
+        <label class="hsl-breakdown__label">
+          <span class="hsl-breakdown__name">Lightness</span>
+          <span class="hsl-breakdown__value">${lightness}%</span>
+        </label>
+        <div class="hsl-breakdown__bar-container">
+          <div class="hsl-breakdown__bar" style="background: ${lightnessGradient};" aria-hidden="true">
+            <div class="hsl-breakdown__indicator" style="left: ${lightness}%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/**
  * Creates an accordion item with optional bulk actions
  * @param {string} id - The unique identifier for the accordion item
  * @param {string} title - The title text for the accordion header
@@ -636,6 +715,12 @@ export function colorDetailModal(
     color.saturation * 100
   )}%, ${Math.round(color.lightness * 100)}%)</span>
                 </div>
+              </div>
+              
+              <!-- HSL Visual Breakdown -->
+              ${generateHSLBreakdown(color)}
+              
+              <div class="${CSS_CLASSES.MODAL_INFO_GRID}">
                 <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
                   <span class="${CSS_CLASSES.MODAL_INFO_LABEL}">LRV:</span>
                   <span class="${
