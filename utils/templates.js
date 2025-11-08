@@ -198,13 +198,16 @@ export function colorTemplate(color, options = {}) {
       ? `<div class="${CSS_CLASSES.COLOR_TILE_BADGES}">${badges.join("")}</div>`
       : "";
 
-  // Format LRV value
+  // Format LRV value with plain language labels
   const lrvValue = color.lrv ? color.lrv.toFixed(1) : "N/A";
   let lrvClass = "medium";
+  let lrvLabel = "Medium";
   if (color.lrv < 30) {
     lrvClass = "dark";
+    lrvLabel = "Dark";
   } else if (color.lrv > 60) {
     lrvClass = "light";
+    lrvLabel = "Light";
   }
 
   return `
@@ -227,12 +230,19 @@ export function colorTemplate(color, options = {}) {
         <div class="${CSS_CLASSES.COLOR_TILE_NUMBER}">SW ${
     color.colorNumber
   }</div>
-        <div class="${CSS_CLASSES.COLOR_TILE_DETAILS}">
+        <div class="${CSS_CLASSES.COLOR_TILE_LRV_CONTAINER}">
           <span class="${CSS_CLASSES.COLOR_TILE_LRV} ${
     CSS_CLASSES.COLOR_TILE_LRV
   }--${lrvClass}" 
-                title="Light Reflectance Value"
-                style="background: ${badgeBgColor}; color: ${badgeTextColor};">LRV ${lrvValue}</span>
+                title="Light Reflectance Value - ${lrvLabel} color reflects ${lrvValue}% of light"
+                style="background: ${badgeBgColor}; color: ${badgeTextColor};">
+            <span class="${CSS_CLASSES.COLOR_TILE_LRV_LABEL}">${lrvLabel}</span>
+            <span class="${
+              CSS_CLASSES.COLOR_TILE_LRV_VALUE
+            }">LRV ${lrvValue}</span>
+          </span>
+        </div>
+        <div class="${CSS_CLASSES.COLOR_TILE_DETAILS}">
         </div>
         <button type="button"
                 aria-label="View details for ${color.name}" 

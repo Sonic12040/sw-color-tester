@@ -962,6 +962,37 @@
   /* Always visible - primary information */
 }
 
+/* LRV Container - always visible */
+.color-tile__lrv-container {
+  margin-bottom: var(--spacing-2);
+}
+
+.color-tile__lrv {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--radius-sm);
+  backdrop-filter: var(--blur-sm);
+  white-space: nowrap;
+  line-height: var(--line-height-tight);
+  -webkit-font-smoothing: antialiased;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  /* Background and color are set inline via style attribute based on isDark */
+}
+
+.color-tile__lrv-label {
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.03em;
+}
+
+.color-tile__lrv-value {
+  font-size: var(--font-size-sm);
+}
+
 /* Secondary details - hidden by default, shown on hover/focus */
 .color-tile__details {
   display: flex;
@@ -992,7 +1023,6 @@
   }
 }
 
-.color-tile__lrv,
 .color-tile__hex {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
