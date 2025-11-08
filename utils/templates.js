@@ -213,19 +213,13 @@ export function colorTemplate(color, options = {}) {
           <span class="${CSS_CLASSES.COLOR_TILE_LRV} ${
     CSS_CLASSES.COLOR_TILE_LRV
   }--${lrvClass}" title="Light Reflectance Value">LRV ${lrvValue}</span>
-          <span class="${CSS_CLASSES.COLOR_TILE_HEX} ${
-    CSS_CLASSES.COLOR_TILE_HEX
-  }--${lrvClass}" title="Hex color code">${color.hex.toUpperCase()}</span>
-        </div>
-        <div class="${CSS_CLASSES.COLOR_TILE_RGB}">
-          RGB(${color.red}, ${color.green}, ${color.blue})
         </div>
         <button aria-label="View details for ${color.name}" 
                 class="${CSS_CLASSES.COLOR_TILE_VIEW_BUTTON} ${
     CSS_CLASSES.COLOR_TILE_BUTTON
   }" 
                 ${DATA_ATTRIBUTES.ID}="${color.id}"
-                style="color: ${textColor}; border-color: ${textColor};">
+                style="--tile-text-color: ${textColor};">
           View Details
         </button>
       </div>
