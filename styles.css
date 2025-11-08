@@ -784,7 +784,7 @@
   position: relative;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
-  transition: box-shadow var(--transition-fast);
+  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -794,6 +794,26 @@
   will-change: transform;
   backface-visibility: hidden;
   transform: translateZ(0);
+}
+
+/* Hover effect - lift and enhance shadow to indicate interactivity */
+.color-tile:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Disable hover effect on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .color-tile:hover {
+    transform: translateZ(0);
+    box-shadow: var(--shadow-sm);
+  }
+}
+
+/* Focus effect - for keyboard navigation */
+.color-tile:focus-within {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 /* Tablet and up - maintain consistent min/max approach */
