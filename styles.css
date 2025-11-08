@@ -214,14 +214,14 @@
   
   /* ============================================
      BORDER RADIUS
-     Aligned to 8px grid
+     Aligned to grid system (multiples of 2px/4px)
      ============================================ */
   --radius-none: 0;
-  --radius-sm: 4px;      /* Small elements, badges */
-  --radius-md: 8px;      /* Cards, buttons, inputs */
-  --radius-lg: 12px;     /* Large containers */
-  --radius-xl: 16px;     /* Extra large containers */
-  --radius-2xl: 24px;    /* Maximum radius */
+  --radius-sm: 6px;      /* Small elements, badges - aligns to 2px increments */
+  --radius-md: 8px;      /* Cards, buttons, inputs - base grid unit */
+  --radius-lg: 12px;     /* Large containers - 1.5x base */
+  --radius-xl: 16px;     /* Extra large containers - 2x base */
+  --radius-2xl: 24px;    /* Maximum radius - 3x base */
   --radius-full: 9999px; /* Fully rounded (pills, avatars) */
   
   /* ============================================
