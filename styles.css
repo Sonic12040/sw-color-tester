@@ -1552,8 +1552,8 @@
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-tight);
-  opacity: var(--opacity-90);
   letter-spacing: 0.02em;
+  /* Removed opacity to ensure WCAG AA contrast compliance (was 0.9, causing 4.44:1 instead of required 4.5:1) */
 }
 
 /* Priority 1: Decision Support Section */
