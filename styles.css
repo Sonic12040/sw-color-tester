@@ -294,6 +294,49 @@
   --icon-2xl: 48px;
   
   /* ============================================
+     BUTTON SYSTEM
+     Unified button tokens for consistent styling
+     ============================================ */
+  
+  /* Button base properties */
+  --button-font-size: var(--font-size-base);
+  --button-font-weight: var(--font-weight-medium);
+  --button-line-height: var(--line-height-tight);
+  --button-border-radius: var(--radius-sm);
+  --button-min-height: 44px;
+  --button-transition: all var(--transition-fast);
+  
+  /* Primary button (filled, high emphasis) */
+  --button-primary-bg: var(--color-primary);
+  --button-primary-color: var(--color-text-inverse);
+  --button-primary-border: var(--color-primary);
+  --button-primary-hover-bg: var(--color-primary-hover);
+  --button-primary-hover-border: var(--color-primary-hover);
+  --button-primary-active-bg: var(--color-primary-active);
+  
+  /* Secondary button (outlined, medium emphasis) */
+  --button-secondary-bg: var(--color-surface-primary);
+  --button-secondary-color: var(--color-primary);
+  --button-secondary-border: var(--color-primary);
+  --button-secondary-hover-bg: var(--color-surface-hover);
+  --button-secondary-hover-border: var(--color-primary);
+  --button-secondary-active-bg: var(--color-surface-active);
+  
+  /* Ghost button (transparent, low emphasis) */
+  --button-ghost-bg: transparent;
+  --button-ghost-color: var(--color-text-primary);
+  --button-ghost-border: transparent;
+  --button-ghost-hover-bg: var(--color-surface-hover);
+  --button-ghost-hover-border: transparent;
+  --button-ghost-active-bg: var(--color-surface-active);
+  
+  /* Icon button (minimal, for actions) */
+  --button-icon-bg: rgba(0, 0, 0, 0.7);
+  --button-icon-hover-bg: rgba(0, 0, 0, 0.85);
+  --button-icon-light-bg: rgba(255, 255, 255, 0.85);
+  --button-icon-light-hover-bg: rgba(255, 255, 255, 0.95);
+  
+  /* ============================================
      BACKDROP BLUR
      Glassmorphism effects
      ============================================ */
@@ -306,6 +349,143 @@
 
 * {
   font-family: "Roboto", sans-serif;
+}
+
+/* ============================================
+   BUTTON COMPONENTS
+   Unified button system with clear variants
+   ============================================ */
+
+/* Base button - shared properties for all buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-3) var(--spacing-6);
+  border-radius: var(--button-border-radius);
+  font-size: var(--button-font-size);
+  font-weight: var(--button-font-weight);
+  line-height: var(--button-line-height);
+  min-height: var(--button-min-height);
+  cursor: pointer;
+  transition: var(--button-transition);
+  border: 1px solid;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Primary button variant - high emphasis actions */
+.btn--primary {
+  background: var(--button-primary-bg);
+  color: var(--button-primary-color);
+  border-color: var(--button-primary-border);
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: var(--button-primary-hover-bg);
+  border-color: var(--button-primary-hover-border);
+}
+
+.btn--primary:active:not(:disabled) {
+  background: var(--button-primary-active-bg);
+}
+
+.btn--primary:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+/* Secondary button variant - medium emphasis actions */
+.btn--secondary {
+  background: var(--button-secondary-bg);
+  color: var(--button-secondary-color);
+  border-color: var(--button-secondary-border);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background: var(--button-secondary-hover-bg);
+  border-color: var(--button-secondary-hover-border);
+}
+
+.btn--secondary:active:not(:disabled) {
+  background: var(--button-secondary-active-bg);
+}
+
+.btn--secondary:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+/* Ghost button variant - low emphasis actions */
+.btn--ghost {
+  background: var(--button-ghost-bg);
+  color: var(--button-ghost-color);
+  border-color: var(--button-ghost-border);
+}
+
+.btn--ghost:hover:not(:disabled) {
+  background: var(--button-ghost-hover-bg);
+  border-color: var(--button-ghost-hover-border);
+}
+
+.btn--ghost:active:not(:disabled) {
+  background: var(--button-ghost-active-bg);
+}
+
+.btn--ghost:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+/* Icon button variant - minimal button for icons */
+.btn--icon {
+  padding: var(--spacing-2);
+  min-width: 44px;
+  min-height: 44px;
+  border: none;
+  background: var(--btn-bg, var(--button-icon-bg));
+  color: var(--btn-text-color, white);
+  backdrop-filter: var(--blur-md);
+}
+
+.btn--icon:hover:not(:disabled) {
+  background: var(--btn-hover-bg, var(--button-icon-hover-bg));
+  transform: scale(1.05);
+}
+
+.btn--icon:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.btn--icon:focus-visible {
+  outline: 2px solid var(--btn-text-color, white);
+  outline-offset: 2px;
+}
+
+/* Icon button light variant - for dark backgrounds */
+.btn--icon.btn--icon-light {
+  --btn-bg: var(--button-icon-light-bg);
+  --btn-hover-bg: var(--button-icon-light-hover-bg);
+  --btn-text-color: rgba(0, 0, 0, 0.9);
+}
+
+/* Size variants */
+.btn--sm {
+  padding: var(--spacing-2) var(--spacing-4);
+  font-size: var(--font-size-sm);
+  min-height: 36px;
+}
+
+.btn--lg {
+  padding: var(--spacing-4) var(--spacing-8);
+  font-size: var(--font-size-lg);
+  min-height: 52px;
 }
 
 /* Header Component */
@@ -342,21 +522,23 @@
   margin-bottom: var(--spacing-6);
 }
 
+/* Header buttons now extend the unified button system */
 .header__button {
-  background: var(--color-surface-primary);
-  color: var(--color-primary);
-  border: 1px solid var(--color-primary);
+  /* Inherits from .btn--secondary when applied in HTML */
+  background: var(--button-secondary-bg);
+  color: var(--button-secondary-color);
+  border: 1px solid var(--button-secondary-border);
   padding: var(--spacing-3) var(--spacing-6);
-  border-radius: var(--radius-sm);
+  border-radius: var(--button-border-radius);
   cursor: pointer;
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
-  transition: background-color var(--transition-fast);
-  min-height: 44px;
+  font-size: var(--button-font-size);
+  font-weight: var(--button-font-weight);
+  transition: var(--button-transition);
+  min-height: var(--button-min-height);
 }
 
 .header__button:hover {
-  background: var(--color-surface-hover);
+  background: var(--button-secondary-hover-bg);
 }
 
 .header__button:focus {
@@ -438,22 +620,23 @@
   color: var(--color-text-primary);
 }
 
-/* Bulk action buttons - shared base styles */
+/* Bulk action buttons - now use unified button system */
 .bulk-actions__favorite-button,
 .bulk-actions__hide-button {
   display: flex;
   align-items: center;
   gap: var(--spacing-2);
-  background: var(--color-surface-primary);
-  border: 1px solid var(--color-border-secondary);
+  background: var(--button-secondary-bg);
+  border: 1px solid var(--button-secondary-border);
   padding: var(--spacing-3) var(--spacing-4);
-  border-radius: var(--radius-sm);
+  border-radius: var(--button-border-radius);
   cursor: pointer;
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  line-height: var(--line-height-tight);
-  transition: all var(--transition-fast);
-  min-height: 44px;
+  font-weight: var(--button-font-weight);
+  line-height: var(--button-line-height);
+  transition: var(--button-transition);
+  min-height: var(--button-min-height);
+  color: var(--button-secondary-color);
 }
 
 /* Bulk action buttons - hover modifiers */
@@ -464,9 +647,8 @@
 }
 
 .bulk-actions__hide-button:hover {
-  background: var(--color-surface-tertiary);
-  border-color: var(--color-text-secondary);
-  color: var(--color-text-secondary);
+  background: var(--button-secondary-hover-bg);
+  border-color: var(--button-secondary-hover-border);
 }
 
 /* Bulk action buttons - focus state */
@@ -476,7 +658,7 @@
   outline-offset: 1px;
 }
 
-/* Color tile interaction buttons - shared base */
+/* Color tile interaction buttons - now use unified icon button system */
 .color-tile__favorite-button,
 .color-tile__hide-button,
 .color-tile__unhide-button {
@@ -487,15 +669,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity var(--transition-fast);
-  min-width: 44px;
-  min-height: 44px;
+  transition: var(--button-transition);
+  min-width: var(--button-min-height);
+  min-height: var(--button-min-height);
 }
 
 /* Color tile buttons - hover states */
 .color-tile__favorite-button:hover,
 .color-tile__hide-button:hover {
   opacity: 0.8;
+  transform: scale(1.05);
 }
 
 /* Color tile buttons - focus states */
@@ -508,13 +691,14 @@
 
 /* Unhide button modifier */
 .color-tile__unhide-button {
-  border-radius: var(--radius-sm);
-  transition: background-color var(--transition-fast), opacity var(--transition-fast);
+  border-radius: var(--button-border-radius);
+  transition: var(--button-transition);
 }
 
 .color-tile__unhide-button:hover {
   background: rgba(255, 255, 255, 0.2);
   opacity: 0.9;
+  transform: scale(1.05);
 }
 
 /* Color tile group modifiers - shared properties */
@@ -658,7 +842,7 @@
 }
 
 .color-tile__button {
-  background: var(--btn-bg, rgba(0, 0, 0, 0.7));
+  background: var(--btn-bg, var(--button-icon-bg));
   backdrop-filter: var(--blur-md);
   border: none;
   cursor: pointer;
@@ -666,49 +850,48 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--transition-fast);
-  border-radius: var(--radius-sm);
-  min-width: 44px;
-  min-height: 44px;
+  transition: var(--button-transition);
+  border-radius: var(--button-border-radius);
+  min-width: var(--button-min-height);
+  min-height: var(--button-min-height);
 }
 
 .color-tile__button:hover {
-  background: var(--btn-hover-bg, rgba(0, 0, 0, 0.85));
+  background: var(--btn-hover-bg, var(--button-icon-hover-bg));
   transform: scale(1.1);
 }
 
 .color-tile__button:focus {
   outline: 2px solid var(--neutral-0);
   outline-offset: 2px;
-  background: var(--btn-hover-bg, rgba(0, 0, 0, 0.9));
+  background: var(--btn-hover-bg, var(--button-icon-hover-bg));
 }
 
-/* View Details button */
+/* View Details button - extends button system */
 .color-tile__view-button {
   width: auto;
   min-width: 120px;
-  min-height: 44px;
+  min-height: var(--button-min-height);
   padding: var(--spacing-3) var(--spacing-4);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-tight);
+  line-height: var(--button-line-height);
   letter-spacing: 0.05em;
   text-transform: uppercase;
   margin-top: var(--spacing-2);
   position: relative;
-  /* Use button background and text color variables */
-  background: var(--btn-bg, rgba(0, 0, 0, 0.75));
+  background: var(--btn-bg, var(--button-icon-bg));
   border: none;
   color: var(--btn-text-color, currentColor);
-  border-radius: var(--radius-sm);
+  border-radius: var(--button-border-radius);
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: var(--button-transition);
   display: inline-block;
   backdrop-filter: blur(4px);
 }
 
 .color-tile__view-button:hover {
-  background: var(--btn-hover-bg, rgba(0, 0, 0, 0.85));
+  background: var(--btn-hover-bg, var(--button-icon-hover-bg));
   transform: translateY(-1px);
   box-shadow: var(--shadow-sm);
 }
@@ -716,7 +899,7 @@
 .color-tile__view-button:active {
   transform: translateY(0);
   box-shadow: none;
-  background: var(--btn-hover-bg, rgba(0, 0, 0, 0.9));
+  background: var(--btn-hover-bg, var(--button-icon-hover-bg));
 }
 
 .color-tile__view-button:focus {
@@ -979,24 +1162,24 @@
 }
 
 .modal__close {
-  background: var(--btn-bg, rgba(0, 0, 0, 0.75));
+  background: var(--btn-bg, var(--button-icon-bg));
   backdrop-filter: var(--blur-md);
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: var(--button-border-radius);
   padding: var(--spacing-4);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--transition-fast);
-  min-width: 44px;
-  min-height: 44px;
+  transition: var(--button-transition);
+  min-width: var(--button-min-height);
+  min-height: var(--button-min-height);
   flex-shrink: 0;
   color: var(--btn-text-color, currentColor);
 }
 
 .modal__close:hover {
-  background: var(--btn-hover-bg, rgba(0, 0, 0, 0.85));
+  background: var(--btn-hover-bg, var(--button-icon-hover-bg));
   transform: scale(1.1);
 }
 
