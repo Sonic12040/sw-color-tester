@@ -787,6 +787,15 @@ export function colorDetailModal(
             <span>Share</span>
           </button>
           <button type="button" 
+                  class="modal__action-button modal__action-button--copy"
+                  ${DATA_ATTRIBUTES.ID}="${color.id}"
+                  aria-label="Copy color code">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              ${ICONS.COPY}
+            </svg>
+            <span>Copy Code</span>
+          </button>
+          <button type="button" 
                   class="modal__action-button modal__action-button--hide" 
                   ${DATA_ATTRIBUTES.ID}="${color.id}"
                   aria-label="${isHidden ? "Show" : "Hide"} color">

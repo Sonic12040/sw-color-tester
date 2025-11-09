@@ -1779,6 +1779,10 @@
   color: var(--color-primary);
 }
 
+.modal__action-button--copy svg {
+  color: var(--color-info);
+}
+
 .modal__action-button--hide svg {
   color: var(--color-warning);
 }

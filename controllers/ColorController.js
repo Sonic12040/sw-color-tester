@@ -194,6 +194,7 @@ export class ColorController {
           ".modal__action-button--favorite"
         );
         const shareButton = modal.querySelector(".modal__action-button--share");
+        const copyButton = modal.querySelector(".modal__action-button--copy");
         const hideButton = modal.querySelector(".modal__action-button--hide");
         const storeButton = modal.querySelector(".modal__action-button--store");
 
@@ -225,6 +226,12 @@ export class ColorController {
         if (shareButton) {
           shareButton.addEventListener("click", async () => {
             await this.handleShare(color);
+          });
+        }
+
+        if (copyButton) {
+          copyButton.addEventListener("click", async () => {
+            await this.handleCopyColorCode(color);
           });
         }
 
@@ -317,6 +324,38 @@ export class ColorController {
       }
     } catch (err) {
       console.error("Error sharing:", err);
+    }
+  }
+
+  /**
+   * Handle copying color code to clipboard
+   * @param {Object} color - The color to copy
+   */
+  async handleCopyColorCode(color) {
+    const colorCode = `${color.name} (SW ${color.colorNumber})
+Hex: ${color.hex}
+RGB: rgb(${color.red}, ${color.green}, ${color.blue})
+HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
+      color.saturation * 100
+    )}%, ${Math.round(color.lightness * 100)}%)`;
+
+    try {
+      await navigator.clipboard.writeText(colorCode);
+      // Provide visual feedback
+      const copyButton = document.querySelector(
+        ".modal__action-button--copy span"
+      );
+      if (copyButton) {
+        const originalText = copyButton.textContent;
+        copyButton.textContent = "Copied!";
+        setTimeout(() => {
+          copyButton.textContent = originalText;
+        }, 2000);
+      }
+    } catch (err) {
+      console.error("Error copying color code:", err);
+      // Fallback: show alert with the color code
+      alert(`Color Code:\n\n${colorCode}`);
     }
   }
 
