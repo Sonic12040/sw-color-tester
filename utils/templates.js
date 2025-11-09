@@ -233,6 +233,7 @@ export function colorTemplate(color, options = {}) {
   const favoriteButtonHTML = showFavoriteButton
     ? `
     <button aria-label="${favoriteLabel} color" 
+            title="${favoriteLabel} ${color.name}"
             class="${CSS_CLASSES.COLOR_TILE_FAVORITE_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON}" 
             ${DATA_ATTRIBUTES.ID}="${color.id}"
             style="--btn-bg: ${buttonBgColor}; --btn-hover-bg: ${buttonHoverBg};">
@@ -246,6 +247,7 @@ export function colorTemplate(color, options = {}) {
   const hideButtonHTML = showHideButton
     ? `
     <button aria-label="${hideLabel} color" 
+            title="${hideLabel} ${color.name}"
             class="${CSS_CLASSES.COLOR_TILE_HIDE_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON}" 
             ${DATA_ATTRIBUTES.ID}="${color.id}"
             style="--btn-bg: ${buttonBgColor}; --btn-hover-bg: ${buttonHoverBg};">
