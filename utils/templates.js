@@ -588,21 +588,17 @@ export function colorDetailModal(
   const lrvValue = color.lrv ? color.lrv.toFixed(1) : "N/A";
   let lrvLabel = "";
   let lrvContext = "";
-  let bestFor = "";
 
   if (color.lrv !== undefined && color.lrv !== null) {
     if (color.lrv < 30) {
       lrvLabel = "Dark";
       lrvContext = `Reflects ${lrvValue}% of light. Absorbs most light, creating intimate, cozy spaces.`;
-      bestFor = "Accent walls, dramatic spaces, exteriors";
     } else if (color.lrv > 60) {
       lrvLabel = "Light";
       lrvContext = `Reflects ${lrvValue}% of light. Creates bright, airy, spacious feeling.`;
-      bestFor = "Small rooms, ceilings, maximizing natural light";
     } else {
       lrvLabel = "Medium";
       lrvContext = `Reflects ${lrvValue}% of light. Balanced color that works in most spaces.`;
-      bestFor = "Living areas, bedrooms, versatile applications";
     }
   }
 
@@ -657,10 +653,6 @@ export function colorDetailModal(
                 <div class="${CSS_CLASSES.MODAL_LRV_CONTEXT}">
                   <span class="${CSS_CLASSES.MODAL_LRV_LABEL}">${lrvLabel}</span>
                   <p class="${CSS_CLASSES.MODAL_LRV_DESCRIPTION}">${lrvContext}</p>
-                </div>
-                <div class="${CSS_CLASSES.MODAL_BEST_FOR}">
-                  <span class="${CSS_CLASSES.MODAL_LABEL}">Best For:</span>
-                  <p class="${CSS_CLASSES.MODAL_VALUE}">${bestFor}</p>
                 </div>
               </div>
             `
