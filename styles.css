@@ -1642,6 +1642,47 @@
 }
 
 /* Priority 2: Coordinating and Similar Colors */
+/* Coordinating colors - curated expert pairings with elevated prominence */
+.modal__section--coordinating .modal__color-grid {
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--spacing-4);
+}
+
+.modal__section--coordinating .modal__mini-tile {
+  /* Larger tiles for coordinating colors */
+  min-height: 140px;
+}
+
+.modal__section--coordinating .modal__mini-tile-name {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+}
+
+.modal__section--coordinating .modal__mini-tile-number {
+  font-size: var(--font-size-sm);
+}
+
+.modal__section--coordinating .modal__mini-tile-role {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  background: rgba(0, 0, 0, 0.15);
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-2);
+  align-self: flex-start;
+}
+
+/* Similar colors - algorithmic matches for browsing */
+.modal__section--similar .modal__color-grid {
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: var(--spacing-3);
+}
+
+.modal__section--similar .modal__mini-tile {
+  /* Smaller tiles for similar colors */
+  min-height: 110px;
+}
+
 .modal__section-description {
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
