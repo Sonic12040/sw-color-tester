@@ -111,6 +111,7 @@ export const ELEMENT_IDS = {
   COLOR_ACCORDION: "color-accordion",
   FAVORITES_TILES: "favorites-tiles",
   HIDDEN_TILES: "hidden-tiles",
+  EXPORT_FAVORITES_BTN: "export-favorites-btn",
   CLEAR_FAVORITES_BTN: "clear-favorites-btn",
   CLEAR_HIDDEN_BTN: "clear-hidden-btn",
 };

@@ -664,6 +664,15 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
    */
   setupHeaderButtons() {
     console.log("--- Setting up header buttons ---");
+    const exportFavBtn = document.getElementById(
+      ELEMENT_IDS.EXPORT_FAVORITES_BTN
+    );
+    if (exportFavBtn) {
+      exportFavBtn.addEventListener("click", () => {
+        this.handleExportFavorites();
+      });
+    }
+
     const clearFavBtn = document.getElementById(
       ELEMENT_IDS.CLEAR_FAVORITES_BTN
     );
@@ -919,5 +928,75 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
         },
       });
     }
+  }
+
+  /**
+   * Handle export favorites button click
+   */
+  handleExportFavorites() {
+    const favoriteIds = this.state.getFavorites();
+
+    if (favoriteIds.length === 0) {
+      this.showToast({
+        message: "No favorites to export.",
+        onUndo: null,
+        duration: 3000,
+      });
+      return;
+    }
+
+    // Get color details for all favorites
+    const allColors = this.model.getActiveColors();
+    const favoriteColors = favoriteIds
+      .map((id) => allColors.find((c) => c.id === id))
+      .filter((color) => color !== undefined);
+
+    // Create export data
+    const exportData = {
+      exportDate: new Date().toISOString(),
+      appVersion: "1.0.0",
+      count: favoriteColors.length,
+      colors: favoriteColors.map((color) => ({
+        id: color.id,
+        name: color.name,
+        number: color.colorNumber,
+        hex: color.hex,
+        rgb: color.rgb,
+        hsl: {
+          h: Math.round(color.hue * 360),
+          s: Math.round(color.saturation * 100),
+          l: Math.round(color.lightness * 100),
+        },
+        lrv: color.lrv,
+        family: color.colorFamilyNames?.[0] || null,
+      })),
+    };
+
+    // Create and download JSON file
+    const jsonString = JSON.stringify(exportData, null, 2);
+    const blob = new Blob([jsonString], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const timestamp = new Date()
+      .toISOString()
+      .replaceAll(/[:.]/g, "-")
+      .slice(0, -5);
+    const filename = `sw-favorites-${timestamp}.json`;
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    link.click();
+
+    // Clean up
+    URL.revokeObjectURL(url);
+
+    // Show success toast
+    this.showToast({
+      message: `${favoriteColors.length} favorite${
+        favoriteColors.length === 1 ? "" : "s"
+      } exported.`,
+      onUndo: null,
+      duration: 3000,
+    });
   }
 }
