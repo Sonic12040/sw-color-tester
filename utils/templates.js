@@ -751,7 +751,7 @@ export function colorDetailModal(
                 <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
                   <span class="${
                     CSS_CLASSES.MODAL_INFO_LABEL
-                  }">Collections:</span>
+                  }">Paint Collections:</span>
                   <span class="${
                     CSS_CLASSES.MODAL_INFO_VALUE
                   }">${collections}</span>
