@@ -15,7 +15,11 @@ import {
   DATA_ATTRIBUTES,
   ICONS,
 } from "../utils/config.js";
-import { colorDetailModal, confirmationModal } from "../utils/templates.js";
+import {
+  colorDetailModal,
+  confirmationModal,
+  toastNotification,
+} from "../utils/templates.js";
 import {
   ToggleFavoriteCommand,
   ToggleHiddenCommand,
@@ -112,6 +116,71 @@ export class ColorController {
       };
       document.addEventListener("keydown", handleEscape);
     });
+  }
+
+  /**
+   * Show toast notification with undo action
+   * @param {Object} options - Toast options
+   * @param {string} options.message - Toast message
+   * @param {Function} options.onUndo - Callback when undo is clicked
+   * @param {number} options.duration - Auto-dismiss duration in ms (default: 5000)
+   * @returns {void}
+   */
+  showToast({ message, onUndo, duration = 5000 }) {
+    const toastId = `toast-${Date.now()}`;
+    const toastHTML = toastNotification({
+      message,
+      actionText: "Undo",
+      id: toastId,
+    });
+
+    // Insert into DOM
+    document.body.insertAdjacentHTML("beforeend", toastHTML);
+
+    const toast = document.getElementById(toastId);
+    const actionBtn = toast.querySelector(".toast__action");
+    const closeBtn = toast.querySelector(".toast__close");
+
+    let timeoutId = null;
+    let isDismissed = false;
+
+    // Auto-dismiss after duration
+    const scheduleAutoDismiss = () => {
+      timeoutId = setTimeout(() => {
+        dismissToast();
+      }, duration);
+    };
+
+    // Dismiss toast
+    const dismissToast = () => {
+      if (isDismissed) return;
+      isDismissed = true;
+
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+
+      toast.classList.add("toast--hiding");
+      setTimeout(() => {
+        toast.remove();
+      }, 300); // Match animation duration
+    };
+
+    // Handle undo
+    const handleUndo = () => {
+      if (isDismissed) return;
+      dismissToast();
+      if (onUndo) {
+        onUndo();
+      }
+    };
+
+    // Event listeners
+    actionBtn.addEventListener("click", handleUndo);
+    closeBtn.addEventListener("click", dismissToast);
+
+    // Start auto-dismiss timer
+    scheduleAutoDismiss();
   }
 
   /**
@@ -667,6 +736,20 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
         groupName
       );
       this._executeCommand(command);
+
+      // Show undo toast
+      const actionPastTense = allFavorited ? "removed from" : "added to";
+      this.showToast({
+        message: `${count} color${
+          count === 1 ? "" : "s"
+        } ${actionPastTense} favorites.`,
+        onUndo: () => {
+          const stateChanged = command.undo();
+          if (stateChanged) {
+            this.render();
+          }
+        },
+      });
     }
   }
 
@@ -700,6 +783,18 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
         groupName
       );
       this._executeCommand(command);
+
+      // Show undo toast
+      const actionPastTense = allHidden ? "unhidden" : "hidden";
+      this.showToast({
+        message: `${count} color${count === 1 ? "" : "s"} ${actionPastTense}.`,
+        onUndo: () => {
+          const stateChanged = command.undo();
+          if (stateChanged) {
+            this.render();
+          }
+        },
+      });
     }
   }
 
@@ -775,6 +870,17 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     if (confirmed) {
       const command = new ClearFavoritesCommand(this.model, this.state);
       this._executeCommand(command);
+
+      // Show undo toast
+      this.showToast({
+        message: `${count} favorite${count === 1 ? "" : "s"} cleared.`,
+        onUndo: () => {
+          const stateChanged = command.undo();
+          if (stateChanged) {
+            this.render();
+          }
+        },
+      });
     }
   }
 
@@ -801,6 +907,17 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     if (confirmed) {
       const command = new ClearHiddenCommand(this.model, this.state);
       this._executeCommand(command);
+
+      // Show undo toast
+      this.showToast({
+        message: `${count} color${count === 1 ? "" : "s"} unhidden.`,
+        onUndo: () => {
+          const stateChanged = command.undo();
+          if (stateChanged) {
+            this.render();
+          }
+        },
+      });
     }
   }
 }

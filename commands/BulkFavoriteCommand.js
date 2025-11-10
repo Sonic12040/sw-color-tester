@@ -25,6 +25,11 @@ export class BulkFavoriteCommand extends ColorCommand {
     );
     const colorIds = groupColors.map((color) => color.id);
 
+    // Store previous state for undo
+    this.previousFavorites = [...favorites];
+    this.wasAdding = !allFavorited;
+    this.colorIds = colorIds;
+
     if (allFavorited) {
       this.state.removeMultipleFavorites(colorIds);
     } else {
@@ -32,5 +37,20 @@ export class BulkFavoriteCommand extends ColorCommand {
     }
 
     return true; // State changed, re-render needed
+  }
+
+  undo() {
+    // Restore previous state
+    if (this.colorIds) {
+      if (this.wasAdding) {
+        // Was adding, so remove them
+        this.state.removeMultipleFavorites(this.colorIds);
+      } else {
+        // Was removing, so add them back
+        this.state.addMultipleFavorites(this.colorIds);
+      }
+      return true; // State changed, re-render needed
+    }
+    return false;
   }
 }

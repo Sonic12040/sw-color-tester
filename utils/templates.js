@@ -873,6 +873,33 @@ export function confirmationModal({
 }
 
 /**
+ * Generate toast notification for undo actions
+ * @param {Object} options - Toast configuration
+ * @param {string} options.message - Toast message
+ * @param {string} options.actionText - Text for action button (default: "Undo")
+ * @param {string} options.id - Unique ID for the toast
+ * @returns {string} HTML for the toast notification
+ */
+export function toastNotification({ message, actionText = "Undo", id }) {
+  return `
+    <div class="toast" id="${id}" role="status" aria-live="polite" aria-atomic="true">
+      <div class="toast__content">
+        <p class="toast__message">${message}</p>
+        <button type="button" class="toast__action" aria-label="${actionText}">
+          ${actionText}
+        </button>
+        <button type="button" class="toast__close" aria-label="Dismiss">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+/**
  * Template utility functions that can be exported if needed separately
  */
 export const TemplateUtils = {
