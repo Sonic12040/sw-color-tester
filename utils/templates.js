@@ -713,6 +713,17 @@ export function colorDetailModal(
                 </div>
               </div>
               
+              <!-- Color Code Usage Guide -->
+              <div class="modal__code-guide">
+                <p class="modal__code-guide-text">
+                  Use color name <strong>${
+                    color.name
+                  }</strong> or number <strong>SW ${
+    color.colorNumber
+  }</strong> when ordering paint at Sherwin-Williams
+                </p>
+              </div>
+              
               <!-- HSL Visual Breakdown -->
               ${generateHSLBreakdown(color)}
               

@@ -1383,6 +1383,27 @@
   color: var(--color-text-primary);
 }
 
+/* Color Code Usage Guide */
+.modal__code-guide {
+  margin: var(--spacing-3) 0;
+  padding: var(--spacing-3);
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--color-primary);
+}
+
+.modal__code-guide-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-normal);
+  margin: 0;
+}
+
+.modal__code-guide-text strong {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
 /* HSL Visual Breakdown */
 .hsl-breakdown {
   margin: var(--spacing-6) 0;
