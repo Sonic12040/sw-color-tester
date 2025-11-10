@@ -399,9 +399,10 @@ export class ColorController {
 
         if (storeButton) {
           storeButton.addEventListener("click", () => {
-            alert(
-              `Visit your local Sherwin-Williams store and ask for:\n\n${color.name}\nLocation: ${color.storeStripLocator}`
-            );
+            this.showToast({
+              message: `Visit your local Sherwin-Williams store and ask for: ${color.name} (Location: ${color.storeStripLocator})`,
+              duration: 8000,
+            });
           });
         }
 
@@ -495,8 +496,11 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       }
     } catch (err) {
       console.error("Error copying color code:", err);
-      // Fallback: show alert with the color code
-      alert(`Color Code:\n\n${colorCode}`);
+      // Fallback: show toast with the color code
+      this.showToast({
+        message: `Color Code: ${colorCode}`,
+        duration: 5000,
+      });
     }
   }
 
