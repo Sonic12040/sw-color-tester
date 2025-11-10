@@ -329,4 +329,31 @@ export class AppState {
     this.hidden.clear();
     this.syncToURL();
   }
+
+  /**
+   * Get scroll position from URL
+   * @returns {number} The saved scroll position, or 0 if none exists
+   */
+  getScrollPosition() {
+    const params = new URLSearchParams(globalThis.location.search);
+    const scroll = params.get(URL_PARAMS.SCROLL);
+    return scroll ? Number.parseInt(scroll, 10) : 0;
+  }
+
+  /**
+   * Set scroll position in URL
+   * @param {number} position - The scroll position to save
+   */
+  setScrollPosition(position) {
+    const params = new URLSearchParams(globalThis.location.search);
+
+    if (position > 0) {
+      params.set(URL_PARAMS.SCROLL, Math.round(position).toString());
+    } else {
+      params.delete(URL_PARAMS.SCROLL);
+    }
+
+    const newUrl = `${globalThis.location.pathname}?${params.toString()}`;
+    globalThis.history.replaceState({}, "", newUrl);
+  }
 }

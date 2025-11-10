@@ -228,6 +228,11 @@ export class ColorController {
    * @param {string} colorId - The ID of the color to display
    */
   openModal(colorId) {
+    // Save current scroll position to URL
+    const scrollPosition =
+      globalThis.scrollY || document.documentElement.scrollTop;
+    this.state.setScrollPosition(scrollPosition);
+
     const allColors = this.model.getActiveColors();
     const color = allColors.find((c) => c.id === colorId);
 
@@ -508,6 +513,17 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
         modal.remove();
         // Restore body scrolling
         document.body.style.overflow = "";
+
+        // Restore scroll position from URL
+        const savedScrollPosition = this.state.getScrollPosition();
+        if (savedScrollPosition > 0) {
+          globalThis.scrollTo({
+            top: savedScrollPosition,
+            behavior: "instant",
+          });
+          // Clear scroll position from URL after restoring
+          this.state.setScrollPosition(0);
+        }
       }, 300);
     }
   }

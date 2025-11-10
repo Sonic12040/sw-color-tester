@@ -129,6 +129,7 @@ export const DATA_ATTRIBUTES = {
 export const URL_PARAMS = {
   FAVORITES: "favorites",
   HIDDEN: "hidden",
+  SCROLL: "scroll",
 };
 
 // Common family names (for sorting priority)

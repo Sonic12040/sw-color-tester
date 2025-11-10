@@ -117,4 +117,38 @@ export class URLParameterManager {
       globalThis.history.pushState({}, "", newUrl);
     }
   }
+
+  /**
+   * Get a scalar parameter from the URL
+   * @param {string} paramName - The name of the URL parameter
+   * @returns {string|null} The parameter value, or null if not found
+   */
+  static getScalarParameter(paramName) {
+    const params = new URLSearchParams(globalThis.location.search);
+    return params.get(paramName);
+  }
+
+  /**
+   * Set a scalar parameter in the URL
+   * @param {string} paramName - The name of the URL parameter
+   * @param {string|number|null} value - Value to set, or null to remove
+   * @param {boolean} replaceState - Whether to replace the current history state (default: true)
+   */
+  static setScalarParameter(paramName, value, replaceState = true) {
+    const params = new URLSearchParams(globalThis.location.search);
+
+    if (value === null || value === undefined || value === "") {
+      params.delete(paramName);
+    } else {
+      params.set(paramName, value.toString());
+    }
+
+    const newUrl = `${globalThis.location.pathname}?${params.toString()}`;
+
+    if (replaceState) {
+      globalThis.history.replaceState({}, "", newUrl);
+    } else {
+      globalThis.history.pushState({}, "", newUrl);
+    }
+  }
 }
