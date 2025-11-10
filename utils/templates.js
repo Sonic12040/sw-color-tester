@@ -666,6 +666,9 @@ export function colorDetailModal(
           ${coordinatingHTML}
           ${similarHTML}
           
+          <!-- Color Science Snapshot -->
+          ${generateHSLBreakdown(color)}
+          
           <!-- Priority 3: Technical Details (Accordion) -->
           <div class="${CSS_CLASSES.MODAL_SECTION} modal__section--technical">
             <button class="${CSS_CLASSES.MODAL_ACCORDION_TRIGGER}" 
@@ -723,9 +726,6 @@ export function colorDetailModal(
   }</strong> when ordering paint at Sherwin-Williams
                 </p>
               </div>
-              
-              <!-- HSL Visual Breakdown -->
-              ${generateHSLBreakdown(color)}
               
               <div class="${CSS_CLASSES.MODAL_INFO_GRID}">
                 <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
