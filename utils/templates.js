@@ -834,6 +834,45 @@ export function colorDetailModal(
 }
 
 /**
+ * Generate confirmation modal for bulk actions
+ * @param {Object} options - Modal configuration
+ * @param {string} options.title - Modal title
+ * @param {string} options.message - Confirmation message
+ * @param {string} options.confirmText - Text for confirm button (default: "Confirm")
+ * @param {string} options.cancelText - Text for cancel button (default: "Cancel")
+ * @param {string} options.confirmClass - CSS class for confirm button (default: "btn-danger")
+ * @returns {string} HTML for the confirmation modal
+ */
+export function confirmationModal({
+  title,
+  message,
+  confirmText = "Confirm",
+  cancelText = "Cancel",
+  confirmClass = "btn-danger",
+}) {
+  return `
+    <div class="confirm-overlay" id="confirm-overlay" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+      <div class="confirm-dialog">
+        <div class="confirm-header">
+          <h2 class="confirm-title" id="confirm-title">${title}</h2>
+        </div>
+        <div class="confirm-body">
+          <p class="confirm-message">${message}</p>
+        </div>
+        <div class="confirm-actions">
+          <button type="button" class="btn btn-secondary" id="confirm-cancel" aria-label="${cancelText}">
+            ${cancelText}
+          </button>
+          <button type="button" class="btn ${confirmClass}" id="confirm-confirm" aria-label="${confirmText}">
+            ${confirmText}
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/**
  * Template utility functions that can be exported if needed separately
  */
 export const TemplateUtils = {

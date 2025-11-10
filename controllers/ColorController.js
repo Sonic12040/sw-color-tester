@@ -15,7 +15,7 @@ import {
   DATA_ATTRIBUTES,
   ICONS,
 } from "../utils/config.js";
-import { colorDetailModal } from "../utils/templates.js";
+import { colorDetailModal, confirmationModal } from "../utils/templates.js";
 import {
   ToggleFavoriteCommand,
   ToggleHiddenCommand,
@@ -45,6 +45,73 @@ export class ColorController {
     if (stateChanged) {
       this.render();
     }
+  }
+
+  /**
+   * Show confirmation dialog and return a Promise
+   * @param {Object} options - Confirmation options
+   * @param {string} options.title - Dialog title
+   * @param {string} options.message - Confirmation message
+   * @param {string} options.confirmText - Confirm button text
+   * @param {string} options.cancelText - Cancel button text
+   * @param {string} options.confirmClass - CSS class for confirm button
+   * @returns {Promise<boolean>} Resolves to true if confirmed, false if cancelled
+   */
+  showConfirmation(options) {
+    return new Promise((resolve) => {
+      // Create confirmation modal
+      const modalHTML = confirmationModal(options);
+
+      // Insert into DOM
+      document.body.insertAdjacentHTML("beforeend", modalHTML);
+
+      const overlay = document.getElementById("confirm-overlay");
+      const confirmBtn = document.getElementById("confirm-confirm");
+      const cancelBtn = document.getElementById("confirm-cancel");
+
+      // Focus confirm button for keyboard accessibility
+      setTimeout(() => confirmBtn.focus(), 100);
+
+      // Handle confirm
+      const handleConfirm = () => {
+        cleanup();
+        resolve(true);
+      };
+
+      // Handle cancel
+      const handleCancel = () => {
+        cleanup();
+        resolve(false);
+      };
+
+      // Cleanup function
+      const cleanup = () => {
+        overlay.classList.add("closing");
+        setTimeout(() => {
+          overlay.remove();
+        }, 300); // Match animation duration
+      };
+
+      // Event listeners
+      confirmBtn.addEventListener("click", handleConfirm);
+      cancelBtn.addEventListener("click", handleCancel);
+
+      // Close on overlay click
+      overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) {
+          handleCancel();
+        }
+      });
+
+      // Close on Escape key
+      const handleEscape = (e) => {
+        if (e.key === "Escape") {
+          handleCancel();
+          document.removeEventListener("keydown", handleEscape);
+        }
+      };
+      document.addEventListener("keydown", handleEscape);
+    });
   }
 
   /**
@@ -569,27 +636,71 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
   /**
    * Handle bulk favorite button click (family/category)
    */
-  handleBulkFavoriteButton(groupId, groupName) {
-    const command = new BulkFavoriteCommand(
-      this.model,
-      this.state,
-      groupId,
-      groupName
+  async handleBulkFavoriteButton(groupId, groupName) {
+    const groupColors = this.model.getColorsForId(groupId, () => groupName);
+    const favorites = this.state.getFavorites();
+    const allFavorited = groupColors.every((color) =>
+      favorites.includes(color.id)
     );
-    this._executeCommand(command);
+    const count = groupColors.length;
+
+    const action = allFavorited ? "unfavorite" : "favorite";
+    const actionTitle = allFavorited
+      ? "Remove from Favorites?"
+      : "Add to Favorites?";
+
+    const confirmed = await this.showConfirmation({
+      title: actionTitle,
+      message: `Are you sure you want to ${action} all ${count} color${
+        count === 1 ? "" : "s"
+      } in "${groupName}"?`,
+      confirmText: allFavorited ? "Remove All" : "Add All",
+      cancelText: "Cancel",
+      confirmClass: allFavorited ? "btn-danger" : "btn-primary",
+    });
+
+    if (confirmed) {
+      const command = new BulkFavoriteCommand(
+        this.model,
+        this.state,
+        groupId,
+        groupName
+      );
+      this._executeCommand(command);
+    }
   }
 
   /**
    * Handle bulk hide button click (family/category)
    */
-  handleBulkHideButton(groupId, groupName) {
-    const command = new BulkHideCommand(
-      this.model,
-      this.state,
-      groupId,
-      groupName
-    );
-    this._executeCommand(command);
+  async handleBulkHideButton(groupId, groupName) {
+    const groupColors = this.model.getColorsForId(groupId, () => groupName);
+    const hidden = this.state.getHidden();
+    const allHidden = groupColors.every((color) => hidden.includes(color.id));
+    const count = groupColors.length;
+
+    const action = allHidden ? "unhide" : "hide";
+    const actionTitle = allHidden ? "Unhide All Colors?" : "Hide All Colors?";
+
+    const confirmed = await this.showConfirmation({
+      title: actionTitle,
+      message: `Are you sure you want to ${action} all ${count} color${
+        count === 1 ? "" : "s"
+      } in "${groupName}"?`,
+      confirmText: allHidden ? "Unhide All" : "Hide All",
+      cancelText: "Cancel",
+      confirmClass: allHidden ? "btn-primary" : "btn-danger",
+    });
+
+    if (confirmed) {
+      const command = new BulkHideCommand(
+        this.model,
+        this.state,
+        groupId,
+        groupName
+      );
+      this._executeCommand(command);
+    }
   }
 
   /**
@@ -644,16 +755,52 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
   /**
    * Handle clear all favorites button click
    */
-  handleClearFavorites() {
-    const command = new ClearFavoritesCommand(this.model, this.state);
-    this._executeCommand(command);
+  async handleClearFavorites() {
+    const count = this.state.getFavorites().length;
+
+    if (count === 0) {
+      return; // Nothing to clear
+    }
+
+    const confirmed = await this.showConfirmation({
+      title: "Clear All Favorites?",
+      message: `Are you sure you want to remove all ${count} favorite color${
+        count === 1 ? "" : "s"
+      }? This action cannot be undone.`,
+      confirmText: "Clear All",
+      cancelText: "Cancel",
+      confirmClass: "btn-danger",
+    });
+
+    if (confirmed) {
+      const command = new ClearFavoritesCommand(this.model, this.state);
+      this._executeCommand(command);
+    }
   }
 
   /**
    * Handle clear all hidden button click
    */
-  handleClearHidden() {
-    const command = new ClearHiddenCommand(this.model, this.state);
-    this._executeCommand(command);
+  async handleClearHidden() {
+    const count = this.state.getHidden().length;
+
+    if (count === 0) {
+      return; // Nothing to clear
+    }
+
+    const confirmed = await this.showConfirmation({
+      title: "Unhide All Colors?",
+      message: `Are you sure you want to unhide all ${count} hidden color${
+        count === 1 ? "" : "s"
+      }? They will reappear in the color list.`,
+      confirmText: "Unhide All",
+      cancelText: "Cancel",
+      confirmClass: "btn-primary",
+    });
+
+    if (confirmed) {
+      const command = new ClearHiddenCommand(this.model, this.state);
+      this._executeCommand(command);
+    }
   }
 }
