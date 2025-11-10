@@ -616,9 +616,10 @@ export function colorDetailModal(
             <h2 id="modal-title" class="${CSS_CLASSES.MODAL_TITLE}">${
     color.name
   }</h2>
-            <div class="${CSS_CLASSES.MODAL_SUBTITLE}">SW ${
-    color.colorNumber
-  }</div>
+            <div class="${CSS_CLASSES.MODAL_SUBTITLE}">
+              SW ${color.colorNumber}
+              ${useTypes.length > 0 ? ` • ${useTypesText}` : ""}
+            </div>
             ${
               descriptions
                 ? `<div class="${CSS_CLASSES.MODAL_DESCRIPTION}">${descriptions}</div>`
@@ -733,12 +734,6 @@ export function colorDetailModal(
                   <span class="${
                     CSS_CLASSES.MODAL_INFO_VALUE
                   }">${lrvValue}</span>
-                </div>
-                <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
-                  <span class="${CSS_CLASSES.MODAL_INFO_LABEL}">Use:</span>
-                  <span class="${
-                    CSS_CLASSES.MODAL_INFO_VALUE
-                  }">${useTypesText}</span>
                 </div>
                 <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
                   <span class="${
