@@ -738,7 +738,7 @@ export function colorDetailModal(
                 <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
                   <span class="${
                     CSS_CLASSES.MODAL_INFO_LABEL
-                  }">Color Family:</span>
+                  }">Color Temperature Family:</span>
                   <span class="${
                     CSS_CLASSES.MODAL_INFO_VALUE
                   }">${families}</span>
