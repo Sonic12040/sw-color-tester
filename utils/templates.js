@@ -677,7 +677,7 @@ export function colorDetailModal(
                 CSS_CLASSES.MODAL_ACCORDION_TITLE
               }">Technical Details <span class="${
     CSS_CLASSES.MODAL_ACCORDION_HINT
-  }">(HSL, RGB, Hex codes & more)</span></span>
+  }">(Paint specs, color codes & more)</span></span>
               <svg class="${
                 CSS_CLASSES.MODAL_ACCORDION_ICON
               }" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
