@@ -1,7 +1,7 @@
 {
-  "name": "Sherwin Williams Color Explorer",
+  "name": "Sherwin-Williams Color Explorer",
   "short_name": "SW Colors",
-  "description": "Explore and favorite Sherwin Williams paint colors",
+  "description": "Explore and favorite Sherwin-Williams paint colors",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

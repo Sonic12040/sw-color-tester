@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sherwin Williams Color Explorer</title>
+    <title>Sherwin-Williams Color Explorer</title>
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json" />
@@ -25,16 +25,25 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
     <link
+      rel="preload"
       href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
+      onload="this.onload=null;this.rel='stylesheet';this.removeAttribute('as')"
+      as="style"
+      fetchpriority="high"
     />
     <!-- Application Styles -->
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="header">
-      <h1>Sherwin Williams Color Explorer</h1>
+      <h1>Sherwin-Williams Color Explorer</h1>
       <p>
         Favorite colors and hidden colors are appended to the URL as query
         parameters. Update your favorites and hidden colors in the URL to see

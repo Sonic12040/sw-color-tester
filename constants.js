@@ -1,4 +1,4 @@
-// Color data for the Sherwin Williams Color Tester
+// Color data for the Sherwin-Williams Color Tester
 // This file contains all color information exported as an ES6 module
 
 export const colorData = [

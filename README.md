@@ -1,6 +1,6 @@
-# Sherwin Williams Color Explorer
+# Sherwin-Williams Color Explorer
 
-A Progressive Web Application (PWA) for exploring, organizing, and sharing Sherwin Williams paint colors with comprehensive color information and visualization tools.
+A Progressive Web Application (PWA) for exploring, organizing, and sharing Sherwin-Williams paint colors with comprehensive color information and visualization tools.
 
 ## Features
 
@@ -143,4 +143,4 @@ This project is for educational and demonstration purposes.
 
 ## Acknowledgments
 
-Color data provided by the Sherwin Williams API.
+Color data provided by the Sherwin-Williams API.
