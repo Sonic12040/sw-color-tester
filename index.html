@@ -38,8 +38,16 @@
       as="style"
       fetchpriority="high"
     />
-    <!-- Application Styles -->
-    <link rel="stylesheet" href="styles.css" />
+    <!-- Application Styles (load without render-blocking) -->
+    <link
+      rel="preload"
+      href="styles.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="styles.css" />
+    </noscript>
   </head>
   <body>
     <header class="header">
