@@ -512,6 +512,8 @@
   justify-content: center;
   gap: var(--spacing-4);
   margin-bottom: var(--spacing-6);
+  flex-wrap: wrap;
+  padding: 0 var(--spacing-4);
 }
 
 /* Header buttons now extend the unified button system */
@@ -1107,6 +1109,33 @@
     --font-size-md: 1rem;       /* 16px - Subheadings */
   }
   
+  /* Header mobile adjustments */
+  .header {
+    padding: var(--spacing-3) 0;
+  }
+  
+  .header h1 {
+    font-size: var(--font-size-2xl);
+    padding: 0 var(--spacing-4);
+  }
+  
+  .header p {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-3);
+  }
+  
+  .header__actions {
+    flex-direction: column;
+    gap: var(--spacing-3);
+    padding: 0 var(--spacing-4);
+    margin-bottom: var(--spacing-4);
+  }
+  
+  .header__button {
+    width: 100%;
+    justify-content: center;
+  }
+  
   .color-tile {
     min-width: 100%;
     max-width: 100%;
@@ -1118,14 +1147,6 @@
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
-  }
-  
-  .header h1 {
-    font-size: var(--font-size-2xl);
-  }
-  
-  .header p {
-    font-size: var(--font-size-sm);
   }
   
   /* Maintain adequate touch targets on mobile while adjusting spacing */
@@ -1145,6 +1166,11 @@
   .bulk-actions-panel__container {
     gap: var(--spacing-3);
     flex-wrap: wrap;
+  }
+  
+  /* Mobile-specific button spacing improvements */
+  .color-tile__actions {
+    gap: var(--spacing-3); /* Increase from 8px to 12px to prevent accidental taps */
   }
 }
 
@@ -2173,6 +2199,7 @@
   .toast {
     left: var(--spacing-4);
     right: var(--spacing-4);
+    bottom: var(--spacing-4);
     transform: translateX(0) translateY(0);
     min-width: auto;
     max-width: none;
@@ -2328,6 +2355,11 @@
 
 /* Tablet optimization (600px - 899px) */
 @media (min-width: 600px) and (max-width: 899px) {
+  .header__actions {
+    gap: var(--spacing-4);
+    padding: 0 var(--spacing-6);
+  }
+  
   .accordion {
     padding: 0 var(--spacing-6);
   }
@@ -2490,5 +2522,90 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================
+   EXTRA SMALL MOBILE (< 400px)
+   Optimizations for very small phones
+   ============================================ */
+
+@media (max-width: 399px) {
+  .header h1 {
+    font-size: var(--font-size-xl);
+  }
+  
+  .header p {
+    font-size: var(--font-size-xs);
+  }
+  
+  .header__button {
+    padding: var(--spacing-3) var(--spacing-4);
+    font-size: var(--font-size-sm);
+  }
+  
+  .modal__title {
+    font-size: var(--font-size-lg);
+  }
+  
+  .modal__subtitle {
+    font-size: var(--font-size-base);
+  }
+  
+  .toast {
+    padding: var(--spacing-3) var(--spacing-4);
+    min-width: auto;
+  }
+  
+  .toast__message {
+    font-size: var(--font-size-xs);
+  }
+  
+  .confirm-dialog {
+    margin: var(--spacing-2);
+  }
+}
+
+/* ============================================
+   LANDSCAPE MOBILE (height < width, height < 500px)
+   Optimizations for horizontal phone orientation
+   ============================================ */
+
+@media (max-width: 899px) and (max-height: 499px) and (orientation: landscape) {
+  .header {
+    position: relative; /* Remove sticky on landscape mobile */
+  }
+  
+  .header h1 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-1);
+  }
+  
+  .header p {
+    display: none; /* Hide description to save vertical space */
+  }
+  
+  .header__actions {
+    margin-bottom: var(--spacing-3);
+  }
+  
+  .modal-container {
+    max-height: 90vh;
+  }
+  
+  .modal-header {
+    padding: var(--spacing-3) var(--spacing-4);
+  }
+  
+  .modal__title {
+    font-size: var(--font-size-md);
+  }
+  
+  .modal__subtitle {
+    font-size: var(--font-size-sm);
+  }
+  
+  .modal__body {
+    padding: var(--spacing-4);
   }
 }
