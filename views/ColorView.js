@@ -39,6 +39,10 @@ export class ColorView {
    */
   render(renderData) {
     console.log("--- ColorView.render() ---");
+    // Performance instrumentation (best-effort; safe in older browsers)
+    try {
+      performance.mark("view:render:start");
+    } catch {}
     const {
       favoriteColors,
       hiddenColors,
@@ -58,6 +62,9 @@ export class ColorView {
     const expandedSections = this._saveAccordionState();
 
     // Build and insert accordion HTML
+    try {
+      performance.mark("view:build-accordion:start");
+    } catch {}
     const accordionHTML = this.buildAccordionHTML(
       favoriteColors.length,
       hiddenColors.length,
@@ -67,22 +74,86 @@ export class ColorView {
       colorCategories
     );
     this.container.innerHTML = accordionHTML;
+    try {
+      performance.measure("view:build-accordion", "view:build-accordion:start");
+    } catch {}
 
     // Populate all sections
+    try {
+      performance.mark("view:favorites:start");
+    } catch {}
     this.renderFavoritesSection(favoriteColors);
+    try {
+      performance.measure("view:favorites", "view:favorites:start");
+    } catch {}
+
+    try {
+      performance.mark("view:hidden:start");
+    } catch {}
     this.renderHiddenSection(hiddenColors, hiddenFamilies, hiddenCategories);
+    try {
+      performance.measure("view:hidden", "view:hidden:start");
+    } catch {}
+
+    try {
+      performance.mark("view:sections:start");
+    } catch {}
     this.renderColorSections(
       sortedFamilies,
       colorFamilies,
       sortedCategories,
       colorCategories
     );
+    try {
+      performance.measure("view:sections", "view:sections:start");
+    } catch {}
 
     // Setup accordion interaction
+    try {
+      performance.mark("view:setup:start");
+    } catch {}
     this.setupAccordionBehavior();
+    try {
+      performance.measure("view:setup", "view:setup:start");
+    } catch {}
 
     // Restore accordion state after rebuilding
     this._restoreAccordionState(expandedSections);
+
+    // Finalize perf summary
+    try {
+      performance.measure("view:render", "view:render:start");
+      const getD = (name) => {
+        const e = performance.getEntriesByName(name);
+        let last;
+        if (typeof e.at === "function") {
+          last = e.at(-1);
+        } else {
+          last = e.length ? e[e.length - 1] : undefined;
+        }
+        return last ? Number(last.duration).toFixed(1) : "0.0";
+      };
+      console.log("[perf] view render (ms)", {
+        total: getD("view:render"),
+        build: getD("view:build-accordion"),
+        favorites: getD("view:favorites"),
+        hidden: getD("view:hidden"),
+        sections: getD("view:sections"),
+        setup: getD("view:setup"),
+      });
+      performance.clearMarks("view:render:start");
+      performance.clearMarks("view:build-accordion:start");
+      performance.clearMarks("view:favorites:start");
+      performance.clearMarks("view:hidden:start");
+      performance.clearMarks("view:sections:start");
+      performance.clearMarks("view:setup:start");
+      performance.clearMeasures("view:render");
+      performance.clearMeasures("view:build-accordion");
+      performance.clearMeasures("view:favorites");
+      performance.clearMeasures("view:hidden");
+      performance.clearMeasures("view:sections");
+      performance.clearMeasures("view:setup");
+    } catch {}
     console.log("✅ ColorView render complete");
   }
 
@@ -220,16 +291,16 @@ export class ColorView {
     );
 
     if (favoriteColors.length > 0) {
-      for (const color of favoriteColors) {
-        favoritesContainer.insertAdjacentHTML(
-          "beforeend",
+      const html = favoriteColors
+        .map((color) =>
           colorTemplate(color, {
             showHideButton: false,
             favoriteIds: this.favoriteIds,
             hiddenIds: this.hiddenIds,
           })
-        );
-      }
+        )
+        .join("");
+      favoritesContainer.innerHTML = html;
     } else {
       favoritesContainer.innerHTML = `
         <div class="${CSS_CLASSES.EMPTY_MESSAGE}">
@@ -246,21 +317,16 @@ export class ColorView {
   renderHiddenSection(hiddenColors, hiddenFamilies, hiddenCategories) {
     const hiddenContainer = document.getElementById(ELEMENT_IDS.HIDDEN_TILES);
     hiddenContainer.innerHTML = ""; // Clear existing hidden tiles
+    let html = "";
 
     // Add hidden family tiles first
     for (const family of hiddenFamilies) {
-      hiddenContainer.insertAdjacentHTML(
-        "beforeend",
-        familyTileTemplate(family.name, family.count)
-      );
+      html += familyTileTemplate(family.name, family.count);
     }
 
     // Add hidden category tiles
     for (const category of hiddenCategories) {
-      hiddenContainer.insertAdjacentHTML(
-        "beforeend",
-        categoryTileTemplate(category.name, category.count)
-      );
+      html += categoryTileTemplate(category.name, category.count);
     }
 
     // Add individual hidden colors (excluding those in completely hidden families or categories)
@@ -289,15 +355,16 @@ export class ColorView {
       return !inHiddenFamily && !inHiddenCategory;
     });
 
-    for (const color of individualHiddenColors) {
-      hiddenContainer.insertAdjacentHTML(
-        "beforeend",
-        colorTemplate(color, {
-          showFavoriteButton: false,
-          favoriteIds: this.favoriteIds,
-          hiddenIds: this.hiddenIds,
-        })
-      );
+    if (individualHiddenColors.length > 0) {
+      html += individualHiddenColors
+        .map((color) =>
+          colorTemplate(color, {
+            showFavoriteButton: false,
+            favoriteIds: this.favoriteIds,
+            hiddenIds: this.hiddenIds,
+          })
+        )
+        .join("");
     }
 
     if (
@@ -311,6 +378,8 @@ export class ColorView {
           <span class="empty-message__hint">Click the eye icon on any color to hide it.</span>
         </div>
       `;
+    } else {
+      hiddenContainer.innerHTML = html;
     }
   }
 
@@ -331,15 +400,14 @@ export class ColorView {
       );
       const familyColors = colorFamilies[family];
 
-      for (const color of familyColors) {
-        familyContainer.insertAdjacentHTML(
-          "beforeend",
+      familyContainer.innerHTML = familyColors
+        .map((color) =>
           colorTemplate(color, {
             favoriteIds: this.favoriteIds,
             hiddenIds: this.hiddenIds,
           })
-        );
-      }
+        )
+        .join("");
     }
 
     // Populate color category sections
@@ -350,15 +418,14 @@ export class ColorView {
       );
       const categoryColors = colorCategories[category];
 
-      for (const color of categoryColors) {
-        categoryContainer.insertAdjacentHTML(
-          "beforeend",
+      categoryContainer.innerHTML = categoryColors
+        .map((color) =>
           colorTemplate(color, {
             favoriteIds: this.favoriteIds,
             hiddenIds: this.hiddenIds,
           })
-        );
-      }
+        )
+        .join("");
     }
   }
 

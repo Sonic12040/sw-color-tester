@@ -33,6 +33,21 @@ console.log("✅ ColorController created");
 
 // Start the application
 console.log("Starting application...");
+try {
+  performance.mark("app:init:start");
+} catch {}
 colorController.init();
+try {
+  performance.measure("app:init", "app:init:start");
+  const entries = performance.getEntriesByName("app:init");
+  const d = entries.length
+    ? entries.at
+      ? entries.at(-1).duration
+      : entries[entries.length - 1].duration
+    : 0;
+  console.log(`[perf] app init: ${Number(d).toFixed(1)}ms`);
+  performance.clearMarks("app:init:start");
+  performance.clearMeasures("app:init");
+} catch {}
 console.log("✅ Application initialized");
 console.log("=== APP.JS COMPLETE ===");
