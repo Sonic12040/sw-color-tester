@@ -400,7 +400,7 @@ export class ColorController {
         if (storeButton) {
           storeButton.addEventListener("click", () => {
             this.showToast({
-              message: `Visit your local Sherwin-Williams store and ask for: ${color.name} (Location: ${color.storeStripLocator})`,
+              message: `Visit your local Sherwin-Williams store and ask for: ${color.name} or ${color.brandKey} ${color.colorNumber} (Location: ${color.storeStripLocator})`,
               duration: 8000,
             });
           });

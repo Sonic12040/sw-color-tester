@@ -704,17 +704,6 @@ export function colorDetailModal(
                 </div>
               </div>
               
-              <!-- Color Code Usage Guide -->
-              <div class="modal__code-guide">
-                <p class="modal__code-guide-text">
-                  Use color name <strong>${
-                    color.name
-                  }</strong> or number <strong>SW ${
-    color.colorNumber
-  }</strong> when ordering paint at Sherwin-Williams
-                </p>
-              </div>
-              
               <div class="${CSS_CLASSES.MODAL_INFO_GRID}">
                 <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
                   <span class="${
@@ -732,16 +721,6 @@ export function colorDetailModal(
                     CSS_CLASSES.MODAL_INFO_VALUE
                   }">${collections}</span>
                 </div>
-                ${
-                  color.storeStripLocator
-                    ? `
-                  <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
-                    <span class="${CSS_CLASSES.MODAL_INFO_LABEL}">Store Location:</span>
-                    <span class="${CSS_CLASSES.MODAL_INFO_VALUE}">${color.storeStripLocator}</span>
-                  </div>
-                `
-                    : ""
-                }
               </div>
             </div>
           </div>
