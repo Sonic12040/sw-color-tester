@@ -789,6 +789,8 @@
   max-width: 320px;
   min-height: 160px;
   padding: var(--spacing-4);
+  /* Ensure info content clears the absolutely-positioned action buttons */
+  padding-top: calc(var(--button-min-height) + var(--spacing-4));
   position: relative;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
@@ -829,6 +831,7 @@
   .color-tile {
     max-width: 350px;
     padding: var(--spacing-4);
+    padding-top: calc(var(--button-min-height) + var(--spacing-4));
   }
 }
 
@@ -839,6 +842,7 @@
     max-width: 320px;
     min-height: 180px;
     padding: var(--spacing-6);
+    padding-top: calc(var(--button-min-height) + var(--spacing-6));
   }
 }
 
@@ -1139,8 +1143,6 @@
   .color-tile {
     min-width: 100%;
     max-width: 100%;
-    /* Ensure info content clears the absolutely-positioned action buttons */
-    padding-top: calc(var(--button-min-height) + var(--spacing-4));
   }
   
   /* On mobile, always show details since hover doesn't work well on touch */
