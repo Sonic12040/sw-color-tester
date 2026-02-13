@@ -620,11 +620,6 @@ export function colorDetailModal(
               SW ${color.colorNumber}
               ${useTypes.length > 0 ? ` • ${useTypesText}` : ""}
             </div>
-            ${
-              descriptions
-                ? `<div class="${CSS_CLASSES.MODAL_DESCRIPTION}">${descriptions}</div>`
-                : ""
-            }
           </div>
           <button class="${
             CSS_CLASSES.MODAL_CLOSE
