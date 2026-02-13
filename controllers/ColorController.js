@@ -14,6 +14,7 @@ import {
   ELEMENT_IDS,
   DATA_ATTRIBUTES,
   ICONS,
+  URL_PARAMS,
 } from "../utils/config.js";
 import {
   colorDetailModal,
@@ -192,7 +193,26 @@ export class ColorController {
     this.setupHeaderButtons();
     this.setupModalListeners();
     this.render();
+    this.checkSharedColor();
     console.log("✅ ColorController initialized");
+  }
+
+  /**
+   * Check for a shared color in the URL and auto-open its modal
+   */
+  checkSharedColor() {
+    const params = new URLSearchParams(globalThis.location.search);
+    const colorId = params.get(URL_PARAMS.COLOR);
+    if (colorId) {
+      // Clean the ?color= param from the URL so it doesn't persist
+      params.delete(URL_PARAMS.COLOR);
+      const remaining = params.toString();
+      const newUrl =
+        globalThis.location.pathname + (remaining ? `?${remaining}` : "");
+      globalThis.history.replaceState({}, "", newUrl);
+
+      this.openModal(colorId);
+    }
   }
 
   /**
@@ -443,7 +463,7 @@ export class ColorController {
       url:
         window.location.origin +
         window.location.pathname +
-        `?color=${color.id}`,
+        `?${URL_PARAMS.COLOR}=${color.id}`,
     };
 
     try {

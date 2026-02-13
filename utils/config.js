@@ -130,6 +130,7 @@ export const URL_PARAMS = {
   FAVORITES: "favorites",
   HIDDEN: "hidden",
   SCROLL: "scroll",
+  COLOR: "color",
 };
 
 // Common family names (for sorting priority)
