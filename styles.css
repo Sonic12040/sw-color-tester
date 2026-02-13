@@ -1139,6 +1139,8 @@
   .color-tile {
     min-width: 100%;
     max-width: 100%;
+    /* Ensure info content clears the absolutely-positioned action buttons */
+    padding-top: calc(var(--button-min-height) + var(--spacing-4));
   }
   
   /* On mobile, always show details since hover doesn't work well on touch */
