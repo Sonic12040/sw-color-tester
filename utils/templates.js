@@ -702,14 +702,6 @@ export function colorDetailModal(
     color.red
   }, ${color.green}, ${color.blue})</span>
                 </div>
-                <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
-                  <span class="${CSS_CLASSES.MODAL_INFO_LABEL}">HSL:</span>
-                  <span class="${
-                    CSS_CLASSES.MODAL_INFO_VALUE
-                  }">hsl(${Math.round(color.hue * 360)}°, ${Math.round(
-    color.saturation * 100
-  )}%, ${Math.round(color.lightness * 100)}%)</span>
-                </div>
               </div>
               
               <!-- Color Code Usage Guide -->
