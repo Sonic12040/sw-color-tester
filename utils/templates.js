@@ -725,12 +725,6 @@ export function colorDetailModal(
               
               <div class="${CSS_CLASSES.MODAL_INFO_GRID}">
                 <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
-                  <span class="${CSS_CLASSES.MODAL_INFO_LABEL}">LRV:</span>
-                  <span class="${
-                    CSS_CLASSES.MODAL_INFO_VALUE
-                  }">${lrvValue}</span>
-                </div>
-                <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
                   <span class="${
                     CSS_CLASSES.MODAL_INFO_LABEL
                   }">Color Temperature Family:</span>
