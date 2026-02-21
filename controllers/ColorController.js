@@ -842,10 +842,16 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
   async handleBulkFavoriteButton(groupId, groupName) {
     const groupColors = this.model.getColorsForId(groupId, () => groupName);
     const favorites = this.state.getFavorites();
+    const hidden = this.state.getHidden();
     const allFavorited = groupColors.every((color) =>
       favorites.includes(color.id)
     );
-    const count = groupColors.length;
+
+    // Use visible count (excluding hidden & already-favorited) to match accordion header
+    const visibleCount = groupColors.filter(
+      (c) => !hidden.includes(c.id) && !favorites.includes(c.id)
+    ).length;
+    const count = allFavorited ? groupColors.length : visibleCount;
 
     const action = allFavorited ? "unfavorite" : "favorite";
     const actionTitle = allFavorited
@@ -893,8 +899,14 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
   async handleBulkHideButton(groupId, groupName) {
     const groupColors = this.model.getColorsForId(groupId, () => groupName);
     const hidden = this.state.getHidden();
+    const favorites = this.state.getFavorites();
     const allHidden = groupColors.every((color) => hidden.includes(color.id));
-    const count = groupColors.length;
+
+    // Use visible count (excluding hidden & favorited) to match accordion header
+    const visibleCount = groupColors.filter(
+      (c) => !hidden.includes(c.id) && !favorites.includes(c.id)
+    ).length;
+    const count = allHidden ? groupColors.length : visibleCount;
 
     const action = allHidden ? "unhide" : "hide";
     const actionTitle = allHidden ? "Unhide All Colors?" : "Hide All Colors?";
