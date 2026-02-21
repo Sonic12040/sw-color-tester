@@ -15,6 +15,9 @@ import {
   DATA_ATTRIBUTES,
   ICONS,
   URL_PARAMS,
+  PREFIX,
+  createGroupId,
+  getTilesContainerId,
 } from "../utils/config.js";
 import { APP_VERSION } from "../version.js";
 import {
@@ -40,14 +43,267 @@ export class ColorController {
   }
 
   /**
-   * Execute a command and re-render if state changed
+   * Execute a command with state diffing — applies surgical DOM updates
+   * when the change is small, or falls back to full render for bulk changes.
    * @private
    * @param {ColorCommand} command - Command to execute
    */
   _executeCommand(command) {
+    // Snapshot state before command
+    const prevFavorites = new Set(this.state.getFavoriteSet());
+    const prevHidden = new Set(this.state.getHiddenSet());
+
     const stateChanged = command.execute();
-    if (stateChanged) {
+    if (!stateChanged) return;
+
+    // Compute diffs
+    const newFavorites = this.state.getFavoriteSet();
+    const newHidden = this.state.getHiddenSet();
+
+    const addedFavs = [];
+    const removedFavs = [];
+    const addedHidden = [];
+    const removedHidden = [];
+
+    for (const id of newFavorites) {
+      if (!prevFavorites.has(id)) addedFavs.push(id);
+    }
+    for (const id of prevFavorites) {
+      if (!newFavorites.has(id)) removedFavs.push(id);
+    }
+    for (const id of newHidden) {
+      if (!prevHidden.has(id)) addedHidden.push(id);
+    }
+    for (const id of prevHidden) {
+      if (!newHidden.has(id)) removedHidden.push(id);
+    }
+
+    const totalChanges =
+      addedFavs.length +
+      removedFavs.length +
+      addedHidden.length +
+      removedHidden.length;
+
+    // Fall back to full render for bulk changes (threshold: > 10 individual changes)
+    if (totalChanges === 0 || totalChanges > 10) {
       this.render();
+      return;
+    }
+
+    // Update the view's cached Sets so surgical methods use current state
+    this.view.favoriteIds = newFavorites;
+    this.view.hiddenIds = newHidden;
+
+    // Apply surgical updates
+    this._applyFavoriteDiff(addedFavs, removedFavs);
+    this._applyHiddenDiff(addedHidden, removedHidden);
+
+    // Update LRV count display
+    this._updateLrvCount();
+  }
+
+  /**
+   * Apply surgical DOM updates for favorite state changes.
+   * - Toggle heart icon fill on all tile instances
+   * - Add/remove tiles from the favorites section
+   * @private
+   * @param {string[]} added - Newly favorited color IDs
+   * @param {string[]} removed - Unfavorited color IDs
+   */
+  _applyFavoriteDiff(added, removed) {
+    const favoriteSet = this.state.getFavoriteSet();
+
+    // Process added favorites
+    for (const colorId of added) {
+      // Update heart icon on all tile instances
+      this.view.updateTileFavoriteState(colorId, true);
+
+      // Add tile to favorites section
+      const color = this.model.getColorById(colorId);
+      if (color) {
+        this.view.addTileToSection("favorites", color, {
+          showHideButton: false,
+        });
+      }
+    }
+
+    // Process removed favorites
+    for (const colorId of removed) {
+      // Update heart icon on all tile instances
+      this.view.updateTileFavoriteState(colorId, false);
+
+      // Remove tile from favorites section
+      this.view.removeTileFromSection("favorites", colorId);
+    }
+
+    // Show empty state if needed
+    if (removed.length > 0) {
+      this.view.showEmptyStateIfNeeded(
+        "favorites",
+        "No favorite colors yet.",
+        "Click the heart icon on any color to add it to your favorites.",
+      );
+    }
+
+    // Update favorites section header count
+    const newCount = favoriteSet.size;
+    const title = newCount > 0 ? `Favorites (${newCount})` : "Favorites";
+    this.view.updateSectionHeader("favorites", title);
+
+    // Update accordion open/close if transitioning from 0 to some or some to 0
+    if (added.length > 0 && favoriteSet.size === added.length) {
+      // Went from 0 to some — open the accordion
+      const header = document.getElementById("favorites-header");
+      const content = document.getElementById("favorites");
+      if (header && content) {
+        header.setAttribute("aria-expanded", "true");
+        content.setAttribute("aria-hidden", "false");
+        content.removeAttribute("inert");
+      }
+    }
+  }
+
+  /**
+   * Apply surgical DOM updates for hidden state changes.
+   * - Toggle eye icon on all tile instances
+   * - Add/remove tiles from the hidden section
+   * - Add/remove tiles from family/category sections
+   * @private
+   * @param {string[]} added - Newly hidden color IDs
+   * @param {string[]} removed - Unhidden color IDs
+   */
+  _applyHiddenDiff(added, removed) {
+    const hiddenSet = this.state.getHiddenSet();
+    const favoriteSet = this.state.getFavoriteSet();
+    const lrvRange = this.state.getLrvRange();
+
+    // Process newly hidden colors
+    for (const colorId of added) {
+      // Update eye icon on all tile instances
+      this.view.updateTileHiddenState(colorId, true);
+
+      const color = this.model.getColorById(colorId);
+      if (!color) continue;
+
+      // Remove tile from family/category sections
+      const sections = this.model.getColorSectionIds(colorId);
+      for (const sectionId of [
+        ...sections.familySectionIds,
+        ...sections.categorySectionIds,
+      ]) {
+        this.view.removeTileFromSection(sectionId, colorId);
+        // Update section header count
+        this._updateSectionHeaderCount(sectionId);
+      }
+
+      // Add tile to hidden section (only if not in a fully-hidden group)
+      this.view.addTileToSection("hidden", color, {
+        showFavoriteButton: false,
+      });
+    }
+
+    // Process unhidden colors
+    for (const colorId of removed) {
+      // Update eye icon on all tile instances
+      this.view.updateTileHiddenState(colorId, false);
+
+      const color = this.model.getColorById(colorId);
+      if (!color) continue;
+
+      // Remove from hidden section
+      this.view.removeTileFromSection("hidden", colorId);
+
+      // Add back to family/category sections if passes LRV filter and not favorited
+      if (!favoriteSet.has(colorId) && this._passesLrvFilter(color, lrvRange)) {
+        const sections = this.model.getColorSectionIds(colorId);
+        for (const sectionId of [
+          ...sections.familySectionIds,
+          ...sections.categorySectionIds,
+        ]) {
+          this.view.addTileToSection(sectionId, color);
+          this._updateSectionHeaderCount(sectionId);
+        }
+      }
+    }
+
+    // Show empty state in hidden section if needed
+    if (removed.length > 0) {
+      this.view.showEmptyStateIfNeeded(
+        "hidden",
+        "No hidden colors.",
+        "Click the eye icon on any color to hide it.",
+      );
+    }
+
+    // Update hidden section header
+    const hiddenCount = hiddenSet.size;
+    const hiddenTitle =
+      hiddenCount > 0 ? `Hidden Colors (${hiddenCount})` : "Hidden Colors";
+    this.view.updateSectionHeader("hidden", hiddenTitle);
+  }
+
+  /**
+   * Check if a color passes the current LRV filter range.
+   * @private
+   * @param {Object} color - The color object
+   * @param {{min: number, max: number}} lrvRange - Current LRV range
+   * @returns {boolean} Whether the color is within the LRV range
+   */
+  _passesLrvFilter(color, lrvRange) {
+    if (lrvRange.min === 0 && lrvRange.max === 100) return true;
+    const lrv = color.lrv ?? 0;
+    return lrv >= lrvRange.min && lrv <= lrvRange.max;
+  }
+
+  /**
+   * Update a section header count by counting its current tiles.
+   * @private
+   * @param {string} sectionId - The section ID
+   */
+  _updateSectionHeaderCount(sectionId) {
+    const containerId = getTilesContainerId(sectionId);
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    const tileCount = container.querySelectorAll(
+      `.${CSS_CLASSES.COLOR_TILE}`,
+    ).length;
+
+    // Extract group name from sectionId for display
+    const header = document.getElementById(`${sectionId}-header`);
+    if (!header) return;
+    const span = header.querySelector("span");
+    if (!span) return;
+
+    // Parse existing title to get the base name (before the count)
+    const currentText = span.textContent;
+    const baseName = currentText.replace(/\s*\(\d+\)\s*$/, "");
+    span.textContent = `${baseName} (${tileCount})`;
+  }
+
+  /**
+   * Update the LRV count display without re-rendering.
+   * @private
+   */
+  _updateLrvCount() {
+    if (this.state.isLrvFilterActive()) {
+      const favoriteCount = this.state.getFavoriteSet().size;
+      const hiddenSet = this.state.getHiddenSet();
+      const favoriteSet = this.state.getFavoriteSet();
+      const lrvRange = this.state.getLrvRange();
+      const visibleColors = this.model.getVisibleColors(
+        hiddenSet,
+        favoriteSet,
+        lrvRange,
+      );
+      const totalActive = this.model.getActiveColorCount();
+      this.view.updateLrvCount(
+        true,
+        visibleColors.length + favoriteCount,
+        totalActive,
+      );
+    } else {
+      this.view.updateLrvCount(false, 0, 0);
     }
   }
 
@@ -1070,10 +1326,9 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       return;
     }
 
-    // Get color details for all favorites
-    const allColors = this.model.getActiveColors();
+    // Get color details for all favorites via O(1) Map lookups
     const favoriteColors = favoriteIds
-      .map((id) => allColors.find((c) => c.id === id))
+      .map((id) => this.model.getColorById(id))
       .filter((color) => color !== undefined);
 
     // Create export data

@@ -17,6 +17,8 @@ import {
 import {
   PREFIX,
   CSS_CLASSES,
+  DATA_ATTRIBUTES,
+  ICONS,
   ELEMENT_IDS,
   createGroupId,
   getTilesContainerId,
@@ -383,6 +385,193 @@ export class ColorView {
           }),
         )
         .join("");
+    }
+  }
+
+  // ============================================
+  // SURGICAL UPDATE METHODS
+  // Patch individual DOM elements instead of full rebuild
+  // ============================================
+
+  /**
+   * Update the favorite icon state on all instances of a tile across the DOM.
+   * @param {string} colorId - The color ID
+   * @param {boolean} isFavorited - Whether the color is now favorited
+   */
+  updateTileFavoriteState(colorId, isFavorited) {
+    const buttons = this.container.querySelectorAll(
+      `.${CSS_CLASSES.COLOR_TILE_FAVORITE_BUTTON}[${DATA_ATTRIBUTES.ID}="${colorId}"]`,
+    );
+    for (const btn of buttons) {
+      const svg = btn.querySelector("svg");
+      if (!svg) continue;
+
+      // Determine icon color from the existing stroke attribute
+      const iconColor = svg.getAttribute("stroke") || "currentColor";
+      svg.setAttribute("fill", isFavorited ? iconColor : "none");
+
+      const label = isFavorited ? "Unfavorite" : "Favorite";
+      const colorEl = btn.closest(`.${CSS_CLASSES.COLOR_TILE}`);
+      const colorName = colorEl
+        ? colorEl.querySelector(`.${CSS_CLASSES.COLOR_TILE_NAME} strong`)
+            ?.textContent || ""
+        : "";
+      btn.setAttribute("aria-label", `${label} color`);
+      btn.setAttribute("title", `${label} ${colorName}`.trim());
+    }
+  }
+
+  /**
+   * Update the hidden icon state on all instances of a tile across the DOM.
+   * @param {string} colorId - The color ID
+   * @param {boolean} isHidden - Whether the color is now hidden
+   */
+  updateTileHiddenState(colorId, isHidden) {
+    const buttons = this.container.querySelectorAll(
+      `.${CSS_CLASSES.COLOR_TILE_HIDE_BUTTON}[${DATA_ATTRIBUTES.ID}="${colorId}"]`,
+    );
+    for (const btn of buttons) {
+      const svg = btn.querySelector("svg");
+      if (!svg) continue;
+
+      svg.innerHTML = isHidden ? ICONS.EYE : ICONS.EYE_OFF;
+
+      const label = isHidden ? "Unhide" : "Hide";
+      const colorEl = btn.closest(`.${CSS_CLASSES.COLOR_TILE}`);
+      const colorName = colorEl
+        ? colorEl.querySelector(`.${CSS_CLASSES.COLOR_TILE_NAME} strong`)
+            ?.textContent || ""
+        : "";
+      btn.setAttribute("aria-label", `${label} color`);
+      btn.setAttribute("title", `${label} ${colorName}`.trim());
+    }
+  }
+
+  /**
+   * Add a single color tile to a section's tile grid.
+   * @param {string} sectionId - The accordion section ID (e.g. 'family-red')
+   * @param {Object} color - The color object
+   * @param {Object} options - Options for colorTemplate
+   */
+  addTileToSection(sectionId, color, options = {}) {
+    const containerId = getTilesContainerId(sectionId);
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    // Remove empty-message placeholder if present
+    const emptyMsg = container.querySelector(`.${CSS_CLASSES.EMPTY_MESSAGE}`);
+    if (emptyMsg) emptyMsg.remove();
+
+    const html = colorTemplate(color, {
+      favoriteIds: this.favoriteIds,
+      hiddenIds: this.hiddenIds,
+      ...options,
+    });
+    container.insertAdjacentHTML("beforeend", html);
+  }
+
+  /**
+   * Remove a single color tile from a section's tile grid.
+   * @param {string} sectionId - The accordion section ID
+   * @param {string} colorId - The color ID to remove
+   */
+  removeTileFromSection(sectionId, colorId) {
+    const containerId = getTilesContainerId(sectionId);
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    const tile = container.querySelector(
+      `.${CSS_CLASSES.COLOR_TILE}[${DATA_ATTRIBUTES.ID}="${colorId}"]`,
+    );
+    if (tile) tile.remove();
+  }
+
+  /**
+   * Show the empty-state message in a section if it has no tiles left.
+   * @param {string} sectionId - The accordion section ID
+   * @param {string} emptyText - Primary text
+   * @param {string} emptyHint - Hint text
+   */
+  showEmptyStateIfNeeded(sectionId, emptyText, emptyHint) {
+    const containerId = getTilesContainerId(sectionId);
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    const tiles = container.querySelectorAll(`.${CSS_CLASSES.COLOR_TILE}`);
+    if (tiles.length === 0) {
+      container.innerHTML = `
+        <div class="${CSS_CLASSES.EMPTY_MESSAGE}">
+          <span class="empty-message__text">${emptyText}</span>
+          <span class="empty-message__hint">${emptyHint}</span>
+        </div>
+      `;
+    }
+  }
+
+  /**
+   * Update only the text of an accordion section header (e.g. count changes).
+   * @param {string} sectionId - The accordion section ID
+   * @param {string} newTitle - The full new title text (e.g. "Favorites (3)")
+   */
+  updateSectionHeader(sectionId, newTitle) {
+    const header = document.getElementById(`${sectionId}-header`);
+    if (!header) return;
+    const span = header.querySelector("span");
+    if (span) span.textContent = newTitle;
+  }
+
+  /**
+   * Rebuild only the tile grid inside a section (not the accordion wrapper).
+   * @param {string} sectionId - The accordion section ID
+   * @param {Object[]} colors - Array of color objects to render
+   * @param {Object} templateOptions - Extra options for colorTemplate
+   */
+  rebuildSection(sectionId, colors, templateOptions = {}) {
+    const containerId = getTilesContainerId(sectionId);
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    container.innerHTML = colors
+      .map((color) =>
+        colorTemplate(color, {
+          favoriteIds: this.favoriteIds,
+          hiddenIds: this.hiddenIds,
+          ...templateOptions,
+        }),
+      )
+      .join("");
+  }
+
+  /**
+   * Rebuild the hidden section entirely (it has special group-tile logic).
+   * @param {Object[]} hiddenColors - Array of hidden color objects
+   * @param {Array} hiddenFamilies - Array of {name, count}
+   * @param {Array} hiddenCategories - Array of {name, count}
+   */
+  rebuildHiddenSection(hiddenColors, hiddenFamilies, hiddenCategories) {
+    this.renderHiddenSection(hiddenColors, hiddenFamilies, hiddenCategories);
+  }
+
+  /**
+   * Rebuild the favorites section contents only.
+   * @param {Object[]} favoriteColors - Array of favorite color objects
+   */
+  rebuildFavoritesSection(favoriteColors) {
+    this.renderFavoritesSection(favoriteColors);
+  }
+
+  /**
+   * Update LRV count display
+   * @param {boolean} isActive - Whether the LRV filter is active
+   * @param {number} visibleCount - Number of visible colors
+   * @param {number} totalActive - Total number of active colors
+   */
+  updateLrvCount(isActive, visibleCount, totalActive) {
+    const countEl = document.getElementById(ELEMENT_IDS.LRV_COUNT);
+    if (countEl) {
+      countEl.textContent = isActive
+        ? `Showing ${visibleCount} of ${totalActive} colors`
+        : "";
     }
   }
 

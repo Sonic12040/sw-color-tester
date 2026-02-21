@@ -7,7 +7,7 @@
  * - Hidden group detection
  */
 
-import { FAMILY_ORDER } from "../utils/config.js";
+import { FAMILY_ORDER, PREFIX, createGroupId } from "../utils/config.js";
 
 export class ColorModel {
   constructor(colorData) {
@@ -304,5 +304,37 @@ export class ColorModel {
         return categories.includes(categoryName) && !excludeSet.has(color.id);
       })
       .map((color) => color.id);
+  }
+
+  /**
+   * Get the section IDs (family and category group IDs) that a color belongs to.
+   * Used by surgical updates to know which accordion sections to patch.
+   * @param {string} colorId - The color ID
+   * @returns {{familySectionIds: string[], categorySectionIds: string[]}} Section IDs
+   */
+  getColorSectionIds(colorId) {
+    const color = this._colorById.get(colorId);
+    if (!color) return { familySectionIds: [], categorySectionIds: [] };
+
+    const familySectionIds = [];
+    const categorySectionIds = [];
+
+    // Primary family → section ID
+    if (color.colorFamilyNames && color.colorFamilyNames.length > 0) {
+      const primaryFamily = color.colorFamilyNames[0];
+      familySectionIds.push(createGroupId(primaryFamily, PREFIX.FAMILY));
+    }
+
+    // All categories → section IDs
+    if (
+      color.brandedCollectionNames &&
+      color.brandedCollectionNames.length > 0
+    ) {
+      for (const cat of color.brandedCollectionNames) {
+        categorySectionIds.push(createGroupId(cat, PREFIX.CATEGORY));
+      }
+    }
+
+    return { familySectionIds, categorySectionIds };
   }
 }
