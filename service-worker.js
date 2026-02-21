@@ -106,8 +106,11 @@ self.addEventListener("install", (event) => {
         .open(CACHE_NAME)
         .then((cache) => {
           console.log("[SW] Caching static assets...");
-          // Cache static assets immediately
-          return cache.addAll(STATIC_ASSETS);
+          // Bypass HTTP cache to ensure fresh files on install
+          const freshRequests = STATIC_ASSETS.map(
+            (url) => new Request(url, { cache: "reload" }),
+          );
+          return cache.addAll(freshRequests);
         })
         .then(() => {
           // Cache large assets separately (non-blocking)
@@ -115,7 +118,7 @@ self.addEventListener("install", (event) => {
           return caches.open(CACHE_NAME).then((cache) => {
             return Promise.all(
               LARGE_ASSETS.map((url) =>
-                fetch(url)
+                fetch(url, { cache: "reload" })
                   .then((response) => {
                     if (response.ok) {
                       // Store version info
