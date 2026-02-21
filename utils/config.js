@@ -158,6 +158,10 @@ export const LRV_THRESHOLDS = {
   LIGHT: 60,
 };
 
+// Only category accordions whose name starts with this prefix are rendered.
+// All other collections are redundant with family accordions.
+export const ALLOWED_CATEGORY_PREFIX = "Designer Color Collection";
+
 // Common family names (for sorting priority)
 export const FAMILY_ORDER = [
   "Red",

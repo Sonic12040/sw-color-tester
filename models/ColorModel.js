@@ -7,7 +7,12 @@
  * - Hidden group detection
  */
 
-import { FAMILY_ORDER, PREFIX, createGroupId } from "../utils/config.js";
+import {
+  FAMILY_ORDER,
+  PREFIX,
+  ALLOWED_CATEGORY_PREFIX,
+  createGroupId,
+} from "../utils/config.js";
 
 export class ColorModel {
   constructor(colorData) {
@@ -52,12 +57,13 @@ export class ColorModel {
         this._familyColorIds.get(family).push(color.id);
       }
 
-      // All categories
+      // Only categories matching the allowed prefix (others are redundant with families)
       if (
         color.brandedCollectionNames &&
         color.brandedCollectionNames.length > 0
       ) {
         for (const cat of color.brandedCollectionNames) {
+          if (!cat.startsWith(ALLOWED_CATEGORY_PREFIX)) continue;
           if (!this._categoryColors.has(cat)) {
             this._categoryColors.set(cat, []);
             this._categoryColorIds.set(cat, []);
@@ -172,6 +178,7 @@ export class ColorModel {
         color.brandedCollectionNames.length > 0
       ) {
         for (const category of color.brandedCollectionNames) {
+          if (!category.startsWith(ALLOWED_CATEGORY_PREFIX)) continue;
           if (!colorCategories[category]) {
             colorCategories[category] = [];
           }
@@ -358,12 +365,13 @@ export class ColorModel {
       familySectionIds.push(createGroupId(primaryFamily, PREFIX.FAMILY));
     }
 
-    // All categories → section IDs
+    // Only allowed categories → section IDs
     if (
       color.brandedCollectionNames &&
       color.brandedCollectionNames.length > 0
     ) {
       for (const cat of color.brandedCollectionNames) {
+        if (!cat.startsWith(ALLOWED_CATEGORY_PREFIX)) continue;
         categorySectionIds.push(createGroupId(cat, PREFIX.CATEGORY));
       }
     }
