@@ -13,13 +13,10 @@ export class UnhideGroupCommand extends ColorCommand {
   }
 
   execute() {
-    const getColors =
+    const colorIds =
       this.groupType === "family"
-        ? this.model.getFamilyColors.bind(this.model)
-        : this.model.getCategoryColors.bind(this.model);
-
-    const colors = getColors(this.groupName);
-    const colorIds = colors.map((color) => color.id);
+        ? this.model.getColorIdsForFamily(this.groupName)
+        : this.model.getColorIdsForCategory(this.groupName);
     this.state.removeMultipleHidden(colorIds);
 
     return true; // State changed, re-render needed

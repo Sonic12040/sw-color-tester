@@ -6,8 +6,8 @@ import { ColorCommand } from "./ColorCommand.js";
 
 export class ClearHiddenCommand extends ColorCommand {
   execute() {
-    // Store previous state for undo
-    this.previousHidden = [...this.state.getHidden()];
+    // Store previous state for undo (use Set directly, avoid double Array.from)
+    this.previousHidden = Array.from(this.state.getHiddenSet());
     this.state.clearHidden();
     return true; // State changed, re-render needed
   }

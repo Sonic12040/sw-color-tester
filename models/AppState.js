@@ -138,8 +138,7 @@ export class AppState {
    * @returns {string[]} Array with group identifiers for fully hidden groups
    */
   _consolidateHiddenIds(hiddenIds) {
-    const favoriteIds = this.getFavorites();
-    return this._consolidateColorIds(hiddenIds, favoriteIds);
+    return this._consolidateColorIds(hiddenIds, this.favorites);
   }
 
   /**
@@ -149,8 +148,7 @@ export class AppState {
    * @returns {string[]} Array with group identifiers for fully favorited groups
    */
   _consolidateFavoriteIds(favoriteIds) {
-    const hiddenIds = this.getHidden();
-    return this._consolidateColorIds(favoriteIds, hiddenIds);
+    return this._consolidateColorIds(favoriteIds, this.hidden);
   }
 
   /**

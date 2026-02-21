@@ -6,17 +6,18 @@
 import { ColorCommand } from "./ColorCommand.js";
 
 export class BulkHideCommand extends ColorCommand {
-  constructor(model, state, groupId, groupName) {
+  constructor(model, state, groupId, groupName, precomputedColors = null) {
     super(model, state);
     this.groupId = groupId;
     this.groupName = groupName;
+    this._precomputedColors = precomputedColors;
   }
 
   execute() {
-    const groupColors = this.model.getColorsForId(
-      this.groupId,
-      () => this.groupName,
-    );
+    const groupColors =
+      this._precomputedColors ||
+      this.model.getColorsForId(this.groupId, () => this.groupName);
+    this._precomputedColors = null; // Release reference after use
     const hiddenSet = this.state.getHiddenSet();
 
     // Check if all colors are already hidden

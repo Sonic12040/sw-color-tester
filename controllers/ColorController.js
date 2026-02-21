@@ -907,17 +907,12 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       lrvRange,
     );
 
-    // Update LRV count display
-    const countEl = document.getElementById(ELEMENT_IDS.LRV_COUNT);
-    if (countEl) {
-      if (this.state.isLrvFilterActive()) {
-        const totalActive = this.model.getActiveColorCount();
-        const visibleCount = visibleColors.length + favoriteColors.length;
-        countEl.textContent = `Showing ${visibleCount} of ${totalActive} colors`;
-      } else {
-        countEl.textContent = "";
-      }
-    }
+    // Update LRV count display (reuse surgical helper)
+    this.view.updateLrvCount(
+      this.state.isLrvFilterActive(),
+      visibleColors.length + favoriteColors.length,
+      this.model.getActiveColorCount(),
+    );
 
     // Group and sort
     const colorFamilies = this.model.groupByFamily(visibleColors);
@@ -1139,11 +1134,13 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     });
 
     if (confirmed) {
+      // Pass precomputed colors to avoid a second getColorsForId call inside execute()
       const command = new BulkFavoriteCommand(
         this.model,
         this.state,
         groupId,
         groupName,
+        groupColors,
       );
       this._executeCommand(command);
 
@@ -1192,11 +1189,13 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     });
 
     if (confirmed) {
+      // Pass precomputed colors to avoid a second getColorsForId call inside execute()
       const command = new BulkHideCommand(
         this.model,
         this.state,
         groupId,
         groupName,
+        groupColors,
       );
       this._executeCommand(command);
 
@@ -1315,9 +1314,9 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
    * Handle export favorites button click
    */
   handleExportFavorites() {
-    const favoriteIds = this.state.getFavorites();
+    const favoriteSet = this.state.getFavoriteSet();
 
-    if (favoriteIds.length === 0) {
+    if (favoriteSet.size === 0) {
       this.showToast({
         message: "No favorites to export.",
         onUndo: null,
@@ -1326,10 +1325,12 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       return;
     }
 
-    // Get color details for all favorites via O(1) Map lookups
-    const favoriteColors = favoriteIds
-      .map((id) => this.model.getColorById(id))
-      .filter((color) => color !== undefined);
+    // Get color details for all favorites via O(1) Map lookups (iterate Set directly)
+    const favoriteColors = [];
+    for (const id of favoriteSet) {
+      const color = this.model.getColorById(id);
+      if (color) favoriteColors.push(color);
+    }
 
     // Create export data
     const exportData = {

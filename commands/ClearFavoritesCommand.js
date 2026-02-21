@@ -6,8 +6,8 @@ import { ColorCommand } from "./ColorCommand.js";
 
 export class ClearFavoritesCommand extends ColorCommand {
   execute() {
-    // Store previous state for undo
-    this.previousFavorites = [...this.state.getFavorites()];
+    // Store previous state for undo (use Set directly, avoid double Array.from)
+    this.previousFavorites = Array.from(this.state.getFavoriteSet());
     this.state.clearFavorites();
     return true; // State changed, re-render needed
   }
