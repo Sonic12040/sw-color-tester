@@ -24,14 +24,6 @@ export class AppState {
   }
 
   /**
-   * Set the color model (for URL consolidation)
-   * @param {ColorModel} colorModel - The color model instance
-   */
-  setColorModel(colorModel) {
-    this.colorModel = colorModel;
-  }
-
-  /**
    * Expand group identifiers (family:Red, category:Neutral) into individual color IDs
    * @private
    * @param {string[]} ids - Array of IDs that may include group identifiers
@@ -246,15 +238,7 @@ export class AppState {
   }
 
   /**
-   * Get array of favorite color IDs
-   * @returns {string[]} Array of favorite color IDs
-   */
-  getFavorites() {
-    return Array.from(this.favorites);
-  }
-
-  /**
-   * Get the internal favorites Set for O(1) lookups (read-only by convention)
+   * Get the favorites Set for O(1) lookups (read-only by convention)
    * @returns {Set<string>} Set of favorite color IDs
    */
   getFavoriteSet() {
@@ -262,15 +246,7 @@ export class AppState {
   }
 
   /**
-   * Get array of hidden color IDs
-   * @returns {string[]} Array of hidden color IDs
-   */
-  getHidden() {
-    return Array.from(this.hidden);
-  }
-
-  /**
-   * Get the internal hidden Set for O(1) lookups (read-only by convention)
+   * Get the hidden Set for O(1) lookups (read-only by convention)
    * @returns {Set<string>} Set of hidden color IDs
    */
   getHiddenSet() {

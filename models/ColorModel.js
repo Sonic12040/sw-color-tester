@@ -11,7 +11,6 @@ import { FAMILY_ORDER, PREFIX, createGroupId } from "../utils/config.js";
 
 export class ColorModel {
   constructor(colorData) {
-    this.colorData = colorData;
     /** @private Cached active colors (immutable at runtime) */
     this._activeColors = colorData.filter((c) => !c.archived && !c.ignore);
     /** @private O(1) color lookup by ID */

@@ -15,8 +15,6 @@ import {
   DATA_ATTRIBUTES,
   ICONS,
   URL_PARAMS,
-  PREFIX,
-  createGroupId,
   getTilesContainerId,
 } from "../utils/config.js";
 import { APP_VERSION } from "../version.js";

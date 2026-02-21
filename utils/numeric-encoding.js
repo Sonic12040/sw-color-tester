@@ -10,7 +10,7 @@
  * @param {string[]} ids - Array of numeric ID strings (e.g., ["1747", "2997", "bright-2527"])
  * @returns {Uint8Array} Compressed binary data
  */
-export function encodeNumericIds(ids) {
+function encodeNumericIds(ids) {
   if (!ids || ids.length === 0) {
     return new Uint8Array(0);
   }
@@ -85,7 +85,7 @@ export function encodeNumericIds(ids) {
  * @param {Uint8Array} buffer - Compressed binary data
  * @returns {string[]} Array of ID strings
  */
-export function decodeNumericIds(buffer) {
+function decodeNumericIds(buffer) {
   if (!buffer || buffer.length === 0) {
     return [];
   }
@@ -172,7 +172,7 @@ if (BASE85_CHARS.length !== 85) {
  * @param {Uint8Array} buffer - Binary data
  * @returns {string} Base85 encoded string
  */
-export function toBase85(buffer) {
+function toBase85(buffer) {
   if (!buffer || buffer.length === 0) {
     return "";
   }
@@ -224,7 +224,7 @@ export function toBase85(buffer) {
  * @param {string} str - Base85 encoded string
  * @returns {Uint8Array} Binary data
  */
-export function fromBase85(str) {
+function fromBase85(str) {
   if (!str || str.length === 0) {
     return new Uint8Array(0);
   }

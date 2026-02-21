@@ -39,8 +39,6 @@ function _perfMeasure(name, startMark) {
 export class ColorView {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
-    this.categoryIdToName = {};
-    this.categoryNameToId = {};
     /** @type {Set<string>} */
     this.favoriteIds = new Set();
     /** @type {Set<string>} */
@@ -224,10 +222,6 @@ export class ColorView {
     for (const category of sortedCategories) {
       const count = colorCategories[category].length;
       const categoryId = createGroupId(category, PREFIX.CATEGORY);
-
-      // Store mapping for later use
-      this.categoryIdToName[categoryId] = category;
-      this.categoryNameToId[category] = categoryId;
 
       accordionHTML += createAccordionItem(
         categoryId,
@@ -518,46 +512,6 @@ export class ColorView {
     if (!header) return;
     const span = header.querySelector("span");
     if (span) span.textContent = newTitle;
-  }
-
-  /**
-   * Rebuild only the tile grid inside a section (not the accordion wrapper).
-   * @param {string} sectionId - The accordion section ID
-   * @param {Object[]} colors - Array of color objects to render
-   * @param {Object} templateOptions - Extra options for colorTemplate
-   */
-  rebuildSection(sectionId, colors, templateOptions = {}) {
-    const containerId = getTilesContainerId(sectionId);
-    const container = document.getElementById(containerId);
-    if (!container) return;
-
-    container.innerHTML = colors
-      .map((color) =>
-        colorTemplate(color, {
-          favoriteIds: this.favoriteIds,
-          hiddenIds: this.hiddenIds,
-          ...templateOptions,
-        }),
-      )
-      .join("");
-  }
-
-  /**
-   * Rebuild the hidden section entirely (it has special group-tile logic).
-   * @param {Object[]} hiddenColors - Array of hidden color objects
-   * @param {Array} hiddenFamilies - Array of {name, count}
-   * @param {Array} hiddenCategories - Array of {name, count}
-   */
-  rebuildHiddenSection(hiddenColors, hiddenFamilies, hiddenCategories) {
-    this.renderHiddenSection(hiddenColors, hiddenFamilies, hiddenCategories);
-  }
-
-  /**
-   * Rebuild the favorites section contents only.
-   * @param {Object[]} favoriteColors - Array of favorite color objects
-   */
-  rebuildFavoritesSection(favoriteColors) {
-    this.renderFavoritesSection(favoriteColors);
   }
 
   /**
