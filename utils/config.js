@@ -43,6 +43,7 @@ export const CSS_CLASSES = {
   COLOR_TILE_BADGE: "color-tile__badge",
   COLOR_TILE_BADGE_INTERIOR: "color-tile__badge--interior",
   COLOR_TILE_BADGE_EXTERIOR: "color-tile__badge--exterior",
+  COLOR_TILE_BADGE_DESIGNER: "color-tile__badge--designer",
   COLOR_TILE_FAMILY: "color-tile--family",
   COLOR_TILE_CATEGORY: "color-tile--category",
   COLOR_TILE_COUNT: "color-tile__count",
@@ -158,9 +159,9 @@ export const LRV_THRESHOLDS = {
   LIGHT: 60,
 };
 
-// Only category accordions whose name starts with this prefix are rendered.
-// All other collections are redundant with family accordions.
-export const ALLOWED_CATEGORY_PREFIX = "Designer Color Collection";
+// Prefix used to identify Designer Color Collection entries in brandedCollectionNames.
+// Used for the "Designer Pick" tile badge and modal sub-collection display.
+export const DESIGNER_COLLECTION_PREFIX = "Designer Color Collection";
 
 // Common family names (for sorting priority)
 export const FAMILY_ORDER = [

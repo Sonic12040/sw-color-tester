@@ -91,6 +91,7 @@ export class ColorController {
     // Update the view's cached Sets so surgical methods use current state
     this.view.favoriteIds = newFavorites;
     this.view.hiddenIds = newHidden;
+    this.view.designerPickIds = this.model.getDesignerPickIds();
 
     // Apply surgical updates
     this._applyFavoriteDiff(addedFavs, removedFavs);
@@ -165,7 +166,7 @@ export class ColorController {
    * Apply surgical DOM updates for hidden state changes.
    * - Toggle eye icon on all tile instances
    * - Add/remove tiles from the hidden section
-   * - Add/remove tiles from family/category sections
+   * - Add/remove tiles from family sections
    * @private
    * @param {string[]} added - Newly hidden color IDs
    * @param {string[]} removed - Unhidden color IDs
@@ -183,12 +184,9 @@ export class ColorController {
       const color = this.model.getColorById(colorId);
       if (!color) continue;
 
-      // Remove tile from family/category sections
+      // Remove tile from family sections
       const sections = this.model.getColorSectionIds(colorId);
-      for (const sectionId of [
-        ...sections.familySectionIds,
-        ...sections.categorySectionIds,
-      ]) {
+      for (const sectionId of sections.familySectionIds) {
         this.view.removeTileFromSection(sectionId, colorId);
         // Update section header count
         this._updateSectionHeaderCount(sectionId);
@@ -211,13 +209,10 @@ export class ColorController {
       // Remove from hidden section
       this.view.removeTileFromSection("hidden", colorId);
 
-      // Add back to family/category sections if passes LRV filter and not favorited
+      // Add back to family sections if passes LRV filter and not favorited
       if (!favoriteSet.has(colorId) && this._passesLrvFilter(color, lrvRange)) {
         const sections = this.model.getColorSectionIds(colorId);
-        for (const sectionId of [
-          ...sections.familySectionIds,
-          ...sections.categorySectionIds,
-        ]) {
+        for (const sectionId of sections.familySectionIds) {
           this.view.addTileToSection(sectionId, color);
           this._updateSectionHeaderCount(sectionId);
         }
@@ -918,17 +913,8 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       Object.keys(colorFamilies),
     );
 
-    const colorCategories = this.model.groupByCategory(visibleColors);
-    const sortedCategories = Object.keys(colorCategories).sort((a, b) =>
-      a.localeCompare(b),
-    );
-
-    // Get hidden groups (excluding favorited colors)
+    // Get hidden families (excluding favorited colors)
     const hiddenFamilies = this.model.getHiddenFamilies(hiddenSet, favoriteSet);
-    const hiddenCategories = this.model.getHiddenCategories(
-      hiddenSet,
-      favoriteSet,
-    );
 
     // Render via view (pass Sets for O(1) template lookups)
     this.view.render({
@@ -936,12 +922,10 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       hiddenColors,
       colorFamilies,
       sortedFamilies,
-      colorCategories,
-      sortedCategories,
       hiddenFamilies,
-      hiddenCategories,
       favoriteSet,
       hiddenSet,
+      designerPickIds: this.model.getDesignerPickIds(),
     });
   }
 
@@ -982,8 +966,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
         selector: `.${CSS_CLASSES.COLOR_TILE_UNHIDE_BUTTON}`,
         handler: (element) => {
           const familyName = element.getAttribute(DATA_ATTRIBUTES.FAMILY);
-          const categoryName = element.getAttribute(DATA_ATTRIBUTES.CATEGORY);
-          this.handleUnhideButton(familyName, categoryName);
+          if (familyName) this.handleUnhideButton(familyName);
         },
       },
       {
@@ -995,13 +978,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
         selector: `.${CSS_CLASSES.COLOR_TILE_FAMILY}`,
         getAttribute: DATA_ATTRIBUTES.FAMILY,
         excludeIfContains: `.${CSS_CLASSES.COLOR_TILE_UNHIDE_BUTTON}`,
-        handler: (familyName) => this.handleUnhideButton(familyName, null),
-      },
-      {
-        selector: `.${CSS_CLASSES.COLOR_TILE_CATEGORY}`,
-        getAttribute: DATA_ATTRIBUTES.CATEGORY,
-        excludeIfContains: `.${CSS_CLASSES.COLOR_TILE_UNHIDE_BUTTON}`,
-        handler: (categoryName) => this.handleUnhideButton(null, categoryName),
+        handler: (familyName) => this.handleUnhideButton(familyName),
       },
     ];
   }
@@ -1212,23 +1189,15 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
   }
 
   /**
-   * Handle unhide button click (both family and category tiles)
+   * Handle unhide button click (family tiles in hidden section)
    */
-  handleUnhideButton(familyName, categoryName) {
+  handleUnhideButton(familyName) {
     if (familyName) {
       const command = new UnhideGroupCommand(
         this.model,
         this.state,
         "family",
         familyName,
-      );
-      this._executeCommand(command);
-    } else if (categoryName) {
-      const command = new UnhideGroupCommand(
-        this.model,
-        this.state,
-        "category",
-        categoryName,
       );
       this._executeCommand(command);
     }

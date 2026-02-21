@@ -10,7 +10,7 @@
 import {
   FAMILY_ORDER,
   PREFIX,
-  ALLOWED_CATEGORY_PREFIX,
+  DESIGNER_COLLECTION_PREFIX,
   createGroupId,
 } from "../utils/config.js";
 
@@ -26,8 +26,8 @@ export class ColorModel {
   }
 
   /**
-   * Pre-compute family and category group structures.
-   * Family maps use primary (first) family; category maps use all collections.
+   * Pre-compute family group structures and Designer Pick set.
+   * Family maps use primary (first) family.
    * @private
    */
   _buildGroupMaps() {
@@ -35,14 +35,10 @@ export class ColorModel {
     this._familyColors = new Map();
     /** @private Map<string, string[]> — familyName → color IDs */
     this._familyColorIds = new Map();
-    /** @private Map<string, Object[]> — categoryName → color objects (case-preserved) */
-    this._categoryColors = new Map();
-    /** @private Map<string, string[]> — categoryName → color IDs */
-    this._categoryColorIds = new Map();
     /** @private Map<string(lowercase), string> — lowercase name → canonical name */
     this._familyNameLookup = new Map();
-    /** @private Map<string(lowercase), string> — lowercase name → canonical name */
-    this._categoryNameLookup = new Map();
+    /** @private Set<string> — IDs of colors in any Designer Color Collection */
+    this._designerPickIds = new Set();
 
     for (const color of this._activeColors) {
       // Primary family
@@ -57,23 +53,25 @@ export class ColorModel {
         this._familyColorIds.get(family).push(color.id);
       }
 
-      // Only categories matching the allowed prefix (others are redundant with families)
+      // Track Designer picks for badge display
       if (
         color.brandedCollectionNames &&
-        color.brandedCollectionNames.length > 0
+        color.brandedCollectionNames.some((c) =>
+          c.startsWith(DESIGNER_COLLECTION_PREFIX),
+        )
       ) {
-        for (const cat of color.brandedCollectionNames) {
-          if (!cat.startsWith(ALLOWED_CATEGORY_PREFIX)) continue;
-          if (!this._categoryColors.has(cat)) {
-            this._categoryColors.set(cat, []);
-            this._categoryColorIds.set(cat, []);
-            this._categoryNameLookup.set(cat.toLowerCase(), cat);
-          }
-          this._categoryColors.get(cat).push(color);
-          this._categoryColorIds.get(cat).push(color.id);
-        }
+        this._designerPickIds.add(color.id);
       }
     }
+  }
+
+  /**
+   * Get the Set of all Designer Color Collection color IDs.
+   * Used for "Designer Pick" badge on tiles.
+   * @returns {Set<string>}
+   */
+  getDesignerPickIds() {
+    return this._designerPickIds;
   }
 
   /**
@@ -165,32 +163,6 @@ export class ColorModel {
   }
 
   /**
-   * Group colors by their branded collection categories
-   * @param {Array} colors - Array of color objects
-   * @returns {Object} Object with category names as keys and color arrays as values
-   */
-  groupByCategory(colors) {
-    const colorCategories = {};
-
-    for (const color of colors) {
-      if (
-        color.brandedCollectionNames &&
-        color.brandedCollectionNames.length > 0
-      ) {
-        for (const category of color.brandedCollectionNames) {
-          if (!category.startsWith(ALLOWED_CATEGORY_PREFIX)) continue;
-          if (!colorCategories[category]) {
-            colorCategories[category] = [];
-          }
-          colorCategories[category].push(color);
-        }
-      }
-    }
-
-    return colorCategories;
-  }
-
-  /**
    * Sort family names by priority order, then alphabetically
    * @param {string[]} familyKeys - Array of family names
    * @returns {string[]} Sorted array of family names
@@ -221,51 +193,30 @@ export class ColorModel {
   }
 
   /**
-   * Get all colors in a specific category (O(1) Map lookup)
-   * @param {string} categoryName - Name of the category (case-insensitive)
-   * @returns {Array} Array of colors in the category
-   */
-  getCategoryColors(categoryName) {
-    // Try exact match first, fall back to case-insensitive lookup
-    const colors = this._categoryColors.get(categoryName);
-    if (colors) return colors;
-    const canonical = this._categoryNameLookup.get(categoryName.toLowerCase());
-    return canonical ? this._categoryColors.get(canonical) : [];
-  }
-
-  /**
    * Get colors for a given group ID (family or category)
    * @param {string} id - Group ID (e.g., 'family-red' or 'category-historic')
    * @param {Function} convertIdToName - Function to convert ID to display name
    * @returns {Array} Array of colors in the group
    */
   getColorsForId(id, convertIdToName) {
-    // Handle both family and category IDs
     if (id.startsWith("family-")) {
       const familyName = convertIdToName(id);
       return this.getFamilyColors(familyName);
-    } else if (id.startsWith("category-")) {
-      const categoryName = convertIdToName(id);
-      return this.getCategoryColors(categoryName);
     }
     return [];
   }
 
   /**
-   * Find groups (families or categories) where ALL non-favorited colors are hidden.
+   * Find families where ALL non-favorited colors are hidden.
    * Uses pre-built group Maps for O(1) group lookups.
-   * @param {string} groupType - Either 'family' or 'category'
    * @param {Set<string>} hiddenSet - Set of hidden color IDs
    * @param {Set<string>} favoriteSet - Set of favorite color IDs
-   * @returns {Array<{name: string, count: number}>} Array of hidden groups with their color counts
+   * @returns {Array<{name: string, count: number}>} Array of hidden families with their color counts
    */
-  getHiddenGroups(groupType, hiddenSet, favoriteSet = new Set()) {
-    const groupMap =
-      groupType === "family" ? this._familyColors : this._categoryColors;
-    const hiddenGroups = [];
+  getHiddenFamilies(hiddenSet, favoriteSet = new Set()) {
+    const hiddenFamilies = [];
 
-    for (const [groupName, colors] of groupMap) {
-      // Count non-favorited colors and check if all are hidden
+    for (const [familyName, colors] of this._familyColors) {
       let nonFavCount = 0;
       let allHidden = true;
 
@@ -274,36 +225,16 @@ export class ColorModel {
         nonFavCount++;
         if (!hiddenSet.has(color.id)) {
           allHidden = false;
-          break; // Early exit — no need to check remaining
+          break;
         }
       }
 
       if (nonFavCount > 0 && allHidden) {
-        hiddenGroups.push({ name: groupName, count: nonFavCount });
+        hiddenFamilies.push({ name: familyName, count: nonFavCount });
       }
     }
 
-    return hiddenGroups;
-  }
-
-  /**
-   * Find all color families where ALL colors are hidden
-   * @param {Set<string>} hiddenSet - Set of hidden color IDs
-   * @param {Set<string>} favoriteSet - Set of favorite color IDs
-   * @returns {Array<{name: string, count: number}>} Array of hidden families
-   */
-  getHiddenFamilies(hiddenSet, favoriteSet = new Set()) {
-    return this.getHiddenGroups("family", hiddenSet, favoriteSet);
-  }
-
-  /**
-   * Find all color categories where ALL colors are hidden
-   * @param {Set<string>} hiddenSet - Set of hidden color IDs
-   * @param {Set<string>} favoriteSet - Set of favorite color IDs
-   * @returns {Array<{name: string, count: number}>} Array of hidden categories
-   */
-  getHiddenCategories(hiddenSet, favoriteSet = new Set()) {
-    return this.getHiddenGroups("category", hiddenSet, favoriteSet);
+    return hiddenFamilies;
   }
 
   /**
@@ -327,26 +258,6 @@ export class ColorModel {
   }
 
   /**
-   * Get all color IDs for a specific category (O(1) Map lookup)
-   * @param {string} categoryName - Name of the category
-   * @param {string[]|Set<string>} excludeIds - IDs to exclude (array or Set)
-   * @returns {string[]} Array of color IDs in the category
-   */
-  getColorIdsForCategory(categoryName, excludeIds = []) {
-    const ids = this._categoryColorIds.get(categoryName);
-    if (!ids) return [];
-    if (
-      (excludeIds instanceof Set && excludeIds.size === 0) ||
-      (Array.isArray(excludeIds) && excludeIds.length === 0)
-    ) {
-      return ids;
-    }
-    const excludeSet =
-      excludeIds instanceof Set ? excludeIds : new Set(excludeIds);
-    return ids.filter((id) => !excludeSet.has(id));
-  }
-
-  /**
    * Get the section IDs (family and category group IDs) that a color belongs to.
    * Used by surgical updates to know which accordion sections to patch.
    * @param {string} colorId - The color ID
@@ -354,10 +265,9 @@ export class ColorModel {
    */
   getColorSectionIds(colorId) {
     const color = this._colorById.get(colorId);
-    if (!color) return { familySectionIds: [], categorySectionIds: [] };
+    if (!color) return { familySectionIds: [] };
 
     const familySectionIds = [];
-    const categorySectionIds = [];
 
     // Primary family → section ID
     if (color.colorFamilyNames && color.colorFamilyNames.length > 0) {
@@ -365,17 +275,6 @@ export class ColorModel {
       familySectionIds.push(createGroupId(primaryFamily, PREFIX.FAMILY));
     }
 
-    // Only allowed categories → section IDs
-    if (
-      color.brandedCollectionNames &&
-      color.brandedCollectionNames.length > 0
-    ) {
-      for (const cat of color.brandedCollectionNames) {
-        if (!cat.startsWith(ALLOWED_CATEGORY_PREFIX)) continue;
-        categorySectionIds.push(createGroupId(cat, PREFIX.CATEGORY));
-      }
-    }
-
-    return { familySectionIds, categorySectionIds };
+    return { familySectionIds };
   }
 }

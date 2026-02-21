@@ -49,17 +49,8 @@ export class AppState {
           expandedIds.add(colorId);
         }
       } else if (id.startsWith(`${PREFIX.CATEGORY}:`)) {
-        // Category group: "category:Living Well"
-        const categoryName = id.substring(PREFIX.CATEGORY.length + 1);
-        // Pass empty array to getColorIdsForCategory to get ALL colors in the category
-        // (don't exclude any during expansion)
-        const colorIds = this.colorModel.getColorIdsForCategory(
-          categoryName,
-          [],
-        );
-        for (const colorId of colorIds) {
-          expandedIds.add(colorId);
-        }
+        // Legacy category group — no longer tracked as accordions.
+        // Skip silently (these IDs won't resolve to anything).
       } else {
         // Regular color ID
         expandedIds.add(id);
@@ -100,24 +91,6 @@ export class AppState {
       }
       // Add the family group identifier
       consolidated.add(`${PREFIX.FAMILY}:${family.name}`);
-    }
-
-    // Check for fully selected categories
-    const selectedCategories = this.colorModel.getHiddenCategories(
-      colorIdSet,
-      exclusionSet,
-    );
-    for (const category of selectedCategories) {
-      // Remove individual color IDs for this category
-      const categoryColorIds = this.colorModel.getColorIdsForCategory(
-        category.name,
-        exclusionSet,
-      );
-      for (const colorId of categoryColorIds) {
-        consolidated.delete(colorId);
-      }
-      // Add the category group identifier
-      consolidated.add(`${PREFIX.CATEGORY}:${category.name}`);
     }
 
     return Array.from(consolidated);

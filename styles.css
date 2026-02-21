@@ -1194,6 +1194,16 @@
   text-rendering: optimizeLegibility;
 }
 
+/* Hide "Designer Pick" badge inside the Designer Color Collection family accordion — redundant there */
+#family-designer-color-collection-tiles .color-tile__badge--designer {
+  display: none;
+}
+
+/* Also hide in favorites section — badge is for cross-reference only */
+#favorites-tiles .color-tile__badge--designer {
+  display: none;
+}
+
 /* Color information section - progressive disclosure for reduced density */
 .color-tile__info {
   position: relative;

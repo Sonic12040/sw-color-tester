@@ -13,10 +13,8 @@ export class UnhideGroupCommand extends ColorCommand {
   }
 
   execute() {
-    const colorIds =
-      this.groupType === "family"
-        ? this.model.getColorIdsForFamily(this.groupName)
-        : this.model.getColorIdsForCategory(this.groupName);
+    // Only family groups have accordions; category groups were removed.
+    const colorIds = this.model.getColorIdsForFamily(this.groupName);
     this.state.removeMultipleHidden(colorIds);
 
     return true; // State changed, re-render needed

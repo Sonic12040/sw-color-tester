@@ -12,7 +12,6 @@ import {
   createAccordionItem,
   colorTemplate,
   familyTileTemplate,
-  categoryTileTemplate,
 } from "../utils/templates.js";
 import {
   PREFIX,
@@ -43,6 +42,8 @@ export class ColorView {
     this.favoriteIds = new Set();
     /** @type {Set<string>} */
     this.hiddenIds = new Set();
+    /** @type {Set<string>} */
+    this.designerPickIds = new Set();
 
     // Setup accordion delegation once — survives innerHTML rebuilds
     this._setupAccordionDelegation();
@@ -59,15 +60,13 @@ export class ColorView {
       hiddenColors,
       colorFamilies,
       sortedFamilies,
-      colorCategories,
-      sortedCategories,
       hiddenFamilies,
-      hiddenCategories,
     } = renderData;
 
     // Store Sets for template rendering (avoid recreating from color arrays)
     this.favoriteIds = renderData.favoriteSet || new Set();
     this.hiddenIds = renderData.hiddenSet || new Set();
+    this.designerPickIds = renderData.designerPickIds || new Set();
 
     // Save accordion state before rebuilding
     const expandedSections = this._saveAccordionState();
@@ -79,8 +78,6 @@ export class ColorView {
       hiddenColors.length,
       sortedFamilies,
       colorFamilies,
-      sortedCategories,
-      colorCategories,
     );
     this.container.innerHTML = accordionHTML;
     _perfMeasure("view:build-accordion", "view:build-accordion:start");
@@ -91,16 +88,11 @@ export class ColorView {
     _perfMeasure("view:favorites", "view:favorites:start");
 
     _perfMark("view:hidden:start");
-    this.renderHiddenSection(hiddenColors, hiddenFamilies, hiddenCategories);
+    this.renderHiddenSection(hiddenColors, hiddenFamilies);
     _perfMeasure("view:hidden", "view:hidden:start");
 
     _perfMark("view:sections:start");
-    this.renderColorSections(
-      sortedFamilies,
-      colorFamilies,
-      sortedCategories,
-      colorCategories,
-    );
+    this.renderColorSections(sortedFamilies, colorFamilies);
     _perfMeasure("view:sections", "view:sections:start");
 
     // Restore accordion state after rebuilding
@@ -186,8 +178,6 @@ export class ColorView {
     hiddenCount,
     sortedFamilies,
     colorFamilies,
-    sortedCategories,
-    colorCategories,
   ) {
     let accordionHTML = "";
 
@@ -218,20 +208,6 @@ export class ColorView {
       );
     }
 
-    // 4. Color category sections
-    for (const category of sortedCategories) {
-      const count = colorCategories[category].length;
-      const categoryId = createGroupId(category, PREFIX.CATEGORY);
-
-      accordionHTML += createAccordionItem(
-        categoryId,
-        `${category} Collection (${count})`,
-        category, // Original name for bulk actions
-        false,
-        true, // Show bulk actions for color categories
-      );
-    }
-
     return accordionHTML;
   }
 
@@ -250,6 +226,7 @@ export class ColorView {
             showHideButton: false,
             favoriteIds: this.favoriteIds,
             hiddenIds: this.hiddenIds,
+            designerPickIds: this.designerPickIds,
           }),
         )
         .join("");
@@ -267,45 +244,23 @@ export class ColorView {
   /**
    * Render the hidden section with family tiles, category tiles, and individual colors
    */
-  renderHiddenSection(hiddenColors, hiddenFamilies, hiddenCategories) {
+  renderHiddenSection(hiddenColors, hiddenFamilies) {
     const hiddenContainer = document.getElementById(ELEMENT_IDS.HIDDEN_TILES);
     hiddenContainer.innerHTML = ""; // Clear existing hidden tiles
     let html = "";
 
-    // Add hidden family tiles first
+    // Add hidden family tiles
     for (const family of hiddenFamilies) {
       html += familyTileTemplate(family.name, family.count);
     }
 
-    // Add hidden category tiles
-    for (const category of hiddenCategories) {
-      html += categoryTileTemplate(category.name, category.count);
-    }
-
-    // Add individual hidden colors (excluding those in completely hidden families or categories)
+    // Add individual hidden colors (excluding those in completely hidden families)
     const hiddenFamilyNames = new Set(hiddenFamilies.map((f) => f.name));
-    const hiddenCategoryNames = new Set(hiddenCategories.map((c) => c.name));
     const individualHiddenColors = hiddenColors.filter((color) => {
-      // Check if color belongs to a completely hidden family
-      let inHiddenFamily = false;
       if (color.colorFamilyNames && color.colorFamilyNames.length > 0) {
-        const primaryFamily = color.colorFamilyNames[0];
-        inHiddenFamily = hiddenFamilyNames.has(primaryFamily);
+        return !hiddenFamilyNames.has(color.colorFamilyNames[0]);
       }
-
-      // Check if color belongs to any completely hidden category
-      let inHiddenCategory = false;
-      if (
-        color.brandedCollectionNames &&
-        color.brandedCollectionNames.length > 0
-      ) {
-        inHiddenCategory = color.brandedCollectionNames.some((category) =>
-          hiddenCategoryNames.has(category),
-        );
-      }
-
-      // Include color only if it's not in a completely hidden family or category
-      return !inHiddenFamily && !inHiddenCategory;
+      return true;
     });
 
     if (individualHiddenColors.length > 0) {
@@ -315,16 +270,13 @@ export class ColorView {
             showFavoriteButton: false,
             favoriteIds: this.favoriteIds,
             hiddenIds: this.hiddenIds,
+            designerPickIds: this.designerPickIds,
           }),
         )
         .join("");
     }
 
-    if (
-      hiddenFamilies.length === 0 &&
-      hiddenCategories.length === 0 &&
-      individualHiddenColors.length === 0
-    ) {
+    if (hiddenFamilies.length === 0 && individualHiddenColors.length === 0) {
       hiddenContainer.innerHTML = `
         <div class="${CSS_CLASSES.EMPTY_MESSAGE}">
           <span class="empty-message__text">No hidden colors.</span>
@@ -339,12 +291,7 @@ export class ColorView {
   /**
    * Render all family and category sections with their color tiles
    */
-  renderColorSections(
-    sortedFamilies,
-    colorFamilies,
-    sortedCategories,
-    colorCategories,
-  ) {
+  renderColorSections(sortedFamilies, colorFamilies) {
     // Populate color family sections
     for (const family of sortedFamilies) {
       const familyId = createGroupId(family, PREFIX.FAMILY);
@@ -358,24 +305,7 @@ export class ColorView {
           colorTemplate(color, {
             favoriteIds: this.favoriteIds,
             hiddenIds: this.hiddenIds,
-          }),
-        )
-        .join("");
-    }
-
-    // Populate color category sections
-    for (const category of sortedCategories) {
-      const categoryId = createGroupId(category, PREFIX.CATEGORY);
-      const categoryContainer = document.getElementById(
-        getTilesContainerId(categoryId),
-      );
-      const categoryColors = colorCategories[category];
-
-      categoryContainer.innerHTML = categoryColors
-        .map((color) =>
-          colorTemplate(color, {
-            favoriteIds: this.favoriteIds,
-            hiddenIds: this.hiddenIds,
+            designerPickIds: this.designerPickIds,
           }),
         )
         .join("");
@@ -459,6 +389,7 @@ export class ColorView {
     const html = colorTemplate(color, {
       favoriteIds: this.favoriteIds,
       hiddenIds: this.hiddenIds,
+      designerPickIds: this.designerPickIds,
       ...options,
     });
     container.insertAdjacentHTML("beforeend", html);

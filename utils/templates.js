@@ -7,6 +7,7 @@ import {
   ELEMENT_IDS,
   ICONS,
   LRV_THRESHOLDS,
+  DESIGNER_COLLECTION_PREFIX,
 } from "./config.js";
 
 // Coordinating color roles (assign contextual labels)
@@ -214,6 +215,7 @@ export function colorTemplate(color, options = {}) {
     showHideButton = true,
     favoriteIds = new Set(),
     hiddenIds = new Set(),
+    designerPickIds = new Set(),
   } = options;
 
   const isFavorited = favoriteIds.has(color.id);
@@ -280,6 +282,14 @@ export function colorTemplate(color, options = {}) {
   // Build badges for interior/exterior use — only show for exceptions (not both)
   // Most colors are Interior & Exterior, so omitting the badge declutters the tile
   const badges = [];
+
+  // Designer Pick badge — shown on tiles outside the Designer family accordion (hidden via CSS inside it)
+  if (designerPickIds.has(color.id)) {
+    badges.push(
+      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_DESIGNER}" style="background: ${badgeBgColor}; color: ${badgeTextColor};">Designer Pick</span>`,
+    );
+  }
+
   if (color.isInterior && !color.isExterior) {
     badges.push(
       `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_INTERIOR}" style="background: ${badgeBgColor}; color: ${badgeTextColor};">Interior Only</span>`,
@@ -574,6 +584,14 @@ export function colorDetailModal(
       ? color.brandedCollectionNames.join(", ")
       : "None";
 
+  // Extract Designer sub-collection names for prominent display
+  const designerCollections =
+    color.brandedCollectionNames && color.brandedCollectionNames.length > 0
+      ? color.brandedCollectionNames
+          .filter((c) => c.startsWith(DESIGNER_COLLECTION_PREFIX))
+          .map((c) => c.replace(`${DESIGNER_COLLECTION_PREFIX} - `, ""))
+      : [];
+
   // Build descriptions
   const descriptions =
     color.description && color.description.length > 0
@@ -653,6 +671,16 @@ export function colorDetailModal(
                   <span class="${CSS_CLASSES.MODAL_LRV_LABEL}">${lrvLabel}</span>
                   <p class="${CSS_CLASSES.MODAL_LRV_DESCRIPTION}">${lrvContext}</p>
                 </div>
+              </div>
+            `
+                : ""
+            }
+            ${
+              designerCollections.length > 0
+                ? `
+              <div class="${CSS_CLASSES.MODAL_MOOD}">
+                <span class="${CSS_CLASSES.MODAL_MOOD_LABEL}">Designer Collection:</span>
+                <p class="${CSS_CLASSES.MODAL_MOOD_DESCRIPTION}">${designerCollections.join(" · ")}</p>
               </div>
             `
                 : ""
