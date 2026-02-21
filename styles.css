@@ -756,6 +756,14 @@
   background: transparent;
   border: none;
   height: 8px;
+  border-radius: 4px;
+}
+
+/* Firefox progress fill - must be transparent so our custom range shows */
+.lrv-filter__input::-moz-range-progress {
+  background: transparent;
+  border: none;
+  height: 8px;
 }
 
 /* Remove default focus outline (we use thumb outline instead) */
