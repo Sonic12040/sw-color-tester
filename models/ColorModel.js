@@ -148,7 +148,7 @@ export class ColorModel {
 
       // Check if any of the color's families match the target family
       return color.colorFamilyNames.some(
-        (family) => family.toLowerCase() === familyName.toLowerCase()
+        (family) => family.toLowerCase() === familyName.toLowerCase(),
       );
     });
   }
@@ -164,7 +164,7 @@ export class ColorModel {
 
       // Check if any of the color's categories match the target category
       return color.brandedCollectionNames.some(
-        (category) => category.toLowerCase() === categoryName.toLowerCase()
+        (category) => category.toLowerCase() === categoryName.toLowerCase(),
       );
     });
   }

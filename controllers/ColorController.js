@@ -343,17 +343,17 @@ export class ColorController {
     if (color.coordinatingColors) {
       if (color.coordinatingColors.coord1ColorId) {
         coordinatingColors.coord1 = allColors.find(
-          (c) => c.id === color.coordinatingColors.coord1ColorId
+          (c) => c.id === color.coordinatingColors.coord1ColorId,
         );
       }
       if (color.coordinatingColors.coord2ColorId) {
         coordinatingColors.coord2 = allColors.find(
-          (c) => c.id === color.coordinatingColors.coord2ColorId
+          (c) => c.id === color.coordinatingColors.coord2ColorId,
         );
       }
       if (color.coordinatingColors.whiteColorId) {
         coordinatingColors.white = allColors.find(
-          (c) => c.id === color.coordinatingColors.whiteColorId
+          (c) => c.id === color.coordinatingColors.whiteColorId,
         );
       }
     }
@@ -370,7 +370,9 @@ export class ColorController {
     }
 
     // Remove existing modal if present
-    const existingModal = document.getElementById(ELEMENT_IDS.COLOR_DETAIL_MODAL);
+    const existingModal = document.getElementById(
+      ELEMENT_IDS.COLOR_DETAIL_MODAL,
+    );
     if (existingModal) {
       existingModal.remove();
     }
@@ -387,7 +389,7 @@ export class ColorController {
       coordinatingColors,
       similarColors,
       isFavorited,
-      isHidden
+      isHidden,
     );
     document.body.insertAdjacentHTML("beforeend", modalHTML);
 
@@ -405,7 +407,7 @@ export class ColorController {
 
         // Set up accordion functionality
         const accordionTrigger = modal.querySelector(
-          ".modal__accordion-trigger"
+          ".modal__accordion-trigger",
         );
         const accordionPanel = modal.querySelector(".modal__accordion-panel");
 
@@ -429,12 +431,20 @@ export class ColorController {
 
         // Set up action button handlers
         const favoriteButton = modal.querySelector(
-          `.${CSS_CLASSES.MODAL_ACTION_BUTTON_FAVORITE}`
+          `.${CSS_CLASSES.MODAL_ACTION_BUTTON_FAVORITE}`,
         );
-        const shareButton = modal.querySelector(`.${CSS_CLASSES.MODAL_ACTION_BUTTON_SHARE}`);
-        const copyButton = modal.querySelector(`.${CSS_CLASSES.MODAL_ACTION_BUTTON_COPY}`);
-        const hideButton = modal.querySelector(`.${CSS_CLASSES.MODAL_ACTION_BUTTON_HIDE}`);
-        const storeButton = modal.querySelector(`.${CSS_CLASSES.MODAL_ACTION_BUTTON_STORE}`);
+        const shareButton = modal.querySelector(
+          `.${CSS_CLASSES.MODAL_ACTION_BUTTON_SHARE}`,
+        );
+        const copyButton = modal.querySelector(
+          `.${CSS_CLASSES.MODAL_ACTION_BUTTON_COPY}`,
+        );
+        const hideButton = modal.querySelector(
+          `.${CSS_CLASSES.MODAL_ACTION_BUTTON_HIDE}`,
+        );
+        const storeButton = modal.querySelector(
+          `.${CSS_CLASSES.MODAL_ACTION_BUTTON_STORE}`,
+        );
 
         if (favoriteButton) {
           favoriteButton.addEventListener("click", () => {
@@ -448,14 +458,14 @@ export class ColorController {
             if (heartSvg && buttonText) {
               heartSvg.setAttribute(
                 "fill",
-                currentlyFavorited ? "currentColor" : "none"
+                currentlyFavorited ? "currentColor" : "none",
               );
               buttonText.textContent = currentlyFavorited
                 ? "Favorited"
                 : "Add to Favorites";
               favoriteButton.setAttribute(
                 "aria-label",
-                `${currentlyFavorited ? "Remove from" : "Add to"} favorites`
+                `${currentlyFavorited ? "Remove from" : "Add to"} favorites`,
               );
             }
           });
@@ -488,7 +498,7 @@ export class ColorController {
                 : "Hide Color";
               hideButton.setAttribute(
                 "aria-label",
-                `${currentlyHidden ? "Show" : "Hide"} color`
+                `${currentlyHidden ? "Show" : "Hide"} color`,
               );
             }
           });
@@ -505,7 +515,7 @@ export class ColorController {
 
         // Set up clickable mini tiles (coordinating & similar colors)
         const clickableTiles = modal.querySelectorAll(
-          `.${CSS_CLASSES.MODAL_MINI_TILE_CLICKABLE}`
+          `.${CSS_CLASSES.MODAL_MINI_TILE_CLICKABLE}`,
         );
         clickableTiles.forEach((tile) => {
           const handleClick = () => {
@@ -551,7 +561,7 @@ export class ColorController {
         await navigator.clipboard.writeText(shareData.url);
         // Provide visual feedback
         const shareButton = document.querySelector(
-          `.${CSS_CLASSES.MODAL_ACTION_BUTTON_SHARE} span`
+          `.${CSS_CLASSES.MODAL_ACTION_BUTTON_SHARE} span`,
         );
         if (shareButton) {
           const originalText = shareButton.textContent;
@@ -575,14 +585,14 @@ export class ColorController {
 Hex: ${color.hex}
 RGB: rgb(${color.red}, ${color.green}, ${color.blue})
 HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
-      color.saturation * 100
+      color.saturation * 100,
     )}%, ${Math.round(color.lightness * 100)}%)`;
 
     try {
       await navigator.clipboard.writeText(colorCode);
       // Provide visual feedback
       const copyButton = document.querySelector(
-        `.${CSS_CLASSES.MODAL_ACTION_BUTTON_COPY} span`
+        `.${CSS_CLASSES.MODAL_ACTION_BUTTON_COPY} span`,
       );
       if (copyButton) {
         const originalText = copyButton.textContent;
@@ -640,7 +650,11 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     // Get color data from model
     const favoriteColors = this.model.getFavoriteColors(favorites);
     const hiddenColors = this.model.getHiddenColors(hidden);
-    const visibleColors = this.model.getVisibleColors(hidden, favorites, lrvRange);
+    const visibleColors = this.model.getVisibleColors(
+      hidden,
+      favorites,
+      lrvRange,
+    );
 
     // Update LRV count display
     const countEl = document.getElementById(ELEMENT_IDS.LRV_COUNT);
@@ -657,12 +671,12 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     // Group and sort
     const colorFamilies = this.model.groupByFamily(visibleColors);
     const sortedFamilies = this.model.sortFamiliesByPriority(
-      Object.keys(colorFamilies)
+      Object.keys(colorFamilies),
     );
 
     const colorCategories = this.model.groupByCategory(visibleColors);
     const sortedCategories = Object.keys(colorCategories).sort((a, b) =>
-      a.localeCompare(b)
+      a.localeCompare(b),
     );
 
     // Get hidden groups (excluding favorited colors)
@@ -791,7 +805,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
    */
   setupHeaderButtons() {
     const exportFavBtn = document.getElementById(
-      ELEMENT_IDS.EXPORT_FAVORITES_BTN
+      ELEMENT_IDS.EXPORT_FAVORITES_BTN,
     );
     if (exportFavBtn) {
       exportFavBtn.addEventListener("click", () => {
@@ -800,7 +814,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     }
 
     const clearFavBtn = document.getElementById(
-      ELEMENT_IDS.CLEAR_FAVORITES_BTN
+      ELEMENT_IDS.CLEAR_FAVORITES_BTN,
     );
     if (clearFavBtn) {
       clearFavBtn.addEventListener("click", () => {
@@ -809,7 +823,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     }
 
     const clearHiddenBtn = document.getElementById(
-      ELEMENT_IDS.CLEAR_HIDDEN_BTN
+      ELEMENT_IDS.CLEAR_HIDDEN_BTN,
     );
     if (clearHiddenBtn) {
       clearHiddenBtn.addEventListener("click", () => {
@@ -844,12 +858,12 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     const favorites = this.state.getFavorites();
     const hidden = this.state.getHidden();
     const allFavorited = groupColors.every((color) =>
-      favorites.includes(color.id)
+      favorites.includes(color.id),
     );
 
     // Use visible count (excluding hidden & already-favorited) to match accordion header
     const visibleCount = groupColors.filter(
-      (c) => !hidden.includes(c.id) && !favorites.includes(c.id)
+      (c) => !hidden.includes(c.id) && !favorites.includes(c.id),
     ).length;
     const count = allFavorited ? groupColors.length : visibleCount;
 
@@ -873,7 +887,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
         this.model,
         this.state,
         groupId,
-        groupName
+        groupName,
       );
       this._executeCommand(command);
 
@@ -904,7 +918,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
 
     // Use visible count (excluding hidden & favorited) to match accordion header
     const visibleCount = groupColors.filter(
-      (c) => !hidden.includes(c.id) && !favorites.includes(c.id)
+      (c) => !hidden.includes(c.id) && !favorites.includes(c.id),
     ).length;
     const count = allHidden ? groupColors.length : visibleCount;
 
@@ -926,7 +940,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
         this.model,
         this.state,
         groupId,
-        groupName
+        groupName,
       );
       this._executeCommand(command);
 
@@ -953,7 +967,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
         this.model,
         this.state,
         "family",
-        familyName
+        familyName,
       );
       this._executeCommand(command);
     } else if (categoryName) {
@@ -961,7 +975,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
         this.model,
         this.state,
         "category",
-        categoryName
+        categoryName,
       );
       this._executeCommand(command);
     }

@@ -1,7 +1,13 @@
 // templates.js
 // HTML template functions for the color tester application
 
-import { CSS_CLASSES, DATA_ATTRIBUTES, ELEMENT_IDS, ICONS, LRV_THRESHOLDS } from "./config.js";
+import {
+  CSS_CLASSES,
+  DATA_ATTRIBUTES,
+  ELEMENT_IDS,
+  ICONS,
+  LRV_THRESHOLDS,
+} from "./config.js";
 
 // Coordinating color roles (assign contextual labels)
 const COORDINATING_ROLES = ["Accent Wall", "Trim Color", "Coordinating"];
@@ -123,7 +129,7 @@ export function createAccordionItem(
   title,
   name,
   isOpen = false,
-  showBulkActions = false
+  showBulkActions = false,
 ) {
   const bulkActionsHTML = showBulkActions
     ? `
@@ -276,11 +282,11 @@ export function colorTemplate(color, options = {}) {
   const badges = [];
   if (color.isInterior && !color.isExterior) {
     badges.push(
-      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_INTERIOR}" style="background: ${badgeBgColor}; color: ${badgeTextColor};">Interior Only</span>`
+      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_INTERIOR}" style="background: ${badgeBgColor}; color: ${badgeTextColor};">Interior Only</span>`,
     );
   } else if (color.isExterior && !color.isInterior) {
     badges.push(
-      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_EXTERIOR}" style="background: ${badgeBgColor}; color: ${badgeTextColor};">Exterior Only</span>`
+      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_EXTERIOR}" style="background: ${badgeBgColor}; color: ${badgeTextColor};">Exterior Only</span>`,
     );
   }
 
@@ -307,7 +313,7 @@ export function colorTemplate(color, options = {}) {
          style="background: ${generateHSLColor(
            color.hue,
            color.saturation,
-           color.lightness
+           color.lightness,
          )}; color: ${textColor}">
       <div class="${CSS_CLASSES.COLOR_TILE_ACTIONS}">
         ${favoriteButtonHTML}
@@ -319,12 +325,12 @@ export function colorTemplate(color, options = {}) {
           <strong>${color.name}</strong>
         </div>
         <div class="${CSS_CLASSES.COLOR_TILE_NUMBER}">SW ${
-    color.colorNumber
-  }</div>
+          color.colorNumber
+        }</div>
         <div class="${CSS_CLASSES.COLOR_TILE_LRV_CONTAINER}">
           <span class="${CSS_CLASSES.COLOR_TILE_LRV} ${
-    CSS_CLASSES.COLOR_TILE_LRV
-  }--${lrvClass}" 
+            CSS_CLASSES.COLOR_TILE_LRV
+          }--${lrvClass}" 
                 title="Light Reflectance Value - ${lrvLabel} color reflects ${lrvValue}% of light"
                 style="background: ${badgeBgColor}; color: ${badgeTextColor};">
             <span class="${CSS_CLASSES.COLOR_TILE_LRV_LABEL}">${lrvLabel}</span>
@@ -336,8 +342,8 @@ export function colorTemplate(color, options = {}) {
         <button type="button"
                 aria-label="See color details and pairings for ${color.name}" 
                 class="${CSS_CLASSES.COLOR_TILE_VIEW_BUTTON} ${
-    CSS_CLASSES.COLOR_TILE_BUTTON
-  }" 
+                  CSS_CLASSES.COLOR_TILE_BUTTON
+                }" 
                 ${DATA_ATTRIBUTES.ID}="${color.id}"
                 style="--btn-bg: ${buttonBgColor}; --btn-hover-bg: ${buttonHoverBg}; --btn-text-color: ${buttonTextColor};">
           View Details
@@ -430,12 +436,12 @@ export function colorDetailModal(
   coordinatingColors = {},
   similarColors = [],
   isFavorited = false,
-  isHidden = false
+  isHidden = false,
 ) {
   const backgroundColor = generateHSLColor(
     color.hue,
     color.saturation,
-    color.lightness
+    color.lightness,
   );
 
   // Header text color based on isDark - same pattern as other UI elements
@@ -478,7 +484,7 @@ export function colorDetailModal(
                  style="background: ${generateHSLColor(
                    c.hue,
                    c.saturation,
-                   c.lightness
+                   c.lightness,
                  )}; color: ${generateAccessibleText(c)};"
                  role="button"
                  tabindex="0"
@@ -535,7 +541,7 @@ export function colorDetailModal(
                  style="background: ${generateHSLColor(
                    c.hue,
                    c.saturation,
-                   c.lightness
+                   c.lightness,
                  )}; color: ${generateAccessibleText(c)};"
                  role="button"
                  tabindex="0"
@@ -609,8 +615,8 @@ export function colorDetailModal(
         }" style="background: ${backgroundColor}; color: ${headerTextColor};">
           <div class="${CSS_CLASSES.MODAL_HEADER_CONTENT}">
             <h2 id="modal-title" class="${CSS_CLASSES.MODAL_TITLE}">${
-    color.name
-  }</h2>
+              color.name
+            }</h2>
             <div class="${CSS_CLASSES.MODAL_SUBTITLE}">
               SW ${color.colorNumber}
               ${useTypes.length > 0 ? ` • ${useTypesText}` : ""}
@@ -670,8 +676,8 @@ export function colorDetailModal(
               <span class="${
                 CSS_CLASSES.MODAL_ACCORDION_TITLE
               }">Technical Details <span class="${
-    CSS_CLASSES.MODAL_ACCORDION_HINT
-  }">(Paint specs, color codes & more)</span></span>
+                CSS_CLASSES.MODAL_ACCORDION_HINT
+              }">(Paint specs, color codes & more)</span></span>
               <svg class="${
                 CSS_CLASSES.MODAL_ACCORDION_ICON
               }" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -694,8 +700,8 @@ export function colorDetailModal(
                 <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
                   <span class="${CSS_CLASSES.MODAL_INFO_LABEL}">RGB:</span>
                   <span class="${CSS_CLASSES.MODAL_INFO_VALUE}">rgb(${
-    color.red
-  }, ${color.green}, ${color.blue})</span>
+                    color.red
+                  }, ${color.green}, ${color.blue})</span>
                 </div>
               </div>
               

@@ -15,7 +15,7 @@ export class BulkHideCommand extends ColorCommand {
   execute() {
     const groupColors = this.model.getColorsForId(
       this.groupId,
-      () => this.groupName
+      () => this.groupName,
     );
     const hidden = this.state.getHidden();
 

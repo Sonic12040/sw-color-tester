@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -34,7 +34,11 @@
     <link
       rel="preload"
       href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-      onload="this.onload=null;this.rel='stylesheet';this.removeAttribute('as')"
+      onload="
+        this.onload = null;
+        this.rel = 'stylesheet';
+        this.removeAttribute('as');
+      "
       as="style"
       fetchpriority="high"
     />
@@ -43,7 +47,10 @@
       rel="preload"
       href="styles.css"
       as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
+      onload="
+        this.onload = null;
+        this.rel = 'stylesheet';
+      "
     />
     <noscript>
       <link rel="stylesheet" href="styles.css" />
@@ -75,7 +82,13 @@
             <span class="lrv-filter__value" id="lrv-value-max">100</span>
           </span>
           <span class="lrv-filter__count" id="lrv-count"></span>
-          <button type="button" class="lrv-filter__reset" id="lrv-reset" hidden aria-label="Reset LRV filter">
+          <button
+            type="button"
+            class="lrv-filter__reset"
+            id="lrv-reset"
+            hidden
+            aria-label="Reset LRV filter"
+          >
             Reset
           </button>
         </div>
@@ -83,12 +96,32 @@
           <div class="lrv-filter__track">
             <div class="lrv-filter__range" id="lrv-range-fill"></div>
           </div>
-          <input type="range" id="lrv-slider-min" class="lrv-filter__input lrv-filter__input--min"
-                 min="0" max="100" value="0" step="1"
-                 aria-label="Minimum LRV value" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-          <input type="range" id="lrv-slider-max" class="lrv-filter__input lrv-filter__input--max"
-                 min="0" max="100" value="100" step="1"
-                 aria-label="Maximum LRV value" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
+          <input
+            type="range"
+            id="lrv-slider-min"
+            class="lrv-filter__input lrv-filter__input--min"
+            min="0"
+            max="100"
+            value="0"
+            step="1"
+            aria-label="Minimum LRV value"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+          />
+          <input
+            type="range"
+            id="lrv-slider-max"
+            class="lrv-filter__input lrv-filter__input--max"
+            min="0"
+            max="100"
+            value="100"
+            step="1"
+            aria-label="Maximum LRV value"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="100"
+          />
         </div>
       </div>
     </section>

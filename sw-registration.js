@@ -27,10 +27,13 @@ if ("serviceWorker" in navigator) {
         console.log("[App] PWA is now available offline!");
 
         // Check for updates every hour
-        setInterval(() => {
-          console.log("[App] Checking for updates...");
-          registration.update();
-        }, 60 * 60 * 1000);
+        setInterval(
+          () => {
+            console.log("[App] Checking for updates...");
+            registration.update();
+          },
+          60 * 60 * 1000,
+        );
 
         // Listen for updates
         registration.addEventListener("updatefound", () => {
@@ -404,7 +407,7 @@ globalThis.swDebug = {
       };
       navigator.serviceWorker.controller.postMessage(
         { type: "CHECK_UPDATES" },
-        [messageChannel.port2]
+        [messageChannel.port2],
       );
     });
   },
@@ -452,5 +455,5 @@ globalThis.swDebug = {
 };
 
 console.log(
-  "💡 Tip: Use swDebug.getVersion(), swDebug.checkUpdates(), or swDebug.forceUpdate() to interact with the service worker"
+  "💡 Tip: Use swDebug.getVersion(), swDebug.checkUpdates(), or swDebug.forceUpdate() to interact with the service worker",
 );

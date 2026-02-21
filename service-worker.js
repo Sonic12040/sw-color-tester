@@ -124,15 +124,15 @@ self.addEventListener("install", (event) => {
                       console.log(
                         `[SW] Cached ${url} (${
                           etag || lastModified || "no version"
-                        })`
+                        })`,
                       );
                       return cache.put(url, response);
                     }
                   })
                   .catch((err) =>
-                    console.error(`[SW] Failed to cache ${url}:`, err)
-                  )
-              )
+                    console.error(`[SW] Failed to cache ${url}:`, err),
+                  ),
+              ),
             );
           });
         })
@@ -141,7 +141,7 @@ self.addEventListener("install", (event) => {
           // Force activation immediately
           return globalThis.skipWaiting();
         });
-    })
+    }),
   );
 });
 
@@ -159,19 +159,19 @@ self.addEventListener("activate", (event) => {
         return Promise.all(
           cacheNames
             .filter(
-              (name) => name.startsWith("sw-colors-") && name !== CACHE_NAME
+              (name) => name.startsWith("sw-colors-") && name !== CACHE_NAME,
             )
             .map((name) => {
               console.log("[SW] Deleting old cache:", name);
               return caches.delete(name);
-            })
+            }),
         );
       })
       .then(() => {
         console.log("[SW] Activation complete, taking control");
         // Take control of all pages immediately
         return globalThis.clients.claim();
-      })
+      }),
   );
 });
 
@@ -225,7 +225,7 @@ function fetchWithTimeout(request, timeout) {
   return Promise.race([
     fetch(request),
     new Promise((_, reject) =>
-      setTimeout(() => reject(new Error("Network timeout")), timeout)
+      setTimeout(() => reject(new Error("Network timeout")), timeout),
     ),
   ]);
 }
@@ -245,7 +245,7 @@ async function fetchWithRetry(request, maxRetries = 2) {
         const delay = Math.pow(2, i) * 1000; // 1s, 2s, 4s
         await new Promise((resolve) => setTimeout(resolve, delay));
         console.log(
-          `[SW] Retrying ${request.url} (attempt ${i + 2}/${maxRetries + 1})`
+          `[SW] Retrying ${request.url} (attempt ${i + 2}/${maxRetries + 1})`,
         );
       }
     }
@@ -307,7 +307,7 @@ async function staleWhileRevalidate(request) {
         // Check if content actually changed
         const hasChanged = await hasFileChanged(
           request.url,
-          networkResponse.clone()
+          networkResponse.clone(),
         );
 
         if (hasChanged) {
@@ -405,7 +405,7 @@ async function hasFileChanged(url, newResponse) {
     console.warn(
       "[SW] Invalid response for change detection:",
       url,
-      newResponse?.status
+      newResponse?.status,
     );
     return false;
   }
@@ -505,7 +505,7 @@ async function notifyClients(message) {
     "[SW] Notifying",
     clients.length,
     "client(s):",
-    enrichedMessage.type
+    enrichedMessage.type,
   );
 
   for (const client of clients) {
@@ -596,7 +596,7 @@ async function checkAllUpdates() {
     try {
       const response = await fetchWithRetry(
         new Request(url, { cache: "no-cache" }),
-        2
+        2,
       );
 
       if (response.ok) {
@@ -611,7 +611,7 @@ async function checkAllUpdates() {
         console.warn(
           "[SW] Update check got bad response:",
           url,
-          response.status
+          response.status,
         );
         failedFiles.push({ url, status: response.status });
       }

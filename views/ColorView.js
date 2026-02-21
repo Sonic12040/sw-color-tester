@@ -24,10 +24,14 @@ import {
 
 /** @private Performance helpers — safe no-ops if Performance API unavailable */
 function _perfMark(name) {
-  try { performance.mark(name); } catch {}
+  try {
+    performance.mark(name);
+  } catch {}
 }
 function _perfMeasure(name, startMark) {
-  try { performance.measure(name, startMark); } catch {}
+  try {
+    performance.measure(name, startMark);
+  } catch {}
 }
 
 export class ColorView {
@@ -71,7 +75,7 @@ export class ColorView {
       sortedFamilies,
       colorFamilies,
       sortedCategories,
-      colorCategories
+      colorCategories,
     );
     this.container.innerHTML = accordionHTML;
     _perfMeasure("view:build-accordion", "view:build-accordion:start");
@@ -90,7 +94,7 @@ export class ColorView {
       sortedFamilies,
       colorFamilies,
       sortedCategories,
-      colorCategories
+      colorCategories,
     );
     _perfMeasure("view:sections", "view:sections:start");
 
@@ -113,7 +117,7 @@ export class ColorView {
   _saveAccordionState() {
     const sectionStates = new Map();
     const headers = this.container.querySelectorAll(
-      `.${CSS_CLASSES.ACCORDION_HEADER}`
+      `.${CSS_CLASSES.ACCORDION_HEADER}`,
     );
 
     for (const header of headers) {
@@ -144,7 +148,7 @@ export class ColorView {
     // Use requestAnimationFrame to ensure DOM has settled before restoring state
     requestAnimationFrame(() => {
       const headers = this.container.querySelectorAll(
-        `.${CSS_CLASSES.ACCORDION_HEADER}`
+        `.${CSS_CLASSES.ACCORDION_HEADER}`,
       );
 
       for (const header of headers) {
@@ -183,7 +187,7 @@ export class ColorView {
     sortedFamilies,
     colorFamilies,
     sortedCategories,
-    colorCategories
+    colorCategories,
   ) {
     let accordionHTML = "";
 
@@ -205,7 +209,7 @@ export class ColorView {
         `${family} (${count})`,
         family, // Original name for bulk actions
         false,
-        true // Show bulk actions for color families
+        true, // Show bulk actions for color families
       );
     }
 
@@ -223,7 +227,7 @@ export class ColorView {
         `${category} Collection (${count})`,
         category, // Original name for bulk actions
         false,
-        true // Show bulk actions for color categories
+        true, // Show bulk actions for color categories
       );
     }
 
@@ -235,7 +239,7 @@ export class ColorView {
    */
   renderFavoritesSection(favoriteColors) {
     const favoritesContainer = document.getElementById(
-      ELEMENT_IDS.FAVORITES_TILES
+      ELEMENT_IDS.FAVORITES_TILES,
     );
 
     if (favoriteColors.length > 0) {
@@ -245,7 +249,7 @@ export class ColorView {
             showHideButton: false,
             favoriteIds: this.favoriteIds,
             hiddenIds: this.hiddenIds,
-          })
+          }),
         )
         .join("");
       favoritesContainer.innerHTML = html;
@@ -295,7 +299,7 @@ export class ColorView {
         color.brandedCollectionNames.length > 0
       ) {
         inHiddenCategory = color.brandedCollectionNames.some((category) =>
-          hiddenCategoryNames.has(category)
+          hiddenCategoryNames.has(category),
         );
       }
 
@@ -310,7 +314,7 @@ export class ColorView {
             showFavoriteButton: false,
             favoriteIds: this.favoriteIds,
             hiddenIds: this.hiddenIds,
-          })
+          }),
         )
         .join("");
     }
@@ -338,13 +342,13 @@ export class ColorView {
     sortedFamilies,
     colorFamilies,
     sortedCategories,
-    colorCategories
+    colorCategories,
   ) {
     // Populate color family sections
     for (const family of sortedFamilies) {
       const familyId = createGroupId(family, PREFIX.FAMILY);
       const familyContainer = document.getElementById(
-        getTilesContainerId(familyId)
+        getTilesContainerId(familyId),
       );
       const familyColors = colorFamilies[family];
 
@@ -353,7 +357,7 @@ export class ColorView {
           colorTemplate(color, {
             favoriteIds: this.favoriteIds,
             hiddenIds: this.hiddenIds,
-          })
+          }),
         )
         .join("");
     }
@@ -362,7 +366,7 @@ export class ColorView {
     for (const category of sortedCategories) {
       const categoryId = createGroupId(category, PREFIX.CATEGORY);
       const categoryContainer = document.getElementById(
-        getTilesContainerId(categoryId)
+        getTilesContainerId(categoryId),
       );
       const categoryColors = colorCategories[category];
 
@@ -371,7 +375,7 @@ export class ColorView {
           colorTemplate(color, {
             favoriteIds: this.favoriteIds,
             hiddenIds: this.hiddenIds,
-          })
+          }),
         )
         .join("");
     }
@@ -382,7 +386,7 @@ export class ColorView {
    */
   setupAccordionBehavior() {
     const headers = document.querySelectorAll(
-      `.${CSS_CLASSES.ACCORDION_HEADER}`
+      `.${CSS_CLASSES.ACCORDION_HEADER}`,
     );
     const headersArray = [...headers];
 
@@ -426,17 +430,17 @@ export class ColorView {
   toggleAccordionItem(clickedHeader) {
     const isExpanded = clickedHeader.getAttribute("aria-expanded") === "true";
     const content = document.getElementById(
-      clickedHeader.getAttribute("aria-controls")
+      clickedHeader.getAttribute("aria-controls"),
     );
 
     // Close all other accordion items
     for (const header of document.querySelectorAll(
-      `.${CSS_CLASSES.ACCORDION_HEADER}`
+      `.${CSS_CLASSES.ACCORDION_HEADER}`,
     )) {
       if (header !== clickedHeader) {
         header.setAttribute("aria-expanded", "false");
         const otherContent = document.getElementById(
-          header.getAttribute("aria-controls")
+          header.getAttribute("aria-controls"),
         );
         otherContent.setAttribute("aria-hidden", "true");
         otherContent.setAttribute("inert", "");

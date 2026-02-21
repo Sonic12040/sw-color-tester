@@ -63,7 +63,7 @@ export class AppState {
         // (don't exclude any during expansion)
         const colorIds = this.colorModel.getColorIdsForCategory(
           categoryName,
-          []
+          [],
         );
         for (const colorId of colorIds) {
           expandedIds.add(colorId);
@@ -92,13 +92,13 @@ export class AppState {
     // Check for fully selected families
     const selectedFamilies = this.colorModel.getHiddenFamilies(
       colorIds,
-      exclusionIds
+      exclusionIds,
     );
     for (const family of selectedFamilies) {
       // Remove individual color IDs for this family
       const familyColorIds = this.colorModel.getColorIdsForFamily(
         family.name,
-        exclusionIds
+        exclusionIds,
       );
       for (const colorId of familyColorIds) {
         consolidated.delete(colorId);
@@ -110,13 +110,13 @@ export class AppState {
     // Check for fully selected categories
     const selectedCategories = this.colorModel.getHiddenCategories(
       colorIds,
-      exclusionIds
+      exclusionIds,
     );
     for (const category of selectedCategories) {
       // Remove individual color IDs for this category
       const categoryColorIds = this.colorModel.getColorIdsForCategory(
         category.name,
-        exclusionIds
+        exclusionIds,
       );
       for (const colorId of categoryColorIds) {
         consolidated.delete(colorId);

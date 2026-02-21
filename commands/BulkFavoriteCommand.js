@@ -15,13 +15,13 @@ export class BulkFavoriteCommand extends ColorCommand {
   execute() {
     const groupColors = this.model.getColorsForId(
       this.groupId,
-      () => this.groupName
+      () => this.groupName,
     );
     const favorites = this.state.getFavorites();
 
     // Check if all colors are already favorited
     const allFavorited = groupColors.every((color) =>
-      favorites.includes(color.id)
+      favorites.includes(color.id),
     );
     const colorIds = groupColors.map((color) => color.id);
 

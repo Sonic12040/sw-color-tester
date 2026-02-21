@@ -163,7 +163,7 @@ const BASE85_CHARS =
 // Validate character set length
 if (BASE85_CHARS.length !== 85) {
   throw new Error(
-    `BASE85_CHARS has ${BASE85_CHARS.length} characters, expected 85`
+    `BASE85_CHARS has ${BASE85_CHARS.length} characters, expected 85`,
   );
 }
 
@@ -197,7 +197,7 @@ export function toBase85(buffer) {
       const digit = value % 85;
       if (digit < 0 || digit >= 85) {
         throw new Error(
-          `Invalid digit ${digit} at position ${k}, value=${value}, byteCount=${byteCount}`
+          `Invalid digit ${digit} at position ${k}, value=${value}, byteCount=${byteCount}`,
         );
       }
       digits.push(digit);
@@ -209,7 +209,7 @@ export function toBase85(buffer) {
       const char = BASE85_CHARS[digits[k]];
       if (char === undefined) {
         throw new Error(
-          `Undefined character for digit ${digits[k]} at position ${k}`
+          `Undefined character for digit ${digits[k]} at position ${k}`,
         );
       }
       result += char;
