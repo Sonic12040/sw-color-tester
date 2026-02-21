@@ -258,19 +258,16 @@ export function colorTemplate(color, options = {}) {
   `
     : "";
 
-  // Build badges for interior/exterior use
+  // Build badges for interior/exterior use — only show for exceptions (not both)
+  // Most colors are Interior & Exterior, so omitting the badge declutters the tile
   const badges = [];
-  if (color.isInterior && color.isExterior) {
+  if (color.isInterior && !color.isExterior) {
     badges.push(
-      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_BOTH}" style="background: ${badgeBgColor}; color: ${badgeTextColor};">Interior & Exterior</span>`
+      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_INTERIOR}" style="background: ${badgeBgColor}; color: ${badgeTextColor};">Interior Only</span>`
     );
-  } else if (color.isInterior) {
+  } else if (color.isExterior && !color.isInterior) {
     badges.push(
-      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_INTERIOR}" style="background: ${badgeBgColor}; color: ${badgeTextColor};">Interior</span>`
-    );
-  } else if (color.isExterior) {
-    badges.push(
-      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_EXTERIOR}" style="background: ${badgeBgColor}; color: ${badgeTextColor};">Exterior</span>`
+      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_EXTERIOR}" style="background: ${badgeBgColor}; color: ${badgeTextColor};">Exterior Only</span>`
     );
   }
 
