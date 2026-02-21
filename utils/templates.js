@@ -726,22 +726,24 @@ export function colorDetailModal(
         <!-- Priority 4: Actions (Sticky Footer) -->
         <div class="${CSS_CLASSES.MODAL_ACTIONS}">
           <button type="button" 
-                  class="modal__action-button modal__action-button--favorite" 
+                  class="modal__action-button modal__action-button--secondary modal__action-button--favorite" 
                   ${DATA_ATTRIBUTES.ID}="${color.id}"
                   aria-label="${
                     isFavorited ? "Remove from" : "Add to"
-                  } favorites">
+                  } favorites"
+                  data-tooltip="${isFavorited ? "Favorited" : "Favorite"}">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="${
               isFavorited ? "currentColor" : "none"
             }" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               ${ICONS.HEART}
             </svg>
-            <span>${isFavorited ? "Favorited" : "Add to Favorites"}</span>
+            <span class="modal__action-label">${isFavorited ? "Favorited" : "Add to Favorites"}</span>
           </button>
           <button type="button" 
-                  class="modal__action-button modal__action-button--share"
+                  class="modal__action-button modal__action-button--secondary modal__action-button--share"
                   ${DATA_ATTRIBUTES.ID}="${color.id}"
-                  aria-label="Share color">
+                  aria-label="Share color"
+                  data-tooltip="Share">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="18" cy="5" r="3"></circle>
               <circle cx="6" cy="12" r="3"></circle>
@@ -749,37 +751,40 @@ export function colorDetailModal(
               <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
               <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
             </svg>
-            <span>Share</span>
+            <span class="modal__action-label">Share</span>
           </button>
           <button type="button" 
-                  class="modal__action-button modal__action-button--copy"
+                  class="modal__action-button modal__action-button--secondary modal__action-button--copy"
                   ${DATA_ATTRIBUTES.ID}="${color.id}"
-                  aria-label="Copy color code">
+                  aria-label="Copy color code"
+                  data-tooltip="Copy Code">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               ${ICONS.COPY}
             </svg>
-            <span>Copy Code</span>
+            <span class="modal__action-label">Copy Code</span>
           </button>
           <button type="button" 
-                  class="modal__action-button modal__action-button--hide" 
+                  class="modal__action-button modal__action-button--secondary modal__action-button--hide" 
                   ${DATA_ATTRIBUTES.ID}="${color.id}"
-                  aria-label="${isHidden ? "Show" : "Hide"} color">
+                  aria-label="${isHidden ? "Show" : "Hide"} color"
+                  data-tooltip="${isHidden ? "Show" : "Hide"}">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               ${isHidden ? ICONS.EYE : ICONS.EYE_OFF}
             </svg>
-            <span>${isHidden ? "Hidden" : "Hide Color"}</span>
+            <span class="modal__action-label">${isHidden ? "Hidden" : "Hide Color"}</span>
           </button>
           ${
             color.storeStripLocator
               ? `
           <button type="button" 
-                  class="modal__action-button modal__action-button--store"
-                  aria-label="Find ${color.name} in store">
+                  class="modal__action-button modal__action-button--secondary modal__action-button--store"
+                  aria-label="Find ${color.name} in store"
+                  data-tooltip="Store: ${color.storeStripLocator}">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
               <circle cx="12" cy="10" r="3"></circle>
             </svg>
-            <span>Store: ${color.storeStripLocator}</span>
+            <span class="modal__action-label">Store: ${color.storeStripLocator}</span>
           </button>
           `
               : ""
