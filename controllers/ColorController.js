@@ -192,6 +192,7 @@ export class ColorController {
     this.setupEventListeners();
     this.setupHeaderButtons();
     this.setupModalListeners();
+    this.setupLrvFilter();
     this.render();
     this.checkSharedColor();
     console.log("✅ ColorController initialized");
@@ -213,6 +214,87 @@ export class ColorController {
 
       this.openModal(colorId);
     }
+  }
+
+  /**
+   * Setup LRV range slider filter
+   */
+  setupLrvFilter() {
+    const minSlider = document.getElementById(ELEMENT_IDS.LRV_SLIDER_MIN);
+    const maxSlider = document.getElementById(ELEMENT_IDS.LRV_SLIDER_MAX);
+    const minValue = document.getElementById(ELEMENT_IDS.LRV_VALUE_MIN);
+    const maxValue = document.getElementById(ELEMENT_IDS.LRV_VALUE_MAX);
+    const rangeFill = document.getElementById("lrv-range-fill");
+    const resetBtn = document.getElementById(ELEMENT_IDS.LRV_RESET);
+
+    if (!minSlider || !maxSlider) return;
+
+    // Initialize from state
+    const { min, max } = this.state.getLrvRange();
+    minSlider.value = min;
+    maxSlider.value = max;
+
+    const updateSliderUI = () => {
+      const minVal = Number(minSlider.value);
+      const maxVal = Number(maxSlider.value);
+
+      // Update displayed values
+      minValue.textContent = minVal;
+      maxValue.textContent = maxVal;
+
+      // Update aria values
+      minSlider.setAttribute("aria-valuenow", minVal);
+      maxSlider.setAttribute("aria-valuenow", maxVal);
+
+      // Update range fill position
+      rangeFill.style.left = `${minVal}%`;
+      rangeFill.style.right = `${100 - maxVal}%`;
+
+      // Show/hide reset button
+      const isActive = minVal > 0 || maxVal < 100;
+      resetBtn.hidden = !isActive;
+    };
+
+    // Debounce render to avoid excessive re-renders during drag
+    let renderTimeout = null;
+    const debouncedRender = () => {
+      if (renderTimeout) clearTimeout(renderTimeout);
+      renderTimeout = setTimeout(() => {
+        const minVal = Number(minSlider.value);
+        const maxVal = Number(maxSlider.value);
+        this.state.setLrvRange(minVal, maxVal);
+        this.render();
+      }, 80);
+    };
+
+    // Prevent min from crossing max and vice versa
+    minSlider.addEventListener("input", () => {
+      if (Number(minSlider.value) > Number(maxSlider.value)) {
+        minSlider.value = maxSlider.value;
+      }
+      updateSliderUI();
+      debouncedRender();
+    });
+
+    maxSlider.addEventListener("input", () => {
+      if (Number(maxSlider.value) < Number(minSlider.value)) {
+        maxSlider.value = minSlider.value;
+      }
+      updateSliderUI();
+      debouncedRender();
+    });
+
+    // Reset button
+    resetBtn.addEventListener("click", () => {
+      minSlider.value = 0;
+      maxSlider.value = 100;
+      updateSliderUI();
+      this.state.setLrvRange(0, 100);
+      this.render();
+    });
+
+    // Set initial UI state
+    updateSliderUI();
   }
 
   /**
@@ -558,11 +640,24 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
   render() {
     const favorites = this.state.getFavorites();
     const hidden = this.state.getHidden();
+    const lrvRange = this.state.getLrvRange();
 
     // Get color data from model
     const favoriteColors = this.model.getFavoriteColors(favorites);
     const hiddenColors = this.model.getHiddenColors(hidden);
-    const visibleColors = this.model.getVisibleColors(hidden, favorites);
+    const visibleColors = this.model.getVisibleColors(hidden, favorites, lrvRange);
+
+    // Update LRV count display
+    const countEl = document.getElementById(ELEMENT_IDS.LRV_COUNT);
+    if (countEl) {
+      if (this.state.isLrvFilterActive()) {
+        const totalActive = this.model.getActiveColorCount();
+        const visibleCount = visibleColors.length + favoriteColors.length;
+        countEl.textContent = `Showing ${visibleCount} of ${totalActive} colors`;
+      } else {
+        countEl.textContent = "";
+      }
+    }
 
     // Group and sort
     const colorFamilies = this.model.groupByFamily(visibleColors);

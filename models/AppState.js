@@ -18,6 +18,8 @@ export class AppState {
     console.log("=== APPSTATE.JS CONSTRUCTOR ===");
     this.favorites = new Set();
     this.hidden = new Set();
+    this.lrvMin = 0;
+    this.lrvMax = 100;
     this.colorModel = colorModel;
     this.loadFromURL();
     console.log("✅ AppState constructed and loaded from URL");
@@ -189,6 +191,12 @@ export class AppState {
 
     this.favorites = new Set(expandedFavoriteIds);
     this.hidden = new Set(expandedHiddenIds);
+
+    // Load LRV filter range
+    const lrvMinParam = params.get(URL_PARAMS.LRV_MIN);
+    const lrvMaxParam = params.get(URL_PARAMS.LRV_MAX);
+    this.lrvMin = lrvMinParam !== null ? Number(lrvMinParam) : 0;
+    this.lrvMax = lrvMaxParam !== null ? Number(lrvMaxParam) : 100;
   }
 
   /**
@@ -219,6 +227,19 @@ export class AppState {
       params.set(URL_PARAMS.HIDDEN, compressedHidden);
     } else {
       params.delete(URL_PARAMS.HIDDEN);
+    }
+
+    // LRV filter range (only persist non-default values)
+    if (this.lrvMin > 0) {
+      params.set(URL_PARAMS.LRV_MIN, this.lrvMin.toString());
+    } else {
+      params.delete(URL_PARAMS.LRV_MIN);
+    }
+
+    if (this.lrvMax < 100) {
+      params.set(URL_PARAMS.LRV_MAX, this.lrvMax.toString());
+    } else {
+      params.delete(URL_PARAMS.LRV_MAX);
     }
 
     const newUrl = `${globalThis.location.pathname}?${params.toString()}`;
@@ -328,6 +349,33 @@ export class AppState {
   clearHidden() {
     this.hidden.clear();
     this.syncToURL();
+  }
+
+  /**
+   * Get LRV filter range
+   * @returns {{min: number, max: number}} The current LRV filter range
+   */
+  getLrvRange() {
+    return { min: this.lrvMin, max: this.lrvMax };
+  }
+
+  /**
+   * Set LRV filter range
+   * @param {number} min - Minimum LRV value (0-100)
+   * @param {number} max - Maximum LRV value (0-100)
+   */
+  setLrvRange(min, max) {
+    this.lrvMin = Math.max(0, Math.min(100, min));
+    this.lrvMax = Math.max(0, Math.min(100, max));
+    this.syncToURL();
+  }
+
+  /**
+   * Check if LRV filter is active (non-default range)
+   * @returns {boolean} True if filter is not at default 0-100
+   */
+  isLrvFilterActive() {
+    return this.lrvMin > 0 || this.lrvMax < 100;
   }
 
   /**

@@ -27,6 +27,14 @@ export class ColorModel {
   }
 
   /**
+   * Get total count of active colors
+   * @returns {number} Total number of active colors
+   */
+  getActiveColorCount() {
+    return this.getActiveColors().length;
+  }
+
+  /**
    * Get favorite colors from a list of IDs
    * @param {string[]} favoriteIds - Array of favorite color IDs
    * @returns {Array} Array of favorite color objects
@@ -50,13 +58,19 @@ export class ColorModel {
    * Get visible colors (excluding hidden and favorited colors)
    * @param {string[]} hiddenIds - Array of hidden color IDs
    * @param {string[]} favoriteIds - Array of favorite color IDs
+   * @param {{min: number, max: number}} [lrvRange] - Optional LRV filter range
    * @returns {Array} Array of visible color objects
    */
-  getVisibleColors(hiddenIds, favoriteIds = []) {
+  getVisibleColors(hiddenIds, favoriteIds = [], lrvRange) {
     const activeColors = this.getActiveColors();
-    return activeColors.filter(
-      (c) => !hiddenIds.includes(c.id) && !favoriteIds.includes(c.id)
-    );
+    return activeColors.filter((c) => {
+      if (hiddenIds.includes(c.id) || favoriteIds.includes(c.id)) return false;
+      if (lrvRange && (lrvRange.min > 0 || lrvRange.max < 100)) {
+        const lrv = c.lrv ?? 0;
+        if (lrv < lrvRange.min || lrv > lrvRange.max) return false;
+      }
+      return true;
+    });
   }
 
   /**

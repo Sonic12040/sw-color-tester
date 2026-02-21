@@ -545,6 +545,232 @@
   outline-offset: 2px;
 }
 
+/* =============================================
+   LRV Filter - Dual Range Slider
+   ============================================= */
+.lrv-filter {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-4) var(--spacing-4) 0;
+}
+
+.lrv-filter__content {
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-4) var(--spacing-6);
+}
+
+.lrv-filter__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-3);
+  flex-wrap: wrap;
+}
+
+.lrv-filter__title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin: 0;
+  line-height: var(--line-height-tight);
+}
+
+.lrv-filter__count {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-tight);
+}
+
+.lrv-filter__reset {
+  margin-left: auto;
+  background: none;
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--button-border-radius);
+  padding: var(--spacing-1) var(--spacing-3);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: var(--button-transition);
+  min-height: 32px;
+  white-space: nowrap;
+}
+
+.lrv-filter__reset:hover {
+  background: var(--color-surface-hover);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-secondary);
+}
+
+.lrv-filter__reset:focus {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+.lrv-filter__slider-group {
+  position: relative;
+}
+
+/* LRV zone labels */
+.lrv-filter__zones {
+  display: flex;
+  margin-bottom: var(--spacing-1);
+}
+
+.lrv-filter__zone {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}
+
+.lrv-filter__zone--dark {
+  width: 30%;
+  text-align: left;
+}
+
+.lrv-filter__zone--medium {
+  width: 30%;
+  text-align: center;
+}
+
+.lrv-filter__zone--light {
+  width: 40%;
+  text-align: right;
+}
+
+/* Track container - positions both inputs over the same track */
+.lrv-filter__track-container {
+  position: relative;
+  height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+/* Visual track behind the range inputs */
+.lrv-filter__track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: var(--neutral-200);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+/* Active range fill between the two thumbs */
+.lrv-filter__range {
+  position: absolute;
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: 4px;
+  transition: left 0.05s ease, right 0.05s ease;
+}
+
+/* Range inputs - overlaid on the same track */
+.lrv-filter__input {
+  position: absolute;
+  width: 100%;
+  height: 44px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  pointer-events: none;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+}
+
+/* Min slider stays below max when at same position */
+.lrv-filter__input--min {
+  z-index: 2;
+}
+
+.lrv-filter__input--max {
+  z-index: 3;
+}
+
+/* Webkit thumb */
+.lrv-filter__input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: 3px solid var(--color-surface-primary);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.lrv-filter__input::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: var(--shadow-md);
+}
+
+.lrv-filter__input:focus::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+/* Firefox thumb */
+.lrv-filter__input::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: 3px solid var(--color-surface-primary);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.lrv-filter__input::-moz-range-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: var(--shadow-md);
+}
+
+.lrv-filter__input:focus::-moz-range-thumb {
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+/* Firefox track - make transparent */
+.lrv-filter__input::-moz-range-track {
+  background: transparent;
+  border: none;
+  height: 8px;
+}
+
+/* Remove default focus outline (we use thumb outline instead) */
+.lrv-filter__input:focus {
+  outline: none;
+}
+
+/* Min/max value labels */
+.lrv-filter__values {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--spacing-1);
+}
+
+.lrv-filter__value {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  min-width: 28px;
+  line-height: var(--line-height-tight);
+}
+
+.lrv-filter__value:last-child {
+  text-align: right;
+}
+
 /* Accordion Styles */
 .accordion {
   max-width: 1200px;
@@ -1175,6 +1401,15 @@
   /* Mobile-specific button spacing improvements */
   .color-tile__actions {
     gap: var(--spacing-3); /* Increase from 8px to 12px to prevent accidental taps */
+  }
+
+  /* LRV filter mobile adjustments */
+  .lrv-filter__content {
+    padding: var(--spacing-3) var(--spacing-4);
+  }
+
+  .lrv-filter__header {
+    gap: var(--spacing-2);
   }
 }
 

@@ -114,6 +114,12 @@ export const ELEMENT_IDS = {
   EXPORT_FAVORITES_BTN: "export-favorites-btn",
   CLEAR_FAVORITES_BTN: "clear-favorites-btn",
   CLEAR_HIDDEN_BTN: "clear-hidden-btn",
+  LRV_SLIDER_MIN: "lrv-slider-min",
+  LRV_SLIDER_MAX: "lrv-slider-max",
+  LRV_VALUE_MIN: "lrv-value-min",
+  LRV_VALUE_MAX: "lrv-value-max",
+  LRV_COUNT: "lrv-count",
+  LRV_RESET: "lrv-reset",
 };
 
 // Data attributes
@@ -131,6 +137,8 @@ export const URL_PARAMS = {
   HIDDEN: "hidden",
   SCROLL: "scroll",
   COLOR: "color",
+  LRV_MIN: "lrvMin",
+  LRV_MAX: "lrvMax",
 };
 
 // Common family names (for sorting priority)
