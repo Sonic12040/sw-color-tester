@@ -332,7 +332,7 @@ export function colorTemplate(color, options = {}) {
   }" 
                 ${DATA_ATTRIBUTES.ID}="${color.id}"
                 style="--btn-bg: ${buttonBgColor}; --btn-hover-bg: ${buttonHoverBg}; --btn-text-color: ${buttonTextColor};">
-          See Color Details & Pairings
+          View Details
         </button>
       </div>
     </div>
