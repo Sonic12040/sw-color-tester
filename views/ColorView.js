@@ -191,10 +191,15 @@ export class ColorView {
   ) {
     let accordionHTML = "";
 
-    // 1. Favorites section (open by default)
+    // 1. Favorites section (open only if there are favorites)
     const favoritesTitle =
       favoriteCount > 0 ? `Favorites (${favoriteCount})` : "Favorites";
-    accordionHTML += createAccordionItem("favorites", favoritesTitle, "", true);
+    accordionHTML += createAccordionItem(
+      "favorites",
+      favoritesTitle,
+      "",
+      favoriteCount > 0,
+    );
 
     // 2. Hidden section
     const hiddenTitle =
