@@ -22,15 +22,21 @@ import {
   getTilesContainerId,
 } from "../utils/config.js";
 
+/** @private Performance helpers — safe no-ops if Performance API unavailable */
+function _perfMark(name) {
+  try { performance.mark(name); } catch {}
+}
+function _perfMeasure(name, startMark) {
+  try { performance.measure(name, startMark); } catch {}
+}
+
 export class ColorView {
   constructor(containerId) {
-    console.log("=== COLORVIEW.JS CONSTRUCTOR ===");
     this.container = document.getElementById(containerId);
     this.categoryIdToName = {};
     this.categoryNameToId = {};
     this.favoriteIds = [];
     this.hiddenIds = [];
-    console.log("✅ ColorView constructed");
   }
 
   /**
@@ -38,11 +44,7 @@ export class ColorView {
    * @param {Object} renderData - All data needed for rendering
    */
   render(renderData) {
-    console.log("--- ColorView.render() ---");
-    // Performance instrumentation (best-effort; safe in older browsers)
-    try {
-      performance.mark("view:render:start");
-    } catch {}
+    _perfMark("view:render:start");
     const {
       favoriteColors,
       hiddenColors,
@@ -62,9 +64,7 @@ export class ColorView {
     const expandedSections = this._saveAccordionState();
 
     // Build and insert accordion HTML
-    try {
-      performance.mark("view:build-accordion:start");
-    } catch {}
+    _perfMark("view:build-accordion:start");
     const accordionHTML = this.buildAccordionHTML(
       favoriteColors.length,
       hiddenColors.length,
@@ -74,87 +74,35 @@ export class ColorView {
       colorCategories
     );
     this.container.innerHTML = accordionHTML;
-    try {
-      performance.measure("view:build-accordion", "view:build-accordion:start");
-    } catch {}
+    _perfMeasure("view:build-accordion", "view:build-accordion:start");
 
     // Populate all sections
-    try {
-      performance.mark("view:favorites:start");
-    } catch {}
+    _perfMark("view:favorites:start");
     this.renderFavoritesSection(favoriteColors);
-    try {
-      performance.measure("view:favorites", "view:favorites:start");
-    } catch {}
+    _perfMeasure("view:favorites", "view:favorites:start");
 
-    try {
-      performance.mark("view:hidden:start");
-    } catch {}
+    _perfMark("view:hidden:start");
     this.renderHiddenSection(hiddenColors, hiddenFamilies, hiddenCategories);
-    try {
-      performance.measure("view:hidden", "view:hidden:start");
-    } catch {}
+    _perfMeasure("view:hidden", "view:hidden:start");
 
-    try {
-      performance.mark("view:sections:start");
-    } catch {}
+    _perfMark("view:sections:start");
     this.renderColorSections(
       sortedFamilies,
       colorFamilies,
       sortedCategories,
       colorCategories
     );
-    try {
-      performance.measure("view:sections", "view:sections:start");
-    } catch {}
+    _perfMeasure("view:sections", "view:sections:start");
 
     // Setup accordion interaction
-    try {
-      performance.mark("view:setup:start");
-    } catch {}
+    _perfMark("view:setup:start");
     this.setupAccordionBehavior();
-    try {
-      performance.measure("view:setup", "view:setup:start");
-    } catch {}
+    _perfMeasure("view:setup", "view:setup:start");
 
     // Restore accordion state after rebuilding
     this._restoreAccordionState(expandedSections);
 
-    // Finalize perf summary
-    try {
-      performance.measure("view:render", "view:render:start");
-      const getD = (name) => {
-        const e = performance.getEntriesByName(name);
-        let last;
-        if (typeof e.at === "function") {
-          last = e.at(-1);
-        } else {
-          last = e.length ? e[e.length - 1] : undefined;
-        }
-        return last ? Number(last.duration).toFixed(1) : "0.0";
-      };
-      console.log("[perf] view render (ms)", {
-        total: getD("view:render"),
-        build: getD("view:build-accordion"),
-        favorites: getD("view:favorites"),
-        hidden: getD("view:hidden"),
-        sections: getD("view:sections"),
-        setup: getD("view:setup"),
-      });
-      performance.clearMarks("view:render:start");
-      performance.clearMarks("view:build-accordion:start");
-      performance.clearMarks("view:favorites:start");
-      performance.clearMarks("view:hidden:start");
-      performance.clearMarks("view:sections:start");
-      performance.clearMarks("view:setup:start");
-      performance.clearMeasures("view:render");
-      performance.clearMeasures("view:build-accordion");
-      performance.clearMeasures("view:favorites");
-      performance.clearMeasures("view:hidden");
-      performance.clearMeasures("view:sections");
-      performance.clearMeasures("view:setup");
-    } catch {}
-    console.log("✅ ColorView render complete");
+    _perfMeasure("view:render", "view:render:start");
   }
 
   /**

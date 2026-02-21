@@ -34,11 +34,9 @@ import {
 
 export class ColorController {
   constructor(model, state, view) {
-    console.log("=== COLORCONTROLLER.JS CONSTRUCTOR ===");
     this.model = model;
     this.state = state;
     this.view = view;
-    console.log("✅ ColorController constructed");
   }
 
   /**
@@ -140,8 +138,8 @@ export class ColorController {
     document.body.insertAdjacentHTML("beforeend", toastHTML);
 
     const toast = document.getElementById(toastId);
-    const actionBtn = toast.querySelector(".toast__action");
-    const closeBtn = toast.querySelector(".toast__close");
+    const actionBtn = toast.querySelector(`.${CSS_CLASSES.TOAST_ACTION}`);
+    const closeBtn = toast.querySelector(`.${CSS_CLASSES.TOAST_CLOSE}`);
 
     let timeoutId = null;
     let isDismissed = false;
@@ -162,7 +160,7 @@ export class ColorController {
         clearTimeout(timeoutId);
       }
 
-      toast.classList.add("toast--hiding");
+      toast.classList.add(CSS_CLASSES.TOAST_HIDING);
       setTimeout(() => {
         toast.remove();
       }, 300); // Match animation duration
@@ -189,14 +187,12 @@ export class ColorController {
    * Initialize the application
    */
   init() {
-    console.log("--- ColorController.init() ---");
     this.setupEventListeners();
     this.setupHeaderButtons();
     this.setupModalListeners();
     this.setupLrvFilter();
     this.render();
     this.checkSharedColor();
-    console.log("✅ ColorController initialized");
   }
 
   /**
@@ -302,7 +298,6 @@ export class ColorController {
    * Setup modal event listeners (close button, overlay click, escape key)
    */
   setupModalListeners() {
-    console.log("--- Setting up modal listeners ---");
     // Close modal when clicking overlay
     document.addEventListener("click", (e) => {
       if (e.target.classList.contains(CSS_CLASSES.MODAL_OVERLAY)) {
@@ -323,7 +318,6 @@ export class ColorController {
         this.closeModal();
       }
     });
-    console.log("✅ Modal listeners set up");
   }
 
   /**
@@ -435,12 +429,12 @@ export class ColorController {
 
         // Set up action button handlers
         const favoriteButton = modal.querySelector(
-          ".modal__action-button--favorite"
+          `.${CSS_CLASSES.MODAL_ACTION_BUTTON_FAVORITE}`
         );
-        const shareButton = modal.querySelector(".modal__action-button--share");
-        const copyButton = modal.querySelector(".modal__action-button--copy");
-        const hideButton = modal.querySelector(".modal__action-button--hide");
-        const storeButton = modal.querySelector(".modal__action-button--store");
+        const shareButton = modal.querySelector(`.${CSS_CLASSES.MODAL_ACTION_BUTTON_SHARE}`);
+        const copyButton = modal.querySelector(`.${CSS_CLASSES.MODAL_ACTION_BUTTON_COPY}`);
+        const hideButton = modal.querySelector(`.${CSS_CLASSES.MODAL_ACTION_BUTTON_HIDE}`);
+        const storeButton = modal.querySelector(`.${CSS_CLASSES.MODAL_ACTION_BUTTON_STORE}`);
 
         if (favoriteButton) {
           favoriteButton.addEventListener("click", () => {
@@ -511,7 +505,7 @@ export class ColorController {
 
         // Set up clickable mini tiles (coordinating & similar colors)
         const clickableTiles = modal.querySelectorAll(
-          ".modal__mini-tile--clickable"
+          `.${CSS_CLASSES.MODAL_MINI_TILE_CLICKABLE}`
         );
         clickableTiles.forEach((tile) => {
           const handleClick = () => {
@@ -557,7 +551,7 @@ export class ColorController {
         await navigator.clipboard.writeText(shareData.url);
         // Provide visual feedback
         const shareButton = document.querySelector(
-          ".modal__action-button--share span"
+          `.${CSS_CLASSES.MODAL_ACTION_BUTTON_SHARE} span`
         );
         if (shareButton) {
           const originalText = shareButton.textContent;
@@ -588,7 +582,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       await navigator.clipboard.writeText(colorCode);
       // Provide visual feedback
       const copyButton = document.querySelector(
-        ".modal__action-button--copy span"
+        `.${CSS_CLASSES.MODAL_ACTION_BUTTON_COPY} span`
       );
       if (copyButton) {
         const originalText = copyButton.textContent;
@@ -754,7 +748,6 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
    * Uses strategy pattern with handler registry for extensibility
    */
   setupEventListeners() {
-    console.log("--- Setting up event listeners ---");
     const accordion = document.getElementById(ELEMENT_IDS.COLOR_ACCORDION);
 
     if (!accordion) {
@@ -791,14 +784,12 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
         return; // Handler found and executed, stop searching
       }
     });
-    console.log("✅ Delegated event listener set up for accordion");
   }
 
   /**
    * Setup header button event listeners
    */
   setupHeaderButtons() {
-    console.log("--- Setting up header buttons ---");
     const exportFavBtn = document.getElementById(
       ELEMENT_IDS.EXPORT_FAVORITES_BTN
     );
@@ -825,7 +816,6 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
         this.handleClearHidden();
       });
     }
-    console.log("✅ Header buttons set up");
   }
 
   // --- EVENT HANDLERS (Delegate to Commands) ---

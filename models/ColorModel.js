@@ -11,11 +11,9 @@ import { FAMILY_ORDER } from "../utils/config.js";
 
 export class ColorModel {
   constructor(colorData) {
-    console.log("=== COLORMODEL.JS CONSTRUCTOR ===");
     this.colorData = colorData;
-    console.log(
-      `✅ ColorModel constructed with ${this.colorData.length} colors.`
-    );
+    /** @private Cached active colors (immutable at runtime) */
+    this._activeColors = colorData.filter((c) => !c.archived && !c.ignore);
   }
 
   /**
@@ -23,7 +21,7 @@ export class ColorModel {
    * @returns {Array} Array of active colors
    */
   getActiveColors() {
-    return this.colorData.filter((c) => !c.archived && !c.ignore);
+    return this._activeColors;
   }
 
   /**

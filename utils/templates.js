@@ -3,6 +3,19 @@
 
 import { CSS_CLASSES, DATA_ATTRIBUTES, ELEMENT_IDS, ICONS, LRV_THRESHOLDS } from "./config.js";
 
+// Coordinating color roles (assign contextual labels)
+const COORDINATING_ROLES = ["Accent Wall", "Trim Color", "Coordinating"];
+
+// Similar color differentiators
+const SIMILAR_DIFFERENTIATORS = [
+  "Warmer",
+  "Cooler",
+  "Lighter",
+  "Darker",
+  "Similar Tone",
+  "Alternative",
+];
+
 /**
  * Color utility functions for templates
  */
@@ -437,19 +450,6 @@ export function colorDetailModal(
     : "rgba(0, 0, 0, 0.85)";
   const closeBtnTextColor = color.isDark ? "rgba(0, 0, 0, 0.9)" : "white";
 
-  // Coordinating color roles (assign contextual labels)
-  const coordinatingRoles = ["Accent Wall", "Trim Color", "Coordinating"];
-
-  // Similar color differentiators
-  const similarDifferentiators = [
-    "Warmer",
-    "Cooler",
-    "Lighter",
-    "Darker",
-    "Similar Tone",
-    "Alternative",
-  ];
-
   // Build coordinating colors section
   const coordColors = [
     coordinatingColors.coord1,
@@ -469,11 +469,11 @@ export function colorDetailModal(
           ${coordColors
             .map((c, index) => {
               // Assign contextual roles to coordinating colors
-              const role = coordinatingRoles[index] || "Coordinating";
+              const role = COORDINATING_ROLES[index] || "Coordinating";
               return `
             <div class="${
               CSS_CLASSES.MODAL_MINI_TILE
-            } modal__mini-tile--clickable" 
+            } ${CSS_CLASSES.MODAL_MINI_TILE_CLICKABLE}" 
                  ${DATA_ATTRIBUTES.ID}="${c.id}"
                  style="background: ${generateHSLColor(
                    c.hue,
@@ -523,14 +523,14 @@ export function colorDetailModal(
                 differentiator = "Lighter";
               } else if (c.lightness < color.lightness - 0.05) {
                 differentiator = "Darker";
-              } else if (index < similarDifferentiators.length) {
-                differentiator = similarDifferentiators[index];
+              } else if (index < SIMILAR_DIFFERENTIATORS.length) {
+                differentiator = SIMILAR_DIFFERENTIATORS[index];
               }
 
               return `
             <div class="${
               CSS_CLASSES.MODAL_MINI_TILE
-            } modal__mini-tile--clickable" 
+            } ${CSS_CLASSES.MODAL_MINI_TILE_CLICKABLE}" 
                  ${DATA_ATTRIBUTES.ID}="${c.id}"
                  style="background: ${generateHSLColor(
                    c.hue,
@@ -724,7 +724,7 @@ export function colorDetailModal(
         <!-- Priority 4: Actions (Sticky Footer) -->
         <div class="${CSS_CLASSES.MODAL_ACTIONS}">
           <button type="button" 
-                  class="modal__action-button modal__action-button--secondary modal__action-button--favorite" 
+                  class="${CSS_CLASSES.MODAL_ACTION_BUTTON} ${CSS_CLASSES.MODAL_ACTION_BUTTON_SECONDARY} ${CSS_CLASSES.MODAL_ACTION_BUTTON_FAVORITE}" 
                   ${DATA_ATTRIBUTES.ID}="${color.id}"
                   aria-label="${
                     isFavorited ? "Remove from" : "Add to"
@@ -735,10 +735,10 @@ export function colorDetailModal(
             }" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               ${ICONS.HEART}
             </svg>
-            <span class="modal__action-label">${isFavorited ? "Favorited" : "Add to Favorites"}</span>
+            <span class="${CSS_CLASSES.MODAL_ACTION_LABEL}">${isFavorited ? "Favorited" : "Add to Favorites"}</span>
           </button>
           <button type="button" 
-                  class="modal__action-button modal__action-button--secondary modal__action-button--share"
+                  class="${CSS_CLASSES.MODAL_ACTION_BUTTON} ${CSS_CLASSES.MODAL_ACTION_BUTTON_SECONDARY} ${CSS_CLASSES.MODAL_ACTION_BUTTON_SHARE}"
                   ${DATA_ATTRIBUTES.ID}="${color.id}"
                   aria-label="Share color"
                   data-tooltip="Share">
@@ -749,40 +749,40 @@ export function colorDetailModal(
               <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
               <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
             </svg>
-            <span class="modal__action-label">Share</span>
+            <span class="${CSS_CLASSES.MODAL_ACTION_LABEL}">Share</span>
           </button>
           <button type="button" 
-                  class="modal__action-button modal__action-button--secondary modal__action-button--copy"
+                  class="${CSS_CLASSES.MODAL_ACTION_BUTTON} ${CSS_CLASSES.MODAL_ACTION_BUTTON_SECONDARY} ${CSS_CLASSES.MODAL_ACTION_BUTTON_COPY}"
                   ${DATA_ATTRIBUTES.ID}="${color.id}"
                   aria-label="Copy color code"
                   data-tooltip="Copy Code">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               ${ICONS.COPY}
             </svg>
-            <span class="modal__action-label">Copy Code</span>
+            <span class="${CSS_CLASSES.MODAL_ACTION_LABEL}">Copy Code</span>
           </button>
           <button type="button" 
-                  class="modal__action-button modal__action-button--secondary modal__action-button--hide" 
+                  class="${CSS_CLASSES.MODAL_ACTION_BUTTON} ${CSS_CLASSES.MODAL_ACTION_BUTTON_SECONDARY} ${CSS_CLASSES.MODAL_ACTION_BUTTON_HIDE}" 
                   ${DATA_ATTRIBUTES.ID}="${color.id}"
                   aria-label="${isHidden ? "Show" : "Hide"} color"
                   data-tooltip="${isHidden ? "Show" : "Hide"}">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               ${isHidden ? ICONS.EYE : ICONS.EYE_OFF}
             </svg>
-            <span class="modal__action-label">${isHidden ? "Hidden" : "Hide Color"}</span>
+            <span class="${CSS_CLASSES.MODAL_ACTION_LABEL}">${isHidden ? "Hidden" : "Hide Color"}</span>
           </button>
           ${
             color.storeStripLocator
               ? `
           <button type="button" 
-                  class="modal__action-button modal__action-button--secondary modal__action-button--store"
+                  class="${CSS_CLASSES.MODAL_ACTION_BUTTON} ${CSS_CLASSES.MODAL_ACTION_BUTTON_SECONDARY} ${CSS_CLASSES.MODAL_ACTION_BUTTON_STORE}"
                   aria-label="Find ${color.name} in store"
                   data-tooltip="Store: ${color.storeStripLocator}">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
               <circle cx="12" cy="10" r="3"></circle>
             </svg>
-            <span class="modal__action-label">Store: ${color.storeStripLocator}</span>
+            <span class="${CSS_CLASSES.MODAL_ACTION_LABEL}">Store: ${color.storeStripLocator}</span>
           </button>
           `
               : ""
@@ -842,13 +842,13 @@ export function confirmationModal({
  */
 export function toastNotification({ message, actionText = "Undo", id }) {
   return `
-    <div class="toast" id="${id}" role="status" aria-live="polite" aria-atomic="true">
-      <div class="toast__content">
-        <p class="toast__message">${message}</p>
-        <button type="button" class="toast__action" aria-label="${actionText}">
+    <div class="${CSS_CLASSES.TOAST}" id="${id}" role="status" aria-live="polite" aria-atomic="true">
+      <div class="${CSS_CLASSES.TOAST_CONTENT}">
+        <p class="${CSS_CLASSES.TOAST_MESSAGE}">${message}</p>
+        <button type="button" class="${CSS_CLASSES.TOAST_ACTION}" aria-label="${actionText}">
           ${actionText}
         </button>
-        <button type="button" class="toast__close" aria-label="Dismiss">
+        <button type="button" class="${CSS_CLASSES.TOAST_CLOSE}" aria-label="Dismiss">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>

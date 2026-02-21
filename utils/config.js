@@ -93,6 +93,23 @@ export const CSS_CLASSES = {
   MODAL_ACCORDION_ICON: "modal__accordion-icon",
   MODAL_ACCORDION_PANEL: "modal__accordion-panel",
   MODAL_ACTIONS: "modal__actions",
+  MODAL_ACTION_BUTTON: "modal__action-button",
+  MODAL_ACTION_BUTTON_SECONDARY: "modal__action-button--secondary",
+  MODAL_ACTION_BUTTON_FAVORITE: "modal__action-button--favorite",
+  MODAL_ACTION_BUTTON_SHARE: "modal__action-button--share",
+  MODAL_ACTION_BUTTON_COPY: "modal__action-button--copy",
+  MODAL_ACTION_BUTTON_HIDE: "modal__action-button--hide",
+  MODAL_ACTION_BUTTON_STORE: "modal__action-button--store",
+  MODAL_ACTION_LABEL: "modal__action-label",
+  MODAL_MINI_TILE_CLICKABLE: "modal__mini-tile--clickable",
+
+  // Toast
+  TOAST: "toast",
+  TOAST_CONTENT: "toast__content",
+  TOAST_MESSAGE: "toast__message",
+  TOAST_ACTION: "toast__action",
+  TOAST_CLOSE: "toast__close",
+  TOAST_HIDING: "toast--hiding",
 };
 
 // Element IDs

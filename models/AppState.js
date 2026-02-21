@@ -15,14 +15,12 @@ import { compressIds, decompressIds } from "../utils/numeric-encoding.js";
 
 export class AppState {
   constructor(colorModel = null) {
-    console.log("=== APPSTATE.JS CONSTRUCTOR ===");
     this.favorites = new Set();
     this.hidden = new Set();
     this.lrvMin = 0;
     this.lrvMax = 100;
     this.colorModel = colorModel;
     this.loadFromURL();
-    console.log("✅ AppState constructed and loaded from URL");
   }
 
   /**
