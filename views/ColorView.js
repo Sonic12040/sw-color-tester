@@ -39,8 +39,13 @@ export class ColorView {
     this.container = document.getElementById(containerId);
     this.categoryIdToName = {};
     this.categoryNameToId = {};
-    this.favoriteIds = [];
-    this.hiddenIds = [];
+    /** @type {Set<string>} */
+    this.favoriteIds = new Set();
+    /** @type {Set<string>} */
+    this.hiddenIds = new Set();
+
+    // Setup accordion delegation once — survives innerHTML rebuilds
+    this._setupAccordionDelegation();
   }
 
   /**
@@ -60,9 +65,9 @@ export class ColorView {
       hiddenCategories,
     } = renderData;
 
-    // Store IDs for template rendering
-    this.favoriteIds = favoriteColors.map((c) => c.id);
-    this.hiddenIds = hiddenColors.map((c) => c.id);
+    // Store Sets for template rendering (avoid recreating from color arrays)
+    this.favoriteIds = renderData.favoriteSet || new Set();
+    this.hiddenIds = renderData.hiddenSet || new Set();
 
     // Save accordion state before rebuilding
     const expandedSections = this._saveAccordionState();
@@ -97,11 +102,6 @@ export class ColorView {
       colorCategories,
     );
     _perfMeasure("view:sections", "view:sections:start");
-
-    // Setup accordion interaction
-    _perfMark("view:setup:start");
-    this.setupAccordionBehavior();
-    _perfMeasure("view:setup", "view:setup:start");
 
     // Restore accordion state after rebuilding
     this._restoreAccordionState(expandedSections);
@@ -387,46 +387,53 @@ export class ColorView {
   }
 
   /**
-   * Setup accordion behavior with keyboard navigation
+   * Setup accordion behavior via event delegation (called once in constructor).
+   * Handles click and keyboard navigation on accordion headers.
+   * @private
    */
-  setupAccordionBehavior() {
-    const headers = document.querySelectorAll(
-      `.${CSS_CLASSES.ACCORDION_HEADER}`,
-    );
-    const headersArray = [...headers];
-
-    for (const [index, header] of headersArray.entries()) {
-      header.addEventListener("click", () => {
+  _setupAccordionDelegation() {
+    // Click delegation
+    this.container.addEventListener("click", (e) => {
+      const header = e.target.closest(`.${CSS_CLASSES.ACCORDION_HEADER}`);
+      if (header) {
         this.toggleAccordionItem(header);
-      });
+      }
+    });
 
-      // Keyboard support
-      header.addEventListener("keydown", (e) => {
-        switch (e.key) {
-          case "Enter":
-          case " ":
-            e.preventDefault();
-            this.toggleAccordionItem(header);
-            break;
-          case "ArrowDown":
-            e.preventDefault();
-            this.focusNextHeader(headersArray, index);
-            break;
-          case "ArrowUp":
-            e.preventDefault();
-            this.focusPreviousHeader(headersArray, index);
-            break;
-          case "Home":
-            e.preventDefault();
-            headersArray[0].focus();
-            break;
-          case "End":
-            e.preventDefault();
-            headersArray.at(-1).focus();
-            break;
-        }
-      });
-    }
+    // Keyboard delegation
+    this.container.addEventListener("keydown", (e) => {
+      const header = e.target.closest(`.${CSS_CLASSES.ACCORDION_HEADER}`);
+      if (!header) return;
+
+      const allHeaders = [
+        ...this.container.querySelectorAll(`.${CSS_CLASSES.ACCORDION_HEADER}`),
+      ];
+      const index = allHeaders.indexOf(header);
+
+      switch (e.key) {
+        case "Enter":
+        case " ":
+          e.preventDefault();
+          this.toggleAccordionItem(header);
+          break;
+        case "ArrowDown":
+          e.preventDefault();
+          allHeaders[(index + 1) % allHeaders.length].focus();
+          break;
+        case "ArrowUp":
+          e.preventDefault();
+          allHeaders[index === 0 ? allHeaders.length - 1 : index - 1].focus();
+          break;
+        case "Home":
+          e.preventDefault();
+          allHeaders[0].focus();
+          break;
+        case "End":
+          e.preventDefault();
+          allHeaders.at(-1).focus();
+          break;
+      }
+    });
   }
 
   /**
@@ -462,22 +469,5 @@ export class ColorView {
       content.setAttribute("aria-hidden", "false");
       content.removeAttribute("inert");
     }
-  }
-
-  /**
-   * Focus next accordion header (keyboard navigation)
-   */
-  focusNextHeader(headers, currentIndex) {
-    const nextIndex = (currentIndex + 1) % headers.length;
-    headers[nextIndex].focus();
-  }
-
-  /**
-   * Focus previous accordion header (keyboard navigation)
-   */
-  focusPreviousHeader(headers, currentIndex) {
-    const prevIndex =
-      currentIndex === 0 ? headers.length - 1 : currentIndex - 1;
-    headers[prevIndex].focus();
   }
 }

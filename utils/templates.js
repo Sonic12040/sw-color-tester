@@ -204,20 +204,20 @@ export function createAccordionItem(
  * @param {Object} options - Options for which buttons to show
  * @param {boolean} options.showFavoriteButton - Whether to show the favorite button (default: true)
  * @param {boolean} options.showHideButton - Whether to show the hide button (default: true)
- * @param {string[]} options.favoriteIds - Array of favorite color IDs (default: [])
- * @param {string[]} options.hiddenIds - Array of hidden color IDs (default: [])
+ * @param {Set<string>} options.favoriteIds - Set of favorite color IDs (default: empty Set)
+ * @param {Set<string>} options.hiddenIds - Set of hidden color IDs (default: empty Set)
  * @returns {string} HTML string for the color tile
  */
 export function colorTemplate(color, options = {}) {
   const {
     showFavoriteButton = true,
     showHideButton = true,
-    favoriteIds = [],
-    hiddenIds = [],
+    favoriteIds = new Set(),
+    hiddenIds = new Set(),
   } = options;
 
-  const isFavorited = favoriteIds.includes(color.id);
-  const isHidden = hiddenIds.includes(color.id);
+  const isFavorited = favoriteIds.has(color.id);
+  const isHidden = hiddenIds.has(color.id);
   const textColor = generateAccessibleText(color);
 
   // Badge colors based on isDark - switch background/foreground for contrast

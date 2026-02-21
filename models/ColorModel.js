@@ -14,6 +14,17 @@ export class ColorModel {
     this.colorData = colorData;
     /** @private Cached active colors (immutable at runtime) */
     this._activeColors = colorData.filter((c) => !c.archived && !c.ignore);
+    /** @private O(1) color lookup by ID */
+    this._colorById = new Map(this._activeColors.map((c) => [c.id, c]));
+  }
+
+  /**
+   * Get a single color by ID in O(1)
+   * @param {string} id - Color ID
+   * @returns {Object|undefined} The color object, or undefined if not found
+   */
+  getColorById(id) {
+    return this._colorById.get(id);
   }
 
   /**
@@ -33,36 +44,36 @@ export class ColorModel {
   }
 
   /**
-   * Get favorite colors from a list of IDs
-   * @param {string[]} favoriteIds - Array of favorite color IDs
+   * Get favorite colors from a Set of IDs
+   * @param {Set<string>} favoriteSet - Set of favorite color IDs
    * @returns {Array} Array of favorite color objects
    */
-  getFavoriteColors(favoriteIds) {
+  getFavoriteColors(favoriteSet) {
     const activeColors = this.getActiveColors();
-    return activeColors.filter((c) => favoriteIds.includes(c.id));
+    return activeColors.filter((c) => favoriteSet.has(c.id));
   }
 
   /**
-   * Get hidden colors from a list of IDs
-   * @param {string[]} hiddenIds - Array of hidden color IDs
+   * Get hidden colors from a Set of IDs
+   * @param {Set<string>} hiddenSet - Set of hidden color IDs
    * @returns {Array} Array of hidden color objects
    */
-  getHiddenColors(hiddenIds) {
+  getHiddenColors(hiddenSet) {
     const activeColors = this.getActiveColors();
-    return activeColors.filter((c) => hiddenIds.includes(c.id));
+    return activeColors.filter((c) => hiddenSet.has(c.id));
   }
 
   /**
    * Get visible colors (excluding hidden and favorited colors)
-   * @param {string[]} hiddenIds - Array of hidden color IDs
-   * @param {string[]} favoriteIds - Array of favorite color IDs
+   * @param {Set<string>} hiddenSet - Set of hidden color IDs
+   * @param {Set<string>} favoriteSet - Set of favorite color IDs
    * @param {{min: number, max: number}} [lrvRange] - Optional LRV filter range
    * @returns {Array} Array of visible color objects
    */
-  getVisibleColors(hiddenIds, favoriteIds = [], lrvRange) {
+  getVisibleColors(hiddenSet, favoriteSet = new Set(), lrvRange) {
     const activeColors = this.getActiveColors();
     return activeColors.filter((c) => {
-      if (hiddenIds.includes(c.id) || favoriteIds.includes(c.id)) return false;
+      if (hiddenSet.has(c.id) || favoriteSet.has(c.id)) return false;
       if (lrvRange && (lrvRange.min > 0 || lrvRange.max < 100)) {
         const lrv = c.lrv ?? 0;
         if (lrv < lrvRange.min || lrv > lrvRange.max) return false;
@@ -195,7 +206,7 @@ export class ColorModel {
    * @param {string[]} favoriteIds - Array of favorite color IDs
    * @returns {Array<{name: string, count: number}>} Array of hidden groups with their color counts
    */
-  getHiddenGroups(groupType, hiddenIds, favoriteIds = []) {
+  getHiddenGroups(groupType, hiddenSet, favoriteSet = new Set()) {
     const allGroups = {};
     const propertyName =
       groupType === "family" ? "colorFamilyNames" : "brandedCollectionNames";
@@ -203,7 +214,7 @@ export class ColorModel {
     // Get all groups and their colors (excluding favorited colors)
     for (const color of this.getActiveColors()) {
       // Skip favorited colors - they shouldn't be counted
-      if (favoriteIds.includes(color.id)) continue;
+      if (favoriteSet.has(color.id)) continue;
 
       const groupNames = color[propertyName];
       if (!groupNames || groupNames.length === 0) continue;
@@ -225,7 +236,7 @@ export class ColorModel {
       const groupColors = allGroups[groupName];
       const allHidden =
         groupColors.length > 0 &&
-        groupColors.every((color) => hiddenIds.includes(color.id));
+        groupColors.every((color) => hiddenSet.has(color.id));
 
       if (allHidden) {
         hiddenGroups.push({
@@ -240,37 +251,39 @@ export class ColorModel {
 
   /**
    * Find all color families where ALL colors are hidden
-   * @param {string[]} hiddenIds - Array of hidden color IDs
-   * @param {string[]} favoriteIds - Array of favorite color IDs
+   * @param {Set<string>} hiddenSet - Set of hidden color IDs
+   * @param {Set<string>} favoriteSet - Set of favorite color IDs
    * @returns {Array<{name: string, count: number}>} Array of hidden families
    */
-  getHiddenFamilies(hiddenIds, favoriteIds = []) {
-    return this.getHiddenGroups("family", hiddenIds, favoriteIds);
+  getHiddenFamilies(hiddenSet, favoriteSet = new Set()) {
+    return this.getHiddenGroups("family", hiddenSet, favoriteSet);
   }
 
   /**
    * Find all color categories where ALL colors are hidden
-   * @param {string[]} hiddenIds - Array of hidden color IDs
-   * @param {string[]} favoriteIds - Array of favorite color IDs
+   * @param {Set<string>} hiddenSet - Set of hidden color IDs
+   * @param {Set<string>} favoriteSet - Set of favorite color IDs
    * @returns {Array<{name: string, count: number}>} Array of hidden categories
    */
-  getHiddenCategories(hiddenIds, favoriteIds = []) {
-    return this.getHiddenGroups("category", hiddenIds, favoriteIds);
+  getHiddenCategories(hiddenSet, favoriteSet = new Set()) {
+    return this.getHiddenGroups("category", hiddenSet, favoriteSet);
   }
 
   /**
    * Get all color IDs for a specific family
    * @param {string} familyName - Name of the family
-   * @param {string[]} favoriteIds - Array of favorite color IDs to exclude
+   * @param {string[]|Set<string>} excludeIds - IDs to exclude (array or Set)
    * @returns {string[]} Array of color IDs in the family
    */
-  getColorIdsForFamily(familyName, favoriteIds = []) {
+  getColorIdsForFamily(familyName, excludeIds = []) {
+    const excludeSet =
+      excludeIds instanceof Set ? excludeIds : new Set(excludeIds);
     const activeColors = this.getActiveColors();
     return activeColors
       .filter((color) => {
         const families = color.colorFamilyNames || [];
         const primaryFamily = families.length > 0 ? families[0] : null;
-        return primaryFamily === familyName && !favoriteIds.includes(color.id);
+        return primaryFamily === familyName && !excludeSet.has(color.id);
       })
       .map((color) => color.id);
   }
@@ -278,17 +291,17 @@ export class ColorModel {
   /**
    * Get all color IDs for a specific category
    * @param {string} categoryName - Name of the category
-   * @param {string[]} favoriteIds - Array of favorite color IDs to exclude
+   * @param {string[]|Set<string>} excludeIds - IDs to exclude (array or Set)
    * @returns {string[]} Array of color IDs in the category
    */
-  getColorIdsForCategory(categoryName, favoriteIds = []) {
+  getColorIdsForCategory(categoryName, excludeIds = []) {
+    const excludeSet =
+      excludeIds instanceof Set ? excludeIds : new Set(excludeIds);
     const activeColors = this.getActiveColors();
     return activeColors
       .filter((color) => {
         const categories = color.brandedCollectionNames || [];
-        return (
-          categories.includes(categoryName) && !favoriteIds.includes(color.id)
-        );
+        return categories.includes(categoryName) && !excludeSet.has(color.id);
       })
       .map((color) => color.id);
   }

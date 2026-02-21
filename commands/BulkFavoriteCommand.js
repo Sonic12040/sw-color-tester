@@ -17,11 +17,11 @@ export class BulkFavoriteCommand extends ColorCommand {
       this.groupId,
       () => this.groupName,
     );
-    const favorites = this.state.getFavorites();
+    const favoriteSet = this.state.getFavoriteSet();
 
     // Check if all colors are already favorited
     const allFavorited = groupColors.every((color) =>
-      favorites.includes(color.id),
+      favoriteSet.has(color.id),
     );
     const colorIds = groupColors.map((color) => color.id);
 

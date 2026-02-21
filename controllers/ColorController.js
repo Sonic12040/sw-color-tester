@@ -330,39 +330,38 @@ export class ColorController {
       globalThis.scrollY || document.documentElement.scrollTop;
     this.state.setScrollPosition(scrollPosition);
 
-    const allColors = this.model.getActiveColors();
-    const color = allColors.find((c) => c.id === colorId);
+    const color = this.model.getColorById(colorId);
 
     if (!color) {
       console.error("Color not found:", colorId);
       return;
     }
 
-    // Get coordinating colors
+    // Get coordinating colors via O(1) Map lookups
     const coordinatingColors = {};
     if (color.coordinatingColors) {
       if (color.coordinatingColors.coord1ColorId) {
-        coordinatingColors.coord1 = allColors.find(
-          (c) => c.id === color.coordinatingColors.coord1ColorId,
+        coordinatingColors.coord1 = this.model.getColorById(
+          color.coordinatingColors.coord1ColorId,
         );
       }
       if (color.coordinatingColors.coord2ColorId) {
-        coordinatingColors.coord2 = allColors.find(
-          (c) => c.id === color.coordinatingColors.coord2ColorId,
+        coordinatingColors.coord2 = this.model.getColorById(
+          color.coordinatingColors.coord2ColorId,
         );
       }
       if (color.coordinatingColors.whiteColorId) {
-        coordinatingColors.white = allColors.find(
-          (c) => c.id === color.coordinatingColors.whiteColorId,
+        coordinatingColors.white = this.model.getColorById(
+          color.coordinatingColors.whiteColorId,
         );
       }
     }
 
-    // Get similar colors
+    // Get similar colors via O(1) Map lookups
     const similarColors = [];
     if (color.similarColors && Array.isArray(color.similarColors)) {
       for (const similarId of color.similarColors) {
-        const similarColor = allColors.find((c) => c.id === similarId);
+        const similarColor = this.model.getColorById(similarId);
         if (similarColor) {
           similarColors.push(similarColor);
         }
@@ -377,11 +376,9 @@ export class ColorController {
       existingModal.remove();
     }
 
-    // Check if color is favorited or hidden
-    const favorites = this.state.getFavorites();
-    const isFavorited = favorites.includes(colorId);
-    const hidden = this.state.getHidden();
-    const isHidden = hidden.includes(colorId);
+    // Check if color is favorited or hidden via O(1) Set lookups
+    const isFavorited = this.state.getFavoriteSet().has(colorId);
+    const isHidden = this.state.getHiddenSet().has(colorId);
 
     // Create and insert modal
     const modalHTML = colorDetailModal(
@@ -450,9 +447,7 @@ export class ColorController {
           favoriteButton.addEventListener("click", () => {
             this.handleFavoriteButton(colorId);
             // Update button UI
-            const currentlyFavorited = this.state
-              .getFavorites()
-              .includes(colorId);
+            const currentlyFavorited = this.state.getFavoriteSet().has(colorId);
             const heartSvg = favoriteButton.querySelector("svg");
             const buttonText = favoriteButton.querySelector("span");
             if (heartSvg && buttonText) {
@@ -487,7 +482,7 @@ export class ColorController {
           hideButton.addEventListener("click", () => {
             this.handleHideButton(colorId);
             // Update button UI
-            const currentlyHidden = this.state.getHidden().includes(colorId);
+            const currentlyHidden = this.state.getHiddenSet().has(colorId);
             const eyeSvg = hideButton.querySelector("svg");
             const buttonText = hideButton.querySelector("span");
             if (eyeSvg && buttonText) {
@@ -643,16 +638,16 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
    * Main render orchestration
    */
   render() {
-    const favorites = this.state.getFavorites();
-    const hidden = this.state.getHidden();
+    const favoriteSet = this.state.getFavoriteSet();
+    const hiddenSet = this.state.getHiddenSet();
     const lrvRange = this.state.getLrvRange();
 
-    // Get color data from model
-    const favoriteColors = this.model.getFavoriteColors(favorites);
-    const hiddenColors = this.model.getHiddenColors(hidden);
+    // Get color data from model (pass Sets for O(1) lookups)
+    const favoriteColors = this.model.getFavoriteColors(favoriteSet);
+    const hiddenColors = this.model.getHiddenColors(hiddenSet);
     const visibleColors = this.model.getVisibleColors(
-      hidden,
-      favorites,
+      hiddenSet,
+      favoriteSet,
       lrvRange,
     );
 
@@ -680,10 +675,13 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     );
 
     // Get hidden groups (excluding favorited colors)
-    const hiddenFamilies = this.model.getHiddenFamilies(hidden, favorites);
-    const hiddenCategories = this.model.getHiddenCategories(hidden, favorites);
+    const hiddenFamilies = this.model.getHiddenFamilies(hiddenSet, favoriteSet);
+    const hiddenCategories = this.model.getHiddenCategories(
+      hiddenSet,
+      favoriteSet,
+    );
 
-    // Render via view
+    // Render via view (pass Sets for O(1) template lookups)
     this.view.render({
       favoriteColors,
       hiddenColors,
@@ -693,6 +691,8 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       sortedCategories,
       hiddenFamilies,
       hiddenCategories,
+      favoriteSet,
+      hiddenSet,
     });
   }
 
@@ -855,15 +855,15 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
    */
   async handleBulkFavoriteButton(groupId, groupName) {
     const groupColors = this.model.getColorsForId(groupId, () => groupName);
-    const favorites = this.state.getFavorites();
-    const hidden = this.state.getHidden();
+    const favoriteSet = this.state.getFavoriteSet();
+    const hiddenSet = this.state.getHiddenSet();
     const allFavorited = groupColors.every((color) =>
-      favorites.includes(color.id),
+      favoriteSet.has(color.id),
     );
 
     // Use visible count (excluding hidden & already-favorited) to match accordion header
     const visibleCount = groupColors.filter(
-      (c) => !hidden.includes(c.id) && !favorites.includes(c.id),
+      (c) => !hiddenSet.has(c.id) && !favoriteSet.has(c.id),
     ).length;
     const count = allFavorited ? groupColors.length : visibleCount;
 
@@ -912,13 +912,13 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
    */
   async handleBulkHideButton(groupId, groupName) {
     const groupColors = this.model.getColorsForId(groupId, () => groupName);
-    const hidden = this.state.getHidden();
-    const favorites = this.state.getFavorites();
-    const allHidden = groupColors.every((color) => hidden.includes(color.id));
+    const hiddenSet = this.state.getHiddenSet();
+    const favoriteSet = this.state.getFavoriteSet();
+    const allHidden = groupColors.every((color) => hiddenSet.has(color.id));
 
     // Use visible count (excluding hidden & favorited) to match accordion header
     const visibleCount = groupColors.filter(
-      (c) => !hidden.includes(c.id) && !favorites.includes(c.id),
+      (c) => !hiddenSet.has(c.id) && !favoriteSet.has(c.id),
     ).length;
     const count = allHidden ? groupColors.length : visibleCount;
 
@@ -985,7 +985,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
    * Handle clear all favorites button click
    */
   async handleClearFavorites() {
-    const count = this.state.getFavorites().length;
+    const count = this.state.getFavoriteSet().size;
 
     if (count === 0) {
       return; // Nothing to clear
@@ -1022,7 +1022,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
    * Handle clear all hidden button click
    */
   async handleClearHidden() {
-    const count = this.state.getHidden().length;
+    const count = this.state.getHiddenSet().size;
 
     if (count === 0) {
       return; // Nothing to clear

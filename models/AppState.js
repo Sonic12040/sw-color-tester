@@ -88,17 +88,20 @@ export class AppState {
     if (!this.colorModel || colorIds.length === 0) return colorIds;
 
     const consolidated = new Set(colorIds);
+    const colorIdSet = new Set(colorIds);
+    const exclusionSet =
+      exclusionIds instanceof Set ? exclusionIds : new Set(exclusionIds);
 
     // Check for fully selected families
     const selectedFamilies = this.colorModel.getHiddenFamilies(
-      colorIds,
-      exclusionIds,
+      colorIdSet,
+      exclusionSet,
     );
     for (const family of selectedFamilies) {
       // Remove individual color IDs for this family
       const familyColorIds = this.colorModel.getColorIdsForFamily(
         family.name,
-        exclusionIds,
+        exclusionSet,
       );
       for (const colorId of familyColorIds) {
         consolidated.delete(colorId);
@@ -109,14 +112,14 @@ export class AppState {
 
     // Check for fully selected categories
     const selectedCategories = this.colorModel.getHiddenCategories(
-      colorIds,
-      exclusionIds,
+      colorIdSet,
+      exclusionSet,
     );
     for (const category of selectedCategories) {
       // Remove individual color IDs for this category
       const categoryColorIds = this.colorModel.getColorIdsForCategory(
         category.name,
-        exclusionIds,
+        exclusionSet,
       );
       for (const colorId of categoryColorIds) {
         consolidated.delete(colorId);
@@ -253,11 +256,27 @@ export class AppState {
   }
 
   /**
+   * Get the internal favorites Set for O(1) lookups (read-only by convention)
+   * @returns {Set<string>} Set of favorite color IDs
+   */
+  getFavoriteSet() {
+    return this.favorites;
+  }
+
+  /**
    * Get array of hidden color IDs
    * @returns {string[]} Array of hidden color IDs
    */
   getHidden() {
     return Array.from(this.hidden);
+  }
+
+  /**
+   * Get the internal hidden Set for O(1) lookups (read-only by convention)
+   * @returns {Set<string>} Set of hidden color IDs
+   */
+  getHiddenSet() {
+    return this.hidden;
   }
 
   /**
