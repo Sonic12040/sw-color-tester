@@ -1243,83 +1243,6 @@
   font-size: var(--font-size-sm);
 }
 
-/* Secondary details - hidden by default, shown on hover/focus */
-.color-tile__details {
-  display: flex;
-  gap: var(--spacing-2);
-  margin-bottom: var(--spacing-1);
-  flex-wrap: wrap;
-  opacity: 0;
-  transform: translateY(-4px);
-  transition: opacity var(--transition-fast), transform var(--transition-fast);
-  pointer-events: none;
-}
-
-/* Show details on tile hover or focus-within */
-.color-tile:hover .color-tile__details,
-.color-tile:focus-within .color-tile__details {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-/* On touch devices, always show details (no hover capability) */
-@media (hover: none) and (pointer: coarse) {
-  .color-tile__details,
-  .color-tile__rgb {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-}
-
-.color-tile__hex {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  padding: var(--spacing-1) var(--spacing-2);
-  border-radius: var(--radius-sm);
-  backdrop-filter: var(--blur-sm);
-  white-space: nowrap;
-  line-height: var(--line-height-tight);
-  -webkit-font-smoothing: antialiased;
-  /* Background and color are set inline via style attribute based on isDark */
-}
-
-/* Legacy modifiers kept for hex values that don't use inline styles */
-.color-tile__lrv--dark,
-.color-tile__hex--dark {
-  background: rgba(0, 0, 0, 0.75);
-  color: var(--neutral-0);
-}
-
-.color-tile__lrv--light,
-.color-tile__hex--light {
-  background: rgba(255, 255, 255, 0.85);
-  color: var(--neutral-900);
-}
-
-/* RGB values - hidden by default, shown on hover/focus */
-.color-tile__rgb {
-  font-size: var(--font-size-xs);
-  font-family: 'Roboto Mono', monospace;
-  font-weight: var(--font-weight-medium);
-  margin-top: var(--spacing-1);
-  letter-spacing: 0.03em;
-  line-height: var(--line-height-tight);
-  opacity: 0;
-  transform: translateY(-4px);
-  transition: opacity var(--transition-fast), transform var(--transition-fast);
-  pointer-events: none;
-}
-
-/* Show RGB on tile hover or focus-within */
-.color-tile:hover .color-tile__rgb,
-.color-tile:focus-within .color-tile__rgb {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
 /* Mobile optimization */
 @media (max-width: 599px) {
   :root {
@@ -1361,14 +1284,6 @@
   .color-tile {
     min-width: 100%;
     max-width: 100%;
-  }
-  
-  /* On mobile, always show details since hover doesn't work well on touch */
-  .color-tile__details,
-  .color-tile__rgb {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
   }
   
   /* Maintain adequate touch targets on mobile while adjusting spacing */
@@ -1535,15 +1450,6 @@
   margin-bottom: var(--spacing-2);
   line-height: var(--line-height-tight);
   letter-spacing: 0.01em;
-  /* Color inherited from parent modal__header inline style */
-}
-
-.modal__description {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-normal);
-  opacity: var(--opacity-90);
-  margin-top: var(--spacing-2);
   /* Color inherited from parent modal__header inline style */
 }
 
@@ -1897,30 +1803,6 @@
   margin: 0;
 }
 
-.modal__best-for {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-1);
-  padding: var(--spacing-3);
-  background: var(--color-bg-primary);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--color-border-primary);
-}
-
-.modal__best-for .modal__label {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-bold);
-  text-transform: uppercase;
-  color: var(--color-text-tertiary);
-  letter-spacing: 0.05em;
-}
-
-.modal__best-for .modal__value {
-  font-size: var(--font-size-base);
-  color: var(--color-text-primary);
-  margin: 0;
-}
-
 /* Priority 2: Coordinating and Similar Colors */
 /* Coordinating colors - curated expert pairings with elevated prominence */
 .modal__section--coordinating .modal__color-grid {
@@ -2116,14 +1998,6 @@
 
 .modal__action-button--store svg {
   color: var(--color-success);
-}
-
-.modal__actions-hint {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-tertiary);
-  text-align: center;
-  margin: 0;
-  font-style: italic;
 }
 
 /* ============================================
@@ -2492,10 +2366,6 @@
     font-size: var(--font-size-md);
   }
   
-  .modal__description {
-    font-size: var(--font-size-sm);
-  }
-  
   .modal__body {
     padding: var(--spacing-4);
   }
@@ -2735,11 +2605,6 @@
 
   .modal__subtitle {
     font-size: var(--font-size-base);
-  }
-
-  .modal__description {
-    font-size: var(--font-size-xs);
-    margin-top: var(--spacing-1);
   }
 
   .modal__body {

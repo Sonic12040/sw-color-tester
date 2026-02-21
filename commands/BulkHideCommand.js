@@ -23,8 +23,7 @@ export class BulkHideCommand extends ColorCommand {
     const allHidden = groupColors.every((color) => hidden.includes(color.id));
     const colorIds = groupColors.map((color) => color.id);
 
-    // Store previous state for undo
-    this.previousHidden = [...hidden];
+    // Store state for undo
     this.wasHiding = !allHidden;
     this.colorIds = colorIds;
 

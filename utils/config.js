@@ -15,8 +15,6 @@ export const PREFIX = {
 export const CSS_CLASSES = {
   // Header
   HEADER: "header",
-  HEADER_ACTIONS: "header__actions",
-  HEADER_BUTTON: "header__button",
 
   // Accordion
   ACCORDION: "accordion",
@@ -41,14 +39,10 @@ export const CSS_CLASSES = {
   COLOR_TILE_LRV: "color-tile__lrv",
   COLOR_TILE_LRV_LABEL: "color-tile__lrv-label",
   COLOR_TILE_LRV_VALUE: "color-tile__lrv-value",
-  COLOR_TILE_DETAILS: "color-tile__details",
-  COLOR_TILE_HEX: "color-tile__hex",
-  COLOR_TILE_RGB: "color-tile__rgb",
   COLOR_TILE_BADGES: "color-tile__badges",
   COLOR_TILE_BADGE: "color-tile__badge",
   COLOR_TILE_BADGE_INTERIOR: "color-tile__badge--interior",
   COLOR_TILE_BADGE_EXTERIOR: "color-tile__badge--exterior",
-  COLOR_TILE_BADGE_BOTH: "color-tile__badge--both",
   COLOR_TILE_FAMILY: "color-tile--family",
   COLOR_TILE_CATEGORY: "color-tile--category",
   COLOR_TILE_COUNT: "color-tile__count",
@@ -72,7 +66,6 @@ export const CSS_CLASSES = {
   MODAL_HEADER_CONTENT: "modal-header__content",
   MODAL_TITLE: "modal__title",
   MODAL_SUBTITLE: "modal__subtitle",
-  MODAL_DESCRIPTION: "modal__description",
   MODAL_CLOSE: "modal__close",
   MODAL_BODY: "modal__body",
   MODAL_SECTION: "modal__section",
@@ -94,16 +87,12 @@ export const CSS_CLASSES = {
   MODAL_LRV_CONTEXT: "modal__lrv-context",
   MODAL_LRV_LABEL: "modal__lrv-label",
   MODAL_LRV_DESCRIPTION: "modal__lrv-description",
-  MODAL_BEST_FOR: "modal__best-for",
-  MODAL_LABEL: "modal__label",
-  MODAL_VALUE: "modal__value",
   MODAL_ACCORDION_TRIGGER: "modal__accordion-trigger",
   MODAL_ACCORDION_TITLE: "modal__accordion-title",
   MODAL_ACCORDION_HINT: "modal__accordion-hint",
   MODAL_ACCORDION_ICON: "modal__accordion-icon",
   MODAL_ACCORDION_PANEL: "modal__accordion-panel",
   MODAL_ACTIONS: "modal__actions",
-  MODAL_ACTIONS_HINT: "modal__actions-hint",
 };
 
 // Element IDs
@@ -120,6 +109,11 @@ export const ELEMENT_IDS = {
   LRV_VALUE_MAX: "lrv-value-max",
   LRV_COUNT: "lrv-count",
   LRV_RESET: "lrv-reset",
+  LRV_RANGE_FILL: "lrv-range-fill",
+  COLOR_DETAIL_MODAL: "color-detail-modal",
+  CONFIRM_OVERLAY: "confirm-overlay",
+  CONFIRM_CONFIRM: "confirm-confirm",
+  CONFIRM_CANCEL: "confirm-cancel",
 };
 
 // Data attributes
@@ -139,6 +133,12 @@ export const URL_PARAMS = {
   COLOR: "color",
   LRV_MIN: "lrvMin",
   LRV_MAX: "lrvMax",
+};
+
+// LRV (Light Reflectance Value) thresholds for dark/medium/light classification
+export const LRV_THRESHOLDS = {
+  DARK: 30,
+  LIGHT: 60,
 };
 
 // Common family names (for sorting priority)
@@ -176,36 +176,10 @@ export function createGroupId(name, type) {
 }
 
 /**
- * Helper function to convert a group ID back to a display name
- * @param {string} groupId - The group ID (e.g., 'family-red-purple')
- * @returns {string} Display name (e.g., 'Red Purple')
- */
-export function convertIdToName(groupId) {
-  // Remove prefix
-  const withoutPrefix = groupId.replace(/^(family|category)-/, "");
-
-  // Convert to title case
-  return withoutPrefix
-    .split("-")
-    .filter((word) => word.length > 0) // Remove empty strings from consecutive hyphens
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-}
-
-/**
  * Helper function to get tiles container ID for a section
  * @param {string} sectionId - The section ID
  * @returns {string} The tiles container ID
  */
 export function getTilesContainerId(sectionId) {
   return `${sectionId}-tiles`;
-}
-
-/**
- * Helper function to get content container ID for a section
- * @param {string} sectionId - The section ID
- * @returns {string} The content container ID
- */
-export function getContentContainerId(sectionId) {
-  return `${sectionId}-content`;
 }

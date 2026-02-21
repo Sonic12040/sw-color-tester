@@ -1,7 +1,7 @@
 // templates.js
 // HTML template functions for the color tester application
 
-import { CSS_CLASSES, DATA_ATTRIBUTES, ICONS } from "./config.js";
+import { CSS_CLASSES, DATA_ATTRIBUTES, ELEMENT_IDS, ICONS, LRV_THRESHOLDS } from "./config.js";
 
 /**
  * Color utility functions for templates
@@ -280,10 +280,10 @@ export function colorTemplate(color, options = {}) {
   const lrvValue = color.lrv ? color.lrv.toFixed(1) : "N/A";
   let lrvClass = "medium";
   let lrvLabel = "Medium";
-  if (color.lrv < 30) {
+  if (color.lrv < LRV_THRESHOLDS.DARK) {
     lrvClass = "dark";
     lrvLabel = "Dark";
-  } else if (color.lrv > 60) {
+  } else if (color.lrv > LRV_THRESHOLDS.LIGHT) {
     lrvClass = "light";
     lrvLabel = "Light";
   }
@@ -319,8 +319,6 @@ export function colorTemplate(color, options = {}) {
               CSS_CLASSES.COLOR_TILE_LRV_VALUE
             }">LRV ${lrvValue}</span>
           </span>
-        </div>
-        <div class="${CSS_CLASSES.COLOR_TILE_DETAILS}">
         </div>
         <button type="button"
                 aria-label="See color details and pairings for ${color.name}" 
@@ -589,10 +587,10 @@ export function colorDetailModal(
   let lrvContext = "";
 
   if (color.lrv !== undefined && color.lrv !== null) {
-    if (color.lrv < 30) {
+    if (color.lrv < LRV_THRESHOLDS.DARK) {
       lrvLabel = "Dark";
       lrvContext = `Reflects ${lrvValue}% of light. Absorbs most light, creating intimate, cozy spaces.`;
-    } else if (color.lrv > 60) {
+    } else if (color.lrv > LRV_THRESHOLDS.LIGHT) {
       lrvLabel = "Light";
       lrvContext = `Reflects ${lrvValue}% of light. Creates bright, airy, spacious feeling.`;
     } else {
@@ -604,7 +602,7 @@ export function colorDetailModal(
   return `
     <div class="${
       CSS_CLASSES.MODAL_OVERLAY
-    }" id="color-detail-modal" aria-modal="true" role="dialog" aria-labelledby="modal-title">
+    }" id="${ELEMENT_IDS.COLOR_DETAIL_MODAL}" aria-modal="true" role="dialog" aria-labelledby="modal-title">
       <div class="${CSS_CLASSES.MODAL_CONTAINER}">
         <div class="${
           CSS_CLASSES.MODAL_HEADER
@@ -813,7 +811,7 @@ export function confirmationModal({
   confirmClass = "btn-danger",
 }) {
   return `
-    <div class="confirm-overlay" id="confirm-overlay" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+    <div class="confirm-overlay" id="${ELEMENT_IDS.CONFIRM_OVERLAY}" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
       <div class="confirm-dialog">
         <div class="confirm-header">
           <h2 class="confirm-title" id="confirm-title">${title}</h2>
@@ -822,10 +820,10 @@ export function confirmationModal({
           <p class="confirm-message">${message}</p>
         </div>
         <div class="confirm-actions">
-          <button type="button" class="btn btn-secondary" id="confirm-cancel" aria-label="${cancelText}">
+          <button type="button" class="btn btn-secondary" id="${ELEMENT_IDS.CONFIRM_CANCEL}" aria-label="${cancelText}">
             ${cancelText}
           </button>
-          <button type="button" class="btn ${confirmClass}" id="confirm-confirm" aria-label="${confirmText}">
+          <button type="button" class="btn ${confirmClass}" id="${ELEMENT_IDS.CONFIRM_CONFIRM}" aria-label="${confirmText}">
             ${confirmText}
           </button>
         </div>
@@ -860,11 +858,3 @@ export function toastNotification({ message, actionText = "Undo", id }) {
     </div>
   `;
 }
-
-/**
- * Template utility functions that can be exported if needed separately
- */
-export const TemplateUtils = {
-  generateHSLColor,
-  generateAccessibleText,
-};

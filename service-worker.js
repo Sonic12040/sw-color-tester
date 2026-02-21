@@ -65,7 +65,6 @@ const STATIC_ASSETS = [
   // Utils
   `${BASE_PATH}/utils/config.js`,
   `${BASE_PATH}/utils/templates.js`,
-  `${BASE_PATH}/utils/url-parameter-utilities.js`,
   `${BASE_PATH}/utils/numeric-encoding.js`,
 
   // PWA

@@ -16,6 +16,7 @@ import {
   ICONS,
   URL_PARAMS,
 } from "../utils/config.js";
+import { APP_VERSION } from "../version.js";
 import {
   colorDetailModal,
   confirmationModal,
@@ -70,9 +71,9 @@ export class ColorController {
       // Insert into DOM
       document.body.insertAdjacentHTML("beforeend", modalHTML);
 
-      const overlay = document.getElementById("confirm-overlay");
-      const confirmBtn = document.getElementById("confirm-confirm");
-      const cancelBtn = document.getElementById("confirm-cancel");
+      const overlay = document.getElementById(ELEMENT_IDS.CONFIRM_OVERLAY);
+      const confirmBtn = document.getElementById(ELEMENT_IDS.CONFIRM_CONFIRM);
+      const cancelBtn = document.getElementById(ELEMENT_IDS.CONFIRM_CANCEL);
 
       // Focus confirm button for keyboard accessibility
       setTimeout(() => confirmBtn.focus(), 100);
@@ -224,7 +225,7 @@ export class ColorController {
     const maxSlider = document.getElementById(ELEMENT_IDS.LRV_SLIDER_MAX);
     const minValue = document.getElementById(ELEMENT_IDS.LRV_VALUE_MIN);
     const maxValue = document.getElementById(ELEMENT_IDS.LRV_VALUE_MAX);
-    const rangeFill = document.getElementById("lrv-range-fill");
+    const rangeFill = document.getElementById(ELEMENT_IDS.LRV_RANGE_FILL);
     const resetBtn = document.getElementById(ELEMENT_IDS.LRV_RESET);
 
     if (!minSlider || !maxSlider) return;
@@ -375,7 +376,7 @@ export class ColorController {
     }
 
     // Remove existing modal if present
-    const existingModal = document.getElementById("color-detail-modal");
+    const existingModal = document.getElementById(ELEMENT_IDS.COLOR_DETAIL_MODAL);
     if (existingModal) {
       existingModal.remove();
     }
@@ -398,7 +399,7 @@ export class ColorController {
 
     // Trigger animation
     requestAnimationFrame(() => {
-      const modal = document.getElementById("color-detail-modal");
+      const modal = document.getElementById(ELEMENT_IDS.COLOR_DETAIL_MODAL);
       if (modal) {
         modal.classList.add("active");
 
@@ -610,7 +611,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
    * Close the modal
    */
   closeModal() {
-    const modal = document.getElementById("color-detail-modal");
+    const modal = document.getElementById(ELEMENT_IDS.COLOR_DETAIL_MODAL);
     if (modal) {
       modal.classList.remove("active");
 
@@ -678,7 +679,6 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     this.view.render({
       favoriteColors,
       hiddenColors,
-      visibleColors,
       colorFamilies,
       sortedFamilies,
       colorCategories,
@@ -738,13 +738,13 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
         selector: `.${CSS_CLASSES.COLOR_TILE_FAMILY}`,
         getAttribute: DATA_ATTRIBUTES.FAMILY,
         excludeIfContains: `.${CSS_CLASSES.COLOR_TILE_UNHIDE_BUTTON}`,
-        handler: (familyName) => this.handleFamilyTileClick(familyName),
+        handler: (familyName) => this.handleUnhideButton(familyName, null),
       },
       {
         selector: `.${CSS_CLASSES.COLOR_TILE_CATEGORY}`,
         getAttribute: DATA_ATTRIBUTES.CATEGORY,
         excludeIfContains: `.${CSS_CLASSES.COLOR_TILE_UNHIDE_BUTTON}`,
-        handler: (categoryName) => this.handleCategoryTileClick(categoryName),
+        handler: (categoryName) => this.handleUnhideButton(null, categoryName),
       },
     ];
   }
@@ -966,32 +966,6 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
   }
 
   /**
-   * Handle family tile click (unhide entire family)
-   */
-  handleFamilyTileClick(familyName) {
-    const command = new UnhideGroupCommand(
-      this.model,
-      this.state,
-      "family",
-      familyName
-    );
-    this._executeCommand(command);
-  }
-
-  /**
-   * Handle category tile click (unhide entire category)
-   */
-  handleCategoryTileClick(categoryName) {
-    const command = new UnhideGroupCommand(
-      this.model,
-      this.state,
-      "category",
-      categoryName
-    );
-    this._executeCommand(command);
-  }
-
-  /**
    * Handle clear all favorites button click
    */
   async handleClearFavorites() {
@@ -1089,7 +1063,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     // Create export data
     const exportData = {
       exportDate: new Date().toISOString(),
-      appVersion: "1.0.0",
+      appVersion: APP_VERSION,
       count: favoriteColors.length,
       colors: favoriteColors.map((color) => ({
         id: color.id,

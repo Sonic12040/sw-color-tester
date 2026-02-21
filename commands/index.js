@@ -3,7 +3,6 @@
  * Simplifies imports and provides a central point for command access
  */
 
-export { ColorCommand } from "./ColorCommand.js";
 export { ToggleFavoriteCommand } from "./ToggleFavoriteCommand.js";
 export { ToggleHiddenCommand } from "./ToggleHiddenCommand.js";
 export { BulkFavoriteCommand } from "./BulkFavoriteCommand.js";

@@ -25,8 +25,7 @@ export class BulkFavoriteCommand extends ColorCommand {
     );
     const colorIds = groupColors.map((color) => color.id);
 
-    // Store previous state for undo
-    this.previousFavorites = [...favorites];
+    // Store state for undo
     this.wasAdding = !allFavorited;
     this.colorIds = colorIds;
 

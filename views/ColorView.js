@@ -523,20 +523,4 @@ export class ColorView {
       currentIndex === 0 ? headers.length - 1 : currentIndex - 1;
     headers[prevIndex].focus();
   }
-
-  /**
-   * Get DOM element by ID
-   */
-  getElement(id) {
-    return document.getElementById(id);
-  }
-
-  /**
-   * Clear the view
-   */
-  clear() {
-    if (this.container) {
-      this.container.innerHTML = "";
-    }
-  }
 }
