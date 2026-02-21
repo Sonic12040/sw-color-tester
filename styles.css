@@ -1053,7 +1053,7 @@
 
 /* Hover effect - lift and enhance shadow to indicate interactivity */
 .color-tile:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
 
