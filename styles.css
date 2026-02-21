@@ -668,6 +668,8 @@
   height: 100%;
   background: var(--color-primary);
   border-radius: 4px;
+  left: 0%;
+  right: 0%;
   transition: left 0.05s ease, right 0.05s ease;
 }
 
@@ -706,6 +708,7 @@
   box-shadow: var(--shadow-sm);
   cursor: pointer;
   pointer-events: auto;
+  margin-top: -8px; /* Center thumb on track: -(thumbHeight - trackHeight) / 2 */
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
@@ -715,7 +718,15 @@
 }
 
 .lrv-filter__input:focus::-webkit-slider-thumb {
-  box-shadow: 0 0 0 3px var(--color-primary-light);
+  box-shadow: 0 0 0 3px var(--blue-200);
+}
+
+/* Webkit track - transparent to show custom track behind */
+.lrv-filter__input::-webkit-slider-runnable-track {
+  height: 8px;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
 }
 
 /* Firefox thumb */
@@ -737,7 +748,7 @@
 }
 
 .lrv-filter__input:focus::-moz-range-thumb {
-  box-shadow: 0 0 0 3px var(--color-primary-light);
+  box-shadow: 0 0 0 3px var(--blue-200);
 }
 
 /* Firefox track - make transparent */
