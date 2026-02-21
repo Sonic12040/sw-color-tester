@@ -23,6 +23,9 @@ async function loadVersion() {
   }
 }
 
+// Load version eagerly on every SW startup (survives kill/restart)
+const versionReady = loadVersion();
+
 // Auto-detect base path for GitHub Pages vs local development
 const isGitHubPages = globalThis.location.hostname.includes("github.io");
 const BASE_PATH = isGitHubPages ? "/sw-color-tester" : "";
@@ -97,7 +100,7 @@ self.addEventListener("install", (event) => {
   console.log("[SW] Installing service worker version", APP_VERSION);
 
   event.waitUntil(
-    loadVersion().then(() => {
+    versionReady.then(() => {
       console.log("[SW] Using version:", APP_VERSION);
       return caches
         .open(CACHE_NAME)
@@ -152,14 +155,16 @@ self.addEventListener("activate", (event) => {
   console.log("[SW] Activating service worker version", APP_VERSION);
 
   event.waitUntil(
-    caches
-      .keys()
+    versionReady
+      .then(() => caches.keys())
       .then((cacheNames) => {
         // Delete old caches
         return Promise.all(
           cacheNames
             .filter(
-              (name) => name.startsWith("sw-colors-") && name !== CACHE_NAME,
+              (name) =>
+                name.startsWith("sw-color-tester-cache-v") &&
+                name !== CACHE_NAME,
             )
             .map((name) => {
               console.log("[SW] Deleting old cache:", name);
@@ -280,6 +285,7 @@ function cleanupFileVersions() {
  * 4. Notify clients if content changed
  */
 async function staleWhileRevalidate(request) {
+  await versionReady;
   const cache = await caches.open(CACHE_NAME);
   const cachedResponse = await cache.match(request);
 
@@ -304,7 +310,10 @@ async function staleWhileRevalidate(request) {
       }
 
       if (networkResponse.ok) {
-        // Check if content actually changed
+        // Always update cache with fresh network response
+        await cache.put(request, networkResponse.clone());
+
+        // Check if content actually changed to notify clients
         const hasChanged = await hasFileChanged(
           request.url,
           networkResponse.clone(),
@@ -312,9 +321,6 @@ async function staleWhileRevalidate(request) {
 
         if (hasChanged) {
           console.log("[SW] File updated:", request.url);
-
-          // Update cache
-          await cache.put(request, networkResponse.clone());
 
           // Notify all clients about the update
           notifyClients({
@@ -351,6 +357,7 @@ async function staleWhileRevalidate(request) {
  * Good for static assets that rarely change
  */
 async function cacheFirst(request) {
+  await versionReady;
   const cache = await caches.open(CACHE_NAME);
   const cachedResponse = await cache.match(request);
 
@@ -377,6 +384,7 @@ async function cacheFirst(request) {
  * Good for dynamic content
  */
 async function networkFirst(request) {
+  await versionReady;
   try {
     const networkResponse = await fetch(request);
     if (networkResponse.ok) {
