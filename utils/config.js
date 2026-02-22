@@ -128,6 +128,8 @@ export const ELEMENT_IDS = {
   LRV_COUNT: "lrv-count",
   LRV_RESET: "lrv-reset",
   LRV_RANGE_FILL: "lrv-range-fill",
+  TOOLBAR_TOGGLE: "toolbar-toggle",
+  TOOLBAR_PANEL: "toolbar-panel",
   COLOR_DETAIL_MODAL: "color-detail-modal",
   CONFIRM_OVERLAY: "confirm-overlay",
   CONFIRM_CONFIRM: "confirm-confirm",

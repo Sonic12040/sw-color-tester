@@ -436,6 +436,7 @@ export class ColorController {
    * Initialize the application
    */
   init() {
+    this.setupToolbar();
     this.setupEventListeners();
     this.setupHeaderButtons();
     this.setupModalListeners();
@@ -460,6 +461,22 @@ export class ColorController {
 
       this.openModal(colorId);
     }
+  }
+
+  /**
+   * Setup toolbar toggle button to show/hide the toolbar panel
+   */
+  setupToolbar() {
+    const toggle = document.getElementById(ELEMENT_IDS.TOOLBAR_TOGGLE);
+    const panel = document.getElementById(ELEMENT_IDS.TOOLBAR_PANEL);
+
+    if (!toggle || !panel) return;
+
+    toggle.addEventListener("click", () => {
+      const isExpanded = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", !isExpanded);
+      panel.hidden = isExpanded;
+    });
   }
 
   /**

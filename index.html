@@ -58,74 +58,96 @@
   </head>
   <body>
     <header class="header">
-      <h1>Sherwin-Williams Color Explorer</h1>
-      <div class="header__actions">
-        <button id="export-favorites-btn" class="header__button">
-          Export Favorites
+      <div class="header__top">
+        <h1>Sherwin-Williams Color Explorer</h1>
+        <button
+          type="button"
+          id="toolbar-toggle"
+          class="toolbar__toggle"
+          aria-expanded="false"
+          aria-controls="toolbar-panel"
+          aria-label="Toggle menu"
+        >
+          <span class="hamburger" aria-hidden="true">
+            <span class="hamburger__line"></span>
+            <span class="hamburger__line"></span>
+            <span class="hamburger__line"></span>
+          </span>
         </button>
-        <button id="clear-favorites-btn" class="header__button">
-          Clear All Favorites
-        </button>
-        <button id="clear-hidden-btn" class="header__button">
-          Clear All Hidden Colors
-        </button>
+      </div>
+      <div id="toolbar-panel" class="toolbar__panel" hidden>
+        <div class="toolbar__content">
+          <div
+            class="toolbar__section toolbar__section--lrv"
+            aria-label="Light Reflectance Value filter"
+          >
+            <div class="lrv-filter__header">
+              <h2 class="lrv-filter__title">LRV Filter</h2>
+              <span class="lrv-filter__range-label" aria-live="polite">
+                <span class="lrv-filter__value" id="lrv-value-min">0</span>
+                <span class="lrv-filter__separator" aria-hidden="true">–</span>
+                <span class="lrv-filter__value" id="lrv-value-max">100</span>
+              </span>
+              <span class="lrv-filter__count" id="lrv-count"
+                >Showing 0000 of 0000 colors</span
+              >
+              <button
+                type="button"
+                class="lrv-filter__reset"
+                id="lrv-reset"
+                aria-label="Reset LRV filter"
+              >
+                Reset
+              </button>
+            </div>
+            <div class="lrv-filter__track-container">
+              <div class="lrv-filter__track">
+                <div class="lrv-filter__range" id="lrv-range-fill"></div>
+              </div>
+              <input
+                type="range"
+                id="lrv-slider-min"
+                class="lrv-filter__input lrv-filter__input--min"
+                min="0"
+                max="100"
+                value="0"
+                step="1"
+                aria-label="Minimum LRV value"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="0"
+              />
+              <input
+                type="range"
+                id="lrv-slider-max"
+                class="lrv-filter__input lrv-filter__input--max"
+                min="0"
+                max="100"
+                value="100"
+                step="1"
+                aria-label="Maximum LRV value"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="100"
+              />
+            </div>
+          </div>
+          <div class="toolbar__section toolbar__section--actions">
+            <div class="toolbar__actions">
+              <button id="export-favorites-btn" class="header__button">
+                Export Favorites
+              </button>
+              <button id="clear-favorites-btn" class="header__button">
+                Clear All Favorites
+              </button>
+              <button id="clear-hidden-btn" class="header__button">
+                Clear All Hidden Colors
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </header>
-
-    <section class="lrv-filter" aria-label="Light Reflectance Value filter">
-      <div class="lrv-filter__content">
-        <div class="lrv-filter__header">
-          <h2 class="lrv-filter__title">LRV</h2>
-          <span class="lrv-filter__range-label" aria-live="polite">
-            <span class="lrv-filter__value" id="lrv-value-min">0</span>
-            <span class="lrv-filter__separator" aria-hidden="true">–</span>
-            <span class="lrv-filter__value" id="lrv-value-max">100</span>
-          </span>
-          <span class="lrv-filter__count" id="lrv-count"
-            >Showing 0000 of 0000 colors</span
-          >
-          <button
-            type="button"
-            class="lrv-filter__reset"
-            id="lrv-reset"
-            aria-label="Reset LRV filter"
-          >
-            Reset
-          </button>
-        </div>
-        <div class="lrv-filter__track-container">
-          <div class="lrv-filter__track">
-            <div class="lrv-filter__range" id="lrv-range-fill"></div>
-          </div>
-          <input
-            type="range"
-            id="lrv-slider-min"
-            class="lrv-filter__input lrv-filter__input--min"
-            min="0"
-            max="100"
-            value="0"
-            step="1"
-            aria-label="Minimum LRV value"
-            aria-valuemin="0"
-            aria-valuemax="100"
-            aria-valuenow="0"
-          />
-          <input
-            type="range"
-            id="lrv-slider-max"
-            class="lrv-filter__input lrv-filter__input--max"
-            min="0"
-            max="100"
-            value="100"
-            step="1"
-            aria-label="Maximum LRV value"
-            aria-valuemin="0"
-            aria-valuemax="100"
-            aria-valuenow="100"
-          />
-        </div>
-      </div>
-    </section>
 
     <main
       id="color-accordion"

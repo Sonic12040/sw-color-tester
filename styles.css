@@ -490,16 +490,24 @@
   top: 0;
   z-index: var(--z-sticky);
   background: var(--color-surface-primary);
-  padding: var(--spacing-4) 0;
-  text-align: center;
   border-bottom: 1px solid var(--color-border-primary);
 }
 
+.header__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-3) var(--spacing-4);
+  gap: var(--spacing-3);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 .header h1 {
-  font-size: var(--font-size-3xl);
+  font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
-  margin: 0 0 var(--spacing-2) 0;
+  margin: 0;
 }
 
 .header p {
@@ -511,28 +519,118 @@
   padding: 0 var(--spacing-4);
 }
 
-.header__actions {
+/* Toolbar toggle button (hamburger) */
+.toolbar__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: var(--spacing-2);
+  cursor: pointer;
+  color: var(--color-text-primary);
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition-fast);
+  min-width: 44px;
+  min-height: 44px;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.toolbar__toggle:hover {
+  background: var(--color-surface-hover);
+}
+
+.toolbar__toggle:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+/* Hamburger icon */
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 22px;
+  height: 22px;
+}
+
+.hamburger__line {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  border-radius: 1px;
+  transition:
+    transform var(--transition-base),
+    opacity var(--transition-base);
+  transform-origin: center;
+}
+
+/* Hamburger → X animation when expanded */
+.toolbar__toggle[aria-expanded="true"] .hamburger__line:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.toolbar__toggle[aria-expanded="true"] .hamburger__line:nth-child(2) {
+  opacity: 0;
+}
+
+.toolbar__toggle[aria-expanded="true"] .hamburger__line:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Toolbar panel - collapsible */
+.toolbar__panel {
+  border-top: 1px solid var(--color-border-secondary);
+  overflow: hidden;
+}
+
+.toolbar__panel[hidden] {
+  display: none;
+}
+
+.toolbar__content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-3) var(--spacing-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+/* Toolbar sections */
+.toolbar__section--lrv {
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-3) var(--spacing-4);
+}
+
+.toolbar__section--actions {
+  /* No wrapper styling needed */
+}
+
+.toolbar__actions {
   display: flex;
   justify-content: center;
-  gap: var(--spacing-4);
-  margin-bottom: var(--spacing-6);
+  gap: var(--spacing-3);
   flex-wrap: wrap;
-  padding: 0 var(--spacing-4);
 }
 
 /* Header buttons now extend the unified button system */
 .header__button {
-  /* Inherits from .btn--secondary when applied in HTML */
   background: var(--button-secondary-bg);
   color: var(--button-secondary-color) !important;
   border: 1px solid var(--button-secondary-border);
-  padding: var(--spacing-3) var(--spacing-6);
+  padding: var(--spacing-2) var(--spacing-4);
   border-radius: var(--button-border-radius);
   cursor: pointer;
-  font-size: var(--button-font-size);
+  font-size: var(--font-size-sm);
   font-weight: var(--button-font-weight);
   transition: var(--button-transition);
-  min-height: var(--button-min-height);
+  min-height: 36px;
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
@@ -552,20 +650,6 @@
 /* =============================================
    LRV Filter - Dual Range Slider
    ============================================= */
-.lrv-filter {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--spacing-4);
-  margin-bottom: var(--spacing-2);
-}
-
-.lrv-filter__content {
-  background: var(--color-surface-secondary);
-  border: 1px solid var(--color-border-primary);
-  border-radius: var(--radius-sm);
-  padding: var(--spacing-3) var(--spacing-4);
-  overflow: hidden;
-}
 
 .lrv-filter__header {
   display: flex;
@@ -1291,13 +1375,12 @@
   }
 
   /* Header mobile adjustments */
-  .header {
-    padding: var(--spacing-3) 0;
+  .header__top {
+    padding: var(--spacing-2) var(--spacing-3);
   }
 
   .header h1 {
-    font-size: var(--font-size-2xl);
-    padding: 0 var(--spacing-4);
+    font-size: var(--font-size-lg);
   }
 
   .header p {
@@ -1305,11 +1388,12 @@
     margin-bottom: var(--spacing-3);
   }
 
-  .header__actions {
+  .toolbar__content {
+    padding: var(--spacing-3);
+  }
+
+  .toolbar__actions {
     flex-direction: column;
-    gap: var(--spacing-3);
-    padding: 0 var(--spacing-4);
-    margin-bottom: var(--spacing-4);
   }
 
   .header__button {
@@ -1346,11 +1430,6 @@
     gap: var(
       --spacing-3
     ); /* Increase from 8px to 12px to prevent accidental taps */
-  }
-
-  /* LRV filter mobile adjustments */
-  .lrv-filter__content {
-    padding: var(--spacing-3) var(--spacing-4);
   }
 }
 
@@ -2550,9 +2629,8 @@
 
 /* Tablet optimization (600px - 899px) */
 @media (min-width: 600px) and (max-width: 899px) {
-  .header__actions {
-    gap: var(--spacing-4);
-    padding: 0 var(--spacing-6);
+  .toolbar__content {
+    padding: var(--spacing-3) var(--spacing-6);
   }
 
   .accordion {
@@ -2578,6 +2656,10 @@
 
 /* Desktop optimization (900px+) */
 @media (min-width: 900px) {
+  .toolbar__content {
+    padding: var(--spacing-4) var(--spacing-8);
+  }
+
   .accordion {
     padding: 0 var(--spacing-8);
   }
@@ -2722,7 +2804,7 @@
 
 @media (max-width: 399px) {
   .header h1 {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-md);
   }
 
   .header p {
@@ -2730,8 +2812,8 @@
   }
 
   .header__button {
-    padding: var(--spacing-3) var(--spacing-4);
-    font-size: var(--font-size-sm);
+    padding: var(--spacing-2) var(--spacing-3);
+    font-size: var(--font-size-xs);
   }
 
   .modal__title {
@@ -2767,16 +2849,11 @@
   }
 
   .header h1 {
-    font-size: var(--font-size-lg);
-    margin-bottom: var(--spacing-1);
+    font-size: var(--font-size-md);
   }
 
   .header p {
     display: none; /* Hide description to save vertical space */
-  }
-
-  .header__actions {
-    margin-bottom: var(--spacing-3);
   }
 
   .modal-container {
