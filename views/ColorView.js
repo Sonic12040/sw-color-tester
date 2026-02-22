@@ -454,9 +454,10 @@ export class ColorView {
   updateLrvCount(isActive, visibleCount, totalActive) {
     const countEl = document.getElementById(ELEMENT_IDS.LRV_COUNT);
     if (countEl) {
-      countEl.textContent = isActive
-        ? `Showing ${visibleCount} of ${totalActive} colors`
-        : "";
+      if (isActive) {
+        countEl.textContent = `Showing ${visibleCount} of ${totalActive} colors`;
+      }
+      countEl.classList.toggle("lrv-filter__count--visible", isActive);
     }
   }
 

@@ -498,7 +498,7 @@ export class ColorController {
 
       // Show/hide reset button
       const isActive = minVal > 0 || maxVal < 100;
-      resetBtn.hidden = !isActive;
+      resetBtn.classList.toggle("lrv-filter__reset--visible", isActive);
     };
 
     // Debounce render to avoid excessive re-renders during drag
