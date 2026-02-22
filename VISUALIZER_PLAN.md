@@ -181,12 +181,12 @@ The color detail modal is currently a full-screen overlay on mobile. It must **n
 
 The Visualizer needs its own state model alongside the existing `AppState`:
 
-| New Concern           | Approach                                                                                                                                                                   |
-| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`VisualizerState`** | Stores `roomId`, `wallAssignments: Map<wallId, colorId>`, `lightingSources`, `timeOfDay`, `activePreset`. Persisted to `localStorage` alongside existing favorites/hidden. |
-| **Color references**  | Wall assignments store `colorId` strings — resolved at render time via `ColorModel.getColorById()`. No data duplication.                                                   |
-| **Undo/Redo**         | Command pattern already exists (`ToggleFavoriteCommand`, etc.). Add `AssignWallColorCommand`, `ChangeLightingCommand`. Stack-based undo with max depth of 20.              |
-| **Room templates**    | Static JSON: wall polygons, window regions, fixture positions. Imported like color data. No API dependency.                                                                |
+| New Concern           | Approach                                                                                                                                                                                                             |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`VisualizerState`** | Stores `roomId`, `wallAssignments: Map<wallId, colorId>`, `lightingSources`, `timeOfDay`, `activePreset`. Persisted to URL query parameters via the existing VarInt + Base85 compression pipeline (no localStorage). |
+| **Color references**  | Wall assignments store `colorId` strings — resolved at render time via `ColorModel.getColorById()`. No data duplication.                                                                                             |
+| **Undo/Redo**         | Command pattern already exists (`ToggleFavoriteCommand`, etc.). Add `AssignWallColorCommand`, `ChangeLightingCommand`. Stack-based undo with max depth of 20.                                                        |
+| **Room templates**    | Static JSON: wall polygons, window regions, fixture positions. Imported like color data. No API dependency.                                                                                                          |
 
 ### New Files (Projected)
 
@@ -1155,16 +1155,566 @@ class NavigationController {
 
 ### Phase 3 — Color Assignment & Palette
 
-**Goal:** Users can assign colors to walls from the Explorer or a palette strip.
+**Goal:** Users can assign favorited colors to room walls via a palette strip, with all state persisted to the URL bar (no localStorage).
 
-- [ ] Create `VisualizerState` model (wall assignments, persistence to localStorage)
-- [ ] Create `AssignWallColorCommand` (extends existing command pattern)
-- [ ] Implement palette strip UI (horizontal scrollable, favorites-sourced)
-- [ ] "Apply to Wall" button on color tiles (mobile)
-- [ ] Drag-and-drop from accordion tiles to canvas walls (desktop)
-- [ ] "Apply to Visualizer" action button in color detail modal
-- [ ] Canvas re-renders walls with assigned HSL colors
-- [ ] Undo/redo stack (FAB on mobile, keyboard shortcut on desktop)
+#### Design Decisions
+
+| Question                          | Decision                                                                                                                                                     |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| URL encoding for wall assignments | Compressed binary — reuse the existing VarInt + Base85 pipeline (`compressIds` / `decompressIds`)                                                            |
+| Palette source                    | Favorites only — the palette strip mirrors the current favorites set                                                                                         |
+| Color-to-wall application flow    | **Flexible / either-order** — tap a color then a wall, _or_ tap a wall then a color. Whichever is selected second triggers the assignment                    |
+| Undo / redo scope                 | **All Visualizer actions** — extensible command stack covering wall assignments, clears, and (later) lighting changes                                        |
+| Empty-palette state               | **Prompt to favorite colors** — friendly message + illustration with a button/link to switch to the Explorer view                                            |
+| "Apply to Visualizer" from modal  | **Toast with link** — a snackbar appears confirming the assignment, with an action button to switch to the Visualizer tab. User stays on Explorer by default |
+
+---
+
+#### URL Persistence — Wall Assignments
+
+Wall assignments are stored in a new `walls` URL query parameter using the same VarInt + Base85 compression as `favorites` and `hidden`.
+
+**Encoding scheme**
+
+Each wall assignment is a `(surfaceIndex, colorId)` pair. Surface indices are fixed per room template (see Phase 1 JSON schema):
+
+| Index | Surface            |
+| ----- | ------------------ |
+| 0     | Back wall / accent |
+| 1     | Left wall          |
+| 2     | Right wall         |
+| 3     | Ceiling            |
+| 4     | Trim               |
+| 5     | Floor              |
+
+Serialization format (before Base85):
+
+```
+[count] [surfaceIndex₁ colorId₁] [surfaceIndex₂ colorId₂] …
+```
+
+- `count` — 1-byte VarInt, number of assigned surfaces (0–6).
+- Each pair: 1-byte surface index + VarInt-encoded color ID.
+- Unassigned surfaces are omitted (wireframe default on canvas).
+
+Example URL:
+
+```
+?favorites=<b85>&walls=<b85>&view=visualizer
+```
+
+`config.js` addition:
+
+```js
+URL_PARAMS.WALLS = "walls";
+```
+
+Helper functions (added to `numeric-encoding.js` or a new `wall-encoding.js`):
+
+```js
+/**
+ * Encode wall assignments to a compact binary string.
+ * @param {Map<number, string>} assignments - surfaceIndex → colorId
+ * @returns {string} Base85-encoded string (empty string if no assignments)
+ */
+function encodeWallAssignments(assignments) { … }
+
+/**
+ * Decode wall assignments from a URL parameter value.
+ * @param {string} encoded - Base85-encoded string
+ * @returns {Map<number, string>} surfaceIndex → colorId
+ */
+function decodeWallAssignments(encoded) { … }
+```
+
+`AppState` changes:
+
+- New field: `this.wallAssignments = new Map()` (surfaceIndex → colorId string).
+- `loadFromURL()` reads `URL_PARAMS.WALLS`, calls `decodeWallAssignments()`.
+- `syncToURL()` calls `encodeWallAssignments()`, writes to `URL_PARAMS.WALLS` (deletes param when map is empty).
+
+---
+
+#### VisualizerState Model
+
+```
+models/VisualizerState.js
+```
+
+Responsibilities:
+
+- Holds the **live wall assignment map** (`Map<number, string>`).
+- Holds the **selected surface index** (`number | null`).
+- Holds the **selected palette color ID** (`string | null`).
+- Exposes `assignColor(surfaceIndex, colorId)`, `clearSurface(surfaceIndex)`, `resetAll()`.
+- On every mutation, calls `AppState.syncToURL()` to persist.
+
+```js
+export class VisualizerState {
+  constructor(appState) {
+    this.appState = appState;
+    this.wallAssignments = appState.wallAssignments; // shared reference
+    this.selectedSurface = null;
+    this.selectedColorId = null;
+    this.undoStack = [];
+    this.redoStack = [];
+  }
+
+  /** Attempt an assignment based on the flexible "either order" flow. */
+  tryAssign() {
+    if (this.selectedSurface !== null && this.selectedColorId !== null) {
+      this.execute(
+        new AssignWallColorCommand(
+          this,
+          this.selectedSurface,
+          this.selectedColorId,
+        ),
+      );
+      this.selectedSurface = null;
+      this.selectedColorId = null;
+    }
+  }
+
+  /** Execute a command, push to undo stack, clear redo. */
+  execute(command) {
+    command.execute();
+    this.undoStack.push(command);
+    this.redoStack = [];
+    this.appState.syncToURL();
+  }
+
+  undo() {
+    const cmd = this.undoStack.pop();
+    if (cmd) {
+      cmd.undo();
+      this.redoStack.push(cmd);
+      this.appState.syncToURL();
+    }
+  }
+
+  redo() {
+    const cmd = this.redoStack.pop();
+    if (cmd) {
+      cmd.execute();
+      this.undoStack.push(cmd);
+      this.appState.syncToURL();
+    }
+  }
+}
+```
+
+---
+
+#### Command Classes
+
+**`AssignWallColorCommand`** (`commands/AssignWallColorCommand.js`)
+
+```js
+export class AssignWallColorCommand {
+  constructor(visualizerState, surfaceIndex, colorId) {
+    this.state = visualizerState;
+    this.surfaceIndex = surfaceIndex;
+    this.colorId = colorId;
+    this.previousColorId =
+      visualizerState.wallAssignments.get(surfaceIndex) ?? null;
+  }
+  execute() {
+    this.state.wallAssignments.set(this.surfaceIndex, this.colorId);
+  }
+  undo() {
+    if (this.previousColorId !== null) {
+      this.state.wallAssignments.set(this.surfaceIndex, this.previousColorId);
+    } else {
+      this.state.wallAssignments.delete(this.surfaceIndex);
+    }
+  }
+}
+```
+
+**`ClearSurfaceCommand`** (`commands/ClearSurfaceCommand.js`)
+
+```js
+export class ClearSurfaceCommand {
+  constructor(visualizerState, surfaceIndex) {
+    this.state = visualizerState;
+    this.surfaceIndex = surfaceIndex;
+    this.previousColorId =
+      visualizerState.wallAssignments.get(surfaceIndex) ?? null;
+  }
+  execute() {
+    this.state.wallAssignments.delete(this.surfaceIndex);
+  }
+  undo() {
+    if (this.previousColorId !== null) {
+      this.state.wallAssignments.set(this.surfaceIndex, this.previousColorId);
+    }
+  }
+}
+```
+
+**`ResetRoomCommand`** (`commands/ResetRoomCommand.js`)
+
+```js
+export class ResetRoomCommand {
+  constructor(visualizerState) {
+    this.state = visualizerState;
+    this.snapshot = new Map(visualizerState.wallAssignments);
+  }
+  execute() {
+    this.state.wallAssignments.clear();
+  }
+  undo() {
+    for (const [idx, id] of this.snapshot) {
+      this.state.wallAssignments.set(idx, id);
+    }
+  }
+}
+```
+
+---
+
+#### Palette Strip UI
+
+The palette strip is a horizontal scrollable tray of favorite-color swatches displayed below the canvas.
+
+**HTML (inside `#visualizer-view`)**
+
+```html
+<div class="palette-strip" role="listbox" aria-label="Favorite colors palette">
+  <!-- Empty state (shown when favorites.size === 0) -->
+  <div class="palette-strip__empty" role="status">
+    <svg class="palette-strip__empty-icon" aria-hidden="true">
+      <!-- paintbrush icon -->
+    </svg>
+    <p class="palette-strip__empty-text">
+      Favorite some colors to build your palette
+    </p>
+    <button class="palette-strip__empty-cta" type="button">
+      Browse Colors
+    </button>
+  </div>
+
+  <!-- Populated state (one per favorite) -->
+  <button
+    class="palette-strip__swatch"
+    role="option"
+    aria-selected="false"
+    aria-label="SW 7006 Extra White"
+    data-color-id="2685"
+    style="--swatch-color: hsl(60, 14%, 93%)"
+  >
+    <span class="palette-strip__swatch-label">7006</span>
+  </button>
+  <!-- … more swatches … -->
+</div>
+```
+
+**CSS**
+
+```css
+.palette-strip {
+  display: flex;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-3);
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  background: var(--color-surface-secondary);
+  border-top: 1px solid var(--color-border);
+  min-height: 56px; /* 44px swatch + padding */
+}
+
+.palette-strip__swatch {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  border: 2px solid transparent;
+  background: var(--swatch-color);
+  cursor: pointer;
+  scroll-snap-align: start;
+  transition: border-color var(--transition-fast);
+  position: relative;
+}
+
+.palette-strip__swatch[aria-selected="true"] {
+  border-color: var(--color-border-focus);
+  box-shadow: 0 0 0 2px var(--color-border-focus);
+}
+
+.palette-strip__swatch-label {
+  position: absolute;
+  bottom: 1px;
+  left: 0;
+  right: 0;
+  font-size: 9px;
+  font-weight: 600;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+
+/* Empty state */
+.palette-strip__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: var(--spacing-2);
+  padding: var(--spacing-4) var(--spacing-3);
+  text-align: center;
+}
+.palette-strip__empty-icon {
+  width: 32px;
+  height: 32px;
+  opacity: 0.5;
+}
+.palette-strip__empty-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+.palette-strip__empty-cta {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-primary);
+  background: none;
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-1) var(--spacing-3);
+  min-height: var(--button-min-height);
+  cursor: pointer;
+}
+```
+
+**Palette sync behavior:**
+
+- Palette strip re-renders whenever `AppState.favorites` changes (listened via a callback / event).
+- If a favorited color is un-favorited and was assigned to a wall, the wall assignment is **kept** (the swatch disappears from the strip, but the wall retains its color). The user can clear the wall manually or re-favorite to get the swatch back.
+
+---
+
+#### "Either Order" Flexible Assignment Flow
+
+**Selection state machine:**
+
+```
+                  ┌─────────────┐
+       ┌──────────│   IDLE      │──────────┐
+       │          └─────────────┘          │
+  tap swatch                          tap wall
+       │                                   │
+       v                                   v
+┌──────────────┐                  ┌──────────────┐
+│ COLOR_READY  │                  │ WALL_READY   │
+│ (swatch      │                  │ (surface     │
+│  highlighted) │                  │  highlighted) │
+└──────┬───────┘                  └──────┬───────┘
+       │ tap wall                        │ tap swatch
+       v                                 v
+┌──────────────────────────────────────────┐
+│             ASSIGN                       │
+│  execute AssignWallColorCommand          │
+│  → re-render wall on canvas              │
+│  → deselect both                         │
+│  → return to IDLE                        │
+└──────────────────────────────────────────┘
+```
+
+- Tapping a **different** swatch while one is selected replaces the selection (no assignment).
+- Tapping a **different** wall while one is selected replaces the wall selection.
+- Tapping the **same** swatch/wall again deselects it (return to IDLE).
+- Long-press on an assigned wall → show context menu: **Clear**, **Change Color**.
+
+---
+
+#### Drag-and-Drop (Desktop / Pointer Devices)
+
+Only enabled when `@media (hover: hover) and (pointer: fine)`.
+
+- **Drag start:** `pointerdown` + `pointermove` (>5px threshold) on a palette swatch.
+- **Drag visual:** A 44×44 ghost clone follows the pointer (`position: fixed`), 50% opacity.
+- **Drop target:** Canvas surfaces highlight on `pointerenter` with a 2px dashed outline.
+- **Drop:** On `pointerup` over a valid surface → `AssignWallColorCommand`.
+- **Cancel:** `pointerup` outside canvas or `Escape` key → cancel, animate ghost back to strip.
+
+No drag-and-drop on touch devices — they use the tap-based flexible flow.
+
+---
+
+#### "Apply to Visualizer" from Detail Modal
+
+The existing color detail modal (opened from Explorer for any color) gains a new action button:
+
+```html
+<button
+  class="modal__action modal__action--visualizer"
+  type="button"
+  aria-label="Apply Extra White to Visualizer"
+>
+  <svg class="modal__action-icon" aria-hidden="true"><!-- room icon --></svg>
+  Apply to Visualizer
+</button>
+```
+
+**Behavior:**
+
+1. User taps "Apply to Visualizer" in the modal.
+2. If **no wall is currently selected** in the Visualizer, the color is stored as the `selectedColorId` in `VisualizerState` (pre-selects it in the palette if it's a favorite, or adds as a "one-off" selection if not).
+3. A **toast/snackbar** appears: _"SW 7006 Extra White ready — [View in Visualizer]"_.
+4. If a **wall is already selected** in the Visualizer, the color is applied immediately and the toast says: _"Applied to Back Wall — [View in Visualizer]"_.
+5. The toast's action link calls `NavigationController.switchTo('visualizer')`.
+6. Modal stays open or closes per normal behavior (user taps backdrop/close).
+
+**Toast HTML:**
+
+```html
+<div class="toast" role="status" aria-live="polite">
+  <span class="toast__message">SW 7006 Extra White ready</span>
+  <button class="toast__action" type="button">View in Visualizer</button>
+</div>
+```
+
+**Toast CSS:**
+
+```css
+.toast {
+  position: fixed;
+  bottom: calc(var(--tab-bar-height, 48px) + var(--spacing-3));
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-2) var(--spacing-4);
+  background: var(--color-surface-elevated, #323232);
+  color: #fff;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-toast, 600);
+  font-size: var(--font-size-sm);
+  max-width: calc(100vw - var(--spacing-6));
+}
+.toast__action {
+  font-weight: 600;
+  color: var(--color-primary-light, #90caf9);
+  background: none;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: var(--spacing-1) var(--spacing-2);
+  min-height: var(--button-min-height);
+}
+```
+
+Toast auto-dismisses after 4 seconds, or on user tap anywhere.
+
+---
+
+#### Undo / Redo
+
+**Mobile** — Floating action button (FAB) in the bottom-right of the Visualizer view:
+
+```html
+<button
+  class="visualizer__undo-fab"
+  type="button"
+  aria-label="Undo last action"
+  disabled
+>
+  <svg aria-hidden="true"><!-- undo arrow icon --></svg>
+</button>
+```
+
+- Single tap → undo.
+- Long-press → show undo/redo popover with stack preview.
+- FAB is hidden when undo stack is empty, appears with a scale-up animation on first action.
+
+**Desktop** — Keyboard shortcuts + optional toolbar buttons:
+
+- `Ctrl+Z` / `Cmd+Z` → undo.
+- `Ctrl+Shift+Z` / `Cmd+Shift+Z` → redo.
+- Toolbar buttons in `#toolbar-panel-visualizer`: Undo ↺ and Redo ↻ with `disabled` when stack is empty.
+
+**Stack limits:** Max 50 entries. Oldest entries are dropped when the limit is exceeded (FIFO eviction on the undo stack).
+
+**Important:** Undo/redo stacks are **ephemeral** (in-memory only). They are NOT persisted to the URL. Navigating away or refreshing clears the stack. Only the final wall assignments are persisted.
+
+---
+
+#### Canvas Re-rendering on Assignment
+
+When a wall assignment changes:
+
+1. `VisualizerCanvas` receives a `wallAssignmentsChanged(assignments)` callback.
+2. For each surface in the room template:
+   - If `assignments.has(surfaceIndex)` → look up the color's HSL from `ColorModel` → fill the surface polygon with that HSL.
+   - Otherwise → render the wireframe default (light gray fill + labeled outline per Phase 1 spec).
+3. Silhouettes (furniture, window) are always re-rendered on top.
+4. The selected surface retains its highlight outline (dashed focus border) until deselected.
+5. A CSS `transition` is NOT used on canvas — the fill is instant via `requestAnimationFrame`. To provide visual feedback, a brief 150ms opacity pulse (1.0 → 0.85 → 1.0) is applied to the changed surface only.
+
+---
+
+#### Accessibility
+
+| Feature                     | Technique                                                                                         |
+| --------------------------- | ------------------------------------------------------------------------------------------------- |
+| Palette strip               | `role="listbox"`, swatches are `role="option"` with `aria-selected`                               |
+| Swatch focus                | Roving `tabindex` — Arrow Left/Right moves focus, Enter/Space selects                             |
+| Wall selection via keyboard | Arrow keys cycle surfaces (Tab to enter canvas, arrows to navigate, Enter to select)              |
+| Color assignment            | Screen reader announcement via `aria-live="assertive"` region: "Extra White applied to Back Wall" |
+| Undo/redo                   | Announce "Undid: Extra White on Back Wall" / "Redid: …"                                           |
+| Empty palette               | `role="status"` on the empty-state container; "Browse Colors" button is focusable                 |
+| Toast                       | `role="status"` + `aria-live="polite"`                                                            |
+| Drag-and-drop               | Not relied upon — always an equivalent tap/keyboard path                                          |
+
+---
+
+#### Checklist
+
+- [ ] Add `URL_PARAMS.WALLS = "walls"` to `config.js`
+- [ ] Implement `encodeWallAssignments()` and `decodeWallAssignments()` in `numeric-encoding.js` (or new `wall-encoding.js`)
+- [ ] Add `wallAssignments` field to `AppState`; update `loadFromURL()` and `syncToURL()`
+- [ ] Create `models/VisualizerState.js` — selection state machine, undo/redo stack, `tryAssign()`, `execute()`, `undo()`, `redo()`
+- [ ] Create `commands/AssignWallColorCommand.js`
+- [ ] Create `commands/ClearSurfaceCommand.js`
+- [ ] Create `commands/ResetRoomCommand.js`
+- [ ] Register new commands in `commands/index.js`
+- [ ] Build palette strip HTML inside `#visualizer-view` (swatches from favorites, empty state)
+- [ ] Style palette strip: horizontal scroll, swatch sizing, selected ring, empty state prompt
+- [ ] Implement "Browse Colors" CTA in empty state → `NavigationController.switchTo('explorer')`
+- [ ] Implement flexible "either order" tap flow: track `selectedSurface` and `selectedColorId`, call `tryAssign()` when both are set
+- [ ] Implement wall tap handler in `VisualizerCanvas` — emit surface index to controller
+- [ ] Implement swatch tap handler — set `selectedColorId`, toggle `aria-selected`
+- [ ] Implement deselection (tap same swatch/wall again)
+- [ ] Implement long-press context menu on assigned wall (Clear / Change Color)
+- [ ] Implement drag-and-drop for `@media (hover: hover) and (pointer: fine)`: drag swatch → drop on canvas surface
+- [ ] Add ghost clone visual during drag (44×44, 50% opacity, position: fixed)
+- [ ] Add surface highlight on drag hover (2px dashed outline)
+- [ ] Add "Apply to Visualizer" button to color detail modal
+- [ ] Implement toast/snackbar component (auto-dismiss 4s, action button to switch view)
+- [ ] Toast positioning: above tab bar on mobile, centered bottom on desktop
+- [ ] Implement undo FAB on mobile (single-tap undo, long-press popover)
+- [ ] Implement `Ctrl+Z` / `Ctrl+Shift+Z` keyboard shortcuts (desktop)
+- [ ] Add undo/redo toolbar buttons in `#toolbar-panel-visualizer`
+- [ ] Cap undo stack at 50 entries
+- [ ] Wire `wallAssignmentsChanged()` callback from `VisualizerState` → `VisualizerCanvas`
+- [ ] Canvas re-render: fill assigned surfaces with HSL from `ColorModel`, wireframe for unassigned
+- [ ] Add 150ms opacity pulse feedback on newly assigned surface
+- [ ] Palette strip re-syncs when `AppState.favorites` changes (add/remove)
+- [ ] Keep wall assignment if its color is un-favorited (wall keeps color, swatch removed from strip)
+- [ ] Accessibility: `role="listbox"` on palette, roving tabindex, `aria-selected`, screen reader announcements for assignments
+- [ ] Accessibility: keyboard wall navigation (arrows to cycle surfaces inside canvas)
+- [ ] Accessibility: `aria-live` announcements for undo/redo and toast
+- [ ] Visual QA: palette strip horizontal scroll on iPhone SE (375px)
+- [ ] Visual QA: drag-and-drop on desktop (1366×768, 1920×1080)
+- [ ] Visual QA: toast above bottom tab bar on mobile
+- [ ] Visual QA: empty palette state layout and CTA
+- [ ] Version bump `version.js` for service worker cache bust
 
 ### Phase 4 — Lighting Engine
 
@@ -1205,7 +1755,7 @@ class NavigationController {
 - [ ] Room selector UI (thumbnail grid)
 - [ ] "Screenshot" / export canvas as PNG (via `canvas.toBlob()`)
 - [ ] Compare mode: side-by-side two lighting conditions or two color schemes
-- [ ] Full localStorage persistence of all room assignments
+- [ ] Full URL persistence of all room assignments (extend `walls` param to support multiple rooms)
 - [ ] Performance optimization pass (OffscreenCanvas, requestAnimationFrame batching)
 - [ ] Accessibility audit: keyboard navigation for all Visualizer controls, screen reader announcements for wall selection and color assignment
 - [ ] Version bump and service worker cache update
