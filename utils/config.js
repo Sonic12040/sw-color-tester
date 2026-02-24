@@ -111,6 +111,9 @@ export const CSS_CLASSES = {
   TOAST_ACTION: "toast__action",
   TOAST_CLOSE: "toast__close",
   TOAST_HIDING: "toast--hiding",
+
+  // LRV Filter
+  LRV_FILTER_RESET_VISIBLE: "lrv-filter__reset--visible",
 };
 
 // Element IDs

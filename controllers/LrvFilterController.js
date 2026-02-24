@@ -2,7 +2,7 @@
  * Controller for the LRV (Light Reflectance Value) dual-range slider widget.
  */
 
-import { ELEMENT_IDS } from "../utils/config.js";
+import { CSS_CLASSES, ELEMENT_IDS } from "../utils/config.js";
 
 const DEBOUNCE_MS = 80;
 
@@ -43,7 +43,7 @@ export class LrvFilterController {
       rangeFill.style.right = `${100 - maxVal}%`;
 
       const isActive = minVal > 0 || maxVal < 100;
-      resetBtn.classList.toggle("lrv-filter__reset--visible", isActive);
+      resetBtn.classList.toggle(CSS_CLASSES.LRV_FILTER_RESET_VISIBLE, isActive);
     };
 
     let renderTimeout = null;
