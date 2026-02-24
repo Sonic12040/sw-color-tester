@@ -1,7 +1,3 @@
-/**
- * ToggleHiddenCommand - Command for toggling a color's hidden status
- */
-
 import { ColorCommand } from "./ColorCommand.js";
 
 export class ToggleHiddenCommand extends ColorCommand {
@@ -12,6 +8,6 @@ export class ToggleHiddenCommand extends ColorCommand {
 
   execute() {
     this.state.toggleHidden(this.colorId);
-    return true; // State changed, re-render needed
+    return true;
   }
 }
