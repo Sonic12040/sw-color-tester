@@ -47,6 +47,8 @@ export const CSS_CLASSES = {
 
   EMPTY_MESSAGE: "empty-message",
 
+  CONFIRM_CLOSING: "closing",
+
   MODAL_OVERLAY: "modal-overlay",
   MODAL_CONTAINER: "modal-container",
   MODAL_HEADER: "modal-header",

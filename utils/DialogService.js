@@ -1,6 +1,8 @@
 import { CSS_CLASSES, ELEMENT_IDS } from "./config.js";
 import { confirmationModal, toastNotification } from "./templates.js";
 
+const CLOSE_ANIMATION_MS = 300;
+
 export class DialogService {
   /**
    * Show confirmation dialog and return a Promise.
@@ -36,10 +38,11 @@ export class DialogService {
       };
 
       const cleanup = () => {
-        overlay.classList.add("closing");
+        document.removeEventListener("keydown", handleEscape);
+        overlay.classList.add(CSS_CLASSES.CONFIRM_CLOSING);
         setTimeout(() => {
           overlay.remove();
-        }, 300);
+        }, CLOSE_ANIMATION_MS);
       };
 
       confirmBtn.addEventListener("click", handleConfirm);
@@ -54,7 +57,6 @@ export class DialogService {
       const handleEscape = (e) => {
         if (e.key === "Escape") {
           handleCancel();
-          document.removeEventListener("keydown", handleEscape);
         }
       };
       document.addEventListener("keydown", handleEscape);
@@ -102,7 +104,7 @@ export class DialogService {
       toast.classList.add(CSS_CLASSES.TOAST_HIDING);
       setTimeout(() => {
         toast.remove();
-      }, 300);
+      }, CLOSE_ANIMATION_MS);
     };
 
     const handleUndo = () => {
