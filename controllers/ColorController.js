@@ -11,11 +11,7 @@ import {
   getTilesContainerId,
 } from "../utils/config.js";
 import { APP_VERSION } from "../version.js";
-import {
-  colorDetailModal,
-  confirmationModal,
-  toastNotification,
-} from "../utils/templates.js";
+import { colorDetailModal } from "../utils/templates.js";
 import {
   ToggleFavoriteCommand,
   ToggleHiddenCommand,
@@ -27,10 +23,11 @@ import {
 } from "../commands/index.js";
 
 export class ColorController {
-  constructor(model, state, view) {
+  constructor(model, state, view, dialog) {
     this.model = model;
     this.state = state;
     this.view = view;
+    this.dialog = dialog;
   }
 
   /**
@@ -263,124 +260,6 @@ export class ColorController {
     } else {
       this.view.updateLrvCount(false, 0, 0);
     }
-  }
-
-  /**
-   * Show confirmation dialog and return a Promise
-   * @param {Object} options - Confirmation options
-   * @param {string} options.title - Dialog title
-   * @param {string} options.message - Confirmation message
-   * @param {string} options.confirmText - Confirm button text
-   * @param {string} options.cancelText - Cancel button text
-   * @param {string} options.confirmClass - CSS class for confirm button
-   * @returns {Promise<boolean>} Resolves to true if confirmed, false if cancelled
-   */
-  showConfirmation(options) {
-    return new Promise((resolve) => {
-      const modalHTML = confirmationModal(options);
-
-      document.body.insertAdjacentHTML("beforeend", modalHTML);
-
-      const overlay = document.getElementById(ELEMENT_IDS.CONFIRM_OVERLAY);
-      const confirmBtn = document.getElementById(ELEMENT_IDS.CONFIRM_CONFIRM);
-      const cancelBtn = document.getElementById(ELEMENT_IDS.CONFIRM_CANCEL);
-
-      // Focus confirm button for accessibility
-      setTimeout(() => confirmBtn.focus(), 100);
-
-      const handleConfirm = () => {
-        cleanup();
-        resolve(true);
-      };
-
-      const handleCancel = () => {
-        cleanup();
-        resolve(false);
-      };
-
-      const cleanup = () => {
-        overlay.classList.add("closing");
-        setTimeout(() => {
-          overlay.remove();
-        }, 300); // Match animation duration
-      };
-
-      confirmBtn.addEventListener("click", handleConfirm);
-      cancelBtn.addEventListener("click", handleCancel);
-
-      overlay.addEventListener("click", (e) => {
-        if (e.target === overlay) {
-          handleCancel();
-        }
-      });
-
-      const handleEscape = (e) => {
-        if (e.key === "Escape") {
-          handleCancel();
-          document.removeEventListener("keydown", handleEscape);
-        }
-      };
-      document.addEventListener("keydown", handleEscape);
-    });
-  }
-
-  /**
-   * Show toast notification with undo action
-   * @param {Object} options - Toast options
-   * @param {string} options.message - Toast message
-   * @param {Function} options.onUndo - Callback when undo is clicked
-   * @param {number} options.duration - Auto-dismiss duration in ms (default: 5000)
-   * @returns {void}
-   */
-  showToast({ message, onUndo, duration = 5000 }) {
-    const toastId = `toast-${Date.now()}`;
-    const toastHTML = toastNotification({
-      message,
-      actionText: "Undo",
-      id: toastId,
-    });
-
-    document.body.insertAdjacentHTML("beforeend", toastHTML);
-
-    const toast = document.getElementById(toastId);
-    const actionBtn = toast.querySelector(`.${CSS_CLASSES.TOAST_ACTION}`);
-    const closeBtn = toast.querySelector(`.${CSS_CLASSES.TOAST_CLOSE}`);
-
-    let timeoutId = null;
-    let isDismissed = false;
-
-    const scheduleAutoDismiss = () => {
-      timeoutId = setTimeout(() => {
-        dismissToast();
-      }, duration);
-    };
-
-    const dismissToast = () => {
-      if (isDismissed) return;
-      isDismissed = true;
-
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-
-      toast.classList.add(CSS_CLASSES.TOAST_HIDING);
-      setTimeout(() => {
-        toast.remove();
-      }, 300); // Match animation duration
-    };
-
-    const handleUndo = () => {
-      if (isDismissed) return;
-      dismissToast();
-      if (onUndo) {
-        onUndo();
-      }
-    };
-
-    actionBtn.addEventListener("click", handleUndo);
-    closeBtn.addEventListener("click", dismissToast);
-
-    scheduleAutoDismiss();
   }
 
   /**
@@ -693,7 +572,7 @@ export class ColorController {
 
         if (storeButton) {
           storeButton.addEventListener("click", () => {
-            this.showToast({
+            this.dialog.toast({
               message: `Visit your local Sherwin-Williams store and ask for: ${color.name} or ${color.brandKey} ${color.colorNumber} (Location: ${color.storeStripLocator})`,
               duration: 8000,
             });
@@ -786,7 +665,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       }
     } catch (err) {
       console.error("Error copying color code:", err);
-      this.showToast({
+      this.dialog.toast({
         message: `Color Code: ${colorCode}`,
         duration: 5000,
       });
@@ -1010,7 +889,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       ? "Remove from Favorites?"
       : "Add to Favorites?";
 
-    const confirmed = await this.showConfirmation({
+    const confirmed = await this.dialog.confirm({
       title: actionTitle,
       message: `Are you sure you want to ${action} all ${count} color${
         count === 1 ? "" : "s"
@@ -1032,7 +911,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       this._executeCommand(command);
 
       const actionPastTense = allFavorited ? "removed from" : "added to";
-      this.showToast({
+      this.dialog.toast({
         message: `${count} color${
           count === 1 ? "" : "s"
         } ${actionPastTense} favorites.`,
@@ -1061,7 +940,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     const action = allHidden ? "unhide" : "hide";
     const actionTitle = allHidden ? "Unhide All Colors?" : "Hide All Colors?";
 
-    const confirmed = await this.showConfirmation({
+    const confirmed = await this.dialog.confirm({
       title: actionTitle,
       message: `Are you sure you want to ${action} all ${count} color${
         count === 1 ? "" : "s"
@@ -1083,7 +962,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       this._executeCommand(command);
 
       const actionPastTense = allHidden ? "unhidden" : "hidden";
-      this.showToast({
+      this.dialog.toast({
         message: `${count} color${count === 1 ? "" : "s"} ${actionPastTense}.`,
         onUndo: () => {
           const stateChanged = command.undo();
@@ -1113,7 +992,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       return;
     }
 
-    const confirmed = await this.showConfirmation({
+    const confirmed = await this.dialog.confirm({
       title: "Clear All Favorites?",
       message: `Are you sure you want to remove all ${count} favorite color${
         count === 1 ? "" : "s"
@@ -1127,7 +1006,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       const command = new ClearFavoritesCommand(this.model, this.state);
       this._executeCommand(command);
 
-      this.showToast({
+      this.dialog.toast({
         message: `${count} favorite${count === 1 ? "" : "s"} cleared.`,
         onUndo: () => {
           const stateChanged = command.undo();
@@ -1146,7 +1025,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       return;
     }
 
-    const confirmed = await this.showConfirmation({
+    const confirmed = await this.dialog.confirm({
       title: "Unhide All Colors?",
       message: `Are you sure you want to unhide all ${count} hidden color${
         count === 1 ? "" : "s"
@@ -1160,7 +1039,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       const command = new ClearHiddenCommand(this.model, this.state);
       this._executeCommand(command);
 
-      this.showToast({
+      this.dialog.toast({
         message: `${count} color${count === 1 ? "" : "s"} unhidden.`,
         onUndo: () => {
           const stateChanged = command.undo();
@@ -1176,7 +1055,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     const favoriteSet = this.state.getFavoriteSet();
 
     if (favoriteSet.size === 0) {
-      this.showToast({
+      this.dialog.toast({
         message: "No favorites to export.",
         onUndo: null,
         duration: 3000,
@@ -1226,7 +1105,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
 
     URL.revokeObjectURL(url);
 
-    this.showToast({
+    this.dialog.toast({
       message: `${favoriteColors.length} favorite${
         favoriteColors.length === 1 ? "" : "s"
       } exported.`,
