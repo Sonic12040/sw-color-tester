@@ -141,13 +141,6 @@ function decodeNumericIds(buffer) {
 const BASE85_CHARS =
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;<=>?@^_`{|}~";
 
-// Validate character set length
-if (BASE85_CHARS.length !== 85) {
-  throw new Error(
-    `BASE85_CHARS has ${BASE85_CHARS.length} characters, expected 85`,
-  );
-}
-
 /** Encode binary data to URL-safe Base85 string. */
 function toBase85(buffer) {
   if (!buffer || buffer.length === 0) {
