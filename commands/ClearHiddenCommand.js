@@ -1,22 +1,20 @@
-/**
- * ClearHiddenCommand - Command for clearing all hidden colors
- */
-
 import { ColorCommand } from "./ColorCommand.js";
 
 export class ClearHiddenCommand extends ColorCommand {
   execute() {
-    // Store previous state for undo (use Set directly, avoid double Array.from)
-    this.previousHidden = Array.from(this.state.getHiddenSet());
+    const hiddenSet = this.state.getHiddenSet();
+    if (hiddenSet.size === 0) return false;
+
+    this.previousHidden = Array.from(hiddenSet);
     this.state.clearHidden();
-    return true; // State changed, re-render needed
+    return true;
   }
 
   undo() {
-    // Restore previous state
     if (this.previousHidden) {
       this.state.addMultipleHidden(this.previousHidden);
-      return true; // State changed, re-render needed
+      this.previousHidden = null;
+      return true;
     }
     return false;
   }

@@ -1,22 +1,20 @@
-/**
- * ClearFavoritesCommand - Command for clearing all favorites
- */
-
 import { ColorCommand } from "./ColorCommand.js";
 
 export class ClearFavoritesCommand extends ColorCommand {
   execute() {
-    // Store previous state for undo (use Set directly, avoid double Array.from)
-    this.previousFavorites = Array.from(this.state.getFavoriteSet());
+    const favoriteSet = this.state.getFavoriteSet();
+    if (favoriteSet.size === 0) return false;
+
+    this.previousFavorites = Array.from(favoriteSet);
     this.state.clearFavorites();
-    return true; // State changed, re-render needed
+    return true;
   }
 
   undo() {
-    // Restore previous state
     if (this.previousFavorites) {
       this.state.addMultipleFavorites(this.previousFavorites);
-      return true; // State changed, re-render needed
+      this.previousFavorites = null;
+      return true;
     }
     return false;
   }
