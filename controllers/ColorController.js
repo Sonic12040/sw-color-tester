@@ -384,7 +384,7 @@ export class ColorController {
   }
 
   /**
-   * Initialize the application
+   * Initialize the application.
    */
   init() {
     this.setupToolbar();
@@ -443,7 +443,6 @@ export class ColorController {
 
     if (!minSlider || !maxSlider) return;
 
-    // Initialize from state
     const { min, max } = this.state.getLrvRange();
     minSlider.value = min;
     maxSlider.value = max;
@@ -452,24 +451,19 @@ export class ColorController {
       const minVal = Number(minSlider.value);
       const maxVal = Number(maxSlider.value);
 
-      // Update displayed values
       minValue.textContent = minVal;
       maxValue.textContent = maxVal;
 
-      // Update aria values
       minSlider.setAttribute("aria-valuenow", minVal);
       maxSlider.setAttribute("aria-valuenow", maxVal);
 
-      // Update range fill position
       rangeFill.style.left = `${minVal}%`;
       rangeFill.style.right = `${100 - maxVal}%`;
 
-      // Show/hide reset button
       const isActive = minVal > 0 || maxVal < 100;
       resetBtn.classList.toggle("lrv-filter__reset--visible", isActive);
     };
 
-    // Debounce render to avoid excessive re-renders during drag
     let renderTimeout = null;
     const debouncedRender = () => {
       if (renderTimeout) clearTimeout(renderTimeout);
@@ -481,7 +475,6 @@ export class ColorController {
       }, 80);
     };
 
-    // Prevent min from crossing max and vice versa
     minSlider.addEventListener("input", () => {
       if (Number(minSlider.value) > Number(maxSlider.value)) {
         minSlider.value = maxSlider.value;
@@ -498,7 +491,6 @@ export class ColorController {
       debouncedRender();
     });
 
-    // Reset button
     resetBtn.addEventListener("click", () => {
       minSlider.value = 0;
       maxSlider.value = 100;
@@ -507,7 +499,7 @@ export class ColorController {
       this.render();
     });
 
-    // Set initial UI state
+    // Set initial state
     updateSliderUI();
   }
 
@@ -515,21 +507,18 @@ export class ColorController {
    * Setup modal event listeners (close button, overlay click, escape key)
    */
   setupModalListeners() {
-    // Close modal when clicking overlay
     document.addEventListener("click", (e) => {
       if (e.target.classList.contains(CSS_CLASSES.MODAL_OVERLAY)) {
         this.closeModal();
       }
     });
 
-    // Close modal when clicking close button
     document.addEventListener("click", (e) => {
       if (e.target.closest(`.${CSS_CLASSES.MODAL_CLOSE}`)) {
         this.closeModal();
       }
     });
 
-    // Close modal with Escape key
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
         this.closeModal();
@@ -542,7 +531,7 @@ export class ColorController {
    * @param {string} colorId - The ID of the color to display
    */
   openModal(colorId) {
-    // Save current scroll position to URL
+    // Save scroll position before opening modal
     const scrollPosition =
       globalThis.scrollY || document.documentElement.scrollTop;
     this.state.setScrollPosition(scrollPosition);
@@ -554,7 +543,6 @@ export class ColorController {
       return;
     }
 
-    // Get coordinating colors via O(1) Map lookups
     const coordinatingColors = {};
     if (color.coordinatingColors) {
       if (color.coordinatingColors.coord1ColorId) {
@@ -574,7 +562,6 @@ export class ColorController {
       }
     }
 
-    // Get similar colors via O(1) Map lookups
     const similarColors = [];
     if (color.similarColors && Array.isArray(color.similarColors)) {
       for (const similarId of color.similarColors) {
@@ -585,7 +572,6 @@ export class ColorController {
       }
     }
 
-    // Remove existing modal if present
     const existingModal = document.getElementById(
       ELEMENT_IDS.COLOR_DETAIL_MODAL,
     );
@@ -593,11 +579,9 @@ export class ColorController {
       existingModal.remove();
     }
 
-    // Check if color is favorited or hidden via O(1) Set lookups
     const isFavorited = this.state.getFavoriteSet().has(colorId);
     const isHidden = this.state.getHiddenSet().has(colorId);
 
-    // Create and insert modal
     const modalHTML = colorDetailModal(
       color,
       coordinatingColors,
@@ -607,19 +591,16 @@ export class ColorController {
     );
     document.body.insertAdjacentHTML("beforeend", modalHTML);
 
-    // Trigger animation
     requestAnimationFrame(() => {
       const modal = document.getElementById(ELEMENT_IDS.COLOR_DETAIL_MODAL);
       if (modal) {
         modal.classList.add("active");
 
-        // Focus the close button for accessibility
         const closeButton = modal.querySelector(`.${CSS_CLASSES.MODAL_CLOSE}`);
         if (closeButton) {
           closeButton.focus();
         }
 
-        // Set up accordion functionality
         const accordionTrigger = modal.querySelector(
           ".modal__accordion-trigger",
         );
@@ -630,11 +611,9 @@ export class ColorController {
             const isExpanded =
               accordionTrigger.getAttribute("aria-expanded") === "true";
 
-            // Toggle expanded state
             accordionTrigger.setAttribute("aria-expanded", !isExpanded);
             accordionPanel.setAttribute("aria-hidden", isExpanded);
 
-            // Toggle inert attribute for accessibility
             if (isExpanded) {
               accordionPanel.setAttribute("inert", "");
             } else {
@@ -643,7 +622,6 @@ export class ColorController {
           });
         }
 
-        // Set up action button handlers
         const favoriteButton = modal.querySelector(
           `.${CSS_CLASSES.MODAL_ACTION_BUTTON_FAVORITE}`,
         );
@@ -663,7 +641,6 @@ export class ColorController {
         if (favoriteButton) {
           favoriteButton.addEventListener("click", () => {
             this.handleFavoriteButton(colorId);
-            // Update button UI
             const currentlyFavorited = this.state.getFavoriteSet().has(colorId);
             const heartSvg = favoriteButton.querySelector("svg");
             const buttonText = favoriteButton.querySelector("span");
@@ -698,12 +675,10 @@ export class ColorController {
         if (hideButton) {
           hideButton.addEventListener("click", () => {
             this.handleHideButton(colorId);
-            // Update button UI
             const currentlyHidden = this.state.getHiddenSet().has(colorId);
             const eyeSvg = hideButton.querySelector("svg");
             const buttonText = hideButton.querySelector("span");
             if (eyeSvg && buttonText) {
-              // Update SVG icon
               eyeSvg.innerHTML = currentlyHidden ? ICONS.EYE : ICONS.EYE_OFF;
               buttonText.textContent = currentlyHidden
                 ? "Hidden"
@@ -725,7 +700,6 @@ export class ColorController {
           });
         }
 
-        // Set up clickable mini tiles (coordinating & similar colors)
         const clickableTiles = modal.querySelectorAll(
           `.${CSS_CLASSES.MODAL_MINI_TILE_CLICKABLE}`,
         );
@@ -769,9 +743,7 @@ export class ColorController {
       if (navigator.share) {
         await navigator.share(shareData);
       } else {
-        // Fallback: copy to clipboard
         await navigator.clipboard.writeText(shareData.url);
-        // Provide visual feedback
         const shareButton = document.querySelector(
           `.${CSS_CLASSES.MODAL_ACTION_BUTTON_SHARE} span`,
         );
@@ -802,7 +774,6 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
 
     try {
       await navigator.clipboard.writeText(colorCode);
-      // Provide visual feedback
       const copyButton = document.querySelector(
         `.${CSS_CLASSES.MODAL_ACTION_BUTTON_COPY} span`,
       );
@@ -815,7 +786,6 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       }
     } catch (err) {
       console.error("Error copying color code:", err);
-      // Fallback: show toast with the color code
       this.showToast({
         message: `Color Code: ${colorCode}`,
         duration: 5000,
@@ -831,20 +801,17 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     if (modal) {
       modal.classList.remove("active");
 
-      // Remove modal after animation
       setTimeout(() => {
         modal.remove();
-        // Restore body scrolling
         document.body.style.overflow = "";
 
-        // Restore scroll position from URL
+        // Restore scroll position
         const savedScrollPosition = this.state.getScrollPosition();
         if (savedScrollPosition > 0) {
           globalThis.scrollTo({
             top: savedScrollPosition,
             behavior: "instant",
           });
-          // Clear scroll position from URL after restoring
           this.state.setScrollPosition(0);
         }
       }, 300);
@@ -859,7 +826,6 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     const hiddenSet = this.state.getHiddenSet();
     const lrvRange = this.state.getLrvRange();
 
-    // Get color data from model (pass Sets for O(1) lookups)
     const favoriteColors = this.model.getFavoriteColors(favoriteSet);
     const hiddenColors = this.model.getHiddenColors(hiddenSet);
     const visibleColors = this.model.getVisibleColors(
@@ -868,23 +834,19 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       lrvRange,
     );
 
-    // Update LRV count display (reuse surgical helper)
     this.view.updateLrvCount(
       this.state.isLrvFilterActive(),
       visibleColors.length + favoriteColors.length,
       this.model.getActiveColorCount(),
     );
 
-    // Group and sort
     const colorFamilies = this.model.groupByFamily(visibleColors);
     const sortedFamilies = this.model.sortFamiliesByPriority(
       Object.keys(colorFamilies),
     );
 
-    // Get hidden families (excluding favorited colors)
     const hiddenFamilies = this.model.getHiddenFamilies(hiddenSet, favoriteSet);
 
-    // Render via view (pass Sets for O(1) template lookups)
     this.view.render({
       favoriteColors,
       hiddenColors,
@@ -898,8 +860,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
   }
 
   /**
-   * Event handler registry - maps selectors to handlers
-   * Strategy pattern to eliminate nested conditionals
+   * Event handler registry — maps selectors to handlers.
    * @private
    */
   _getEventHandlerRegistry() {
@@ -952,8 +913,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
   }
 
   /**
-   * Setup delegated event listeners on accordion
-   * Uses strategy pattern with handler registry for extensibility
+   * Setup delegated event listeners on accordion.
    */
   setupEventListeners() {
     const accordion = document.getElementById(ELEMENT_IDS.COLOR_ACCORDION);
@@ -965,12 +925,10 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
 
     const handlers = this._getEventHandlerRegistry();
 
-    // Single delegated click handler using handler registry
     accordion.addEventListener("click", (e) => {
       for (const config of handlers) {
         const element = e.target.closest(config.selector);
 
-        // Skip if element not found or contains excluded element
         if (!element) continue;
         if (
           config.excludeIfContains &&
@@ -979,24 +937,19 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
           continue;
         }
 
-        // Prevent default behavior and stop propagation
         e.preventDefault();
         e.stopPropagation();
 
-        // Get attribute value if specified, otherwise pass element
         const value = config.getAttribute
           ? element.getAttribute(config.getAttribute)
           : element;
 
         config.handler(value);
-        return; // Handler found and executed, stop searching
+        return;
       }
     });
   }
 
-  /**
-   * Setup header button event listeners
-   */
   setupHeaderButtons() {
     const exportFavBtn = document.getElementById(
       ELEMENT_IDS.EXPORT_FAVORITES_BTN,
@@ -1028,25 +981,16 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
 
   // --- EVENT HANDLERS (Delegate to Commands) ---
 
-  /**
-   * Handle individual color favorite button click
-   */
   handleFavoriteButton(colorId) {
     const command = new ToggleFavoriteCommand(this.model, this.state, colorId);
     this._executeCommand(command);
   }
 
-  /**
-   * Handle individual color hide button click
-   */
   handleHideButton(colorId) {
     const command = new ToggleHiddenCommand(this.model, this.state, colorId);
     this._executeCommand(command);
   }
 
-  /**
-   * Handle bulk favorite button click (family/category)
-   */
   async handleBulkFavoriteButton(groupId, groupName) {
     const groupColors = this.model.getColorsForId(groupId, () => groupName);
     const favoriteSet = this.state.getFavoriteSet();
@@ -1055,7 +999,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       favoriteSet.has(color.id),
     );
 
-    // Use visible count (excluding hidden & already-favorited) to match accordion header
+    // Use visible count to match accordion header
     const visibleCount = groupColors.filter(
       (c) => !hiddenSet.has(c.id) && !favoriteSet.has(c.id),
     ).length;
@@ -1077,7 +1021,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     });
 
     if (confirmed) {
-      // Pass precomputed colors to avoid a second getColorsForId call inside execute()
+      // Precomputed colors avoid a second getColorsForId call inside execute()
       const command = new BulkFavoriteCommand(
         this.model,
         this.state,
@@ -1087,7 +1031,6 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       );
       this._executeCommand(command);
 
-      // Show undo toast
       const actionPastTense = allFavorited ? "removed from" : "added to";
       this.showToast({
         message: `${count} color${
@@ -1103,16 +1046,13 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     }
   }
 
-  /**
-   * Handle bulk hide button click (family/category)
-   */
   async handleBulkHideButton(groupId, groupName) {
     const groupColors = this.model.getColorsForId(groupId, () => groupName);
     const hiddenSet = this.state.getHiddenSet();
     const favoriteSet = this.state.getFavoriteSet();
     const allHidden = groupColors.every((color) => hiddenSet.has(color.id));
 
-    // Use visible count (excluding hidden & favorited) to match accordion header
+    // Use visible count to match accordion header
     const visibleCount = groupColors.filter(
       (c) => !hiddenSet.has(c.id) && !favoriteSet.has(c.id),
     ).length;
@@ -1132,7 +1072,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     });
 
     if (confirmed) {
-      // Pass precomputed colors to avoid a second getColorsForId call inside execute()
+      // Precomputed colors avoid a second getColorsForId call inside execute()
       const command = new BulkHideCommand(
         this.model,
         this.state,
@@ -1142,7 +1082,6 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       );
       this._executeCommand(command);
 
-      // Show undo toast
       const actionPastTense = allHidden ? "unhidden" : "hidden";
       this.showToast({
         message: `${count} color${count === 1 ? "" : "s"} ${actionPastTense}.`,
@@ -1156,9 +1095,6 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     }
   }
 
-  /**
-   * Handle unhide button click (family tiles in hidden section)
-   */
   handleUnhideButton(familyName) {
     if (familyName) {
       const command = new UnhideGroupCommand(
@@ -1170,14 +1106,11 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     }
   }
 
-  /**
-   * Handle clear all favorites button click
-   */
   async handleClearFavorites() {
     const count = this.state.getFavoriteSet().size;
 
     if (count === 0) {
-      return; // Nothing to clear
+      return;
     }
 
     const confirmed = await this.showConfirmation({
@@ -1194,7 +1127,6 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       const command = new ClearFavoritesCommand(this.model, this.state);
       this._executeCommand(command);
 
-      // Show undo toast
       this.showToast({
         message: `${count} favorite${count === 1 ? "" : "s"} cleared.`,
         onUndo: () => {
@@ -1207,14 +1139,11 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     }
   }
 
-  /**
-   * Handle clear all hidden button click
-   */
   async handleClearHidden() {
     const count = this.state.getHiddenSet().size;
 
     if (count === 0) {
-      return; // Nothing to clear
+      return;
     }
 
     const confirmed = await this.showConfirmation({
@@ -1231,7 +1160,6 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       const command = new ClearHiddenCommand(this.model, this.state);
       this._executeCommand(command);
 
-      // Show undo toast
       this.showToast({
         message: `${count} color${count === 1 ? "" : "s"} unhidden.`,
         onUndo: () => {
@@ -1244,9 +1172,6 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     }
   }
 
-  /**
-   * Handle export favorites button click
-   */
   handleExportFavorites() {
     const favoriteSet = this.state.getFavoriteSet();
 
@@ -1259,14 +1184,12 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       return;
     }
 
-    // Get color details for all favorites via O(1) Map lookups (iterate Set directly)
     const favoriteColors = [];
     for (const id of favoriteSet) {
       const color = this.model.getColorById(id);
       if (color) favoriteColors.push(color);
     }
 
-    // Create export data
     const exportData = {
       exportDate: new Date().toISOString(),
       appVersion: APP_VERSION,
@@ -1287,7 +1210,6 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       })),
     };
 
-    // Create and download JSON file
     const jsonString = JSON.stringify(exportData, null, 2);
     const blob = new Blob([jsonString], { type: "application/json" });
     const url = URL.createObjectURL(blob);
@@ -1302,10 +1224,8 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     link.download = filename;
     link.click();
 
-    // Clean up
     URL.revokeObjectURL(url);
 
-    // Show success toast
     this.showToast({
       message: `${favoriteColors.length} favorite${
         favoriteColors.length === 1 ? "" : "s"
