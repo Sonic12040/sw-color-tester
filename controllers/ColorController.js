@@ -19,6 +19,9 @@ import {
   ClearHiddenCommand,
 } from "../commands/index.js";
 
+const SURGICAL_DIFF_THRESHOLD = 10;
+const TOAST_DURATION_MS = 3000;
+
 export class ColorController {
   constructor(
     model,
@@ -82,7 +85,7 @@ export class ColorController {
       removedHidden.length;
 
     // Fall back to full render for bulk changes
-    if (totalChanges === 0 || totalChanges > 10) {
+    if (totalChanges === 0 || totalChanges > SURGICAL_DIFF_THRESHOLD) {
       this.render();
       return;
     }
@@ -681,7 +684,7 @@ export class ColorController {
       this.dialog.toast({
         message: "No favorites to export.",
         onUndo: null,
-        duration: 3000,
+        duration: TOAST_DURATION_MS,
       });
       return;
     }
@@ -697,7 +700,7 @@ export class ColorController {
     this.dialog.toast({
       message: `${count} favorite${count === 1 ? "" : "s"} exported.`,
       onUndo: null,
-      duration: 3000,
+      duration: TOAST_DURATION_MS,
     });
   }
 }
