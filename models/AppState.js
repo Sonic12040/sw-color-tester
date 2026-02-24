@@ -1,13 +1,5 @@
 /**
- * AppState - State Management Model
- * Handles application state for favorites and hidden colors
- * Persists state to URL parameters for shareability
- * Responsibilities:
- * - Manage favorites and hidden color state
- * - Sync state with URL parameters
- * - Provide state query and mutation methods
- * - Consolidate favorites and hidden colors into family/category groups in URLs
- * - Compress URL parameters using custom numeric encoding
+ * Application state — favorites, hidden colors, and LRV range, persisted to URL.
  */
 
 import { URL_PARAMS, PREFIX } from "../utils/config.js";
@@ -40,19 +32,14 @@ export class AppState {
 
     for (const id of ids) {
       if (id.startsWith(`${PREFIX.FAMILY}:`)) {
-        // Family group: "family:Red"
         const familyName = id.substring(PREFIX.FAMILY.length + 1);
-        // Pass empty array to getColorIdsForFamily to get ALL colors in the family
-        // (don't exclude any during expansion)
         const colorIds = this.colorModel.getColorIdsForFamily(familyName, []);
         for (const colorId of colorIds) {
           expandedIds.add(colorId);
         }
       } else if (id.startsWith(`${PREFIX.CATEGORY}:`)) {
-        // Legacy category group — no longer tracked as accordions.
-        // Skip silently (these IDs won't resolve to anything).
+        // Legacy category group — no longer tracked. Skip silently.
       } else {
-        // Regular color ID
         expandedIds.add(id);
       }
     }
@@ -81,7 +68,6 @@ export class AppState {
       exclusionSet,
     );
     for (const family of selectedFamilies) {
-      // Remove individual color IDs for this family
       const familyColorIds = this.colorModel.getColorIdsForFamily(
         family.name,
         exclusionSet,
@@ -89,29 +75,16 @@ export class AppState {
       for (const colorId of familyColorIds) {
         consolidated.delete(colorId);
       }
-      // Add the family group identifier
       consolidated.add(`${PREFIX.FAMILY}:${family.name}`);
     }
 
     return Array.from(consolidated);
   }
 
-  /**
-   * Consolidate color IDs into group identifiers where entire families/categories are hidden
-   * @private
-   * @param {string[]} hiddenIds - Array of hidden color IDs
-   * @returns {string[]} Array with group identifiers for fully hidden groups
-   */
   _consolidateHiddenIds(hiddenIds) {
     return this._consolidateColorIds(hiddenIds, this.favorites);
   }
 
-  /**
-   * Consolidate color IDs into group identifiers where entire families/categories are favorited
-   * @private
-   * @param {string[]} favoriteIds - Array of favorite color IDs
-   * @returns {string[]} Array with group identifiers for fully favorited groups
-   */
   _consolidateFavoriteIds(favoriteIds) {
     return this._consolidateColorIds(favoriteIds, this.hidden);
   }
@@ -120,12 +93,10 @@ export class AppState {
    * Load state from URL parameters
    */
   loadFromURL() {
-    // Get compressed parameters from URL
     const params = new URLSearchParams(globalThis.location.search);
     const compressedFavorites = params.get(URL_PARAMS.FAVORITES) || "";
     const compressedHidden = params.get(URL_PARAMS.HIDDEN) || "";
 
-    // Decompress to get array of IDs (may include group identifiers)
     let favoriteIds = [];
     let hiddenIds = [];
 
@@ -149,7 +120,6 @@ export class AppState {
       hiddenIds = compressedHidden.split(",").filter((id) => id.trim() !== "");
     }
 
-    // Expand any group identifiers in both favorites and hidden
     const expandedFavoriteIds = this._expandGroupIds(favoriteIds);
     const expandedHiddenIds = this._expandGroupIds(hiddenIds);
 
@@ -163,22 +133,16 @@ export class AppState {
     this.lrvMax = lrvMaxParam !== null ? Number(lrvMaxParam) : 100;
   }
 
-  /**
-   * Sync current state to URL
-   */
   syncToURL() {
     const favoriteArray = Array.from(this.favorites);
     const hiddenArray = Array.from(this.hidden);
 
-    // First consolidate into group identifiers where possible
     const consolidatedFavorites = this._consolidateFavoriteIds(favoriteArray);
     const consolidatedHidden = this._consolidateHiddenIds(hiddenArray);
 
-    // Then compress the consolidated arrays
     const compressedFavorites = compressIds(consolidatedFavorites);
     const compressedHidden = compressIds(consolidatedHidden);
 
-    // Update URL with compressed strings
     const params = new URLSearchParams(globalThis.location.search);
 
     if (compressedFavorites) {
@@ -211,25 +175,19 @@ export class AppState {
   }
 
   /**
-   * Get the favorites Set for O(1) lookups (read-only by convention)
-   * @returns {Set<string>} Set of favorite color IDs
+   * @returns {Set<string>} Favorites set (read-only by convention)
    */
   getFavoriteSet() {
     return this.favorites;
   }
 
   /**
-   * Get the hidden Set for O(1) lookups (read-only by convention)
-   * @returns {Set<string>} Set of hidden color IDs
+   * @returns {Set<string>} Hidden set (read-only by convention)
    */
   getHiddenSet() {
     return this.hidden;
   }
 
-  /**
-   * Toggle a color's favorite status
-   * @param {string} colorId - Color ID to toggle
-   */
   toggleFavorite(colorId) {
     if (this.favorites.has(colorId)) {
       this.favorites.delete(colorId);
@@ -239,10 +197,6 @@ export class AppState {
     this.syncToURL();
   }
 
-  /**
-   * Toggle a color's hidden status
-   * @param {string} colorId - Color ID to toggle
-   */
   toggleHidden(colorId) {
     if (this.hidden.has(colorId)) {
       this.hidden.delete(colorId);
@@ -267,95 +221,52 @@ export class AppState {
     this.syncToURL();
   }
 
-  /**
-   * Add multiple colors to favorites
-   * @param {string[]} colorIds - Array of color IDs to add
-   */
   addMultipleFavorites(colorIds) {
     this._bulkOperation("favorites", colorIds, "add");
   }
 
-  /**
-   * Remove multiple colors from favorites
-   * @param {string[]} colorIds - Array of color IDs to remove
-   */
   removeMultipleFavorites(colorIds) {
     this._bulkOperation("favorites", colorIds, "remove");
   }
 
-  /**
-   * Add multiple colors to hidden
-   * @param {string[]} colorIds - Array of color IDs to add
-   */
   addMultipleHidden(colorIds) {
     this._bulkOperation("hidden", colorIds, "add");
   }
 
-  /**
-   * Remove multiple colors from hidden
-   * @param {string[]} colorIds - Array of color IDs to remove
-   */
   removeMultipleHidden(colorIds) {
     this._bulkOperation("hidden", colorIds, "remove");
   }
 
-  /**
-   * Clear all favorites
-   */
   clearFavorites() {
     this.favorites.clear();
     this.syncToURL();
   }
 
-  /**
-   * Clear all hidden colors
-   */
   clearHidden() {
     this.hidden.clear();
     this.syncToURL();
   }
 
-  /**
-   * Get LRV filter range
-   * @returns {{min: number, max: number}} The current LRV filter range
-   */
   getLrvRange() {
     return { min: this.lrvMin, max: this.lrvMax };
   }
 
-  /**
-   * Set LRV filter range
-   * @param {number} min - Minimum LRV value (0-100)
-   * @param {number} max - Maximum LRV value (0-100)
-   */
   setLrvRange(min, max) {
     this.lrvMin = Math.max(0, Math.min(100, min));
     this.lrvMax = Math.max(0, Math.min(100, max));
     this.syncToURL();
   }
 
-  /**
-   * Check if LRV filter is active (non-default range)
-   * @returns {boolean} True if filter is not at default 0-100
-   */
   isLrvFilterActive() {
     return this.lrvMin > 0 || this.lrvMax < 100;
   }
 
-  /**
-   * Get scroll position from URL
-   * @returns {number} The saved scroll position, or 0 if none exists
-   */
   getScrollPosition() {
     const params = new URLSearchParams(globalThis.location.search);
     const scroll = params.get(URL_PARAMS.SCROLL);
     return scroll ? Number.parseInt(scroll, 10) : 0;
   }
 
-  /**
-   * Set scroll position in URL
-   * @param {number} position - The scroll position to save
-   */
   setScrollPosition(position) {
     const params = new URLSearchParams(globalThis.location.search);
 
