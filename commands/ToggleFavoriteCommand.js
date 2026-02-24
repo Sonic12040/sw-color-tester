@@ -1,7 +1,3 @@
-/**
- * ToggleFavoriteCommand - Command for toggling a color's favorite status
- */
-
 import { ColorCommand } from "./ColorCommand.js";
 
 export class ToggleFavoriteCommand extends ColorCommand {
@@ -12,6 +8,6 @@ export class ToggleFavoriteCommand extends ColorCommand {
 
   execute() {
     this.state.toggleFavorite(this.colorId);
-    return true; // State changed, re-render needed
+    return true;
   }
 }
