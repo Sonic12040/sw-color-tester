@@ -9,6 +9,7 @@ import { AppState } from "./models/AppState.js";
 import { ColorView } from "./views/ColorView.js";
 import { ColorController } from "./controllers/ColorController.js";
 import { LrvFilterController } from "./controllers/LrvFilterController.js";
+import { ModalController } from "./controllers/ModalController.js";
 import { DialogService } from "./utils/DialogService.js";
 import { ExportService } from "./utils/ExportService.js";
 import { ELEMENT_IDS } from "./utils/config.js";
@@ -20,6 +21,11 @@ const colorView = new ColorView(ELEMENT_IDS.COLOR_ACCORDION);
 const dialogService = new DialogService();
 const exportService = new ExportService();
 const lrvFilterController = new LrvFilterController(appState);
+const modalController = new ModalController(
+  colorModel,
+  appState,
+  dialogService,
+);
 const colorController = new ColorController(
   colorModel,
   appState,
@@ -27,6 +33,7 @@ const colorController = new ColorController(
   dialogService,
   exportService,
   lrvFilterController,
+  modalController,
 );
 
 // Start the application
