@@ -1213,7 +1213,6 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       const command = new UnhideGroupCommand(
         this.model,
         this.state,
-        "family",
         familyName,
       );
       this._executeCommand(command);
