@@ -494,7 +494,7 @@ export class ColorController {
   }
 
   async handleBulkFavoriteButton(groupId, groupName) {
-    const groupColors = this.model.getColorsForId(groupId, () => groupName);
+    const groupColors = this.model.getFamilyColors(groupName);
     const favoriteSet = this.state.getFavoriteSet();
     const hiddenSet = this.state.getHiddenSet();
     const allFavorited = groupColors.every((color) =>
@@ -523,7 +523,6 @@ export class ColorController {
     });
 
     if (confirmed) {
-      // Precomputed colors avoid a second getColorsForId call inside execute()
       const command = new BulkFavoriteCommand(
         this.model,
         this.state,
@@ -549,7 +548,7 @@ export class ColorController {
   }
 
   async handleBulkHideButton(groupId, groupName) {
-    const groupColors = this.model.getColorsForId(groupId, () => groupName);
+    const groupColors = this.model.getFamilyColors(groupName);
     const hiddenSet = this.state.getHiddenSet();
     const favoriteSet = this.state.getFavoriteSet();
     const allHidden = groupColors.every((color) => hiddenSet.has(color.id));
@@ -574,7 +573,6 @@ export class ColorController {
     });
 
     if (confirmed) {
-      // Precomputed colors avoid a second getColorsForId call inside execute()
       const command = new BulkHideCommand(
         this.model,
         this.state,

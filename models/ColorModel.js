@@ -1,10 +1,5 @@
 /**
- * ColorModel - Model Layer
- * Handles all data operations and business logic for colors
- * Responsibilities:
- * - Data queries and filtering
- * - Grouping and sorting operations
- * - Hidden group detection
+ * Read-only data model — queries, grouping, and filtering over the color dataset.
  */
 
 import {
@@ -66,66 +61,34 @@ export class ColorModel {
   }
 
   /**
-   * Get the Set of all Designer Color Collection color IDs.
-   * Used for "Designer Pick" badge on tiles.
    * @returns {Set<string>}
    */
   getDesignerPickIds() {
     return this._designerPickIds;
   }
 
-  /**
-   * Get a single color by ID in O(1)
-   * @param {string} id - Color ID
-   * @returns {Object|undefined} The color object, or undefined if not found
-   */
   getColorById(id) {
     return this._colorById.get(id);
   }
 
-  /**
-   * Get all active (non-archived, non-ignored) colors
-   * @returns {Array} Array of active colors
-   */
   getActiveColors() {
     return this._activeColors;
   }
 
-  /**
-   * Get total count of active colors
-   * @returns {number} Total number of active colors
-   */
   getActiveColorCount() {
     return this.getActiveColors().length;
   }
 
-  /**
-   * Get favorite colors from a Set of IDs
-   * @param {Set<string>} favoriteSet - Set of favorite color IDs
-   * @returns {Array} Array of favorite color objects
-   */
   getFavoriteColors(favoriteSet) {
     const activeColors = this.getActiveColors();
     return activeColors.filter((c) => favoriteSet.has(c.id));
   }
 
-  /**
-   * Get hidden colors from a Set of IDs
-   * @param {Set<string>} hiddenSet - Set of hidden color IDs
-   * @returns {Array} Array of hidden color objects
-   */
   getHiddenColors(hiddenSet) {
     const activeColors = this.getActiveColors();
     return activeColors.filter((c) => hiddenSet.has(c.id));
   }
 
-  /**
-   * Get visible colors (excluding hidden and favorited colors)
-   * @param {Set<string>} hiddenSet - Set of hidden color IDs
-   * @param {Set<string>} favoriteSet - Set of favorite color IDs
-   * @param {{min: number, max: number}} [lrvRange] - Optional LRV filter range
-   * @returns {Array} Array of visible color objects
-   */
   getVisibleColors(hiddenSet, favoriteSet = new Set(), lrvRange) {
     const activeColors = this.getActiveColors();
     return activeColors.filter((c) => {
@@ -138,11 +101,6 @@ export class ColorModel {
     });
   }
 
-  /**
-   * Group colors by their primary family
-   * @param {Array} colors - Array of color objects
-   * @returns {Object} Object with family names as keys and color arrays as values
-   */
   groupByFamily(colors) {
     const colorFamilies = {};
 
@@ -162,11 +120,6 @@ export class ColorModel {
     return colorFamilies;
   }
 
-  /**
-   * Sort family names by priority order, then alphabetically
-   * @param {string[]} familyKeys - Array of family names
-   * @returns {string[]} Sorted array of family names
-   */
   sortFamiliesByPriority(familyKeys) {
     return familyKeys.sort((a, b) => {
       const aIndex = FAMILY_ORDER.indexOf(a);
@@ -180,30 +133,13 @@ export class ColorModel {
   }
 
   /**
-   * Get all colors in a specific family (O(1) Map lookup)
    * @param {string} familyName - Name of the family (case-insensitive)
-   * @returns {Array} Array of colors in the family
    */
   getFamilyColors(familyName) {
-    // Try exact match first, fall back to case-insensitive lookup
     const colors = this._familyColors.get(familyName);
     if (colors) return colors;
     const canonical = this._familyNameLookup.get(familyName.toLowerCase());
     return canonical ? this._familyColors.get(canonical) : [];
-  }
-
-  /**
-   * Get colors for a given group ID (family or category)
-   * @param {string} id - Group ID (e.g., 'family-red' or 'category-historic')
-   * @param {Function} convertIdToName - Function to convert ID to display name
-   * @returns {Array} Array of colors in the group
-   */
-  getColorsForId(id, convertIdToName) {
-    if (id.startsWith("family-")) {
-      const familyName = convertIdToName(id);
-      return this.getFamilyColors(familyName);
-    }
-    return [];
   }
 
   /**
@@ -238,10 +174,8 @@ export class ColorModel {
   }
 
   /**
-   * Get all color IDs for a specific family (O(1) Map lookup)
    * @param {string} familyName - Name of the family
    * @param {string[]|Set<string>} excludeIds - IDs to exclude (array or Set)
-   * @returns {string[]} Array of color IDs in the family
    */
   getColorIdsForFamily(familyName, excludeIds = []) {
     const ids = this._familyColorIds.get(familyName);
@@ -258,10 +192,10 @@ export class ColorModel {
   }
 
   /**
-   * Get the section IDs (family and category group IDs) that a color belongs to.
+   * Get the family section IDs a color belongs to.
    * Used by surgical updates to know which accordion sections to patch.
-   * @param {string} colorId - The color ID
-   * @returns {{familySectionIds: string[], categorySectionIds: string[]}} Section IDs
+   * @param {string} colorId
+   * @returns {{familySectionIds: string[]}}
    */
   getColorSectionIds(colorId) {
     const color = this._colorById.get(colorId);

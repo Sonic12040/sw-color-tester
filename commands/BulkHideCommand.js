@@ -10,8 +10,7 @@ export class BulkHideCommand extends ColorCommand {
 
   execute() {
     const groupColors =
-      this._precomputedColors ||
-      this.model.getColorsForId(this.groupId, () => this.groupName);
+      this._precomputedColors || this.model.getFamilyColors(this.groupName);
     this._precomputedColors = null; // Release reference after use
 
     const colorIds = groupColors.map((color) => color.id);
