@@ -1,11 +1,6 @@
 /**
- * ColorCommand - Base Command Interface
- * Implements Command Pattern for encapsulating requests as objects
- * Following Robert C. Martin's Dependency Inversion Principle:
- * - High-level modules (Controller) should not depend on low-level modules (specific operations)
- * - Both should depend on abstractions (Command interface)
+ * Abstract base class for the Command Pattern.
  */
-
 export class ColorCommand {
   constructor(model, state) {
     this.model = model;
@@ -17,6 +12,6 @@ export class ColorCommand {
    * @returns {boolean} True if state changed and re-render is needed
    */
   execute() {
-    throw new Error("Command.execute() must be implemented by subclass");
+    throw new Error("ColorCommand.execute() must be implemented by subclass");
   }
 }
