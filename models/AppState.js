@@ -16,14 +16,13 @@ export class AppState {
   }
 
   /**
-   * Expand group identifiers (family:Red, category:Neutral) into individual color IDs
+   * Expand group identifiers (e.g. family:Red) into individual color IDs.
    * @private
    * @param {string[]} ids - Array of IDs that may include group identifiers
    * @returns {string[]} Array of expanded color IDs
    *
    * Supported group identifier formats:
    * - "family:Red" - All colors in the Red family
-   * - "category:Living Well" - All colors in the Living Well category
    */
   _expandGroupIds(ids) {
     if (!this.colorModel) return ids;
@@ -37,8 +36,6 @@ export class AppState {
         for (const colorId of colorIds) {
           expandedIds.add(colorId);
         }
-      } else if (id.startsWith(`${PREFIX.CATEGORY}:`)) {
-        // Legacy category group — no longer tracked. Skip silently.
       } else {
         expandedIds.add(id);
       }
