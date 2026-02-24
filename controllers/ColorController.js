@@ -39,9 +39,6 @@ export class ColorController {
     this.exportService = exportService;
     this.lrvFilter = lrvFilter;
     this.modalController = modalController;
-    this.modalController.onToggleFavorite = (id) =>
-      this.handleFavoriteButton(id);
-    this.modalController.onToggleHidden = (id) => this.handleHideButton(id);
   }
 
   /**

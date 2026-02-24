@@ -21,12 +21,19 @@ const colorView = new ColorView(ELEMENT_IDS.COLOR_ACCORDION);
 const dialogService = new DialogService();
 const exportService = new ExportService();
 const lrvFilterController = new LrvFilterController(appState);
+
+// Late-binding closures — colorController is assigned before any user interaction
+let colorController;
 const modalController = new ModalController(
   colorModel,
   appState,
   dialogService,
+  {
+    onToggleFavorite: (id) => colorController.handleFavoriteButton(id),
+    onToggleHidden: (id) => colorController.handleHideButton(id),
+  },
 );
-const colorController = new ColorController(
+colorController = new ColorController(
   colorModel,
   appState,
   colorView,

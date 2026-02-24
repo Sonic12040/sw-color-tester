@@ -17,12 +17,12 @@ const STORE_TOAST_MS = 8000;
 const COPY_FALLBACK_TOAST_MS = 5000;
 
 export class ModalController {
-  constructor(model, state, dialog) {
+  constructor(model, state, dialog, { onToggleFavorite, onToggleHidden }) {
     this.model = model;
     this.state = state;
     this.dialog = dialog;
-    this.onToggleFavorite = null;
-    this.onToggleHidden = null;
+    this.onToggleFavorite = onToggleFavorite;
+    this.onToggleHidden = onToggleHidden;
   }
 
   setupListeners() {
@@ -108,7 +108,7 @@ export class ModalController {
     requestAnimationFrame(() => {
       const modal = document.getElementById(ELEMENT_IDS.COLOR_DETAIL_MODAL);
       if (modal) {
-        modal.classList.add("active");
+        modal.classList.add(CSS_CLASSES.MODAL_ACTIVE);
 
         const closeButton = modal.querySelector(`.${CSS_CLASSES.MODAL_CLOSE}`);
         if (closeButton) {
@@ -127,8 +127,12 @@ export class ModalController {
 
   /** @private */
   _setupAccordion(modal) {
-    const accordionTrigger = modal.querySelector(".modal__accordion-trigger");
-    const accordionPanel = modal.querySelector(".modal__accordion-panel");
+    const accordionTrigger = modal.querySelector(
+      `.${CSS_CLASSES.MODAL_ACCORDION_TRIGGER}`,
+    );
+    const accordionPanel = modal.querySelector(
+      `.${CSS_CLASSES.MODAL_ACCORDION_PANEL}`,
+    );
 
     if (accordionTrigger && accordionPanel) {
       accordionTrigger.addEventListener("click", () => {
@@ -265,16 +269,10 @@ export class ModalController {
         await navigator.share(shareData);
       } else {
         await navigator.clipboard.writeText(shareData.url);
-        const shareButton = document.querySelector(
+        this._flashButtonText(
           `.${CSS_CLASSES.MODAL_ACTION_BUTTON_SHARE} span`,
+          "Link Copied!",
         );
-        if (shareButton) {
-          const originalText = shareButton.textContent;
-          shareButton.textContent = "Link Copied!";
-          setTimeout(() => {
-            shareButton.textContent = originalText;
-          }, FEEDBACK_RESET_MS);
-        }
       }
     } catch (err) {
       console.error("Error sharing:", err);
@@ -292,16 +290,10 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
 
     try {
       await navigator.clipboard.writeText(colorCode);
-      const copyButton = document.querySelector(
+      this._flashButtonText(
         `.${CSS_CLASSES.MODAL_ACTION_BUTTON_COPY} span`,
+        "Copied!",
       );
-      if (copyButton) {
-        const originalText = copyButton.textContent;
-        copyButton.textContent = "Copied!";
-        setTimeout(() => {
-          copyButton.textContent = originalText;
-        }, FEEDBACK_RESET_MS);
-      }
     } catch (err) {
       console.error("Error copying color code:", err);
       this.dialog.toast({
@@ -314,7 +306,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
   close() {
     const modal = document.getElementById(ELEMENT_IDS.COLOR_DETAIL_MODAL);
     if (modal) {
-      modal.classList.remove("active");
+      modal.classList.remove(CSS_CLASSES.MODAL_ACTIVE);
 
       setTimeout(() => {
         modal.remove();
@@ -331,5 +323,16 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
         }
       }, CLOSE_ANIMATION_MS);
     }
+  }
+
+  /** @private */
+  _flashButtonText(selector, tempText) {
+    const el = document.querySelector(selector);
+    if (!el) return;
+    const originalText = el.textContent;
+    el.textContent = tempText;
+    setTimeout(() => {
+      el.textContent = originalText;
+    }, FEEDBACK_RESET_MS);
   }
 }

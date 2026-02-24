@@ -114,6 +114,9 @@ export const CSS_CLASSES = {
 
   // LRV Filter
   LRV_FILTER_RESET_VISIBLE: "lrv-filter__reset--visible",
+
+  // Modal State
+  MODAL_ACTIVE: "active",
 };
 
 // Element IDs
