@@ -34,6 +34,17 @@ function generateAccessibleText(color) {
   return "black";
 }
 
+/** Adaptive button/badge colors for dark vs light tile backgrounds. */
+function generateButtonStyles(isDark) {
+  return {
+    bgColor: isDark ? "rgba(255, 255, 255, 0.85)" : "rgba(0, 0, 0, 0.7)",
+    hoverBg: isDark ? "rgba(255, 255, 255, 0.95)" : "rgba(0, 0, 0, 0.85)",
+    textColor: isDark ? "rgba(0, 0, 0, 0.9)" : "white",
+    badgeBg: isDark ? "rgba(255, 255, 255, 0.85)" : "rgba(0, 0, 0, 0.75)",
+    badgeText: isDark ? "rgba(0, 0, 0, 0.9)" : "rgba(255, 255, 255, 0.95)",
+  };
+}
+
 /**
  * Generate HSL visual breakdown bars
  * @param {Object} color - The color object with hue, saturation, lightness
@@ -218,34 +229,11 @@ export function colorTemplate(color, options = {}) {
   const isFavorited = favoriteIds.has(color.id);
   const isHidden = hiddenIds.has(color.id);
   const textColor = generateAccessibleText(color);
-
-  // Badge colors based on isDark - switch background/foreground for contrast
-  // Dark tiles: light badges, Light tiles: dark badges
-  const badgeBgColor = color.isDark
-    ? "rgba(255, 255, 255, 0.85)"
-    : "rgba(0, 0, 0, 0.75)";
-  const badgeTextColor = color.isDark
-    ? "rgba(0, 0, 0, 0.9)"
-    : "rgba(255, 255, 255, 0.95)";
+  const styles = generateButtonStyles(color.isDark);
 
   const favoriteLabel = isFavorited ? "Unfavorite" : "Favorite";
   const hideLabel = isHidden ? "Unhide" : "Hide";
-
-  // Icon colors and fills based on isDark - switch for contrast with button backgrounds
-  // Dark tiles: use light buttons with dark icons, Light tiles: use dark buttons with light icons
-  const iconColor = color.isDark ? "rgba(0, 0, 0, 0.9)" : "white";
-  const favoriteFill = isFavorited ? iconColor : "none";
-
-  // Button background colors based on isDark
-  const buttonBgColor = color.isDark
-    ? "rgba(255, 255, 255, 0.85)"
-    : "rgba(0, 0, 0, 0.7)";
-  const buttonHoverBg = color.isDark
-    ? "rgba(255, 255, 255, 0.95)"
-    : "rgba(0, 0, 0, 0.85)";
-
-  // Button text color (matches icon color)
-  const buttonTextColor = iconColor;
+  const favoriteFill = isFavorited ? styles.textColor : "none";
 
   // Build button HTML conditionally
   const favoriteButtonHTML = showFavoriteButton
@@ -254,8 +242,8 @@ export function colorTemplate(color, options = {}) {
             title="${favoriteLabel} ${color.name}"
             class="${CSS_CLASSES.COLOR_TILE_FAVORITE_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON}" 
             ${DATA_ATTRIBUTES.ID}="${color.id}"
-            style="--btn-bg: ${buttonBgColor}; --btn-hover-bg: ${buttonHoverBg};">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="${favoriteFill}" stroke="${iconColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            style="--btn-bg: ${styles.bgColor}; --btn-hover-bg: ${styles.hoverBg};">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="${favoriteFill}" stroke="${styles.textColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
         ${ICONS.HEART}
       </svg>
     </button>
@@ -268,8 +256,8 @@ export function colorTemplate(color, options = {}) {
             title="${hideLabel} ${color.name}"
             class="${CSS_CLASSES.COLOR_TILE_HIDE_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON}" 
             ${DATA_ATTRIBUTES.ID}="${color.id}"
-            style="--btn-bg: ${buttonBgColor}; --btn-hover-bg: ${buttonHoverBg};">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${iconColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            style="--btn-bg: ${styles.bgColor}; --btn-hover-bg: ${styles.hoverBg};">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${styles.textColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
         ${ICONS.EYE_OFF}
       </svg>
     </button>
@@ -283,17 +271,17 @@ export function colorTemplate(color, options = {}) {
   // Designer Pick badge — shown on tiles outside the Designer family accordion (hidden via CSS inside it)
   if (designerPickIds.has(color.id)) {
     badges.push(
-      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_DESIGNER}" style="background: ${badgeBgColor}; color: ${badgeTextColor};">Designer Pick</span>`,
+      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_DESIGNER}" style="background: ${styles.badgeBg}; color: ${styles.badgeText};">Designer Pick</span>`,
     );
   }
 
   if (color.isInterior && !color.isExterior) {
     badges.push(
-      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_INTERIOR}" style="background: ${badgeBgColor}; color: ${badgeTextColor};">Interior Only</span>`,
+      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_INTERIOR}" style="background: ${styles.badgeBg}; color: ${styles.badgeText};">Interior Only</span>`,
     );
   } else if (color.isExterior && !color.isInterior) {
     badges.push(
-      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_EXTERIOR}" style="background: ${badgeBgColor}; color: ${badgeTextColor};">Exterior Only</span>`,
+      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_EXTERIOR}" style="background: ${styles.badgeBg}; color: ${styles.badgeText};">Exterior Only</span>`,
     );
   }
 
@@ -339,7 +327,7 @@ export function colorTemplate(color, options = {}) {
             CSS_CLASSES.COLOR_TILE_LRV
           }--${lrvClass}" 
                 title="Light Reflectance Value - ${lrvLabel} color reflects ${lrvValue}% of light"
-                style="background: ${badgeBgColor}; color: ${badgeTextColor};">
+                style="background: ${styles.badgeBg}; color: ${styles.badgeText};">
             <span class="${CSS_CLASSES.COLOR_TILE_LRV_LABEL}">${lrvLabel}</span>
             <span class="${
               CSS_CLASSES.COLOR_TILE_LRV_VALUE
@@ -352,7 +340,7 @@ export function colorTemplate(color, options = {}) {
                   CSS_CLASSES.COLOR_TILE_BUTTON
                 }" 
                 ${DATA_ATTRIBUTES.ID}="${color.id}"
-                style="--btn-bg: ${buttonBgColor}; --btn-hover-bg: ${buttonHoverBg}; --btn-text-color: ${buttonTextColor};">
+                style="--btn-bg: ${styles.bgColor}; --btn-hover-bg: ${styles.hoverBg}; --btn-text-color: ${styles.textColor};">
           View Details
         </button>
       </div>
@@ -402,18 +390,7 @@ export function colorDetailModal(
     color.saturation,
     color.lightness,
   );
-
-  // Header text color based on isDark - same pattern as other UI elements
-  const headerTextColor = color.isDark ? "white" : "rgba(0, 0, 0, 0.9)";
-
-  // Close button colors based on isDark - same pattern as other buttons
-  const closeBtnBg = color.isDark
-    ? "rgba(255, 255, 255, 0.85)"
-    : "rgba(0, 0, 0, 0.7)";
-  const closeBtnHoverBg = color.isDark
-    ? "rgba(255, 255, 255, 0.95)"
-    : "rgba(0, 0, 0, 0.85)";
-  const closeBtnTextColor = color.isDark ? "rgba(0, 0, 0, 0.9)" : "white";
+  const styles = generateButtonStyles(color.isDark);
 
   // Build coordinating colors section
   const coordColors = [
@@ -579,7 +556,7 @@ export function colorDetailModal(
       <div class="${CSS_CLASSES.MODAL_CONTAINER}">
         <div class="${
           CSS_CLASSES.MODAL_HEADER
-        }" style="background: ${backgroundColor}; color: ${headerTextColor};">
+        }" style="background: ${backgroundColor}; color: ${generateAccessibleText(color)};">
           <div class="${CSS_CLASSES.MODAL_HEADER_CONTENT}">
             <h2 id="modal-title" class="${CSS_CLASSES.MODAL_TITLE}">${
               color.name
@@ -591,7 +568,7 @@ export function colorDetailModal(
           </div>
           <button class="${
             CSS_CLASSES.MODAL_CLOSE
-          }" aria-label="Close modal" type="button" style="--btn-bg: ${closeBtnBg}; --btn-hover-bg: ${closeBtnHoverBg}; --btn-text-color: ${closeBtnTextColor};">
+          }" aria-label="Close modal" type="button" style="--btn-bg: ${styles.bgColor}; --btn-hover-bg: ${styles.hoverBg}; --btn-text-color: ${styles.textColor};">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
