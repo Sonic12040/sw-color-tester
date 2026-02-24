@@ -198,14 +198,12 @@ export class AppState {
   }
 
   /**
-   * Private helper for bulk operations on a Set
    * @private
-   * @param {string} setName - Name of the Set property ('favorites' or 'hidden')
+   * @param {Set<string>} set - The target Set to mutate
    * @param {string[]} colorIds - Array of color IDs to operate on
-   * @param {string} operation - Operation type ('add' or 'remove')
+   * @param {string} operation - 'add' or 'remove'
    */
-  _bulkOperation(setName, colorIds, operation) {
-    const set = this[setName];
+  _bulkUpdate(set, colorIds, operation) {
     for (const id of colorIds) {
       operation === "add" ? set.add(id) : set.delete(id);
     }
@@ -213,19 +211,19 @@ export class AppState {
   }
 
   addMultipleFavorites(colorIds) {
-    this._bulkOperation("favorites", colorIds, "add");
+    this._bulkUpdate(this.favorites, colorIds, "add");
   }
 
   removeMultipleFavorites(colorIds) {
-    this._bulkOperation("favorites", colorIds, "remove");
+    this._bulkUpdate(this.favorites, colorIds, "remove");
   }
 
   addMultipleHidden(colorIds) {
-    this._bulkOperation("hidden", colorIds, "add");
+    this._bulkUpdate(this.hidden, colorIds, "add");
   }
 
   removeMultipleHidden(colorIds) {
-    this._bulkOperation("hidden", colorIds, "remove");
+    this._bulkUpdate(this.hidden, colorIds, "remove");
   }
 
   clearFavorites() {
@@ -252,6 +250,8 @@ export class AppState {
     return this.lrvMin > 0 || this.lrvMax < 100;
   }
 
+  // Scroll position is transient — read/written directly to URL rather than
+  // cached in instance state, so it doesn't survive page reloads.
   getScrollPosition() {
     const params = new URLSearchParams(globalThis.location.search);
     const scroll = params.get(URL_PARAMS.SCROLL);
