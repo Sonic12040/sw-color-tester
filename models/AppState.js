@@ -45,6 +45,20 @@ export class AppState {
   }
 
   /**
+   * Decompress a URL param, falling back to legacy comma-separated format.
+   * @private
+   */
+  _safeDecompress(compressed, label) {
+    if (!compressed) return [];
+    try {
+      return decompressIds(compressed);
+    } catch (error) {
+      console.error(`Error decompressing ${label}:`, error);
+      return compressed.split(",").filter((id) => id.trim() !== "");
+    }
+  }
+
+  /**
    * Consolidate color IDs into group identifiers where entire families/categories are selected
    * @private
    * @param {string[]} colorIds - Array of color IDs
@@ -94,28 +108,8 @@ export class AppState {
     const compressedFavorites = params.get(URL_PARAMS.FAVORITES) || "";
     const compressedHidden = params.get(URL_PARAMS.HIDDEN) || "";
 
-    let favoriteIds = [];
-    let hiddenIds = [];
-
-    try {
-      favoriteIds = compressedFavorites
-        ? decompressIds(compressedFavorites)
-        : [];
-    } catch (error) {
-      console.error("Error decompressing favorites:", error);
-      // Fall back to legacy comma-separated format if decompression fails
-      favoriteIds = compressedFavorites
-        .split(",")
-        .filter((id) => id.trim() !== "");
-    }
-
-    try {
-      hiddenIds = compressedHidden ? decompressIds(compressedHidden) : [];
-    } catch (error) {
-      console.error("Error decompressing hidden:", error);
-      // Fall back to legacy comma-separated format if decompression fails
-      hiddenIds = compressedHidden.split(",").filter((id) => id.trim() !== "");
-    }
+    const favoriteIds = this._safeDecompress(compressedFavorites, "favorites");
+    const hiddenIds = this._safeDecompress(compressedHidden, "hidden");
 
     const expandedFavoriteIds = this._expandGroupIds(favoriteIds);
     const expandedHiddenIds = this._expandGroupIds(hiddenIds);
