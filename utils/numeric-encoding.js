@@ -141,6 +141,11 @@ function decodeNumericIds(buffer) {
 const BASE85_CHARS =
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;<=>?@^_`{|}~";
 
+// Reverse lookup: character → index
+const BASE85_CHAR_MAP = Object.fromEntries(
+  [...BASE85_CHARS].map((ch, i) => [ch, i]),
+);
+
 /** Encode binary data to URL-safe Base85 string. */
 function toBase85(buffer) {
   if (!buffer || buffer.length === 0) {
@@ -195,12 +200,6 @@ function fromBase85(str) {
     return new Uint8Array(0);
   }
 
-  // Create reverse lookup map
-  const charMap = {};
-  for (let i = 0; i < BASE85_CHARS.length; i++) {
-    charMap[BASE85_CHARS[i]] = i;
-  }
-
   const buffer = [];
 
   // Process in chunks of 5 characters
@@ -211,10 +210,10 @@ function fromBase85(str) {
     // Decode base85 digits to a number
     for (let j = 0; j < chunkLen; j++) {
       const char = str[i + j];
-      if (!(char in charMap)) {
+      if (!(char in BASE85_CHAR_MAP)) {
         throw new Error(`Invalid Base85 character: ${char}`);
       }
-      value = value * 85 + charMap[char];
+      value = value * 85 + BASE85_CHAR_MAP[char];
     }
 
     // Convert to bytes
