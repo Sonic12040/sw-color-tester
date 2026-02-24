@@ -1,15 +1,6 @@
-/**
- * Custom Numeric Encoding for Color IDs
- * Provides compact binary encoding for comma-separated numeric color IDs
- * Uses variable-length integer encoding (VarInt) + Base85 for URL safety
- * Version: 1.0.8 - Fixed bright marker to use 0xFE 0x00 (avoids collision with max value)
- */
+/** Custom VarInt + Base85 codec for compact URL encoding of numeric color IDs. */
 
-/**
- * Encode array of numeric IDs to compact binary format using VarInt
- * @param {string[]} ids - Array of numeric ID strings (e.g., ["1747", "2997", "bright-2527"])
- * @returns {Uint8Array} Compressed binary data
- */
+/** Encode array of numeric IDs to VarInt binary format. */
 function encodeNumericIds(ids) {
   if (!ids || ids.length === 0) {
     return new Uint8Array(0);
@@ -20,7 +11,6 @@ function encodeNumericIds(ids) {
   let offset = 0;
 
   for (const id of ids) {
-    // Handle "bright-" prefix if present
     let num;
     let hasBrightPrefix = false;
 
@@ -36,11 +26,8 @@ function encodeNumericIds(ids) {
       throw new Error(`Invalid numeric ID: ${id}`);
     }
 
-    // Encode bright prefix marker if needed
-    // Use 0xFE 0x00 which can't occur in valid VarInt:
-    // - If first byte is 0xFE (high bit set), it's a multi-byte value
-    // - Next byte must be either continuation (high bit set) or final (high bit clear with value)
-    // - 0x00 as second byte would mean value ends with 0, giving tiny value inconsistent with 0xFE first byte
+    // Bright prefix marker: 0xFE 0x00 — an invalid VarInt sequence,
+    // so it can't collide with any encoded number.
     if (hasBrightPrefix) {
       buffer[offset++] = 0xfe; // Marker byte 1
       buffer[offset++] = 0x00; // Marker byte 2
@@ -76,15 +63,10 @@ function encodeNumericIds(ids) {
     }
   }
 
-  // Return trimmed buffer
   return buffer.slice(0, offset);
 }
 
-/**
- * Decode binary format back to array of numeric IDs
- * @param {Uint8Array} buffer - Compressed binary data
- * @returns {string[]} Array of ID strings
- */
+/** Decode VarInt binary format back to array of numeric ID strings. */
 function decodeNumericIds(buffer) {
   if (!buffer || buffer.length === 0) {
     return [];
@@ -141,7 +123,6 @@ function decodeNumericIds(buffer) {
       }
     }
 
-    // Add ID to array
     if (hasBrightPrefix) {
       ids.push(`bright-${num}`);
     } else {
@@ -167,11 +148,7 @@ if (BASE85_CHARS.length !== 85) {
   );
 }
 
-/**
- * Encode binary data to URL-safe Base85 string
- * @param {Uint8Array} buffer - Binary data
- * @returns {string} Base85 encoded string
- */
+/** Encode binary data to URL-safe Base85 string. */
 function toBase85(buffer) {
   if (!buffer || buffer.length === 0) {
     return "";
@@ -219,11 +196,7 @@ function toBase85(buffer) {
   return result;
 }
 
-/**
- * Decode Base85 string back to binary data
- * @param {string} str - Base85 encoded string
- * @returns {Uint8Array} Binary data
- */
+/** Decode Base85 string back to binary data. */
 function fromBase85(str) {
   if (!str || str.length === 0) {
     return new Uint8Array(0);
