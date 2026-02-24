@@ -1,6 +1,3 @@
-// templates.js
-// HTML template functions for the color tester application
-
 import {
   CSS_CLASSES,
   DATA_ATTRIBUTES,
@@ -363,50 +360,27 @@ export function colorTemplate(color, options = {}) {
   `;
 }
 
-/**
- * Private helper to create a hidden group tile (family or category)
- * @private
- * @param {string} groupName - Name of the group
- * @param {number} colorCount - Number of hidden colors
- * @param {string} groupType - Either 'family' or 'category'
- * @returns {string} HTML string for the hidden group tile
- */
-function createHiddenGroupTile(groupName, colorCount, groupType) {
-  const isFamily = groupType === "family";
-  const displayType = isFamily ? "Family" : "Collection";
-  const tileClass = isFamily
-    ? CSS_CLASSES.COLOR_TILE_FAMILY
-    : CSS_CLASSES.COLOR_TILE_CATEGORY;
-  const attribute = isFamily
-    ? DATA_ATTRIBUTES.FAMILY
-    : DATA_ATTRIBUTES.CATEGORY;
-  const ariaLabel = isFamily
-    ? `${groupName} family`
-    : `${groupName} collection`;
-  const overlayIcon = isFamily
-    ? ICONS.EYE_OFF
-    : '<path d="M2 3h6l2 4h9l-3 7H6l-2-4H2z"/>';
-
+export function familyTileTemplate(familyName, colorCount) {
   return `
-    <div class="${CSS_CLASSES.COLOR_TILE} ${tileClass}" 
-         aria-label="Unhide ${ariaLabel}" 
-         ${attribute}="${groupName}">
+    <div class="${CSS_CLASSES.COLOR_TILE} ${CSS_CLASSES.COLOR_TILE_FAMILY}" 
+         aria-label="Unhide ${familyName} family" 
+         ${DATA_ATTRIBUTES.FAMILY}="${familyName}">
       <div class="${CSS_CLASSES.COLOR_TILE_ACTIONS}">
-        <button aria-label="Unhide all ${groupName} colors" 
+        <button aria-label="Unhide all ${familyName} colors" 
                 class="${CSS_CLASSES.COLOR_TILE_UNHIDE_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON}" 
-                ${attribute}="${groupName}">
+                ${DATA_ATTRIBUTES.FAMILY}="${familyName}">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
             ${ICONS.EYE}
           </svg>
         </button>
       </div>
       <div class="${CSS_CLASSES.COLOR_TILE_INFO}">
-        <strong>${groupName} ${displayType}</strong><br/>
+        <strong>${familyName} Family</strong><br/>
         <span class="${CSS_CLASSES.COLOR_TILE_COUNT}">${colorCount} colors hidden</span>
       </div>
       <div class="${CSS_CLASSES.COLOR_TILE_ICON_OVERLAY}">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-          ${overlayIcon}
+          ${ICONS.EYE_OFF}
         </svg>
       </div>
     </div>
@@ -414,32 +388,7 @@ function createHiddenGroupTile(groupName, colorCount, groupType) {
 }
 
 /**
- * Creates a family tile template for showing hidden color families
- * @param {string} familyName - The name of the color family
- * @param {number} colorCount - The number of hidden colors in the family
- * @returns {string} HTML string for the family tile
- */
-export function familyTileTemplate(familyName, colorCount) {
-  return createHiddenGroupTile(familyName, colorCount, "family");
-}
-
-/**
- * Creates a category tile template for showing hidden color categories
- * @param {string} categoryName - The name of the color category
- * @param {number} colorCount - The number of hidden colors in the category
- * @returns {string} HTML string for the category tile
- */
-export function categoryTileTemplate(categoryName, colorCount) {
-  return createHiddenGroupTile(categoryName, colorCount, "category");
-}
-
-/**
- * Creates the color detail modal with coordinating and similar colors
- * @param {Object} color - The main color object
- * @param {Object} coordinatingColors - Object with coord1, coord2, and white color objects
- * @param {Array} similarColors - Array of similar color objects
- * @param {boolean} isFavorited - Whether the color is currently favorited
- * @returns {string} HTML string for the modal
+ * @param {Object} coordinatingColors - { coord1, coord2, white } color objects
  */
 export function colorDetailModal(
   color,
@@ -845,19 +794,19 @@ export function confirmationModal({
   confirmClass = "btn-danger",
 }) {
   return `
-    <div class="confirm-overlay" id="${ELEMENT_IDS.CONFIRM_OVERLAY}" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
-      <div class="confirm-dialog">
-        <div class="confirm-header">
-          <h2 class="confirm-title" id="confirm-title">${title}</h2>
+    <div class="${CSS_CLASSES.CONFIRM_OVERLAY}" id="${ELEMENT_IDS.CONFIRM_OVERLAY}" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+      <div class="${CSS_CLASSES.CONFIRM_DIALOG}">
+        <div class="${CSS_CLASSES.CONFIRM_HEADER}">
+          <h2 class="${CSS_CLASSES.CONFIRM_TITLE}" id="confirm-title">${title}</h2>
         </div>
-        <div class="confirm-body">
-          <p class="confirm-message">${message}</p>
+        <div class="${CSS_CLASSES.CONFIRM_BODY}">
+          <p class="${CSS_CLASSES.CONFIRM_MESSAGE}">${message}</p>
         </div>
-        <div class="confirm-actions">
-          <button type="button" class="btn btn-secondary" id="${ELEMENT_IDS.CONFIRM_CANCEL}" aria-label="${cancelText}">
+        <div class="${CSS_CLASSES.CONFIRM_ACTIONS}">
+          <button type="button" class="${CSS_CLASSES.BTN} ${CSS_CLASSES.BTN_SECONDARY}" id="${ELEMENT_IDS.CONFIRM_CANCEL}" aria-label="${cancelText}">
             ${cancelText}
           </button>
-          <button type="button" class="btn ${confirmClass}" id="${ELEMENT_IDS.CONFIRM_CONFIRM}" aria-label="${confirmText}">
+          <button type="button" class="${CSS_CLASSES.BTN} ${confirmClass}" id="${ELEMENT_IDS.CONFIRM_CONFIRM}" aria-label="${confirmText}">
             ${confirmText}
           </button>
         </div>

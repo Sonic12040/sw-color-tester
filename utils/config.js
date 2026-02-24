@@ -48,6 +48,16 @@ export const CSS_CLASSES = {
   EMPTY_MESSAGE: "empty-message",
 
   CONFIRM_CLOSING: "closing",
+  CONFIRM_OVERLAY: "confirm-overlay",
+  CONFIRM_DIALOG: "confirm-dialog",
+  CONFIRM_HEADER: "confirm-header",
+  CONFIRM_TITLE: "confirm-title",
+  CONFIRM_BODY: "confirm-body",
+  CONFIRM_MESSAGE: "confirm-message",
+  CONFIRM_ACTIONS: "confirm-actions",
+
+  BTN: "btn",
+  BTN_SECONDARY: "btn-secondary",
 
   MODAL_OVERLAY: "modal-overlay",
   MODAL_CONTAINER: "modal-container",
