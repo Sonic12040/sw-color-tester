@@ -11,6 +11,7 @@ export class AppState {
     this.hidden = new Set();
     this.lrvMin = 0;
     this.lrvMax = 100;
+    this.scrollPosition = 0;
     this.colorModel = colorModel;
     this.loadFromURL();
   }
@@ -122,6 +123,9 @@ export class AppState {
     const lrvMaxParam = params.get(URL_PARAMS.LRV_MAX);
     this.lrvMin = lrvMinParam !== null ? Number(lrvMinParam) : 0;
     this.lrvMax = lrvMaxParam !== null ? Number(lrvMaxParam) : 100;
+
+    const scrollParam = params.get(URL_PARAMS.SCROLL);
+    this.scrollPosition = scrollParam ? Number.parseInt(scrollParam, 10) : 0;
   }
 
   syncToURL() {
@@ -159,6 +163,12 @@ export class AppState {
       params.set(URL_PARAMS.LRV_MAX, this.lrvMax.toString());
     } else {
       params.delete(URL_PARAMS.LRV_MAX);
+    }
+
+    if (this.scrollPosition > 0) {
+      params.set(URL_PARAMS.SCROLL, Math.round(this.scrollPosition).toString());
+    } else {
+      params.delete(URL_PARAMS.SCROLL);
     }
 
     const newUrl = `${globalThis.location.pathname}?${params.toString()}`;
@@ -250,24 +260,12 @@ export class AppState {
     return this.lrvMin > 0 || this.lrvMax < 100;
   }
 
-  // Scroll position is transient — read/written directly to URL rather than
-  // cached in instance state, so it doesn't survive page reloads.
   getScrollPosition() {
-    const params = new URLSearchParams(globalThis.location.search);
-    const scroll = params.get(URL_PARAMS.SCROLL);
-    return scroll ? Number.parseInt(scroll, 10) : 0;
+    return this.scrollPosition;
   }
 
   setScrollPosition(position) {
-    const params = new URLSearchParams(globalThis.location.search);
-
-    if (position > 0) {
-      params.set(URL_PARAMS.SCROLL, Math.round(position).toString());
-    } else {
-      params.delete(URL_PARAMS.SCROLL);
-    }
-
-    const newUrl = `${globalThis.location.pathname}?${params.toString()}`;
-    globalThis.history.replaceState({}, "", newUrl);
+    this.scrollPosition = position > 0 ? Math.round(position) : 0;
+    this.syncToURL();
   }
 }
