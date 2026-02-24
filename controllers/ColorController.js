@@ -10,7 +10,6 @@ import {
   URL_PARAMS,
   getTilesContainerId,
 } from "../utils/config.js";
-import { APP_VERSION } from "../version.js";
 import { colorDetailModal } from "../utils/templates.js";
 import {
   ToggleFavoriteCommand,
@@ -23,11 +22,12 @@ import {
 } from "../commands/index.js";
 
 export class ColorController {
-  constructor(model, state, view, dialog) {
+  constructor(model, state, view, dialog, exportService) {
     this.model = model;
     this.state = state;
     this.view = view;
     this.dialog = dialog;
+    this.exportService = exportService;
   }
 
   /**
@@ -1069,46 +1069,10 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       if (color) favoriteColors.push(color);
     }
 
-    const exportData = {
-      exportDate: new Date().toISOString(),
-      appVersion: APP_VERSION,
-      count: favoriteColors.length,
-      colors: favoriteColors.map((color) => ({
-        id: color.id,
-        name: color.name,
-        number: color.colorNumber,
-        hex: color.hex,
-        rgb: color.rgb,
-        hsl: {
-          h: Math.round(color.hue * 360),
-          s: Math.round(color.saturation * 100),
-          l: Math.round(color.lightness * 100),
-        },
-        lrv: color.lrv,
-        family: color.colorFamilyNames?.[0] || null,
-      })),
-    };
-
-    const jsonString = JSON.stringify(exportData, null, 2);
-    const blob = new Blob([jsonString], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const timestamp = new Date()
-      .toISOString()
-      .replaceAll(/[:.]/g, "-")
-      .slice(0, -5);
-    const filename = `sw-favorites-${timestamp}.json`;
-
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = filename;
-    link.click();
-
-    URL.revokeObjectURL(url);
+    const { count } = this.exportService.exportColors(favoriteColors);
 
     this.dialog.toast({
-      message: `${favoriteColors.length} favorite${
-        favoriteColors.length === 1 ? "" : "s"
-      } exported.`,
+      message: `${count} favorite${count === 1 ? "" : "s"} exported.`,
       onUndo: null,
       duration: 3000,
     });

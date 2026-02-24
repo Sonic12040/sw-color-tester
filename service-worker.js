@@ -70,6 +70,7 @@ const STATIC_ASSETS = [
   `${BASE_PATH}/utils/templates.js`,
   `${BASE_PATH}/utils/numeric-encoding.js`,
   `${BASE_PATH}/utils/DialogService.js`,
+  `${BASE_PATH}/utils/ExportService.js`,
 
   // PWA
   `${BASE_PATH}/manifest.json`,
