@@ -1,22 +1,12 @@
-/**
- * Configuration constants for the color tester application
- * Centralizes magic strings and configuration values
- */
-
 // Section/Group prefixes for IDs
 export const PREFIX = {
   FAMILY: "family",
-  CATEGORY: "category",
-  FAVORITES: "favorites",
-  HIDDEN: "hidden",
 };
 
 // CSS class names (BEM Convention: block__element--modifier)
 export const CSS_CLASSES = {
-  // Header
   HEADER: "header",
 
-  // Accordion
   ACCORDION: "accordion",
   ACCORDION_ITEM: "accordion__item",
   ACCORDION_HEADER: "accordion__header",
@@ -24,7 +14,6 @@ export const CSS_CLASSES = {
   ACCORDION_PANEL: "accordion__panel",
   ACCORDION_ICON: "accordion__icon",
 
-  // Color Tiles
   COLOR_TILE: "color-tile",
   COLOR_TILE_ACTIONS: "color-tile__actions",
   COLOR_TILE_BUTTON: "color-tile__button",
@@ -50,17 +39,14 @@ export const CSS_CLASSES = {
   COLOR_TILE_ICON_OVERLAY: "color-tile__icon-overlay",
   COLOR_TILES_GRID: "color-tiles__grid",
 
-  // Bulk Actions
   BULK_ACTIONS_PANEL: "bulk-actions-panel",
   BULK_ACTIONS_PANEL_CONTAINER: "bulk-actions-panel__container",
   BULK_ACTIONS_PANEL_LABEL: "bulk-actions-panel__label",
   BULK_ACTIONS_FAVORITE_BUTTON: "bulk-actions__favorite-button",
   BULK_ACTIONS_HIDE_BUTTON: "bulk-actions__hide-button",
 
-  // Empty State
   EMPTY_MESSAGE: "empty-message",
 
-  // Modal
   MODAL_OVERLAY: "modal-overlay",
   MODAL_CONTAINER: "modal-container",
   MODAL_HEADER: "modal-header",
@@ -104,7 +90,6 @@ export const CSS_CLASSES = {
   MODAL_ACTION_LABEL: "modal__action-label",
   MODAL_MINI_TILE_CLICKABLE: "modal__mini-tile--clickable",
 
-  // Toast
   TOAST: "toast",
   TOAST_CONTENT: "toast__content",
   TOAST_MESSAGE: "toast__message",
@@ -112,10 +97,8 @@ export const CSS_CLASSES = {
   TOAST_CLOSE: "toast__close",
   TOAST_HIDING: "toast--hiding",
 
-  // LRV Filter
   LRV_FILTER_RESET_VISIBLE: "lrv-filter__reset--visible",
 
-  // Modal State
   MODAL_ACTIVE: "active",
 };
 
@@ -191,12 +174,6 @@ export const ICONS = {
   COPY: `<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>`,
 };
 
-/**
- * Helper function to create a sanitized group ID
- * @param {string} name - The name of the group
- * @param {string} type - The type of group (family or category)
- * @returns {string} Sanitized ID string
- */
 export function createGroupId(name, type) {
   return `${type}-${name
     .toLowerCase()
@@ -205,11 +182,6 @@ export function createGroupId(name, type) {
     .replaceAll(/-+/g, "-")}`;
 }
 
-/**
- * Helper function to get tiles container ID for a section
- * @param {string} sectionId - The section ID
- * @returns {string} The tiles container ID
- */
 export function getTilesContainerId(sectionId) {
   return `${sectionId}-tiles`;
 }
