@@ -22,12 +22,13 @@ import {
 } from "../commands/index.js";
 
 export class ColorController {
-  constructor(model, state, view, dialog, exportService) {
+  constructor(model, state, view, dialog, exportService, lrvFilter) {
     this.model = model;
     this.state = state;
     this.view = view;
     this.dialog = dialog;
     this.exportService = exportService;
+    this.lrvFilter = lrvFilter;
   }
 
   /**
@@ -270,7 +271,7 @@ export class ColorController {
     this.setupEventListeners();
     this.setupHeaderButtons();
     this.setupModalListeners();
-    this.setupLrvFilter();
+    this.lrvFilter.setup(() => this.render());
     this.render();
     this.checkSharedColor();
   }
@@ -307,79 +308,6 @@ export class ColorController {
       toggle.setAttribute("aria-expanded", !isExpanded);
       panel.hidden = isExpanded;
     });
-  }
-
-  /**
-   * Setup LRV range slider filter
-   */
-  setupLrvFilter() {
-    const minSlider = document.getElementById(ELEMENT_IDS.LRV_SLIDER_MIN);
-    const maxSlider = document.getElementById(ELEMENT_IDS.LRV_SLIDER_MAX);
-    const minValue = document.getElementById(ELEMENT_IDS.LRV_VALUE_MIN);
-    const maxValue = document.getElementById(ELEMENT_IDS.LRV_VALUE_MAX);
-    const rangeFill = document.getElementById(ELEMENT_IDS.LRV_RANGE_FILL);
-    const resetBtn = document.getElementById(ELEMENT_IDS.LRV_RESET);
-
-    if (!minSlider || !maxSlider) return;
-
-    const { min, max } = this.state.getLrvRange();
-    minSlider.value = min;
-    maxSlider.value = max;
-
-    const updateSliderUI = () => {
-      const minVal = Number(minSlider.value);
-      const maxVal = Number(maxSlider.value);
-
-      minValue.textContent = minVal;
-      maxValue.textContent = maxVal;
-
-      minSlider.setAttribute("aria-valuenow", minVal);
-      maxSlider.setAttribute("aria-valuenow", maxVal);
-
-      rangeFill.style.left = `${minVal}%`;
-      rangeFill.style.right = `${100 - maxVal}%`;
-
-      const isActive = minVal > 0 || maxVal < 100;
-      resetBtn.classList.toggle("lrv-filter__reset--visible", isActive);
-    };
-
-    let renderTimeout = null;
-    const debouncedRender = () => {
-      if (renderTimeout) clearTimeout(renderTimeout);
-      renderTimeout = setTimeout(() => {
-        const minVal = Number(minSlider.value);
-        const maxVal = Number(maxSlider.value);
-        this.state.setLrvRange(minVal, maxVal);
-        this.render();
-      }, 80);
-    };
-
-    minSlider.addEventListener("input", () => {
-      if (Number(minSlider.value) > Number(maxSlider.value)) {
-        minSlider.value = maxSlider.value;
-      }
-      updateSliderUI();
-      debouncedRender();
-    });
-
-    maxSlider.addEventListener("input", () => {
-      if (Number(maxSlider.value) < Number(minSlider.value)) {
-        maxSlider.value = minSlider.value;
-      }
-      updateSliderUI();
-      debouncedRender();
-    });
-
-    resetBtn.addEventListener("click", () => {
-      minSlider.value = 0;
-      maxSlider.value = 100;
-      updateSliderUI();
-      this.state.setLrvRange(0, 100);
-      this.render();
-    });
-
-    // Set initial state
-    updateSliderUI();
   }
 
   /**

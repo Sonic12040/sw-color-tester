@@ -53,6 +53,7 @@ const STATIC_ASSETS = [
 
   // Controllers
   `${BASE_PATH}/controllers/ColorController.js`,
+  `${BASE_PATH}/controllers/LrvFilterController.js`,
 
   // Commands (Command Pattern implementation)
   `${BASE_PATH}/commands/ColorCommand.js`,
