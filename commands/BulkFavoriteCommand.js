@@ -1,8 +1,3 @@
-/**
- * BulkFavoriteCommand - Command for bulk favorite/unfavorite operations
- * Encapsulates the business logic for favoriting/unfavoriting all colors in a group
- */
-
 import { ColorCommand } from "./ColorCommand.js";
 
 export class BulkFavoriteCommand extends ColorCommand {
@@ -18,15 +13,15 @@ export class BulkFavoriteCommand extends ColorCommand {
       this._precomputedColors ||
       this.model.getColorsForId(this.groupId, () => this.groupName);
     this._precomputedColors = null; // Release reference after use
-    const favoriteSet = this.state.getFavoriteSet();
 
-    // Check if all colors are already favorited
+    const colorIds = groupColors.map((color) => color.id);
+    if (colorIds.length === 0) return false;
+
+    const favoriteSet = this.state.getFavoriteSet();
     const allFavorited = groupColors.every((color) =>
       favoriteSet.has(color.id),
     );
-    const colorIds = groupColors.map((color) => color.id);
 
-    // Store state for undo
     this.wasAdding = !allFavorited;
     this.colorIds = colorIds;
 
@@ -36,20 +31,18 @@ export class BulkFavoriteCommand extends ColorCommand {
       this.state.addMultipleFavorites(colorIds);
     }
 
-    return true; // State changed, re-render needed
+    return true;
   }
 
   undo() {
-    // Restore previous state
     if (this.colorIds) {
       if (this.wasAdding) {
-        // Was adding, so remove them
         this.state.removeMultipleFavorites(this.colorIds);
       } else {
-        // Was removing, so add them back
         this.state.addMultipleFavorites(this.colorIds);
       }
-      return true; // State changed, re-render needed
+      this.colorIds = null;
+      return true;
     }
     return false;
   }
