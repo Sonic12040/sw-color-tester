@@ -1,12 +1,5 @@
 /**
- * ColorController - Controller Layer
- * Handles user interactions and coordinates Model & View
- * Implements Dependency Inversion Principle via Command Pattern
- * Responsibilities:
- * - Handle user events
- * - Delegate to Commands (business logic)
- * - Orchestrate rendering
- * - Application initialization
+ * Controller layer — coordinates user events, commands, and rendering.
  */
 
 import {
@@ -47,14 +40,12 @@ export class ColorController {
    * @param {ColorCommand} command - Command to execute
    */
   _executeCommand(command) {
-    // Snapshot state before command
     const prevFavorites = new Set(this.state.getFavoriteSet());
     const prevHidden = new Set(this.state.getHiddenSet());
 
     const stateChanged = command.execute();
     if (!stateChanged) return;
 
-    // Compute diffs
     const newFavorites = this.state.getFavoriteSet();
     const newHidden = this.state.getHiddenSet();
 
@@ -82,22 +73,18 @@ export class ColorController {
       addedHidden.length +
       removedHidden.length;
 
-    // Fall back to full render for bulk changes (threshold: > 10 individual changes)
+    // Fall back to full render for bulk changes
     if (totalChanges === 0 || totalChanges > 10) {
       this.render();
       return;
     }
 
-    // Update the view's cached Sets so surgical methods use current state
     this.view.favoriteIds = newFavorites;
     this.view.hiddenIds = newHidden;
     this.view.designerPickIds = this.model.getDesignerPickIds();
 
-    // Apply surgical updates
     this._applyFavoriteDiff(addedFavs, removedFavs);
     this._applyHiddenDiff(addedHidden, removedHidden);
-
-    // Update LRV count display
     this._updateLrvCount();
   }
 
@@ -112,12 +99,9 @@ export class ColorController {
   _applyFavoriteDiff(added, removed) {
     const favoriteSet = this.state.getFavoriteSet();
 
-    // Process added favorites
     for (const colorId of added) {
-      // Update heart icon on all tile instances
       this.view.updateTileFavoriteState(colorId, true);
 
-      // Add tile to favorites section
       const color = this.model.getColorById(colorId);
       if (color) {
         this.view.addTileToSection("favorites", color, {
@@ -126,16 +110,11 @@ export class ColorController {
       }
     }
 
-    // Process removed favorites
     for (const colorId of removed) {
-      // Update heart icon on all tile instances
       this.view.updateTileFavoriteState(colorId, false);
-
-      // Remove tile from favorites section
       this.view.removeTileFromSection("favorites", colorId);
     }
 
-    // Show empty state if needed
     if (removed.length > 0) {
       this.view.showEmptyStateIfNeeded(
         "favorites",
@@ -144,14 +123,12 @@ export class ColorController {
       );
     }
 
-    // Update favorites section header count
     const newCount = favoriteSet.size;
     const title = newCount > 0 ? `Favorites (${newCount})` : "Favorites";
     this.view.updateSectionHeader("favorites", title);
 
-    // Update accordion open/close if transitioning from 0 to some or some to 0
+    // Open accordion when transitioning from 0 favorites to some
     if (added.length > 0 && favoriteSet.size === added.length) {
-      // Went from 0 to some — open the accordion
       const header = document.getElementById("favorites-header");
       const content = document.getElementById("favorites");
       if (header && content) {
@@ -176,40 +153,32 @@ export class ColorController {
     const favoriteSet = this.state.getFavoriteSet();
     const lrvRange = this.state.getLrvRange();
 
-    // Process newly hidden colors
     for (const colorId of added) {
-      // Update eye icon on all tile instances
       this.view.updateTileHiddenState(colorId, true);
 
       const color = this.model.getColorById(colorId);
       if (!color) continue;
 
-      // Remove tile from family sections
       const sections = this.model.getColorSectionIds(colorId);
       for (const sectionId of sections.familySectionIds) {
         this.view.removeTileFromSection(sectionId, colorId);
-        // Update section header count
         this._updateSectionHeaderCount(sectionId);
       }
 
-      // Add tile to hidden section (only if not in a fully-hidden group)
+      // Add tile to hidden section
       this.view.addTileToSection("hidden", color, {
         showFavoriteButton: false,
       });
     }
 
-    // Process unhidden colors
     for (const colorId of removed) {
-      // Update eye icon on all tile instances
       this.view.updateTileHiddenState(colorId, false);
 
       const color = this.model.getColorById(colorId);
       if (!color) continue;
 
-      // Remove from hidden section
       this.view.removeTileFromSection("hidden", colorId);
 
-      // Add back to family sections if passes LRV filter and not favorited
       if (!favoriteSet.has(colorId) && this._passesLrvFilter(color, lrvRange)) {
         const sections = this.model.getColorSectionIds(colorId);
         for (const sectionId of sections.familySectionIds) {
@@ -219,7 +188,6 @@ export class ColorController {
       }
     }
 
-    // Show empty state in hidden section if needed
     if (removed.length > 0) {
       this.view.showEmptyStateIfNeeded(
         "hidden",
@@ -228,7 +196,6 @@ export class ColorController {
       );
     }
 
-    // Update hidden section header
     const hiddenCount = hiddenSet.size;
     const hiddenTitle =
       hiddenCount > 0 ? `Hidden Colors (${hiddenCount})` : "Hidden Colors";
@@ -262,13 +229,11 @@ export class ColorController {
       `.${CSS_CLASSES.COLOR_TILE}`,
     ).length;
 
-    // Extract group name from sectionId for display
     const header = document.getElementById(`${sectionId}-header`);
     if (!header) return;
     const span = header.querySelector("span");
     if (!span) return;
 
-    // Parse existing title to get the base name (before the count)
     const currentText = span.textContent;
     const baseName = currentText.replace(/\s*\(\d+\)\s*$/, "");
     span.textContent = `${baseName} (${tileCount})`;
@@ -312,32 +277,27 @@ export class ColorController {
    */
   showConfirmation(options) {
     return new Promise((resolve) => {
-      // Create confirmation modal
       const modalHTML = confirmationModal(options);
 
-      // Insert into DOM
       document.body.insertAdjacentHTML("beforeend", modalHTML);
 
       const overlay = document.getElementById(ELEMENT_IDS.CONFIRM_OVERLAY);
       const confirmBtn = document.getElementById(ELEMENT_IDS.CONFIRM_CONFIRM);
       const cancelBtn = document.getElementById(ELEMENT_IDS.CONFIRM_CANCEL);
 
-      // Focus confirm button for keyboard accessibility
+      // Focus confirm button for accessibility
       setTimeout(() => confirmBtn.focus(), 100);
 
-      // Handle confirm
       const handleConfirm = () => {
         cleanup();
         resolve(true);
       };
 
-      // Handle cancel
       const handleCancel = () => {
         cleanup();
         resolve(false);
       };
 
-      // Cleanup function
       const cleanup = () => {
         overlay.classList.add("closing");
         setTimeout(() => {
@@ -345,18 +305,15 @@ export class ColorController {
         }, 300); // Match animation duration
       };
 
-      // Event listeners
       confirmBtn.addEventListener("click", handleConfirm);
       cancelBtn.addEventListener("click", handleCancel);
 
-      // Close on overlay click
       overlay.addEventListener("click", (e) => {
         if (e.target === overlay) {
           handleCancel();
         }
       });
 
-      // Close on Escape key
       const handleEscape = (e) => {
         if (e.key === "Escape") {
           handleCancel();
@@ -383,7 +340,6 @@ export class ColorController {
       id: toastId,
     });
 
-    // Insert into DOM
     document.body.insertAdjacentHTML("beforeend", toastHTML);
 
     const toast = document.getElementById(toastId);
@@ -393,14 +349,12 @@ export class ColorController {
     let timeoutId = null;
     let isDismissed = false;
 
-    // Auto-dismiss after duration
     const scheduleAutoDismiss = () => {
       timeoutId = setTimeout(() => {
         dismissToast();
       }, duration);
     };
 
-    // Dismiss toast
     const dismissToast = () => {
       if (isDismissed) return;
       isDismissed = true;
@@ -415,7 +369,6 @@ export class ColorController {
       }, 300); // Match animation duration
     };
 
-    // Handle undo
     const handleUndo = () => {
       if (isDismissed) return;
       dismissToast();
@@ -424,11 +377,9 @@ export class ColorController {
       }
     };
 
-    // Event listeners
     actionBtn.addEventListener("click", handleUndo);
     closeBtn.addEventListener("click", dismissToast);
 
-    // Start auto-dismiss timer
     scheduleAutoDismiss();
   }
 
