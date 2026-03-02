@@ -464,7 +464,7 @@
 .toolbar__content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: var(--spacing-3) var(--spacing-4);
+  padding: var(--spacing-3) clamp(1rem, 2.67vw, 2rem);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-3);
@@ -743,7 +743,7 @@
 .accordion {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 var(--spacing-4);
+  padding: 0 clamp(1rem, 2.67vw, 2rem);
 }
 
 .accordion__item {
@@ -757,7 +757,8 @@
   background: var(--color-surface-hover);
   border: none;
   width: 100%;
-  padding: var(--spacing-4) var(--spacing-6);
+  padding: clamp(0.75rem, 0.214rem + 2.29vw, 1.5rem)
+    clamp(1rem, 0.318rem + 2.91vw, 2rem);
   text-align: left;
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-semibold);
@@ -795,7 +796,7 @@
 /* Bulk action panel styles */
 .bulk-actions-panel {
   margin-bottom: var(--spacing-4);
-  padding: var(--spacing-4);
+  padding: clamp(0.75rem, 0.214rem + 2.29vw, 1.5rem);
   background: var(--color-surface-secondary);
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border-secondary);
@@ -803,7 +804,7 @@
 
 .bulk-actions-panel__container {
   display: flex;
-  gap: var(--spacing-4);
+  gap: clamp(0.75rem, 0.214rem + 2.29vw, 1.5rem);
   align-items: center;
 }
 
@@ -941,13 +942,13 @@
 }
 
 .accordion__panel {
-  padding: var(--spacing-4);
+  padding: clamp(0.75rem, 0.182rem + 2.42vw, 2rem);
   background: var(--color-surface-primary);
   min-height: 0;
 }
 
 .accordion__content[aria-hidden="true"] .accordion__panel {
-  padding: 0 var(--spacing-4);
+  padding: 0 clamp(1rem, 2.67vw, 2rem);
 }
 
 /* Custom scrollbar styling for webkit browsers */
@@ -984,9 +985,9 @@
   min-width: 280px;
   max-width: 320px;
   min-height: 160px;
-  padding: var(--spacing-4);
+  padding: clamp(1rem, 2.67vw, 1.5rem);
   /* Ensure info content clears the absolutely-positioned action buttons */
-  padding-top: calc(var(--button-min-height) + var(--spacing-4));
+  padding-top: calc(var(--button-min-height) + clamp(1rem, 2.67vw, 1.5rem));
   position: relative;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
@@ -1028,8 +1029,6 @@
 @media (min-width: 600px) {
   .color-tile {
     max-width: 350px;
-    padding: var(--spacing-4);
-    padding-top: calc(var(--button-min-height) + var(--spacing-4));
   }
 }
 
@@ -1039,8 +1038,6 @@
     min-width: 280px;
     max-width: 320px;
     min-height: 180px;
-    padding: var(--spacing-6);
-    padding-top: calc(var(--button-min-height) + var(--spacing-6));
   }
 }
 
@@ -1249,10 +1246,6 @@
     margin-bottom: var(--spacing-3);
   }
 
-  .toolbar__content {
-    padding: var(--spacing-3);
-  }
-
   .toolbar__actions {
     flex-direction: column;
   }
@@ -1267,22 +1260,7 @@
     max-width: 100%;
   }
 
-  /* Maintain adequate touch targets on mobile while adjusting spacing */
-  .accordion__header {
-    padding: var(--spacing-3) var(--spacing-4);
-    min-height: 44px;
-  }
-
-  .accordion__panel {
-    padding: var(--spacing-3);
-  }
-
-  .bulk-actions-panel {
-    padding: var(--spacing-3);
-  }
-
   .bulk-actions-panel__container {
-    gap: var(--spacing-3);
     flex-wrap: wrap;
   }
 
@@ -1401,7 +1379,7 @@
 }
 
 .modal-header {
-  padding: var(--spacing-5) var(--spacing-6);
+  padding: clamp(1.25rem, 0.568rem + 2.91vw, 2.5rem);
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -1463,7 +1441,7 @@
 .modal__body {
   flex: 1;
   overflow-y: auto;
-  padding: var(--spacing-6);
+  padding: clamp(1.5rem, 0.818rem + 2.91vw, 2.5rem);
   scrollbar-width: thin;
   scrollbar-color: var(--color-border-secondary) var(--color-surface-secondary);
   background: var(--color-surface-primary);
@@ -1483,7 +1461,7 @@
 }
 
 .modal__section {
-  margin-bottom: var(--spacing-6);
+  margin-bottom: clamp(1.5rem, 1.045rem + 1.94vw, 2rem);
 }
 
 .modal__section:last-child {
@@ -1494,7 +1472,7 @@
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-tight);
-  margin: 0 0 var(--spacing-4) 0;
+  margin: 0 0 clamp(1rem, 0.545rem + 1.94vw, 1.5rem) 0;
   color: var(--color-text-primary);
   border-bottom: 2px solid var(--color-border-secondary);
   padding-bottom: var(--spacing-2);
@@ -1503,7 +1481,7 @@
 .modal__info-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--spacing-4);
+  gap: clamp(1rem, 0.545rem + 1.94vw, 1.5rem);
 }
 
 .modal__info-item {
@@ -1670,13 +1648,13 @@
 .modal__color-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: var(--spacing-4);
+  gap: clamp(1rem, 0.545rem + 1.94vw, 1.5rem);
 }
 
 .modal__mini-tile {
   aspect-ratio: 1;
   border-radius: var(--radius-md);
-  padding: var(--spacing-2);
+  padding: clamp(0.5rem, 0.045rem + 1.94vw, 1rem);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -2485,88 +2463,6 @@
   .modal__action-button--secondary:hover::after,
   .modal__action-button--secondary:focus-visible::after {
     opacity: 1;
-  }
-}
-
-/* Tablet optimization (600px - 899px) */
-@media (min-width: 600px) and (max-width: 899px) {
-  .toolbar__content {
-    padding: var(--spacing-3) var(--spacing-6);
-  }
-
-  .accordion {
-    padding: 0 var(--spacing-6);
-  }
-
-  .accordion__header {
-    padding: var(--spacing-4) var(--spacing-6);
-  }
-
-  .accordion__panel {
-    padding: var(--spacing-6);
-  }
-
-  .modal-header {
-    padding: var(--spacing-8);
-  }
-
-  .modal__body {
-    padding: var(--spacing-8);
-  }
-}
-
-/* Desktop optimization (900px+) */
-@media (min-width: 900px) {
-  .toolbar__content {
-    padding: var(--spacing-4) var(--spacing-8);
-  }
-
-  .accordion {
-    padding: 0 var(--spacing-8);
-  }
-
-  .accordion__header {
-    padding: var(--spacing-6) var(--spacing-8);
-  }
-
-  .accordion__panel {
-    padding: var(--spacing-8);
-  }
-
-  .bulk-actions-panel {
-    padding: var(--spacing-6);
-  }
-
-  .bulk-actions-panel__container {
-    gap: var(--spacing-6);
-  }
-
-  .modal-header {
-    padding: var(--spacing-10);
-  }
-
-  .modal__body {
-    padding: var(--spacing-10);
-  }
-
-  .modal__section {
-    margin-bottom: var(--spacing-8);
-  }
-
-  .modal__section-title {
-    margin-bottom: var(--spacing-6);
-  }
-
-  .modal__info-grid {
-    gap: var(--spacing-6);
-  }
-
-  .modal__color-grid {
-    gap: var(--spacing-6);
-  }
-
-  .modal__mini-tile {
-    padding: var(--spacing-4);
   }
 }
 
