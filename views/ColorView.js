@@ -12,6 +12,7 @@ import {
   createAccordionItem,
   colorTemplate,
   familyTileTemplate,
+  parseHTML,
 } from "../utils/templates.js";
 import {
   PREFIX,
@@ -220,17 +221,19 @@ export class ColorView {
     );
 
     if (favoriteColors.length > 0) {
-      const html = favoriteColors
-        .map((color) =>
+      const fragment = document.createDocumentFragment();
+      for (const color of favoriteColors) {
+        fragment.appendChild(
           colorTemplate(color, {
             showHideButton: false,
             favoriteIds: this.favoriteIds,
             hiddenIds: this.hiddenIds,
             designerPickIds: this.designerPickIds,
           }),
-        )
-        .join("");
-      favoritesContainer.innerHTML = html;
+        );
+      }
+      favoritesContainer.innerHTML = "";
+      favoritesContainer.appendChild(fragment);
     } else {
       favoritesContainer.innerHTML = `
         <div class="${CSS_CLASSES.EMPTY_MESSAGE}">
@@ -246,13 +249,7 @@ export class ColorView {
    */
   renderHiddenSection(hiddenColors, hiddenFamilies) {
     const hiddenContainer = document.getElementById(ELEMENT_IDS.HIDDEN_TILES);
-    hiddenContainer.innerHTML = ""; // Clear existing hidden tiles
-    let html = "";
-
-    // Add hidden family tiles
-    for (const family of hiddenFamilies) {
-      html += familyTileTemplate(family.name, family.count);
-    }
+    hiddenContainer.innerHTML = "";
 
     // Add individual hidden colors (excluding those in completely hidden families)
     const hiddenFamilyNames = new Set(hiddenFamilies.map((f) => f.name));
@@ -263,19 +260,6 @@ export class ColorView {
       return true;
     });
 
-    if (individualHiddenColors.length > 0) {
-      html += individualHiddenColors
-        .map((color) =>
-          colorTemplate(color, {
-            showFavoriteButton: false,
-            favoriteIds: this.favoriteIds,
-            hiddenIds: this.hiddenIds,
-            designerPickIds: this.designerPickIds,
-          }),
-        )
-        .join("");
-    }
-
     if (hiddenFamilies.length === 0 && individualHiddenColors.length === 0) {
       hiddenContainer.innerHTML = `
         <div class="${CSS_CLASSES.EMPTY_MESSAGE}">
@@ -284,7 +268,23 @@ export class ColorView {
         </div>
       `;
     } else {
-      hiddenContainer.innerHTML = html;
+      const fragment = document.createDocumentFragment();
+      for (const family of hiddenFamilies) {
+        fragment.appendChild(
+          parseHTML(familyTileTemplate(family.name, family.count)),
+        );
+      }
+      for (const color of individualHiddenColors) {
+        fragment.appendChild(
+          colorTemplate(color, {
+            showFavoriteButton: false,
+            favoriteIds: this.favoriteIds,
+            hiddenIds: this.hiddenIds,
+            designerPickIds: this.designerPickIds,
+          }),
+        );
+      }
+      hiddenContainer.appendChild(fragment);
     }
   }
 
@@ -300,15 +300,17 @@ export class ColorView {
       );
       const familyColors = colorFamilies[family];
 
-      familyContainer.innerHTML = familyColors
-        .map((color) =>
+      const fragment = document.createDocumentFragment();
+      for (const color of familyColors) {
+        fragment.appendChild(
           colorTemplate(color, {
             favoriteIds: this.favoriteIds,
             hiddenIds: this.hiddenIds,
             designerPickIds: this.designerPickIds,
           }),
-        )
-        .join("");
+        );
+      }
+      familyContainer.appendChild(fragment);
     }
   }
 
@@ -386,13 +388,13 @@ export class ColorView {
     const emptyMsg = container.querySelector(`.${CSS_CLASSES.EMPTY_MESSAGE}`);
     if (emptyMsg) emptyMsg.remove();
 
-    const html = colorTemplate(color, {
+    const node = colorTemplate(color, {
       favoriteIds: this.favoriteIds,
       hiddenIds: this.hiddenIds,
       designerPickIds: this.designerPickIds,
       ...options,
     });
-    container.insertAdjacentHTML("beforeend", html);
+    container.appendChild(node);
   }
 
   /**

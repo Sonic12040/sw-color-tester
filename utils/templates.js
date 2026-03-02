@@ -20,9 +20,15 @@ const SIMILAR_DIFFERENTIATORS = [
   "Alternative",
 ];
 
-/**
- * Color utility functions for templates
- */
+/** Reusable <template> element for efficient HTML → DOM parsing. */
+const _tmpl = document.createElement("template");
+
+/** Parse an HTML string into a single DOM element. */
+export function parseHTML(html) {
+  _tmpl.innerHTML = html;
+  return _tmpl.content.firstElementChild;
+}
+
 function generateHSLColor(hue, saturation, lightness) {
   return `hsl(${hue * 360}deg ${saturation * 100}% ${lightness * 100}%)`;
 }
@@ -215,7 +221,7 @@ export function createAccordionItem(
  * @param {boolean} options.showHideButton - Whether to show the hide button (default: true)
  * @param {Set<string>} options.favoriteIds - Set of favorite color IDs (default: empty Set)
  * @param {Set<string>} options.hiddenIds - Set of hidden color IDs (default: empty Set)
- * @returns {string} HTML string for the color tile
+ * @returns {Element} DOM element for the color tile
  */
 export function colorTemplate(color, options = {}) {
   const {
@@ -302,50 +308,9 @@ export function colorTemplate(color, options = {}) {
     lrvLabel = "Light";
   }
 
-  return `
-    <div class="${CSS_CLASSES.COLOR_TILE}" 
-         ${DATA_ATTRIBUTES.ID}="${color.id}"
-         style="background: ${generateHSLColor(
-           color.hue,
-           color.saturation,
-           color.lightness,
-         )}; color: ${textColor}">
-      <div class="${CSS_CLASSES.COLOR_TILE_ACTIONS}">
-        ${favoriteButtonHTML}
-        ${hideButtonHTML}
-      </div>
-      ${badgesHTML}
-      <div class="${CSS_CLASSES.COLOR_TILE_INFO}" style="color:${textColor};">
-        <div class="${CSS_CLASSES.COLOR_TILE_NAME}">
-          <strong>${color.name}</strong>
-        </div>
-        <div class="${CSS_CLASSES.COLOR_TILE_NUMBER}">SW ${
-          color.colorNumber
-        }</div>
-        <div class="${CSS_CLASSES.COLOR_TILE_LRV_CONTAINER}">
-          <span class="${CSS_CLASSES.COLOR_TILE_LRV} ${
-            CSS_CLASSES.COLOR_TILE_LRV
-          }--${lrvClass}" 
-                title="Light Reflectance Value - ${lrvLabel} color reflects ${lrvValue}% of light"
-                style="background: ${styles.badgeBg}; color: ${styles.badgeText};">
-            <span class="${CSS_CLASSES.COLOR_TILE_LRV_LABEL}">${lrvLabel}</span>
-            <span class="${
-              CSS_CLASSES.COLOR_TILE_LRV_VALUE
-            }">LRV ${lrvValue}</span>
-          </span>
-        </div>
-        <button type="button"
-                aria-label="See color details and pairings for ${color.name}" 
-                class="${CSS_CLASSES.COLOR_TILE_VIEW_BUTTON} ${
-                  CSS_CLASSES.COLOR_TILE_BUTTON
-                }" 
-                ${DATA_ATTRIBUTES.ID}="${color.id}"
-                style="--btn-bg: ${styles.bgColor}; --btn-hover-bg: ${styles.hoverBg}; --btn-text-color: ${styles.textColor};">
-          View Details
-        </button>
-      </div>
-    </div>
-  `;
+  const html = `<div class="${CSS_CLASSES.COLOR_TILE}" ${DATA_ATTRIBUTES.ID}="${color.id}" style="background: ${generateHSLColor(color.hue, color.saturation, color.lightness)}; color: ${textColor}"><div class="${CSS_CLASSES.COLOR_TILE_ACTIONS}">${favoriteButtonHTML}${hideButtonHTML}</div>${badgesHTML}<div class="${CSS_CLASSES.COLOR_TILE_INFO}" style="color:${textColor};"><div class="${CSS_CLASSES.COLOR_TILE_NAME}"><strong>${color.name}</strong></div><div class="${CSS_CLASSES.COLOR_TILE_NUMBER}">SW ${color.colorNumber}</div><div class="${CSS_CLASSES.COLOR_TILE_LRV_CONTAINER}"><span class="${CSS_CLASSES.COLOR_TILE_LRV} ${CSS_CLASSES.COLOR_TILE_LRV}--${lrvClass}" title="Light Reflectance Value - ${lrvLabel} color reflects ${lrvValue}% of light" style="background: ${styles.badgeBg}; color: ${styles.badgeText};"><span class="${CSS_CLASSES.COLOR_TILE_LRV_LABEL}">${lrvLabel}</span><span class="${CSS_CLASSES.COLOR_TILE_LRV_VALUE}">LRV ${lrvValue}</span></span></div><button type="button" aria-label="See color details and pairings for ${color.name}" class="${CSS_CLASSES.COLOR_TILE_VIEW_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON}" ${DATA_ATTRIBUTES.ID}="${color.id}" style="--btn-bg: ${styles.bgColor}; --btn-hover-bg: ${styles.hoverBg}; --btn-text-color: ${styles.textColor};">View Details</button></div></div>`;
+
+  return parseHTML(html);
 }
 
 export function familyTileTemplate(familyName, colorCount) {
