@@ -177,6 +177,19 @@ export const FAMILY_ORDER = [
   "Neutral",
 ];
 
+export const TIMING = {
+  CLOSE_ANIMATION_MS: 300,
+  FEEDBACK_RESET_MS: 2000,
+  STORE_TOAST_MS: 8000,
+  COPY_FALLBACK_TOAST_MS: 5000,
+  TOAST_DURATION_MS: 3000,
+  LRV_DEBOUNCE_MS: 80,
+};
+
+export const THRESHOLDS = {
+  SURGICAL_DIFF: 10,
+};
+
 // SVG icons as constants
 export const ICONS = {
   HEART: `<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>`,

@@ -8,17 +8,13 @@ import {
   DATA_ATTRIBUTES,
   ICONS,
   URL_PARAMS,
+  TIMING,
 } from "../utils/config.js";
 import { colorDetailModal } from "../utils/templates.js";
 import {
   ToggleFavoriteCommand,
   ToggleHiddenCommand,
 } from "../commands/index.js";
-
-const CLOSE_ANIMATION_MS = 300;
-const FEEDBACK_RESET_MS = 2000;
-const STORE_TOAST_MS = 8000;
-const COPY_FALLBACK_TOAST_MS = 5000;
 
 export class ModalController {
   constructor(model, state, dialog, commandBus) {
@@ -31,13 +27,10 @@ export class ModalController {
 
   setupListeners() {
     document.addEventListener("click", (e) => {
-      if (e.target.classList.contains(CSS_CLASSES.MODAL_OVERLAY)) {
-        this.close();
-      }
-    });
-
-    document.addEventListener("click", (e) => {
-      if (e.target.closest(`.${CSS_CLASSES.MODAL_CLOSE}`)) {
+      if (
+        e.target.classList.contains(CSS_CLASSES.MODAL_OVERLAY) ||
+        e.target.closest(`.${CSS_CLASSES.MODAL_CLOSE}`)
+      ) {
         this.close();
       }
     });
@@ -254,7 +247,7 @@ export class ModalController {
       storeButton.addEventListener("click", () => {
         this.dialog.toast({
           message: `Visit your local Sherwin-Williams store and ask for: ${color.name} or ${color.brandKey} ${color.colorNumber} (Location: ${color.storeStripLocator})`,
-          duration: STORE_TOAST_MS,
+          duration: TIMING.STORE_TOAST_MS,
         });
       });
     }
@@ -328,7 +321,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
       console.error("Error copying color code:", err);
       this.dialog.toast({
         message: `Color Code: ${colorCode}`,
-        duration: COPY_FALLBACK_TOAST_MS,
+        duration: TIMING.COPY_FALLBACK_TOAST_MS,
       });
     }
   }
@@ -352,7 +345,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
           });
           this.state.setScrollPosition(0);
         }
-      }, CLOSE_ANIMATION_MS);
+      }, TIMING.CLOSE_ANIMATION_MS);
     }
   }
 
@@ -364,6 +357,6 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     el.textContent = tempText;
     setTimeout(() => {
       el.textContent = originalText;
-    }, FEEDBACK_RESET_MS);
+    }, TIMING.FEEDBACK_RESET_MS);
   }
 }

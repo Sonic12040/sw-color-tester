@@ -1,7 +1,5 @@
-import { CSS_CLASSES, ELEMENT_IDS } from "./config.js";
+import { CSS_CLASSES, ELEMENT_IDS, TIMING } from "./config.js";
 import { confirmationModal, toastNotification } from "./templates.js";
-
-const CLOSE_ANIMATION_MS = 300;
 
 export class DialogService {
   /**
@@ -42,7 +40,7 @@ export class DialogService {
         overlay.classList.add(CSS_CLASSES.CONFIRM_CLOSING);
         setTimeout(() => {
           overlay.remove();
-        }, CLOSE_ANIMATION_MS);
+        }, TIMING.CLOSE_ANIMATION_MS);
       };
 
       confirmBtn.addEventListener("click", handleConfirm);
@@ -104,7 +102,7 @@ export class DialogService {
       toast.classList.add(CSS_CLASSES.TOAST_HIDING);
       setTimeout(() => {
         toast.remove();
-      }, CLOSE_ANIMATION_MS);
+      }, TIMING.CLOSE_ANIMATION_MS);
     };
 
     const handleUndo = () => {

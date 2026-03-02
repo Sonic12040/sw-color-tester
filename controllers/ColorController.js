@@ -7,6 +7,8 @@ import {
   ELEMENT_IDS,
   DATA_ATTRIBUTES,
   URL_PARAMS,
+  TIMING,
+  THRESHOLDS,
   getTilesContainerId,
 } from "../utils/config.js";
 import {
@@ -18,9 +20,6 @@ import {
   ClearFavoritesCommand,
   ClearHiddenCommand,
 } from "../commands/index.js";
-
-const SURGICAL_DIFF_THRESHOLD = 10;
-const TOAST_DURATION_MS = 3000;
 
 export class ColorController {
   constructor(
@@ -89,23 +88,10 @@ export class ColorController {
     const newFavorites = this.state.getFavoriteSet();
     const newHidden = this.state.getHiddenSet();
 
-    const addedFavs = [];
-    const removedFavs = [];
-    const addedHidden = [];
-    const removedHidden = [];
-
-    for (const id of newFavorites) {
-      if (!prevFavorites.has(id)) addedFavs.push(id);
-    }
-    for (const id of prevFavorites) {
-      if (!newFavorites.has(id)) removedFavs.push(id);
-    }
-    for (const id of newHidden) {
-      if (!prevHidden.has(id)) addedHidden.push(id);
-    }
-    for (const id of prevHidden) {
-      if (!newHidden.has(id)) removedHidden.push(id);
-    }
+    const addedFavs = [...newFavorites.difference(prevFavorites)];
+    const removedFavs = [...prevFavorites.difference(newFavorites)];
+    const addedHidden = [...newHidden.difference(prevHidden)];
+    const removedHidden = [...prevHidden.difference(newHidden)];
 
     const totalChanges =
       addedFavs.length +
@@ -114,7 +100,7 @@ export class ColorController {
       removedHidden.length;
 
     // Fall back to full render for bulk changes
-    if (totalChanges === 0 || totalChanges > SURGICAL_DIFF_THRESHOLD) {
+    if (totalChanges === 0 || totalChanges > THRESHOLDS.SURGICAL_DIFF) {
       this.render();
       return;
     }
@@ -123,9 +109,11 @@ export class ColorController {
     this.view.hiddenIds = newHidden;
     this.view.designerPickIds = this.model.getDesignerPickIds();
 
-    this._applyFavoriteDiff(addedFavs, removedFavs);
-    this._applyHiddenDiff(addedHidden, removedHidden);
-    this._updateLrvCount();
+    requestAnimationFrame(() => {
+      this._applyFavoriteDiff(addedFavs, removedFavs);
+      this._applyHiddenDiff(addedHidden, removedHidden);
+      this._updateLrvCount();
+    });
   }
 
   /**
@@ -673,7 +661,7 @@ export class ColorController {
       this.dialog.toast({
         message: "No favorites to export.",
         onUndo: null,
-        duration: TOAST_DURATION_MS,
+        duration: TIMING.TOAST_DURATION_MS,
       });
       return;
     }
@@ -689,7 +677,7 @@ export class ColorController {
     this.dialog.toast({
       message: `${count} favorite${count === 1 ? "" : "s"} exported.`,
       onUndo: null,
-      duration: TOAST_DURATION_MS,
+      duration: TIMING.TOAST_DURATION_MS,
     });
   }
 }
