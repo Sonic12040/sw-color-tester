@@ -74,6 +74,7 @@ const STATIC_ASSETS = [
   `${BASE_PATH}/utils/DialogService.js`,
   `${BASE_PATH}/utils/ExportService.js`,
   `${BASE_PATH}/utils/EventEmitter.js`,
+  `${BASE_PATH}/utils/CommandBus.js`,
 
   // PWA
   `${BASE_PATH}/manifest.json`,

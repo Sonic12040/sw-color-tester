@@ -31,6 +31,7 @@ export class ColorController {
     exportService,
     lrvFilter,
     modalController,
+    commandBus,
   ) {
     this.model = model;
     this.state = state;
@@ -40,13 +41,15 @@ export class ColorController {
     this.lrvFilter = lrvFilter;
     this.modalController = modalController;
 
+    commandBus.setHandler((cmd) => this._executeCommand(cmd));
+
     this._handlingCommand = false;
     this._subscribeToStateEvents();
   }
 
   /**
-   * Subscribe to AppState events for rendering triggered by external sources
-   * (e.g. ModalController toggling favorites/hidden directly on state).
+   * Subscribe to AppState events for rendering triggered by non-command sources
+   * (e.g. LrvFilterController setting LRV range directly on state).
    * Skipped when _handlingCommand is true — _executeCommand handles its own rendering.
    * @private
    */

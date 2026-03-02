@@ -10,6 +10,10 @@ import {
   URL_PARAMS,
 } from "../utils/config.js";
 import { colorDetailModal } from "../utils/templates.js";
+import {
+  ToggleFavoriteCommand,
+  ToggleHiddenCommand,
+} from "../commands/index.js";
 
 const CLOSE_ANIMATION_MS = 300;
 const FEEDBACK_RESET_MS = 2000;
@@ -17,10 +21,11 @@ const STORE_TOAST_MS = 8000;
 const COPY_FALLBACK_TOAST_MS = 5000;
 
 export class ModalController {
-  constructor(model, state, dialog) {
+  constructor(model, state, dialog, commandBus) {
     this.model = model;
     this.state = state;
     this.dialog = dialog;
+    this.commandBus = commandBus;
   }
 
   setupListeners() {
@@ -169,7 +174,9 @@ export class ModalController {
 
     if (favoriteButton) {
       favoriteButton.addEventListener("click", () => {
-        this.state.toggleFavorite(colorId);
+        this.commandBus.execute(
+          new ToggleFavoriteCommand(this.model, this.state, colorId),
+        );
         const currentlyFavorited = this.state.getFavoriteSet().has(colorId);
         const heartSvg = favoriteButton.querySelector("svg");
         const buttonText = favoriteButton.querySelector("span");
@@ -203,7 +210,9 @@ export class ModalController {
 
     if (hideButton) {
       hideButton.addEventListener("click", () => {
-        this.state.toggleHidden(colorId);
+        this.commandBus.execute(
+          new ToggleHiddenCommand(this.model, this.state, colorId),
+        );
         const currentlyHidden = this.state.getHiddenSet().has(colorId);
         const eyeSvg = hideButton.querySelector("svg");
         const buttonText = hideButton.querySelector("span");

@@ -12,6 +12,7 @@ import { LrvFilterController } from "./controllers/LrvFilterController.js";
 import { ModalController } from "./controllers/ModalController.js";
 import { DialogService } from "./utils/DialogService.js";
 import { ExportService } from "./utils/ExportService.js";
+import { CommandBus } from "./utils/CommandBus.js";
 import { ELEMENT_IDS } from "./utils/config.js";
 
 // Initialize MVC components
@@ -21,10 +22,12 @@ const colorView = new ColorView(ELEMENT_IDS.COLOR_ACCORDION);
 const dialogService = new DialogService();
 const exportService = new ExportService();
 const lrvFilterController = new LrvFilterController(appState);
+const commandBus = new CommandBus();
 const modalController = new ModalController(
   colorModel,
   appState,
   dialogService,
+  commandBus,
 );
 
 const colorController = new ColorController(
@@ -35,6 +38,7 @@ const colorController = new ColorController(
   exportService,
   lrvFilterController,
   modalController,
+  commandBus,
 );
 
 // Start the application
