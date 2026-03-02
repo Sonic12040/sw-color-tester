@@ -140,16 +140,16 @@
 
   /* ============================================
      TYPOGRAPHY SCALE
-     Desktop (16px base with 1.25 ratio)
+     Fluid type: scales between 375px → 600px viewport
      ============================================ */
   --font-size-2xs: 0.625rem; /* 10px - Mini tile numbers, smallest text */
   --font-size-xs: 0.75rem; /* 12px - Badges, minimal labels */
   --font-size-sm: 0.875rem; /* 14px - Supporting text, metadata */
   --font-size-base: 1rem; /* 16px - Body text, buttons */
-  --font-size-md: 1.125rem; /* 18px - Subheadings, prominent labels */
-  --font-size-lg: 1.25rem; /* 20px - Section titles */
-  --font-size-xl: 1.5rem; /* 24px - Major headings */
-  --font-size-2xl: 1.75rem; /* 28px - Modal titles, primary headings */
+  --font-size-md: clamp(1rem, 0.792rem + 0.89vw, 1.125rem); /* 16px → 18px */
+  --font-size-lg: clamp(1.125rem, 0.917rem + 0.89vw, 1.25rem); /* 18px → 20px */
+  --font-size-xl: clamp(1.375rem, 1.167rem + 0.89vw, 1.5rem); /* 22px → 24px */
+  --font-size-2xl: clamp(1.5rem, 1.083rem + 1.78vw, 1.75rem); /* 24px → 28px */
 
   /* Font weights */
   --font-weight-normal: 400;
@@ -1235,14 +1235,6 @@
 
 /* Mobile optimization */
 @media (max-width: 599px) {
-  :root {
-    /* Slightly smaller type scale for mobile */
-    --font-size-2xl: 1.5rem; /* 24px - Modal titles */
-    --font-size-xl: 1.375rem; /* 22px - Major headings */
-    --font-size-lg: 1.125rem; /* 18px - Section titles */
-    --font-size-md: 1rem; /* 16px - Subheadings */
-  }
-
   /* Header mobile adjustments */
   .header__top {
     padding: var(--spacing-2) var(--spacing-3);
