@@ -478,10 +478,6 @@
   padding: var(--spacing-3) var(--spacing-4);
 }
 
-.toolbar__section--actions {
-  /* No wrapper styling needed */
-}
-
 .toolbar__actions {
   display: flex;
   justify-content: center;
@@ -1701,7 +1697,6 @@
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-tight);
   letter-spacing: 0.02em;
-  /* Removed opacity to ensure WCAG AA contrast compliance (was 0.9, causing 4.44:1 instead of required 4.5:1) */
 }
 
 /* Priority 1: Decision Support Section */
