@@ -1,11 +1,15 @@
 /**
- * Central command dispatcher — decouples command producers from execution logic.
+ * Central command dispatcher with middleware support.
+ * Injects model/state into commands and routes them through
+ * an optional before/after middleware pipeline.
  */
 
 export class CommandBus {
   #model;
   #state;
   #handler = null;
+  #beforeMiddleware = [];
+  #afterMiddleware = [];
 
   /**
    * @param {import('../models/ColorModel.js').ColorModel} model
@@ -17,7 +21,7 @@ export class CommandBus {
   }
 
   /**
-   * Register the single command handler (typically ColorController._executeCommand).
+   * Register the primary command handler (typically ColorController._executeCommand).
    * @param {(command: import('../commands/ColorCommand.js').ColorCommand) => void} handler
    */
   setHandler(handler) {
@@ -25,7 +29,23 @@ export class CommandBus {
   }
 
   /**
-   * Inject model/state into the command, then dispatch through the registered handler.
+   * Add middleware that runs before command execution.
+   * @param {(command: import('../commands/ColorCommand.js').ColorCommand) => void} fn
+   */
+  before(fn) {
+    this.#beforeMiddleware.push(fn);
+  }
+
+  /**
+   * Add middleware that runs after command execution.
+   * @param {(command: import('../commands/ColorCommand.js').ColorCommand) => void} fn
+   */
+  after(fn) {
+    this.#afterMiddleware.push(fn);
+  }
+
+  /**
+   * Inject model/state, run before middleware, dispatch to handler, run after middleware.
    * @param {import('../commands/ColorCommand.js').ColorCommand} command
    */
   execute(command) {
@@ -34,6 +54,9 @@ export class CommandBus {
     }
     command.model = this.#model;
     command.state = this.#state;
+
+    for (const fn of this.#beforeMiddleware) fn(command);
     this.#handler(command);
+    for (const fn of this.#afterMiddleware) fn(command);
   }
 }
