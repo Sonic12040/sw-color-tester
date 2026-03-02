@@ -39,6 +39,24 @@ export class ColorController {
     this.exportService = exportService;
     this.lrvFilter = lrvFilter;
     this.modalController = modalController;
+
+    this._handlingCommand = false;
+    this._subscribeToStateEvents();
+  }
+
+  /**
+   * Subscribe to AppState events for rendering triggered by external sources
+   * (e.g. ModalController toggling favorites/hidden directly on state).
+   * Skipped when _handlingCommand is true — _executeCommand handles its own rendering.
+   * @private
+   */
+  _subscribeToStateEvents() {
+    const renderIfExternal = () => {
+      if (!this._handlingCommand) this.render();
+    };
+    this.state.on("favoritesChanged", renderIfExternal);
+    this.state.on("hiddenChanged", renderIfExternal);
+    this.state.on("lrvChanged", renderIfExternal);
   }
 
   /**
@@ -48,6 +66,16 @@ export class ColorController {
    * @param {ColorCommand} command - Command to execute
    */
   _executeCommand(command) {
+    this._handlingCommand = true;
+    try {
+      this._executeCommandInner(command);
+    } finally {
+      this._handlingCommand = false;
+    }
+  }
+
+  /** @private */
+  _executeCommandInner(command) {
     const prevFavorites = new Set(this.state.getFavoriteSet());
     const prevHidden = new Set(this.state.getHiddenSet());
 
@@ -281,7 +309,7 @@ export class ColorController {
     this.setupEventListeners();
     this.setupHeaderButtons();
     this.modalController.setupListeners();
-    this.lrvFilter.setup(() => this.render());
+    this.lrvFilter.setup();
     this.render();
     this.checkSharedColor();
   }
@@ -537,12 +565,7 @@ export class ColorController {
         message: `${count} color${
           count === 1 ? "" : "s"
         } ${actionPastTense} favorites.`,
-        onUndo: () => {
-          const stateChanged = command.undo();
-          if (stateChanged) {
-            this.render();
-          }
-        },
+        onUndo: () => command.undo(),
       });
     }
   }
@@ -585,12 +608,7 @@ export class ColorController {
       const actionPastTense = allHidden ? "unhidden" : "hidden";
       this.dialog.toast({
         message: `${count} color${count === 1 ? "" : "s"} ${actionPastTense}.`,
-        onUndo: () => {
-          const stateChanged = command.undo();
-          if (stateChanged) {
-            this.render();
-          }
-        },
+        onUndo: () => command.undo(),
       });
     }
   }
@@ -629,12 +647,7 @@ export class ColorController {
 
       this.dialog.toast({
         message: `${count} favorite${count === 1 ? "" : "s"} cleared.`,
-        onUndo: () => {
-          const stateChanged = command.undo();
-          if (stateChanged) {
-            this.render();
-          }
-        },
+        onUndo: () => command.undo(),
       });
     }
   }
@@ -662,12 +675,7 @@ export class ColorController {
 
       this.dialog.toast({
         message: `${count} color${count === 1 ? "" : "s"} unhidden.`,
-        onUndo: () => {
-          const stateChanged = command.undo();
-          if (stateChanged) {
-            this.render();
-          }
-        },
+        onUndo: () => command.undo(),
       });
     }
   }

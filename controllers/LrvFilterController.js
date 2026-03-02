@@ -13,9 +13,8 @@ export class LrvFilterController {
 
   /**
    * Wire up slider listeners and initialize UI from persisted state.
-   * @param {Function} onChange - Called after each debounced range change or reset
    */
-  setup(onChange) {
+  setup() {
     const minSlider = document.getElementById(ELEMENT_IDS.LRV_SLIDER_MIN);
     const maxSlider = document.getElementById(ELEMENT_IDS.LRV_SLIDER_MAX);
     const minValue = document.getElementById(ELEMENT_IDS.LRV_VALUE_MIN);
@@ -53,7 +52,6 @@ export class LrvFilterController {
         const minVal = Number(minSlider.value);
         const maxVal = Number(maxSlider.value);
         this.state.setLrvRange(minVal, maxVal);
-        onChange();
       }, DEBOUNCE_MS);
     };
 
@@ -78,7 +76,6 @@ export class LrvFilterController {
       maxSlider.value = 100;
       updateSliderUI();
       this.state.setLrvRange(0, 100);
-      onChange();
     });
 
     updateSliderUI();

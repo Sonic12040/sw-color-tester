@@ -17,12 +17,10 @@ const STORE_TOAST_MS = 8000;
 const COPY_FALLBACK_TOAST_MS = 5000;
 
 export class ModalController {
-  constructor(model, state, dialog, { onToggleFavorite, onToggleHidden }) {
+  constructor(model, state, dialog) {
     this.model = model;
     this.state = state;
     this.dialog = dialog;
-    this.onToggleFavorite = onToggleFavorite;
-    this.onToggleHidden = onToggleHidden;
   }
 
   setupListeners() {
@@ -171,7 +169,7 @@ export class ModalController {
 
     if (favoriteButton) {
       favoriteButton.addEventListener("click", () => {
-        this.onToggleFavorite?.(colorId);
+        this.state.toggleFavorite(colorId);
         const currentlyFavorited = this.state.getFavoriteSet().has(colorId);
         const heartSvg = favoriteButton.querySelector("svg");
         const buttonText = favoriteButton.querySelector("span");
@@ -205,7 +203,7 @@ export class ModalController {
 
     if (hideButton) {
       hideButton.addEventListener("click", () => {
-        this.onToggleHidden?.(colorId);
+        this.state.toggleHidden(colorId);
         const currentlyHidden = this.state.getHiddenSet().has(colorId);
         const eyeSvg = hideButton.querySelector("svg");
         const buttonText = hideButton.querySelector("span");

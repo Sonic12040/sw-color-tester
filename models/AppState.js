@@ -4,9 +4,11 @@
 
 import { URL_PARAMS, PREFIX } from "../utils/config.js";
 import { compressIds, decompressIds } from "../utils/numeric-encoding.js";
+import { EventEmitter } from "../utils/EventEmitter.js";
 
-export class AppState {
+export class AppState extends EventEmitter {
   constructor(colorModel = null) {
+    super();
     this.favorites = new Set();
     this.hidden = new Set();
     this.lrvMin = 0;
@@ -196,6 +198,7 @@ export class AppState {
       this.favorites.add(colorId);
     }
     this.syncToURL();
+    this.emit("favoritesChanged");
   }
 
   toggleHidden(colorId) {
@@ -205,6 +208,7 @@ export class AppState {
       this.hidden.add(colorId);
     }
     this.syncToURL();
+    this.emit("hiddenChanged");
   }
 
   /**
@@ -212,38 +216,42 @@ export class AppState {
    * @param {Set<string>} set - The target Set to mutate
    * @param {string[]} colorIds - Array of color IDs to operate on
    * @param {string} operation - 'add' or 'remove'
+   * @param {string} event - Event name to emit after mutation
    */
-  _bulkUpdate(set, colorIds, operation) {
+  _bulkUpdate(set, colorIds, operation, event) {
     for (const id of colorIds) {
       operation === "add" ? set.add(id) : set.delete(id);
     }
     this.syncToURL();
+    this.emit(event);
   }
 
   addMultipleFavorites(colorIds) {
-    this._bulkUpdate(this.favorites, colorIds, "add");
+    this._bulkUpdate(this.favorites, colorIds, "add", "favoritesChanged");
   }
 
   removeMultipleFavorites(colorIds) {
-    this._bulkUpdate(this.favorites, colorIds, "remove");
+    this._bulkUpdate(this.favorites, colorIds, "remove", "favoritesChanged");
   }
 
   addMultipleHidden(colorIds) {
-    this._bulkUpdate(this.hidden, colorIds, "add");
+    this._bulkUpdate(this.hidden, colorIds, "add", "hiddenChanged");
   }
 
   removeMultipleHidden(colorIds) {
-    this._bulkUpdate(this.hidden, colorIds, "remove");
+    this._bulkUpdate(this.hidden, colorIds, "remove", "hiddenChanged");
   }
 
   clearFavorites() {
     this.favorites.clear();
     this.syncToURL();
+    this.emit("favoritesChanged");
   }
 
   clearHidden() {
     this.hidden.clear();
     this.syncToURL();
+    this.emit("hiddenChanged");
   }
 
   getLrvRange() {
@@ -254,6 +262,7 @@ export class AppState {
     this.lrvMin = Math.max(0, Math.min(100, min));
     this.lrvMax = Math.max(0, Math.min(100, max));
     this.syncToURL();
+    this.emit("lrvChanged");
   }
 
   isLrvFilterActive() {
