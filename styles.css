@@ -978,9 +978,10 @@
 /* Color tile base - Mobile-first responsive design with consistent sizing */
 .color-tile {
   width: 100%;
-  min-width: 280px;
-  max-width: 320px;
-  min-height: 160px;
+  /* Fluid tile sizing: scales between 600px → 1200px viewport */
+  min-width: clamp(280px, 220px + 6.67vw, 300px);
+  max-width: clamp(320px, 260px + 6.67vw, 340px);
+  min-height: clamp(160px, 120px + 6.67vw, 200px);
   padding: clamp(1rem, 2.67vw, 1.5rem);
   /* Ensure info content clears the absolutely-positioned action buttons */
   padding-top: calc(var(--button-min-height) + clamp(1rem, 2.67vw, 1.5rem));
@@ -1018,31 +1019,6 @@
   .color-tile:hover {
     transform: translateZ(0);
     box-shadow: var(--shadow-sm);
-  }
-}
-
-/* Tablet and up - maintain consistent min/max approach */
-@media (min-width: 600px) {
-  .color-tile {
-    max-width: 350px;
-  }
-}
-
-/* Desktop - maintain consistent min/max approach */
-@media (min-width: 900px) {
-  .color-tile {
-    min-width: 280px;
-    max-width: 320px;
-    min-height: 180px;
-  }
-}
-
-/* Large desktop - slightly larger tiles with more breathing room */
-@media (min-width: 1200px) {
-  .color-tile {
-    min-width: 300px;
-    max-width: 340px;
-    min-height: 200px;
   }
 }
 
@@ -1375,7 +1351,8 @@
 }
 
 .modal-header {
-  padding: clamp(1.25rem, 0.568rem + 2.91vw, 2.5rem);
+  /* Fluid padding: 1rem at 375px → 2.5rem at 900px+ */
+  padding: clamp(1rem, -0.071rem + 4.57vw, 2.5rem);
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -1437,7 +1414,8 @@
 .modal__body {
   flex: 1;
   overflow-y: auto;
-  padding: clamp(1.5rem, 0.818rem + 2.91vw, 2.5rem);
+  /* Fluid padding: 1rem at 375px → 2.5rem at 900px+ */
+  padding: clamp(1rem, -0.071rem + 4.57vw, 2.5rem);
   scrollbar-width: thin;
   scrollbar-color: var(--color-border-secondary) var(--color-surface-secondary);
   background: var(--color-surface-primary);
@@ -1457,7 +1435,8 @@
 }
 
 .modal__section {
-  margin-bottom: clamp(1.5rem, 1.045rem + 1.94vw, 2rem);
+  /* Fluid margin: 1rem at 375px → 2rem at 900px+ */
+  margin-bottom: clamp(1rem, 0.286rem + 3.05vw, 2rem);
 
   &:last-child {
     margin-bottom: 0;
@@ -1468,7 +1447,8 @@
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-tight);
-  margin: 0 0 clamp(1rem, 0.545rem + 1.94vw, 1.5rem) 0;
+  /* Fluid margin: 0.5rem at 375px → 1.5rem at 900px+ */
+  margin: 0 0 clamp(0.5rem, -0.214rem + 3.05vw, 1.5rem) 0;
   color: var(--color-text-primary);
   border-bottom: 2px solid var(--color-border-secondary);
   padding-bottom: var(--spacing-2);
@@ -1477,7 +1457,8 @@
 .modal__info-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: clamp(1rem, 0.545rem + 1.94vw, 1.5rem);
+  /* Fluid gap: 0.5rem at 375px → 1.5rem at 900px+ */
+  gap: clamp(0.5rem, -0.214rem + 3.05vw, 1.5rem);
 }
 
 .modal__info-item {
@@ -2030,7 +2011,9 @@
 
 /* Confirmation header */
 .confirm-header {
-  padding: var(--spacing-5) var(--spacing-6);
+  /* Fluid padding: 1rem at 375px → 1.25rem/1.5rem at 600px+ */
+  padding: clamp(1rem, 0.583rem + 1.78vw, 1.25rem)
+    clamp(1rem, 0.167rem + 3.56vw, 1.5rem);
   border-bottom: 1px solid var(--color-border-primary);
 }
 
@@ -2044,7 +2027,8 @@
 
 /* Confirmation body */
 .confirm-body {
-  padding: var(--spacing-6);
+  /* Fluid padding: 1rem at 375px → 1.5rem at 600px+ */
+  padding: clamp(1rem, 0.167rem + 3.56vw, 1.5rem);
 }
 
 .confirm-message {
@@ -2056,7 +2040,9 @@
 
 /* Confirmation actions */
 .confirm-actions {
-  padding: var(--spacing-5) var(--spacing-6);
+  /* Fluid padding: 1rem at 375px → 1.25rem/1.5rem at 600px+ */
+  padding: clamp(1rem, 0.583rem + 1.78vw, 1.25rem)
+    clamp(1rem, 0.167rem + 3.56vw, 1.5rem);
   display: flex;
   gap: var(--spacing-3);
   justify-content: flex-end;
@@ -2121,16 +2107,8 @@
     max-width: 100%;
   }
 
-  .confirm-header {
-    padding: var(--spacing-4);
-  }
-
   .confirm-title {
     font-size: var(--font-size-lg);
-  }
-
-  .confirm-body {
-    padding: var(--spacing-4);
   }
 
   .confirm-message {
@@ -2138,7 +2116,6 @@
   }
 
   .confirm-actions {
-    padding: var(--spacing-4);
     flex-direction: column;
   }
 
@@ -2308,12 +2285,7 @@
     padding: var(--spacing-2);
   }
 
-  .modal-container {
-    max-height: 95vh;
-  }
-
   .modal-header {
-    padding: var(--spacing-4);
     min-height: auto;
   }
 
@@ -2325,31 +2297,20 @@
     font-size: var(--font-size-md);
   }
 
-  .modal__body {
-    padding: var(--spacing-4);
-  }
-
-  .modal__section {
-    margin-bottom: var(--spacing-4);
-  }
-
   .modal__section--priority-1 {
     padding: var(--spacing-3);
   }
 
   .modal__section-title {
     font-size: var(--font-size-base);
-    margin-bottom: var(--spacing-2);
   }
 
   .modal__info-grid {
     grid-template-columns: 1fr;
-    gap: var(--spacing-2);
   }
 
   .modal__color-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing-2);
   }
 
   .modal__lrv-label {
