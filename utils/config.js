@@ -122,6 +122,7 @@ export const ELEMENT_IDS = {
   EXPORT_FAVORITES_BTN: "export-favorites-btn",
   CLEAR_FAVORITES_BTN: "clear-favorites-btn",
   CLEAR_HIDDEN_BTN: "clear-hidden-btn",
+  NEUTRAL_BG_TOGGLE: "neutral-bg-toggle",
   LRV_SLIDER_MIN: "lrv-slider-min",
   LRV_SLIDER_MAX: "lrv-slider-max",
   LRV_VALUE_MIN: "lrv-value-min",
@@ -154,12 +155,15 @@ export const URL_PARAMS = {
   COLOR: "color",
   LRV_MIN: "lrvMin",
   LRV_MAX: "lrvMax",
+  NEUTRAL_BG: "neutralBg",
 };
 
 // LRV (Light Reflectance Value) thresholds for dark/medium/light classification
 export const LRV_THRESHOLDS = {
   DARK: 30,
   LIGHT: 60,
+  /** Colors below this LRV get white text/icons for WCAG contrast. */
+  CONTRAST: 40,
 };
 
 // Prefix used to identify Designer Color Collection entries in brandedCollectionNames.

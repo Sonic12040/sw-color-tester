@@ -13,6 +13,7 @@ export class AppState extends EventEmitter {
     this.hidden = new Set();
     this.lrvMin = 0;
     this.lrvMax = 100;
+    this.neutralBg = false;
     this.scrollPosition = 0;
     this.colorModel = colorModel;
     this.loadFromURL();
@@ -126,6 +127,8 @@ export class AppState extends EventEmitter {
     this.lrvMin = lrvMinParam !== null ? Number(lrvMinParam) : 0;
     this.lrvMax = lrvMaxParam !== null ? Number(lrvMaxParam) : 100;
 
+    this.neutralBg = params.get(URL_PARAMS.NEUTRAL_BG) === "1";
+
     const scrollParam = params.get(URL_PARAMS.SCROLL);
     this.scrollPosition = scrollParam ? Number.parseInt(scrollParam, 10) : 0;
   }
@@ -165,6 +168,13 @@ export class AppState extends EventEmitter {
       params.set(URL_PARAMS.LRV_MAX, this.lrvMax.toString());
     } else {
       params.delete(URL_PARAMS.LRV_MAX);
+    }
+
+    // Neutral background (only persist when active)
+    if (this.neutralBg) {
+      params.set(URL_PARAMS.NEUTRAL_BG, "1");
+    } else {
+      params.delete(URL_PARAMS.NEUTRAL_BG);
     }
 
     if (this.scrollPosition > 0) {
@@ -276,5 +286,15 @@ export class AppState extends EventEmitter {
   setScrollPosition(position) {
     this.scrollPosition = position > 0 ? Math.round(position) : 0;
     this.syncToURL();
+  }
+
+  getNeutralBg() {
+    return this.neutralBg;
+  }
+
+  toggleNeutralBg() {
+    this.neutralBg = !this.neutralBg;
+    this.syncToURL();
+    this.emit("neutralBgChanged");
   }
 }

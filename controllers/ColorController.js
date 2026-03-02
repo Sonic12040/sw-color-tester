@@ -60,6 +60,7 @@ export class ColorController {
     this.state.on("favoritesChanged", renderIfExternal);
     this.state.on("hiddenChanged", renderIfExternal);
     this.state.on("lrvChanged", renderIfExternal);
+    this.state.on("neutralBgChanged", () => this._applyNeutralBg());
   }
 
   /**
@@ -302,6 +303,7 @@ export class ColorController {
     this.setupHeaderButtons();
     this.modalController.setupListeners();
     this.lrvFilter.setup();
+    this._applyNeutralBg();
     this.render();
     this.checkSharedColor();
   }
@@ -499,6 +501,25 @@ export class ColorController {
         this.handleClearHidden();
       });
     }
+
+    const neutralBgBtn = document.getElementById(ELEMENT_IDS.NEUTRAL_BG_TOGGLE);
+    if (neutralBgBtn) {
+      neutralBgBtn.addEventListener("click", () => {
+        this.state.toggleNeutralBg();
+      });
+    }
+  }
+
+  /**
+   * Apply or remove the neutral evaluation background based on state.
+   * Toggles the body class and updates the toggle button's aria-pressed.
+   * @private
+   */
+  _applyNeutralBg() {
+    const isActive = this.state.getNeutralBg();
+    document.body.classList.toggle("neutral-bg", isActive);
+    const btn = document.getElementById(ELEMENT_IDS.NEUTRAL_BG_TOGGLE);
+    if (btn) btn.setAttribute("aria-pressed", String(isActive));
   }
 
   // --- EVENT HANDLERS (Delegate to Commands) ---

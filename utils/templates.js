@@ -33,15 +33,18 @@ function generateHSLColor(hue, saturation, lightness) {
   return `hsl(${hue * 360}deg ${saturation * 100}% ${lightness * 100}%)`;
 }
 
+/**
+ * Determine text color for readability over a given color tile background.
+ * Uses LRV (Light Reflectance Value) threshold instead of the pre-computed
+ * isDark flag, which only triggers at LRV ~18 and misses many dark-ish colors.
+ */
 function generateAccessibleText(color) {
-  if (color.isDark) {
-    return "white";
-  }
-  return "black";
+  return color.lrv < LRV_THRESHOLDS.CONTRAST ? "white" : "black";
 }
 
-/** Adaptive button/badge colors for dark vs light tile backgrounds. */
-function generateButtonStyles(isDark) {
+/** Adaptive button/badge colors keyed off LRV contrast threshold. */
+function generateButtonStyles(color) {
+  const isDark = color.lrv < LRV_THRESHOLDS.CONTRAST;
   return {
     bgColor: isDark ? "rgba(255, 255, 255, 0.85)" : "rgba(0, 0, 0, 0.7)",
     hoverBg: isDark ? "rgba(255, 255, 255, 0.95)" : "rgba(0, 0, 0, 0.85)",
@@ -235,7 +238,7 @@ export function colorTemplate(color, options = {}) {
   const isFavorited = favoriteIds.has(color.id);
   const isHidden = hiddenIds.has(color.id);
   const textColor = generateAccessibleText(color);
-  const styles = generateButtonStyles(color.isDark);
+  const styles = generateButtonStyles(color);
 
   const favoriteLabel = isFavorited ? "Unfavorite" : "Favorite";
   const hideLabel = isHidden ? "Unhide" : "Hide";
@@ -355,7 +358,7 @@ export function colorDetailModal(
     color.saturation,
     color.lightness,
   );
-  const styles = generateButtonStyles(color.isDark);
+  const styles = generateButtonStyles(color);
 
   // Build coordinating colors section
   const coordColors = [
