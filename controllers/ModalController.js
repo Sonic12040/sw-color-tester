@@ -228,9 +228,7 @@ export class ModalController {
 
     if (favoriteButton) {
       favoriteButton.addEventListener("click", () => {
-        this.commandBus.execute(
-          new ToggleFavoriteCommand(this.model, this.state, colorId),
-        );
+        this.commandBus.execute(new ToggleFavoriteCommand(colorId));
       });
     }
 
@@ -248,9 +246,7 @@ export class ModalController {
 
     if (hideButton) {
       hideButton.addEventListener("click", () => {
-        this.commandBus.execute(
-          new ToggleHiddenCommand(this.model, this.state, colorId),
-        );
+        this.commandBus.execute(new ToggleHiddenCommand(colorId));
       });
     }
 

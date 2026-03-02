@@ -1,8 +1,8 @@
 import { ColorCommand } from "./ColorCommand.js";
 
 export class BulkFavoriteCommand extends ColorCommand {
-  constructor(model, state, groupId, groupName, precomputedColors = null) {
-    super(model, state);
+  constructor(groupId, groupName, precomputedColors = null) {
+    super();
     this.groupId = groupId;
     this.groupName = groupName;
     this._precomputedColors = precomputedColors;

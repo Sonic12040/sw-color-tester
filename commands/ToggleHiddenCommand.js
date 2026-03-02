@@ -1,8 +1,8 @@
 import { ColorCommand } from "./ColorCommand.js";
 
 export class ToggleHiddenCommand extends ColorCommand {
-  constructor(model, state, colorId) {
-    super(model, state);
+  constructor(colorId) {
+    super();
     this.colorId = colorId;
   }
 

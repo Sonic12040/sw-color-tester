@@ -5,8 +5,8 @@
 import { ColorCommand } from "./ColorCommand.js";
 
 export class UnhideGroupCommand extends ColorCommand {
-  constructor(model, state, groupName) {
-    super(model, state);
+  constructor(groupName) {
+    super();
     this.groupName = groupName;
   }
 

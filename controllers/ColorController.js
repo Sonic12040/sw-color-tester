@@ -40,6 +40,7 @@ export class ColorController {
     this.exportService = exportService;
     this.lrvFilter = lrvFilter;
     this.modalController = modalController;
+    this.commandBus = commandBus;
 
     commandBus.setHandler((cmd) => this._executeCommand(cmd));
 
@@ -515,13 +516,11 @@ export class ColorController {
   // --- EVENT HANDLERS (Delegate to Commands) ---
 
   handleFavoriteButton(colorId) {
-    const command = new ToggleFavoriteCommand(this.model, this.state, colorId);
-    this._executeCommand(command);
+    this.commandBus.execute(new ToggleFavoriteCommand(colorId));
   }
 
   handleHideButton(colorId) {
-    const command = new ToggleHiddenCommand(this.model, this.state, colorId);
-    this._executeCommand(command);
+    this.commandBus.execute(new ToggleHiddenCommand(colorId));
   }
 
   async handleBulkFavoriteButton(groupId, groupName) {
@@ -554,14 +553,8 @@ export class ColorController {
     });
 
     if (confirmed) {
-      const command = new BulkFavoriteCommand(
-        this.model,
-        this.state,
-        groupId,
-        groupName,
-        groupColors,
-      );
-      this._executeCommand(command);
+      const command = new BulkFavoriteCommand(groupId, groupName, groupColors);
+      this.commandBus.execute(command);
 
       const actionPastTense = allFavorited ? "removed from" : "added to";
       this.dialog.toast({
@@ -599,14 +592,8 @@ export class ColorController {
     });
 
     if (confirmed) {
-      const command = new BulkHideCommand(
-        this.model,
-        this.state,
-        groupId,
-        groupName,
-        groupColors,
-      );
-      this._executeCommand(command);
+      const command = new BulkHideCommand(groupId, groupName, groupColors);
+      this.commandBus.execute(command);
 
       const actionPastTense = allHidden ? "unhidden" : "hidden";
       this.dialog.toast({
@@ -618,12 +605,8 @@ export class ColorController {
 
   handleUnhideButton(familyName) {
     if (familyName) {
-      const command = new UnhideGroupCommand(
-        this.model,
-        this.state,
-        familyName,
-      );
-      this._executeCommand(command);
+      const command = new UnhideGroupCommand(familyName);
+      this.commandBus.execute(command);
     }
   }
 
@@ -645,8 +628,8 @@ export class ColorController {
     });
 
     if (confirmed) {
-      const command = new ClearFavoritesCommand(this.model, this.state);
-      this._executeCommand(command);
+      const command = new ClearFavoritesCommand();
+      this.commandBus.execute(command);
 
       this.dialog.toast({
         message: `${count} favorite${count === 1 ? "" : "s"} cleared.`,
@@ -673,8 +656,8 @@ export class ColorController {
     });
 
     if (confirmed) {
-      const command = new ClearHiddenCommand(this.model, this.state);
-      this._executeCommand(command);
+      const command = new ClearHiddenCommand();
+      this.commandBus.execute(command);
 
       this.dialog.toast({
         message: `${count} color${count === 1 ? "" : "s"} unhidden.`,

@@ -1,11 +1,12 @@
 /**
  * Abstract base class for the Command Pattern.
+ * model and state are injected by the CommandBus before execute() is called.
  */
 export class ColorCommand {
-  constructor(model, state) {
-    this.model = model;
-    this.state = state;
-  }
+  /** @type {import('../models/ColorModel.js').ColorModel} */
+  model;
+  /** @type {import('../models/AppState.js').AppState} */
+  state;
 
   /**
    * Execute the command

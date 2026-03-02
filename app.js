@@ -22,7 +22,7 @@ const colorView = new ColorView(ELEMENT_IDS.COLOR_ACCORDION);
 const dialogService = new DialogService();
 const exportService = new ExportService();
 const lrvFilterController = new LrvFilterController(appState);
-const commandBus = new CommandBus();
+const commandBus = new CommandBus(colorModel, appState);
 const modalController = new ModalController(
   colorModel,
   appState,
