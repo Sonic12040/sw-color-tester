@@ -26,6 +26,7 @@ export class ModalController {
     this.state = state;
     this.dialog = dialog;
     this.commandBus = commandBus;
+    this._unsubscribers = [];
   }
 
   setupListeners() {
@@ -124,8 +125,61 @@ export class ModalController {
       }
     });
 
-    // Prevent body scrolling
+    this._subscribeToState(colorId);
     document.body.style.overflow = "hidden";
+  }
+
+  /**
+   * Subscribe to state events so modal UI stays in sync with external changes (e.g. undo).
+   * @private
+   */
+  _subscribeToState(colorId) {
+    this._unsubscribeFromState();
+    this._unsubscribers.push(
+      this.state.on("favoritesChanged", () => this._updateFavoriteUI(colorId)),
+      this.state.on("hiddenChanged", () => this._updateHiddenUI(colorId)),
+    );
+  }
+
+  /** @private */
+  _unsubscribeFromState() {
+    for (const unsub of this._unsubscribers) unsub();
+    this._unsubscribers = [];
+  }
+
+  /** @private */
+  _updateFavoriteUI(colorId) {
+    const modal = document.getElementById(ELEMENT_IDS.COLOR_DETAIL_MODAL);
+    if (!modal) return;
+    const btn = modal.querySelector(
+      `.${CSS_CLASSES.MODAL_ACTION_BUTTON_FAVORITE}`,
+    );
+    if (!btn) return;
+
+    const isFav = this.state.getFavoriteSet().has(colorId);
+    const svg = btn.querySelector("svg");
+    const span = btn.querySelector("span");
+    if (svg) svg.setAttribute("fill", isFav ? "currentColor" : "none");
+    if (span) span.textContent = isFav ? "Favorited" : "Add to Favorites";
+    btn.setAttribute(
+      "aria-label",
+      `${isFav ? "Remove from" : "Add to"} favorites`,
+    );
+  }
+
+  /** @private */
+  _updateHiddenUI(colorId) {
+    const modal = document.getElementById(ELEMENT_IDS.COLOR_DETAIL_MODAL);
+    if (!modal) return;
+    const btn = modal.querySelector(`.${CSS_CLASSES.MODAL_ACTION_BUTTON_HIDE}`);
+    if (!btn) return;
+
+    const isHidden = this.state.getHiddenSet().has(colorId);
+    const svg = btn.querySelector("svg");
+    const span = btn.querySelector("span");
+    if (svg) svg.innerHTML = isHidden ? ICONS.EYE : ICONS.EYE_OFF;
+    if (span) span.textContent = isHidden ? "Hidden" : "Hide Color";
+    btn.setAttribute("aria-label", `${isHidden ? "Show" : "Hide"} color`);
   }
 
   /** @private */
@@ -177,22 +231,6 @@ export class ModalController {
         this.commandBus.execute(
           new ToggleFavoriteCommand(this.model, this.state, colorId),
         );
-        const currentlyFavorited = this.state.getFavoriteSet().has(colorId);
-        const heartSvg = favoriteButton.querySelector("svg");
-        const buttonText = favoriteButton.querySelector("span");
-        if (heartSvg && buttonText) {
-          heartSvg.setAttribute(
-            "fill",
-            currentlyFavorited ? "currentColor" : "none",
-          );
-          buttonText.textContent = currentlyFavorited
-            ? "Favorited"
-            : "Add to Favorites";
-          favoriteButton.setAttribute(
-            "aria-label",
-            `${currentlyFavorited ? "Remove from" : "Add to"} favorites`,
-          );
-        }
       });
     }
 
@@ -213,17 +251,6 @@ export class ModalController {
         this.commandBus.execute(
           new ToggleHiddenCommand(this.model, this.state, colorId),
         );
-        const currentlyHidden = this.state.getHiddenSet().has(colorId);
-        const eyeSvg = hideButton.querySelector("svg");
-        const buttonText = hideButton.querySelector("span");
-        if (eyeSvg && buttonText) {
-          eyeSvg.innerHTML = currentlyHidden ? ICONS.EYE : ICONS.EYE_OFF;
-          buttonText.textContent = currentlyHidden ? "Hidden" : "Hide Color";
-          hideButton.setAttribute(
-            "aria-label",
-            `${currentlyHidden ? "Show" : "Hide"} color`,
-          );
-        }
       });
     }
 
@@ -311,6 +338,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
   }
 
   close() {
+    this._unsubscribeFromState();
     const modal = document.getElementById(ELEMENT_IDS.COLOR_DETAIL_MODAL);
     if (modal) {
       modal.classList.remove(CSS_CLASSES.MODAL_ACTIVE);
