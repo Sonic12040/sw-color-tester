@@ -173,7 +173,10 @@
   --button-line-height: var(--line-height-tight);
   --button-border-radius: var(--radius-sm);
   --button-min-height: 44px;
-  --button-transition: all var(--transition-fast);
+  --button-transition:
+    background-color var(--transition-fast), color var(--transition-fast),
+    border-color var(--transition-fast), box-shadow var(--transition-fast),
+    opacity var(--transition-fast), transform var(--transition-fast);
 
   /* Primary button (filled, high emphasis) */
   --button-primary-bg: var(--color-primary);
@@ -1322,6 +1325,7 @@
   padding: var(--spacing-4);
   opacity: 0;
   visibility: hidden;
+  will-change: opacity;
   transition:
     opacity var(--transition-medium),
     visibility var(--transition-medium);
@@ -1347,6 +1351,7 @@
   flex-direction: column;
   box-shadow: var(--shadow-2xl);
   transform: scale(0.9);
+  will-change: transform;
   transition: transform var(--transition-medium);
 }
 
@@ -1892,7 +1897,11 @@
   font-size: var(--font-size-base);
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   flex: 1;
   min-width: max-content;
 
@@ -1957,6 +1966,7 @@
   z-index: calc(var(--z-modal-backdrop) + 100);
   padding: var(--spacing-4);
   opacity: 0;
+  will-change: opacity;
   animation: fadeIn var(--transition-medium) forwards;
 
   &.closing {
@@ -1991,6 +2001,7 @@
   width: 100%;
   box-shadow: var(--shadow-2xl);
   transform: scale(0.9);
+  will-change: transform;
   animation: scaleIn var(--transition-medium) forwards;
 }
 
@@ -2056,7 +2067,12 @@
     border-radius: var(--radius-md);
     border: none;
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition:
+      background-color var(--transition-fast),
+      color var(--transition-fast),
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast),
+      transform var(--transition-fast);
     min-width: 100px;
 
     &:focus {
@@ -2144,6 +2160,7 @@
   max-width: 560px;
   z-index: var(--z-toast);
   opacity: 0;
+  will-change: transform, opacity;
   animation: toastSlideIn var(--transition-medium) forwards;
 
   &.toast--hiding {
