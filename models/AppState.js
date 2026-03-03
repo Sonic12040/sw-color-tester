@@ -127,7 +127,7 @@ export class AppState extends EventEmitter {
     this.neutralBg = params.get(URL_PARAMS.NEUTRAL_BG) === "1";
 
     const scrollParam = params.get(URL_PARAMS.SCROLL);
-    this.scrollPosition = scrollParam ? Number.parseInt(scrollParam, 10) : 0;
+    this.scrollPosition = scrollParam ? Number(scrollParam) : 0;
   }
 
   syncToURL() {
