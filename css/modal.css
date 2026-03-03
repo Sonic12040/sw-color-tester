@@ -13,7 +13,7 @@
   background: var(--color-overlay);
   backdrop-filter: var(--blur-md);
   z-index: var(--z-modal-backdrop);
-  padding: var(--spacing-4);
+  padding: clamp(0.5rem, 0.143rem + 1.524vw, 1rem);
   opacity: 0;
   visibility: hidden;
   will-change: opacity;
@@ -195,28 +195,28 @@
 
 /* HSL Visual Breakdown */
 .hsl-breakdown {
-  margin: var(--spacing-6) 0;
-  padding: var(--spacing-4);
+  margin: clamp(1rem, 0.643rem + 1.524vw, 1.5rem) 0;
+  padding: clamp(0.75rem, 0.571rem + 0.762vw, 1rem);
   background: var(--color-surface-tertiary);
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border-secondary);
 }
 
 .hsl-breakdown__header {
-  margin-bottom: var(--spacing-4);
-  padding-bottom: var(--spacing-3);
+  margin-bottom: clamp(0.75rem, 0.571rem + 0.762vw, 1rem);
+  padding-bottom: clamp(0.5rem, 0.321rem + 0.762vw, 0.75rem);
   border-bottom: 1px solid var(--color-border-secondary);
 }
 
 .hsl-breakdown__title {
-  font-size: var(--font-size-base);
+  font-size: clamp(0.875rem, 0.786rem + 0.381vw, 1rem);
   font-weight: var(--font-weight-semibold);
   color: var(--color-text-primary);
   margin: 0 0 var(--spacing-1) 0;
 }
 
 .hsl-breakdown__description {
-  font-size: var(--font-size-xs);
+  font-size: clamp(0.65rem, 0.579rem + 0.305vw, 0.75rem);
   color: var(--color-text-tertiary);
   margin: 0;
   font-style: italic;
@@ -237,7 +237,7 @@
   justify-content: space-between;
   align-items: baseline;
   margin-bottom: var(--spacing-2);
-  font-size: var(--font-size-sm);
+  font-size: clamp(0.75rem, 0.661rem + 0.381vw, 0.875rem);
 }
 
 .hsl-breakdown__name {
@@ -251,13 +251,13 @@
 .hsl-breakdown__value {
   font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
-  font-size: var(--font-size-base);
+  font-size: clamp(0.875rem, 0.786rem + 0.381vw, 1rem);
   font-variant-numeric: tabular-nums;
 }
 
 .hsl-breakdown__bar-container {
   position: relative;
-  height: 32px;
+  height: clamp(1.5rem, 1.143rem + 1.524vw, 2rem);
   border-radius: var(--radius-sm);
   overflow: hidden;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
@@ -372,7 +372,7 @@
 /* Priority 1: Decision Support Section */
 .modal__section--priority-1 {
   background: var(--color-surface-tertiary);
-  padding: var(--spacing-5);
+  padding: clamp(0.75rem, 0.393rem + 1.524vw, 1.25rem);
   border-radius: var(--radius-md);
   border-left: 4px solid var(--color-primary);
 }
@@ -402,7 +402,7 @@
 }
 
 .modal__decision-support {
-  gap: var(--spacing-4);
+  gap: clamp(0.75rem, 0.571rem + 0.762vw, 1rem);
 }
 
 .modal__lrv-context {
@@ -492,7 +492,7 @@
 
 .modal__accordion-trigger {
   width: 100%;
-  padding: var(--spacing-4);
+  padding: clamp(0.75rem, 0.571rem + 0.762vw, 1rem);
   background: var(--color-surface-secondary);
   border: none;
   cursor: pointer;
@@ -552,11 +552,11 @@
   bottom: 0;
   background: var(--color-surface-secondary);
   border-top: 1px solid var(--color-border-primary);
-  padding: var(--spacing-4);
+  padding: clamp(0.75rem, 0.571rem + 0.762vw, 1rem);
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
   margin-top: var(--spacing-6);
   display: flex;
-  gap: var(--spacing-3);
+  gap: clamp(0.5rem, 0.321rem + 0.762vw, 0.75rem);
   flex-wrap: wrap;
 }
 
@@ -622,10 +622,6 @@
 
 /* Mobile modal adjustments */
 @media (max-width: 599px) {
-  .modal-overlay {
-    padding: var(--spacing-2);
-  }
-
   .modal-header {
     min-height: auto;
   }
@@ -636,10 +632,6 @@
 
   .modal__subtitle {
     font-size: var(--font-size-md);
-  }
-
-  .modal__section--priority-1 {
-    padding: var(--spacing-3);
   }
 
   .modal__section-title {
@@ -662,53 +654,11 @@
     font-size: var(--font-size-base);
   }
 
-  .modal__decision-support {
-    gap: var(--spacing-3);
-  }
-
-  .modal__accordion-trigger {
-    padding: var(--spacing-3);
-  }
-
   .modal__accordion-hint {
     display: none;
   }
 
-  .hsl-breakdown {
-    padding: var(--spacing-3);
-    margin: var(--spacing-4) 0;
-  }
-
-  .hsl-breakdown__header {
-    margin-bottom: var(--spacing-3);
-    padding-bottom: var(--spacing-2);
-  }
-
-  .hsl-breakdown__title {
-    font-size: var(--font-size-sm);
-  }
-
-  .hsl-breakdown__description {
-    font-size: 0.65rem;
-  }
-
-  .hsl-breakdown__bar-container {
-    height: 24px;
-  }
-
-  .hsl-breakdown__label {
-    font-size: var(--font-size-xs);
-  }
-
-  .hsl-breakdown__value {
-    font-size: var(--font-size-sm);
-  }
-
   .modal__actions {
-    padding: var(--spacing-3);
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: var(--spacing-2);
     justify-content: center;
   }
 
