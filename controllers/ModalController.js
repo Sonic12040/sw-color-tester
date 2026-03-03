@@ -252,7 +252,7 @@ export class ModalController {
     const clickableTiles = modal.querySelectorAll(
       `.${CSS_CLASSES.MODAL_MINI_TILE_CLICKABLE}`,
     );
-    clickableTiles.forEach((tile) => {
+    for (const tile of clickableTiles) {
       const handleClick = () => {
         const tileColorId = tile.getAttribute(DATA_ATTRIBUTES.ID);
         if (tileColorId) {
@@ -267,7 +267,7 @@ export class ModalController {
           handleClick();
         }
       });
-    });
+    }
   }
 
   async #handleShare(color) {
