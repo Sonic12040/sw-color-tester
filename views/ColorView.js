@@ -197,7 +197,7 @@ export class ColorView {
 
     // 3. Color family sections
     for (const family of sortedFamilies) {
-      const count = colorFamilies[family].length;
+      const count = colorFamilies.get(family).length;
       accordionHTML += createAccordionItem(
         createGroupId(family, PREFIX.FAMILY),
         `${family} (${count})`,
@@ -296,7 +296,7 @@ export class ColorView {
       const familyContainer = document.getElementById(
         getTilesContainerId(familyId),
       );
-      const familyColors = colorFamilies[family];
+      const familyColors = colorFamilies.get(family);
 
       const fragment = document.createDocumentFragment();
       for (const color of familyColors) {

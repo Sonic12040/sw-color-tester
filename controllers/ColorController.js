@@ -358,9 +358,9 @@ export class ColorController {
     );
 
     const colorFamilies = this.model.groupByFamily(visibleColors);
-    const sortedFamilies = this.model.sortFamiliesByPriority(
-      Object.keys(colorFamilies),
-    );
+    const sortedFamilies = this.model.sortFamiliesByPriority([
+      ...colorFamilies.keys(),
+    ]);
 
     const hiddenFamilies = this.model.getHiddenFamilies(hiddenSet, favoriteSet);
 

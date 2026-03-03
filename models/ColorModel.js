@@ -109,17 +109,19 @@ export class ColorModel {
   }
 
   groupByFamily(colors) {
-    const colorFamilies = {};
+    const colorFamilies = new Map();
 
     for (const color of colors) {
       // Handle multiple color families - use the first one as primary
       const primaryFamily =
         color.colorFamilyNames.length > 0 ? color.colorFamilyNames[0] : "Other";
 
-      if (!colorFamilies[primaryFamily]) {
-        colorFamilies[primaryFamily] = [];
+      let group = colorFamilies.get(primaryFamily);
+      if (!group) {
+        group = [];
+        colorFamilies.set(primaryFamily, group);
       }
-      colorFamilies[primaryFamily].push(color);
+      group.push(color);
     }
 
     return colorFamilies;
