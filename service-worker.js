@@ -309,7 +309,9 @@ async function staleWhileRevalidate(request) {
   }
 
   // Fetch from network in background with timeout
-  const fetchPromise = fetchWithTimeout(request, NETWORK_TIMEOUT)
+  // Bypass browser HTTP cache so revalidation always reaches the server
+  const revalidateRequest = new Request(request, { cache: "no-cache" });
+  const fetchPromise = fetchWithTimeout(revalidateRequest, NETWORK_TIMEOUT)
     .then(async (networkResponse) => {
       // Handle 304 Not Modified - no body to process
       if (networkResponse.status === 304) {
