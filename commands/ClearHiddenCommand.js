@@ -5,7 +5,7 @@ export class ClearHiddenCommand extends ColorCommand {
     const hiddenSet = this.state.getHiddenSet();
     if (hiddenSet.size === 0) return false;
 
-    this.previousHidden = Array.from(hiddenSet);
+    this.previousHidden = [...hiddenSet];
     this.state.clearHidden();
     return true;
   }

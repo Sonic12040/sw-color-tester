@@ -5,7 +5,7 @@ export class ClearFavoritesCommand extends ColorCommand {
     const favoriteSet = this.state.getFavoriteSet();
     if (favoriteSet.size === 0) return false;
 
-    this.previousFavorites = Array.from(favoriteSet);
+    this.previousFavorites = [...favoriteSet];
     this.state.clearFavorites();
     return true;
   }

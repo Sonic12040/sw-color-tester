@@ -44,7 +44,7 @@ export class AppState extends EventEmitter {
       }
     }
 
-    return Array.from(expandedIds);
+    return [...expandedIds];
   }
 
   /**
@@ -90,7 +90,7 @@ export class AppState extends EventEmitter {
       consolidated.add(`${PREFIX.FAMILY}:${family.name}`);
     }
 
-    return Array.from(consolidated);
+    return [...consolidated];
   }
 
   #consolidateHiddenIds(hiddenIds) {
@@ -131,8 +131,8 @@ export class AppState extends EventEmitter {
   }
 
   syncToURL() {
-    const favoriteArray = Array.from(this.favorites);
-    const hiddenArray = Array.from(this.hidden);
+    const favoriteArray = [...this.favorites];
+    const hiddenArray = [...this.hidden];
 
     const consolidatedFavorites = this.#consolidateFavoriteIds(favoriteArray);
     const consolidatedHidden = this.#consolidateHiddenIds(hiddenArray);
