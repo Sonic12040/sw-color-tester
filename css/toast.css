@@ -49,13 +49,13 @@
 
 /* Toast content */
 .toast__content {
-  gap: var(--spacing-4);
+  gap: clamp(0.75rem, 0.583rem + 0.444vw, 1rem);
 }
 
 .toast__message {
   flex: 1;
   margin: 0;
-  font-size: var(--font-size-base);
+  font-size: clamp(0.875rem, 0.792rem + 0.222vw, 1rem);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-normal);
 }
@@ -137,13 +137,5 @@
       opacity: 0;
       transform: translateY(100px);
     }
-  }
-
-  .toast__content {
-    gap: var(--spacing-3);
-  }
-
-  .toast__message {
-    font-size: var(--font-size-sm);
   }
 }
