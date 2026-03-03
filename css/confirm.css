@@ -12,7 +12,7 @@
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: var(--blur-md);
   z-index: calc(var(--z-modal-backdrop) + 100);
-  padding: var(--spacing-4);
+  padding: clamp(0.75rem, 2.67vw, 1rem);
   opacity: 0;
   will-change: opacity;
   animation: fadeIn var(--transition-medium) forwards;
@@ -45,7 +45,7 @@
 .confirm-dialog {
   background: var(--color-surface-primary);
   border-radius: var(--radius-lg);
-  max-width: 480px;
+  max-width: min(480px, 100%);
   width: 100%;
   box-shadow: var(--shadow-2xl);
   transform: scale(0.9);
@@ -77,7 +77,7 @@
 }
 
 .confirm-title {
-  font-size: var(--font-size-xl);
+  font-size: clamp(1.125rem, 0.554rem + 2.44vw, 1.5rem);
   font-weight: var(--font-weight-bold);
   margin: 0;
   color: var(--color-text-primary);
@@ -91,7 +91,7 @@
 }
 
 .confirm-message {
-  font-size: var(--font-size-base);
+  font-size: clamp(0.875rem, 0.542rem + 1.43vw, 1rem);
   color: var(--color-text-secondary);
   margin: 0;
   line-height: var(--line-height-relaxed);
@@ -163,22 +163,6 @@
 
 /* Mobile confirmation modal adjustments */
 @media (max-width: 599px) {
-  .confirm-overlay {
-    padding: var(--spacing-3);
-  }
-
-  .confirm-dialog {
-    max-width: 100%;
-  }
-
-  .confirm-title {
-    font-size: var(--font-size-lg);
-  }
-
-  .confirm-message {
-    font-size: var(--font-size-sm);
-  }
-
   .confirm-actions {
     flex-direction: column;
   }
