@@ -75,12 +75,10 @@ export class ModalController {
     }
 
     const similarColors = [];
-    if (color.similarColors && Array.isArray(color.similarColors)) {
-      for (const similarId of color.similarColors) {
-        const similarColor = this.model.getColorById(similarId);
-        if (similarColor) {
-          similarColors.push(similarColor);
-        }
+    for (const similarId of color.similarColors) {
+      const similarColor = this.model.getColorById(similarId);
+      if (similarColor) {
+        similarColors.push(similarColor);
       }
     }
 

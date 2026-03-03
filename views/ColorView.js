@@ -252,7 +252,7 @@ export class ColorView {
     // Add individual hidden colors (excluding those in completely hidden families)
     const hiddenFamilyNames = new Set(hiddenFamilies.map((f) => f.name));
     const individualHiddenColors = hiddenColors.filter((color) => {
-      if (color.colorFamilyNames && color.colorFamilyNames.length > 0) {
+      if (color.colorFamilyNames.length > 0) {
         return !hiddenFamilyNames.has(color.colorFamilyNames[0]);
       }
       return true;

@@ -18,7 +18,15 @@ export class ColorModel {
   #designerPickIds;
 
   constructor(colorData) {
-    this.#activeColors = colorData.filter((c) => !c.archived && !c.ignore);
+    this.#activeColors = colorData
+      .filter((c) => !c.archived && !c.ignore)
+      .map((c) => ({
+        ...c,
+        colorFamilyNames: c.colorFamilyNames ?? [],
+        brandedCollectionNames: c.brandedCollectionNames ?? [],
+        similarColors: c.similarColors ?? [],
+        description: c.description ?? [],
+      }));
     this.#colorById = new Map(this.#activeColors.map((c) => [c.id, c]));
 
     // Pre-build immutable group Maps (family/category membership never changes at runtime)
@@ -41,7 +49,7 @@ export class ColorModel {
 
     for (const color of this.#activeColors) {
       // Primary family
-      if (color.colorFamilyNames && color.colorFamilyNames.length > 0) {
+      if (color.colorFamilyNames.length > 0) {
         const family = color.colorFamilyNames[0];
         if (!this.#familyColors.has(family)) {
           this.#familyColors.set(family, []);
@@ -54,7 +62,6 @@ export class ColorModel {
 
       // Track Designer picks for badge display
       if (
-        color.brandedCollectionNames &&
         color.brandedCollectionNames.some((c) =>
           c.startsWith(DESIGNER_COLLECTION_PREFIX),
         )
@@ -111,9 +118,7 @@ export class ColorModel {
     for (const color of colors) {
       // Handle multiple color families - use the first one as primary
       const primaryFamily =
-        color.colorFamilyNames && color.colorFamilyNames.length > 0
-          ? color.colorFamilyNames[0]
-          : "Other";
+        color.colorFamilyNames.length > 0 ? color.colorFamilyNames[0] : "Other";
 
       if (!colorFamilies[primaryFamily]) {
         colorFamilies[primaryFamily] = [];
@@ -208,7 +213,7 @@ export class ColorModel {
     const familySectionIds = [];
 
     // Primary family → section ID
-    if (color.colorFamilyNames && color.colorFamilyNames.length > 0) {
+    if (color.colorFamilyNames.length > 0) {
       const primaryFamily = color.colorFamilyNames[0];
       familySectionIds.push(createGroupId(primaryFamily, PREFIX.FAMILY));
     }

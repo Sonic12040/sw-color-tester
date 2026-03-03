@@ -469,28 +469,23 @@ export function colorDetailModal(
 
   // Build color families and collections
   const families =
-    color.colorFamilyNames && color.colorFamilyNames.length > 0
+    color.colorFamilyNames.length > 0
       ? color.colorFamilyNames.join(", ")
       : "None";
 
   const collections =
-    color.brandedCollectionNames && color.brandedCollectionNames.length > 0
+    color.brandedCollectionNames.length > 0
       ? color.brandedCollectionNames.join(", ")
       : "None";
 
   // Extract Designer sub-collection names for prominent display
-  const designerCollections =
-    color.brandedCollectionNames && color.brandedCollectionNames.length > 0
-      ? color.brandedCollectionNames
-          .filter((c) => c.startsWith(DESIGNER_COLLECTION_PREFIX))
-          .map((c) => c.replace(`${DESIGNER_COLLECTION_PREFIX} - `, ""))
-      : [];
+  const designerCollections = color.brandedCollectionNames
+    .filter((c) => c.startsWith(DESIGNER_COLLECTION_PREFIX))
+    .map((c) => c.replace(`${DESIGNER_COLLECTION_PREFIX} - `, ""));
 
   // Build descriptions
   const descriptions =
-    color.description && color.description.length > 0
-      ? color.description.join(" • ")
-      : "";
+    color.description.length > 0 ? color.description.join(" • ") : "";
 
   // Build use type badges
   const useTypes = [];
