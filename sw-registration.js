@@ -11,12 +11,12 @@ if ("serviceWorker" in navigator) {
     if (!refreshing) {
       refreshing = true;
       console.log("[App] New service worker activated, reloading...");
-      window.location.reload();
+      globalThis.location.reload();
     }
   });
 
   // Register the service worker
-  window.addEventListener("load", () => {
+  globalThis.addEventListener("load", () => {
     // Use relative path for GitHub Pages subdirectory compatibility
     navigator.serviceWorker
       .register("./service-worker.js", {
@@ -189,7 +189,7 @@ function showUpdateNotification(worker) {
     if (worker) {
       worker.postMessage({ type: "SKIP_WAITING" });
     } else {
-      window.location.reload();
+      globalThis.location.reload();
     }
   });
 

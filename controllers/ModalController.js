@@ -275,8 +275,8 @@ export class ModalController {
       title: `${color.name} - Sherwin-Williams`,
       text: `Check out this color: ${color.name} (${color.colorNumber})`,
       url:
-        window.location.origin +
-        window.location.pathname +
+        globalThis.location.origin +
+        globalThis.location.pathname +
         `?${URL_PARAMS.COLOR}=${color.id}`,
     };
 
