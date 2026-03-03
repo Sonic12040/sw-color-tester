@@ -12,7 +12,8 @@
 }
 
 .header__top {
-  padding: var(--spacing-3) var(--spacing-4);
+  padding: clamp(0.5rem, 0.25rem + 0.667vw, 0.75rem)
+    clamp(0.75rem, 0.5rem + 0.667vw, 1rem);
   gap: var(--spacing-3);
   max-width: 1200px;
   margin: 0 auto;
@@ -26,10 +27,10 @@
 }
 
 .header p {
-  font-size: var(--font-size-base);
+  font-size: clamp(0.875rem, 0.75rem + 0.333vw, 1rem);
   line-height: var(--line-height-normal);
   color: var(--color-text-primary);
-  margin: 0 auto var(--spacing-4);
+  margin: 0 auto clamp(0.75rem, 0.5rem + 0.667vw, 1rem);
   max-width: 800px;
   padding: 0 var(--spacing-4);
 }
@@ -152,17 +153,8 @@
 
 /* Header mobile adjustments */
 @media (max-width: 599px) {
-  .header__top {
-    padding: var(--spacing-2) var(--spacing-3);
-  }
-
   .header h1 {
     font-size: var(--font-size-lg);
-  }
-
-  .header p {
-    font-size: var(--font-size-sm);
-    margin-bottom: var(--spacing-3);
   }
 
   .toolbar__actions {
