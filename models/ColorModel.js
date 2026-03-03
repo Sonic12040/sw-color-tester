@@ -86,10 +86,6 @@ export class ColorModel {
     return this.#activeColors;
   }
 
-  getActiveColorCount() {
-    return this.getActiveColors().length;
-  }
-
   getFavoriteColors(favoriteSet) {
     const activeColors = this.getActiveColors();
     return activeColors.filter((c) => favoriteSet.has(c.id));

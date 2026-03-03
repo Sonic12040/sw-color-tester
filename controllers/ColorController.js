@@ -276,7 +276,7 @@ export class ColorController {
         favoriteSet,
         lrvRange,
       );
-      const totalActive = this.model.getActiveColorCount();
+      const totalActive = this.model.getActiveColors().length;
       this.view.updateLrvCount(
         true,
         visibleColors.length + favoriteCount,
@@ -354,7 +354,7 @@ export class ColorController {
     this.view.updateLrvCount(
       this.state.isLrvFilterActive(),
       visibleColors.length + favoriteColors.length,
-      this.model.getActiveColorCount(),
+      this.model.getActiveColors().length,
     );
 
     const colorFamilies = this.model.groupByFamily(visibleColors);
