@@ -47,7 +47,7 @@ export class ColorView {
     this.designerPickIds = new Set();
 
     // Setup accordion delegation once — survives innerHTML rebuilds
-    this._setupAccordionDelegation();
+    this.#setupAccordionDelegation();
   }
 
   /**
@@ -70,7 +70,7 @@ export class ColorView {
     this.designerPickIds = renderData.designerPickIds || new Set();
 
     // Save accordion state before rebuilding
-    const expandedSections = this._saveAccordionState();
+    const expandedSections = this.#saveAccordionState();
 
     // Build and insert accordion HTML
     _perfMark("view:build-accordion:start");
@@ -97,17 +97,16 @@ export class ColorView {
     _perfMeasure("view:sections", "view:sections:start");
 
     // Restore accordion state after rebuilding
-    this._restoreAccordionState(expandedSections);
+    this.#restoreAccordionState(expandedSections);
 
     _perfMeasure("view:render", "view:render:start");
   }
 
   /**
    * Save which accordion sections are currently expanded and their scroll positions
-   * @private
    * @returns {Map<string, {expanded: boolean, scrollTop: number}>} Map of section states
    */
-  _saveAccordionState() {
+  #saveAccordionState() {
     const sectionStates = new Map();
     const headers = this.container.querySelectorAll(
       `.${CSS_CLASSES.ACCORDION_HEADER}`,
@@ -132,10 +131,9 @@ export class ColorView {
 
   /**
    * Restore accordion state and scroll positions after re-rendering
-   * @private
    * @param {Map<string, {expanded: boolean, scrollTop: number}>} sectionStates - Map of section states
    */
-  _restoreAccordionState(sectionStates) {
+  #restoreAccordionState(sectionStates) {
     if (!sectionStates || sectionStates.size === 0) return;
 
     // Use requestAnimationFrame to ensure DOM has settled before restoring state
@@ -466,9 +464,8 @@ export class ColorView {
   /**
    * Setup accordion behavior via event delegation (called once in constructor).
    * Handles click and keyboard navigation on accordion headers.
-   * @private
    */
-  _setupAccordionDelegation() {
+  #setupAccordionDelegation() {
     // Click delegation
     this.container.addEventListener("click", (e) => {
       const header = e.target.closest(`.${CSS_CLASSES.ACCORDION_HEADER}`);

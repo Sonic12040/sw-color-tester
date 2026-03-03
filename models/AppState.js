@@ -21,14 +21,13 @@ export class AppState extends EventEmitter {
 
   /**
    * Expand group identifiers (e.g. family:Red) into individual color IDs.
-   * @private
    * @param {string[]} ids - Array of IDs that may include group identifiers
    * @returns {string[]} Array of expanded color IDs
    *
    * Supported group identifier formats:
    * - "family:Red" - All colors in the Red family
    */
-  _expandGroupIds(ids) {
+  #expandGroupIds(ids) {
     if (!this.colorModel) return ids;
 
     const expandedIds = new Set();
@@ -50,9 +49,8 @@ export class AppState extends EventEmitter {
 
   /**
    * Decompress a URL param, falling back to legacy comma-separated format.
-   * @private
    */
-  _safeDecompress(compressed, label) {
+  #safeDecompress(compressed, label) {
     if (!compressed) return [];
     try {
       return decompressIds(compressed);
@@ -64,12 +62,11 @@ export class AppState extends EventEmitter {
 
   /**
    * Consolidate color IDs into group identifiers where entire families/categories are selected
-   * @private
    * @param {string[]} colorIds - Array of color IDs
    * @param {string[]} exclusionIds - Array of IDs to exclude from group consideration (e.g., hidden IDs when consolidating favorites)
    * @returns {string[]} Array with group identifiers for fully selected groups
    */
-  _consolidateColorIds(colorIds, exclusionIds = []) {
+  #consolidateColorIds(colorIds, exclusionIds = []) {
     if (!this.colorModel || colorIds.length === 0) return colorIds;
 
     const consolidated = new Set(colorIds);
@@ -96,12 +93,12 @@ export class AppState extends EventEmitter {
     return Array.from(consolidated);
   }
 
-  _consolidateHiddenIds(hiddenIds) {
-    return this._consolidateColorIds(hiddenIds, this.favorites);
+  #consolidateHiddenIds(hiddenIds) {
+    return this.#consolidateColorIds(hiddenIds, this.favorites);
   }
 
-  _consolidateFavoriteIds(favoriteIds) {
-    return this._consolidateColorIds(favoriteIds, this.hidden);
+  #consolidateFavoriteIds(favoriteIds) {
+    return this.#consolidateColorIds(favoriteIds, this.hidden);
   }
 
   /**
@@ -112,11 +109,11 @@ export class AppState extends EventEmitter {
     const compressedFavorites = params.get(URL_PARAMS.FAVORITES) || "";
     const compressedHidden = params.get(URL_PARAMS.HIDDEN) || "";
 
-    const favoriteIds = this._safeDecompress(compressedFavorites, "favorites");
-    const hiddenIds = this._safeDecompress(compressedHidden, "hidden");
+    const favoriteIds = this.#safeDecompress(compressedFavorites, "favorites");
+    const hiddenIds = this.#safeDecompress(compressedHidden, "hidden");
 
-    const expandedFavoriteIds = this._expandGroupIds(favoriteIds);
-    const expandedHiddenIds = this._expandGroupIds(hiddenIds);
+    const expandedFavoriteIds = this.#expandGroupIds(favoriteIds);
+    const expandedHiddenIds = this.#expandGroupIds(hiddenIds);
 
     this.favorites = new Set(expandedFavoriteIds);
     this.hidden = new Set(expandedHiddenIds);
@@ -137,8 +134,8 @@ export class AppState extends EventEmitter {
     const favoriteArray = Array.from(this.favorites);
     const hiddenArray = Array.from(this.hidden);
 
-    const consolidatedFavorites = this._consolidateFavoriteIds(favoriteArray);
-    const consolidatedHidden = this._consolidateHiddenIds(hiddenArray);
+    const consolidatedFavorites = this.#consolidateFavoriteIds(favoriteArray);
+    const consolidatedHidden = this.#consolidateHiddenIds(hiddenArray);
 
     const compressedFavorites = compressIds(consolidatedFavorites);
     const compressedHidden = compressIds(consolidatedHidden);
@@ -222,13 +219,12 @@ export class AppState extends EventEmitter {
   }
 
   /**
-   * @private
    * @param {Set<string>} set - The target Set to mutate
    * @param {string[]} colorIds - Array of color IDs to operate on
    * @param {string} operation - 'add' or 'remove'
    * @param {string} event - Event name to emit after mutation
    */
-  _bulkUpdate(set, colorIds, operation, event) {
+  #bulkUpdate(set, colorIds, operation, event) {
     for (const id of colorIds) {
       operation === "add" ? set.add(id) : set.delete(id);
     }
@@ -237,19 +233,19 @@ export class AppState extends EventEmitter {
   }
 
   addMultipleFavorites(colorIds) {
-    this._bulkUpdate(this.favorites, colorIds, "add", "favoritesChanged");
+    this.#bulkUpdate(this.favorites, colorIds, "add", "favoritesChanged");
   }
 
   removeMultipleFavorites(colorIds) {
-    this._bulkUpdate(this.favorites, colorIds, "remove", "favoritesChanged");
+    this.#bulkUpdate(this.favorites, colorIds, "remove", "favoritesChanged");
   }
 
   addMultipleHidden(colorIds) {
-    this._bulkUpdate(this.hidden, colorIds, "add", "hiddenChanged");
+    this.#bulkUpdate(this.hidden, colorIds, "add", "hiddenChanged");
   }
 
   removeMultipleHidden(colorIds) {
-    this._bulkUpdate(this.hidden, colorIds, "remove", "hiddenChanged");
+    this.#bulkUpdate(this.hidden, colorIds, "remove", "hiddenChanged");
   }
 
   clearFavorites() {

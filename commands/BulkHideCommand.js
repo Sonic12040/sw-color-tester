@@ -1,17 +1,19 @@
 import { ColorCommand } from "./ColorCommand.js";
 
 export class BulkHideCommand extends ColorCommand {
+  #precomputedColors;
+
   constructor(groupId, groupName, precomputedColors = null) {
     super();
     this.groupId = groupId;
     this.groupName = groupName;
-    this._precomputedColors = precomputedColors;
+    this.#precomputedColors = precomputedColors;
   }
 
   execute() {
     const groupColors =
-      this._precomputedColors || this.model.getFamilyColors(this.groupName);
-    this._precomputedColors = null; // Release reference after use
+      this.#precomputedColors || this.model.getFamilyColors(this.groupName);
+    this.#precomputedColors = null; // Release reference after use
 
     const colorIds = groupColors.map((color) => color.id);
     if (colorIds.length === 0) return false;

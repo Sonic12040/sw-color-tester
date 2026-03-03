@@ -22,6 +22,8 @@ import {
 } from "../commands/index.js";
 
 export class ColorController {
+  #handlingCommand = false;
+
   constructor(
     model,
     state,
@@ -41,45 +43,41 @@ export class ColorController {
     this.modalController = modalController;
     this.commandBus = commandBus;
 
-    commandBus.setHandler((cmd) => this._executeCommand(cmd));
+    commandBus.setHandler((cmd) => this.#executeCommand(cmd));
 
-    this._handlingCommand = false;
-    this._subscribeToStateEvents();
+    this.#subscribeToStateEvents();
   }
 
   /**
    * Subscribe to AppState events for rendering triggered by non-command sources
    * (e.g. LrvFilterController setting LRV range directly on state).
-   * Skipped when _handlingCommand is true — _executeCommand handles its own rendering.
-   * @private
+   * Skipped when #handlingCommand is true — #executeCommand handles its own rendering.
    */
-  _subscribeToStateEvents() {
+  #subscribeToStateEvents() {
     const renderIfExternal = () => {
-      if (!this._handlingCommand) this.render();
+      if (!this.#handlingCommand) this.render();
     };
     this.state.on("favoritesChanged", renderIfExternal);
     this.state.on("hiddenChanged", renderIfExternal);
     this.state.on("lrvChanged", renderIfExternal);
-    this.state.on("neutralBgChanged", () => this._applyNeutralBg());
+    this.state.on("neutralBgChanged", () => this.#applyNeutralBg());
   }
 
   /**
    * Execute a command with state diffing — applies surgical DOM updates
    * when the change is small, or falls back to full render for bulk changes.
-   * @private
    * @param {ColorCommand} command - Command to execute
    */
-  _executeCommand(command) {
-    this._handlingCommand = true;
+  #executeCommand(command) {
+    this.#handlingCommand = true;
     try {
-      this._executeCommandInner(command);
+      this.#executeCommandInner(command);
     } finally {
-      this._handlingCommand = false;
+      this.#handlingCommand = false;
     }
   }
 
-  /** @private */
-  _executeCommandInner(command) {
+  #executeCommandInner(command) {
     const prevFavorites = new Set(this.state.getFavoriteSet());
     const prevHidden = new Set(this.state.getHiddenSet());
 
@@ -111,9 +109,9 @@ export class ColorController {
     this.view.designerPickIds = this.model.getDesignerPickIds();
 
     requestAnimationFrame(() => {
-      this._applyFavoriteDiff(addedFavs, removedFavs);
-      this._applyHiddenDiff(addedHidden, removedHidden);
-      this._updateLrvCount();
+      this.#applyFavoriteDiff(addedFavs, removedFavs);
+      this.#applyHiddenDiff(addedHidden, removedHidden);
+      this.#updateLrvCount();
     });
   }
 
@@ -121,11 +119,10 @@ export class ColorController {
    * Apply surgical DOM updates for favorite state changes.
    * - Toggle heart icon fill on all tile instances
    * - Add/remove tiles from the favorites section
-   * @private
    * @param {string[]} added - Newly favorited color IDs
    * @param {string[]} removed - Unfavorited color IDs
    */
-  _applyFavoriteDiff(added, removed) {
+  #applyFavoriteDiff(added, removed) {
     const favoriteSet = this.state.getFavoriteSet();
 
     for (const colorId of added) {
@@ -173,11 +170,10 @@ export class ColorController {
    * - Toggle eye icon on all tile instances
    * - Add/remove tiles from the hidden section
    * - Add/remove tiles from family sections
-   * @private
    * @param {string[]} added - Newly hidden color IDs
    * @param {string[]} removed - Unhidden color IDs
    */
-  _applyHiddenDiff(added, removed) {
+  #applyHiddenDiff(added, removed) {
     const hiddenSet = this.state.getHiddenSet();
     const favoriteSet = this.state.getFavoriteSet();
     const lrvRange = this.state.getLrvRange();
@@ -191,7 +187,7 @@ export class ColorController {
       const sections = this.model.getColorSectionIds(colorId);
       for (const sectionId of sections.familySectionIds) {
         this.view.removeTileFromSection(sectionId, colorId);
-        this._updateSectionHeaderCount(sectionId);
+        this.#updateSectionHeaderCount(sectionId);
       }
 
       // Add tile to hidden section
@@ -208,11 +204,11 @@ export class ColorController {
 
       this.view.removeTileFromSection("hidden", colorId);
 
-      if (!favoriteSet.has(colorId) && this._passesLrvFilter(color, lrvRange)) {
+      if (!favoriteSet.has(colorId) && this.#passesLrvFilter(color, lrvRange)) {
         const sections = this.model.getColorSectionIds(colorId);
         for (const sectionId of sections.familySectionIds) {
           this.view.addTileToSection(sectionId, color);
-          this._updateSectionHeaderCount(sectionId);
+          this.#updateSectionHeaderCount(sectionId);
         }
       }
     }
@@ -233,12 +229,11 @@ export class ColorController {
 
   /**
    * Check if a color passes the current LRV filter range.
-   * @private
    * @param {Object} color - The color object
    * @param {{min: number, max: number}} lrvRange - Current LRV range
    * @returns {boolean} Whether the color is within the LRV range
    */
-  _passesLrvFilter(color, lrvRange) {
+  #passesLrvFilter(color, lrvRange) {
     if (lrvRange.min === 0 && lrvRange.max === 100) return true;
     const lrv = color.lrv ?? 0;
     return lrv >= lrvRange.min && lrv <= lrvRange.max;
@@ -246,10 +241,9 @@ export class ColorController {
 
   /**
    * Update a section header count by counting its current tiles.
-   * @private
    * @param {string} sectionId - The section ID
    */
-  _updateSectionHeaderCount(sectionId) {
+  #updateSectionHeaderCount(sectionId) {
     const containerId = getTilesContainerId(sectionId);
     const container = document.getElementById(containerId);
     if (!container) return;
@@ -270,9 +264,8 @@ export class ColorController {
 
   /**
    * Update the LRV count display without re-rendering.
-   * @private
    */
-  _updateLrvCount() {
+  #updateLrvCount() {
     if (this.state.isLrvFilterActive()) {
       const favoriteCount = this.state.getFavoriteSet().size;
       const hiddenSet = this.state.getHiddenSet();
@@ -303,7 +296,7 @@ export class ColorController {
     this.setupHeaderButtons();
     this.modalController.setupListeners();
     this.lrvFilter.setup();
-    this._applyNeutralBg();
+    this.#applyNeutralBg();
     this.render();
     this.checkSharedColor();
   }
@@ -385,9 +378,8 @@ export class ColorController {
 
   /**
    * Event handler registry — maps selectors to handlers.
-   * @private
    */
-  _getEventHandlerRegistry() {
+  #getEventHandlerRegistry() {
     return [
       {
         selector: `.${CSS_CLASSES.COLOR_TILE_FAVORITE_BUTTON}`,
@@ -447,7 +439,7 @@ export class ColorController {
       return;
     }
 
-    const handlers = this._getEventHandlerRegistry();
+    const handlers = this.#getEventHandlerRegistry();
 
     accordion.addEventListener("click", (e) => {
       for (const config of handlers) {
@@ -513,9 +505,8 @@ export class ColorController {
   /**
    * Apply or remove the neutral evaluation background based on state.
    * Toggles the body class and updates the toggle button's aria-pressed.
-   * @private
    */
-  _applyNeutralBg() {
+  #applyNeutralBg() {
     const isActive = this.state.getNeutralBg();
     document.body.classList.toggle("neutral-bg", isActive);
     const btn = document.getElementById(ELEMENT_IDS.NEUTRAL_BG_TOGGLE);

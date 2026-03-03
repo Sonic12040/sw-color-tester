@@ -17,12 +17,13 @@ import {
 } from "../commands/index.js";
 
 export class ModalController {
+  #unsubscribers = [];
+
   constructor(model, state, dialog, commandBus) {
     this.model = model;
     this.state = state;
     this.dialog = dialog;
     this.commandBus = commandBus;
-    this._unsubscribers = [];
   }
 
   setupListeners() {
@@ -112,36 +113,33 @@ export class ModalController {
           closeButton.focus();
         }
 
-        this._setupAccordion(modal);
-        this._setupActionButtons(modal, color, colorId);
-        this._setupMiniTiles(modal);
+        this.#setupAccordion(modal);
+        this.#setupActionButtons(modal, color, colorId);
+        this.#setupMiniTiles(modal);
       }
     });
 
-    this._subscribeToState(colorId);
+    this.#subscribeToState(colorId);
     document.body.style.overflow = "hidden";
   }
 
   /**
    * Subscribe to state events so modal UI stays in sync with external changes (e.g. undo).
-   * @private
    */
-  _subscribeToState(colorId) {
-    this._unsubscribeFromState();
-    this._unsubscribers.push(
-      this.state.on("favoritesChanged", () => this._updateFavoriteUI(colorId)),
-      this.state.on("hiddenChanged", () => this._updateHiddenUI(colorId)),
+  #subscribeToState(colorId) {
+    this.#unsubscribeFromState();
+    this.#unsubscribers.push(
+      this.state.on("favoritesChanged", () => this.#updateFavoriteUI(colorId)),
+      this.state.on("hiddenChanged", () => this.#updateHiddenUI(colorId)),
     );
   }
 
-  /** @private */
-  _unsubscribeFromState() {
-    for (const unsub of this._unsubscribers) unsub();
-    this._unsubscribers = [];
+  #unsubscribeFromState() {
+    for (const unsub of this.#unsubscribers) unsub();
+    this.#unsubscribers = [];
   }
 
-  /** @private */
-  _updateFavoriteUI(colorId) {
+  #updateFavoriteUI(colorId) {
     const modal = document.getElementById(ELEMENT_IDS.COLOR_DETAIL_MODAL);
     if (!modal) return;
     const btn = modal.querySelector(
@@ -160,8 +158,7 @@ export class ModalController {
     );
   }
 
-  /** @private */
-  _updateHiddenUI(colorId) {
+  #updateHiddenUI(colorId) {
     const modal = document.getElementById(ELEMENT_IDS.COLOR_DETAIL_MODAL);
     if (!modal) return;
     const btn = modal.querySelector(`.${CSS_CLASSES.MODAL_ACTION_BUTTON_HIDE}`);
@@ -175,8 +172,7 @@ export class ModalController {
     btn.setAttribute("aria-label", `${isHidden ? "Show" : "Hide"} color`);
   }
 
-  /** @private */
-  _setupAccordion(modal) {
+  #setupAccordion(modal) {
     const accordionTrigger = modal.querySelector(
       `.${CSS_CLASSES.MODAL_ACCORDION_TRIGGER}`,
     );
@@ -201,8 +197,7 @@ export class ModalController {
     }
   }
 
-  /** @private */
-  _setupActionButtons(modal, color, colorId) {
+  #setupActionButtons(modal, color, colorId) {
     const favoriteButton = modal.querySelector(
       `.${CSS_CLASSES.MODAL_ACTION_BUTTON_FAVORITE}`,
     );
@@ -227,13 +222,13 @@ export class ModalController {
 
     if (shareButton) {
       shareButton.addEventListener("click", async () => {
-        await this._handleShare(color);
+        await this.#handleShare(color);
       });
     }
 
     if (copyButton) {
       copyButton.addEventListener("click", async () => {
-        await this._handleCopyColorCode(color);
+        await this.#handleCopyColorCode(color);
       });
     }
 
@@ -253,8 +248,7 @@ export class ModalController {
     }
   }
 
-  /** @private */
-  _setupMiniTiles(modal) {
+  #setupMiniTiles(modal) {
     const clickableTiles = modal.querySelectorAll(
       `.${CSS_CLASSES.MODAL_MINI_TILE_CLICKABLE}`,
     );
@@ -276,8 +270,7 @@ export class ModalController {
     });
   }
 
-  /** @private */
-  async _handleShare(color) {
+  async #handleShare(color) {
     const shareData = {
       title: `${color.name} - Sherwin-Williams`,
       text: `Check out this color: ${color.name} (${color.colorNumber})`,
@@ -292,7 +285,7 @@ export class ModalController {
         await navigator.share(shareData);
       } else {
         await navigator.clipboard.writeText(shareData.url);
-        this._flashButtonText(
+        this.#flashButtonText(
           `.${CSS_CLASSES.MODAL_ACTION_BUTTON_SHARE} span`,
           "Link Copied!",
         );
@@ -302,8 +295,7 @@ export class ModalController {
     }
   }
 
-  /** @private */
-  async _handleCopyColorCode(color) {
+  async #handleCopyColorCode(color) {
     const colorCode = `${color.name} (SW ${color.colorNumber})
 Hex: ${color.hex}
 RGB: rgb(${color.red}, ${color.green}, ${color.blue})
@@ -313,7 +305,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
 
     try {
       await navigator.clipboard.writeText(colorCode);
-      this._flashButtonText(
+      this.#flashButtonText(
         `.${CSS_CLASSES.MODAL_ACTION_BUTTON_COPY} span`,
         "Copied!",
       );
@@ -327,7 +319,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
   }
 
   close() {
-    this._unsubscribeFromState();
+    this.#unsubscribeFromState();
     const modal = document.getElementById(ELEMENT_IDS.COLOR_DETAIL_MODAL);
     if (modal) {
       modal.classList.remove(CSS_CLASSES.MODAL_ACTIVE);
@@ -349,8 +341,7 @@ HSL: hsl(${Math.round(color.hue * 360)}°, ${Math.round(
     }
   }
 
-  /** @private */
-  _flashButtonText(selector, tempText) {
+  #flashButtonText(selector, tempText) {
     const el = document.querySelector(selector);
     if (!el) return;
     const originalText = el.textContent;

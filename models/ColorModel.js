@@ -10,42 +10,46 @@ import {
 } from "../utils/config.js";
 
 export class ColorModel {
+  #activeColors;
+  #colorById;
+  #familyColors;
+  #familyColorIds;
+  #familyNameLookup;
+  #designerPickIds;
+
   constructor(colorData) {
-    /** @private Cached active colors (immutable at runtime) */
-    this._activeColors = colorData.filter((c) => !c.archived && !c.ignore);
-    /** @private O(1) color lookup by ID */
-    this._colorById = new Map(this._activeColors.map((c) => [c.id, c]));
+    this.#activeColors = colorData.filter((c) => !c.archived && !c.ignore);
+    this.#colorById = new Map(this.#activeColors.map((c) => [c.id, c]));
 
     // Pre-build immutable group Maps (family/category membership never changes at runtime)
-    this._buildGroupMaps();
+    this.#buildGroupMaps();
   }
 
   /**
    * Pre-compute family group structures and Designer Pick set.
    * Family maps use primary (first) family.
-   * @private
    */
-  _buildGroupMaps() {
-    /** @private Map<string, Object[]> — familyName → color objects (case-preserved) */
-    this._familyColors = new Map();
-    /** @private Map<string, string[]> — familyName → color IDs */
-    this._familyColorIds = new Map();
-    /** @private Map<string(lowercase), string> — lowercase name → canonical name */
-    this._familyNameLookup = new Map();
-    /** @private Set<string> — IDs of colors in any Designer Color Collection */
-    this._designerPickIds = new Set();
+  #buildGroupMaps() {
+    /** Map<string, Object[]> — familyName → color objects (case-preserved) */
+    this.#familyColors = new Map();
+    /** Map<string, string[]> — familyName → color IDs */
+    this.#familyColorIds = new Map();
+    /** Map<string(lowercase), string> — lowercase name → canonical name */
+    this.#familyNameLookup = new Map();
+    /** Set<string> — IDs of colors in any Designer Color Collection */
+    this.#designerPickIds = new Set();
 
-    for (const color of this._activeColors) {
+    for (const color of this.#activeColors) {
       // Primary family
       if (color.colorFamilyNames && color.colorFamilyNames.length > 0) {
         const family = color.colorFamilyNames[0];
-        if (!this._familyColors.has(family)) {
-          this._familyColors.set(family, []);
-          this._familyColorIds.set(family, []);
-          this._familyNameLookup.set(family.toLowerCase(), family);
+        if (!this.#familyColors.has(family)) {
+          this.#familyColors.set(family, []);
+          this.#familyColorIds.set(family, []);
+          this.#familyNameLookup.set(family.toLowerCase(), family);
         }
-        this._familyColors.get(family).push(color);
-        this._familyColorIds.get(family).push(color.id);
+        this.#familyColors.get(family).push(color);
+        this.#familyColorIds.get(family).push(color.id);
       }
 
       // Track Designer picks for badge display
@@ -55,7 +59,7 @@ export class ColorModel {
           c.startsWith(DESIGNER_COLLECTION_PREFIX),
         )
       ) {
-        this._designerPickIds.add(color.id);
+        this.#designerPickIds.add(color.id);
       }
     }
   }
@@ -64,15 +68,15 @@ export class ColorModel {
    * @returns {Set<string>}
    */
   getDesignerPickIds() {
-    return this._designerPickIds;
+    return this.#designerPickIds;
   }
 
   getColorById(id) {
-    return this._colorById.get(id);
+    return this.#colorById.get(id);
   }
 
   getActiveColors() {
-    return this._activeColors;
+    return this.#activeColors;
   }
 
   getActiveColorCount() {
@@ -136,10 +140,10 @@ export class ColorModel {
    * @param {string} familyName - Name of the family (case-insensitive)
    */
   getFamilyColors(familyName) {
-    const colors = this._familyColors.get(familyName);
+    const colors = this.#familyColors.get(familyName);
     if (colors) return colors;
-    const canonical = this._familyNameLookup.get(familyName.toLowerCase());
-    return canonical ? this._familyColors.get(canonical) : [];
+    const canonical = this.#familyNameLookup.get(familyName.toLowerCase());
+    return canonical ? this.#familyColors.get(canonical) : [];
   }
 
   /**
@@ -152,7 +156,7 @@ export class ColorModel {
   getHiddenFamilies(hiddenSet, favoriteSet = new Set()) {
     const hiddenFamilies = [];
 
-    for (const [familyName, colors] of this._familyColors) {
+    for (const [familyName, colors] of this.#familyColors) {
       let nonFavCount = 0;
       let allHidden = true;
 
@@ -178,7 +182,7 @@ export class ColorModel {
    * @param {string[]|Set<string>} excludeIds - IDs to exclude (array or Set)
    */
   getColorIdsForFamily(familyName, excludeIds = []) {
-    const ids = this._familyColorIds.get(familyName);
+    const ids = this.#familyColorIds.get(familyName);
     if (!ids) return [];
     if (
       (excludeIds instanceof Set && excludeIds.size === 0) ||
@@ -198,7 +202,7 @@ export class ColorModel {
    * @returns {{familySectionIds: string[]}}
    */
   getColorSectionIds(colorId) {
-    const color = this._colorById.get(colorId);
+    const color = this.#colorById.get(colorId);
     if (!color) return { familySectionIds: [] };
 
     const familySectionIds = [];
