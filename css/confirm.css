@@ -1,0 +1,190 @@
+/* ============================================
+   CONFIRMATION MODAL STYLES
+   ============================================ */
+
+/* Confirmation overlay - higher z-index than regular modals */
+.confirm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: var(--blur-md);
+  z-index: calc(var(--z-modal-backdrop) + 100);
+  padding: var(--spacing-4);
+  opacity: 0;
+  will-change: opacity;
+  animation: fadeIn var(--transition-medium) forwards;
+
+  &.closing {
+    animation: fadeOut var(--transition-medium) forwards;
+
+    .confirm-dialog {
+      animation: scaleOut var(--transition-medium) forwards;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Confirmation dialog box */
+.confirm-dialog {
+  background: var(--color-surface-primary);
+  border-radius: var(--radius-lg);
+  max-width: 480px;
+  width: 100%;
+  box-shadow: var(--shadow-2xl);
+  transform: scale(0.9);
+  will-change: transform;
+  animation: scaleIn var(--transition-medium) forwards;
+}
+
+@keyframes scaleIn {
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleOut {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0.9);
+  }
+}
+
+/* Confirmation header */
+.confirm-header {
+  /* Fluid padding: 1rem at 375px → 1.25rem/1.5rem at 600px+ */
+  padding: clamp(1rem, 0.583rem + 1.78vw, 1.25rem)
+    clamp(1rem, 0.167rem + 3.56vw, 1.5rem);
+  border-bottom: 1px solid var(--color-border-primary);
+}
+
+.confirm-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+  color: var(--color-text-primary);
+  line-height: var(--line-height-tight);
+}
+
+/* Confirmation body */
+.confirm-body {
+  /* Fluid padding: 1rem at 375px → 1.5rem at 600px+ */
+  padding: clamp(1rem, 0.167rem + 3.56vw, 1.5rem);
+}
+
+.confirm-message {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: var(--line-height-relaxed);
+}
+
+/* Confirmation actions */
+.confirm-actions {
+  /* Fluid padding: 1rem at 375px → 1.25rem/1.5rem at 600px+ */
+  padding: clamp(1rem, 0.583rem + 1.78vw, 1.25rem)
+    clamp(1rem, 0.167rem + 3.56vw, 1.5rem);
+  display: flex;
+  gap: var(--spacing-3);
+  justify-content: flex-end;
+  border-top: 1px solid var(--color-border-primary);
+  background: var(--color-surface-secondary);
+
+  & .btn {
+    padding: var(--spacing-3) var(--spacing-5);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    transition:
+      background-color var(--transition-fast),
+      color var(--transition-fast),
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast),
+      transform var(--transition-fast);
+    min-width: 100px;
+
+    &:focus-visible {
+      outline: 2px solid var(--color-border-focus);
+      outline-offset: 2px;
+    }
+  }
+
+  & .btn-secondary {
+    background: var(--color-surface-primary);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border-primary);
+
+    &:hover {
+      background: var(--color-surface-tertiary);
+      border-color: var(--color-border-secondary);
+    }
+  }
+
+  & .btn-danger {
+    background: var(--color-danger);
+    color: var(--neutral-0);
+
+    &:hover {
+      background: var(--red-700);
+      color: var(--neutral-0);
+    }
+  }
+
+  & .btn-primary {
+    background: var(--color-primary);
+    color: var(--neutral-0);
+
+    &:hover {
+      background: var(--blue-700);
+      color: var(--neutral-0);
+    }
+  }
+}
+
+/* Mobile confirmation modal adjustments */
+@media (max-width: 599px) {
+  .confirm-overlay {
+    padding: var(--spacing-3);
+  }
+
+  .confirm-dialog {
+    max-width: 100%;
+  }
+
+  .confirm-title {
+    font-size: var(--font-size-lg);
+  }
+
+  .confirm-message {
+    font-size: var(--font-size-sm);
+  }
+
+  .confirm-actions {
+    flex-direction: column;
+  }
+
+  .confirm-actions .btn {
+    width: 100%;
+    min-width: auto;
+  }
+}

@@ -1,0 +1,79 @@
+/* ============================================
+   EXTRA SMALL MOBILE (< 400px)
+   Optimizations for very small phones
+   ============================================ */
+
+@media (max-width: 399px) {
+  .header h1 {
+    font-size: var(--font-size-md);
+  }
+
+  .header p {
+    font-size: var(--font-size-xs);
+  }
+
+  .header__button {
+    padding: var(--spacing-2) var(--spacing-3);
+    font-size: var(--font-size-xs);
+  }
+
+  .modal__title {
+    font-size: var(--font-size-lg);
+  }
+
+  .modal__subtitle {
+    font-size: var(--font-size-base);
+  }
+
+  .toast {
+    padding: var(--spacing-3) var(--spacing-4);
+    min-width: auto;
+  }
+
+  .toast__message {
+    font-size: var(--font-size-xs);
+  }
+
+  .confirm-dialog {
+    margin: var(--spacing-2);
+  }
+}
+
+/* ============================================
+   LANDSCAPE MOBILE (height < width, height < 500px)
+   Optimizations for horizontal phone orientation
+   ============================================ */
+
+@media (max-width: 899px) and (max-height: 499px) and (orientation: landscape) {
+  .header {
+    position: relative; /* Remove sticky on landscape mobile */
+  }
+
+  .header h1 {
+    font-size: var(--font-size-md);
+  }
+
+  .header p {
+    display: none; /* Hide description to save vertical space */
+  }
+
+  .modal-container {
+    max-height: 90vh;
+  }
+
+  .modal-header {
+    padding: var(--spacing-3) var(--spacing-4);
+  }
+
+  .modal__title {
+    font-size: var(--font-size-md);
+  }
+
+  .modal__subtitle {
+    font-size: var(--font-size-sm);
+  }
+
+  .modal__body {
+    padding: var(--spacing-4);
+  }
+}

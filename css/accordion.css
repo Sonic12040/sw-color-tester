@@ -1,0 +1,157 @@
+/* =============================================
+   ACCORDION & BULK ACTIONS
+   ============================================= */
+
+/* Accordion Styles */
+.accordion {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 2.67vw, 2rem);
+}
+
+.accordion__item {
+  border: 1px solid var(--color-border-primary);
+  margin-bottom: var(--spacing-2);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.accordion__header {
+  background: var(--color-surface-hover);
+  border: none;
+  width: 100%;
+  padding: clamp(0.75rem, 0.214rem + 2.29vw, 1.5rem)
+    clamp(1rem, 0.318rem + 2.91vw, 2rem);
+  text-align: left;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  text-transform: capitalize;
+  min-height: 44px;
+
+  &:hover {
+    background: var(--color-surface-active);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+
+  &[aria-expanded="true"] {
+    background: var(--color-surface-active);
+
+    .accordion__icon {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.accordion__icon {
+  transition: transform var(--transition-fast);
+}
+
+.accordion__content {
+  overflow: hidden;
+  transition: max-height var(--transition-medium);
+  scrollbar-width: thin;
+  scrollbar-color: #c1c1c1 #f1f1f1;
+
+  &[aria-hidden="true"] {
+    max-height: 0;
+    padding: 0;
+
+    .accordion__panel {
+      padding: 0 clamp(1rem, 2.67vw, 2rem);
+    }
+  }
+
+  &[aria-hidden="false"] {
+    max-height: 80vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  /* Custom scrollbar styling for webkit browsers */
+  &::-webkit-scrollbar {
+    width: var(--spacing-4);
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--color-surface-secondary);
+    border-radius: var(--radius-sm);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-border-secondary);
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-fast);
+
+    &:hover {
+      background: var(--color-border-primary);
+    }
+  }
+}
+
+.accordion__panel {
+  padding: clamp(0.75rem, 0.182rem + 2.42vw, 2rem);
+  background: var(--color-surface-primary);
+  min-height: 0;
+}
+
+/* Bulk action panel styles */
+.bulk-actions-panel {
+  margin-bottom: var(--spacing-4);
+  padding: clamp(0.75rem, 0.214rem + 2.29vw, 1.5rem);
+  background: var(--color-surface-secondary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-secondary);
+}
+
+.bulk-actions-panel__container {
+  gap: clamp(0.75rem, 0.214rem + 2.29vw, 1.5rem);
+}
+
+.bulk-actions-panel__label {
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+}
+
+/* Bulk action buttons - now use unified button system */
+.bulk-actions__favorite-button,
+.bulk-actions__hide-button {
+  gap: var(--spacing-2);
+  background: var(--button-secondary-bg);
+  border: 1px solid var(--button-secondary-border);
+  padding: var(--spacing-3) var(--spacing-4);
+  border-radius: var(--button-border-radius);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: var(--button-font-weight);
+  line-height: var(--button-line-height);
+  transition: var(--button-transition);
+  min-height: var(--button-min-height);
+  color: var(--button-secondary-color);
+}
+
+/* Bulk action buttons - hover modifiers */
+.bulk-actions__favorite-button:hover {
+  background: var(--color-error-subtle);
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
+
+.bulk-actions__hide-button:hover {
+  background: var(--button-secondary-hover-bg);
+  border-color: var(--button-secondary-hover-border);
+}
+
+/* Bulk action buttons - focus state */
+.bulk-actions__favorite-button:focus-visible,
+.bulk-actions__hide-button:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}

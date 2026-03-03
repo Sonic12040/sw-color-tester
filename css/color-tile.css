@@ -1,0 +1,379 @@
+/* =============================================
+   COLOR TILE COMPONENT
+   Tiles, buttons, badges, empty states
+   ============================================= */
+
+/* Color tile interaction buttons - now use unified icon button system */
+.color-tile__favorite-button,
+.color-tile__hide-button,
+.color-tile__unhide-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: var(--button-transition);
+  min-width: var(--button-min-height);
+  min-height: var(--button-min-height);
+}
+
+/* Color tile buttons - hover states */
+.color-tile__favorite-button:hover,
+.color-tile__hide-button:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+/* Color tile buttons - focus states */
+.color-tile__favorite-button:focus-visible,
+.color-tile__hide-button:focus-visible,
+.color-tile__unhide-button:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+/* Unhide button modifier */
+.color-tile__unhide-button {
+  border-radius: var(--button-border-radius);
+  transition: var(--button-transition);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    opacity: 0.9;
+    transform: scale(1.05);
+  }
+}
+
+/* Color tile group modifiers - shared properties */
+.color-tile--family,
+.color-tile--category {
+  position: relative;
+  color: white;
+  cursor: pointer;
+  border: 2px dashed var(--neutral-0);
+  opacity: var(--opacity-30);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.color-tile--family:hover,
+.color-tile--category:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Color tile group modifiers - unique gradients */
+.color-tile--family {
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+}
+
+.color-tile--category {
+  background: linear-gradient(135deg, #8e44ad 0%, #6c3483 100%);
+}
+
+/* Color tile grid container */
+.color-tiles__grid {
+  gap: var(--spacing-4);
+}
+
+/* Color tile base - Mobile-first responsive design with consistent sizing */
+.color-tile {
+  width: 100%;
+  /* Fluid tile sizing: scales between 600px → 1200px viewport */
+  min-width: clamp(280px, 220px + 6.67vw, 300px);
+  max-width: clamp(320px, 260px + 6.67vw, 340px);
+  min-height: clamp(160px, 120px + 6.67vw, 200px);
+  padding: clamp(1rem, 2.67vw, 1.5rem);
+  /* Ensure info content clears the absolutely-positioned action buttons */
+  padding-top: calc(var(--button-min-height) + clamp(1rem, 2.67vw, 1.5rem));
+  position: relative;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition:
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* Improve overall rendering quality */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+
+  /* Hover effect - lift and enhance shadow to indicate interactivity */
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Focus effect - for keyboard navigation */
+  &:focus-within {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+/* Disable hover effect on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .color-tile:hover {
+    transform: translateZ(0);
+    box-shadow: var(--shadow-sm);
+  }
+}
+
+.color-tile__actions {
+  position: absolute;
+  top: var(--spacing-2);
+  right: var(--spacing-2);
+  gap: var(--spacing-2);
+  z-index: var(--z-base);
+}
+
+.color-tile__button {
+  background: var(--btn-bg, var(--button-icon-bg));
+  backdrop-filter: var(--blur-md);
+  border: none;
+  cursor: pointer;
+  padding: var(--spacing-2);
+  transition: var(--button-transition);
+  border-radius: var(--button-border-radius);
+  min-width: var(--button-min-height);
+  min-height: var(--button-min-height);
+
+  &:hover {
+    background: var(--btn-hover-bg, var(--button-icon-hover-bg));
+    transform: scale(1.1);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+    background: var(--btn-hover-bg, var(--button-icon-hover-bg));
+  }
+}
+
+/* View Details button - extends button system, always visible for discoverability */
+.color-tile__view-button {
+  width: auto;
+  min-width: 120px;
+  min-height: var(--button-min-height);
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--button-line-height);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-top: var(--spacing-2);
+  position: relative;
+  background: var(--btn-bg, var(--button-icon-bg));
+  border: none;
+  color: var(--btn-text-color, currentColor);
+  border-radius: var(--button-border-radius);
+  cursor: pointer;
+  transition: var(--button-transition);
+  display: inline-block;
+  backdrop-filter: blur(4px);
+  /* Always visible for discoverability - essential user action */
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+
+  &:hover {
+    background: var(--btn-hover-bg, var(--button-icon-hover-bg));
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: none;
+    background: var(--btn-hover-bg, var(--button-icon-hover-bg));
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+}
+
+/* Badge container */
+.color-tile__badges {
+  position: absolute;
+  top: var(--spacing-2);
+  left: var(--spacing-2);
+  gap: var(--spacing-2);
+  z-index: var(--z-base);
+}
+
+.color-tile__badge {
+  display: inline-block;
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: 12px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  backdrop-filter: var(--blur-md);
+  border: none;
+  /* Background and color are set inline via style attribute based on isDark */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Hide "Designer Pick" badge inside the Designer Color Collection family accordion — redundant there */
+#family-designer-color-collection-tiles .color-tile__badge--designer {
+  display: none;
+}
+
+/* Also hide in favorites section — badge is for cross-reference only */
+#favorites-tiles .color-tile__badge--designer {
+  display: none;
+}
+
+/* Color information section - progressive disclosure for reduced density */
+.color-tile__info {
+  position: relative;
+  margin-top: auto;
+  padding-top: var(--spacing-4);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  /* Text rendering optimization */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.color-tile__name {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-1);
+  line-height: var(--line-height-tight);
+  letter-spacing: 0.01em;
+  /* Always visible - primary information */
+}
+
+.color-tile__number {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-2);
+  opacity: var(--opacity-95);
+  letter-spacing: 0.02em;
+  line-height: var(--line-height-tight);
+  /* Always visible - primary information */
+}
+
+/* LRV Container - always visible */
+.color-tile__lrv-container {
+  margin-bottom: var(--spacing-2);
+}
+
+.color-tile__lrv {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--radius-sm);
+  backdrop-filter: var(--blur-sm);
+  white-space: nowrap;
+  line-height: var(--line-height-tight);
+  -webkit-font-smoothing: antialiased;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  /* Background and color are set inline via style attribute based on isDark */
+}
+
+.color-tile__lrv-label {
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.03em;
+}
+
+.color-tile__lrv-value {
+  font-size: var(--font-size-sm);
+}
+
+.color-tile__count {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+  opacity: 0.85;
+}
+
+.color-tile__icon-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.3;
+}
+
+/* Enhanced empty states with visual elements */
+.empty-message {
+  text-align: center;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+  padding: var(--spacing-8) var(--spacing-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-4);
+
+  &::before {
+    content: "";
+    display: block;
+    width: 64px;
+    height: 64px;
+    background-color: var(--color-surface-tertiary);
+    border-radius: var(--radius-full);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px 32px;
+    opacity: 0.6;
+  }
+}
+
+/* Favorites empty state icon - heart outline */
+#favorites-tiles .empty-message::before {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>');
+}
+
+/* Hidden colors empty state icon - eye-off */
+#hidden-tiles .empty-message::before {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>');
+}
+
+.empty-message__text {
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-normal);
+}
+
+.empty-message__hint {
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-1);
+}
+
+/* Color tile mobile adjustments */
+@media (max-width: 599px) {
+  .color-tile {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .bulk-actions-panel__container {
+    flex-wrap: wrap;
+  }
+
+  /* Mobile-specific button spacing improvements */
+  .color-tile__actions {
+    gap: var(
+      --spacing-3
+    ); /* Increase from 8px to 12px to prevent accidental taps */
+  }
+}

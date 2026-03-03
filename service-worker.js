@@ -42,6 +42,21 @@ const STATIC_ASSETS = [
 
   `${BASE_PATH}/styles.css`,
 
+  // CSS modules (loaded via @import in styles.css)
+  `${BASE_PATH}/css/tokens.css`,
+  `${BASE_PATH}/css/buttons.css`,
+  `${BASE_PATH}/css/utilities.css`,
+  `${BASE_PATH}/css/header.css`,
+  `${BASE_PATH}/css/lrv-filter.css`,
+  `${BASE_PATH}/css/accordion.css`,
+  `${BASE_PATH}/css/color-tile.css`,
+  `${BASE_PATH}/css/modal.css`,
+  `${BASE_PATH}/css/confirm.css`,
+  `${BASE_PATH}/css/toast.css`,
+  `${BASE_PATH}/css/theme-neutral.css`,
+  `${BASE_PATH}/css/responsive.css`,
+  `${BASE_PATH}/css/a11y.css`,
+
   `${BASE_PATH}/app.js`,
 
   // Models

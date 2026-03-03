@@ -1,0 +1,226 @@
+/* ============================================
+   DESIGN TOKENS
+   Custom properties + global reset
+   ============================================ */
+
+:root {
+  /* ============================================
+     PRIMITIVE COLOR TOKENS (Base Palette)
+     These are the raw color values that don't change
+     ============================================ */
+
+  /* Neutrals - Grayscale with consistent contrast ratios */
+  --neutral-0: #ffffff;
+  --neutral-50: #fafafa;
+  --neutral-100: #f5f5f5;
+  --neutral-200: #e5e5e5;
+  --neutral-300: #d4d4d4;
+  --neutral-400: #a3a3a3;
+  --neutral-500: #737373;
+  --neutral-600: #525252;
+  --neutral-800: #262626;
+  --neutral-900: #171717;
+  --neutral-1000: #000000;
+
+  /* Blue - Primary interaction color */
+  --blue-200: #bfdbfe;
+  --blue-600: #2563eb;
+  --blue-700: #1d4ed8;
+
+  /* Red - Danger/destructive actions */
+  --red-50: #fef2f2;
+  --red-600: #dc2626;
+  --red-700: #b91c1c;
+
+  /* Green - Success states */
+  --green-600: #16a34a;
+
+  /* Yellow - Warning states */
+  --yellow-600: #ca8a04;
+
+  /* ============================================
+     SEMANTIC COLOR TOKENS (Light Theme)
+     These map to specific use cases
+     ============================================ */
+
+  /* Text colors - WCAG AA compliant contrast ratios */
+  --color-text-primary: var(--neutral-900); /* Body text, headings */
+  --color-text-secondary: var(--neutral-600); /* Supporting text, labels */
+  --color-text-tertiary: var(--neutral-500); /* Placeholder, disabled */
+  --color-text-inverse: var(--neutral-0); /* Text on dark backgrounds */
+
+  /* Surface colors - Backgrounds and containers */
+  --color-surface-primary: var(--neutral-0); /* Main background */
+  --color-surface-secondary: var(--neutral-50); /* Cards, panels */
+  --color-surface-tertiary: var(--neutral-100); /* Subtle backgrounds */
+  --color-surface-hover: var(--neutral-100); /* Hover states */
+  --color-surface-active: var(--neutral-200); /* Active/pressed states */
+
+  /* Border colors - Separators and outlines */
+  --color-border-primary: var(--neutral-300); /* Standard borders */
+  --color-border-secondary: var(--neutral-200); /* Subtle borders */
+  --color-border-focus: var(--blue-600); /* Focus rings */
+
+  /* Interactive colors - Buttons, links, etc. */
+  --color-primary: var(--neutral-1000); /* Primary brand color */
+  --color-primary-hover: var(--neutral-800); /* Primary hover */
+  --color-primary-active: var(--neutral-900); /* Primary active */
+
+  /* Feedback colors - Success, warning, error states */
+  --color-success: var(--green-600);
+
+  --color-warning: var(--yellow-600);
+
+  --color-error: var(--red-600);
+  --color-error-subtle: var(--red-50);
+  --color-danger: var(--red-600); /* Alias for destructive actions */
+
+  --color-info: var(--blue-600);
+
+  /* Overlay & Accent */
+  --color-overlay: rgba(0, 0, 0, 0.5); /* Modal backdrop */
+  --color-accent: var(--yellow-600); /* Favorite/star highlight */
+
+  /* Neutral evaluation background (Munsell N5) */
+  --color-surface-neutral: #808080;
+
+  /* ============================================
+     OPACITY SCALE
+     Consistent transparency values
+     ============================================ */
+  --opacity-30: 0.3;
+  --opacity-95: 0.95;
+
+  /* ============================================
+     ELEVATION SYSTEM (Box Shadows)
+     Consistent depth and layering
+     ============================================ */
+  --shadow-sm:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+  /* ============================================
+     Z-INDEX SCALE
+     Consistent layering system
+     ============================================ */
+  --z-base: 0;
+  --z-sticky: 200;
+  --z-modal-backdrop: 900;
+  --z-toast: 2000;
+  --z-tooltip: 3000;
+
+  /* ============================================
+     SPACING SYSTEM
+     8px base grid system
+     ============================================ */
+  --spacing-1: 4px; /* 0.5 × base */
+  --spacing-2: 8px; /* 1 × base - Touch-friendly minimum */
+  --spacing-3: 12px; /* 1.5 × base */
+  --spacing-4: 16px; /* 2 × base - Standard element spacing */
+  --spacing-5: 20px; /* 2.5 × base */
+  --spacing-6: 24px; /* 3 × base - Section spacing */
+  --spacing-8: 32px; /* 4 × base - Major section spacing */
+  --spacing-10: 40px; /* 5 × base - Large spacing */
+
+  /* ============================================
+     BORDER RADIUS
+     Aligned to grid system (multiples of 2px/4px)
+     ============================================ */
+  --radius-sm: 6px; /* Small elements, badges - aligns to 2px increments */
+  --radius-md: 8px; /* Cards, buttons, inputs - base grid unit */
+  --radius-lg: 12px; /* Large containers - 1.5x base */
+  --radius-full: 9999px; /* Fully rounded (pills, avatars) */
+
+  /* ============================================
+     TRANSITIONS
+     Consistent animation timing
+     ============================================ */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-medium: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ============================================
+     TYPOGRAPHY SCALE
+     Fluid type: scales between 375px → 600px viewport
+     ============================================ */
+  --font-size-2xs: 0.625rem; /* 10px - Mini tile numbers, smallest text */
+  --font-size-xs: 0.75rem; /* 12px - Badges, minimal labels */
+  --font-size-sm: 0.875rem; /* 14px - Supporting text, metadata */
+  --font-size-base: 1rem; /* 16px - Body text, buttons */
+  --font-size-md: clamp(1rem, 0.792rem + 0.89vw, 1.125rem); /* 16px → 18px */
+  --font-size-lg: clamp(1.125rem, 0.917rem + 0.89vw, 1.25rem); /* 18px → 20px */
+  --font-size-xl: clamp(1.375rem, 1.167rem + 0.89vw, 1.5rem); /* 22px → 24px */
+  --font-size-2xl: clamp(1.5rem, 1.083rem + 1.78vw, 1.75rem); /* 24px → 28px */
+
+  /* Font weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Line heights */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+
+  /* ============================================
+     BUTTON SYSTEM
+     Unified button tokens for consistent styling
+     ============================================ */
+
+  /* Button base properties */
+  --button-font-size: var(--font-size-base);
+  --button-font-weight: var(--font-weight-medium);
+  --button-line-height: var(--line-height-tight);
+  --button-border-radius: var(--radius-sm);
+  --button-min-height: 44px;
+  --button-transition:
+    background-color var(--transition-fast), color var(--transition-fast),
+    border-color var(--transition-fast), box-shadow var(--transition-fast),
+    opacity var(--transition-fast), transform var(--transition-fast);
+
+  /* Primary button (filled, high emphasis) */
+  --button-primary-bg: var(--color-primary);
+  --button-primary-color: var(--color-text-inverse);
+  --button-primary-border: var(--color-primary);
+  --button-primary-hover-bg: var(--color-primary-hover);
+  --button-primary-hover-border: var(--color-primary-hover);
+  --button-primary-active-bg: var(--color-primary-active);
+
+  /* Secondary button (outlined, medium emphasis) */
+  --button-secondary-bg: var(--color-surface-primary);
+  --button-secondary-color: var(--color-primary);
+  --button-secondary-border: var(--color-primary);
+  --button-secondary-hover-bg: var(--color-surface-hover);
+  --button-secondary-hover-border: var(--color-primary);
+  --button-secondary-active-bg: var(--color-surface-active);
+
+  /* Ghost button (transparent, low emphasis) */
+  --button-ghost-bg: transparent;
+  --button-ghost-color: var(--color-text-primary);
+  --button-ghost-border: transparent;
+  --button-ghost-hover-bg: var(--color-surface-hover);
+  --button-ghost-hover-border: transparent;
+  --button-ghost-active-bg: var(--color-surface-active);
+
+  /* Icon button (minimal, for actions) */
+  --button-icon-bg: rgba(0, 0, 0, 0.7);
+  --button-icon-hover-bg: rgba(0, 0, 0, 0.85);
+  --button-icon-light-bg: rgba(255, 255, 255, 0.85);
+  --button-icon-light-hover-bg: rgba(255, 255, 255, 0.95);
+
+  /* ============================================
+     BACKDROP BLUR
+     Glassmorphism effects
+     ============================================ */
+  --blur-sm: 4px;
+  --blur-md: 8px;
+}
+
+* {
+  font-family: "Roboto", sans-serif;
+}

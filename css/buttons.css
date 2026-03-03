@@ -1,0 +1,136 @@
+/* ============================================
+   BUTTON COMPONENTS
+   Unified button system with clear variants
+   ============================================ */
+
+/* Base button - shared properties for all buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-3) var(--spacing-6);
+  border-radius: var(--button-border-radius);
+  font-size: var(--button-font-size);
+  font-weight: var(--button-font-weight);
+  line-height: var(--button-line-height);
+  min-height: var(--button-min-height);
+  cursor: pointer;
+  transition: var(--button-transition);
+  border: 1px solid;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+/* Primary button variant - high emphasis actions */
+.btn--primary {
+  background: var(--button-primary-bg);
+  color: var(--button-primary-color);
+  border-color: var(--button-primary-border);
+
+  &:hover:not(:disabled) {
+    background: var(--button-primary-hover-bg);
+    border-color: var(--button-primary-hover-border);
+  }
+
+  &:active:not(:disabled) {
+    background: var(--button-primary-active-bg);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+}
+
+/* Secondary button variant - medium emphasis actions */
+.btn--secondary {
+  background: var(--button-secondary-bg);
+  color: var(--button-secondary-color);
+  border-color: var(--button-secondary-border);
+
+  &:hover:not(:disabled) {
+    background: var(--button-secondary-hover-bg);
+    border-color: var(--button-secondary-hover-border);
+  }
+
+  &:active:not(:disabled) {
+    background: var(--button-secondary-active-bg);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+}
+
+/* Ghost button variant - low emphasis actions */
+.btn--ghost {
+  background: var(--button-ghost-bg);
+  color: var(--button-ghost-color);
+  border-color: var(--button-ghost-border);
+
+  &:hover:not(:disabled) {
+    background: var(--button-ghost-hover-bg);
+    border-color: var(--button-ghost-hover-border);
+  }
+
+  &:active:not(:disabled) {
+    background: var(--button-ghost-active-bg);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+}
+
+/* Icon button variant - minimal button for icons */
+.btn--icon {
+  padding: var(--spacing-2);
+  min-width: 44px;
+  min-height: 44px;
+  border: none;
+  background: var(--btn-bg, var(--button-icon-bg));
+  color: var(--btn-text-color, white);
+  backdrop-filter: var(--blur-md);
+
+  &:hover:not(:disabled) {
+    background: var(--btn-hover-bg, var(--button-icon-hover-bg));
+    transform: scale(1.05);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.95);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--btn-text-color, white);
+    outline-offset: 2px;
+  }
+
+  /* Icon button light variant - for dark backgrounds */
+  &.btn--icon-light {
+    --btn-bg: var(--button-icon-light-bg);
+    --btn-hover-bg: var(--button-icon-light-hover-bg);
+    --btn-text-color: rgba(0, 0, 0, 0.9);
+  }
+}
+
+/* Size variants */
+.btn--sm {
+  padding: var(--spacing-2) var(--spacing-4);
+  font-size: var(--font-size-sm);
+  min-height: 36px;
+}
+
+.btn--lg {
+  padding: var(--spacing-4) var(--spacing-8);
+  font-size: var(--font-size-lg);
+  min-height: 52px;
+}
