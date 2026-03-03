@@ -471,34 +471,30 @@ export class ColorController {
       ELEMENT_IDS.EXPORT_FAVORITES_BTN,
     );
     if (exportFavBtn) {
-      exportFavBtn.addEventListener("click", () => {
-        this.handleExportFavorites();
-      });
+      exportFavBtn.addEventListener("click", () =>
+        this.handleExportFavorites(),
+      );
     }
 
     const clearFavBtn = document.getElementById(
       ELEMENT_IDS.CLEAR_FAVORITES_BTN,
     );
     if (clearFavBtn) {
-      clearFavBtn.addEventListener("click", () => {
-        this.handleClearFavorites();
-      });
+      clearFavBtn.addEventListener("click", () => this.handleClearFavorites());
     }
 
     const clearHiddenBtn = document.getElementById(
       ELEMENT_IDS.CLEAR_HIDDEN_BTN,
     );
     if (clearHiddenBtn) {
-      clearHiddenBtn.addEventListener("click", () => {
-        this.handleClearHidden();
-      });
+      clearHiddenBtn.addEventListener("click", () => this.handleClearHidden());
     }
 
     const neutralBgBtn = document.getElementById(ELEMENT_IDS.NEUTRAL_BG_TOGGLE);
     if (neutralBgBtn) {
-      neutralBgBtn.addEventListener("click", () => {
-        this.state.toggleNeutralBg();
-      });
+      neutralBgBtn.addEventListener("click", () =>
+        this.state.toggleNeutralBg(),
+      );
     }
   }
 
