@@ -152,11 +152,11 @@ export function createAccordionItem(
   const bulkActionsHTML = showBulkActions
     ? `
     <div class="${CSS_CLASSES.BULK_ACTIONS_PANEL}">
-      <div class="${CSS_CLASSES.BULK_ACTIONS_PANEL_CONTAINER}">
+      <div class="${CSS_CLASSES.BULK_ACTIONS_PANEL_CONTAINER} u-flex-align">
         <span class="${CSS_CLASSES.BULK_ACTIONS_PANEL_LABEL}">Family Actions:</span>
         <button 
           type="button"
-          class="${CSS_CLASSES.BULK_ACTIONS_FAVORITE_BUTTON}" 
+          class="${CSS_CLASSES.BULK_ACTIONS_FAVORITE_BUTTON} u-flex-align" 
           ${DATA_ATTRIBUTES.FAMILY}="${id}"
           ${DATA_ATTRIBUTES.NAME}="${name}"
           title="Favorite all colors in this family"
@@ -168,7 +168,7 @@ export function createAccordionItem(
         </button>
         <button 
           type="button"
-          class="${CSS_CLASSES.BULK_ACTIONS_HIDE_BUTTON}" 
+          class="${CSS_CLASSES.BULK_ACTIONS_HIDE_BUTTON} u-flex-align" 
           ${DATA_ATTRIBUTES.FAMILY}="${id}"
           ${DATA_ATTRIBUTES.NAME}="${name}"
           title="Hide all colors in this family"
@@ -186,7 +186,7 @@ export function createAccordionItem(
   return `
     <div class="${CSS_CLASSES.ACCORDION_ITEM}">
       <button 
-        class="${CSS_CLASSES.ACCORDION_HEADER}" 
+        class="${CSS_CLASSES.ACCORDION_HEADER} u-flex-between" 
         aria-expanded="${isOpen}" 
         aria-controls="${id}-content"
         id="${id}-header"
@@ -209,7 +209,7 @@ export function createAccordionItem(
       >
         <div class="${CSS_CLASSES.ACCORDION_PANEL}">
           ${bulkActionsHTML}
-          <div id="${id}-tiles" class="${CSS_CLASSES.COLOR_TILES_GRID}"></div>
+          <div id="${id}-tiles" class="${CSS_CLASSES.COLOR_TILES_GRID} u-flex-wrap-center"></div>
         </div>
       </div>
     </div>
@@ -249,7 +249,7 @@ export function colorTemplate(color, options = {}) {
     ? `
     <button aria-label="${favoriteLabel} color" 
             title="${favoriteLabel} ${color.name}"
-            class="${CSS_CLASSES.COLOR_TILE_FAVORITE_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON}" 
+            class="${CSS_CLASSES.COLOR_TILE_FAVORITE_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON} u-flex-center" 
             ${DATA_ATTRIBUTES.ID}="${color.id}"
             style="--btn-bg: ${styles.bgColor}; --btn-hover-bg: ${styles.hoverBg};">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="${favoriteFill}" stroke="${styles.textColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
@@ -263,7 +263,7 @@ export function colorTemplate(color, options = {}) {
     ? `
     <button aria-label="${hideLabel} color" 
             title="${hideLabel} ${color.name}"
-            class="${CSS_CLASSES.COLOR_TILE_HIDE_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON}" 
+            class="${CSS_CLASSES.COLOR_TILE_HIDE_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON} u-flex-center" 
             ${DATA_ATTRIBUTES.ID}="${color.id}"
             style="--btn-bg: ${styles.bgColor}; --btn-hover-bg: ${styles.hoverBg};">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${styles.textColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
@@ -296,7 +296,7 @@ export function colorTemplate(color, options = {}) {
 
   const badgesHTML =
     badges.length > 0
-      ? `<div class="${CSS_CLASSES.COLOR_TILE_BADGES}">${badges.join("")}</div>`
+      ? `<div class="${CSS_CLASSES.COLOR_TILE_BADGES} u-flex-col">${badges.join("")}</div>`
       : "";
 
   // Format LRV value with plain language labels
@@ -311,7 +311,7 @@ export function colorTemplate(color, options = {}) {
     lrvLabel = "Light";
   }
 
-  const html = `<div class="${CSS_CLASSES.COLOR_TILE}" ${DATA_ATTRIBUTES.ID}="${color.id}" style="background: ${generateHSLColor(color.hue, color.saturation, color.lightness)}; color: ${textColor}"><div class="${CSS_CLASSES.COLOR_TILE_ACTIONS}">${favoriteButtonHTML}${hideButtonHTML}</div>${badgesHTML}<div class="${CSS_CLASSES.COLOR_TILE_INFO}" style="color:${textColor};"><div class="${CSS_CLASSES.COLOR_TILE_NAME}"><strong>${color.name}</strong></div><div class="${CSS_CLASSES.COLOR_TILE_NUMBER}">SW ${color.colorNumber}</div><div class="${CSS_CLASSES.COLOR_TILE_LRV_CONTAINER}"><span class="${CSS_CLASSES.COLOR_TILE_LRV} ${CSS_CLASSES.COLOR_TILE_LRV}--${lrvClass}" title="Light Reflectance Value - ${lrvLabel} color reflects ${lrvValue}% of light" style="background: ${styles.badgeBg}; color: ${styles.badgeText};"><span class="${CSS_CLASSES.COLOR_TILE_LRV_LABEL}">${lrvLabel}</span><span class="${CSS_CLASSES.COLOR_TILE_LRV_VALUE}">LRV ${lrvValue}</span></span></div><button type="button" aria-label="See color details and pairings for ${color.name}" class="${CSS_CLASSES.COLOR_TILE_VIEW_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON}" ${DATA_ATTRIBUTES.ID}="${color.id}" style="--btn-bg: ${styles.bgColor}; --btn-hover-bg: ${styles.hoverBg}; --btn-text-color: ${styles.textColor};">View Details</button></div></div>`;
+  const html = `<div class="${CSS_CLASSES.COLOR_TILE}" ${DATA_ATTRIBUTES.ID}="${color.id}" style="background: ${generateHSLColor(color.hue, color.saturation, color.lightness)}; color: ${textColor}"><div class="${CSS_CLASSES.COLOR_TILE_ACTIONS} u-flex-align">${favoriteButtonHTML}${hideButtonHTML}</div>${badgesHTML}<div class="${CSS_CLASSES.COLOR_TILE_INFO}" style="color:${textColor};"><div class="${CSS_CLASSES.COLOR_TILE_NAME}"><strong>${color.name}</strong></div><div class="${CSS_CLASSES.COLOR_TILE_NUMBER}">SW ${color.colorNumber}</div><div class="${CSS_CLASSES.COLOR_TILE_LRV_CONTAINER}"><span class="${CSS_CLASSES.COLOR_TILE_LRV} ${CSS_CLASSES.COLOR_TILE_LRV}--${lrvClass}" title="Light Reflectance Value - ${lrvLabel} color reflects ${lrvValue}% of light" style="background: ${styles.badgeBg}; color: ${styles.badgeText};"><span class="${CSS_CLASSES.COLOR_TILE_LRV_LABEL}">${lrvLabel}</span><span class="${CSS_CLASSES.COLOR_TILE_LRV_VALUE}">LRV ${lrvValue}</span></span></div><button type="button" aria-label="See color details and pairings for ${color.name}" class="${CSS_CLASSES.COLOR_TILE_VIEW_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON} u-flex-center" ${DATA_ATTRIBUTES.ID}="${color.id}" style="--btn-bg: ${styles.bgColor}; --btn-hover-bg: ${styles.hoverBg}; --btn-text-color: ${styles.textColor};">View Details</button></div></div>`;
 
   return parseHTML(html);
 }
@@ -321,9 +321,9 @@ export function familyTileTemplate(familyName, colorCount) {
     <div class="${CSS_CLASSES.COLOR_TILE} ${CSS_CLASSES.COLOR_TILE_FAMILY}" 
          aria-label="Unhide ${familyName} family" 
          ${DATA_ATTRIBUTES.FAMILY}="${familyName}">
-      <div class="${CSS_CLASSES.COLOR_TILE_ACTIONS}">
+      <div class="${CSS_CLASSES.COLOR_TILE_ACTIONS} u-flex-align">
         <button aria-label="Unhide all ${familyName} colors" 
-                class="${CSS_CLASSES.COLOR_TILE_UNHIDE_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON}" 
+                class="${CSS_CLASSES.COLOR_TILE_UNHIDE_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON} u-flex-center" 
                 ${DATA_ATTRIBUTES.FAMILY}="${familyName}">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
             ${ICONS.EYE}
@@ -515,8 +515,8 @@ export function colorDetailModal(
   return `
     <div class="${
       CSS_CLASSES.MODAL_OVERLAY
-    }" id="${ELEMENT_IDS.COLOR_DETAIL_MODAL}" aria-modal="true" role="dialog" aria-labelledby="modal-title">
-      <div class="${CSS_CLASSES.MODAL_CONTAINER}">
+    } u-flex-center" id="${ELEMENT_IDS.COLOR_DETAIL_MODAL}" aria-modal="true" role="dialog" aria-labelledby="modal-title">
+      <div class="${CSS_CLASSES.MODAL_CONTAINER} u-flex-col">
         <div class="${
           CSS_CLASSES.MODAL_HEADER
         }" style="background: ${backgroundColor}; color: ${generateAccessibleText(color)};">
@@ -531,7 +531,7 @@ export function colorDetailModal(
           </div>
           <button class="${
             CSS_CLASSES.MODAL_CLOSE
-          }" aria-label="Close modal" type="button" style="--btn-bg: ${styles.bgColor}; --btn-hover-bg: ${styles.hoverBg}; --btn-text-color: ${styles.textColor};">
+          } u-flex-center" aria-label="Close modal" type="button" style="--btn-bg: ${styles.bgColor}; --btn-hover-bg: ${styles.hoverBg}; --btn-text-color: ${styles.textColor};">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -545,7 +545,7 @@ export function colorDetailModal(
             ${
               descriptions
                 ? `
-              <div class="${CSS_CLASSES.MODAL_MOOD}">
+              <div class="${CSS_CLASSES.MODAL_MOOD} u-flex-col">
                 <span class="${CSS_CLASSES.MODAL_MOOD_LABEL}">Mood & Feel:</span>
                 <p class="${CSS_CLASSES.MODAL_MOOD_DESCRIPTION}">${descriptions}</p>
               </div>
@@ -555,8 +555,8 @@ export function colorDetailModal(
             ${
               lrvContext
                 ? `
-              <div class="${CSS_CLASSES.MODAL_DECISION_SUPPORT}">
-                <div class="${CSS_CLASSES.MODAL_LRV_CONTEXT}">
+              <div class="${CSS_CLASSES.MODAL_DECISION_SUPPORT} u-flex-col">
+                <div class="${CSS_CLASSES.MODAL_LRV_CONTEXT} u-flex-col">
                   <span class="${CSS_CLASSES.MODAL_LRV_LABEL}">${lrvLabel}</span>
                   <p class="${CSS_CLASSES.MODAL_LRV_DESCRIPTION}">${lrvContext}</p>
                 </div>
@@ -567,7 +567,7 @@ export function colorDetailModal(
             ${
               designerCollections.length > 0
                 ? `
-              <div class="${CSS_CLASSES.MODAL_MOOD}">
+              <div class="${CSS_CLASSES.MODAL_MOOD} u-flex-col">
                 <span class="${CSS_CLASSES.MODAL_MOOD_LABEL}">Designer Collection:</span>
                 <p class="${CSS_CLASSES.MODAL_MOOD_DESCRIPTION}">${designerCollections.join(" · ")}</p>
               </div>
@@ -585,7 +585,7 @@ export function colorDetailModal(
           
           <!-- Priority 3: Technical Details (Accordion) -->
           <div class="${CSS_CLASSES.MODAL_SECTION} modal__section--technical">
-            <button class="${CSS_CLASSES.MODAL_ACCORDION_TRIGGER}" 
+            <button class="${CSS_CLASSES.MODAL_ACCORDION_TRIGGER} u-flex-between" 
                     type="button"
                     aria-expanded="false"
                     aria-controls="technical-details-panel"
@@ -608,13 +608,13 @@ export function colorDetailModal(
                  role="region"
                  inert>
               <div class="${CSS_CLASSES.MODAL_INFO_GRID}">
-                <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
+                <div class="${CSS_CLASSES.MODAL_INFO_ITEM} u-flex-col">
                   <span class="${CSS_CLASSES.MODAL_INFO_LABEL}">Hex:</span>
                   <span class="${
                     CSS_CLASSES.MODAL_INFO_VALUE
                   }">${color.hex.toUpperCase()}</span>
                 </div>
-                <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
+                <div class="${CSS_CLASSES.MODAL_INFO_ITEM} u-flex-col">
                   <span class="${CSS_CLASSES.MODAL_INFO_LABEL}">RGB:</span>
                   <span class="${CSS_CLASSES.MODAL_INFO_VALUE}">rgb(${
                     color.red
@@ -623,7 +623,7 @@ export function colorDetailModal(
               </div>
               
               <div class="${CSS_CLASSES.MODAL_INFO_GRID}">
-                <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
+                <div class="${CSS_CLASSES.MODAL_INFO_ITEM} u-flex-col">
                   <span class="${
                     CSS_CLASSES.MODAL_INFO_LABEL
                   }">Color Temperature Family:</span>
@@ -631,7 +631,7 @@ export function colorDetailModal(
                     CSS_CLASSES.MODAL_INFO_VALUE
                   }">${families}</span>
                 </div>
-                <div class="${CSS_CLASSES.MODAL_INFO_ITEM}">
+                <div class="${CSS_CLASSES.MODAL_INFO_ITEM} u-flex-col">
                   <span class="${
                     CSS_CLASSES.MODAL_INFO_LABEL
                   }">Paint Collections:</span>
@@ -647,7 +647,7 @@ export function colorDetailModal(
         <!-- Priority 4: Actions (Sticky Footer) -->
         <div class="${CSS_CLASSES.MODAL_ACTIONS}">
           <button type="button" 
-                  class="${CSS_CLASSES.MODAL_ACTION_BUTTON} ${CSS_CLASSES.MODAL_ACTION_BUTTON_SECONDARY} ${CSS_CLASSES.MODAL_ACTION_BUTTON_FAVORITE}" 
+                  class="${CSS_CLASSES.MODAL_ACTION_BUTTON} ${CSS_CLASSES.MODAL_ACTION_BUTTON_SECONDARY} ${CSS_CLASSES.MODAL_ACTION_BUTTON_FAVORITE} u-flex-align" 
                   ${DATA_ATTRIBUTES.ID}="${color.id}"
                   aria-label="${
                     isFavorited ? "Remove from" : "Add to"
@@ -661,7 +661,7 @@ export function colorDetailModal(
             <span class="${CSS_CLASSES.MODAL_ACTION_LABEL}">${isFavorited ? "Favorited" : "Add to Favorites"}</span>
           </button>
           <button type="button" 
-                  class="${CSS_CLASSES.MODAL_ACTION_BUTTON} ${CSS_CLASSES.MODAL_ACTION_BUTTON_SECONDARY} ${CSS_CLASSES.MODAL_ACTION_BUTTON_SHARE}"
+                  class="${CSS_CLASSES.MODAL_ACTION_BUTTON} ${CSS_CLASSES.MODAL_ACTION_BUTTON_SECONDARY} ${CSS_CLASSES.MODAL_ACTION_BUTTON_SHARE} u-flex-align"
                   ${DATA_ATTRIBUTES.ID}="${color.id}"
                   aria-label="Share color"
                   data-tooltip="Share">
@@ -675,7 +675,7 @@ export function colorDetailModal(
             <span class="${CSS_CLASSES.MODAL_ACTION_LABEL}">Share</span>
           </button>
           <button type="button" 
-                  class="${CSS_CLASSES.MODAL_ACTION_BUTTON} ${CSS_CLASSES.MODAL_ACTION_BUTTON_SECONDARY} ${CSS_CLASSES.MODAL_ACTION_BUTTON_COPY}"
+                  class="${CSS_CLASSES.MODAL_ACTION_BUTTON} ${CSS_CLASSES.MODAL_ACTION_BUTTON_SECONDARY} ${CSS_CLASSES.MODAL_ACTION_BUTTON_COPY} u-flex-align"
                   ${DATA_ATTRIBUTES.ID}="${color.id}"
                   aria-label="Copy color code"
                   data-tooltip="Copy Code">
@@ -685,7 +685,7 @@ export function colorDetailModal(
             <span class="${CSS_CLASSES.MODAL_ACTION_LABEL}">Copy Code</span>
           </button>
           <button type="button" 
-                  class="${CSS_CLASSES.MODAL_ACTION_BUTTON} ${CSS_CLASSES.MODAL_ACTION_BUTTON_SECONDARY} ${CSS_CLASSES.MODAL_ACTION_BUTTON_HIDE}" 
+                  class="${CSS_CLASSES.MODAL_ACTION_BUTTON} ${CSS_CLASSES.MODAL_ACTION_BUTTON_SECONDARY} ${CSS_CLASSES.MODAL_ACTION_BUTTON_HIDE} u-flex-align" 
                   ${DATA_ATTRIBUTES.ID}="${color.id}"
                   aria-label="${isHidden ? "Show" : "Hide"} color"
                   data-tooltip="${isHidden ? "Show" : "Hide"}">
@@ -698,7 +698,7 @@ export function colorDetailModal(
             color.storeStripLocator
               ? `
           <button type="button" 
-                  class="${CSS_CLASSES.MODAL_ACTION_BUTTON} ${CSS_CLASSES.MODAL_ACTION_BUTTON_SECONDARY} ${CSS_CLASSES.MODAL_ACTION_BUTTON_STORE}"
+                  class="${CSS_CLASSES.MODAL_ACTION_BUTTON} ${CSS_CLASSES.MODAL_ACTION_BUTTON_SECONDARY} ${CSS_CLASSES.MODAL_ACTION_BUTTON_STORE} u-flex-align"
                   aria-label="Find ${color.name} in store"
                   data-tooltip="Store: ${color.storeStripLocator}">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -734,7 +734,7 @@ export function confirmationModal({
   confirmClass = "btn-danger",
 }) {
   return `
-    <div class="${CSS_CLASSES.CONFIRM_OVERLAY}" id="${ELEMENT_IDS.CONFIRM_OVERLAY}" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+    <div class="${CSS_CLASSES.CONFIRM_OVERLAY} u-flex-center" id="${ELEMENT_IDS.CONFIRM_OVERLAY}" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
       <div class="${CSS_CLASSES.CONFIRM_DIALOG}">
         <div class="${CSS_CLASSES.CONFIRM_HEADER}">
           <h2 class="${CSS_CLASSES.CONFIRM_TITLE}" id="confirm-title">${title}</h2>
@@ -766,12 +766,12 @@ export function confirmationModal({
 export function toastNotification({ message, actionText = "Undo", id }) {
   return `
     <div class="${CSS_CLASSES.TOAST}" id="${id}" role="status" aria-live="polite" aria-atomic="true">
-      <div class="${CSS_CLASSES.TOAST_CONTENT}">
+      <div class="${CSS_CLASSES.TOAST_CONTENT} u-flex-align">
         <p class="${CSS_CLASSES.TOAST_MESSAGE}">${message}</p>
         <button type="button" class="${CSS_CLASSES.TOAST_ACTION}" aria-label="${actionText}">
           ${actionText}
         </button>
-        <button type="button" class="${CSS_CLASSES.TOAST_CLOSE}" aria-label="Dismiss">
+        <button type="button" class="${CSS_CLASSES.TOAST_CLOSE} u-flex-center" aria-label="Dismiss">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>

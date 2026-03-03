@@ -714,6 +714,37 @@ body.neutral-bg {
   min-height: 52px;
 }
 
+/* =============================================
+   LAYOUT UTILITIES
+   ============================================= */
+.u-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.u-flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.u-flex-align {
+  display: flex;
+  align-items: center;
+}
+
+.u-flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.u-flex-wrap-center {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 /* Header Component */
 .header {
   position: sticky;
@@ -724,9 +755,6 @@ body.neutral-bg {
 }
 
 .header__top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   padding: var(--spacing-3) var(--spacing-4);
   gap: var(--spacing-3);
   max-width: 1200px;
@@ -751,9 +779,6 @@ body.neutral-bg {
 
 /* Toolbar toggle button (hamburger) */
 .toolbar__toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: none;
   border: none;
   padding: var(--spacing-2);
@@ -825,8 +850,6 @@ body.neutral-bg {
   max-width: 1200px;
   margin: 0 auto;
   padding: var(--spacing-3) clamp(1rem, 2.67vw, 2rem);
-  display: flex;
-  flex-direction: column;
   gap: var(--spacing-3);
 }
 
@@ -839,10 +862,7 @@ body.neutral-bg {
 }
 
 .toolbar__actions {
-  display: flex;
-  justify-content: center;
   gap: var(--spacing-3);
-  flex-wrap: wrap;
 }
 
 /* Header buttons now extend the unified button system */
@@ -965,8 +985,6 @@ body.neutral-bg {
 .lrv-filter__track-container {
   position: relative;
   height: 36px;
-  display: flex;
-  align-items: center;
 }
 
 /* Visual track behind the range inputs */
@@ -1120,9 +1138,6 @@ body.neutral-bg {
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-tight);
   cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   transition: background-color var(--transition-fast);
   text-transform: capitalize;
   min-height: 44px;
@@ -1159,9 +1174,7 @@ body.neutral-bg {
 }
 
 .bulk-actions-panel__container {
-  display: flex;
   gap: clamp(0.75rem, 0.214rem + 2.29vw, 1.5rem);
-  align-items: center;
 }
 
 .bulk-actions-panel__label {
@@ -1173,8 +1186,6 @@ body.neutral-bg {
 /* Bulk action buttons - now use unified button system */
 .bulk-actions__favorite-button,
 .bulk-actions__hide-button {
-  display: flex;
-  align-items: center;
   gap: var(--spacing-2);
   background: var(--button-secondary-bg);
   border: 1px solid var(--button-secondary-border);
@@ -1216,9 +1227,6 @@ body.neutral-bg {
   border: none;
   cursor: pointer;
   padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   transition: var(--button-transition);
   min-width: var(--button-min-height);
   min-height: var(--button-min-height);
@@ -1329,9 +1337,6 @@ body.neutral-bg {
 
 /* Color tile grid container */
 .color-tiles__grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
   gap: var(--spacing-4);
 }
 
@@ -1386,7 +1391,6 @@ body.neutral-bg {
   position: absolute;
   top: var(--spacing-2);
   right: var(--spacing-2);
-  display: flex;
   gap: var(--spacing-2);
   z-index: var(--z-base);
 }
@@ -1397,9 +1401,6 @@ body.neutral-bg {
   border: none;
   cursor: pointer;
   padding: var(--spacing-2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   transition: var(--button-transition);
   border-radius: var(--button-border-radius);
   min-width: var(--button-min-height);
@@ -1466,8 +1467,6 @@ body.neutral-bg {
   position: absolute;
   top: var(--spacing-2);
   left: var(--spacing-2);
-  display: flex;
-  flex-direction: column;
   gap: var(--spacing-2);
   z-index: var(--z-base);
 }
@@ -1675,9 +1674,6 @@ body.neutral-bg {
   bottom: 0;
   background: var(--color-overlay);
   backdrop-filter: var(--blur-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   z-index: var(--z-modal-backdrop);
   padding: var(--spacing-4);
   opacity: 0;
@@ -1704,8 +1700,6 @@ body.neutral-bg {
   width: 100%;
   max-height: 95vh;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
   box-shadow: var(--shadow-2xl);
   transform: scale(0.9);
   will-change: transform;
@@ -1753,9 +1747,6 @@ body.neutral-bg {
   border-radius: var(--button-border-radius);
   padding: var(--spacing-4);
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   transition: var(--button-transition);
   min-width: var(--button-min-height);
   min-height: var(--button-min-height);
@@ -1824,8 +1815,6 @@ body.neutral-bg {
 }
 
 .modal__info-item {
-  display: flex;
-  flex-direction: column;
   gap: var(--spacing-1);
 }
 
@@ -2051,8 +2040,6 @@ body.neutral-bg {
 }
 
 .modal__mood {
-  display: flex;
-  flex-direction: column;
   gap: var(--spacing-2);
   margin-bottom: var(--spacing-4);
   padding-bottom: var(--spacing-4);
@@ -2077,14 +2064,10 @@ body.neutral-bg {
 }
 
 .modal__decision-support {
-  display: flex;
-  flex-direction: column;
   gap: var(--spacing-4);
 }
 
 .modal__lrv-context {
-  display: flex;
-  flex-direction: column;
   gap: var(--spacing-2);
 }
 
@@ -2171,9 +2154,6 @@ body.neutral-bg {
 
 .modal__accordion-trigger {
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   padding: var(--spacing-4);
   background: var(--color-surface-secondary);
   border: none;
@@ -2243,8 +2223,6 @@ body.neutral-bg {
 }
 
 .modal__action-button {
-  display: flex;
-  align-items: center;
   gap: var(--spacing-2);
   padding: var(--spacing-3) var(--spacing-4);
   background: var(--color-surface-primary);
@@ -2317,9 +2295,6 @@ body.neutral-bg {
   bottom: 0;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: var(--blur-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   z-index: calc(var(--z-modal-backdrop) + 100);
   padding: var(--spacing-4);
   opacity: 0;
@@ -2549,8 +2524,6 @@ body.neutral-bg {
 
 /* Toast content */
 .toast__content {
-  display: flex;
-  align-items: center;
   gap: var(--spacing-4);
 }
 
@@ -2592,9 +2565,6 @@ body.neutral-bg {
   color: var(--neutral-400);
   padding: var(--spacing-1);
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   border-radius: var(--radius-sm);
   transition:
     color var(--transition-fast),

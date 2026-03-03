@@ -58,12 +58,12 @@
   </head>
   <body>
     <header class="header">
-      <div class="header__top">
+      <div class="header__top u-flex-between">
         <h1>Sherwin-Williams Color Explorer</h1>
         <button
           type="button"
           id="toolbar-toggle"
-          class="toolbar__toggle"
+          class="toolbar__toggle u-flex-center"
           aria-expanded="false"
           aria-controls="toolbar-panel"
           aria-label="Toggle menu"
@@ -76,7 +76,7 @@
         </button>
       </div>
       <div id="toolbar-panel" class="toolbar__panel" hidden>
-        <div class="toolbar__content">
+        <div class="toolbar__content u-flex-col">
           <div
             class="toolbar__section toolbar__section--lrv"
             aria-label="Light Reflectance Value filter"
@@ -100,7 +100,7 @@
                 Reset
               </button>
             </div>
-            <div class="lrv-filter__track-container">
+            <div class="lrv-filter__track-container u-flex-align">
               <div class="lrv-filter__track">
                 <div class="lrv-filter__range" id="lrv-range-fill"></div>
               </div>
@@ -133,7 +133,7 @@
             </div>
           </div>
           <div class="toolbar__section toolbar__section--actions">
-            <div class="toolbar__actions">
+            <div class="toolbar__actions u-flex-wrap-center">
               <button
                 id="neutral-bg-toggle"
                 class="header__button"
