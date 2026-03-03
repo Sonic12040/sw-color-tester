@@ -224,9 +224,9 @@ export class AppState extends EventEmitter {
    * @param {string} operation - 'add' or 'remove'
    * @param {string} event - Event name to emit after mutation
    */
-  #bulkUpdate(set, colorIds, operation, event) {
+  #bulkUpdate(set, colorIds, method, event) {
     for (const id of colorIds) {
-      operation === "add" ? set.add(id) : set.delete(id);
+      set[method](id);
     }
     this.syncToURL();
     this.emit(event);
@@ -237,7 +237,7 @@ export class AppState extends EventEmitter {
   }
 
   removeMultipleFavorites(colorIds) {
-    this.#bulkUpdate(this.favorites, colorIds, "remove", "favoritesChanged");
+    this.#bulkUpdate(this.favorites, colorIds, "delete", "favoritesChanged");
   }
 
   addMultipleHidden(colorIds) {
@@ -245,7 +245,7 @@ export class AppState extends EventEmitter {
   }
 
   removeMultipleHidden(colorIds) {
-    this.#bulkUpdate(this.hidden, colorIds, "remove", "hiddenChanged");
+    this.#bulkUpdate(this.hidden, colorIds, "delete", "hiddenChanged");
   }
 
   clearFavorites() {
