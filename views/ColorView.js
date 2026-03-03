@@ -479,10 +479,10 @@ export class ColorView {
       const header = e.target.closest(`.${CSS_CLASSES.ACCORDION_HEADER}`);
       if (!header) return;
 
-      const allHeaders = [
-        ...this.container.querySelectorAll(`.${CSS_CLASSES.ACCORDION_HEADER}`),
-      ];
-      const index = allHeaders.indexOf(header);
+      const allHeaders = this.container.querySelectorAll(
+        `.${CSS_CLASSES.ACCORDION_HEADER}`,
+      );
+      const index = Array.prototype.indexOf.call(allHeaders, header);
 
       switch (e.key) {
         case "Enter":
@@ -504,7 +504,7 @@ export class ColorView {
           break;
         case "End":
           e.preventDefault();
-          allHeaders.at(-1).focus();
+          allHeaders[allHeaders.length - 1].focus();
           break;
       }
     });
