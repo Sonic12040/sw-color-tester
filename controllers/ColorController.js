@@ -21,6 +21,9 @@ import {
   ClearHiddenCommand,
 } from "../commands/index.js";
 
+const plural = (n, word, suffix = "s") =>
+  `${n} ${word}${n === 1 ? "" : suffix}`;
+
 export class ColorController {
   #handlingCommand = false;
 
@@ -540,9 +543,7 @@ export class ColorController {
 
     const confirmed = await this.dialog.confirm({
       title: actionTitle,
-      message: `Are you sure you want to ${action} all ${count} color${
-        count === 1 ? "" : "s"
-      } in "${groupName}"?`,
+      message: `Are you sure you want to ${action} all ${plural(count, "color")} in "${groupName}"?`,
       confirmText: allFavorited ? "Remove All" : "Add All",
       cancelText: "Cancel",
       confirmClass: allFavorited ? "btn-danger" : "btn-primary",
@@ -554,9 +555,7 @@ export class ColorController {
 
       const actionPastTense = allFavorited ? "removed from" : "added to";
       this.dialog.toast({
-        message: `${count} color${
-          count === 1 ? "" : "s"
-        } ${actionPastTense} favorites.`,
+        message: `${plural(count, "color")} ${actionPastTense} favorites.`,
         onUndo: () => command.undo(),
       });
     }
@@ -579,9 +578,7 @@ export class ColorController {
 
     const confirmed = await this.dialog.confirm({
       title: actionTitle,
-      message: `Are you sure you want to ${action} all ${count} color${
-        count === 1 ? "" : "s"
-      } in "${groupName}"?`,
+      message: `Are you sure you want to ${action} all ${plural(count, "color")} in "${groupName}"?`,
       confirmText: allHidden ? "Unhide All" : "Hide All",
       cancelText: "Cancel",
       confirmClass: allHidden ? "btn-primary" : "btn-danger",
@@ -593,7 +590,7 @@ export class ColorController {
 
       const actionPastTense = allHidden ? "unhidden" : "hidden";
       this.dialog.toast({
-        message: `${count} color${count === 1 ? "" : "s"} ${actionPastTense}.`,
+        message: `${plural(count, "color")} ${actionPastTense}.`,
         onUndo: () => command.undo(),
       });
     }
@@ -615,9 +612,7 @@ export class ColorController {
 
     const confirmed = await this.dialog.confirm({
       title: "Clear All Favorites?",
-      message: `Are you sure you want to remove all ${count} favorite color${
-        count === 1 ? "" : "s"
-      }? This action cannot be undone.`,
+      message: `Are you sure you want to remove all ${plural(count, "favorite color")}? This action cannot be undone.`,
       confirmText: "Clear All",
       cancelText: "Cancel",
       confirmClass: "btn-danger",
@@ -628,7 +623,7 @@ export class ColorController {
       this.commandBus.execute(command);
 
       this.dialog.toast({
-        message: `${count} favorite${count === 1 ? "" : "s"} cleared.`,
+        message: `${plural(count, "favorite")} cleared.`,
         onUndo: () => command.undo(),
       });
     }
@@ -643,9 +638,7 @@ export class ColorController {
 
     const confirmed = await this.dialog.confirm({
       title: "Unhide All Colors?",
-      message: `Are you sure you want to unhide all ${count} hidden color${
-        count === 1 ? "" : "s"
-      }? They will reappear in the color list.`,
+      message: `Are you sure you want to unhide all ${plural(count, "hidden color")}? They will reappear in the color list.`,
       confirmText: "Unhide All",
       cancelText: "Cancel",
       confirmClass: "btn-primary",
@@ -656,7 +649,7 @@ export class ColorController {
       this.commandBus.execute(command);
 
       this.dialog.toast({
-        message: `${count} color${count === 1 ? "" : "s"} unhidden.`,
+        message: `${plural(count, "color")} unhidden.`,
         onUndo: () => command.undo(),
       });
     }
@@ -683,7 +676,7 @@ export class ColorController {
     const { count } = this.exportService.exportColors(favoriteColors);
 
     this.dialog.toast({
-      message: `${count} favorite${count === 1 ? "" : "s"} exported.`,
+      message: `${plural(count, "favorite")} exported.`,
       onUndo: null,
       duration: TIMING.TOAST_DURATION_MS,
     });
