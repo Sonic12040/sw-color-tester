@@ -62,6 +62,7 @@ const STATIC_ASSETS = [
   // Models
   `${BASE_PATH}/models/ColorModel.js`,
   `${BASE_PATH}/models/AppState.js`,
+  `${BASE_PATH}/models/palette-v1.js`,
 
   // Views
   `${BASE_PATH}/views/ColorView.js`,
@@ -86,7 +87,7 @@ const STATIC_ASSETS = [
   `${BASE_PATH}/utils/config.js`,
   `${BASE_PATH}/utils/dom.js`,
   `${BASE_PATH}/utils/templates.js`,
-  `${BASE_PATH}/utils/numeric-encoding.js`,
+  `${BASE_PATH}/utils/bitset-codec.js`,
   `${BASE_PATH}/utils/DialogService.js`,
   `${BASE_PATH}/utils/ExportService.js`,
   `${BASE_PATH}/utils/EventEmitter.js`,

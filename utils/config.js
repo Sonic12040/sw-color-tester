@@ -153,8 +153,9 @@ export const DATA_ATTRIBUTES = {
 
 // URL parameter names
 export const URL_PARAMS = {
-  FAVORITES: "favorites",
-  HIDDEN: "hidden",
+  VERSION: "v",
+  FAVORITES: "f",
+  HIDDEN: "h",
   SCROLL: "scroll",
   COLOR: "color",
   LRV_MIN: "lrvMin",

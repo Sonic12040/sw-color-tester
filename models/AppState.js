@@ -2,8 +2,12 @@
  * Application state — favorites, hidden colors, and LRV range, persisted to URL.
  */
 
-import { URL_PARAMS, PREFIX } from "../utils/config.js";
-import { compressIds, decompressIds } from "../utils/numeric-encoding.js";
+import { URL_PARAMS } from "../utils/config.js";
+import {
+  encodeBitset,
+  decodeBitset,
+  CURRENT_PALETTE_VERSION,
+} from "../utils/bitset-codec.js";
 import { EventEmitter } from "../utils/EventEmitter.js";
 
 export class AppState extends EventEmitter {
@@ -20,103 +24,21 @@ export class AppState extends EventEmitter {
   }
 
   /**
-   * Expand group identifiers (e.g. family:Red) into individual color IDs.
-   * @param {string[]} ids - Array of IDs that may include group identifiers
-   * @returns {string[]} Array of expanded color IDs
-   *
-   * Supported group identifier formats:
-   * - "family:Red" - All colors in the Red family
-   */
-  #expandGroupIds(ids) {
-    if (!this.colorModel) return ids;
-
-    const expandedIds = new Set();
-
-    for (const id of ids) {
-      if (id.startsWith(`${PREFIX.FAMILY}:`)) {
-        const familyName = id.substring(PREFIX.FAMILY.length + 1);
-        const colorIds = this.colorModel.getColorIdsForFamily(familyName, []);
-        for (const colorId of colorIds) {
-          expandedIds.add(colorId);
-        }
-      } else {
-        expandedIds.add(id);
-      }
-    }
-
-    return [...expandedIds];
-  }
-
-  /**
-   * Decompress a URL param, falling back to legacy comma-separated format.
-   */
-  #safeDecompress(compressed, label) {
-    if (!compressed) return [];
-    try {
-      return decompressIds(compressed);
-    } catch (error) {
-      console.error(`Error decompressing ${label}:`, error);
-      return compressed.split(",").filter((id) => id.trim() !== "");
-    }
-  }
-
-  /**
-   * Consolidate color IDs into group identifiers where entire families/categories are selected
-   * @param {string[]} colorIds - Array of color IDs
-   * @param {string[]} exclusionIds - Array of IDs to exclude from group consideration (e.g., hidden IDs when consolidating favorites)
-   * @returns {string[]} Array with group identifiers for fully selected groups
-   */
-  #consolidateColorIds(colorIds, exclusionIds = []) {
-    if (!this.colorModel || colorIds.length === 0) return colorIds;
-
-    const consolidated = new Set(colorIds);
-    const colorIdSet = new Set(colorIds);
-    const exclusionSet =
-      exclusionIds instanceof Set ? exclusionIds : new Set(exclusionIds);
-
-    // Check for fully selected families
-    const selectedFamilies = this.colorModel.getHiddenFamilies(
-      colorIdSet,
-      exclusionSet,
-    );
-    for (const family of selectedFamilies) {
-      const familyColorIds = this.colorModel.getColorIdsForFamily(
-        family.name,
-        exclusionSet,
-      );
-      for (const colorId of familyColorIds) {
-        consolidated.delete(colorId);
-      }
-      consolidated.add(`${PREFIX.FAMILY}:${family.name}`);
-    }
-
-    return [...consolidated];
-  }
-
-  #consolidateHiddenIds(hiddenIds) {
-    return this.#consolidateColorIds(hiddenIds, this.favorites);
-  }
-
-  #consolidateFavoriteIds(favoriteIds) {
-    return this.#consolidateColorIds(favoriteIds, this.hidden);
-  }
-
-  /**
-   * Load state from URL parameters
+   * Load state from URL parameters.
+   * Format: ?v=1&f=<base64url>&h=<base64url>
    */
   loadFromURL() {
     const params = new URLSearchParams(globalThis.location.search);
-    const compressedFavorites = params.get(URL_PARAMS.FAVORITES) || "";
-    const compressedHidden = params.get(URL_PARAMS.HIDDEN) || "";
+    const version = Number(
+      params.get(URL_PARAMS.VERSION) || CURRENT_PALETTE_VERSION,
+    );
 
-    const favoriteIds = this.#safeDecompress(compressedFavorites, "favorites");
-    const hiddenIds = this.#safeDecompress(compressedHidden, "hidden");
-
-    const expandedFavoriteIds = this.#expandGroupIds(favoriteIds);
-    const expandedHiddenIds = this.#expandGroupIds(hiddenIds);
-
-    this.favorites = new Set(expandedFavoriteIds);
-    this.hidden = new Set(expandedHiddenIds);
+    this.favorites = new Set(
+      decodeBitset(params.get(URL_PARAMS.FAVORITES) || "", version),
+    );
+    this.hidden = new Set(
+      decodeBitset(params.get(URL_PARAMS.HIDDEN) || "", version),
+    );
 
     // Load LRV filter range
     const lrvMinParam = params.get(URL_PARAMS.LRV_MIN);
@@ -131,53 +53,38 @@ export class AppState extends EventEmitter {
   }
 
   syncToURL() {
-    const favoriteArray = [...this.favorites];
-    const hiddenArray = [...this.hidden];
+    const encodedFavorites = encodeBitset(this.favorites);
+    const encodedHidden = encodeBitset(this.hidden);
 
-    const consolidatedFavorites = this.#consolidateFavoriteIds(favoriteArray);
-    const consolidatedHidden = this.#consolidateHiddenIds(hiddenArray);
+    const params = new URLSearchParams();
 
-    const compressedFavorites = compressIds(consolidatedFavorites);
-    const compressedHidden = compressIds(consolidatedHidden);
+    // Always write the current palette version
+    params.set(URL_PARAMS.VERSION, String(CURRENT_PALETTE_VERSION));
 
-    const params = new URLSearchParams(globalThis.location.search);
-
-    if (compressedFavorites) {
-      params.set(URL_PARAMS.FAVORITES, compressedFavorites);
-    } else {
-      params.delete(URL_PARAMS.FAVORITES);
+    if (encodedFavorites) {
+      params.set(URL_PARAMS.FAVORITES, encodedFavorites);
     }
 
-    if (compressedHidden) {
-      params.set(URL_PARAMS.HIDDEN, compressedHidden);
-    } else {
-      params.delete(URL_PARAMS.HIDDEN);
+    if (encodedHidden) {
+      params.set(URL_PARAMS.HIDDEN, encodedHidden);
     }
 
     // LRV filter range (only persist non-default values)
     if (this.lrvMin > 0) {
       params.set(URL_PARAMS.LRV_MIN, this.lrvMin.toString());
-    } else {
-      params.delete(URL_PARAMS.LRV_MIN);
     }
 
     if (this.lrvMax < 100) {
       params.set(URL_PARAMS.LRV_MAX, this.lrvMax.toString());
-    } else {
-      params.delete(URL_PARAMS.LRV_MAX);
     }
 
     // Neutral background (only persist when active)
     if (this.neutralBg) {
       params.set(URL_PARAMS.NEUTRAL_BG, "1");
-    } else {
-      params.delete(URL_PARAMS.NEUTRAL_BG);
     }
 
     if (this.scrollPosition > 0) {
       params.set(URL_PARAMS.SCROLL, Math.round(this.scrollPosition).toString());
-    } else {
-      params.delete(URL_PARAMS.SCROLL);
     }
 
     const newUrl = `${globalThis.location.pathname}?${params.toString()}`;
