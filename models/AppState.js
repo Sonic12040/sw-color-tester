@@ -9,8 +9,15 @@ import {
   CURRENT_PALETTE_VERSION,
 } from "../utils/bitset-codec.js";
 import { EventEmitter } from "../utils/EventEmitter.js";
+import { STOCK_ROOMS } from "../constants.js";
 
 export class AppState extends EventEmitter {
+  // ── Private visualizer state (never serialised to URL) ────
+  #currentRoomId;
+  #roomColors;
+  #timeOfDay;
+  #customRooms;
+
   constructor(colorModel = null) {
     super();
     this.favorites = new Set();
@@ -20,6 +27,13 @@ export class AppState extends EventEmitter {
     this.neutralBg = false;
     this.scrollPosition = 0;
     this.colorModel = colorModel;
+
+    // ── Visualizer state (never serialised to URL) ──────────
+    this.#currentRoomId = STOCK_ROOMS.length ? STOCK_ROOMS[0].room.id : null;
+    this.#roomColors = new Map(); // Map<layerId, colorHex>
+    this.#timeOfDay = "daylight";
+    this.#customRooms = []; // user-imported room JSON payloads
+
     this.loadFromURL();
   }
 
@@ -53,6 +67,11 @@ export class AppState extends EventEmitter {
   }
 
   syncToURL() {
+    // ── Guard: visualizer state is NEVER written to the URL ──
+    // currentRoomId, roomColors, timeOfDay, and customRooms are
+    // intentionally excluded to protect URL character limits.
+    // They are persisted separately (IndexedDB / file export).
+
     const encodedFavorites = encodeBitset(this.favorites);
     const encodedHidden = encodeBitset(this.hidden);
 
@@ -199,5 +218,107 @@ export class AppState extends EventEmitter {
     this.neutralBg = !this.neutralBg;
     this.syncToURL();
     this.emit("neutralBgChanged");
+  }
+
+  // ──────────────────────────────────────────────────────────
+  // Visualizer state — getters / setters
+  // These properties are deliberately excluded from syncToURL().
+  // ──────────────────────────────────────────────────────────
+
+  /** @returns {string|null} Active room id */
+  getCurrentRoomId() {
+    return this.#currentRoomId;
+  }
+
+  /**
+   * Switch the active room.
+   * @param {string} roomId — id from STOCK_ROOMS or a custom room
+   */
+  setCurrentRoomId(roomId) {
+    if (roomId === this.#currentRoomId) return;
+    this.#currentRoomId = roomId;
+    this.#roomColors.clear();
+    this.emit("roomChanged");
+  }
+
+  /** @returns {Map<string, string>} Map of layerId → colorHex */
+  getRoomColors() {
+    return this.#roomColors;
+  }
+
+  /**
+   * Apply a color to a specific room layer.
+   * @param {string} layerId
+   * @param {string} colorHex — e.g. "#B54D7F"
+   */
+  setRoomColor(layerId, colorHex) {
+    this.#roomColors.set(layerId, colorHex);
+    this.emit("roomColorsChanged", { layerId, colorHex });
+  }
+
+  /**
+   * Remove an applied color, reverting a layer to its default.
+   * @param {string} layerId
+   */
+  removeRoomColor(layerId) {
+    if (!this.#roomColors.has(layerId)) return;
+    this.#roomColors.delete(layerId);
+    this.emit("roomColorsChanged", { layerId, colorHex: null });
+  }
+
+  /** Reset all applied room colors at once. */
+  clearRoomColors() {
+    this.#roomColors.clear();
+    this.emit("roomColorsChanged", null);
+  }
+
+  /** @returns {string} Current lighting preset key (e.g. "daylight") */
+  getTimeOfDay() {
+    return this.#timeOfDay;
+  }
+
+  /**
+   * Change the lighting preset.
+   * @param {string} preset — must match a key in the room's lightingPresets
+   */
+  setTimeOfDay(preset) {
+    if (preset === this.#timeOfDay) return;
+    this.#timeOfDay = preset;
+    this.emit("lightingChanged", { preset });
+  }
+
+  /** @returns {Array} User-imported custom room JSON payloads */
+  getCustomRooms() {
+    return this.#customRooms;
+  }
+
+  /**
+   * Register one or more custom rooms (e.g. from an imported JSON file).
+   * @param {object} roomPayload — complete Vector Scene Graph JSON object
+   */
+  addCustomRoom(roomPayload) {
+    const exists = this.#customRooms.some(
+      (r) => r.room.id === roomPayload.room.id,
+    );
+    if (exists) return;
+    this.#customRooms.push(roomPayload);
+    this.emit("customRoomsChanged");
+  }
+
+  /**
+   * Remove a custom room by id.
+   * @param {string} roomId
+   */
+  removeCustomRoom(roomId) {
+    const idx = this.#customRooms.findIndex((r) => r.room.id === roomId);
+    if (idx === -1) return;
+    this.#customRooms.splice(idx, 1);
+    // If the deleted room was active, fall back to first stock room
+    if (this.#currentRoomId === roomId) {
+      this.#currentRoomId = STOCK_ROOMS.length ? STOCK_ROOMS[0].room.id : null;
+      this.#roomColors.clear();
+      this.emit("roomChanged");
+    }
+    this.emit("customRoomsChanged");
   }
 }

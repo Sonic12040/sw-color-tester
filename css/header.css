@@ -1,181 +1,204 @@
 @layer components {
-
-/* =============================================
+  /* =============================================
    HEADER COMPONENT
    Header, toolbar, hamburger menu
    ============================================= */
 
-.header {
-  position: sticky;
-  top: 0;
-  z-index: var(--z-sticky);
-  background: var(--color-surface-primary);
-  border-bottom: 1px solid var(--color-border-primary);
-}
-
-.header__top {
-  padding: clamp(0.5rem, 0.25rem + 0.667vw, 0.75rem)
-    clamp(0.75rem, 0.5rem + 0.667vw, 1rem);
-  gap: var(--spacing-3);
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.header h1 {
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
-  margin: 0;
-}
-
-.header p {
-  font-size: clamp(0.875rem, 0.75rem + 0.333vw, 1rem);
-  line-height: var(--line-height-normal);
-  color: var(--color-text-primary);
-  margin: 0 auto clamp(0.75rem, 0.5rem + 0.667vw, 1rem);
-  max-width: 800px;
-  padding: 0 var(--spacing-4);
-}
-
-/* Toolbar toggle button (hamburger) */
-.toolbar__toggle {
-  background: none;
-  border: none;
-  padding: var(--spacing-2);
-  cursor: pointer;
-  color: var(--color-text-primary);
-  border-radius: var(--radius-sm);
-  transition: background-color var(--transition-fast);
-  min-width: 44px;
-  min-height: 44px;
-  flex-shrink: 0;
-  -webkit-tap-highlight-color: transparent;
-
-  &:hover {
-    background: var(--color-surface-hover);
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    background: var(--color-surface-primary);
+    border-bottom: 1px solid var(--color-border-primary);
   }
 
-  &:focus-visible {
-    outline: 2px solid var(--color-border-focus);
-    outline-offset: 2px;
+  .header__top {
+    padding: clamp(0.5rem, 0.25rem + 0.667vw, 0.75rem)
+      clamp(0.75rem, 0.5rem + 0.667vw, 1rem);
+    gap: var(--spacing-3);
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
-  /* Hamburger → X animation when expanded */
-  &[aria-expanded="true"] .hamburger__line:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
-  }
-
-  &[aria-expanded="true"] .hamburger__line:nth-child(2) {
-    opacity: 0;
-  }
-
-  &[aria-expanded="true"] .hamburger__line:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
-  }
-}
-
-/* Hamburger icon */
-.hamburger {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  width: 22px;
-  height: 22px;
-}
-
-.hamburger__line {
-  display: block;
-  width: 100%;
-  height: 2px;
-  background: currentColor;
-  border-radius: 1px;
-  transition:
-    transform var(--transition-base),
-    opacity var(--transition-base);
-  transform-origin: center;
-}
-
-/* Toolbar panel - collapsible */
-.toolbar__panel {
-  border-top: 1px solid var(--color-border-secondary);
-  overflow: hidden;
-
-  &[hidden] {
-    display: none;
-  }
-}
-
-.toolbar__content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: var(--spacing-3) clamp(1rem, 2.67vw, 2rem);
-  gap: var(--spacing-3);
-}
-
-/* Toolbar sections */
-.toolbar__section--lrv {
-  background: var(--color-surface-secondary);
-  border: 1px solid var(--color-border-primary);
-  border-radius: var(--radius-sm);
-  padding: var(--spacing-3) var(--spacing-4);
-}
-
-.toolbar__actions {
-  gap: var(--spacing-3);
-}
-
-/* Header buttons extend the unified button system */
-.header__button {
-  background: var(--button-secondary-bg);
-  color: var(--button-secondary-color);
-  border: 1px solid var(--button-secondary-border);
-  padding: var(--spacing-2) var(--spacing-4);
-  border-radius: var(--button-border-radius);
-  cursor: pointer;
-  font-size: var(--font-size-sm);
-  font-weight: var(--button-font-weight);
-  transition: var(--button-transition);
-  min-height: 36px;
-  white-space: nowrap;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  &:hover {
-    background: var(--button-secondary-hover-bg);
-    color: var(--button-secondary-color);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--color-border-focus);
-    outline-offset: 2px;
-  }
-}
-
-/* Header mobile adjustments */
-@media (max-width: 599px) {
   .header h1 {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    margin: 0;
+  }
+
+  .header p {
+    font-size: clamp(0.875rem, 0.75rem + 0.333vw, 1rem);
+    line-height: var(--line-height-normal);
+    color: var(--color-text-primary);
+    margin: 0 auto clamp(0.75rem, 0.5rem + 0.667vw, 1rem);
+    max-width: 800px;
+    padding: 0 var(--spacing-4);
+  }
+
+  /* Toolbar toggle button (hamburger) */
+  .toolbar__toggle {
+    background: none;
+    border: none;
+    padding: var(--spacing-2);
+    cursor: pointer;
+    color: var(--color-text-primary);
+    border-radius: var(--radius-sm);
+    transition: background-color var(--transition-fast);
+    min-width: 44px;
+    min-height: 44px;
+    flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
+
+    &:hover {
+      background: var(--color-surface-hover);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-border-focus);
+      outline-offset: 2px;
+    }
+
+    /* Hamburger → X animation when expanded */
+    &[aria-expanded="true"] .hamburger__line:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    &[aria-expanded="true"] .hamburger__line:nth-child(2) {
+      opacity: 0;
+    }
+
+    &[aria-expanded="true"] .hamburger__line:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+  }
+
+  /* Hamburger icon */
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 22px;
+    height: 22px;
+  }
+
+  .hamburger__line {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: currentColor;
+    border-radius: 1px;
+    transition:
+      transform var(--transition-base),
+      opacity var(--transition-base);
+    transform-origin: center;
+  }
+
+  /* Toolbar panel - collapsible */
+  .toolbar__panel {
+    border-top: 1px solid var(--color-border-secondary);
+    overflow: hidden;
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  .toolbar__content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-3) clamp(1rem, 2.67vw, 2rem);
+    gap: var(--spacing-3);
+  }
+
+  /* Toolbar sections */
+  .toolbar__section--lrv {
+    background: var(--color-surface-secondary);
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-3) var(--spacing-4);
   }
 
   .toolbar__actions {
-    flex-direction: column;
+    gap: var(--spacing-3);
   }
 
+  /* Header buttons extend the unified button system */
   .header__button {
-    width: 100%;
+    background: var(--button-secondary-bg);
+    color: var(--button-secondary-color);
+    border: 1px solid var(--button-secondary-border);
+    padding: var(--spacing-2) var(--spacing-4);
+    border-radius: var(--button-border-radius);
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    font-weight: var(--button-font-weight);
+    transition: var(--button-transition);
+    min-height: 36px;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
-  }
-}
 
-/* Reduced motion: instant transitions for toolbar and hamburger animation */
-@media (prefers-reduced-motion: reduce) {
-  .toolbar__toggle,
-  .hamburger__line,
-  .header__button {
-    transition-duration: 0.01ms;
-  }
-}
+    &:hover {
+      background: var(--button-secondary-hover-bg);
+      color: var(--button-secondary-color);
+    }
 
+    &:focus-visible {
+      outline: 2px solid var(--color-border-focus);
+      outline-offset: 2px;
+    }
+  }
+
+  /* Header mobile adjustments */
+  @media (max-width: 599px) {
+    .header h1 {
+      font-size: var(--font-size-lg);
+    }
+
+    .toolbar__actions {
+      flex-direction: column;
+    }
+
+    .header__button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  /* ── Visualizer section (inside toolbar panel) ────────────── */
+  .toolbar__section--visualizer {
+    background: var(--color-surface-secondary);
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-3) var(--spacing-4);
+  }
+
+  .toolbar__section-title {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 var(--spacing-3) 0;
+    line-height: var(--line-height-tight);
+  }
+
+  .toolbar__visualizer-controls {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+    margin-bottom: var(--spacing-3);
+  }
+
+  /* Reduced motion: instant transitions for toolbar and hamburger animation */
+  @media (prefers-reduced-motion: reduce) {
+    .toolbar__toggle,
+    .hamburger__line,
+    .header__button {
+      transition-duration: 0.01ms;
+    }
+  }
 } /* end @layer components */

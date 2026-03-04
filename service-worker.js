@@ -54,6 +54,7 @@ const STATIC_ASSETS = [
   `${BASE_PATH}/css/theme-neutral.css`,
   `${BASE_PATH}/css/responsive.css`,
   `${BASE_PATH}/css/a11y.css`,
+  `${BASE_PATH}/css/visualizer.css`,
 
   `${BASE_PATH}/app.js`,
 
@@ -64,11 +65,13 @@ const STATIC_ASSETS = [
 
   // Views
   `${BASE_PATH}/views/ColorView.js`,
+  `${BASE_PATH}/views/VisualizerView.js`,
 
   // Controllers
   `${BASE_PATH}/controllers/ColorController.js`,
   `${BASE_PATH}/controllers/LrvFilterController.js`,
   `${BASE_PATH}/controllers/ModalController.js`,
+  `${BASE_PATH}/controllers/VisualizerController.js`,
 
   // Commands (Command Pattern implementation)
   `${BASE_PATH}/commands/ColorCommand.js`,
@@ -79,6 +82,10 @@ const STATIC_ASSETS = [
   `${BASE_PATH}/commands/UnhideGroupCommand.js`,
   `${BASE_PATH}/commands/ClearFavoritesCommand.js`,
   `${BASE_PATH}/commands/ClearHiddenCommand.js`,
+  `${BASE_PATH}/commands/ApplyColorCommand.js`,
+  `${BASE_PATH}/commands/ChangeLightingCommand.js`,
+  `${BASE_PATH}/commands/ExportRoomCommand.js`,
+  `${BASE_PATH}/commands/ImportRoomCommand.js`,
   `${BASE_PATH}/commands/index.js`,
 
   // Utils
@@ -90,8 +97,10 @@ const STATIC_ASSETS = [
   `${BASE_PATH}/utils/ExportService.js`,
   `${BASE_PATH}/utils/EventEmitter.js`,
   `${BASE_PATH}/utils/CommandBus.js`,
+  `${BASE_PATH}/utils/StorageService.js`,
 
   // PWA
+  `${BASE_PATH}/sw-registration.js`,
   `${BASE_PATH}/manifest.json`,
   `${BASE_PATH}/favicon.svg`,
   `${BASE_PATH}/version.js`,

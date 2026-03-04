@@ -14,6 +14,8 @@ import { DialogService } from "./utils/DialogService.js";
 import { ExportService } from "./utils/ExportService.js";
 import { CommandBus } from "./utils/CommandBus.js";
 import { ELEMENT_IDS } from "./utils/config.js";
+import { VisualizerView } from "./views/VisualizerView.js";
+import { VisualizerController } from "./controllers/VisualizerController.js";
 
 // Initialize MVC components
 const colorModel = new ColorModel(colorData);
@@ -40,6 +42,37 @@ const colorController = new ColorController(
   modalController,
   commandBus,
 );
+
+// ── Visualizer ──────────────────────────────────────────────
+const visualizerView = new VisualizerView("#visualizer-canvas");
+const visualizerController = new VisualizerController(
+  appState,
+  visualizerView,
+  commandBus,
+  colorModel,
+);
+
+// ── Tab switching (mobile two-tab system) ───────────────────
+const tabExplorer = document.getElementById("tab-explorer");
+const tabVisualizer = document.getElementById("tab-visualizer");
+const panelExplorer = document.getElementById("panel-explorer");
+const panelVisualizer = document.getElementById("panel-visualizer");
+
+function switchTab(activeTab, inactiveTab, activePanel, inactivePanel) {
+  activeTab.setAttribute("aria-selected", "true");
+  inactiveTab.setAttribute("aria-selected", "false");
+  activePanel.removeAttribute("hidden");
+  inactivePanel.setAttribute("hidden", "");
+}
+
+if (tabExplorer && tabVisualizer) {
+  tabExplorer.addEventListener("click", () =>
+    switchTab(tabExplorer, tabVisualizer, panelExplorer, panelVisualizer),
+  );
+  tabVisualizer.addEventListener("click", () =>
+    switchTab(tabVisualizer, tabExplorer, panelVisualizer, panelExplorer),
+  );
+}
 
 // Start the application
 colorController.init();

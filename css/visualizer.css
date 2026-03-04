@@ -1,0 +1,378 @@
+@layer components {
+  /* ============================================
+   VISUALIZER LAYOUT
+   Mobile: two-tab system  (Explorer | Visualizer)
+   Desktop: side-by-side split pane
+   ============================================ */
+
+  /* ── Shell: wraps everything below the <header> ───────────── */
+  .app-shell {
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* allow flex children to shrink */
+  }
+
+  /* ── Tab bar (mobile only, hidden on desktop) ─────────────── */
+  .app-tabs {
+    display: flex;
+    position: sticky;
+    top: 0;
+    z-index: calc(var(--z-sticky) - 1);
+    background: var(--color-surface-primary);
+    border-bottom: 1px solid var(--color-border-secondary);
+  }
+
+  .app-tabs__btn {
+    flex: 1;
+    padding: var(--spacing-3) var(--spacing-4);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-tight);
+    text-align: center;
+    color: var(--color-text-secondary);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition:
+      color var(--transition-fast),
+      border-color var(--transition-fast);
+    min-height: var(--button-min-height);
+  }
+
+  .app-tabs__btn[aria-selected="true"] {
+    color: var(--color-text-primary);
+    border-bottom-color: var(--color-primary);
+  }
+
+  .app-tabs__btn:hover {
+    color: var(--color-text-primary);
+  }
+
+  /* ── Panel container (holds the two switchable panels) ────── */
+  .app-panels {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* Each panel fills the available space */
+  .app-panel {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  /* Mobile: hide the inactive panel */
+  .app-panel[hidden] {
+    display: none;
+  }
+
+  /* ── Visualizer panel internals ───────────────────────────── */
+  .visualizer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative; /* anchor for floating controls & hint */
+    background: var(--color-surface-secondary);
+  }
+
+  .visualizer__canvas {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    padding: var(--spacing-4);
+    overflow: hidden;
+  }
+
+  /* Ensure the SVG scales naturally inside the canvas area */
+  .visualizer__canvas svg {
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+  }
+
+  /* ── Room name / info bar ─────────────────────────────────── */
+  .visualizer__info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    border-bottom: 1px solid var(--color-border-secondary);
+    background: var(--color-surface-primary);
+  }
+
+  .visualizer__room-name {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+  }
+
+  /* ============================================
+   DESKTOP — SPLIT PANE (>= 900px)
+   ============================================ */
+
+  @media (min-width: 900px) {
+    /* Hide the mobile tab bar */
+    .app-tabs {
+      display: none;
+    }
+
+    /* Switch to horizontal split */
+    .app-panels {
+      flex-direction: row;
+      height: 100%;
+    }
+
+    /* Both panels visible side-by-side; override hidden attr */
+    .app-panel {
+      flex: 1 1 50%;
+      max-width: 50%;
+      overflow-y: auto;
+    }
+
+    /* Override the [hidden] behaviour so both panels always show */
+    .app-panel[hidden] {
+      display: block;
+    }
+
+    /* Explorer panel — left side */
+    .app-panel--explorer {
+      border-right: 1px solid var(--color-border-secondary);
+    }
+
+    /* Visualizer panel — right side */
+    .app-panel--visualizer {
+      position: relative; /* anchor for future floating controls */
+    }
+
+    /* Give the canvas more breathing room on desktop */
+    .visualizer__canvas {
+      padding: var(--spacing-6);
+    }
+  }
+
+  /* ============================================
+   LARGE DESKTOP (>= 1200px)
+   Give the visualizer more room on wide monitors
+   ============================================ */
+
+  @media (min-width: 1200px) {
+    .app-panel--explorer {
+      flex: 0 0 40%;
+      max-width: 40%;
+    }
+
+    .app-panel--visualizer {
+      flex: 0 0 60%;
+      max-width: 60%;
+    }
+  }
+
+  /* ============================================
+   FULL-HEIGHT UTILITY
+   When the shell is a direct child of <body>,
+   ensure it fills the viewport below the header.
+   ============================================ */
+
+  .app-shell {
+    /* Fallback for browsers without dvh */
+    min-height: calc(100vh - var(--header-height, 0px));
+    min-height: calc(100dvh - var(--header-height, 0px));
+  }
+
+  /* On desktop, use body-level flex so the shell fills exactly
+     the remaining viewport below the sticky header.  Each panel
+     scrolls independently — long explorer content never pushes
+     the visualizer off-screen. */
+  @media (min-width: 900px) {
+    html,
+    body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Let the header keep its natural height */
+    .header {
+      flex-shrink: 0;
+    }
+
+    .app-shell {
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+  }
+
+  /* ============================================
+     PAINT BUCKET — Favorites palette strip
+     Horizontal scrolling swatch bar docked to the
+     bottom of the visualizer panel.
+     ============================================ */
+
+  .paint-bucket {
+    display: flex;
+    gap: var(--spacing-2);
+    padding: var(--spacing-2) var(--spacing-4);
+    overflow-x: auto;
+    overflow-y: hidden;
+    background: var(--color-surface-primary);
+    border-top: 1px solid var(--color-border-secondary);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  /* Hide scrollbar on WebKit (cleaner look) */
+  .paint-bucket::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .paint-bucket::-webkit-scrollbar-thumb {
+    background: var(--neutral-300);
+    border-radius: var(--radius-full);
+  }
+
+  .paint-bucket__swatch {
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    border: 2px solid var(--color-border-secondary);
+    cursor: pointer;
+    transition:
+      transform var(--transition-fast),
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast);
+    outline: none;
+    padding: 0;
+  }
+
+  .paint-bucket__swatch:hover {
+    transform: scale(1.15);
+    border-color: var(--color-border-primary);
+  }
+
+  .paint-bucket__swatch:focus-visible {
+    box-shadow: 0 0 0 2px var(--color-border-focus);
+    border-color: var(--color-border-focus);
+  }
+
+  .paint-bucket__swatch--selected {
+    border-color: var(--color-primary);
+    box-shadow:
+      0 0 0 2px var(--color-surface-primary),
+      0 0 0 4px var(--color-primary);
+    transform: scale(1.15);
+  }
+
+  /* Larger swatches on desktop */
+  @media (min-width: 900px) {
+    .paint-bucket__swatch {
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  /* ============================================
+     HINT BANNER — instruction for new users
+     ============================================ */
+
+  .visualizer__hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+    background: var(--color-surface-secondary);
+    border-top: 1px solid var(--color-border-secondary);
+    text-align: center;
+  }
+
+  .visualizer__hint-icon {
+    font-size: var(--font-size-sm);
+    flex-shrink: 0;
+  }
+
+  .visualizer__hint[hidden] {
+    display: none;
+  }
+
+  /* ── Shared control styling (toolbar + visualizer) ────── */
+  .visualizer__control-group {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+  }
+
+  .visualizer__control-label {
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
+  }
+
+  .visualizer__select {
+    flex: 1;
+    padding: var(--spacing-1) var(--spacing-2);
+    border: 1px solid var(--color-border-secondary);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-primary);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    min-height: 32px;
+  }
+
+  .visualizer__select:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 1px;
+  }
+
+  /* Lighting toggle buttons */
+  .visualizer__btn-group {
+    display: flex;
+    gap: 2px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 1px solid var(--color-border-secondary);
+    width: 100%;
+  }
+
+  .visualizer__btn-group button {
+    flex: 1;
+    padding: var(--spacing-1) var(--spacing-3);
+    border: none;
+    background: var(--color-surface-primary);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition:
+      background var(--transition-fast),
+      color var(--transition-fast);
+    min-height: 32px;
+    text-transform: capitalize;
+  }
+
+  .visualizer__btn-group button:hover {
+    background: var(--color-surface-hover);
+  }
+
+  .visualizer__btn-group button[aria-checked="true"] {
+    background: var(--color-primary);
+    color: var(--color-surface-primary);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  /* ── Desktop refinements ────────────────────────────────── */
+} /* end @layer components */

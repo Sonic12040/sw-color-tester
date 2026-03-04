@@ -59,6 +59,7 @@
     <link rel="stylesheet" href="css/confirm.css" />
     <link rel="stylesheet" href="css/toast.css" />
     <link rel="stylesheet" href="css/theme-neutral.css" />
+    <link rel="stylesheet" href="css/visualizer.css" />
     <link rel="stylesheet" href="css/responsive.css" />
     <link rel="stylesheet" href="css/a11y.css" />
   </head>
@@ -159,15 +160,129 @@
               </button>
             </div>
           </div>
+          <div
+            class="toolbar__section toolbar__section--visualizer"
+            aria-label="Visualizer settings"
+          >
+            <h2 class="toolbar__section-title">Visualizer</h2>
+            <div class="toolbar__visualizer-controls">
+              <div class="visualizer__control-group">
+                <label class="visualizer__control-label" for="room-select"
+                  >Room</label
+                >
+                <select id="room-select" class="visualizer__select"></select>
+              </div>
+              <div class="visualizer__control-group">
+                <span class="visualizer__control-label">Lighting</span>
+                <div
+                  class="visualizer__btn-group"
+                  id="lighting-buttons"
+                  role="radiogroup"
+                  aria-label="Lighting preset"
+                ></div>
+              </div>
+              <div class="visualizer__control-group" id="floor-variant-group">
+                <label class="visualizer__control-label" for="floor-select"
+                  >Flooring</label
+                >
+                <select id="floor-select" class="visualizer__select"></select>
+              </div>
+            </div>
+            <div class="toolbar__actions u-flex-wrap-center">
+              <button
+                type="button"
+                class="header__button"
+                id="export-room-btn"
+                title="Export room design as JSON"
+              >
+                Export Room
+              </button>
+              <button
+                type="button"
+                class="header__button"
+                id="import-room-btn"
+                title="Import a room design JSON file"
+              >
+                Import Room
+              </button>
+              <input type="file" id="import-room-input" accept=".json" hidden />
+            </div>
+          </div>
         </div>
       </div>
     </header>
 
-    <main
-      id="color-accordion"
-      class="accordion"
-      aria-label="Color families accordion"
-    ></main>
+    <!-- ── App Shell: tab bar + panels ─────────────────────── -->
+    <div class="app-shell">
+      <!-- Mobile tab bar (hidden on desktop via CSS) -->
+      <nav class="app-tabs" aria-label="App sections">
+        <button
+          type="button"
+          class="app-tabs__btn"
+          id="tab-explorer"
+          role="tab"
+          aria-selected="true"
+          aria-controls="panel-explorer"
+        >
+          Explorer
+        </button>
+        <button
+          type="button"
+          class="app-tabs__btn"
+          id="tab-visualizer"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panel-visualizer"
+        >
+          Visualizer
+        </button>
+      </nav>
+
+      <div class="app-panels">
+        <!-- Explorer panel (existing accordion) -->
+        <div
+          class="app-panel app-panel--explorer"
+          id="panel-explorer"
+          role="tabpanel"
+          aria-labelledby="tab-explorer"
+        >
+          <main
+            id="color-accordion"
+            class="accordion"
+            aria-label="Color families accordion"
+          ></main>
+        </div>
+
+        <!-- Visualizer panel -->
+        <div
+          class="app-panel app-panel--visualizer"
+          id="panel-visualizer"
+          role="tabpanel"
+          aria-labelledby="tab-visualizer"
+          hidden
+        >
+          <section class="visualizer">
+            <div class="visualizer__info">
+              <span class="visualizer__room-name" id="visualizer-room-name"
+                >Modern Living Room</span
+              >
+            </div>
+            <div class="visualizer__canvas" id="visualizer-canvas">
+              <!-- SVG injected by VisualizerView -->
+            </div>
+
+            <!-- Hint banner — shown when no swatch is selected -->
+            <div class="visualizer__hint" id="visualizer-hint">
+              <span class="visualizer__hint-icon" aria-hidden="true"
+                >&#9757;</span
+              >
+              Favorite colors in the Explorer, then select a swatch below and
+              click any wall to paint it.
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
 
     <!-- PWA Service Worker Registration -->
     <script src="sw-registration.js"></script>

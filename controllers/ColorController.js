@@ -71,20 +71,20 @@ export class ColorController {
    * when the change is small, or falls back to full render for bulk changes.
    * @param {ColorCommand} command - Command to execute
    */
-  #executeCommand(command) {
+  async #executeCommand(command) {
     this.#handlingCommand = true;
     try {
-      this.#executeCommandInner(command);
+      await this.#executeCommandInner(command);
     } finally {
       this.#handlingCommand = false;
     }
   }
 
-  #executeCommandInner(command) {
+  async #executeCommandInner(command) {
     const prevFavorites = new Set(this.state.getFavoriteSet());
     const prevHidden = new Set(this.state.getHiddenSet());
 
-    const stateChanged = command.execute();
+    const stateChanged = await command.execute();
     if (!stateChanged) return;
 
     const newFavorites = this.state.getFavoriteSet();

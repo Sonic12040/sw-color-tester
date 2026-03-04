@@ -1,7 +1,11 @@
+export { ApplyColorCommand } from "./ApplyColorCommand.js";
 export { BulkFavoriteCommand } from "./BulkFavoriteCommand.js";
 export { BulkHideCommand } from "./BulkHideCommand.js";
+export { ChangeLightingCommand } from "./ChangeLightingCommand.js";
 export { ClearFavoritesCommand } from "./ClearFavoritesCommand.js";
 export { ClearHiddenCommand } from "./ClearHiddenCommand.js";
+export { ExportRoomCommand } from "./ExportRoomCommand.js";
+export { ImportRoomCommand } from "./ImportRoomCommand.js";
 export { ToggleFavoriteCommand } from "./ToggleFavoriteCommand.js";
 export { ToggleHiddenCommand } from "./ToggleHiddenCommand.js";
 export { UnhideGroupCommand } from "./UnhideGroupCommand.js";
