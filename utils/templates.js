@@ -6,6 +6,10 @@ import {
   LRV_THRESHOLDS,
   DESIGNER_COLLECTION_PREFIX,
 } from "./config.js";
+import { parseHTML } from "./dom.js";
+
+// Re-export so existing consumers don't break
+export { parseHTML };
 
 // Coordinating color roles (assign contextual labels)
 const COORDINATING_ROLES = ["Accent Wall", "Trim Color", "Coordinating"];
@@ -19,15 +23,6 @@ const SIMILAR_DIFFERENTIATORS = [
   "Similar Tone",
   "Alternative",
 ];
-
-/** Reusable <template> element for efficient HTML → DOM parsing. */
-const _tmpl = document.createElement("template");
-
-/** Parse an HTML string into a single DOM element. */
-export function parseHTML(html) {
-  _tmpl.innerHTML = html;
-  return _tmpl.content.firstElementChild;
-}
 
 function generateHSLColor(hue, saturation, lightness) {
   return `hsl(${hue * 360}deg ${saturation * 100}% ${lightness * 100}%)`;

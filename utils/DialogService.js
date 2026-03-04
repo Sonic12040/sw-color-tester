@@ -1,5 +1,6 @@
 import { CSS_CLASSES, ELEMENT_IDS, TIMING } from "./config.js";
 import { confirmationModal, toastNotification } from "./templates.js";
+import { parseHTML } from "./dom.js";
 
 export class DialogService {
   /**
@@ -16,7 +17,7 @@ export class DialogService {
     return new Promise((resolve) => {
       const modalHTML = confirmationModal(options);
 
-      document.body.insertAdjacentHTML("beforeend", modalHTML);
+      document.body.appendChild(parseHTML(modalHTML));
 
       const overlay = document.getElementById(ELEMENT_IDS.CONFIRM_OVERLAY);
       const confirmBtn = document.getElementById(ELEMENT_IDS.CONFIRM_CONFIRM);
@@ -76,7 +77,7 @@ export class DialogService {
       id: toastId,
     });
 
-    document.body.insertAdjacentHTML("beforeend", toastHTML);
+    document.body.appendChild(parseHTML(toastHTML));
 
     const toast = document.getElementById(toastId);
     const actionBtn = toast.querySelector(`.${CSS_CLASSES.TOAST_ACTION}`);

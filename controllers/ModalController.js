@@ -11,6 +11,7 @@ import {
   TIMING,
 } from "../utils/config.js";
 import { colorDetailModal } from "../utils/templates.js";
+import { parseHTML, parseSVGContent } from "../utils/dom.js";
 import {
   ToggleFavoriteCommand,
   ToggleHiddenCommand,
@@ -99,7 +100,7 @@ export class ModalController {
       isFavorited,
       isHidden,
     );
-    document.body.insertAdjacentHTML("beforeend", modalHTML);
+    document.body.appendChild(parseHTML(modalHTML));
 
     requestAnimationFrame(() => {
       const modal = document.getElementById(ELEMENT_IDS.COLOR_DETAIL_MODAL);
@@ -165,7 +166,10 @@ export class ModalController {
     const isHidden = this.state.getHiddenSet().has(colorId);
     const svg = btn.querySelector("svg");
     const span = btn.querySelector("span");
-    if (svg) svg.innerHTML = isHidden ? ICONS.EYE : ICONS.EYE_OFF;
+    if (svg)
+      svg.replaceChildren(
+        parseSVGContent(isHidden ? ICONS.EYE : ICONS.EYE_OFF),
+      );
     if (span) span.textContent = isHidden ? "Hidden" : "Hide Color";
     btn.setAttribute("aria-label", `${isHidden ? "Show" : "Hide"} color`);
   }

@@ -84,6 +84,7 @@ const STATIC_ASSETS = [
 
   // Utils
   `${BASE_PATH}/utils/config.js`,
+  `${BASE_PATH}/utils/dom.js`,
   `${BASE_PATH}/utils/templates.js`,
   `${BASE_PATH}/utils/numeric-encoding.js`,
   `${BASE_PATH}/utils/DialogService.js`,

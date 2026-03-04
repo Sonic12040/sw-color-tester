@@ -12,8 +12,8 @@ import {
   createAccordionItem,
   colorTemplate,
   familyTileTemplate,
-  parseHTML,
 } from "../utils/templates.js";
+import { parseHTML, parseHTMLFragment, parseSVGContent } from "../utils/dom.js";
 import {
   PREFIX,
   CSS_CLASSES,
@@ -80,7 +80,7 @@ export class ColorView {
       sortedFamilies,
       colorFamilies,
     );
-    this.container.innerHTML = accordionHTML;
+    this.container.replaceChildren(parseHTMLFragment(accordionHTML));
     _perfMeasure("view:build-accordion", "view:build-accordion:start");
 
     // Populate all sections
@@ -230,15 +230,16 @@ export class ColorView {
           }),
         );
       }
-      favoritesContainer.innerHTML = "";
-      favoritesContainer.appendChild(fragment);
+      favoritesContainer.replaceChildren(fragment);
     } else {
-      favoritesContainer.innerHTML = `
-        <div class="${CSS_CLASSES.EMPTY_MESSAGE}">
-          <span class="empty-message__text">No favorite colors yet.</span>
-          <span class="empty-message__hint">Click the heart icon on any color to add it to your favorites.</span>
-        </div>
-      `;
+      favoritesContainer.replaceChildren(
+        parseHTML(`
+          <div class="${CSS_CLASSES.EMPTY_MESSAGE}">
+            <span class="empty-message__text">No favorite colors yet.</span>
+            <span class="empty-message__hint">Click the heart icon on any color to add it to your favorites.</span>
+          </div>
+        `),
+      );
     }
   }
 
@@ -247,7 +248,7 @@ export class ColorView {
    */
   renderHiddenSection(hiddenColors, hiddenFamilies) {
     const hiddenContainer = document.getElementById(ELEMENT_IDS.HIDDEN_TILES);
-    hiddenContainer.innerHTML = "";
+    hiddenContainer.replaceChildren();
 
     // Add individual hidden colors (excluding those in completely hidden families)
     const hiddenFamilyNames = new Set(hiddenFamilies.map((f) => f.name));
@@ -259,12 +260,14 @@ export class ColorView {
     });
 
     if (hiddenFamilies.length === 0 && individualHiddenColors.length === 0) {
-      hiddenContainer.innerHTML = `
-        <div class="${CSS_CLASSES.EMPTY_MESSAGE}">
-          <span class="empty-message__text">No hidden colors.</span>
-          <span class="empty-message__hint">Click the eye icon on any color to hide it.</span>
-        </div>
-      `;
+      hiddenContainer.replaceChildren(
+        parseHTML(`
+          <div class="${CSS_CLASSES.EMPTY_MESSAGE}">
+            <span class="empty-message__text">No hidden colors.</span>
+            <span class="empty-message__hint">Click the eye icon on any color to hide it.</span>
+          </div>
+        `),
+      );
     } else {
       const fragment = document.createDocumentFragment();
       for (const family of hiddenFamilies) {
@@ -358,7 +361,9 @@ export class ColorView {
       const svg = btn.querySelector("svg");
       if (!svg) continue;
 
-      svg.innerHTML = isHidden ? ICONS.EYE : ICONS.EYE_OFF;
+      svg.replaceChildren(
+        parseSVGContent(isHidden ? ICONS.EYE : ICONS.EYE_OFF),
+      );
 
       const label = isHidden ? "Unhide" : "Hide";
       const colorEl = btn.closest(`.${CSS_CLASSES.COLOR_TILE}`);
@@ -424,12 +429,14 @@ export class ColorView {
 
     const tiles = container.querySelectorAll(`.${CSS_CLASSES.COLOR_TILE}`);
     if (tiles.length === 0) {
-      container.innerHTML = `
-        <div class="${CSS_CLASSES.EMPTY_MESSAGE}">
-          <span class="empty-message__text">${emptyText}</span>
-          <span class="empty-message__hint">${emptyHint}</span>
-        </div>
-      `;
+      container.replaceChildren(
+        parseHTML(`
+          <div class="${CSS_CLASSES.EMPTY_MESSAGE}">
+            <span class="empty-message__text">${emptyText}</span>
+            <span class="empty-message__hint">${emptyHint}</span>
+          </div>
+        `),
+      );
     }
   }
 
