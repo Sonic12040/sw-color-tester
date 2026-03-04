@@ -1,3 +1,5 @@
+@layer components {
+
 /* =============================================
    HEADER COMPONENT
    Header, toolbar, hamburger menu
@@ -175,3 +177,5 @@
     transition-duration: 0.01ms;
   }
 }
+
+} /* end @layer components */

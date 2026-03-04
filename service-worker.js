@@ -40,9 +40,7 @@ const STATIC_ASSETS = [
   `${BASE_PATH}/`,
   `${BASE_PATH}/index.html`,
 
-  `${BASE_PATH}/styles.css`,
-
-  // CSS modules (loaded via @import in styles.css)
+  // CSS modules (loaded directly via <link> tags in index.html)
   `${BASE_PATH}/css/tokens.css`,
   `${BASE_PATH}/css/buttons.css`,
   `${BASE_PATH}/css/utilities.css`,

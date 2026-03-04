@@ -1,3 +1,5 @@
+@layer responsive {
+
 /* ============================================
    EXTRA SMALL MOBILE (< 400px)
    Optimizations for very small phones
@@ -77,3 +79,5 @@
     padding: var(--spacing-4);
   }
 }
+
+} /* end @layer responsive */

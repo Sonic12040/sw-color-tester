@@ -1,3 +1,5 @@
+@layer theme {
+
 /* ============================================
    NEUTRAL EVALUATION BACKGROUND THEME
    Munsell N5 – eliminates simultaneous contrast
@@ -352,3 +354,5 @@ body.neutral-bg {
     }
   }
 }
+
+} /* end @layer theme */

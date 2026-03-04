@@ -1,3 +1,5 @@
+@layer utilities {
+
 /* =============================================
    LAYOUT UTILITIES
    ============================================= */
@@ -29,3 +31,5 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+
+} /* end @layer utilities */

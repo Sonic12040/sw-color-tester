@@ -1,3 +1,5 @@
+@layer a11y {
+
 /* ============================================
    ACCESSIBILITY - Global Primitives
    ============================================ */
@@ -34,3 +36,5 @@
  * lrv-filter.css, color-tile.css) rather than here. This prevents orphaned
  * motion overrides when components are refactored or removed.
  */
+
+} /* end @layer a11y */

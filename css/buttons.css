@@ -1,3 +1,5 @@
+@layer base {
+
 /* ============================================
    BUTTON COMPONENTS
    Unified button system with clear variants
@@ -141,3 +143,5 @@
     transition-duration: 0.01ms;
   }
 }
+
+} /* end @layer base */

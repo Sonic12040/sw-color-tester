@@ -42,19 +42,25 @@
       as="style"
       fetchpriority="high"
     />
-    <!-- Application Styles (load without render-blocking) -->
-    <link
-      rel="preload"
-      href="styles.css"
-      as="style"
-      onload="
-        this.onload = null;
-        this.rel = 'stylesheet';
-      "
-    />
-    <noscript>
-      <link rel="stylesheet" href="styles.css" />
-    </noscript>
+    <!-- CSS Layer Order Declaration -->
+    <style>
+      @layer tokens, base, utilities, components, theme, responsive, a11y;
+    </style>
+
+    <!-- Application Styles — parallel HTTP/2 loading, no @import waterfall -->
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/buttons.css" />
+    <link rel="stylesheet" href="css/utilities.css" />
+    <link rel="stylesheet" href="css/header.css" />
+    <link rel="stylesheet" href="css/lrv-filter.css" />
+    <link rel="stylesheet" href="css/accordion.css" />
+    <link rel="stylesheet" href="css/color-tile.css" />
+    <link rel="stylesheet" href="css/modal.css" />
+    <link rel="stylesheet" href="css/confirm.css" />
+    <link rel="stylesheet" href="css/toast.css" />
+    <link rel="stylesheet" href="css/theme-neutral.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+    <link rel="stylesheet" href="css/a11y.css" />
   </head>
   <body>
     <header class="header">

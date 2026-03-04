@@ -1,3 +1,5 @@
+@layer components {
+
 /* =============================================
    COLOR TILE COMPONENT
    Tiles, buttons, badges, empty states
@@ -451,3 +453,5 @@
     transition-duration: 0.01ms;
   }
 }
+
+} /* end @layer components */
