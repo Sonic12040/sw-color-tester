@@ -217,3 +217,19 @@
     outline: none;
   }
 }
+
+/* Reduced motion: instant transitions for slider and controls */
+@media (prefers-reduced-motion: reduce) {
+  .lrv-filter__reset,
+  .lrv-filter__range {
+    transition-duration: 0.01ms;
+  }
+
+  .lrv-filter__input::-webkit-slider-thumb {
+    transition-duration: 0.01ms;
+  }
+
+  .lrv-filter__input::-moz-range-thumb {
+    transition-duration: 0.01ms;
+  }
+}

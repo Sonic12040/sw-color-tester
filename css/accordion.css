@@ -155,3 +155,17 @@
   outline: 2px solid var(--color-border-focus);
   outline-offset: 2px;
 }
+
+/* Reduced motion: instant transitions for accordion expand/collapse */
+@media (prefers-reduced-motion: reduce) {
+  .accordion__header,
+  .accordion__icon,
+  .accordion__content {
+    transition-duration: 0.01ms;
+  }
+
+  .bulk-actions__favorite-button,
+  .bulk-actions__hide-button {
+    transition-duration: 0.01ms;
+  }
+}

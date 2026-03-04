@@ -795,3 +795,20 @@
     min-height: 44px;
   }
 }
+
+/* Reduced motion: instant transitions for all animated modal elements */
+@media (prefers-reduced-motion: reduce) {
+  .modal-overlay,
+  .modal-container {
+    transition-duration: 0.01ms;
+  }
+
+  .modal__close,
+  .modal__mini-tile,
+  .modal__accordion-trigger,
+  .modal__accordion-icon,
+  .modal__accordion-panel,
+  .modal__action-button {
+    transition-duration: 0.01ms;
+  }
+}

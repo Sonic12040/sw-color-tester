@@ -439,3 +439,15 @@
     ); /* Increase from 8px to 12px to prevent accidental taps */
   }
 }
+
+/* Reduced motion: instant transitions for tile hover and button effects */
+@media (prefers-reduced-motion: reduce) {
+  .color-tile__favorite-button,
+  .color-tile__hide-button,
+  .color-tile__unhide-button,
+  .color-tile,
+  .color-tile__view-button,
+  .color-tile__lrv {
+    transition-duration: 0.01ms;
+  }
+}

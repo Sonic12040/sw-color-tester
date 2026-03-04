@@ -1,6 +1,7 @@
 /* Sherwin-Williams Color Tester - Styles
    Architecture: Multi-file + @layer (Option D)
-   Layer cascade order: tokens → base → utilities → components → theme → responsive → a11y */
+   Layer cascade order: tokens → base → utilities → components → theme → responsive → a11y
+   Reduced-motion overrides are co-located inside each component file. */
 
 @layer tokens, base, utilities, components, theme, responsive, a11y;
 

@@ -172,3 +172,16 @@
     min-width: auto;
   }
 }
+
+/* Reduced motion: disable fade/scale animations, instant transitions */
+@media (prefers-reduced-motion: reduce) {
+  .confirm-overlay,
+  .confirm-dialog {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+  }
+
+  .confirm-actions .btn {
+    transition-duration: 0.01ms;
+  }
+}

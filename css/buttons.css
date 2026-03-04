@@ -134,3 +134,10 @@
   font-size: var(--font-size-lg);
   min-height: 52px;
 }
+
+/* Reduced motion: instant transitions for all button variants */
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition-duration: 0.01ms;
+  }
+}

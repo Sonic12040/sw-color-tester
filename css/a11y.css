@@ -1,19 +1,36 @@
 /* ============================================
-   ACCESSIBILITY - Reduced Motion
+   ACCESSIBILITY - Global Primitives
    ============================================ */
 
 /**
- * Respect user's motion preferences
- * WCAG 2.1 Level AA - Required for accessibility compliance
- * Affects users with vestibular disorders, motion sensitivity, or seizure disorders
+ * Screen-reader-only utility — visually hidden but accessible to assistive tech.
+ * Use on elements that provide context for screen readers but should not be visible.
  */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
+
+/**
+ * Global focus-visible normalization.
+ * Ensures a consistent, high-contrast focus ring across all interactive elements
+ * for keyboard navigation. Component-level :focus-visible may override.
+ */
+:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+/**
+ * NOTE: prefers-reduced-motion overrides are co-located in each component file
+ * (toast.css, confirm.css, modal.css, accordion.css, header.css, buttons.css,
+ * lrv-filter.css, color-tile.css) rather than here. This prevents orphaned
+ * motion overrides when components are refactored or removed.
+ */

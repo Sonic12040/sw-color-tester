@@ -166,3 +166,12 @@
     justify-content: center;
   }
 }
+
+/* Reduced motion: instant transitions for toolbar and hamburger animation */
+@media (prefers-reduced-motion: reduce) {
+  .toolbar__toggle,
+  .hamburger__line,
+  .header__button {
+    transition-duration: 0.01ms;
+  }
+}

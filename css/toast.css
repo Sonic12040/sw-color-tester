@@ -139,3 +139,17 @@
     }
   }
 }
+
+/* Reduced motion: disable slide animations, instant transitions */
+@media (prefers-reduced-motion: reduce) {
+  .toast,
+  .toast.toast--hiding {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+  }
+
+  .toast__action,
+  .toast__close {
+    transition-duration: 0.01ms;
+  }
+}
