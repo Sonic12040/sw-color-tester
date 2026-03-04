@@ -83893,344 +83893,250 @@ export const STOCK_ROOMS = [
 
   /* ── Room 2 : Cozy Bedroom (3-point perspective) ─────────── */
   {
-    version: "3.0",
+    version: "3.1",
     room: {
-      id: "vector-cozy-bedroom",
-      name: "Cozy Bedroom",
-      metadata: { roomType: "bedroom", sponsor: null },
-      viewport: { width: 1200, height: 800 },
-
+      id: "stock-primary-bedroom-detailed",
+      name: "Primary Bedroom (Detailed)",
+      metadata: {
+        roomType: "bedroom",
+        style: "transitional",
+        sponsor: "Crate & Barrel",
+      },
+      viewport: { width: 1600, height: 1000 },
       lightingPresets: {
         daylight: {
-          temperatureHex: "#EEF3FF",
-          shadowOpacity: 0.5,
+          temperatureHex: "#F4FAFF",
+          shadowOpacity: 0.85,
           sourceOpacity: 0.15,
         },
-        evening: {
-          temperatureHex: "#FFE0B2",
+        overcast: {
+          temperatureHex: "#E8ECEF",
           shadowOpacity: 0.3,
+          sourceOpacity: 0.05,
+        },
+        "warm-bulb": {
+          temperatureHex: "#FFDFB3",
+          shadowOpacity: 0.65,
           sourceOpacity: 0.9,
         },
+        "cool-led": {
+          temperatureHex: "#F0F8FF",
+          shadowOpacity: 0.7,
+          sourceOpacity: 0.85,
+        },
+        night: {
+          temperatureHex: "#0A1128",
+          shadowOpacity: 0.95,
+          sourceOpacity: 1.0,
+        },
       },
-
       defs: [
         {
-          id: "texture-plaster",
+          id: "texture-drywall",
           type: "filter",
           svgFilterNode:
-            "<feTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='3' result='noise'/>" +
-            "<feColorMatrix type='matrix' values='1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 0.025 0' in='noise' result='coloredNoise'/>" +
-            "<feBlend in='SourceGraphic' in2='coloredNoise' mode='multiply'/>",
+            "<feTurbulence type='fractalNoise' baseFrequency='0.02' numOctaves='3' result='noise' /> <feColorMatrix type='matrix' values='1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 0.03 0' in='noise' result='coloredNoise' /> <feBlend in='SourceGraphic' in2='coloredNoise' mode='multiply' />",
         },
         {
-          id: "gradient-lampglow",
+          id: "lamp-glow-warm",
           type: "radialGradient",
-          svgNode:
-            "<stop offset='0%' stop-color='#FFF8E1' stop-opacity='0.6'/>" +
-            "<stop offset='50%' stop-color='#FFF8E1' stop-opacity='0.2'/>" +
-            "<stop offset='100%' stop-color='#FFF8E1' stop-opacity='0'/>",
-          attrs: { cx: "85%", cy: "50%", r: "35%" },
+          cx: "50%",
+          cy: "50%",
+          r: "50%",
+          stops: [
+            { offset: "0%", color: "#FFF0D4", opacity: 1 },
+            { offset: "100%", color: "#FFF0D4", opacity: 0 },
+          ],
         },
         {
-          id: "gradient-window-glow",
-          type: "radialGradient",
-          svgNode:
-            "<stop offset='0%' stop-color='#FFFFFF' stop-opacity='0.4'/>" +
-            "<stop offset='100%' stop-color='#FFFFFF' stop-opacity='0'/>",
-          attrs: { cx: "30%", cy: "30%", r: "45%" },
+          id: "window-beam",
+          type: "linearGradient",
+          x1: "100%",
+          y1: "0%",
+          x2: "0%",
+          y2: "100%",
+          stops: [
+            { offset: "0%", color: "#FFFFFF", opacity: 0.6 },
+            { offset: "100%", color: "#FFFFFF", opacity: 0 },
+          ],
         },
       ],
-
       layers: [
-        /* ── Back wall ──────────────────────────────────────── */
-        {
-          id: "wall-headboard",
-          type: "paintable",
-          tags: ["wall", "accent"],
-          label: "Headboard Wall",
-          path: "M130,70 L1070,70 L1070,500 L130,500 Z",
-          defaultHex: "#C5CEBD",
-          fill: "#C5CEBD",
-          texture: "url(#texture-plaster)",
-          physicalAreaSqFt: 170,
-          zIndex: 10,
-        },
-
-        /* ── Left wall ──────────────────────────────────────── */
-        {
-          id: "wall-left",
-          type: "paintable",
-          tags: ["wall", "side"],
-          label: "Left Wall",
-          path: "M0,0 L130,70 L130,500 L0,590 Z",
-          defaultHex: "#B5BEAD",
-          fill: "#B5BEAD",
-          texture: "url(#texture-plaster)",
-          physicalAreaSqFt: 80,
-          zIndex: 11,
-        },
-
-        /* ── Right wall ─────────────────────────────────────── */
-        {
-          id: "wall-right",
-          type: "paintable",
-          tags: ["wall", "side"],
-          label: "Right Wall",
-          path: "M1070,70 L1200,0 L1200,590 L1070,500 Z",
-          defaultHex: "#B5BEAD",
-          fill: "#B5BEAD",
-          texture: "url(#texture-plaster)",
-          physicalAreaSqFt: 80,
-          zIndex: 11,
-        },
-
-        /* ── Ceiling ────────────────────────────────────────── */
         {
           id: "ceiling",
           type: "static",
-          path: "M0,0 L1200,0 L1070,70 L130,70 Z",
-          fill: "#F5F4F2",
-          zIndex: 12,
+          label: "Ceiling",
+          path: "M0,0 L1600,0 L1200,200 L400,200 Z",
+          fill: "#FAFAFA",
+          zIndex: 5,
         },
-
-        /* ── Floor ──────────────────────────────────────────── */
         {
-          id: "floor-bedroom",
+          id: "floor",
           type: "static",
+          label: "Flooring",
           variants: [
-            { id: "carpet-beige", name: "Beige Carpet", fill: "#C8B89A" },
-            { id: "hardwood-honey", name: "Honey Hardwood", fill: "#B8935A" },
+            { id: "hardwood-ash", name: "Ash Hardwood", fill: "#C1B3A0" },
+            { id: "carpet-berber", name: "Berber Carpet", fill: "#E5E1D8" },
           ],
-          activeVariantId: "carpet-beige",
-          path: "M0,590 L130,500 L1070,500 L1200,590 L1200,800 L0,800 Z",
-          fill: "#C8B89A",
-          zIndex: 13,
+          activeVariantId: "hardwood-ash",
+          path: "M0,1000 L400,700 L1200,700 L1600,1000 Z",
+          zIndex: 10,
         },
-
-        /* ── Crown moulding ─────────────────────────────────── */
         {
-          id: "trim-crown",
+          id: "wall-left",
+          type: "paintable",
+          tags: ["wall", "secondary"],
+          label: "Left Wall",
+          path: "M0,0 L400,200 L400,700 L0,1000 Z",
+          defaultHex: "#EAEAEA",
+          texture: "url(#texture-drywall)",
+          textureTransform: "matrix(1 0.5 0 1 0 0)",
+          physicalAreaSqFt: 95,
+          zIndex: 20,
+        },
+        {
+          id: "wall-back",
+          type: "paintable",
+          tags: ["wall", "primary", "accent"],
+          label: "Headboard Wall",
+          path: "M400,200 L1200,200 L1200,700 L400,700 Z",
+          defaultHex: "#F5F5F0",
+          texture: "url(#texture-drywall)",
+          physicalAreaSqFt: 130,
+          allowSheen: true,
+          zIndex: 21,
+        },
+        {
+          id: "wall-right",
+          type: "paintable",
+          tags: ["wall", "secondary"],
+          label: "Window Wall",
+          path: "M1200,200 L1600,0 L1600,1000 L1200,700 Z",
+          defaultHex: "#EAEAEA",
+          texture: "url(#texture-drywall)",
+          textureTransform: "matrix(1 -0.5 0 1 0 0)",
+          physicalAreaSqFt: 80,
+          zIndex: 22,
+        },
+        {
+          id: "trim-baseboards",
           type: "paintable",
           tags: ["trim"],
-          label: "Crown Moulding",
-          path: "M130,70 L1070,70 L1070,78 L130,78 Z",
+          label: "Baseboards",
+          path: "M0,950 L400,680 L1200,680 L1600,950 L1600,1000 L1200,700 L400,700 L0,1000 Z",
           defaultHex: "#FFFFFF",
-          fill: "#FFFFFF",
-          physicalAreaSqFt: 8,
-          zIndex: 15,
-        },
-
-        /* ── Baseboard ──────────────────────────────────────── */
-        {
-          id: "trim-base",
-          type: "paintable",
-          tags: ["trim"],
-          label: "Baseboard",
-          path: "M130,492 L1070,492 L1070,500 L130,500 Z",
-          defaultHex: "#FFFFFF",
-          fill: "#FFFFFF",
-          physicalAreaSqFt: 10,
-          zIndex: 16,
-        },
-
-        /* ── Window (left wall) ─────────────────────────────── */
-        {
-          id: "window-left",
-          type: "static",
-          path: "M20,120 L110,155 L110,380 L20,420 Z",
-          fill: "#B8D8EE",
-          zIndex: 17,
+          allowSheen: true,
+          zIndex: 25,
         },
         {
-          id: "window-left-frame",
-          type: "static",
-          path: "M15,115 L22,115 L22,425 L15,425 Z M108,150 L115,150 L115,385 L108,385 Z M15,115 L115,150 L115,155 L15,120 Z M15,420 L115,385 L115,390 L15,425 Z M15,268 L115,268 L115,273 L15,273 Z",
-          fill: "#FFFFFF",
-          zIndex: 18,
+          id: "rug-main",
+          type: "furniture",
+          label: "Area Rug",
+          path: "M250,950 L450,730 L1150,730 L1350,950 Z",
+          fill: "#D0D4D9",
+          shoppable: {
+            brand: "West Elm",
+            productName: "Colca Wool Rug",
+            price: "$599",
+          },
+          zIndex: 30,
         },
-
-        /* ── Bed shadow ─────────────────────────────────────── */
-        {
-          id: "shadow-bed",
-          type: "shadow",
-          path: "M240,498 L860,498 Q870,500 865,510 L235,510 Q230,500 240,498 Z",
-          fill: "rgba(0,0,0,0.25)",
-          blendMode: "multiply",
-          zIndex: 24,
-        },
-
-        /* ── Bed — headboard ────────────────────────────────── */
         {
           id: "bed-headboard",
           type: "furniture",
-          path: "M250,180 Q250,165 270,165 L830,165 Q850,165 850,180 L850,330 L250,330 Z",
-          fill: "#4A3F35",
-          shoppable: null,
-          zIndex: 25,
+          label: "Upholstered Headboard",
+          path: "M550,300 L1050,300 L1050,550 L550,550 Z",
+          fill: "#8C929C",
+          shoppable: {
+            brand: "Crate & Barrel",
+            productName: "Batavia Bed",
+            price: "$1,499",
+          },
+          zIndex: 40,
         },
-
-        /* ── Headboard upholstery ───────────────────────────── */
-        {
-          id: "bed-headboard-pad",
-          type: "furniture",
-          path: "M270,185 Q270,178 285,178 L815,178 Q830,178 830,185 L830,320 L270,320 Z",
-          fill: "#6B6055",
-          shoppable: null,
-          zIndex: 26,
-        },
-
-        /* ── Bed — frame ────────────────────────────────────── */
-        {
-          id: "bed-frame",
-          type: "furniture",
-          path: "M235,325 L865,325 L865,505 L235,505 Z",
-          fill: "#5C4A3A",
-          shoppable: null,
-          zIndex: 27,
-        },
-
-        /* ── Bed — mattress ─────────────────────────────────── */
         {
           id: "bed-mattress",
           type: "furniture",
-          path: "M245,315 L855,315 Q860,315 860,325 L860,340 Q860,345 855,345 L245,345 Q240,345 240,340 L240,325 Q240,315 245,315 Z",
-          fill: "#FAFAFA",
-          shoppable: null,
-          zIndex: 28,
+          label: "Bedding",
+          path: "M550,550 L1050,550 L1100,820 L500,820 Z",
+          fill: "#FDFCFB",
+          zIndex: 41,
         },
-
-        /* ── Bed — duvet ────────────────────────────────────── */
         {
-          id: "bed-duvet",
+          id: "bed-pillows",
           type: "furniture",
-          path: "M245,340 L855,340 L855,490 Q855,500 845,500 L255,500 Q245,500 245,490 Z",
-          fill: "#E8E2D8",
-          shoppable: {
-            brand: "Brooklinen",
-            productName: "Luxe Duvet Cover",
-            price: "$199",
-            outboundUrl: "https://www.brooklinen.com",
-          },
-          zIndex: 29,
+          path: "M600,480 C600,450 780,450 780,480 L790,540 L590,540 Z M820,480 C820,450 1000,450 1000,480 L1010,540 L810,540 Z",
+          fill: "#E5E4E2",
+          zIndex: 42,
         },
-
-        /* ── Duvet fold line ────────────────────────────────── */
         {
-          id: "bed-duvet-fold",
+          id: "nightstand-left",
           type: "furniture",
-          path: "M245,370 Q550,385 855,370 L855,380 Q550,395 245,380 Z",
-          fill: "#DDD7CC",
-          shoppable: null,
-          zIndex: 30,
+          path: "M410,550 L510,550 L520,680 L400,680 Z",
+          fill: "#3B3530",
+          zIndex: 45,
         },
-
-        /* ── Pillows ────────────────────────────────────────── */
         {
-          id: "pillow-left",
+          id: "nightstand-right",
           type: "furniture",
-          path: "M300,290 Q300,270 340,268 L480,268 Q520,270 520,290 L520,335 Q520,345 480,347 L340,347 Q300,345 300,335 Z",
-          fill: "#FAFAF7",
-          shoppable: null,
-          zIndex: 31,
+          path: "M1090,550 L1190,550 L1200,680 L1080,680 Z",
+          fill: "#3B3530",
+          zIndex: 46,
         },
         {
-          id: "pillow-right",
+          id: "art-canvas",
           type: "furniture",
-          path: "M580,290 Q580,270 620,268 L760,268 Q800,270 800,290 L800,335 Q800,345 760,347 L620,347 Q580,345 580,335 Z",
-          fill: "#FAFAF7",
-          shoppable: null,
-          zIndex: 31,
+          label: "Canvas Art",
+          path: "M700,220 L900,220 L900,350 L700,350 Z",
+          fill: "#C4A484",
+          zIndex: 47,
         },
-
-        /* ── Accent pillow ──────────────────────────────────── */
         {
-          id: "accent-pillow",
-          type: "furniture",
-          path: "M510,310 Q525,290 565,290 Q580,290 580,310 L580,350 Q565,360 535,360 Q510,358 510,350 Z",
-          fill: "#8B6B5B",
-          shoppable: null,
-          zIndex: 32,
-        },
-
-        /* ── Nightstand shadow ──────────────────────────────── */
-        {
-          id: "shadow-nightstand",
+          id: "shadow-ambient-occlusion",
           type: "shadow",
-          path: "M895,496 L1040,496 L1045,508 L890,508 Z",
-          fill: "rgba(0,0,0,0.18)",
+          label: "Corner Creases",
+          path: "M400,200 L420,220 L420,680 L400,700 Z M1200,200 L1180,220 L1180,680 L1200,700 Z M400,200 L420,220 L1180,220 L1200,200 Z",
+          fill: "#000000",
           blendMode: "multiply",
-          zIndex: 33,
-        },
-
-        /* ── Nightstand ─────────────────────────────────────── */
-        {
-          id: "nightstand",
-          type: "furniture",
-          path: "M900,380 L1040,380 L1040,390 Q1040,393 1037,393 L903,393 Q900,393 900,390 Z M900,393 L900,500 L1040,500 L1040,393 Z M915,420 L1025,420 L1025,460 L915,460 Z",
-          fill: "#7B6B5A",
-          shoppable: {
-            brand: "Article",
-            productName: "Nera Walnut Nightstand",
-            price: "$349",
-            outboundUrl: "https://www.article.com",
-          },
-          zIndex: 34,
-        },
-
-        /* ── Lamp on nightstand ─────────────────────────────── */
-        {
-          id: "lamp-shade",
-          type: "furniture",
-          path: "M940,280 Q945,268 960,265 L975,265 Q990,268 995,280 L1000,340 Q998,348 985,350 L950,350 Q937,348 935,340 Z",
-          fill: "#F0EBE0",
-          shoppable: null,
-          zIndex: 35,
+          zIndex: 60,
         },
         {
-          id: "lamp-stem",
-          type: "furniture",
-          path: "M963,350 L972,350 L972,380 L963,380 Z M955,375 L980,375 L980,380 L955,380 Z",
-          fill: "#8B7355",
-          shoppable: null,
-          zIndex: 35,
+          id: "shadow-bed-drop",
+          type: "shadow",
+          path: "M450,820 L1150,820 L1250,920 L350,920 Z",
+          fill: "#000000",
+          blendMode: "multiply",
+          zIndex: 61,
         },
-
-        /* ── Rug under bed ──────────────────────────────────── */
         {
-          id: "rug",
-          type: "furniture",
-          path: "M190,500 Q190,496 210,496 L890,496 Q910,496 910,500 L930,590 Q930,596 910,596 L170,596 Q150,596 170,590 Z",
-          fill: "#9E8E7E",
-          shoppable: null,
-          zIndex: 14,
-        },
-
-        /* ── Light source — window ──────────────────────────── */
-        {
-          id: "light-window",
+          id: "light-window-beam",
           type: "light-source",
-          path: "M0,0 L400,0 L400,550 L0,550 Z",
-          fill: "url(#gradient-window-glow)",
+          label: "Window Sunlight",
+          path: "M1200,300 L1600,100 L1000,850 L600,850 Z",
+          fill: "url(#window-beam)",
           blendMode: "screen",
-          zIndex: 90,
+          zIndex: 70,
         },
-
-        /* ── Light source — lamp ────────────────────────────── */
         {
-          id: "light-lamp",
+          id: "light-lamp-left",
           type: "light-source",
-          path: "M800,150 L1200,150 L1200,550 L800,550 Z",
-          fill: "url(#gradient-lampglow)",
-          blendMode: "screen",
-          zIndex: 91,
+          path: "M200,300 A250,250 0 1,0 700,300 A250,250 0 1,0 200,300",
+          fill: "url(#lamp-glow-warm)",
+          blendMode: "overlay",
+          zIndex: 71,
         },
-
-        /* ── Global environment temperature ─────────────────── */
+        {
+          id: "light-lamp-right",
+          type: "light-source",
+          path: "M900,300 A250,250 0 1,0 1400,300 A250,250 0 1,0 900,300",
+          fill: "url(#lamp-glow-warm)",
+          blendMode: "overlay",
+          zIndex: 72,
+        },
         {
           id: "global-temperature",
           type: "environment",
-          path: "M0,0 L1200,0 L1200,800 L0,800 Z",
-          fill: "#EEF3FF",
+          path: "M0,0 L1600,0 L1600,1000 L0,1000 Z",
           blendMode: "soft-light",
           zIndex: 100,
         },
