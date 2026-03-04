@@ -55,6 +55,21 @@
   flex-shrink: 0;
 }
 
+/* Theme modifiers — set text + close-button colors based on LRV contrast */
+.modal-header--theme-dark {
+  color: white;
+  --btn-bg: rgba(255, 255, 255, 0.85);
+  --btn-hover-bg: rgba(255, 255, 255, 0.95);
+  --btn-text-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-header--theme-light {
+  color: black;
+  --btn-bg: rgba(0, 0, 0, 0.7);
+  --btn-hover-bg: rgba(0, 0, 0, 0.85);
+  --btn-text-color: white;
+}
+
 .modal-header__content {
   flex: 1;
 }
@@ -65,7 +80,7 @@
   margin: 0 0 var(--spacing-1) 0;
   line-height: var(--line-height-tight);
   letter-spacing: -0.01em;
-  /* Color inherited from parent modal__header inline style */
+  /* Color inherited from parent .modal-header--theme-dark/light */
 }
 
 .modal__subtitle {
@@ -75,7 +90,7 @@
   margin-bottom: var(--spacing-2);
   line-height: var(--line-height-tight);
   letter-spacing: 0.01em;
-  /* Color inherited from parent modal__header inline style */
+  /* Color inherited from parent .modal-header--theme-dark/light */
 }
 
 .modal__close {

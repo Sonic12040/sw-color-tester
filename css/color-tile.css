@@ -115,6 +115,68 @@
   }
 }
 
+/*
+ * Contrast theme modifiers — set by getContrastTheme() in JS.
+ * Child elements inherit these custom properties instead of per-element inline styles.
+ * --tile-text: foreground color for typography overlaid on the swatch
+ * --tile-btn-bg / --tile-btn-hover-bg: action button backgrounds
+ * --tile-btn-text: icon stroke / button text color
+ * --tile-badge-bg / --tile-badge-text: badge & LRV pill colors
+ */
+.color-tile--theme-dark {
+  --tile-text: white;
+  --tile-btn-bg: rgba(255, 255, 255, 0.85);
+  --tile-btn-hover-bg: rgba(255, 255, 255, 0.95);
+  --tile-btn-text: rgba(0, 0, 0, 0.9);
+  --tile-badge-bg: rgba(255, 255, 255, 0.85);
+  --tile-badge-text: rgba(0, 0, 0, 0.9);
+}
+
+.color-tile--theme-light {
+  --tile-text: black;
+  --tile-btn-bg: rgba(0, 0, 0, 0.7);
+  --tile-btn-hover-bg: rgba(0, 0, 0, 0.85);
+  --tile-btn-text: white;
+  --tile-badge-bg: rgba(0, 0, 0, 0.75);
+  --tile-badge-text: rgba(255, 255, 255, 0.95);
+}
+
+/* Apply theme text color to tile content */
+.color-tile--theme-dark,
+.color-tile--theme-light {
+  color: var(--tile-text);
+
+  & .color-tile__info {
+    color: var(--tile-text);
+  }
+
+  & .color-tile__badge {
+    background: var(--tile-badge-bg);
+    color: var(--tile-badge-text);
+  }
+
+  & .color-tile__lrv {
+    background: var(--tile-badge-bg);
+    color: var(--tile-badge-text);
+  }
+
+  & .color-tile__button {
+    --btn-bg: var(--tile-btn-bg);
+    --btn-hover-bg: var(--tile-btn-hover-bg);
+    --btn-text-color: var(--tile-btn-text);
+  }
+
+  & .color-tile__button svg {
+    stroke: var(--tile-btn-text);
+  }
+
+  & .color-tile__view-button {
+    --btn-bg: var(--tile-btn-bg);
+    --btn-hover-bg: var(--tile-btn-hover-bg);
+    --btn-text-color: var(--tile-btn-text);
+  }
+}
+
 /* Disable hover effect on touch devices */
 @media (hover: none) and (pointer: coarse) {
   .color-tile:hover {
@@ -218,7 +280,7 @@
   letter-spacing: 0.05em;
   backdrop-filter: var(--blur-md);
   border: none;
-  /* Background and color are set inline via style attribute based on isDark */
+  /* Background and color are driven by .color-tile--theme-dark/light custom properties */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;

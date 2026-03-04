@@ -29,24 +29,13 @@ function generateHSLColor(hue, saturation, lightness) {
 }
 
 /**
- * Determine text color for readability over a given color tile background.
- * Uses LRV (Light Reflectance Value) threshold instead of the pre-computed
- * isDark flag, which only triggers at LRV ~18 and misses many dark-ish colors.
+ * Determine contrast theme for a color based on its LRV.
+ * Returns a class-safe theme string that can be used as a BEM modifier.
+ * @param {number} lrv - Light Reflectance Value (0-100)
+ * @returns {'dark' | 'light'} Theme identifier — 'dark' means background is dark (needs white text)
  */
-function generateAccessibleText(color) {
-  return color.lrv < LRV_THRESHOLDS.CONTRAST ? "white" : "black";
-}
-
-/** Adaptive button/badge colors keyed off LRV contrast threshold. */
-function generateButtonStyles(color) {
-  const isDark = color.lrv < LRV_THRESHOLDS.CONTRAST;
-  return {
-    bgColor: isDark ? "rgba(255, 255, 255, 0.85)" : "rgba(0, 0, 0, 0.7)",
-    hoverBg: isDark ? "rgba(255, 255, 255, 0.95)" : "rgba(0, 0, 0, 0.85)",
-    textColor: isDark ? "rgba(0, 0, 0, 0.9)" : "white",
-    badgeBg: isDark ? "rgba(255, 255, 255, 0.85)" : "rgba(0, 0, 0, 0.75)",
-    badgeText: isDark ? "rgba(0, 0, 0, 0.9)" : "rgba(255, 255, 255, 0.95)",
-  };
+export function getContrastTheme(lrv) {
+  return lrv < LRV_THRESHOLDS.CONTRAST ? "dark" : "light";
 }
 
 /**
@@ -232,22 +221,24 @@ export function colorTemplate(color, options = {}) {
 
   const isFavorited = favoriteIds.has(color.id);
   const isHidden = hiddenIds.has(color.id);
-  const textColor = generateAccessibleText(color);
-  const styles = generateButtonStyles(color);
+  const theme = getContrastTheme(color.lrv);
+  const themeClass =
+    theme === "dark"
+      ? CSS_CLASSES.COLOR_TILE_THEME_DARK
+      : CSS_CLASSES.COLOR_TILE_THEME_LIGHT;
+  const favoriteFill = isFavorited ? "var(--tile-btn-text)" : "none";
 
   const favoriteLabel = isFavorited ? "Unfavorite" : "Favorite";
   const hideLabel = isHidden ? "Unhide" : "Hide";
-  const favoriteFill = isFavorited ? styles.textColor : "none";
 
-  // Build button HTML conditionally
+  // Build button HTML conditionally — styles now inherited from theme class
   const favoriteButtonHTML = showFavoriteButton
     ? `
     <button aria-label="${favoriteLabel} color" 
             title="${favoriteLabel} ${color.name}"
             class="${CSS_CLASSES.COLOR_TILE_FAVORITE_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON} u-flex-center" 
-            ${DATA_ATTRIBUTES.ID}="${color.id}"
-            style="--btn-bg: ${styles.bgColor}; --btn-hover-bg: ${styles.hoverBg};">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="${favoriteFill}" stroke="${styles.textColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            ${DATA_ATTRIBUTES.ID}="${color.id}">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="${favoriteFill}" stroke="var(--tile-btn-text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
         ${ICONS.HEART}
       </svg>
     </button>
@@ -259,33 +250,30 @@ export function colorTemplate(color, options = {}) {
     <button aria-label="${hideLabel} color" 
             title="${hideLabel} ${color.name}"
             class="${CSS_CLASSES.COLOR_TILE_HIDE_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON} u-flex-center" 
-            ${DATA_ATTRIBUTES.ID}="${color.id}"
-            style="--btn-bg: ${styles.bgColor}; --btn-hover-bg: ${styles.hoverBg};">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${styles.textColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            ${DATA_ATTRIBUTES.ID}="${color.id}">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--tile-btn-text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
         ${ICONS.EYE_OFF}
       </svg>
     </button>
   `
     : "";
 
-  // Build badges for interior/exterior use — only show for exceptions (not both)
-  // Most colors are Interior & Exterior, so omitting the badge declutters the tile
+  // Build badges — styles now inherited from theme class custom properties
   const badges = [];
 
-  // Designer Pick badge — shown on tiles outside the Designer family accordion (hidden via CSS inside it)
   if (designerPickIds.has(color.id)) {
     badges.push(
-      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_DESIGNER}" style="background: ${styles.badgeBg}; color: ${styles.badgeText};">Designer Pick</span>`,
+      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_DESIGNER}">Designer Pick</span>`,
     );
   }
 
   if (color.isInterior && !color.isExterior) {
     badges.push(
-      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_INTERIOR}" style="background: ${styles.badgeBg}; color: ${styles.badgeText};">Interior Only</span>`,
+      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_INTERIOR}">Interior Only</span>`,
     );
   } else if (color.isExterior && !color.isInterior) {
     badges.push(
-      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_EXTERIOR}" style="background: ${styles.badgeBg}; color: ${styles.badgeText};">Exterior Only</span>`,
+      `<span class="${CSS_CLASSES.COLOR_TILE_BADGE} ${CSS_CLASSES.COLOR_TILE_BADGE_EXTERIOR}">Exterior Only</span>`,
     );
   }
 
@@ -306,7 +294,7 @@ export function colorTemplate(color, options = {}) {
     lrvLabel = "Light";
   }
 
-  const html = `<div class="${CSS_CLASSES.COLOR_TILE}" ${DATA_ATTRIBUTES.ID}="${color.id}" style="background: ${generateHSLColor(color.hue, color.saturation, color.lightness)}; color: ${textColor}"><div class="${CSS_CLASSES.COLOR_TILE_ACTIONS} u-flex-align">${favoriteButtonHTML}${hideButtonHTML}</div>${badgesHTML}<div class="${CSS_CLASSES.COLOR_TILE_INFO}" style="color:${textColor};"><div class="${CSS_CLASSES.COLOR_TILE_NAME}"><strong>${color.name}</strong></div><div class="${CSS_CLASSES.COLOR_TILE_NUMBER}">SW ${color.colorNumber}</div><div class="${CSS_CLASSES.COLOR_TILE_LRV_CONTAINER}"><span class="${CSS_CLASSES.COLOR_TILE_LRV} ${CSS_CLASSES.COLOR_TILE_LRV}--${lrvClass}" title="Light Reflectance Value - ${lrvLabel} color reflects ${lrvValue}% of light" style="background: ${styles.badgeBg}; color: ${styles.badgeText};"><span class="${CSS_CLASSES.COLOR_TILE_LRV_LABEL}">${lrvLabel}</span><span class="${CSS_CLASSES.COLOR_TILE_LRV_VALUE}">LRV ${lrvValue}</span></span></div><button type="button" aria-label="See color details and pairings for ${color.name}" class="${CSS_CLASSES.COLOR_TILE_VIEW_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON} u-flex-center" ${DATA_ATTRIBUTES.ID}="${color.id}" style="--btn-bg: ${styles.bgColor}; --btn-hover-bg: ${styles.hoverBg}; --btn-text-color: ${styles.textColor};">View Details</button></div></div>`;
+  const html = `<div class="${CSS_CLASSES.COLOR_TILE} ${themeClass}" ${DATA_ATTRIBUTES.ID}="${color.id}" style="background: ${generateHSLColor(color.hue, color.saturation, color.lightness)}"><div class="${CSS_CLASSES.COLOR_TILE_ACTIONS} u-flex-align">${favoriteButtonHTML}${hideButtonHTML}</div>${badgesHTML}<div class="${CSS_CLASSES.COLOR_TILE_INFO}"><div class="${CSS_CLASSES.COLOR_TILE_NAME}"><strong>${color.name}</strong></div><div class="${CSS_CLASSES.COLOR_TILE_NUMBER}">SW ${color.colorNumber}</div><div class="${CSS_CLASSES.COLOR_TILE_LRV_CONTAINER}"><span class="${CSS_CLASSES.COLOR_TILE_LRV} ${CSS_CLASSES.COLOR_TILE_LRV}--${lrvClass}" title="Light Reflectance Value - ${lrvLabel} color reflects ${lrvValue}% of light"><span class="${CSS_CLASSES.COLOR_TILE_LRV_LABEL}">${lrvLabel}</span><span class="${CSS_CLASSES.COLOR_TILE_LRV_VALUE}">LRV ${lrvValue}</span></span></div><button type="button" aria-label="See color details and pairings for ${color.name}" class="${CSS_CLASSES.COLOR_TILE_VIEW_BUTTON} ${CSS_CLASSES.COLOR_TILE_BUTTON} u-flex-center" ${DATA_ATTRIBUTES.ID}="${color.id}">View Details</button></div></div>`;
 
   return parseHTML(html);
 }
@@ -353,7 +341,11 @@ export function colorDetailModal(
     color.saturation,
     color.lightness,
   );
-  const styles = generateButtonStyles(color);
+  const headerTheme = getContrastTheme(color.lrv);
+  const headerThemeClass =
+    headerTheme === "dark"
+      ? CSS_CLASSES.MODAL_HEADER_THEME_DARK
+      : CSS_CLASSES.MODAL_HEADER_THEME_LIGHT;
 
   // Build coordinating colors section
   const coordColors = [
@@ -375,6 +367,8 @@ export function colorDetailModal(
             .map((c, index) => {
               // Assign contextual roles to coordinating colors
               const role = COORDINATING_ROLES[index] || "Coordinating";
+              const tileText =
+                getContrastTheme(c.lrv) === "dark" ? "white" : "black";
               return `
             <div class="${
               CSS_CLASSES.MODAL_MINI_TILE
@@ -384,7 +378,7 @@ export function colorDetailModal(
                    c.hue,
                    c.saturation,
                    c.lightness,
-                 )}; color: ${generateAccessibleText(c)};"
+                 )}; color: ${tileText};"
                  role="button"
                  tabindex="0"
                  aria-label="View ${c.name}"
@@ -432,6 +426,8 @@ export function colorDetailModal(
                 differentiator = SIMILAR_DIFFERENTIATORS[index];
               }
 
+              const tileText =
+                getContrastTheme(c.lrv) === "dark" ? "white" : "black";
               return `
             <div class="${
               CSS_CLASSES.MODAL_MINI_TILE
@@ -441,7 +437,7 @@ export function colorDetailModal(
                    c.hue,
                    c.saturation,
                    c.lightness,
-                 )}; color: ${generateAccessibleText(c)};"
+                 )}; color: ${tileText};"
                  role="button"
                  tabindex="0"
                  aria-label="View ${c.name}"
@@ -514,7 +510,7 @@ export function colorDetailModal(
       <div class="${CSS_CLASSES.MODAL_CONTAINER} u-flex-col">
         <div class="${
           CSS_CLASSES.MODAL_HEADER
-        }" style="background: ${backgroundColor}; color: ${generateAccessibleText(color)};">
+        } ${headerThemeClass}" style="background: ${backgroundColor};">
           <div class="${CSS_CLASSES.MODAL_HEADER_CONTENT}">
             <h2 id="modal-title" class="${CSS_CLASSES.MODAL_TITLE}">${
               color.name
@@ -526,7 +522,7 @@ export function colorDetailModal(
           </div>
           <button class="${
             CSS_CLASSES.MODAL_CLOSE
-          } u-flex-center" aria-label="Close modal" type="button" style="--btn-bg: ${styles.bgColor}; --btn-hover-bg: ${styles.hoverBg}; --btn-text-color: ${styles.textColor};">
+          } u-flex-center" aria-label="Close modal" type="button">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
