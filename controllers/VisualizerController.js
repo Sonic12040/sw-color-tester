@@ -5,7 +5,6 @@
  * Responsibilities:
  *   • On "roomChanged"       → full re-render via VisualizerView.render()
  *   • On "roomColorsChanged" → rAF-batched fill update on the target <path>
- *   • On "lightingChanged"   → update environment fill + shadow/source opacity
  *   • On "favoritesChanged"  → re-render the paint bucket strip
  *   • On "customRoomsChanged"→ (informational — no render side-effect)
  *
@@ -16,7 +15,6 @@
 import { VisualizerView } from "../views/VisualizerView.js";
 import { STOCK_ROOMS } from "../constants.js";
 import { ApplyColorCommand } from "../commands/ApplyColorCommand.js";
-import { ChangeLightingCommand } from "../commands/ChangeLightingCommand.js";
 import { ExportRoomCommand } from "../commands/ExportRoomCommand.js";
 import { ImportRoomCommand } from "../commands/ImportRoomCommand.js";
 
@@ -43,17 +41,11 @@ export class VisualizerController {
   /** @type {number} Pending rAF id for color updates */
   #colorRafId = 0;
 
-  /** @type {number} Pending rAF id for lighting updates */
-  #lightingRafId = 0;
-
   /** @type {Function[]} Unsubscribe callbacks returned by EventEmitter.on() */
   #unsubs = [];
 
   // ── Control panel DOM references ────────────────────────────
   /** @type {HTMLSelectElement|null} */ #roomSelect = null;
-  /** @type {HTMLElement|null} */ #lightingButtons = null;
-  /** @type {HTMLSelectElement|null} */ #floorSelect = null;
-  /** @type {HTMLElement|null} */ #floorVariantGroup = null;
   /** @type {HTMLButtonElement|null} */ #exportBtn = null;
   /** @type {HTMLButtonElement|null} */ #importBtn = null;
   /** @type {HTMLInputElement|null} */ #importInput = null;
@@ -72,9 +64,6 @@ export class VisualizerController {
 
     // Cache DOM references for the control panel
     this.#roomSelect = document.getElementById("room-select");
-    this.#lightingButtons = document.getElementById("lighting-buttons");
-    this.#floorSelect = document.getElementById("floor-select");
-    this.#floorVariantGroup = document.getElementById("floor-variant-group");
     this.#exportBtn = document.getElementById("export-room-btn");
     this.#importBtn = document.getElementById("import-room-btn");
     this.#importInput = document.getElementById("import-room-input");
@@ -95,7 +84,6 @@ export class VisualizerController {
     for (const unsub of this.#unsubs) unsub();
     this.#unsubs.length = 0;
     cancelAnimationFrame(this.#colorRafId);
-    cancelAnimationFrame(this.#lightingRafId);
     this.#view.destroy();
   }
 
@@ -108,9 +96,6 @@ export class VisualizerController {
       this.#state.on("roomChanged", () => this.#onRoomChanged()),
       this.#state.on("roomColorsChanged", (detail) =>
         this.#onRoomColorsChanged(detail),
-      ),
-      this.#state.on("lightingChanged", (detail) =>
-        this.#onLightingChanged(detail),
       ),
       this.#state.on("favoritesChanged", () => this.#updatePaintBucket()),
       this.#state.on("customRoomsChanged", () => this.#populateRoomSelector()),
@@ -144,16 +129,11 @@ export class VisualizerController {
     const nameEl = document.getElementById("visualizer-room-name");
     if (nameEl) nameEl.textContent = payload.room.name || roomId;
 
-    // Apply current lighting to the freshly-rendered SVG
-    this.#applyLighting(this.#state.getTimeOfDay());
-
     // Render the paint bucket with current favorites
     this.#updatePaintBucket();
 
-    // Populate / refresh control panel widgets
+    // Populate / refresh room selector
     this.#populateRoomSelector();
-    this.#populateLightingButtons();
-    this.#populateFloorVariants();
   }
 
   #onRoomChanged() {
@@ -199,14 +179,6 @@ export class VisualizerController {
     this.#commandBus.execute(new ApplyColorCommand(roomId, layerId, colorId));
   }
 
-  /**
-   * Dispatch a ChangeLightingCommand.
-   * @param {string} presetName — e.g. "daylight", "evening"
-   */
-  changeLighting(presetName) {
-    this.#commandBus.execute(new ChangeLightingCommand(presetName));
-  }
-
   // ────────────────────────────────────────────────────────────
   // Private — Control panel binding & population
   // ────────────────────────────────────────────────────────────
@@ -217,29 +189,6 @@ export class VisualizerController {
     if (this.#roomSelect) {
       this.#roomSelect.addEventListener("change", () => {
         this.#state.setCurrentRoomId(this.#roomSelect.value);
-      });
-    }
-
-    // Lighting buttons (delegated)
-    if (this.#lightingButtons) {
-      this.#lightingButtons.addEventListener("click", (e) => {
-        const btn = e.target.closest("button[data-preset]");
-        if (!btn) return;
-        this.changeLighting(btn.dataset.preset);
-        // Update aria-checked state
-        for (const b of this.#lightingButtons.querySelectorAll("button")) {
-          b.setAttribute(
-            "aria-checked",
-            String(b.dataset.preset === btn.dataset.preset),
-          );
-        }
-      });
-    }
-
-    // Floor variant selector
-    if (this.#floorSelect) {
-      this.#floorSelect.addEventListener("change", () => {
-        this.#applyFloorVariant(this.#floorSelect.value);
       });
     }
 
@@ -301,83 +250,6 @@ export class VisualizerController {
     }
   }
 
-  /**
-   * Populate lighting preset buttons from the active room's lightingPresets.
-   */
-  #populateLightingButtons() {
-    if (!this.#lightingButtons || !this.#activeRoomPayload) return;
-
-    const presets = this.#activeRoomPayload.room.lightingPresets;
-    if (!presets) return;
-
-    const activePreset = this.#state.getTimeOfDay();
-    this.#lightingButtons.innerHTML = "";
-
-    for (const key of Object.keys(presets)) {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.dataset.preset = key;
-      btn.textContent = key;
-      btn.setAttribute("role", "radio");
-      btn.setAttribute("aria-checked", String(key === activePreset));
-      this.#lightingButtons.appendChild(btn);
-    }
-  }
-
-  /**
-   * Populate the floor variant <select> from the first "static" layer
-   * with a `variants` array. Hide the group if none found.
-   */
-  #populateFloorVariants() {
-    if (!this.#floorSelect || !this.#activeRoomPayload) return;
-
-    const floorLayer = this.#activeRoomPayload.room.layers.find(
-      (l) => l.variants && l.variants.length,
-    );
-
-    if (!floorLayer) {
-      // Hide the whole group
-      if (this.#floorVariantGroup) this.#floorVariantGroup.hidden = true;
-      return;
-    }
-
-    if (this.#floorVariantGroup) this.#floorVariantGroup.hidden = false;
-
-    this.#floorSelect.innerHTML = "";
-
-    for (const v of floorLayer.variants) {
-      const opt = document.createElement("option");
-      opt.value = v.id;
-      opt.textContent = v.name || v.id;
-      if (v.id === floorLayer.activeVariantId) opt.selected = true;
-      this.#floorSelect.appendChild(opt);
-    }
-  }
-
-  /**
-   * Apply a floor variant selection: update the layer data and SVG fill.
-   * @param {string} variantId
-   */
-  #applyFloorVariant(variantId) {
-    if (!this.#activeRoomPayload) return;
-
-    const floorLayer = this.#activeRoomPayload.room.layers.find(
-      (l) => l.variants && l.variants.length,
-    );
-    if (!floorLayer) return;
-
-    const variant = floorLayer.variants.find((v) => v.id === variantId);
-    if (!variant) return;
-
-    // Update the live data so subsequent renders remember the choice
-    floorLayer.activeVariantId = variantId;
-    floorLayer.fill = variant.fill;
-
-    // Surgical DOM update
-    const el = this.#view.getLayerElement(floorLayer.id);
-    if (el) el.setAttribute("fill", variant.fill);
-  }
-
   // ────────────────────────────────────────────────────────────
   // Private — Paint bucket management
   // ────────────────────────────────────────────────────────────
@@ -437,7 +309,7 @@ export class VisualizerController {
 
   /**
    * Look up the default fill for a layer from the cached room payload.
-   * Falls through: activeVariant → fill → defaultHex → "none".
+   * Falls through: fill → defaultHex → "none".
    */
   #resolveDefaultFill(layerId) {
     if (!this.#activeRoomPayload) return "none";
@@ -447,71 +319,6 @@ export class VisualizerController {
     );
     if (!layer) return "none";
 
-    // Static variant
-    if (layer.variants && layer.activeVariantId) {
-      const variant = layer.variants.find(
-        (v) => v.id === layer.activeVariantId,
-      );
-      if (variant) return variant.fill;
-    }
-
     return layer.fill || layer.defaultHex || "none";
-  }
-
-  // ────────────────────────────────────────────────────────────
-  // Private — Lighting updates
-  // ────────────────────────────────────────────────────────────
-
-  /**
-   * Handle "lightingChanged".
-   * @param {{ preset: string }} detail
-   */
-  #onLightingChanged({ preset }) {
-    cancelAnimationFrame(this.#lightingRafId);
-
-    this.#lightingRafId = requestAnimationFrame(() => {
-      this.#applyLighting(preset);
-    });
-  }
-
-  /**
-   * Walk the optical-stack layers in the current room and update
-   * their SVG attributes to match the given lighting preset.
-   *
-   * - environment  → fill = preset.temperatureHex
-   * - shadow       → opacity = preset.shadowOpacity
-   * - light-source → opacity = preset.sourceOpacity
-   *
-   * @param {string} presetName — key into room.lightingPresets
-   */
-  #applyLighting(presetName) {
-    if (!this.#activeRoomPayload) return;
-
-    const { lightingPresets, layers } = this.#activeRoomPayload.room;
-    const preset = lightingPresets?.[presetName];
-    if (!preset) return;
-
-    for (const layer of layers) {
-      const el = this.#view.getLayerElement(layer.id);
-      if (!el) continue;
-
-      switch (layer.type) {
-        case "environment":
-          el.setAttribute("fill", preset.temperatureHex);
-          break;
-
-        case "shadow":
-          el.setAttribute("opacity", String(preset.shadowOpacity));
-          break;
-
-        case "light-source":
-          el.setAttribute("opacity", String(preset.sourceOpacity));
-          break;
-
-        // paintable / static / furniture — untouched by lighting
-        default:
-          break;
-      }
-    }
   }
 }

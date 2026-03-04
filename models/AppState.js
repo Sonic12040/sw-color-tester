@@ -15,7 +15,6 @@ export class AppState extends EventEmitter {
   // ── Private visualizer state (never serialised to URL) ────
   #currentRoomId;
   #roomColors;
-  #timeOfDay;
   #customRooms;
 
   constructor(colorModel = null) {
@@ -31,7 +30,6 @@ export class AppState extends EventEmitter {
     // ── Visualizer state (never serialised to URL) ──────────
     this.#currentRoomId = STOCK_ROOMS.length ? STOCK_ROOMS[0].room.id : null;
     this.#roomColors = new Map(); // Map<layerId, colorHex>
-    this.#timeOfDay = "daylight";
     this.#customRooms = []; // user-imported room JSON payloads
 
     this.loadFromURL();
@@ -270,21 +268,6 @@ export class AppState extends EventEmitter {
   clearRoomColors() {
     this.#roomColors.clear();
     this.emit("roomColorsChanged", null);
-  }
-
-  /** @returns {string} Current lighting preset key (e.g. "daylight") */
-  getTimeOfDay() {
-    return this.#timeOfDay;
-  }
-
-  /**
-   * Change the lighting preset.
-   * @param {string} preset — must match a key in the room's lightingPresets
-   */
-  setTimeOfDay(preset) {
-    if (preset === this.#timeOfDay) return;
-    this.#timeOfDay = preset;
-    this.emit("lightingChanged", { preset });
   }
 
   /** @returns {Array} User-imported custom room JSON payloads */

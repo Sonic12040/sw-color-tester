@@ -4,9 +4,9 @@ import { StorageService } from "../utils/StorageService.js";
 /**
  * Import a room design from a user-uploaded .json file.
  *
- * Validates the Vector Scene Graph schema, persists the room to
+ * Validates the Room Scene Graph schema, persists the room to
  * IndexedDB via StorageService, registers it with AppState, and
- * hydrates any embedded appliedState (roomColors + lighting).
+ * hydrates any embedded appliedState (roomColors).
  *
  * Dispatched via CommandBus — `model` and `state` are injected.
  *
@@ -75,15 +75,12 @@ export class ImportRoomCommand extends ColorCommand {
     this.state.addCustomRoom(roomPayload);
     this.state.setCurrentRoomId(roomPayload.room.id);
 
-    // ── 7. Hydrate embedded colors & lighting ──────────────
+    // ── 7. Hydrate embedded colors ──────────────────────────
     if (appliedState) {
       if (appliedState.roomColors) {
         for (const [layerId, hex] of Object.entries(appliedState.roomColors)) {
           this.state.setRoomColor(layerId, hex);
         }
-      }
-      if (appliedState.timeOfDay) {
-        this.state.setTimeOfDay(appliedState.timeOfDay);
       }
     }
 
@@ -95,14 +92,12 @@ export class ImportRoomCommand extends ColorCommand {
   // ────────────────────────────────────────────────────────────
 
   /**
-   * Minimal structural validation of the Vector Scene Graph JSON.
+   * Minimal structural validation of the Room Scene Graph JSON.
    *
    * Checks:
-   *  - Top-level `room` object exists
-   *  - `room.id` is a non-empty string
-   *  - `room.viewport` has numeric width/height
-   *  - `room.layers` is a non-empty array
-   *  - Every layer has `id`, `type`, `path`, and numeric `zIndex`
+   *   - Must have `version` and `room` keys
+   *   - `room` must have `id`, `viewport`, and `layers`
+   *   - `layers` must be a non-empty array
    *
    * @param {object} payload
    * @returns {boolean}

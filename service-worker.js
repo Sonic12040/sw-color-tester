@@ -83,7 +83,6 @@ const STATIC_ASSETS = [
   `${BASE_PATH}/commands/ClearFavoritesCommand.js`,
   `${BASE_PATH}/commands/ClearHiddenCommand.js`,
   `${BASE_PATH}/commands/ApplyColorCommand.js`,
-  `${BASE_PATH}/commands/ChangeLightingCommand.js`,
   `${BASE_PATH}/commands/ExportRoomCommand.js`,
   `${BASE_PATH}/commands/ImportRoomCommand.js`,
   `${BASE_PATH}/commands/index.js`,

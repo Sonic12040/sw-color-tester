@@ -1,31 +1,23 @@
 /**
- * VisualizerView — Pure SVG rendering factory for Vector Scene Graph rooms.
+ * VisualizerView — Hybrid Masking Engine for Photorealistic Room Rendering.
  *
- * Parses a Room JSON payload into a fully-namespaced <svg> element:
- *   1. Builds <defs> (filters, gradients) from the room's `defs` array.
- *   2. Sorts `layers` by zIndex (Painter's Algorithm — back-to-front).
- *   3. Constructs <path> elements with the correct fill, blend-mode,
- *      filter, and data-* attributes for downstream controllers.
+ * Photorealistic Hybrid ("Sandwich" Architecture):
+ *   1. Base Plate   — high-res JPEG photo of the room (type: "image")
+ *   2. Color Masks  — SVG <path> with mix-blend-mode: multiply, allowing
+ *                     photographic shadows/textures to bleed through
+ *   3. Occlusion    — transparent PNG of furniture/plants (type: "image")
+ *                     at high zIndex, masking color bleed automatically
  *
- * Zero external dependencies.  All DOM construction uses the project's
- * shared `parseSVGContent` utility so nodes are properly SVG-namespaced.
+ * Zero external dependencies.  All DOM construction uses SVG namespacing.
  */
 
-import { parseSVGContent } from "../utils/dom.js";
 import { STOCK_ROOMS } from "../constants.js";
 
 // ── SVG Namespace ────────────────────────────────────────────
 const SVG_NS = "http://www.w3.org/2000/svg";
 
-// ── Blend-mode defaults per layer type ───────────────────────
-const BLEND_MODE_DEFAULTS = {
-  shadow: "multiply",
-  "light-source": "screen",
-  environment: "soft-light",
-};
-
 // ── Layer types that receive pointer interaction ─────────────
-const INTERACTIVE_TYPES = new Set(["paintable", "furniture"]);
+const INTERACTIVE_TYPES = new Set(["paintable"]);
 
 export class VisualizerView {
   /** @type {HTMLElement|null} DOM wrapper the SVG is injected into */
@@ -91,8 +83,8 @@ export class VisualizerView {
   /**
    * Render a complete room SVG and inject it into the container.
    *
-   * @param {object} roomPayload — full Vector Scene Graph JSON object
-   *   e.g. `{ version, room: { id, viewport, defs, layers, … } }`
+   * @param {object} roomPayload — full Room Scene Graph JSON object
+   *   e.g. `{ version, room: { id, viewport, layers, … } }`
    * @param {Map<string, string>} [appliedColors] — Map<layerId, hex>
    *   Pre-applied colors (from AppState.roomColors) so the SVG renders
    *   with the user's current palette on first paint.
@@ -107,18 +99,14 @@ export class VisualizerView {
     // Build the SVG skeleton
     const svg = this.#createSVGRoot(room.viewport);
 
-    // 1. Parse <defs> (filters, gradients)
-    const defsEl = this.#buildDefs(room.defs);
-    svg.appendChild(defsEl);
-
-    // 2. Sort layers by zIndex (Painter's Algorithm)
+    // Sort layers by zIndex (Painter's Algorithm)
     const sorted = [...room.layers].sort((a, b) => a.zIndex - b.zIndex);
 
-    // 3. Construct each <path> and append
+    // Construct each layer element and append
     for (const layer of sorted) {
-      const pathEl = this.#buildLayerPath(layer, room, appliedColors);
-      svg.appendChild(pathEl);
-      this.#layerElements.set(layer.id, pathEl);
+      const el = this.#buildLayer(layer, room, appliedColors);
+      svg.appendChild(el);
+      this.#layerElements.set(layer.id, el);
     }
 
     // Inject into DOM
@@ -290,79 +278,71 @@ export class VisualizerView {
   }
 
   // ────────────────────────────────────────────────────────────
-  // Private — <defs> construction
+  // Private — Layer routing
   // ────────────────────────────────────────────────────────────
 
   /**
-   * Build an SVG <defs> element from the room's `defs` array.
-   * Supports:
-   *   • type "filter"          → <filter id="…">…inner SVG…</filter>
-   *   • type "radialGradient"  → <radialGradient id="…" …attrs>…stops…</radialGradient>
-   *   • type "linearGradient"  → <linearGradient id="…" …attrs>…stops…</linearGradient>
+   * Route to the correct builder based on layer type.
+   * @param {object} layer
+   * @param {object} room
+   * @param {Map<string, string>} appliedColors
+   * @returns {SVGElement}
+   */
+  #buildLayer(layer, room, appliedColors) {
+    if (layer.type === "image") {
+      return this.#buildImageLayer(layer);
+    }
+    return this.#buildLayerPath(layer, room, appliedColors);
+  }
+
+  // ────────────────────────────────────────────────────────────
+  // Private — <image> construction (Hybrid Masking Engine)
+  // ────────────────────────────────────────────────────────────
+
+  /**
+   * Build an SVG <image> element for photographic base plates and
+   * occlusion masks.  Supports blend modes and optional pointer-events
+   * override from the layer descriptor.
    *
-   * @param {Array} defs
-   * @returns {SVGDefsElement}
+   * @param {object} layer — must have `href`, and typically `width`/`height`
+   * @returns {SVGImageElement}
    */
-  #buildDefs(defs = []) {
-    const defsEl = document.createElementNS(SVG_NS, "defs");
+  #buildImageLayer(layer) {
+    const imgEl = document.createElementNS(SVG_NS, "image");
 
-    for (const def of defs) {
-      switch (def.type) {
-        case "filter":
-          this.#appendFilter(defsEl, def);
-          break;
+    // ── Identity ──────────────────────────────────────────────
+    imgEl.setAttribute("id", layer.id);
+    imgEl.dataset.layerId = layer.id;
+    imgEl.dataset.type = layer.type;
 
-        case "radialGradient":
-        case "linearGradient":
-          this.#appendGradient(defsEl, def);
-          break;
+    // ── Source & dimensions ───────────────────────────────────
+    imgEl.setAttributeNS("http://www.w3.org/1999/xlink", "href", layer.href);
+    imgEl.setAttribute("href", layer.href); // SVG 2 native href
 
-        default:
-          // Unknown def type — skip silently (forward-compatible)
-          break;
-      }
+    // Position defaults to origin; dimensions default to 100% of viewport
+    imgEl.setAttribute("x", String(layer.x ?? 0));
+    imgEl.setAttribute("y", String(layer.y ?? 0));
+    imgEl.setAttribute("width", String(layer.width ?? "100%"));
+    imgEl.setAttribute("height", String(layer.height ?? "100%"));
+    imgEl.setAttribute(
+      "preserveAspectRatio",
+      layer.preserveAspectRatio ?? "xMidYMid meet",
+    );
+
+    // ── Blend mode ────────────────────────────────────────────
+    if (layer.blendMode) {
+      imgEl.style.mixBlendMode = layer.blendMode;
     }
 
-    return defsEl;
-  }
-
-  /**
-   * Append a <filter> node parsed from the def's svgFilterNode string.
-   * Uses parseSVGContent so child <feTurbulence>, <feBlend>, etc. are
-   * correctly SVG-namespaced.
-   */
-  #appendFilter(defsEl, def) {
-    const filterEl = document.createElementNS(SVG_NS, "filter");
-    filterEl.setAttribute("id", def.id);
-    // Allow the filter to extend beyond the element's bounding box
-    filterEl.setAttribute("x", "0");
-    filterEl.setAttribute("y", "0");
-    filterEl.setAttribute("width", "100%");
-    filterEl.setAttribute("height", "100%");
-
-    const children = parseSVGContent(def.svgFilterNode);
-    filterEl.appendChild(children);
-    defsEl.appendChild(filterEl);
-  }
-
-  /**
-   * Append a <radialGradient> or <linearGradient> from the def.
-   * `def.svgNode` contains the <stop> markup; `def.attrs` holds the
-   * element-level attributes (cx, cy, r, x1, y1, etc.).
-   */
-  #appendGradient(defsEl, def) {
-    const gradientEl = document.createElementNS(SVG_NS, def.type);
-    gradientEl.setAttribute("id", def.id);
-
-    if (def.attrs) {
-      for (const [attr, value] of Object.entries(def.attrs)) {
-        gradientEl.setAttribute(attr, value);
-      }
+    // ── Opacity ───────────────────────────────────────────────
+    if (layer.opacity != null && layer.opacity !== 1) {
+      imgEl.setAttribute("opacity", String(layer.opacity));
     }
 
-    const stops = parseSVGContent(def.svgNode);
-    gradientEl.appendChild(stops);
-    defsEl.appendChild(gradientEl);
+    // ── Pointer events (occlusion layers are non-interactive) ─
+    imgEl.style.pointerEvents = layer.pointerEvents ?? "none";
+
+    return imgEl;
   }
 
   // ────────────────────────────────────────────────────────────
@@ -370,10 +350,11 @@ export class VisualizerView {
   // ────────────────────────────────────────────────────────────
 
   /**
-   * Build a single <path> from a layer descriptor.
+   * Build a single <path> from a layer descriptor.  In the hybrid
+   * architecture these are paintable colour-mask regions.
    *
    * @param {object} layer — one entry from the room's `layers` array
-   * @param {object} room  — the full room object (for lightingPresets)
+   * @param {object} room  — the full room object
    * @param {Map<string, string>} appliedColors — pre-applied user colors
    * @returns {SVGPathElement}
    */
@@ -394,26 +375,15 @@ export class VisualizerView {
 
     // ── Fill resolution ───────────────────────────────────────
     pathEl.setAttribute("fill", this.#resolveFill(layer, appliedColors));
-    // ── Stroke (for decorative line layers like floor planks) ─
-    if (layer.stroke) {
-      pathEl.setAttribute("stroke", layer.stroke);
-      pathEl.setAttribute("stroke-width", String(layer.strokeWidth || 1));
-    }
-    // ── Texture / filter ──────────────────────────────────────
-    if (layer.texture) {
-      // texture holds something like "url(#texture-drywall)"
-      pathEl.setAttribute("filter", layer.texture);
-    }
 
-    // ── Blend mode (optical stack layers) ─────────────────────
-    const blendMode =
-      layer.blendMode || BLEND_MODE_DEFAULTS[layer.type] || null;
-    if (blendMode) {
-      pathEl.style.mixBlendMode = blendMode;
+    // ── Blend mode ────────────────────────────────────────────
+    if (layer.blendMode) {
+      pathEl.style.mixBlendMode = layer.blendMode;
     }
 
     // ── Pointer events ────────────────────────────────────────
     if (INTERACTIVE_TYPES.has(layer.type)) {
+      pathEl.classList.add("layer-paintable");
       pathEl.style.cursor = "pointer";
       pathEl.setAttribute("role", "button");
       pathEl.setAttribute("tabindex", "0");
@@ -425,23 +395,17 @@ export class VisualizerView {
       pathEl.style.pointerEvents = "none";
     }
 
-    // ── Shoppable metadata ────────────────────────────────────
-    if (layer.shoppable) {
-      pathEl.dataset.shoppable = JSON.stringify(layer.shoppable);
-    }
-
     return pathEl;
   }
 
   /**
    * Determine the fill value for a layer, considering:
    *   1. User-applied color (from AppState roomColors)
-   *   2. Static variant (activeVariantId)
-   *   3. Layer-level fill / defaultHex
+   *   2. Layer-level fill / defaultHex
    *
    * @param {object} layer
    * @param {Map<string, string>} appliedColors
-   * @returns {string} A CSS color or url(#gradient) reference
+   * @returns {string} A CSS color value
    */
   #resolveFill(layer, appliedColors) {
     // 1. User override (paintable layers only)
@@ -449,15 +413,7 @@ export class VisualizerView {
       return appliedColors.get(layer.id);
     }
 
-    // 2. Static variant
-    if (layer.variants && layer.activeVariantId) {
-      const variant = layer.variants.find(
-        (v) => v.id === layer.activeVariantId,
-      );
-      if (variant) return variant.fill;
-    }
-
-    // 3. Explicit fill or defaultHex
+    // 2. Explicit fill or defaultHex
     return layer.fill || layer.defaultHex || "none";
   }
 
