@@ -1,6 +1,12 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <style>
+      /* Hide visualizer tab by default; JS will show if enabled */
+      #tab-visualizer {
+        display: none !important;
+      }
+    </style>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sherwin-Williams Color Explorer</title>
@@ -218,10 +224,19 @@
           role="tab"
           aria-selected="false"
           aria-controls="panel-visualizer"
+          style="display: none"
         >
           Visualizer
         </button>
       </nav>
+      <script type="module">
+        import { isFeatureEnabled } from "./utils/featureFlags.js";
+        // Show the visualizer tab immediately if enabled, before DOMContentLoaded
+        if (isFeatureEnabled("enableVisualizer")) {
+          const tab = document.getElementById("tab-visualizer");
+          if (tab) tab.style.display = "";
+        }
+      </script>
 
       <div class="app-panels">
         <!-- Explorer panel (existing accordion) -->
