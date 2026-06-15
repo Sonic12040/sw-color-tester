@@ -203,83 +203,55 @@
       </div>
     </header>
 
-    <!-- ── App Shell: tab bar + panels ─────────────────────── -->
+    <!-- ── App Shell: Spatial Layered Architecture ─────────────────────── -->
     <div class="app-shell">
-      <!-- Mobile tab bar (hidden on desktop via CSS) -->
-      <nav class="app-tabs" aria-label="App sections">
-        <button
-          type="button"
-          class="app-tabs__btn"
-          id="tab-explorer"
-          role="tab"
-          aria-selected="true"
-          aria-controls="panel-explorer"
-        >
-          Explorer
-        </button>
-        <button
-          type="button"
-          class="app-tabs__btn"
-          id="tab-visualizer"
-          role="tab"
-          aria-selected="false"
-          aria-controls="panel-visualizer"
-          style="display: none"
-        >
-          Visualizer
-        </button>
-      </nav>
-      <script type="module">
-        import { isFeatureEnabled } from "./utils/featureFlags.js";
-        // Show the visualizer tab immediately if enabled, before DOMContentLoaded
-        if (isFeatureEnabled("enableVisualizer")) {
-          const tab = document.getElementById("tab-visualizer");
-          if (tab) tab.style.display = "";
-        }
-      </script>
-
       <div class="app-panels">
-        <!-- Explorer panel (existing accordion) -->
-        <div
-          class="app-panel app-panel--explorer"
-          id="panel-explorer"
-          role="tabpanel"
-          aria-labelledby="tab-explorer"
-        >
-          <main
-            id="color-accordion"
-            class="accordion"
-            aria-label="Color families accordion"
-          ></main>
-        </div>
-
-        <!-- Visualizer panel -->
-        <div
-          class="app-panel app-panel--visualizer"
-          id="panel-visualizer"
-          role="tabpanel"
-          aria-labelledby="tab-visualizer"
-          hidden
-        >
+        <!-- Visualizer panel (Base Layer) -->
+        <div class="app-panel app-panel--visualizer" id="panel-visualizer">
           <section class="visualizer">
-            <div class="visualizer__info">
-              <span class="visualizer__room-name" id="visualizer-room-name"
-                >Modern Living Room</span
-              >
+            <!-- Floating Controls -->
+            <div class="visualizer__floating-controls">
+              <div class="visualizer__control-group">
+                <label class="visualizer__control-label" for="room-select">Room</label>
+                <select id="room-select" class="visualizer__select"></select>
+              </div>
+              <div class="visualizer__control-actions">
+                <button type="button" class="header__button header__button--icon" id="export-room-btn" title="Export room design as JSON">
+                  Export
+                </button>
+                <button type="button" class="header__button header__button--icon" id="import-room-btn" title="Import a room design JSON file">
+                  Import
+                </button>
+                <input type="file" id="import-room-input" accept=".json" hidden />
+              </div>
             </div>
+
             <div class="visualizer__canvas" id="visualizer-canvas">
               <!-- SVG injected by VisualizerView -->
             </div>
 
             <!-- Hint banner — shown when no swatch is selected -->
             <div class="visualizer__hint" id="visualizer-hint">
-              <span class="visualizer__hint-icon" aria-hidden="true"
-                >&#9757;</span
-              >
-              Favorite colors in the Explorer, then select a swatch below and
-              click any wall to paint it.
+              <span class="visualizer__hint-icon" aria-hidden="true">&#9757;</span>
+              Favorite colors in the Explorer, then select a swatch below and click any wall to paint it.
             </div>
           </section>
+        </div>
+
+        <!-- Explorer panel (Overlay / Bottom Sheet / Sidebar) -->
+        <div class="app-panel app-panel--explorer" id="panel-explorer">
+          <div class="explorer-drawer-handle" id="explorer-toggle">
+            <div class="explorer-drawer-handle-bar"></div>
+            <span class="explorer-drawer-title">Browse Colors</span>
+            <span class="explorer-drawer-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+          <div class="explorer-drawer-content">
+            <main id="color-accordion" class="accordion" aria-label="Color families accordion"></main>
+          </div>
         </div>
       </div>
     </div>

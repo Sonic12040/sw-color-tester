@@ -1,81 +1,71 @@
 @layer components {
   /* ============================================
-   VISUALIZER LAYOUT
-   Mobile: two-tab system  (Explorer | Visualizer)
-   Desktop: side-by-side split pane
+   VISUALIZER LAYOUT: SPATIAL / LAYERED ARCHITECTURE
    ============================================ */
 
   /* ── Shell: wraps everything below the <header> ───────────── */
   .app-shell {
     display: flex;
     flex-direction: column;
-    min-height: 0; /* allow flex children to shrink */
+    position: relative;
+    overflow: hidden;
+    min-height: calc(100vh - var(--header-height, 0px));
+    height: calc(100dvh - var(--header-height, 0px));
   }
 
-  /* ── Tab bar (mobile only, hidden on desktop) ─────────────── */
-  .app-tabs {
-    display: flex;
-    position: sticky;
-    top: 0;
-    z-index: calc(var(--z-sticky) - 1);
-    background: var(--color-surface-primary);
-    border-bottom: 1px solid var(--color-border-secondary);
-  }
-
-  .app-tabs__btn {
-    flex: 1;
-    padding: var(--spacing-3) var(--spacing-4);
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-medium);
-    line-height: var(--line-height-tight);
-    text-align: center;
-    color: var(--color-text-secondary);
-    background: transparent;
-    border: none;
-    border-bottom: 2px solid transparent;
-    cursor: pointer;
-    transition:
-      color var(--transition-fast),
-      border-color var(--transition-fast);
-    min-height: var(--button-min-height);
-  }
-
-  .app-tabs__btn[aria-selected="true"] {
-    color: var(--color-text-primary);
-    border-bottom-color: var(--color-primary);
-  }
-
-  .app-tabs__btn:hover {
-    color: var(--color-text-primary);
-  }
-
-  /* ── Panel container (holds the two switchable panels) ────── */
+  /* ── Panel container ────── */
   .app-panels {
+    position: relative;
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+  }
+
+  /* Each panel fills the available space by default */
+  .app-panel {
+    min-height: 0;
+  }
+
+  /* ── Visualizer panel (Base Layer) ───────────────────────────── */
+  .app-panel--visualizer {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
     display: flex;
     flex-direction: column;
-    flex: 1;
-    min-height: 0;
+    background: var(--color-surface-secondary);
   }
 
-  /* Each panel fills the available space */
-  .app-panel {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
-  }
-
-  /* Mobile: hide the inactive panel */
-  .app-panel[hidden] {
-    display: none;
-  }
-
-  /* ── Visualizer panel internals ───────────────────────────── */
   .visualizer {
     display: flex;
     flex-direction: column;
     height: 100%;
-    position: relative; /* anchor for floating controls & hint */
-    background: var(--color-surface-secondary);
+    position: relative;
+  }
+
+  /* Floating Controls (Glassmorphism) */
+  .visualizer__floating-controls {
+    position: absolute;
+    top: var(--spacing-4);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    padding: var(--spacing-2) var(--spacing-4);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(var(--blur-md));
+    -webkit-backdrop-filter: blur(var(--blur-md));
+    border: 1px solid var(--color-border-secondary);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-md);
+  }
+
+  .visualizer__control-actions {
+    display: flex;
+    gap: var(--spacing-2);
   }
 
   .visualizer__canvas {
@@ -84,114 +74,143 @@
     align-items: center;
     justify-content: center;
     min-height: 0;
-    padding: var(--spacing-4);
+    padding: var(--spacing-4) var(--spacing-4) 80px var(--spacing-4);
     overflow: hidden;
   }
 
-  /* Ensure the SVG scales naturally inside the canvas area */
   .visualizer__canvas svg {
     max-width: 100%;
     max-height: 100%;
     height: auto;
   }
 
-  /* ── Room name / info bar ─────────────────────────────────── */
-  .visualizer__info {
+  /* ── Explorer panel (Overlay Layer) ───────────────────────── */
+  .app-panel--explorer {
+    position: absolute;
+    z-index: 10;
+    background: var(--color-surface-primary);
+    box-shadow: var(--shadow-xl);
+    transition: transform var(--transition-medium);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .explorer-drawer-handle {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--spacing-2) var(--spacing-4);
-    font-size: var(--font-size-sm);
-    color: var(--color-text-secondary);
-    border-bottom: 1px solid var(--color-border-secondary);
+    padding: var(--spacing-3) var(--spacing-4);
+    cursor: pointer;
     background: var(--color-surface-primary);
+    border-bottom: 1px solid var(--color-border-secondary);
+    user-select: none;
+    flex-shrink: 0;
   }
 
-  .visualizer__room-name {
+  .explorer-drawer-title {
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-primary);
   }
 
-  /* ============================================
-   DESKTOP — SPLIT PANE (>= 900px)
-   ============================================ */
+  .explorer-drawer-icon svg {
+    transition: transform var(--transition-medium);
+  }
 
-  @media (min-width: 900px) {
-    /* Hide the mobile tab bar */
-    .app-tabs {
+  .explorer-drawer-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: var(--spacing-4);
+  }
+
+  /* ============================================
+   MOBILE (< 600px): BOTTOM SHEET PATTERN
+   ============================================ */
+  @media (max-width: 599px) {
+    .app-panel--explorer {
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 80vh;
+      border-top-left-radius: var(--radius-xl);
+      border-top-right-radius: var(--radius-xl);
+      transform: translateY(calc(100% - 56px));
+    }
+
+    .app-panel--explorer.is-expanded {
+      transform: translateY(0);
+    }
+
+    .explorer-drawer-handle {
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--spacing-2) var(--spacing-4) var(--spacing-3);
+      border-bottom: none;
+    }
+
+    .explorer-drawer-handle-bar {
+      width: 40px;
+      height: 4px;
+      background: var(--neutral-300);
+      border-radius: var(--radius-full);
+      margin-bottom: var(--spacing-2);
+    }
+
+    .explorer-drawer-title {
+      font-size: var(--font-size-sm);
+    }
+
+    .explorer-drawer-icon {
       display: none;
     }
 
-    /* Switch to horizontal split */
-    .app-panels {
-      flex-direction: row;
-      height: 100%;
+    .visualizer__floating-controls {
+      width: 90%;
+      flex-direction: column;
+      border-radius: var(--radius-lg);
     }
+  }
 
-    /* Both panels visible side-by-side; override hidden attr */
-    .app-panel {
-      flex: 1 1 50%;
-      max-width: 50%;
-      overflow-y: auto;
-    }
-
-    /* Override the [hidden] behaviour so both panels always show */
-    .app-panel[hidden] {
-      display: block;
-    }
-
-    /* Explorer panel — left side */
+  /* ============================================
+   TABLET (600px - 899px): OFF-CANVAS SIDEBAR
+   ============================================ */
+  @media (min-width: 600px) and (max-width: 899px) {
     .app-panel--explorer {
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 340px;
+      transform: translateX(-100%);
       border-right: 1px solid var(--color-border-secondary);
     }
 
-    /* Visualizer panel — right side */
-    .app-panel--visualizer {
-      position: relative; /* anchor for future floating controls */
+    .app-panel--explorer.is-expanded {
+      transform: translateX(0);
     }
 
-    /* Give the canvas more breathing room on desktop */
-    .visualizer__canvas {
-      padding: var(--spacing-6);
-    }
-  }
-
-  /* ============================================
-   LARGE DESKTOP (>= 1200px)
-   Give the visualizer more room on wide monitors
-   ============================================ */
-
-  @media (min-width: 1200px) {
-    .app-panel--explorer {
-      flex: 0 0 40%;
-      max-width: 40%;
+    .explorer-drawer-handle {
+      position: absolute;
+      top: var(--spacing-4);
+      right: -48px;
+      width: 48px;
+      height: 48px;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      box-shadow: 4px 0 6px rgba(0,0,0,0.1);
+      justify-content: center;
+      padding: 0;
+      border: 1px solid var(--color-border-secondary);
+      border-left: none;
     }
 
-    .app-panel--visualizer {
-      flex: 0 0 60%;
-      max-width: 60%;
+    .explorer-drawer-title, .explorer-drawer-handle-bar {
+      display: none;
     }
   }
 
   /* ============================================
-   FULL-HEIGHT UTILITY
-   When the shell is a direct child of <body>,
-   ensure it fills the viewport below the header.
+   DESKTOP (>= 900px): COLLAPSIBLE SPLIT-PANE
    ============================================ */
-
-  .app-shell {
-    /* Fallback for browsers without dvh */
-    min-height: calc(100vh - var(--header-height, 0px));
-    min-height: calc(100dvh - var(--header-height, 0px));
-  }
-
-  /* On desktop, use body-level flex so the shell fills exactly
-     the remaining viewport below the sticky header.  Each panel
-     scrolls independently — long explorer content never pushes
-     the visualizer off-screen. */
   @media (min-width: 900px) {
-    html,
-    body {
+    html, body {
       height: 100%;
       overflow: hidden;
     }
@@ -201,24 +220,74 @@
       flex-direction: column;
     }
 
-    /* Let the header keep its natural height */
     .header {
       flex-shrink: 0;
     }
 
     .app-shell {
       flex: 1;
-      min-height: 0;
+    }
+
+    .app-panels {
+      flex-direction: row;
+    }
+
+    .app-panel--visualizer {
+      position: relative;
+      flex: 1;
+      order: 2;
+    }
+
+    .app-panel--explorer {
+      position: relative;
+      order: 1;
+      width: 400px;
+      flex-shrink: 0;
+      transform: none;
+      border-right: 1px solid var(--color-border-secondary);
+      transition: width var(--transition-medium);
       overflow: hidden;
+    }
+
+    .app-panel--explorer:not(.is-expanded) {
+      width: 48px;
+    }
+
+    .app-panel--explorer:not(.is-expanded) .explorer-drawer-title {
+      display: none;
+    }
+
+    .explorer-drawer-handle-bar {
+      display: none;
+    }
+    
+    .explorer-drawer-handle {
+      background: var(--color-surface-secondary);
+    }
+
+    .visualizer__canvas {
+      padding: var(--spacing-6);
+    }
+
+    .visualizer__floating-controls {
+      top: var(--spacing-6);
+      left: var(--spacing-6);
+      transform: none;
+    }
+  }
+
+  /* ============================================
+   LARGE DESKTOP (>= 1200px)
+   ============================================ */
+  @media (min-width: 1200px) {
+    .app-panel--explorer.is-expanded {
+      width: 480px;
     }
   }
 
   /* ============================================
      PAINT BUCKET — Favorites palette strip
-     Horizontal scrolling swatch bar docked to the
-     bottom of the visualizer panel.
      ============================================ */
-
   .paint-bucket {
     display: flex;
     gap: var(--spacing-2);
@@ -231,7 +300,6 @@
     scrollbar-width: thin;
   }
 
-  /* Hide scrollbar on WebKit (cleaner look) */
   .paint-bucket::-webkit-scrollbar {
     height: 4px;
   }
@@ -274,7 +342,6 @@
     transform: scale(1.15);
   }
 
-  /* Larger swatches on desktop */
   @media (min-width: 900px) {
     .paint-bucket__swatch {
       width: 48px;
@@ -283,9 +350,8 @@
   }
 
   /* ============================================
-     HINT BANNER — instruction for new users
+     HINT BANNER
      ============================================ */
-
   .visualizer__hint {
     display: flex;
     align-items: center;
@@ -297,6 +363,7 @@
     background: var(--color-surface-secondary);
     border-top: 1px solid var(--color-border-secondary);
     text-align: center;
+    z-index: 2; 
   }
 
   .visualizer__hint-icon {
@@ -308,7 +375,7 @@
     display: none;
   }
 
-  /* ── Shared control styling (toolbar + visualizer) ────── */
+  /* ── Shared control styling ────── */
   .visualizer__control-group {
     display: flex;
     align-items: center;
@@ -339,40 +406,4 @@
     outline-offset: 1px;
   }
 
-  /* Lighting toggle buttons */
-  .visualizer__btn-group {
-    display: flex;
-    gap: 2px;
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-    border: 1px solid var(--color-border-secondary);
-    width: 100%;
-  }
-
-  .visualizer__btn-group button {
-    flex: 1;
-    padding: var(--spacing-1) var(--spacing-3);
-    border: none;
-    background: var(--color-surface-primary);
-    color: var(--color-text-secondary);
-    font-size: var(--font-size-sm);
-    cursor: pointer;
-    transition:
-      background var(--transition-fast),
-      color var(--transition-fast);
-    min-height: 32px;
-    text-transform: capitalize;
-  }
-
-  .visualizer__btn-group button:hover {
-    background: var(--color-surface-hover);
-  }
-
-  .visualizer__btn-group button[aria-checked="true"] {
-    background: var(--color-primary);
-    color: var(--color-surface-primary);
-    font-weight: var(--font-weight-semibold);
-  }
-
-  /* ── Desktop refinements ────────────────────────────────── */
 } /* end @layer components */

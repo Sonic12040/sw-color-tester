@@ -52,26 +52,39 @@ const visualizerController = new VisualizerController(
   colorModel,
 );
 
-// ── Tab switching (mobile two-tab system) ───────────────────
-const tabExplorer = document.getElementById("tab-explorer");
-const tabVisualizer = document.getElementById("tab-visualizer");
-const panelExplorer = document.getElementById("panel-explorer");
-const panelVisualizer = document.getElementById("panel-visualizer");
+// ── Explorer Drawer Toggle (Mobile/Tablet/Desktop) ──────────
+const explorerToggle = document.getElementById('explorer-toggle');
+const panelExplorer = document.getElementById('panel-explorer');
+if (explorerToggle && panelExplorer) {
+  if (window.innerWidth >= 900) {
+    panelExplorer.classList.add('is-expanded');
+  }
 
-function switchTab(activeTab, inactiveTab, activePanel, inactivePanel) {
-  activeTab.setAttribute("aria-selected", "true");
-  inactiveTab.setAttribute("aria-selected", "false");
-  activePanel.removeAttribute("hidden");
-  inactivePanel.setAttribute("hidden", "");
-}
+  const updateIcon = () => {
+    const isExpanded = panelExplorer.classList.contains('is-expanded');
+    const svg = explorerToggle.querySelector('svg');
+    if (!svg) return;
+    
+    if (window.innerWidth < 600) {
+      svg.style.transform = isExpanded ? 'rotate(270deg)' : 'rotate(90deg)';
+    } else {
+      svg.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
+    }
+  };
 
-if (tabExplorer && tabVisualizer) {
-  tabExplorer.addEventListener("click", () =>
-    switchTab(tabExplorer, tabVisualizer, panelExplorer, panelVisualizer),
-  );
-  tabVisualizer.addEventListener("click", () =>
-    switchTab(tabVisualizer, tabExplorer, panelVisualizer, panelExplorer),
-  );
+  updateIcon();
+
+  explorerToggle.addEventListener('click', () => {
+    panelExplorer.classList.toggle('is-expanded');
+    updateIcon();
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 900 && !panelExplorer.classList.contains('is-expanded')) {
+      panelExplorer.classList.add('is-expanded');
+    }
+    updateIcon();
+  });
 }
 
 // Start the application
