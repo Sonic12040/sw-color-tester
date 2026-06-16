@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { Color } from "../../data/types.js";
 import {
@@ -473,7 +473,7 @@ export function Modal({ colorId, onClose }: ModalProps) {
     }
   }, [colorId]);
 
-  const close = useCallback(() => {
+  const close = () => {
     // Ignore if a close is already in flight.
     if (closeTimerRef.current) return;
     setClosing(true);
@@ -481,7 +481,7 @@ export function Modal({ colorId, onClose }: ModalProps) {
       closeTimerRef.current = null;
       onClose();
     }, 300);
-  }, [onClose]);
+  };
 
   // Clean up the timer if the component unmounts unexpectedly.
   useEffect(() => {
@@ -499,7 +499,7 @@ export function Modal({ colorId, onClose }: ModalProps) {
     };
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
-  }, [colorId, close]);
+  }, [colorId]); // close is no longer in dependencies since it is unstable
 
   // Reset closing once the parent's colorId becomes null so next open starts clean.
   useEffect(() => {
