@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useAppContext } from "../../context/AppContext.js";
 import { useAppState } from "../../hooks/useAppState.js";
 import {
@@ -12,24 +12,40 @@ import { ColorAccordion } from "./ColorAccordion/ColorAccordion.js";
 import styles from "./ColorExplorer.module.css";
 
 export function ColorExplorer() {
-  const { colorModel, appState, commandBus } = useAppContext();
+  const { colorModel, appState, commandBus, openModal } = useAppContext();
   const snapshot = useAppState(appState);
 
   const { favorites, hidden, lrvMin, lrvMax } = snapshot;
-  const lrvRange = { min: lrvMin, max: lrvMax };
-  const designerPickIds = colorModel.getDesignerPickIds();
-  const favoriteColors = colorModel.getFavoriteColors(favorites);
-  const hiddenColors = colorModel.getHiddenColors(hidden);
-  const visibleColors = colorModel.getVisibleColors(
-    hidden,
-    favorites,
-    lrvRange,
+  const lrvRange = useMemo(
+    () => ({ min: lrvMin, max: lrvMax }),
+    [lrvMin, lrvMax],
   );
-  const colorFamilies = colorModel.groupByFamily(visibleColors);
-  const sortedFamilies = colorModel.sortFamiliesByPriority([
-    ...colorFamilies.keys(),
-  ]);
-  const hiddenFamilies = colorModel.getHiddenFamilies(hidden, favorites);
+
+  const designerPickIds = colorModel.getDesignerPickIds(); // stable — built once in constructor
+  const favoriteColors = useMemo(
+    () => colorModel.getFavoriteColors(favorites),
+    [favorites],
+  );
+  const hiddenColors = useMemo(
+    () => colorModel.getHiddenColors(hidden),
+    [hidden],
+  );
+  const visibleColors = useMemo(
+    () => colorModel.getVisibleColors(hidden, favorites, lrvRange),
+    [hidden, favorites, lrvRange],
+  );
+  const colorFamilies = useMemo(
+    () => colorModel.groupByFamily(visibleColors),
+    [visibleColors],
+  );
+  const sortedFamilies = useMemo(
+    () => colorModel.sortFamiliesByPriority([...colorFamilies.keys()]),
+    [colorFamilies],
+  );
+  const hiddenFamilies = useMemo(
+    () => colorModel.getHiddenFamilies(hidden, favorites),
+    [hidden, favorites],
+  );
 
   // Command dispatchers
   const onToggleFavorite = useCallback(
@@ -60,11 +76,7 @@ export function ColorExplorer() {
     [commandBus],
   );
 
-  const onView = useCallback((_id: string) => {
-    document.dispatchEvent(
-      new CustomEvent("sw:openModal", { detail: { colorId: _id } }),
-    );
-  }, []);
+  const onView = useCallback((id: string) => openModal(id), [openModal]);
 
   const favTitle =
     favoriteColors.length > 0

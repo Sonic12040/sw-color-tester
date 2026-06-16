@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
 import { TIMING } from "../../utils/config.js";
 import styles from "./Toast.module.css";
@@ -9,6 +16,23 @@ export interface ToastMessage {
   actionText?: string;
   onAction?: () => void;
 }
+
+// ── Context ─────────────────────────────────────────────────────────────────
+
+type ShowToastFn = (
+  message: string,
+  options?: Omit<ToastMessage, "id" | "message">,
+) => void;
+
+const ToastContext = createContext<ShowToastFn | null>(null);
+
+export function useToast(): ShowToastFn {
+  const fn = useContext(ToastContext);
+  if (!fn) throw new Error("useToast must be used inside <ToastProvider>");
+  return fn;
+}
+
+// ── Individual toast item ───────────────────────────────────────────────────
 
 interface ToastProps {
   toast: ToastMessage;
@@ -76,40 +100,38 @@ function ToastItem({ toast, onDismiss }: ToastProps) {
   );
 }
 
-// Global toast emitter
-type ToastListener = (toast: ToastMessage) => void;
-const listeners = new Set<ToastListener>();
+// ── Provider + container ────────────────────────────────────────────────────
 
-export const toast = {
-  show(message: string, options?: Omit<ToastMessage, "id" | "message">) {
-    const id = `toast-${Date.now()}-${Math.random().toString(36).slice(2)}`;
-    listeners.forEach((fn) => fn({ id, message, ...options }));
-  },
-};
-
-export function ToastContainer() {
+export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
-  useEffect(() => {
-    const listener: ToastListener = (t) => setToasts((prev) => [...prev, t]);
-    listeners.add(listener);
-    return () => {
-      listeners.delete(listener);
-    };
+  const show = useCallback<ShowToastFn>((message, options) => {
+    const id = `toast-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    setToasts((prev) => [...prev, { id, message, ...options }]);
   }, []);
 
   const dismiss = useCallback((id: string) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
-  if (toasts.length === 0) return null;
-
-  return createPortal(
-    <div className={styles.container} aria-label="Notifications">
-      {toasts.map((t) => (
-        <ToastItem key={t.id} toast={t} onDismiss={dismiss} />
-      ))}
-    </div>,
-    document.body,
+  return (
+    <ToastContext.Provider value={show}>
+      {children}
+      {toasts.length > 0 &&
+        createPortal(
+          <div className={styles.container} aria-label="Notifications">
+            {toasts.map((t) => (
+              <ToastItem key={t.id} toast={t} onDismiss={dismiss} />
+            ))}
+          </div>,
+          document.body,
+        )}
+    </ToastContext.Provider>
   );
+}
+
+// ToastContainer kept as a no-op re-export for backwards compatibility
+// (App.tsx renders it inside ToastProvider — the portal is now inside the provider).
+export function ToastContainer() {
+  return null;
 }

@@ -39,19 +39,17 @@ interface MiniTileProps {
 
 function MiniTile({ color, role, onClick }: MiniTileProps) {
   return (
-    <div
+    <button
+      type="button"
       className={styles.miniTile}
       style={{ background: hsl(color), color: contrastText(color.lrv) }}
-      role="button"
-      tabIndex={0}
       aria-label={`View ${color.name}`}
       onClick={() => onClick(color.id)}
-      onKeyDown={(e) => e.key === "Enter" && onClick(color.id)}
     >
       <div className={styles.miniRole}>{role}</div>
       <div className={styles.miniName}>{color.name}</div>
       <div className={styles.miniNumber}>SW {color.colorNumber}</div>
-    </div>
+    </button>
   );
 }
 
@@ -457,45 +455,51 @@ function ModalContent({ colorId, onClose, onNavigate }: ModalContentProps) {
   );
 }
 
-export function Modal() {
-  const [colorId, setColorId] = useState<string | null>(null);
+interface ModalProps {
+  colorId: string | null;
+  onClose: () => void;
+}
+
+export function Modal({ colorId, onClose }: ModalProps) {
   const [closing, setClosing] = useState(false);
+  const [activeId, setActiveId] = useState<string | null>(colorId);
 
+  // When a new colorId arrives, reset closing state and show it
   useEffect(() => {
-    const handler = (e: Event) => {
-      const id = (e as CustomEvent<{ colorId: string }>).detail.colorId;
+    if (colorId) {
       setClosing(false);
-      setColorId(id);
-    };
-    document.addEventListener("sw:openModal", handler);
-    return () => document.removeEventListener("sw:openModal", handler);
-  }, []);
-
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && colorId) close();
-    };
-    document.addEventListener("keydown", handler);
-    return () => document.removeEventListener("keydown", handler);
+      setActiveId(colorId);
+    }
   }, [colorId]);
 
   const close = useCallback(() => {
     setClosing(true);
     setTimeout(() => {
-      setColorId(null);
       setClosing(false);
+      onClose();
     }, 300);
-  }, []);
+  }, [onClose]);
 
+  // Navigate to a related color without closing
   const navigate = useCallback((id: string) => {
-    setColorId(id);
+    setActiveId(id);
   }, []);
 
-  if (!colorId) return null;
+  // Keyboard Escape
+  useEffect(() => {
+    if (!activeId) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [activeId, close]);
+
+  if (!activeId) return null;
 
   return createPortal(
     <div className={`${styles.modalWrapper} ${closing ? styles.closing : ""}`}>
-      <ModalContent colorId={colorId} onClose={close} onNavigate={navigate} />
+      <ModalContent colorId={activeId} onClose={close} onNavigate={navigate} />
     </div>,
     document.body,
   );

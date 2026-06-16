@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { AppContext } from "./context/AppContext.js";
 import { colorData } from "./data/palette.js";
 import { ColorModel } from "./models/ColorModel.js";
@@ -10,7 +10,7 @@ import { ClearFavoritesCommand, ClearHiddenCommand } from "./commands/index.js";
 import { Header } from "./components/Header/Header.js";
 import { ColorExplorer } from "./components/ColorExplorer/ColorExplorer.js";
 import { Modal } from "./components/Modal/Modal.js";
-import { ToastContainer } from "./components/Toast/Toast.js";
+import { ToastProvider, ToastContainer } from "./components/Toast/Toast.js";
 import { ConfirmDialogProvider } from "./components/ConfirmDialog/ConfirmDialog.js";
 
 // Singletons — created once outside the component tree
@@ -19,9 +19,19 @@ const appState = new AppState(colorModel);
 const commandBus = new CommandBus(colorModel, appState);
 const exportService = new ExportService();
 
-const ctxValue = { colorModel, appState, commandBus };
-
 function AppInner() {
+  const [modalColorId, setModalColorId] = useState<string | null>(null);
+
+  const openModal = useCallback(
+    (colorId: string) => setModalColorId(colorId),
+    [],
+  );
+  const closeModal = useCallback(() => setModalColorId(null), []);
+
+  const ctxValue = useMemo(
+    () => ({ colorModel, appState, commandBus, openModal }),
+    [openModal],
+  );
   const snapshot = useAppState(appState);
   const { favorites, hidden, lrvMin, lrvMax, neutralBg } = snapshot;
 
@@ -60,7 +70,7 @@ function AppInner() {
   }, [hidden.size]);
 
   return (
-    <>
+    <AppContext.Provider value={ctxValue}>
       <Header
         lrvMin={lrvMin}
         lrvMax={lrvMax}
@@ -79,18 +89,18 @@ function AppInner() {
         <ColorExplorer />
       </main>
 
-      <Modal />
+      <Modal colorId={modalColorId} onClose={closeModal} />
       <ToastContainer />
-    </>
+    </AppContext.Provider>
   );
 }
 
 export function App() {
   return (
-    <AppContext.Provider value={ctxValue}>
+    <ToastProvider>
       <ConfirmDialogProvider>
         <AppInner />
       </ConfirmDialogProvider>
-    </AppContext.Provider>
+    </ToastProvider>
   );
 }

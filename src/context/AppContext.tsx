@@ -7,6 +7,7 @@ export interface AppContextValue {
   colorModel: ColorModel;
   appState: AppState;
   commandBus: CommandBus;
+  openModal: (colorId: string) => void;
 }
 
 export const AppContext = createContext<AppContextValue | null>(null);

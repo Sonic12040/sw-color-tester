@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Color } from "../../../data/types.js";
 import { ColorTile, HiddenFamilyTile } from "../ColorTile/ColorTile.js";
 import { BulkActionsPanel } from "../BulkActionsPanel/BulkActionsPanel.js";
@@ -50,6 +50,12 @@ export function ColorAccordion({
   emptySubMessage,
 }: ColorAccordionProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
+
+  // Open automatically when the section transitions from empty to having content
+  // (e.g. Favorites accordion opening on first heart-click).
+  useEffect(() => {
+    if (defaultOpen) setIsOpen(true);
+  }, [defaultOpen]);
 
   const contentId = `${id}-content`;
   const headerId = `${id}-header`;

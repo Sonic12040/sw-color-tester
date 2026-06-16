@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { useSyncExternalStore } from "react";
 import type { AppState } from "../models/AppState.js";
 
 export interface AppSnapshot {
@@ -9,10 +9,19 @@ export interface AppSnapshot {
   neutralBg: boolean;
 }
 
+const EVENTS = [
+  "favoritesChanged",
+  "hiddenChanged",
+  "lrvChanged",
+  "neutralBgChanged",
+] as const;
+
 function snapshot(state: AppState): AppSnapshot {
   return {
-    favorites: new Set(state.favorites),
-    hidden: new Set(state.hidden),
+    // Return live references — useSyncExternalStore guarantees a new snapshot
+    // object on every notify(), so referential equality checks work correctly.
+    favorites: state.favorites,
+    hidden: state.hidden,
     lrvMin: state.lrvMin,
     lrvMax: state.lrvMax,
     neutralBg: state.neutralBg,
@@ -20,13 +29,11 @@ function snapshot(state: AppState): AppSnapshot {
 }
 
 export function useAppState(appState: AppState): AppSnapshot {
-  const [, forceUpdate] = useReducer((n: number) => n + 1, 0);
-
-  useEffect(() => {
-    const events = ["favoritesChanged", "hiddenChanged", "lrvChanged"] as const;
-    const unsubs = events.map((ev) => appState.on(ev, forceUpdate));
-    return () => unsubs.forEach((u) => u());
-  }, [appState]);
-
-  return snapshot(appState);
+  return useSyncExternalStore(
+    (notify) => {
+      const unsubs = EVENTS.map((ev) => appState.on(ev, notify));
+      return () => unsubs.forEach((u) => u());
+    },
+    () => snapshot(appState),
+  );
 }

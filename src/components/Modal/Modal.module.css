@@ -147,10 +147,12 @@
 }
 
 .miniTile {
+  border: none;
+  text-align: left;
+  cursor: pointer;
   border-radius: var(--radius-md);
   padding: 0.625rem;
   min-height: 80px;
-  cursor: pointer;
   display: flex;
   flex-direction: column;
   gap: 0.125rem;
