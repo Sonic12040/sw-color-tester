@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useState } from "react";
 import { AppContext } from "./context/AppContext.js";
 import { colorData } from "./data/palette.js";
 import { ColorModel } from "./models/ColorModel.js";
@@ -22,49 +22,37 @@ const exportService = new ExportService();
 function AppInner() {
   const [modalColorId, setModalColorId] = useState<string | null>(null);
 
-  const openModal = useCallback(
-    (colorId: string) => setModalColorId(colorId),
-    [],
-  );
-  const closeModal = useCallback(() => setModalColorId(null), []);
+  const openModal = (colorId: string) => setModalColorId(colorId);
+  const closeModal = () => setModalColorId(null);
 
-  const ctxValue = useMemo(
-    () => ({ colorModel, appState, commandBus, openModal }),
-    [openModal],
-  );
+  const ctxValue = { colorModel, appState, commandBus, openModal };
   const snapshot = useAppState(appState);
   const { favorites, hidden, lrvMin, lrvMax } = snapshot;
 
-  const lrvRange = useMemo(
-    () => ({ min: lrvMin, max: lrvMax }),
-    [lrvMin, lrvMax],
-  );
-  const visibleColors = useMemo(
-    () => colorModel.getVisibleColors(hidden, favorites, lrvRange),
-    [hidden, favorites, lrvRange],
-  );
+  const lrvRange = { min: lrvMin, max: lrvMax };
+  const visibleColors = colorModel.getVisibleColors(hidden, favorites, lrvRange);
 
-  const onLrvChange = useCallback((min: number, max: number) => {
+  const onLrvChange = (min: number, max: number) => {
     appState.setLrvRange(min, max);
-  }, []);
+  };
 
-  const onExportFavorites = useCallback(() => {
+  const onExportFavorites = () => {
     const favColors = colorModel.getFavoriteColors(favorites);
     if (favColors.length > 0) exportService.exportColors(favColors);
-  }, [favorites]);
+  };
 
-  const onClearFavorites = useCallback(async () => {
+  const onClearFavorites = async () => {
     if (favorites.size === 0) return;
     await commandBus.execute(new ClearFavoritesCommand());
-  }, [favorites.size]);
+  };
 
-  const onClearHidden = useCallback(async () => {
+  const onClearHidden = async () => {
     if (hidden.size === 0) return;
     await commandBus.execute(new ClearHiddenCommand());
-  }, [hidden.size]);
+  };
 
   return (
-    <AppContext.Provider value={ctxValue}>
+    <AppContext value={ctxValue}>
       <Header
         lrvMin={lrvMin}
         lrvMax={lrvMax}
@@ -83,7 +71,7 @@ function AppInner() {
 
       <Modal colorId={modalColorId} onClose={closeModal} />
       <ToastContainer />
-    </AppContext.Provider>
+    </AppContext>
   );
 }
 

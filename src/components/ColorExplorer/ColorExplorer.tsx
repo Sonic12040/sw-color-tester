@@ -1,4 +1,3 @@
-import { useCallback, useMemo } from "react";
 import { useAppContext } from "../../context/AppContext.js";
 import { useAppState } from "../../hooks/useAppState.js";
 import {
@@ -16,67 +15,23 @@ export function ColorExplorer() {
   const snapshot = useAppState(appState);
 
   const { favorites, hidden, lrvMin, lrvMax } = snapshot;
-  const lrvRange = useMemo(
-    () => ({ min: lrvMin, max: lrvMax }),
-    [lrvMin, lrvMax],
-  );
+  const lrvRange = { min: lrvMin, max: lrvMax };
 
   const designerPickIds = colorModel.getDesignerPickIds(); // stable — built once in constructor
-  const favoriteColors = useMemo(
-    () => colorModel.getFavoriteColors(favorites),
-    [favorites],
-  );
-  const hiddenColors = useMemo(
-    () => colorModel.getHiddenColors(hidden),
-    [hidden],
-  );
-  const visibleColors = useMemo(
-    () => colorModel.getVisibleColors(hidden, favorites, lrvRange),
-    [hidden, favorites, lrvRange],
-  );
-  const colorFamilies = useMemo(
-    () => colorModel.groupByFamily(visibleColors),
-    [visibleColors],
-  );
-  const sortedFamilies = useMemo(
-    () => colorModel.sortFamiliesByPriority([...colorFamilies.keys()]),
-    [colorFamilies],
-  );
-  const hiddenFamilies = useMemo(
-    () => colorModel.getHiddenFamilies(hidden, favorites),
-    [hidden, favorites],
-  );
+  const favoriteColors = colorModel.getFavoriteColors(favorites);
+  const hiddenColors = colorModel.getHiddenColors(hidden);
+  const visibleColors = colorModel.getVisibleColors(hidden, favorites, lrvRange);
+  const colorFamilies = colorModel.groupByFamily(visibleColors);
+  const sortedFamilies = colorModel.sortFamiliesByPriority([...colorFamilies.keys()]);
+  const hiddenFamilies = colorModel.getHiddenFamilies(hidden, favorites);
 
   // Command dispatchers
-  const onToggleFavorite = useCallback(
-    (id: string) => commandBus.execute(new ToggleFavoriteCommand(id)),
-    [commandBus],
-  );
-
-  const onToggleHidden = useCallback(
-    (id: string) => commandBus.execute(new ToggleHiddenCommand(id)),
-    [commandBus],
-  );
-
-  const onFavoriteAll = useCallback(
-    (groupId: string, groupName: string) =>
-      commandBus.execute(new BulkFavoriteCommand(groupId, groupName)),
-    [commandBus],
-  );
-
-  const onHideAll = useCallback(
-    (groupId: string, groupName: string) =>
-      commandBus.execute(new BulkHideCommand(groupId, groupName)),
-    [commandBus],
-  );
-
-  const onUnhideFamily = useCallback(
-    (familyName: string) =>
-      commandBus.execute(new UnhideGroupCommand(familyName)),
-    [commandBus],
-  );
-
-  const onView = useCallback((id: string) => openModal(id), [openModal]);
+  const onToggleFavorite = (id: string) => commandBus.execute(new ToggleFavoriteCommand(id));
+  const onToggleHidden = (id: string) => commandBus.execute(new ToggleHiddenCommand(id));
+  const onFavoriteAll = (groupId: string, groupName: string) => commandBus.execute(new BulkFavoriteCommand(groupId, groupName));
+  const onHideAll = (groupId: string, groupName: string) => commandBus.execute(new BulkHideCommand(groupId, groupName));
+  const onUnhideFamily = (familyName: string) => commandBus.execute(new UnhideGroupCommand(familyName));
+  const onView = (id: string) => openModal(id);
 
   const favTitle =
     favoriteColors.length > 0
