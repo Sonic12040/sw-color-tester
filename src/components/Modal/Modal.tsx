@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { Color } from "../../data/types.js";
 import {
@@ -449,45 +449,75 @@ interface ModalProps {
 }
 
 export function Modal({ colorId, onClose }: ModalProps) {
+  const { openModal } = useAppContext();
   const [closing, setClosing] = useState(false);
-  const [activeId, setActiveId] = useState<string | null>(colorId);
+  // Holds the last non-null colorId so we can display it during the close animation
+  // even after the parent has cleared colorId.
+  const displayedIdRef = useRef<string | null>(colorId);
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // When a new colorId arrives, reset closing state and show it
+  // Keep displayedIdRef current whenever a new color is opened.
+  // Do this synchronously during render (safe — ref updates don't cause re-renders).
+  if (colorId) {
+    displayedIdRef.current = colorId;
+  }
+
+  // Reset closing state when the parent opens a new (or same) color.
   useEffect(() => {
     if (colorId) {
       setClosing(false);
-      setActiveId(colorId);
+      if (closeTimerRef.current) {
+        clearTimeout(closeTimerRef.current);
+        closeTimerRef.current = null;
+      }
     }
   }, [colorId]);
 
   const close = useCallback(() => {
+    // Ignore if a close is already in flight.
+    if (closeTimerRef.current) return;
     setClosing(true);
-    setTimeout(() => {
-      setClosing(false);
+    closeTimerRef.current = setTimeout(() => {
+      closeTimerRef.current = null;
       onClose();
     }, 300);
   }, [onClose]);
 
-  // Navigate to a related color without closing
-  const navigate = useCallback((id: string) => {
-    setActiveId(id);
+  // Clean up the timer if the component unmounts unexpectedly.
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    };
   }, []);
 
-  // Keyboard Escape
+  // Keyboard Escape — keyed on colorId (the prop) so the listener is removed as
+  // soon as the parent considers the modal closed.
   useEffect(() => {
-    if (!activeId) return;
+    if (!colorId) return;
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") close();
     };
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
-  }, [activeId, close]);
+  }, [colorId, close]);
 
-  if (!activeId) return null;
+  // Reset closing once the parent's colorId becomes null so next open starts clean.
+  useEffect(() => {
+    if (!colorId) setClosing(false);
+  }, [colorId]);
+
+  // Show if the parent says open, OR if we're still playing the close animation.
+  const shouldRender = colorId !== null || closing;
+  if (!shouldRender || !displayedIdRef.current) return null;
 
   return createPortal(
     <div className={`${styles.modalWrapper} ${closing ? styles.closing : ""}`}>
-      <ModalContent colorId={activeId} onClose={close} onNavigate={navigate} />
+      <ModalContent
+        colorId={displayedIdRef.current}
+        onClose={close}
+        // Navigation updates the parent's colorId directly — single source of truth.
+        onNavigate={openModal}
+      />
     </div>,
     document.body,
   );
