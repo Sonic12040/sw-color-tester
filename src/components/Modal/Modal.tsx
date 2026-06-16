@@ -7,10 +7,8 @@ import {
 } from "../../utils/config.js";
 import { useAppContext } from "../../context/AppContext.js";
 import { useAppState } from "../../hooks/useAppState.js";
-import {
-  ToggleFavoriteCommand,
-  ToggleHiddenCommand,
-} from "../../commands/index.js";
+import { useFavorites } from "../../context/FavoritesContext.js";
+import { ToggleHiddenCommand } from "../../commands/index.js";
 import styles from "./Modal.module.css";
 
 const COORDINATING_ROLES = ["Accent Wall", "Trim Color", "Coordinating"];
@@ -62,11 +60,12 @@ interface ModalContentProps {
 function ModalContent({ colorId, onClose, onNavigate }: ModalContentProps) {
   const { colorModel, appState, commandBus } = useAppContext();
   const snapshot = useAppState(appState);
+  const { favorites, toggleFavorite } = useFavorites();
   const color = colorModel.getColorById(colorId);
 
   if (!color) return null;
 
-  const isFavorite = snapshot.favorites.has(color.id);
+  const isFavorite = favorites.has(color.id);
   const isHidden = snapshot.hidden.has(color.id);
 
   const bg = hsl(color);
@@ -319,9 +318,7 @@ function ModalContent({ colorId, onClose, onNavigate }: ModalContentProps) {
           <button
             type="button"
             className={`${styles.actionBtn} ${isFavorite ? styles.actionBtnActive : ""}`}
-            onClick={() =>
-              commandBus.execute(new ToggleFavoriteCommand(color.id))
-            }
+            onClick={() => toggleFavorite(color.id)}
           >
             <svg
               width="20"

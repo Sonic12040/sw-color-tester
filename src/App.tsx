@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { AppContext } from "./context/AppContext.js";
+import { FavoritesProvider, useFavorites } from "./context/FavoritesContext.js";
 import { colorData } from "./data/palette.js";
 import { ColorModel } from "./models/ColorModel.js";
 import { AppState } from "./models/AppState.js";
 import { CommandBus } from "./utils/CommandBus.js";
 import { ExportService } from "./utils/ExportService.js";
 import { useAppState } from "./hooks/useAppState.js";
-import { ClearFavoritesCommand, ClearHiddenCommand } from "./commands/index.js";
+import { ClearHiddenCommand } from "./commands/index.js";
 import { Header } from "./components/Header/Header.js";
 import { ColorExplorer } from "./components/ColorExplorer/ColorExplorer.js";
 import { Modal } from "./components/Modal/Modal.js";
@@ -27,7 +28,8 @@ function AppInner() {
 
   const ctxValue = { colorModel, appState, commandBus, openModal };
   const snapshot = useAppState(appState);
-  const { favorites, hidden, lrvMin, lrvMax } = snapshot;
+  const { hidden, lrvMin, lrvMax } = snapshot;
+  const { favorites, clearFavorites } = useFavorites();
 
   const lrvRange = { min: lrvMin, max: lrvMax };
   const visibleColors = colorModel.getVisibleColors(hidden, favorites, lrvRange);
@@ -43,7 +45,7 @@ function AppInner() {
 
   const onClearFavorites = async () => {
     if (favorites.size === 0) return;
-    await commandBus.execute(new ClearFavoritesCommand());
+    clearFavorites();
   };
 
   const onClearHidden = async () => {
@@ -77,10 +79,12 @@ function AppInner() {
 
 export function App() {
   return (
-    <ToastProvider>
-      <ConfirmDialogProvider>
-        <AppInner />
-      </ConfirmDialogProvider>
-    </ToastProvider>
+    <FavoritesProvider>
+      <ToastProvider>
+        <ConfirmDialogProvider>
+          <AppInner />
+        </ConfirmDialogProvider>
+      </ToastProvider>
+    </FavoritesProvider>
   );
 }

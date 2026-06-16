@@ -1,9 +1,8 @@
 import { useAppContext } from "../../context/AppContext.js";
 import { useAppState } from "../../hooks/useAppState.js";
+import { useFavorites } from "../../context/FavoritesContext.js";
 import {
-  ToggleFavoriteCommand,
   ToggleHiddenCommand,
-  BulkFavoriteCommand,
   BulkHideCommand,
   UnhideGroupCommand,
 } from "../../commands/index.js";
@@ -13,8 +12,9 @@ import styles from "./ColorExplorer.module.css";
 export function ColorExplorer() {
   const { colorModel, appState, commandBus, openModal } = useAppContext();
   const snapshot = useAppState(appState);
+  const { favorites, toggleFavorite, toggleBulkFavorite } = useFavorites();
 
-  const { favorites, hidden, lrvMin, lrvMax } = snapshot;
+  const { hidden, lrvMin, lrvMax } = snapshot;
   const lrvRange = { min: lrvMin, max: lrvMax };
 
   const designerPickIds = colorModel.getDesignerPickIds(); // stable — built once in constructor
@@ -26,9 +26,12 @@ export function ColorExplorer() {
   const hiddenFamilies = colorModel.getHiddenFamilies(hidden, favorites);
 
   // Command dispatchers
-  const onToggleFavorite = (id: string) => commandBus.execute(new ToggleFavoriteCommand(id));
+  const onToggleFavorite = (id: string) => toggleFavorite(id);
   const onToggleHidden = (id: string) => commandBus.execute(new ToggleHiddenCommand(id));
-  const onFavoriteAll = (groupId: string, groupName: string) => commandBus.execute(new BulkFavoriteCommand(groupId, groupName));
+  const onFavoriteAll = (_groupId: string, groupName: string) => {
+    const groupColors = colorModel.getFamilyColors(groupName);
+    toggleBulkFavorite(groupColors.map((c) => c.id));
+  };
   const onHideAll = (groupId: string, groupName: string) => commandBus.execute(new BulkHideCommand(groupId, groupName));
   const onUnhideFamily = (familyName: string) => commandBus.execute(new UnhideGroupCommand(familyName));
   const onView = (id: string) => openModal(id);

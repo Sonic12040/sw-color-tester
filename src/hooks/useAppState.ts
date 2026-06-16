@@ -2,14 +2,12 @@ import { useSyncExternalStore } from "react";
 import type { AppState } from "../models/AppState.js";
 
 export interface AppSnapshot {
-  favorites: Set<string>;
   hidden: Set<string>;
   lrvMin: number;
   lrvMax: number;
 }
 
 const EVENTS = [
-  "favoritesChanged",
   "hiddenChanged",
   "lrvChanged",
 ] as const;
@@ -28,7 +26,6 @@ function getSnapshot(state: AppState): AppSnapshot {
   const prev = snapshotCache.get(state);
   if (
     prev &&
-    prev.favorites === state.favorites &&
     prev.hidden === state.hidden &&
     prev.lrvMin === state.lrvMin &&
     prev.lrvMax === state.lrvMax
@@ -36,7 +33,6 @@ function getSnapshot(state: AppState): AppSnapshot {
     return prev;
   }
   const next: AppSnapshot = {
-    favorites: state.favorites,
     hidden: state.hidden,
     lrvMin: state.lrvMin,
     lrvMax: state.lrvMax,
