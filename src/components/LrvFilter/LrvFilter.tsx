@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TIMING } from "../../utils/config.js";
 import styles from "./LrvFilter.module.css";
 
@@ -29,37 +29,31 @@ export function LrvFilter({
     setLocalMax(lrvMax);
   }, [lrvMax]);
 
-  const handleMinChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const val = Math.min(Number(e.target.value), localMax);
-      setLocalMin(val);
-      if (debounceRef.current) clearTimeout(debounceRef.current);
-      debounceRef.current = setTimeout(
-        () => onChange(val, localMax),
-        TIMING.LRV_DEBOUNCE_MS,
-      );
-    },
-    [localMax, onChange],
-  );
+  const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = Math.min(Number(e.target.value), localMax);
+    setLocalMin(val);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(
+      () => onChange(val, localMax),
+      TIMING.LRV_DEBOUNCE_MS,
+    );
+  };
 
-  const handleMaxChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const val = Math.max(Number(e.target.value), localMin);
-      setLocalMax(val);
-      if (debounceRef.current) clearTimeout(debounceRef.current);
-      debounceRef.current = setTimeout(
-        () => onChange(localMin, val),
-        TIMING.LRV_DEBOUNCE_MS,
-      );
-    },
-    [localMin, onChange],
-  );
+  const handleMaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = Math.max(Number(e.target.value), localMin);
+    setLocalMax(val);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(
+      () => onChange(localMin, val),
+      TIMING.LRV_DEBOUNCE_MS,
+    );
+  };
 
-  const handleReset = useCallback(() => {
+  const handleReset = () => {
     setLocalMin(0);
     setLocalMax(100);
     onChange(0, 100);
-  }, [onChange]);
+  };
 
   const isActive = localMin > 0 || localMax < 100;
 
