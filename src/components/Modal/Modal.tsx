@@ -258,53 +258,41 @@ function ModalContent({ colorId, onClose, onNavigate }: ModalContentProps) {
           )}
 
           {/* HSL breakdown */}
-          <div className={styles.section}>
+          <div className={styles.hslSection}>
             <h3 className={styles.sectionTitle}>HSL Color Breakdown</h3>
-            <div className={styles.hslItem}>
-              <span>Hue</span>
-              <span>{hue}°</span>
-              <div
-                className={styles.hslBar}
-                style={{
-                  background: `linear-gradient(to right, hsl(0,100%,50%),hsl(60,100%,50%),hsl(120,100%,50%),hsl(180,100%,50%),hsl(240,100%,50%),hsl(300,100%,50%),hsl(360,100%,50%))`,
-                }}
-              >
-                <div
-                  className={styles.hslIndicator}
-                  style={{ left: `${color.hue * 100}%` }}
-                />
+            {[
+              {
+                name: "Hue",
+                value: `${hue}°`,
+                pct: color.hue * 100,
+                bg: `linear-gradient(to right, hsl(0,100%,50%),hsl(60,100%,50%),hsl(120,100%,50%),hsl(180,100%,50%),hsl(240,100%,50%),hsl(300,100%,50%),hsl(360,100%,50%))`,
+              },
+              {
+                name: "Saturation",
+                value: `${sat}%`,
+                pct: sat,
+                bg: `linear-gradient(to right, hsl(${hue},0%,50%), hsl(${hue},100%,50%))`,
+              },
+              {
+                name: "Lightness",
+                value: `${lig}%`,
+                pct: lig,
+                bg: `linear-gradient(to right, hsl(${hue},${sat}%,0%), hsl(${hue},${sat}%,50%), hsl(${hue},${sat}%,100%))`,
+              },
+            ].map(({ name, value, pct, bg }) => (
+              <div key={name} className={styles.hslItem}>
+                <div className={styles.hslItemLabel}>
+                  <span className={styles.hslItemName}>{name}</span>
+                  <span className={styles.hslItemValue}>{value}</span>
+                </div>
+                <div className={styles.hslBar} style={{ background: bg }}>
+                  <div
+                    className={styles.hslIndicator}
+                    style={{ left: `${pct}%` }}
+                  />
+                </div>
               </div>
-            </div>
-            <div className={styles.hslItem}>
-              <span>Saturation</span>
-              <span>{sat}%</span>
-              <div
-                className={styles.hslBar}
-                style={{
-                  background: `linear-gradient(to right, hsl(${hue},0%,50%), hsl(${hue},100%,50%))`,
-                }}
-              >
-                <div
-                  className={styles.hslIndicator}
-                  style={{ left: `${sat}%` }}
-                />
-              </div>
-            </div>
-            <div className={styles.hslItem}>
-              <span>Lightness</span>
-              <span>{lig}%</span>
-              <div
-                className={styles.hslBar}
-                style={{
-                  background: `linear-gradient(to right, hsl(${hue},${sat}%,0%), hsl(${hue},${sat}%,50%), hsl(${hue},${sat}%,100%))`,
-                }}
-              >
-                <div
-                  className={styles.hslIndicator}
-                  style={{ left: `${lig}%` }}
-                />
-              </div>
-            </div>
+            ))}
           </div>
 
           {/* Technical details */}

@@ -1,92 +1,121 @@
 .container {
   position: fixed;
-  bottom: 1.5rem;
+  bottom: var(--spacing-6);
   left: 50%;
   transform: translateX(-50%);
-  z-index: var(--z-toast, 9000);
+  z-index: var(--z-toast);
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--spacing-2);
   pointer-events: none;
 }
 
 .toast {
-  background: var(--color-surface-inverse, #1f2937);
-  color: var(--color-text-inverse, #f9fafb);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-lg);
-  min-width: 280px;
-  max-width: 480px;
+  background: var(--neutral-900);
+  color: var(--neutral-0);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-2xl);
+  padding: var(--spacing-4) var(--spacing-5);
+  min-width: 320px;
+  max-width: 560px;
   pointer-events: all;
-  animation: slideUp 0.25s ease forwards;
+  opacity: 0;
+  animation: toastSlideIn var(--transition-medium) forwards;
 }
 
 .hiding {
-  animation: slideDown 0.25s ease forwards;
+  animation: toastSlideOut var(--transition-medium) forwards;
 }
 
 .content {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
+  gap: clamp(0.75rem, 0.583rem + 0.444vw, 1rem);
 }
 
 .message {
   flex: 1;
   margin: 0;
-  font-size: 0.875rem;
+  font-size: clamp(0.875rem, 0.792rem + 0.222vw, 1rem);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
 }
 
 .action {
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: inherit;
-  border-radius: var(--radius-sm);
-  padding: 0.25rem 0.625rem;
-  font-size: 0.8125rem;
+  background: var(--blue-600);
+  color: var(--neutral-0);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-2) var(--spacing-4);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
   cursor: pointer;
+  transition: background var(--transition-fast);
   white-space: nowrap;
 }
 
 .action:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--blue-700);
+}
+
+.action:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
 }
 
 .close {
   background: transparent;
   border: none;
-  color: inherit;
+  color: var(--neutral-400);
+  padding: var(--spacing-1);
   cursor: pointer;
-  padding: 0.125rem;
-  opacity: 0.7;
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: color var(--transition-fast), background var(--transition-fast);
 }
 
 .close:hover {
-  opacity: 1;
+  color: var(--neutral-0);
+  background: rgba(255, 255, 255, 0.1);
 }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(0.5rem);
+.close:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+@media (max-width: 599px) {
+  .container {
+    left: var(--spacing-4);
+    right: var(--spacing-4);
+    bottom: var(--spacing-4);
+    transform: none;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .toast {
+    min-width: auto;
+    max-width: none;
   }
 }
 
-@keyframes slideDown {
-  from {
-    opacity: 1;
-    transform: translateY(0);
+@media (max-width: 399px) {
+  .toast {
+    padding: var(--spacing-3) var(--spacing-4);
   }
-  to {
-    opacity: 0;
-    transform: translateY(0.5rem);
+
+  .message {
+    font-size: var(--font-size-xs);
   }
+}
+
+@keyframes toastSlideIn {
+  from { opacity: 0; transform: translateY(100px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes toastSlideOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(100px); }
 }

@@ -1,16 +1,8 @@
 .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 2.67vw, 2rem);
   width: 100%;
-}
-
-.sectionActions {
-  display: flex;
-  gap: 0.5rem;
-  padding: 0.5rem 0.75rem;
-}
-
-.actionBtn {
-  composes: btn btn-secondary from global;
-  font-size: 0.8125rem;
 }
 
 .actionBtnDanger {

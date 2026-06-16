@@ -85,7 +85,7 @@ function AppInner() {
         onClearHidden={onClearHidden}
       />
 
-      <main className="accordion" aria-label="Color families accordion">
+      <main aria-label="Color families accordion">
         <ColorExplorer />
       </main>
 

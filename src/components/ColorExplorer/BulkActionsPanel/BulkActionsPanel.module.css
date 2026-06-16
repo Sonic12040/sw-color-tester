@@ -1,35 +1,47 @@
 .panel {
-  padding: 0.5rem 0.75rem;
-  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--spacing-4);
+  padding: clamp(0.75rem, 0.214rem + 2.29vw, 1.5rem);
   background: var(--color-surface-secondary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-secondary);
 }
 
 .container {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: clamp(0.75rem, 0.214rem + 2.29vw, 1.5rem);
   flex-wrap: wrap;
 }
 
 .label {
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
   color: var(--color-text-secondary);
 }
 
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.375rem;
-  padding: 0.25rem 0.625rem;
-  font-size: 0.75rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-4);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--button-border-radius);
   background: var(--color-surface-primary);
   color: var(--color-text-primary);
   cursor: pointer;
+  transition: var(--button-transition);
+  min-height: 36px;
+  white-space: nowrap;
 }
 
 .btn:hover {
-  background: var(--color-surface-tertiary);
+  background: var(--color-surface-hover);
+  border-color: var(--color-border-primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
 }

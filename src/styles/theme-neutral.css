@@ -1,0 +1,36 @@
+/* ============================================
+   NEUTRAL EVALUATION BACKGROUND
+   Munsell N5 — eliminates simultaneous contrast
+   so users can evaluate true colour temperature.
+
+   Sets CSS custom properties that component modules
+   consume via var(--nb-*, fallback) pattern.
+   ============================================ */
+
+body.neutral-bg {
+  background: var(--color-surface-neutral);
+
+  /* Surface / border */
+  --nb-surface: var(--color-surface-neutral);
+  --nb-border: rgba(255, 255, 255, 0.2);
+
+  /* Text */
+  --nb-text: var(--neutral-0);
+  --nb-text-secondary: rgba(255, 255, 255, 0.85);
+  --nb-text-tertiary: rgba(255, 255, 255, 0.7);
+  --nb-text-separator: rgba(255, 255, 255, 0.5);
+
+  /* Buttons */
+  --nb-btn-bg: rgba(255, 255, 255, 0.12);
+  --nb-btn-hover-bg: rgba(255, 255, 255, 0.22);
+  --nb-btn-text: var(--neutral-0);
+  --nb-btn-border: rgba(255, 255, 255, 0.25);
+  --nb-btn-hover-border: rgba(255, 255, 255, 0.35);
+
+  /* Inputs / track */
+  --nb-track-bg: rgba(255, 255, 255, 0.2);
+
+  /* Toolbar panel */
+  --nb-panel-bg: rgba(0, 0, 0, 0.15);
+  --nb-panel-border: rgba(255, 255, 255, 0.2);
+}

@@ -1,17 +1,22 @@
 @layer tokens, base, utilities, components, theme, responsive, a11y;
 
 @import "./tokens.css" layer(tokens);
+@import "./a11y.css" layer(a11y);
+@import "./theme-neutral.css" layer(theme);
 
-/* Import all existing CSS files */
-@import "../../css/buttons.css";
-@import "../../css/utilities.css";
-@import "../../css/header.css";
-@import "../../css/lrv-filter.css";
-@import "../../css/accordion.css";
-@import "../../css/color-tile.css";
-@import "../../css/modal.css";
-@import "../../css/confirm.css";
-@import "../../css/toast.css";
-@import "../../css/theme-neutral.css";
-@import "../../css/responsive.css";
-@import "../../css/a11y.css";
+/* Base reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  font-family: Roboto, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--color-surface-primary);
+  color: var(--color-text-primary);
+}

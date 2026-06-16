@@ -1,42 +1,74 @@
 .filter {
-  padding: 0.75rem 1rem;
+  padding: var(--spacing-3) var(--spacing-4);
 }
 
 .header {
   display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-1);
   flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
 }
 
 .title {
-  font-size: 0.9375rem;
-  font-weight: 600;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--nb-text-tertiary, var(--color-text-secondary));
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   margin: 0;
+  line-height: var(--line-height-tight);
 }
 
 .rangeLabel {
-  font-size: 0.875rem;
-  font-family: var(--font-mono);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  font-variant-numeric: tabular-nums;
+}
+
+.separator {
+  color: var(--nb-text-separator, var(--color-text-tertiary));
+  font-size: var(--font-size-sm);
+}
+
+.value {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--nb-text, var(--color-text-primary));
+  min-width: 20px;
+  line-height: var(--line-height-tight);
+}
+
+.value:last-child {
+  text-align: right;
 }
 
 .count {
-  font-size: 0.75rem;
-  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  color: var(--nb-text-tertiary, var(--color-text-secondary));
+  line-height: var(--line-height-tight);
   flex: 1;
 }
 
 .reset {
-  font-size: 0.75rem;
-  padding: 0.125rem 0.5rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  background: transparent;
+  margin-left: auto;
+  background: none;
+  border: 1px solid var(--nb-reset-border, var(--color-border-primary));
+  border-radius: var(--button-border-radius);
+  padding: var(--spacing-1) var(--spacing-3);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--nb-text-tertiary, var(--color-text-secondary));
   cursor: pointer;
+  transition: var(--button-transition);
+  min-height: 32px;
+  white-space: nowrap;
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--transition-fast);
+  transition:
+    opacity var(--transition-fast),
+    background-color var(--transition-fast);
 }
 
 .resetVisible {
@@ -44,9 +76,20 @@
   pointer-events: auto;
 }
 
+.reset:hover {
+  background: var(--nb-btn-bg, var(--color-surface-hover));
+  color: var(--nb-text, var(--color-text-primary));
+  border-color: var(--nb-btn-border, var(--color-border-secondary));
+}
+
+.reset:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
 .trackContainer {
   position: relative;
-  height: 1.5rem;
+  height: 36px;
   display: flex;
   align-items: center;
 }
@@ -55,17 +98,22 @@
   position: absolute;
   left: 0;
   right: 0;
-  height: 4px;
-  background: var(--color-border);
-  border-radius: 2px;
+  height: 8px;
+  background: var(--nb-track-bg, var(--neutral-200));
+  border-radius: 4px;
+  pointer-events: none;
 }
 
 .rangeFill {
   position: absolute;
-  top: 0;
   height: 100%;
-  background: var(--color-primary, #0066cc);
-  border-radius: 2px;
+  background: var(--color-primary);
+  border-radius: 4px;
+  left: 0%;
+  right: 0%;
+  transition:
+    left 0.05s ease,
+    right 0.05s ease;
 }
 
 .input {
@@ -80,22 +128,38 @@
 
 .input::-webkit-slider-thumb {
   appearance: none;
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
-  background: var(--color-primary, #0066cc);
+  background: var(--color-primary);
   pointer-events: all;
   cursor: pointer;
+  border: 2px solid var(--color-surface-primary);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.input::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: var(--shadow-md);
 }
 
 .input::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
-  background: var(--color-primary, #0066cc);
+  background: var(--color-primary);
   pointer-events: all;
   cursor: pointer;
-  border: none;
+  border: 2px solid var(--color-surface-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.input:focus-visible::-webkit-slider-thumb {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
 }
 
 .inputMin {
