@@ -90,8 +90,36 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--spacing-4);
+}
+
+/* 400–599px: 3 columns */
+@media (min-width: 400px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 600–899px: 4 columns */
+@media (min-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* 900–1199px: 5 columns */
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* ≥ 1200px: 6 columns */
+@media (min-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
 }
 
 .empty {
