@@ -150,17 +150,6 @@ export const DATA_ATTRIBUTES = {
   NAME: "data-name",
 };
 
-// URL parameter names
-export const URL_PARAMS = {
-  VERSION: "v",
-  FAVORITES: "f",
-  HIDDEN: "h",
-  SCROLL: "scroll",
-  COLOR: "color",
-  LRV_MIN: "lrvMin",
-  LRV_MAX: "lrvMax",
-};
-
 // LRV (Light Reflectance Value) thresholds for dark/medium/light classification
 export const LRV_THRESHOLDS = {
   DARK: 30,
