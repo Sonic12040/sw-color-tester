@@ -4,19 +4,21 @@
 @import "./a11y.css" layer(a11y);
 @import "./theme-neutral.css" layer(theme);
 
-/* Base reset */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+@layer base {
+  /* Base reset */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
-* {
-  font-family: Roboto, sans-serif;
-}
+  * {
+    font-family: Roboto, sans-serif;
+  }
 
-body {
-  margin: 0;
-  background: var(--color-surface-primary);
-  color: var(--color-text-primary);
+  body {
+    margin: 0;
+    background: var(--color-surface-neutral);
+    color: var(--color-text-primary);
+  }
 }
