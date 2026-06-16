@@ -1,4 +1,4 @@
-import { createContext, use } from "react";
+import { createContext, useContext, useMemo } from "react";
 import { useSet, type SetActions } from "../hooks/useSet.js";
 
 export interface FavoritesContextValue {
@@ -12,7 +12,7 @@ export interface FavoritesContextValue {
 export const FavoritesContext = createContext<FavoritesContextValue | null>(null);
 
 export function useFavorites(): FavoritesContextValue {
-  const ctx = use(FavoritesContext);
+  const ctx = useContext(FavoritesContext);
   if (!ctx) {
     throw new Error("useFavorites must be used inside <FavoritesProvider>");
   }
@@ -31,13 +31,13 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const value: FavoritesContextValue = {
+  const value = useMemo<FavoritesContextValue>(() => ({
     favorites,
     actions,
     toggleFavorite: actions.toggle,
     clearFavorites: actions.clear,
     toggleBulkFavorite,
-  };
+  }), [favorites, actions]);
 
   return (
     <FavoritesContext.Provider value={value}>

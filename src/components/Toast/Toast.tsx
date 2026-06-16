@@ -1,7 +1,7 @@
 import {
   createContext,
   useCallback,
-  use,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -27,7 +27,7 @@ type ShowToastFn = (
 const ToastContext = createContext<ShowToastFn | null>(null);
 
 export function useToast(): ShowToastFn {
-  const fn = use(ToastContext);
+  const fn = useContext(ToastContext);
   if (!fn) throw new Error("useToast must be used inside <ToastProvider>");
   return fn;
 }
@@ -115,7 +115,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <ToastContext value={show}>
+    <ToastContext.Provider value={show}>
       {children}
       {toasts.length > 0 &&
         createPortal(
@@ -126,7 +126,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
           </div>,
           document.body,
         )}
-    </ToastContext>
+    </ToastContext.Provider>
   );
 }
 

@@ -54,7 +54,7 @@ function AppInner() {
   };
 
   return (
-    <AppContext value={ctxValue}>
+    <AppContext.Provider value={ctxValue}>
       <Header
         lrvMin={lrvMin}
         lrvMax={lrvMax}
@@ -73,7 +73,7 @@ function AppInner() {
 
       <Modal colorId={modalColorId} onClose={closeModal} />
       <ToastContainer />
-    </AppContext>
+    </AppContext.Provider>
   );
 }
 

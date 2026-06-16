@@ -1,4 +1,4 @@
-import { createContext, use, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import styles from "./ConfirmDialog.module.css";
 
@@ -14,7 +14,7 @@ type ConfirmFn = (options: ConfirmOptions) => Promise<boolean>;
 const ConfirmContext = createContext<ConfirmFn | null>(null);
 
 export function useConfirmDialog(): ConfirmFn {
-  const fn = use(ConfirmContext);
+  const fn = useContext(ConfirmContext);
   if (!fn)
     throw new Error(
       "useConfirmDialog must be used inside <ConfirmDialogProvider>",
@@ -53,7 +53,7 @@ export function ConfirmDialogProvider({
   };
 
   return (
-    <ConfirmContext value={confirm}>
+    <ConfirmContext.Provider value={confirm}>
       {children}
       {dialog &&
         createPortal(
@@ -72,7 +72,7 @@ export function ConfirmDialogProvider({
               <div className={styles.body}>
                 <p className={styles.message}>{dialog.options.message}</p>
               </div>
-              <div className={styles.actions}>
+              <div className={styles.footer}>
                 <button
                   type="button"
                   className={styles.cancelBtn}
@@ -84,7 +84,7 @@ export function ConfirmDialogProvider({
                   type="button"
                   className={styles.confirmBtn}
                   onClick={() => close(true)}
-                  autoFocus
+                  ref={confirmBtnRef}
                 >
                   {dialog.options.confirmLabel ?? "Confirm"}
                 </button>
@@ -93,6 +93,6 @@ export function ConfirmDialogProvider({
           </div>,
           document.body,
         )}
-    </ConfirmContext>
+    </ConfirmContext.Provider>
   );
 }
