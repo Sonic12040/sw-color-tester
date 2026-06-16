@@ -1,0 +1,100 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header, 100);
+  background: var(--color-surface-primary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+}
+
+.title {
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  font-weight: 700;
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.toggle {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.375rem;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-primary);
+}
+
+.toggle:hover {
+  background: var(--color-surface-secondary);
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 22px;
+}
+
+.hamburgerLine {
+  display: block;
+  height: 2px;
+  background: currentColor;
+  border-radius: 1px;
+}
+
+.toolbarPanel {
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface-secondary);
+}
+
+.toolbarContent {
+  padding: 0.5rem 0;
+}
+
+.toolbarSection {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.toolbarSection:last-child {
+  border-bottom: none;
+}
+
+.toolbarActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+}
+
+.actionBtn {
+  padding: 0.375rem 0.875rem;
+  font-size: 0.875rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-primary);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+.actionBtn:hover:not(:disabled) {
+  background: var(--color-surface-tertiary);
+}
+
+.actionBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.actionBtnPressed {
+  background: var(--color-primary, #0066cc);
+  border-color: var(--color-primary, #0066cc);
+  color: white;
+}

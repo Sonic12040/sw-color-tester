@@ -1,0 +1,98 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: var(--blur-md);
+  z-index: calc(var(--z-modal-backdrop) + 100);
+  padding: clamp(0.75rem, 2.67vw, 1rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  animation: fadeIn var(--transition-medium) forwards;
+}
+
+.overlay.closing {
+  animation: fadeOut var(--transition-medium) forwards;
+}
+
+.overlay.closing .dialog {
+  animation: scaleOut var(--transition-medium) forwards;
+}
+
+.dialog {
+  background: var(--color-surface-primary);
+  border-radius: var(--radius-lg);
+  max-width: min(480px, 100%);
+  width: 100%;
+  box-shadow: var(--shadow-2xl);
+  transform: scale(0.9);
+  animation: scaleIn var(--transition-medium) forwards;
+}
+
+.header {
+  padding: 1.25rem 1.5rem 0.5rem;
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.body {
+  padding: 0.5rem 1.5rem;
+}
+
+.message {
+  margin: 0;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem 1.25rem;
+}
+
+.cancelBtn {
+  composes: btn btn-secondary from global;
+}
+
+.confirmBtn {
+  composes: btn from global;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes scaleIn {
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleOut {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}

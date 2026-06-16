@@ -1,0 +1,19 @@
+.container {
+  width: 100%;
+}
+
+.sectionActions {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.actionBtn {
+  composes: btn btn-secondary from global;
+  font-size: 0.8125rem;
+}
+
+.actionBtnDanger {
+  color: var(--color-error, #dc2626);
+  border-color: var(--color-error, #dc2626);
+}

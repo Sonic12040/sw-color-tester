@@ -1,0 +1,96 @@
+import { useCallback, useMemo } from "react";
+import { AppContext } from "./context/AppContext.js";
+import { colorData } from "./data/palette.js";
+import { ColorModel } from "./models/ColorModel.js";
+import { AppState } from "./models/AppState.js";
+import { CommandBus } from "./utils/CommandBus.js";
+import { ExportService } from "./utils/ExportService.js";
+import { useAppState } from "./hooks/useAppState.js";
+import { ClearFavoritesCommand, ClearHiddenCommand } from "./commands/index.js";
+import { Header } from "./components/Header/Header.js";
+import { ColorExplorer } from "./components/ColorExplorer/ColorExplorer.js";
+import { Modal } from "./components/Modal/Modal.js";
+import { ToastContainer } from "./components/Toast/Toast.js";
+import { ConfirmDialogProvider } from "./components/ConfirmDialog/ConfirmDialog.js";
+
+// Singletons — created once outside the component tree
+const colorModel = new ColorModel(colorData);
+const appState = new AppState(colorModel);
+const commandBus = new CommandBus(colorModel, appState);
+const exportService = new ExportService();
+
+const ctxValue = { colorModel, appState, commandBus };
+
+function AppInner() {
+  const snapshot = useAppState(appState);
+  const { favorites, hidden, lrvMin, lrvMax, neutralBg } = snapshot;
+
+  const lrvRange = useMemo(
+    () => ({ min: lrvMin, max: lrvMax }),
+    [lrvMin, lrvMax],
+  );
+  const visibleColors = useMemo(
+    () => colorModel.getVisibleColors(hidden, favorites, lrvRange),
+    [hidden, favorites, lrvRange],
+  );
+
+  const onLrvChange = useCallback((min: number, max: number) => {
+    appState.setLrvRange(min, max);
+  }, []);
+
+  const onNeutralBgToggle = useCallback(() => {
+    appState.neutralBg = !appState.neutralBg;
+    appState.emit("neutralBgChanged");
+    document.body.classList.toggle("neutral-bg", appState.neutralBg);
+  }, []);
+
+  const onExportFavorites = useCallback(() => {
+    const favColors = colorModel.getFavoriteColors(favorites);
+    if (favColors.length > 0) exportService.exportColors(favColors);
+  }, [favorites]);
+
+  const onClearFavorites = useCallback(async () => {
+    if (favorites.size === 0) return;
+    await commandBus.execute(new ClearFavoritesCommand());
+  }, [favorites.size]);
+
+  const onClearHidden = useCallback(async () => {
+    if (hidden.size === 0) return;
+    await commandBus.execute(new ClearHiddenCommand());
+  }, [hidden.size]);
+
+  return (
+    <>
+      <Header
+        lrvMin={lrvMin}
+        lrvMax={lrvMax}
+        colorCount={colorModel.getActiveColors().length}
+        filteredCount={visibleColors.length}
+        neutralBg={neutralBg}
+        favoritesCount={favorites.size}
+        onLrvChange={onLrvChange}
+        onNeutralBgToggle={onNeutralBgToggle}
+        onExportFavorites={onExportFavorites}
+        onClearFavorites={onClearFavorites}
+        onClearHidden={onClearHidden}
+      />
+
+      <main className="accordion" aria-label="Color families accordion">
+        <ColorExplorer />
+      </main>
+
+      <Modal />
+      <ToastContainer />
+    </>
+  );
+}
+
+export function App() {
+  return (
+    <AppContext.Provider value={ctxValue}>
+      <ConfirmDialogProvider>
+        <AppInner />
+      </ConfirmDialogProvider>
+    </AppContext.Provider>
+  );
+}
