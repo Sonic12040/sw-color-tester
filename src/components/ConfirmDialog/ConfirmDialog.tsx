@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useState } from "react";
+import { createContext, use, useState } from "react";
 import { createPortal } from "react-dom";
 import styles from "./ConfirmDialog.module.css";
 
@@ -14,7 +14,7 @@ type ConfirmFn = (options: ConfirmOptions) => Promise<boolean>;
 const ConfirmContext = createContext<ConfirmFn | null>(null);
 
 export function useConfirmDialog(): ConfirmFn {
-  const fn = useContext(ConfirmContext);
+  const fn = use(ConfirmContext);
   if (!fn)
     throw new Error(
       "useConfirmDialog must be used inside <ConfirmDialogProvider>",
@@ -35,28 +35,25 @@ export function ConfirmDialogProvider({
   const [dialog, setDialog] = useState<DialogState | null>(null);
   const [closing, setClosing] = useState(false);
 
-  const confirm = useCallback((options: ConfirmOptions): Promise<boolean> => {
+  const confirm = (options: ConfirmOptions): Promise<boolean> => {
     return new Promise<boolean>((resolve) => {
       setClosing(false);
       setDialog({ options, resolve });
     });
-  }, []);
+  };
 
-  const close = useCallback(
-    (value: boolean) => {
-      if (!dialog) return;
-      setClosing(true);
-      setTimeout(() => {
-        dialog.resolve(value);
-        setDialog(null);
-        setClosing(false);
-      }, 250);
-    },
-    [dialog],
-  );
+  const close = (value: boolean) => {
+    if (!dialog) return;
+    setClosing(true);
+    setTimeout(() => {
+      dialog.resolve(value);
+      setDialog(null);
+      setClosing(false);
+    }, 250);
+  };
 
   return (
-    <ConfirmContext.Provider value={confirm}>
+    <ConfirmContext value={confirm}>
       {children}
       {dialog &&
         createPortal(
@@ -96,6 +93,6 @@ export function ConfirmDialogProvider({
           </div>,
           document.body,
         )}
-    </ConfirmContext.Provider>
+    </ConfirmContext>
   );
 }
