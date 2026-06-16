@@ -199,21 +199,21 @@ export const THRESHOLDS = {
 
 // SVG icons as constants
 export const ICONS = {
-  HEART: \`<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>\`,
-  EYE_OFF: \`<line x1="1" y1="1" x2="23" y2="23"/><path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-5 0-9.27-3.11-11-7 1.21-2.61 3.16-4.77 5.66-6.11"/><path d="M1 1l22 22"/>\`,
-  EYE: \`<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>\`,
-  CHEVRON_DOWN: \`<path d="m6 9 6 6 6-6"/>\`,
-  COPY: \`<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>\`,
+  HEART: `<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>`,
+  EYE_OFF: `<line x1="1" y1="1" x2="23" y2="23"/><path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-5 0-9.27-3.11-11-7 1.21-2.61 3.16-4.77 5.66-6.11"/><path d="M1 1l22 22"/>`,
+  EYE: `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`,
+  CHEVRON_DOWN: `<path d="m6 9 6 6 6-6"/>`,
+  COPY: `<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>`,
 };
 
 export function createGroupId(name: string, type: string): string {
-  return \`\${type}-\${name
+  return `${type}-${name
     .toLowerCase()
-    .replace(/\\s+/g, "-")
+    .replace(/\s+/g, "-")
     .replace(/[^a-z0-9-]/g, "")
-    .replace(/-+/g, "-")}\`;
+    .replace(/-+/g, "-")}`;
 }
 
 export function getTilesContainerId(sectionId: string): string {
-  return \`\${sectionId}-tiles\`;
+  return `${sectionId}-tiles`;
 }
