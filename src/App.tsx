@@ -33,7 +33,7 @@ function AppInner() {
     [openModal],
   );
   const snapshot = useAppState(appState);
-  const { favorites, hidden, lrvMin, lrvMax, neutralBg } = snapshot;
+  const { favorites, hidden, lrvMin, lrvMax } = snapshot;
 
   const lrvRange = useMemo(
     () => ({ min: lrvMin, max: lrvMax }),
@@ -46,12 +46,6 @@ function AppInner() {
 
   const onLrvChange = useCallback((min: number, max: number) => {
     appState.setLrvRange(min, max);
-  }, []);
-
-  const onNeutralBgToggle = useCallback(() => {
-    appState.neutralBg = !appState.neutralBg;
-    appState.emit("neutralBgChanged");
-    document.body.classList.toggle("neutral-bg", appState.neutralBg);
   }, []);
 
   const onExportFavorites = useCallback(() => {
@@ -76,10 +70,8 @@ function AppInner() {
         lrvMax={lrvMax}
         colorCount={colorModel.getActiveColors().length}
         filteredCount={visibleColors.length}
-        neutralBg={neutralBg}
         favoritesCount={favorites.size}
         onLrvChange={onLrvChange}
-        onNeutralBgToggle={onNeutralBgToggle}
         onExportFavorites={onExportFavorites}
         onClearFavorites={onClearFavorites}
         onClearHidden={onClearHidden}

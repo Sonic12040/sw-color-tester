@@ -6,14 +6,12 @@ export interface AppSnapshot {
   hidden: Set<string>;
   lrvMin: number;
   lrvMax: number;
-  neutralBg: boolean;
 }
 
 const EVENTS = [
   "favoritesChanged",
   "hiddenChanged",
   "lrvChanged",
-  "neutralBgChanged",
 ] as const;
 
 /**
@@ -33,8 +31,7 @@ function getSnapshot(state: AppState): AppSnapshot {
     prev.favorites === state.favorites &&
     prev.hidden === state.hidden &&
     prev.lrvMin === state.lrvMin &&
-    prev.lrvMax === state.lrvMax &&
-    prev.neutralBg === state.neutralBg
+    prev.lrvMax === state.lrvMax
   ) {
     return prev;
   }
@@ -43,7 +40,6 @@ function getSnapshot(state: AppState): AppSnapshot {
     hidden: state.hidden,
     lrvMin: state.lrvMin,
     lrvMax: state.lrvMax,
-    neutralBg: state.neutralBg,
   };
   snapshotCache.set(state, next);
   return next;

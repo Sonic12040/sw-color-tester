@@ -7,9 +7,7 @@
    consume via var(--nb-*, fallback) pattern.
    ============================================ */
 
-body.neutral-bg {
-  background: var(--color-surface-neutral);
-
+:root {
   /* Surface / border */
   --nb-surface: var(--color-surface-neutral);
   --nb-border: rgba(255, 255, 255, 0.2);
@@ -33,4 +31,8 @@ body.neutral-bg {
   /* Toolbar panel */
   --nb-panel-bg: rgba(0, 0, 0, 0.15);
   --nb-panel-border: rgba(255, 255, 255, 0.2);
+}
+
+body {
+  background: var(--color-surface-neutral);
 }

@@ -12,7 +12,6 @@ export class AppState extends EventEmitter {
   hidden: Set<string>;
   lrvMin: number;
   lrvMax: number;
-  neutralBg: boolean;
   scrollPosition: number;
   colorModel: ColorModel | null;
 
@@ -22,7 +21,6 @@ export class AppState extends EventEmitter {
     this.hidden = new Set();
     this.lrvMin = 0;
     this.lrvMax = 100;
-    this.neutralBg = false;
     this.scrollPosition = 0;
     this.colorModel = colorModel;
     this.loadFromURL();
@@ -46,8 +44,6 @@ export class AppState extends EventEmitter {
     this.lrvMin = lrvMinParam !== null ? Number(lrvMinParam) : 0;
     this.lrvMax = lrvMaxParam !== null ? Number(lrvMaxParam) : 100;
 
-    this.neutralBg = params.get(URL_PARAMS.NEUTRAL_BG) === "1";
-
     const scrollParam = params.get(URL_PARAMS.SCROLL);
     this.scrollPosition = scrollParam ? Number(scrollParam) : 0;
   }
@@ -64,7 +60,6 @@ export class AppState extends EventEmitter {
     if (this.lrvMin > 0) params.set(URL_PARAMS.LRV_MIN, this.lrvMin.toString());
     if (this.lrvMax < 100)
       params.set(URL_PARAMS.LRV_MAX, this.lrvMax.toString());
-    if (this.neutralBg) params.set(URL_PARAMS.NEUTRAL_BG, "1");
     if (this.scrollPosition > 0) {
       params.set(URL_PARAMS.SCROLL, Math.round(this.scrollPosition).toString());
     }

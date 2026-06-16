@@ -7,10 +7,8 @@ interface HeaderProps {
   lrvMax: number;
   colorCount: number;
   filteredCount: number;
-  neutralBg: boolean;
   favoritesCount: number;
   onLrvChange: (min: number, max: number) => void;
-  onNeutralBgToggle: () => void;
   onExportFavorites: () => void;
   onClearFavorites: () => void;
   onClearHidden: () => void;
@@ -21,10 +19,8 @@ export function Header({
   lrvMax,
   colorCount,
   filteredCount,
-  neutralBg,
   favoritesCount,
   onLrvChange,
-  onNeutralBgToggle,
   onExportFavorites,
   onClearFavorites,
   onClearHidden,
@@ -69,16 +65,6 @@ export function Header({
             {/* Actions */}
             <div className={styles.toolbarSection}>
               <div className={styles.toolbarActions}>
-                <button
-                  type="button"
-                  id="neutral-bg-toggle"
-                  className={`${styles.actionBtn} ${neutralBg ? styles.actionBtnPressed : ""}`}
-                  aria-pressed={neutralBg}
-                  onClick={onNeutralBgToggle}
-                  title="Toggle neutral gray background for true color evaluation"
-                >
-                  Neutral Background
-                </button>
                 <button
                   type="button"
                   id="export-favorites-btn"
