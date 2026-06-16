@@ -4,7 +4,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-height: 140px;
+  height: 160px; /* uniform height — matches across all tiles in the row */
   cursor: default;
 }
 
