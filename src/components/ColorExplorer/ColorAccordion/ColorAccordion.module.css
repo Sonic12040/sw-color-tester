@@ -1,12 +1,12 @@
 .item {
-  border: 1px solid var(--color-border-primary);
+  border: 1px solid var(--nb-border, var(--color-border-primary));
   margin-block-end: var(--spacing-2);
   border-radius: var(--radius-sm);
   overflow: hidden;
 }
 
 .header {
-  background: var(--color-surface-hover);
+  background: var(--nb-btn-bg, var(--color-surface-hover));
   border: none;
   width: 100%;
   padding: clamp(0.75rem, 0.214rem + 2.29vw, 1.5rem)
@@ -22,12 +22,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: var(--color-text-primary);
+  color: var(--nb-text, var(--color-text-primary));
 }
 
 .header:hover,
 .header[aria-expanded="true"] {
-  background: var(--color-surface-active);
+  background: var(--nb-btn-hover-bg, var(--color-surface-active));
 }
 
 .header:focus-visible {
@@ -81,7 +81,7 @@
 
 .panel {
   padding: clamp(0.75rem, 0.182rem + 2.42vw, 2rem);
-  background: var(--color-surface-primary);
+  background: var(--nb-surface, var(--color-surface-primary));
   min-height: 0;
 }
 
