@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import styles from "./ConfirmDialog.module.css";
 
@@ -35,12 +35,13 @@ export function ConfirmDialogProvider({
   const [dialog, setDialog] = useState<DialogState | null>(null);
   const [closing, setClosing] = useState(false);
 
-  const confirm = (options: ConfirmOptions): Promise<boolean> => {
+  // Stable identity so ConfirmContext consumers don't re-render on dialog state changes.
+  const confirm = useCallback((options: ConfirmOptions): Promise<boolean> => {
     return new Promise<boolean>((resolve) => {
       setClosing(false);
       setDialog({ options, resolve });
     });
-  };
+  }, []);
 
   const close = (value: boolean) => {
     if (!dialog) return;

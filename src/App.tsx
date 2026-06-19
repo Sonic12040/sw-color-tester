@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { AppContext } from "./context/AppContext.js";
-import { FavoritesProvider, useFavorites } from "./context/FavoritesContext.js";
-import { HiddenProvider, useHidden } from "./context/HiddenContext.js";
+import { AppProviders } from "./context/AppProviders.js";
+import { useFavorites } from "./context/FavoritesContext.js";
+import { useHidden } from "./context/HiddenContext.js";
 import { colorData } from "./data/palette.js";
 import { ColorModel } from "./models/ColorModel.js";
 import { AppState } from "./models/AppState.js";
@@ -10,8 +11,7 @@ import { useAppState } from "./hooks/useAppState.js";
 import { Header } from "./components/Header/Header.js";
 import { ColorExplorer } from "./components/ColorExplorer/ColorExplorer.js";
 import { Modal } from "./components/Modal/Modal.js";
-import { ToastProvider, ToastContainer } from "./components/Toast/Toast.js";
-import { ConfirmDialogProvider } from "./components/ConfirmDialog/ConfirmDialog.js";
+import { ToastContainer } from "./components/Toast/Toast.js";
 
 // Singletons — created once outside the component tree
 const colorModel = new ColorModel(colorData);
@@ -21,10 +21,16 @@ const exportService = new ExportService();
 function AppInner() {
   const [modalColorId, setModalColorId] = useState<string | null>(null);
 
-  const openModal = (colorId: string) => setModalColorId(colorId);
-  const closeModal = () => setModalColorId(null);
+  const openModal = useCallback((colorId: string) => setModalColorId(colorId), []);
+  const closeModal = useCallback(() => setModalColorId(null), []);
 
-  const ctxValue = { colorModel, appState, openModal };
+  // colorModel & appState are stable singletons and openModal is memoized, so this
+  // context value never changes identity — AppContext-only consumers don't re-render
+  // when favorites / hidden / lrv change.
+  const ctxValue = useMemo(
+    () => ({ colorModel, appState, openModal }),
+    [openModal],
+  );
   const snapshot = useAppState(appState);
   const { lrvMin, lrvMax } = snapshot;
   const { favorites, clearFavorites } = useFavorites();
@@ -79,14 +85,8 @@ function AppInner() {
 
 export function App() {
   return (
-    <FavoritesProvider>
-      <HiddenProvider>
-        <ToastProvider>
-          <ConfirmDialogProvider>
-            <AppInner />
-          </ConfirmDialogProvider>
-        </ToastProvider>
-      </HiddenProvider>
-    </FavoritesProvider>
+    <AppProviders>
+      <AppInner />
+    </AppProviders>
   );
 }
