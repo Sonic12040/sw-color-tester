@@ -80,6 +80,8 @@
   gap: var(--spacing-1);
 }
 
+/* Designer Pick / Interior-Only / Exterior-Only badges: always a dark badge
+   with white text, independent of the swatch's lightness (matches the chips). */
 .badge {
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
@@ -89,8 +91,8 @@
   border-radius: var(--radius-sm);
   backdrop-filter: var(--blur-sm);
   width: fit-content;
-  background: var(--tile-badge-bg, rgba(128, 128, 128, 0.7));
-  color: var(--tile-badge-text, currentColor);
+  background: rgba(20, 21, 25, 0.82);
+  color: #ffffff;
   line-height: var(--line-height-tight);
 }
 
