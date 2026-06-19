@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo } from "react";
+import { createContext, useCallback, useContext, useMemo } from "react";
 import { useSet, type SetActions } from "../hooks/useSet.js";
 
 export interface HiddenContextValue {
@@ -22,26 +22,31 @@ export function useHidden(): HiddenContextValue {
 export function HiddenProvider({ children }: { children: React.ReactNode }) {
   const [hidden, actions] = useSet<string>();
 
-  const toggleBulkHidden = (colorIds: string[]) => {
-    const allHidden = colorIds.length > 0 && colorIds.every((id) => hidden.has(id));
-    if (allHidden) {
-      actions.removeMultiple(colorIds);
-    } else {
-      actions.addMultiple(colorIds);
-    }
-  };
+  const toggleBulkHidden = useCallback(
+    (colorIds: string[]) => {
+      const allHidden =
+        colorIds.length > 0 && colorIds.every((id) => hidden.has(id));
+      if (allHidden) {
+        actions.removeMultiple(colorIds);
+      } else {
+        actions.addMultiple(colorIds);
+      }
+    },
+    [hidden, actions],
+  );
 
-  const value = useMemo<HiddenContextValue>(() => ({
-    hidden,
-    actions,
-    toggleHidden: actions.toggle,
-    clearHidden: actions.clear,
-    toggleBulkHidden,
-  }), [hidden, actions]);
+  const value = useMemo<HiddenContextValue>(
+    () => ({
+      hidden,
+      actions,
+      toggleHidden: actions.toggle,
+      clearHidden: actions.clear,
+      toggleBulkHidden,
+    }),
+    [hidden, actions, toggleBulkHidden],
+  );
 
   return (
-    <HiddenContext.Provider value={value}>
-      {children}
-    </HiddenContext.Provider>
+    <HiddenContext.Provider value={value}>{children}</HiddenContext.Provider>
   );
 }

@@ -31,7 +31,8 @@
 }
 
 .header {
-  padding: clamp(1rem, 0.583rem + 1.78vw, 1.25rem) clamp(1rem, 0.167rem + 3.56vw, 1.5rem);
+  padding: clamp(1rem, 0.583rem + 1.78vw, 1.25rem)
+    clamp(1rem, 0.167rem + 3.56vw, 1.5rem);
   border-bottom: 1px solid var(--color-border-primary);
 }
 
@@ -55,7 +56,8 @@
 }
 
 .actions {
-  padding: clamp(1rem, 0.583rem + 1.78vw, 1.25rem) clamp(1rem, 0.167rem + 3.56vw, 1.5rem);
+  padding: clamp(1rem, 0.583rem + 1.78vw, 1.25rem)
+    clamp(1rem, 0.167rem + 3.56vw, 1.5rem);
   display: flex;
   gap: var(--spacing-3);
   justify-content: flex-end;
@@ -122,19 +124,32 @@
 }
 
 @keyframes fadeIn {
-  to { opacity: 1; }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes scaleIn {
-  to { transform: scale(1); }
+  to {
+    transform: scale(1);
+  }
 }
 
 @keyframes scaleOut {
-  from { transform: scale(1); }
-  to { transform: scale(0.9); opacity: 0; }
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0.9);
+    opacity: 0;
+  }
 }

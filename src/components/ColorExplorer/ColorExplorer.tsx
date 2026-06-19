@@ -1,30 +1,56 @@
+import { useMemo } from "react";
 import { useAppContext } from "../../context/AppContext.js";
-import { useAppState } from "../../hooks/useAppState.js";
 import { useFavorites } from "../../context/FavoritesContext.js";
 import { useHidden } from "../../context/HiddenContext.js";
+import { useFilters } from "../../context/FiltersContext.js";
 import { useToast } from "../Toast/Toast.js";
 import { ColorAccordion } from "./ColorAccordion/ColorAccordion.js";
 import styles from "./ColorExplorer.module.css";
 
 export function ColorExplorer() {
-  const { colorModel, appState, openModal } = useAppContext();
-  const snapshot = useAppState(appState);
-  const { favorites, actions: favActions, toggleFavorite, toggleBulkFavorite } =
-    useFavorites();
-  const { hidden, actions: hiddenActions, toggleHidden, toggleBulkHidden } =
-    useHidden();
+  const { colorModel, openModal } = useAppContext();
+  const {
+    favorites,
+    actions: favActions,
+    toggleFavorite,
+    toggleBulkFavorite,
+  } = useFavorites();
+  const {
+    hidden,
+    actions: hiddenActions,
+    toggleHidden,
+    toggleBulkHidden,
+  } = useHidden();
+  const { lrvRange } = useFilters();
   const showToast = useToast();
 
-  const { lrvMin, lrvMax } = snapshot;
-  const lrvRange = { min: lrvMin, max: lrvMax };
-
   const designerPickIds = colorModel.getDesignerPickIds(); // stable — built once in constructor
-  const favoriteColors = colorModel.getFavoriteColors(favorites);
-  const hiddenColors = colorModel.getHiddenColors(hidden);
-  const visibleColors = colorModel.getVisibleColors(hidden, favorites, lrvRange);
-  const colorFamilies = colorModel.groupByFamily(visibleColors);
-  const sortedFamilies = colorModel.sortFamiliesByPriority([...colorFamilies.keys()]);
-  const hiddenFamilies = colorModel.getHiddenFamilies(hidden, favorites);
+  const favoriteColors = useMemo(
+    () => colorModel.getFavoriteColors(favorites),
+    [colorModel, favorites],
+  );
+  const hiddenColors = useMemo(
+    () => colorModel.getHiddenColors(hidden),
+    [colorModel, hidden],
+  );
+  const hiddenFamilies = useMemo(
+    () => colorModel.getHiddenFamilies(hidden, favorites),
+    [colorModel, hidden, favorites],
+  );
+  // Filtering + grouping + sorting the full active list runs on every favorite /
+  // hidden / lrv change, so memoize it against those inputs.
+  const { colorFamilies, sortedFamilies } = useMemo(() => {
+    const visibleColors = colorModel.getVisibleColors(
+      hidden,
+      favorites,
+      lrvRange,
+    );
+    const families = colorModel.groupByFamily(visibleColors);
+    return {
+      colorFamilies: families,
+      sortedFamilies: colorModel.sortFamiliesByPriority([...families.keys()]),
+    };
+  }, [colorModel, hidden, favorites, lrvRange]);
 
   // Event handlers
   const onToggleFavorite = (id: string) => toggleFavorite(id);

@@ -42,12 +42,48 @@ const { COLORS } = vi.hoisted(() => {
   });
 
   const COLORS = [
-    make({ id: "r1", name: "Crimson", colorNumber: "1001", lrv: 10, family: "Red" }),
-    make({ id: "r2", name: "Scarlet", colorNumber: "1002", lrv: 50, family: "Red" }),
-    make({ id: "r3", name: "Ruby", colorNumber: "1003", lrv: 90, family: "Red" }),
-    make({ id: "b1", name: "Azure", colorNumber: "2001", lrv: 20, family: "Blue" }),
-    make({ id: "b2", name: "Cobalt", colorNumber: "2002", lrv: 55, family: "Blue" }),
-    make({ id: "b3", name: "Navy", colorNumber: "2003", lrv: 85, family: "Blue" }),
+    make({
+      id: "r1",
+      name: "Crimson",
+      colorNumber: "1001",
+      lrv: 10,
+      family: "Red",
+    }),
+    make({
+      id: "r2",
+      name: "Scarlet",
+      colorNumber: "1002",
+      lrv: 50,
+      family: "Red",
+    }),
+    make({
+      id: "r3",
+      name: "Ruby",
+      colorNumber: "1003",
+      lrv: 90,
+      family: "Red",
+    }),
+    make({
+      id: "b1",
+      name: "Azure",
+      colorNumber: "2001",
+      lrv: 20,
+      family: "Blue",
+    }),
+    make({
+      id: "b2",
+      name: "Cobalt",
+      colorNumber: "2002",
+      lrv: 55,
+      family: "Blue",
+    }),
+    make({
+      id: "b3",
+      name: "Navy",
+      colorNumber: "2003",
+      lrv: 85,
+      family: "Blue",
+    }),
   ];
   return { COLORS };
 });
@@ -71,6 +107,18 @@ function clickButton(name: string | RegExp) {
 /** Get the open accordion region by its (header) name. */
 function region(name: RegExp) {
   return screen.getByRole("region", { name });
+}
+
+/** Confirm the open ConfirmDialog and let its close animation resolve. */
+async function confirmDialog(confirmName: string) {
+  const dialog = screen.getByRole("dialog");
+  vi.useFakeTimers();
+  fireEvent.click(within(dialog).getByRole("button", { name: confirmName }));
+  // ConfirmDialog resolves its promise after a short close animation.
+  await act(async () => {
+    vi.advanceTimersByTime(300);
+  });
+  vi.useRealTimers();
 }
 
 afterEach(() => {
@@ -240,12 +288,18 @@ describe("Clearing all from the toolbar", () => {
     clickButton(/Toggle menu/);
 
     expect(
-      (screen.getByRole("button", { name: "Clear All Favorites" }) as HTMLButtonElement)
-        .disabled,
+      (
+        screen.getByRole("button", {
+          name: "Clear All Favorites",
+        }) as HTMLButtonElement
+      ).disabled,
     ).toBe(true);
     expect(
-      (screen.getByRole("button", { name: "Clear All Hidden Colors" }) as HTMLButtonElement)
-        .disabled,
+      (
+        screen.getByRole("button", {
+          name: "Clear All Hidden Colors",
+        }) as HTMLButtonElement
+      ).disabled,
     ).toBe(true);
   });
 
@@ -258,12 +312,15 @@ describe("Clearing all from the toolbar", () => {
 
     clickButton(/Toggle menu/);
     expect(
-      (screen.getByRole("button", { name: "Clear All Hidden Colors" }) as HTMLButtonElement)
-        .disabled,
+      (
+        screen.getByRole("button", {
+          name: "Clear All Hidden Colors",
+        }) as HTMLButtonElement
+      ).disabled,
     ).toBe(false);
   });
 
-  it("clears all favorites, returning the colors to their families", () => {
+  it("clears all favorites after confirmation, returning colors to their families", async () => {
     render(<App />);
     clickButton(RED);
     fireEvent.click(
@@ -275,18 +332,35 @@ describe("Clearing all from the toolbar", () => {
     expect(within(region(FAVORITES)).getByText("Crimson")).toBeTruthy();
 
     clickButton(/Toggle menu/);
-    const clearFavorites = screen.getByRole("button", {
-      name: "Clear All Favorites",
-    });
-    expect((clearFavorites as HTMLButtonElement).disabled).toBe(false);
-    fireEvent.click(clearFavorites);
+    fireEvent.click(
+      screen.getByRole("button", { name: "Clear All Favorites" }),
+    );
+
+    // A confirmation dialog gates the destructive action.
+    await confirmDialog("Clear favorites");
 
     expect(within(region(FAVORITES)).queryByText("Crimson")).toBeNull();
     expect(within(region(FAVORITES)).queryByText("Scarlet")).toBeNull();
     expect(screen.getByRole("button", { name: /^Red \(3\)/ })).toBeTruthy();
   });
 
-  it("clears all hidden colors, returning the colors to their families", () => {
+  it("keeps favorites when the confirmation is cancelled", async () => {
+    render(<App />);
+    clickButton(RED);
+    fireEvent.click(
+      within(region(RED)).getByRole("button", { name: "Favorite Crimson" }),
+    );
+
+    clickButton(/Toggle menu/);
+    fireEvent.click(
+      screen.getByRole("button", { name: "Clear All Favorites" }),
+    );
+    await confirmDialog("Cancel");
+
+    expect(within(region(FAVORITES)).getByText("Crimson")).toBeTruthy();
+  });
+
+  it("clears all hidden colors after confirmation, returning colors to their families", async () => {
     render(<App />);
     clickButton(RED);
     fireEvent.click(
@@ -302,21 +376,17 @@ describe("Clearing all from the toolbar", () => {
     fireEvent.click(
       screen.getByRole("button", { name: "Clear All Hidden Colors" }),
     );
+    await confirmDialog("Clear hidden");
 
     expect(screen.getByRole("button", { name: /^Red \(3\)/ })).toBeTruthy();
   });
 });
 
 // ── LRV filter ───────────────────────────────────────────────────────────────
-// LRV lives in the AppState singleton (module-scoped), so each test resets the
-// range to 0–100 at the start and restores it at the end to stay isolated.
+// LRV now lives in React state (FiltersContext), so it resets with each fresh
+// render — no cross-test cleanup needed.
 
 describe("LRV filter", () => {
-  function openFilterAndReset() {
-    clickButton(/Toggle menu/);
-    fireEvent.click(screen.getByRole("button", { name: "Reset LRV filter" }));
-  }
-
   function setSlider(name: string, value: number) {
     vi.useFakeTimers();
     fireEvent.change(screen.getByRole("slider", { name }), {
@@ -328,7 +398,7 @@ describe("LRV filter", () => {
 
   it("increasing the minimum hides colors below it", () => {
     render(<App />);
-    openFilterAndReset();
+    clickButton(/Toggle menu/);
     clickButton(RED);
     expect(within(region(RED)).getByText("Crimson")).toBeTruthy(); // lrv 10
 
@@ -338,13 +408,11 @@ describe("LRV filter", () => {
     expect(screen.getByText(/Showing 4 of 6 colors/)).toBeTruthy();
     expect(within(region(RED)).queryByText("Crimson")).toBeNull();
     expect(within(region(RED)).getByText("Scarlet")).toBeTruthy(); // lrv 50
-
-    fireEvent.click(screen.getByRole("button", { name: "Reset LRV filter" }));
   });
 
   it("decreasing the maximum hides colors above it", () => {
     render(<App />);
-    openFilterAndReset();
+    clickButton(/Toggle menu/);
     clickButton(RED);
     expect(within(region(RED)).getByText("Ruby")).toBeTruthy(); // lrv 90
 
@@ -354,7 +422,5 @@ describe("LRV filter", () => {
     expect(screen.getByText(/Showing 4 of 6 colors/)).toBeTruthy();
     expect(within(region(RED)).queryByText("Ruby")).toBeNull();
     expect(within(region(RED)).getByText("Scarlet")).toBeTruthy(); // lrv 50
-
-    fireEvent.click(screen.getByRole("button", { name: "Reset LRV filter" }));
   });
 });

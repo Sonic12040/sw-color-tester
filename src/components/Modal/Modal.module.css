@@ -1,4 +1,5 @@
-.modalWrapper {}
+.modalWrapper {
+}
 
 .closing .overlay {
   animation: fadeOut var(--transition-medium) forwards;
@@ -323,7 +324,9 @@
   bottom: 0;
   width: 3px;
   background: white;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.8), 0 2px 4px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    0 0 0 2px rgba(0, 0, 0, 0.8),
+    0 2px 4px rgba(0, 0, 0, 0.3);
   transform: translateX(-50%);
   pointer-events: none;
   z-index: 1;
@@ -356,7 +359,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-2);
-  padding: clamp(0.75rem, 0.393rem + 1.524vw, 1.25rem) clamp(1rem, -0.071rem + 4.57vw, 2.5rem);
+  padding: clamp(0.75rem, 0.393rem + 1.524vw, 1.25rem)
+    clamp(1rem, -0.071rem + 4.57vw, 2.5rem);
   border-top: 1px solid var(--color-border-secondary);
   background: var(--color-surface-secondary);
   flex-shrink: 0;
@@ -400,34 +404,68 @@
 
 /* Responsive */
 @media (max-width: 399px) {
-  .title { font-size: var(--font-size-lg); }
-  .subtitle { font-size: var(--font-size-base); }
+  .title {
+    font-size: var(--font-size-lg);
+  }
+  .subtitle {
+    font-size: var(--font-size-base);
+  }
 }
 
 @media (max-width: 899px) and (max-height: 499px) and (orientation: landscape) {
-  .container { max-height: 90vh; }
-  .header { padding: var(--spacing-3) var(--spacing-4); }
-  .title { font-size: var(--font-size-md); }
-  .subtitle { font-size: var(--font-size-sm); }
-  .body { padding: var(--spacing-4); }
+  .container {
+    max-height: 90vh;
+  }
+  .header {
+    padding: var(--spacing-3) var(--spacing-4);
+  }
+  .title {
+    font-size: var(--font-size-md);
+  }
+  .subtitle {
+    font-size: var(--font-size-sm);
+  }
+  .body {
+    padding: var(--spacing-4);
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes slideIn {
-  from { opacity: 0; transform: scale(0.95) translateY(1rem); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 @keyframes slideOut {
-  from { opacity: 1; transform: scale(1) translateY(0); }
-  to { opacity: 0; transform: scale(0.95) translateY(1rem); }
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95) translateY(1rem);
+  }
 }

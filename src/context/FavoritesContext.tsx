@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo } from "react";
+import { createContext, useCallback, useContext, useMemo } from "react";
 import { useSet, type SetActions } from "../hooks/useSet.js";
 
 export interface FavoritesContextValue {
@@ -9,7 +9,9 @@ export interface FavoritesContextValue {
   toggleBulkFavorite: (colorIds: string[]) => void;
 }
 
-export const FavoritesContext = createContext<FavoritesContextValue | null>(null);
+export const FavoritesContext = createContext<FavoritesContextValue | null>(
+  null,
+);
 
 export function useFavorites(): FavoritesContextValue {
   const ctx = useContext(FavoritesContext);
@@ -22,22 +24,29 @@ export function useFavorites(): FavoritesContextValue {
 export function FavoritesProvider({ children }: { children: React.ReactNode }) {
   const [favorites, actions] = useSet<string>();
 
-  const toggleBulkFavorite = (colorIds: string[]) => {
-    const allFavorited = colorIds.length > 0 && colorIds.every((id) => favorites.has(id));
-    if (allFavorited) {
-      actions.removeMultiple(colorIds);
-    } else {
-      actions.addMultiple(colorIds);
-    }
-  };
+  const toggleBulkFavorite = useCallback(
+    (colorIds: string[]) => {
+      const allFavorited =
+        colorIds.length > 0 && colorIds.every((id) => favorites.has(id));
+      if (allFavorited) {
+        actions.removeMultiple(colorIds);
+      } else {
+        actions.addMultiple(colorIds);
+      }
+    },
+    [favorites, actions],
+  );
 
-  const value = useMemo<FavoritesContextValue>(() => ({
-    favorites,
-    actions,
-    toggleFavorite: actions.toggle,
-    clearFavorites: actions.clear,
-    toggleBulkFavorite,
-  }), [favorites, actions]);
+  const value = useMemo<FavoritesContextValue>(
+    () => ({
+      favorites,
+      actions,
+      toggleFavorite: actions.toggle,
+      clearFavorites: actions.clear,
+      toggleBulkFavorite,
+    }),
+    [favorites, actions, toggleBulkFavorite],
+  );
 
   return (
     <FavoritesContext.Provider value={value}>

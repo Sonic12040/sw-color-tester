@@ -1,5 +1,6 @@
 import { FavoritesProvider } from "./FavoritesContext.js";
 import { HiddenProvider } from "./HiddenContext.js";
+import { FiltersProvider } from "./FiltersContext.js";
 import { ToastProvider } from "../components/Toast/Toast.js";
 import { ConfirmDialogProvider } from "../components/ConfirmDialog/ConfirmDialog.js";
 
@@ -20,9 +21,11 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <FavoritesProvider>
       <HiddenProvider>
-        <ToastProvider>
-          <ConfirmDialogProvider>{children}</ConfirmDialogProvider>
-        </ToastProvider>
+        <FiltersProvider>
+          <ToastProvider>
+            <ConfirmDialogProvider>{children}</ConfirmDialogProvider>
+          </ToastProvider>
+        </FiltersProvider>
       </HiddenProvider>
     </FavoritesProvider>
   );

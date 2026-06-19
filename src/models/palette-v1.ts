@@ -7,7 +7,7 @@
  * create palette-v2.js with the updated list and bump CURRENT_PALETTE_VERSION.
  *
  * @readonly
- * 
+ *
  */
 // prettier-ignore
 export const PALETTE_INDEX_V1: string[] = [

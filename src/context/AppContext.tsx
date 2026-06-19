@@ -1,10 +1,8 @@
 import { createContext, useContext } from "react";
 import type { ColorModel } from "../models/ColorModel.js";
-import type { AppState } from "../models/AppState.js";
 
 export interface AppContextValue {
   colorModel: ColorModel;
-  appState: AppState;
   openModal: (colorId: string) => void;
 }
 

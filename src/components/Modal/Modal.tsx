@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { Color } from "../../data/types.js";
 import {
   LRV_THRESHOLDS,
   DESIGNER_COLLECTION_PREFIX,
+  TIMING,
 } from "../../utils/config.js";
 import { useAppContext } from "../../context/AppContext.js";
 import { useFavorites } from "../../context/FavoritesContext.js";
@@ -25,6 +26,17 @@ const SIMILAR_DIFFERENTIATORS = [
 
 function hsl(c: Color) {
   return `hsl(${c.hue * 360}deg ${c.saturation * 100}% ${c.lightness * 100}%)`;
+}
+
+/** Describe how a similar color differs from the base color (for its mini-tile role). */
+function similarityRole(base: Color, other: Color, index: number): string {
+  if (other.hue > base.hue + 0.05)
+    return other.lightness > base.lightness ? "Warmer & Lighter" : "Warmer";
+  if (other.hue < base.hue - 0.05)
+    return other.lightness > base.lightness ? "Cooler & Lighter" : "Cooler";
+  if (other.lightness > base.lightness + 0.05) return "Lighter";
+  if (other.lightness < base.lightness - 0.05) return "Darker";
+  return SIMILAR_DIFFERENTIATORS[index] ?? "Similar";
 }
 
 function contrastText(lrv: number) {
@@ -230,32 +242,14 @@ function ModalContent({
               <h3 className={styles.sectionTitle}>Similar Colors</h3>
               <p className={styles.sectionDesc}>Explore subtle variations</p>
               <div className={styles.colorGrid}>
-                {similarEntries.map((c, i) => {
-                  let diff = "Similar";
-                  if (c.hue > color.hue + 0.05)
-                    diff =
-                      c.lightness > color.lightness
-                        ? "Warmer & Lighter"
-                        : "Warmer";
-                  else if (c.hue < color.hue - 0.05)
-                    diff =
-                      c.lightness > color.lightness
-                        ? "Cooler & Lighter"
-                        : "Cooler";
-                  else if (c.lightness > color.lightness + 0.05)
-                    diff = "Lighter";
-                  else if (c.lightness < color.lightness - 0.05)
-                    diff = "Darker";
-                  else diff = SIMILAR_DIFFERENTIATORS[i] ?? "Similar";
-                  return (
-                    <MiniTile
-                      key={c.id}
-                      color={c}
-                      role={diff}
-                      onClick={onNavigate}
-                    />
-                  );
-                })}
+                {similarEntries.map((c, i) => (
+                  <MiniTile
+                    key={c.id}
+                    color={c}
+                    role={similarityRole(color, c, i)}
+                    onClick={onNavigate}
+                  />
+                ))}
               </div>
             </div>
           )}
@@ -452,15 +446,15 @@ export function Modal({ colorId, onClose }: ModalProps) {
     }
   }, [colorId]);
 
-  const close = () => {
+  const close = useCallback(() => {
     // Ignore if a close is already in flight.
     if (closeTimerRef.current) return;
     setClosing(true);
     closeTimerRef.current = setTimeout(() => {
       closeTimerRef.current = null;
       onClose();
-    }, 300);
-  };
+    }, TIMING.CLOSE_ANIMATION_MS);
+  }, [onClose]);
 
   // Clean up the timer if the component unmounts unexpectedly.
   useEffect(() => {
@@ -507,7 +501,7 @@ export function Modal({ colorId, onClose }: ModalProps) {
     };
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
-  }, [colorId]); // close is no longer in dependencies since it is unstable
+  }, [colorId, close]);
 
   // Reset closing once the parent's colorId becomes null so next open starts clean.
   useEffect(() => {

@@ -111,9 +111,12 @@
   line-height: var(--line-height-tight);
 }
 
-.badgeInterior {}
-.badgeExterior {}
-.badgeDesigner {}
+.badgeInterior {
+}
+.badgeExterior {
+}
+.badgeDesigner {
+}
 
 .info {
   color: var(--tile-text, inherit);
@@ -169,9 +172,12 @@
   font-size: var(--font-size-sm);
 }
 
-.lrvDark {}
-.lrvMedium {}
-.lrvLight {}
+.lrvDark {
+}
+.lrvMedium {
+}
+.lrvLight {
+}
 
 .viewBtn {
   display: block;
@@ -205,7 +211,9 @@
   opacity: var(--opacity-30);
   cursor: pointer;
   color: white;
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
   justify-content: center;
 }
 

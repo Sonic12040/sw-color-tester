@@ -1,0 +1,6 @@
+dist
+coverage
+package-lock.json
+src/data/palette.ts
+src/data/palette-v1.ts
+src/**/__snapshots__
