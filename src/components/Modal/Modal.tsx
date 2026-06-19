@@ -419,6 +419,8 @@ export function Modal({ colorId, onClose }: ModalProps) {
   // even after the parent has cleared colorId.
   const displayedIdRef = useRef<string | null>(colorId);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // The element focused when the modal opened, so focus can be returned on close.
+  const openerRef = useRef<HTMLElement | null>(null);
 
   // Keep displayedIdRef current whenever a new color is opened.
   // Do this synchronously during render (safe — ref updates don't cause re-renders).
@@ -468,6 +470,19 @@ export function Modal({ colorId, onClose }: ModalProps) {
   // Reset closing once the parent's colorId becomes null so next open starts clean.
   useEffect(() => {
     if (!colorId) setClosing(false);
+  }, [colorId]);
+
+  // Accessibility: remember the element that opened the modal and return focus to
+  // it when the modal closes, so keyboard users aren't dropped at the top of the
+  // page. Captured only on the initial open — navigating between colors keeps the
+  // original opener.
+  useEffect(() => {
+    if (colorId) {
+      openerRef.current ??= document.activeElement as HTMLElement | null;
+    } else if (openerRef.current) {
+      openerRef.current.focus?.();
+      openerRef.current = null;
+    }
   }, [colorId]);
 
   // Show if the parent says open, OR if we're still playing the close animation.
