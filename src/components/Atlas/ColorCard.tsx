@@ -74,7 +74,7 @@ function ColorCardImpl({
               className={styles.chip}
               title={`Light Reflectance Value — ${lrvLabel}: reflects ${color.lrv.toFixed(1)}% of light`}
             >
-              {lrvLabel} · LRV {color.lrv.toFixed(0)}
+              {lrvLabel}
             </span>
             <span className={styles.chip}>{tone}</span>
           </div>
