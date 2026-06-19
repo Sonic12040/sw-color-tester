@@ -185,6 +185,26 @@ async function run() {
     }
   }
 
+  // Base path without a trailing slash should still render the gallery
+  // (dev/preview redirect + 404.html fallback on static hosts).
+  try {
+    const ctx = await browser.newContext();
+    const page = await ctx.newPage();
+    await page.goto(BASE.replace(/\/$/, ""), { waitUntil: "networkidle" });
+    const endsWithSlash = page.url().endsWith("/");
+    const count = await page
+      .getByText(/\bof\b/)
+      .first()
+      .textContent()
+      .catch(() => null);
+    if (endsWithSlash && count && /\d/.test(count))
+      pass("no-trailing-slash", `renders gallery (${count.trim()})`);
+    else fail("no-trailing-slash", `url=${page.url()} count=${count}`);
+    await ctx.close();
+  } catch (err) {
+    fail("no-trailing-slash", `exception: ${err.message}`);
+  }
+
   await browser.close();
 
   // 6. SEO-without-JS: a prerendered color file has <h1> + JSON-LD on disk

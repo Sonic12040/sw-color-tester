@@ -153,6 +153,56 @@ describe("Atlas browse", () => {
     expect(screen.getByText("Ruby")).toBeTruthy();
     expect(screen.queryByText("Crimson")).toBeNull();
   });
+
+  it("filters by undertone facet", () => {
+    renderApp();
+    // Blues (hue ~0.6) are Cool; reds are Warm.
+    fireEvent.click(screen.getByRole("checkbox", { name: "Cool" }));
+    expect(screen.getByText("3 of 6")).toBeTruthy();
+    expect(screen.getByText("Azure")).toBeTruthy();
+    expect(screen.queryByText("Crimson")).toBeNull();
+  });
+
+  it("reorders results when the sort changes", () => {
+    renderApp();
+    fireEvent.change(screen.getByLabelText("Sort colors"), {
+      target: { value: "name" },
+    });
+    expect(cardNames()).toEqual([
+      "Azure",
+      "Cobalt",
+      "Crimson",
+      "Navy",
+      "Ruby",
+      "Scarlet",
+    ]);
+  });
+});
+
+describe("Hidden view", () => {
+  it("hides a color from the default view and surfaces it under Hidden", () => {
+    renderApp();
+    fireEvent.click(screen.getByRole("button", { name: "Hide Crimson" }));
+    // Default ("all") view excludes hidden colors.
+    expect(screen.getByText("5 of 6")).toBeTruthy();
+    expect(screen.queryByText("Crimson")).toBeNull();
+    // The Hidden view shows them.
+    fireEvent.click(screen.getByRole("button", { name: "Hidden" }));
+    expect(screen.getByText("1 of 6")).toBeTruthy();
+    expect(screen.getByText("Crimson")).toBeTruthy();
+  });
+});
+
+describe("Palette", () => {
+  it("adds a color from its tile and lists it on the palette page", () => {
+    renderApp();
+    fireEvent.click(
+      screen.getByRole("button", { name: "Add Crimson to palette" }),
+    );
+    fireEvent.click(screen.getByRole("link", { name: /^Palette/ }));
+    expect(screen.getByRole("heading", { name: "My palette" })).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Crimson" })).toBeTruthy();
+  });
 });
 
 describe("Favorites view", () => {

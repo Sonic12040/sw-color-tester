@@ -7,6 +7,9 @@ import {
   designerCollections,
   formatUseTypes,
   similarityRole,
+  undertone,
+  UNDERTONES,
+  LRV_CLASSES,
 } from "./colorPresentation.js";
 
 function make(over: Partial<Color>): Color {
@@ -55,6 +58,30 @@ describe("describeLrv", () => {
     expect(describeLrv(50).label).toBe("Medium");
     expect(describeLrv(80).label).toBe("Light");
     expect(describeLrv(10).context).toContain("10.0%");
+  });
+});
+
+describe("undertone", () => {
+  it("treats low-saturation colors as Neutral regardless of hue", () => {
+    expect(undertone(make({ hue: 0, saturation: 0.05 }))).toBe("Neutral");
+    expect(undertone(make({ hue: 0.6, saturation: 0.08 }))).toBe("Neutral");
+  });
+
+  it("classifies reds/oranges/yellows/magentas as Warm", () => {
+    expect(undertone(make({ hue: 0, saturation: 0.8 }))).toBe("Warm"); // 0°
+    expect(undertone(make({ hue: 0.13, saturation: 0.8 }))).toBe("Warm"); // ~47°
+    expect(undertone(make({ hue: 0.95, saturation: 0.8 }))).toBe("Warm"); // ~342°
+  });
+
+  it("classifies greens/blues/purples as Cool", () => {
+    expect(undertone(make({ hue: 0.45, saturation: 0.8 }))).toBe("Cool"); // 162°
+    expect(undertone(make({ hue: 0.6, saturation: 0.8 }))).toBe("Cool"); // 216°
+    expect(undertone(make({ hue: 0.78, saturation: 0.8 }))).toBe("Cool"); // ~281°
+  });
+
+  it("exposes the canonical undertone + lightness lists", () => {
+    expect(UNDERTONES).toEqual(["Warm", "Cool", "Neutral"]);
+    expect(LRV_CLASSES).toEqual(["Dark", "Medium", "Light"]);
   });
 });
 
