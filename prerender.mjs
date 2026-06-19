@@ -50,6 +50,13 @@ for (let i = 0; i < paths.length; i += BATCH) {
 }
 process.stdout.write("\n");
 
+// 404.html — SPA fallback for static hosts (e.g. GitHub Pages). Served for any
+// unmatched path, including the base URL without a trailing slash; the client
+// router then reads the real URL and renders the right route (the gallery for
+// the bare base path, or the NotFound page for a bogus color slug).
+const gallery = readFileSync(resolve(dist, "index.html"), "utf8");
+writeFileSync(resolve(dist, "404.html"), gallery);
+
 // sitemap.xml
 const urls = getSitemapUrls();
 const sitemap =
