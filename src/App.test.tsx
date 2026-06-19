@@ -235,16 +235,28 @@ describe("Toast lifetime", () => {
 // ── Toolbar "Clear all" actions ──────────────────────────────────────────────
 
 describe("Clearing all from the toolbar", () => {
-  it("disables the clear buttons appropriately when nothing is set", () => {
+  it("disables both clear buttons when nothing is favorited or hidden", () => {
     render(<App />);
     clickButton(/Toggle menu/);
 
-    // No favorites yet → Clear All Favorites is disabled.
     expect(
       (screen.getByRole("button", { name: "Clear All Favorites" }) as HTMLButtonElement)
         .disabled,
     ).toBe(true);
-    // Clear All Hidden is always actionable.
+    expect(
+      (screen.getByRole("button", { name: "Clear All Hidden Colors" }) as HTMLButtonElement)
+        .disabled,
+    ).toBe(true);
+  });
+
+  it("enables Clear All Hidden once a color is hidden", () => {
+    render(<App />);
+    clickButton(RED);
+    fireEvent.click(
+      within(region(RED)).getByRole("button", { name: "Hide Crimson" }),
+    );
+
+    clickButton(/Toggle menu/);
     expect(
       (screen.getByRole("button", { name: "Clear All Hidden Colors" }) as HTMLButtonElement)
         .disabled,

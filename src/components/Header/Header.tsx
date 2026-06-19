@@ -8,6 +8,7 @@ interface HeaderProps {
   colorCount: number;
   filteredCount: number;
   favoritesCount: number;
+  hiddenCount: number;
   onLrvChange: (min: number, max: number) => void;
   onExportFavorites: () => void;
   onClearFavorites: () => void;
@@ -20,6 +21,7 @@ export function Header({
   colorCount,
   filteredCount,
   favoritesCount,
+  hiddenCount,
   onLrvChange,
   onExportFavorites,
   onClearFavorites,
@@ -88,6 +90,7 @@ export function Header({
                   id="clear-hidden-btn"
                   className={styles.actionBtn}
                   onClick={onClearHidden}
+                  disabled={hiddenCount === 0}
                 >
                   Clear All Hidden Colors
                 </button>

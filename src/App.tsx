@@ -60,6 +60,7 @@ function AppInner() {
         colorCount={colorModel.getActiveColors().length}
         filteredCount={visibleColors.length}
         favoritesCount={favorites.size}
+        hiddenCount={hidden.size}
         onLrvChange={onLrvChange}
         onExportFavorites={onExportFavorites}
         onClearFavorites={onClearFavorites}
