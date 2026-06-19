@@ -40,11 +40,12 @@ src/
 │   ├── usePersistentSet.ts  # useSet backed by localStorage
 │   └── usePersistentState.ts# useState backed by localStorage
 ├── components/
+│   ├── ErrorBoundary/       # top-level render-error recovery UI
 │   ├── Header/              # title + collapsible toolbar (LrvFilter, clear/export)
 │   ├── LrvFilter/           # debounced dual-range LRV slider
 │   ├── ColorExplorer/       # accordion of Favorites / Hidden / family sections
-│   │   ├── ColorAccordion/  #   collapsible section
-│   │   ├── ColorTile/       #   single color card (+ HiddenFamilyTile)
+│   │   ├── ColorAccordion/  #   collapsible layout section (no per-tile state)
+│   │   ├── ColorTile/       #   self-sufficient color card (+ HiddenFamilyTile)
 │   │   └── BulkActionsPanel/#   "Favorite All" / "Hide All"
 │   ├── Modal/               # color-detail dialog (focus-trapped, portal)
 │   └── Toast/               # transient notifications + undo action
@@ -82,6 +83,15 @@ validated; corrupt or unavailable storage falls back to defaults without throwin
 `ColorModel` is constructed once from the static dataset and holds no UI state; it
 is pure-ish domain logic (filtering/grouping/sorting take state Sets as arguments
 and return new arrays). Context values are memoized so identities stay stable.
+
+Leaf components consume the contexts they need directly (e.g. `ColorTile` reads
+favorites/hidden/model) rather than receiving state through props, so
+`ColorAccordion` is a pure layout component. Color presentation (hsl string, LRV
+classification, similarity labels) lives in `utils/colorPresentation.ts` — one
+source of truth shared by tiles and the modal.
+
+A top-level `<ErrorBoundary>` (in `main.tsx`) catches render errors so a single
+failure shows a recovery UI instead of blanking the PWA.
 
 ## Data flow
 
@@ -123,3 +133,6 @@ destructive "Clear All Favorites/Hidden" each apply immediately and surface an
   to a curated set) would build on the same context seam.
 - The Toast context is defined inside its component file; moving it to `context/`
   would match the rest of the codebase.
+- `palette.ts` (~2k records) is statically bundled (~340 kB gzip, trips Vite's
+  chunk-size warning). **Code-splitting the dataset** (dynamic `import()` or a
+  fetched JSON asset) is the main bundle-size lever.

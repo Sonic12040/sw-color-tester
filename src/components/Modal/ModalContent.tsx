@@ -64,7 +64,6 @@ export function ModalContent({
       ref={dialogRef}
       tabIndex={-1}
       className={styles.overlay}
-      id="color-detail-modal"
       aria-modal="true"
       role="dialog"
       aria-labelledby="modal-title"

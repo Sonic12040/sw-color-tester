@@ -5,7 +5,6 @@ exports[`Modal > displays the expected data for a color 1`] = `
   aria-labelledby="modal-title"
   aria-modal="true"
   class="overlay"
-  id="color-detail-modal"
   role="dialog"
   tabindex="-1"
 >

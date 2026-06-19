@@ -8,23 +8,12 @@ import { ColorAccordion } from "./ColorAccordion/ColorAccordion.js";
 import styles from "./ColorExplorer.module.css";
 
 export function ColorExplorer() {
-  const { colorModel, openModal } = useAppContext();
-  const {
-    favorites,
-    actions: favActions,
-    toggleFavorite,
-    toggleBulkFavorite,
-  } = useFavorites();
-  const {
-    hidden,
-    actions: hiddenActions,
-    toggleHidden,
-    toggleBulkHidden,
-  } = useHidden();
+  const { colorModel } = useAppContext();
+  const { favorites, actions: favActions, toggleBulkFavorite } = useFavorites();
+  const { hidden, actions: hiddenActions, toggleBulkHidden } = useHidden();
   const { lrvRange } = useFilters();
   const showToast = useToast();
 
-  const designerPickIds = colorModel.getDesignerPickIds(); // stable — built once in constructor
   const favoriteColors = useMemo(
     () => colorModel.getFavoriteColors(favorites),
     [colorModel, favorites],
@@ -53,8 +42,6 @@ export function ColorExplorer() {
   }, [colorModel, hidden, favorites, lrvRange]);
 
   // Event handlers
-  const onToggleFavorite = (id: string) => toggleFavorite(id);
-  const onToggleHidden = (id: string) => toggleHidden(id);
   const onFavoriteAll = (_groupId: string, groupName: string) => {
     const ids = colorModel.getFamilyColors(groupName).map((c) => c.id);
     if (ids.length === 0) return;
@@ -87,9 +74,6 @@ export function ColorExplorer() {
           : hiddenActions.removeMultiple(ids),
     });
   };
-  const onUnhideFamily = (familyName: string) =>
-    hiddenActions.removeMultiple(colorModel.getColorIdsForFamily(familyName));
-  const onView = (id: string) => openModal(id);
 
   const favTitle =
     favoriteColors.length > 0
@@ -101,20 +85,14 @@ export function ColorExplorer() {
       : "Hidden Colors";
 
   return (
-    <div id="color-accordion" className={styles.container}>
+    <div className={styles.container}>
       {/* Favorites section */}
       <ColorAccordion
         id="favorites"
         title={favTitle}
         defaultOpen={favoriteColors.length > 0}
         colors={favoriteColors}
-        favorites={favorites}
-        hidden={hidden}
-        designerPickIds={designerPickIds}
         showHideButton={false}
-        onToggleFavorite={onToggleFavorite}
-        onToggleHidden={onToggleHidden}
-        onView={onView}
         emptyMessage="No favorite colors yet."
         emptySubMessage="Click the heart icon on any color to add it to your favorites."
       />
@@ -125,14 +103,7 @@ export function ColorExplorer() {
         title={hiddenTitle}
         colors={hiddenColors}
         hiddenFamilies={hiddenFamilies}
-        favorites={favorites}
-        hidden={hidden}
-        designerPickIds={designerPickIds}
         showFavoriteButton={false}
-        onToggleFavorite={onToggleFavorite}
-        onToggleHidden={onToggleHidden}
-        onView={onView}
-        onUnhideFamily={onUnhideFamily}
         emptyMessage="No hidden colors."
       />
 
@@ -148,12 +119,6 @@ export function ColorExplorer() {
             showBulkActions
             groupName={family}
             colors={familyColors}
-            favorites={favorites}
-            hidden={hidden}
-            designerPickIds={designerPickIds}
-            onToggleFavorite={onToggleFavorite}
-            onToggleHidden={onToggleHidden}
-            onView={onView}
             onFavoriteAll={onFavoriteAll}
             onHideAll={onHideAll}
           />

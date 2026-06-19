@@ -12,17 +12,10 @@ interface ColorAccordionProps {
   groupName?: string;
   colors: Color[];
   hiddenFamilies?: Array<{ name: string; count: number }>;
-  favorites: Set<string>;
-  hidden: Set<string>;
-  designerPickIds: Set<string>;
   showFavoriteButton?: boolean;
   showHideButton?: boolean;
-  onToggleFavorite: (id: string) => void;
-  onToggleHidden: (id: string) => void;
-  onView: (id: string) => void;
   onFavoriteAll?: (groupId: string, groupName: string) => void;
   onHideAll?: (groupId: string, groupName: string) => void;
-  onUnhideFamily?: (familyName: string) => void;
   emptyMessage?: string;
   emptySubMessage?: string;
 }
@@ -35,17 +28,10 @@ export function ColorAccordion({
   groupName = "",
   colors,
   hiddenFamilies,
-  favorites,
-  hidden,
-  designerPickIds,
   showFavoriteButton = true,
   showHideButton = true,
-  onToggleFavorite,
-  onToggleHidden,
-  onView,
   onFavoriteAll,
   onHideAll,
-  onUnhideFamily,
   emptyMessage,
   emptySubMessage,
 }: ColorAccordionProps) {
@@ -112,24 +98,13 @@ export function ColorAccordion({
               <ColorTile
                 key={color.id}
                 color={color}
-                isFavorite={favorites.has(color.id)}
-                isHidden={hidden.has(color.id)}
-                isDesignerPick={designerPickIds.has(color.id)}
                 showFavoriteButton={showFavoriteButton}
                 showHideButton={showHideButton}
-                onToggleFavorite={onToggleFavorite}
-                onToggleHidden={onToggleHidden}
-                onView={onView}
               />
             ))}
 
             {hiddenFamilies?.map(({ name, count }) => (
-              <HiddenFamilyTile
-                key={name}
-                familyName={name}
-                count={count}
-                onUnhide={onUnhideFamily ?? (() => {})}
-              />
+              <HiddenFamilyTile key={name} familyName={name} count={count} />
             ))}
           </div>
 

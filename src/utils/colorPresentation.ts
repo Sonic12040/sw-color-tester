@@ -23,29 +23,32 @@ export function contrastText(lrv: number): "white" | "black" {
   return lrv < LRV_THRESHOLDS.CONTRAST ? "white" : "black";
 }
 
+export type LrvClass = "Dark" | "Medium" | "Light";
+
+/** Classify a color's lightness (LRV) into Dark / Medium / Light. */
+export function classifyLrv(lrv: number): LrvClass {
+  if (lrv < LRV_THRESHOLDS.DARK) return "Dark";
+  if (lrv > LRV_THRESHOLDS.LIGHT) return "Light";
+  return "Medium";
+}
+
 export interface LrvDescription {
-  label: string;
+  label: LrvClass;
   context: string;
 }
 
+const LRV_CONTEXT: Record<LrvClass, string> = {
+  Dark: "Absorbs most light, creating intimate, cozy spaces.",
+  Medium: "Balanced color that works in most spaces.",
+  Light: "Creates bright, airy, spacious feeling.",
+};
+
 /** Human-readable label + sentence describing a color's lightness (LRV). */
 export function describeLrv(lrv: number): LrvDescription {
-  const value = lrv.toFixed(1);
-  if (lrv < LRV_THRESHOLDS.DARK) {
-    return {
-      label: "Dark",
-      context: `Reflects ${value}% of light. Absorbs most light, creating intimate, cozy spaces.`,
-    };
-  }
-  if (lrv > LRV_THRESHOLDS.LIGHT) {
-    return {
-      label: "Light",
-      context: `Reflects ${value}% of light. Creates bright, airy, spacious feeling.`,
-    };
-  }
+  const label = classifyLrv(lrv);
   return {
-    label: "Medium",
-    context: `Reflects ${value}% of light. Balanced color that works in most spaces.`,
+    label,
+    context: `Reflects ${lrv.toFixed(1)}% of light. ${LRV_CONTEXT[label]}`,
   };
 }
 

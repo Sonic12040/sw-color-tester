@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import type { Color } from "../data/types.js";
 import {
+  classifyLrv,
   contrastText,
   describeLrv,
   designerCollections,
@@ -37,6 +38,14 @@ describe("contrastText", () => {
   it("returns white below the contrast threshold and black above", () => {
     expect(contrastText(10)).toBe("white");
     expect(contrastText(80)).toBe("black");
+  });
+});
+
+describe("classifyLrv", () => {
+  it("buckets by the dark/light thresholds", () => {
+    expect(classifyLrv(10)).toBe("Dark");
+    expect(classifyLrv(50)).toBe("Medium");
+    expect(classifyLrv(80)).toBe("Light");
   });
 });
 

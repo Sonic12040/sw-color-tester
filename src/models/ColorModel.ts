@@ -49,8 +49,8 @@ export class ColorModel {
     }
   }
 
-  getDesignerPickIds(): Set<string> {
-    return this.#designerPickIds;
+  isDesignerPick(id: string): boolean {
+    return this.#designerPickIds.has(id);
   }
 
   getColorById(id: string): Color | undefined {
@@ -100,7 +100,7 @@ export class ColorModel {
   }
 
   sortFamiliesByPriority(familyKeys: string[]): string[] {
-    return familyKeys.sort((a, b) => {
+    return [...familyKeys].sort((a, b) => {
       const aIndex = FAMILY_ORDER.indexOf(a);
       const bIndex = FAMILY_ORDER.indexOf(b);
       if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;

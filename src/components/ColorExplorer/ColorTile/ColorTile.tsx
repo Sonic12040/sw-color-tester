@@ -1,47 +1,47 @@
 import type { Color } from "../../../data/types.js";
+import {
+  hsl,
+  classifyLrv,
+  type LrvClass,
+} from "../../../utils/colorPresentation.js";
 import { LRV_THRESHOLDS } from "../../../utils/config.js";
+import { useAppContext } from "../../../context/AppContext.js";
+import { useFavorites } from "../../../context/FavoritesContext.js";
+import { useHidden } from "../../../context/HiddenContext.js";
 import styles from "./ColorTile.module.css";
+
+const LRV_CLASS: Record<LrvClass, string> = {
+  Dark: styles.lrvDark,
+  Medium: styles.lrvMedium,
+  Light: styles.lrvLight,
+};
 
 interface ColorTileProps {
   color: Color;
-  isFavorite: boolean;
-  isHidden: boolean;
-  isDesignerPick: boolean;
   showFavoriteButton?: boolean;
   showHideButton?: boolean;
-  onToggleFavorite: (id: string) => void;
-  onToggleHidden: (id: string) => void;
-  onView: (id: string) => void;
-}
-
-function getLrvLabel(lrv: number): { label: string; cls: string } {
-  if (lrv < LRV_THRESHOLDS.DARK) return { label: "Dark", cls: styles.lrvDark };
-  if (lrv > LRV_THRESHOLDS.LIGHT)
-    return { label: "Light", cls: styles.lrvLight };
-  return { label: "Medium", cls: styles.lrvMedium };
 }
 
 export function ColorTile({
   color,
-  isFavorite,
-  isHidden: _isHidden,
-  isDesignerPick,
   showFavoriteButton = true,
   showHideButton = true,
-  onToggleFavorite,
-  onToggleHidden,
-  onView,
 }: ColorTileProps) {
-  const bg = `hsl(${color.hue * 360}deg ${color.saturation * 100}% ${color.lightness * 100}%)`;
+  const { colorModel, openModal } = useAppContext();
+  const { favorites, toggleFavorite } = useFavorites();
+  const { toggleHidden } = useHidden();
+
+  const isFavorite = favorites.has(color.id);
+  const isDesignerPick = colorModel.isDesignerPick(color.id);
+
   const themeClass =
     color.lrv < LRV_THRESHOLDS.CONTRAST ? styles.dark : styles.light;
-  const { label: lrvLabel, cls: lrvCls } = getLrvLabel(color.lrv);
+  const lrvLabel = classifyLrv(color.lrv);
 
   return (
     <div
       className={`${styles.tile} ${themeClass}`}
-      style={{ background: bg }}
-      data-id={color.id}
+      style={{ background: hsl(color) }}
     >
       <div className={styles.actions}>
         {showFavoriteButton && (
@@ -51,7 +51,7 @@ export function ColorTile({
             aria-label={
               isFavorite ? `Unfavorite ${color.name}` : `Favorite ${color.name}`
             }
-            onClick={() => onToggleFavorite(color.id)}
+            onClick={() => toggleFavorite(color.id)}
           >
             <svg
               width="24"
@@ -73,7 +73,7 @@ export function ColorTile({
             type="button"
             className={styles.actionBtn}
             aria-label={`Hide ${color.name}`}
-            onClick={() => onToggleHidden(color.id)}
+            onClick={() => toggleHidden(color.id)}
           >
             <svg
               width="24"
@@ -121,7 +121,7 @@ export function ColorTile({
         <div className={styles.number}>SW {color.colorNumber}</div>
         <div className={styles.lrvContainer}>
           <span
-            className={`${styles.lrv} ${lrvCls}`}
+            className={`${styles.lrv} ${LRV_CLASS[lrvLabel]}`}
             title={`Light Reflectance Value — ${lrvLabel}: reflects ${color.lrv.toFixed(1)}% of light`}
           >
             <span className={styles.lrvLabel}>{lrvLabel}</span>
@@ -132,7 +132,7 @@ export function ColorTile({
           type="button"
           className={styles.viewBtn}
           aria-label={`See color details and pairings for ${color.name}`}
-          onClick={() => onView(color.id)}
+          onClick={() => openModal(color.id)}
         >
           View Details
         </button>
@@ -144,14 +144,15 @@ export function ColorTile({
 interface HiddenFamilyTileProps {
   familyName: string;
   count: number;
-  onUnhide: (familyName: string) => void;
 }
 
-export function HiddenFamilyTile({
-  familyName,
-  count,
-  onUnhide,
-}: HiddenFamilyTileProps) {
+export function HiddenFamilyTile({ familyName, count }: HiddenFamilyTileProps) {
+  const { colorModel } = useAppContext();
+  const { actions } = useHidden();
+
+  const unhide = () =>
+    actions.removeMultiple(colorModel.getColorIdsForFamily(familyName));
+
   return (
     <div
       className={`${styles.tile} ${styles.familyTile}`}
@@ -162,7 +163,7 @@ export function HiddenFamilyTile({
           type="button"
           className={styles.actionBtn}
           aria-label={`Unhide all ${familyName} colors`}
-          onClick={() => onUnhide(familyName)}
+          onClick={unhide}
         >
           <svg
             width="24"

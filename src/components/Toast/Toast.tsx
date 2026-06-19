@@ -129,9 +129,3 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
     </ToastContext.Provider>
   );
 }
-
-// ToastContainer kept as a no-op re-export for backwards compatibility
-// (App.tsx renders it inside ToastProvider — the portal is now inside the provider).
-export function ToastContainer() {
-  return null;
-}

@@ -10,7 +10,7 @@ import { ExportService } from "./utils/ExportService.js";
 import { Header } from "./components/Header/Header.js";
 import { ColorExplorer } from "./components/ColorExplorer/ColorExplorer.js";
 import { Modal } from "./components/Modal/Modal.js";
-import { ToastContainer, useToast } from "./components/Toast/Toast.js";
+import { useToast } from "./components/Toast/Toast.js";
 
 // Singletons — created once outside the component tree
 const colorModel = new ColorModel(colorData);
@@ -88,7 +88,6 @@ function AppInner() {
       </main>
 
       <Modal colorId={modalColorId} onClose={closeModal} />
-      <ToastContainer />
     </AppContext.Provider>
   );
 }
