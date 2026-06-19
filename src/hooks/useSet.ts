@@ -10,12 +10,16 @@ export interface SetActions<T> {
   set: (newSet: Set<T>) => void;
 }
 
+type SetInitializer<T> = T[] | Set<T> | (() => T[] | Set<T>);
+
 export function useSet<T>(
-  initialValue: T[] | Set<T> = new Set(),
+  initialValue: SetInitializer<T> = new Set(),
 ): [Set<T>, SetActions<T>] {
-  const [set, setSet] = useState<Set<T>>(() =>
-    initialValue instanceof Set ? initialValue : new Set(initialValue),
-  );
+  const [set, setSet] = useState<Set<T>>(() => {
+    const value =
+      typeof initialValue === "function" ? initialValue() : initialValue;
+    return value instanceof Set ? value : new Set(value);
+  });
 
   const actions = useMemo<SetActions<T>>(
     () => ({

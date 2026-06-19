@@ -424,3 +424,56 @@ describe("LRV filter", () => {
     expect(within(region(RED)).getByText("Scarlet")).toBeTruthy(); // lrv 50
   });
 });
+
+// ── Persistence across reloads ───────────────────────────────────────────────
+// Unmounting + re-rendering <App /> simulates a page reload: state is gone from
+// memory and must be restored from localStorage.
+
+describe("Persistence across reloads", () => {
+  it("remembers favorites", () => {
+    const app = render(<App />);
+    clickButton(RED);
+    fireEvent.click(
+      within(region(RED)).getByRole("button", { name: "Favorite Crimson" }),
+    );
+    app.unmount();
+
+    render(<App />); // reload
+    // Favorites auto-opens because a favorite exists; Crimson is still there.
+    expect(within(region(FAVORITES)).getByText("Crimson")).toBeTruthy();
+    expect(screen.getByRole("button", { name: /^Red \(2\)/ })).toBeTruthy();
+  });
+
+  it("remembers hidden colors", () => {
+    const app = render(<App />);
+    clickButton(RED);
+    fireEvent.click(
+      within(region(RED)).getByRole("button", { name: "Hide Crimson" }),
+    );
+    app.unmount();
+
+    render(<App />); // reload
+    // Crimson stays hidden, so the Red family shows 2 visible colors.
+    expect(screen.getByRole("button", { name: /^Red \(2\)/ })).toBeTruthy();
+  });
+
+  it("remembers the LRV filter", () => {
+    const app = render(<App />);
+    clickButton(/Toggle menu/);
+    vi.useFakeTimers();
+    fireEvent.change(
+      screen.getByRole("slider", { name: "Minimum LRV value" }),
+      {
+        target: { value: "30" },
+      },
+    );
+    act(() => vi.advanceTimersByTime(TIMING.LRV_DEBOUNCE_MS));
+    vi.useRealTimers();
+    expect(screen.getByText(/Showing 4 of 6 colors/)).toBeTruthy();
+    app.unmount();
+
+    render(<App />); // reload
+    clickButton(/Toggle menu/);
+    expect(screen.getByText(/Showing 4 of 6 colors/)).toBeTruthy();
+  });
+});

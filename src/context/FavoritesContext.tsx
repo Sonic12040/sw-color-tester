@@ -1,5 +1,7 @@
 import { createContext, useCallback, useContext, useMemo } from "react";
-import { useSet, type SetActions } from "../hooks/useSet.js";
+import { type SetActions } from "../hooks/useSet.js";
+import { usePersistentSet } from "../hooks/usePersistentSet.js";
+import { STORAGE_KEYS } from "../utils/storage.js";
 
 export interface FavoritesContextValue {
   favorites: Set<string>;
@@ -22,7 +24,7 @@ export function useFavorites(): FavoritesContextValue {
 }
 
 export function FavoritesProvider({ children }: { children: React.ReactNode }) {
-  const [favorites, actions] = useSet<string>();
+  const [favorites, actions] = usePersistentSet(STORAGE_KEYS.favorites);
 
   const toggleBulkFavorite = useCallback(
     (colorIds: string[]) => {

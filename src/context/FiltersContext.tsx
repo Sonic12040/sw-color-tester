@@ -1,10 +1,6 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from "react";
+import { createContext, useCallback, useContext, useMemo } from "react";
+import { usePersistentState } from "../hooks/usePersistentState.js";
+import { STORAGE_KEYS } from "../utils/storage.js";
 
 export interface LrvRange {
   min: number;
@@ -31,31 +27,42 @@ export function useFilters(): FiltersContextValue {
 }
 
 const clamp = (n: number) => Math.max(0, Math.min(100, n));
+const DEFAULT_RANGE: LrvRange = { min: 0, max: 100 };
+
+/** Narrow stored data to a valid LrvRange (clamped), or null to fall back. */
+function parseLrvRange(raw: unknown): LrvRange | null {
+  if (typeof raw !== "object" || raw === null) return null;
+  const r = raw as Record<string, unknown>;
+  if (typeof r.min !== "number" || typeof r.max !== "number") return null;
+  return { min: clamp(r.min), max: clamp(r.max) };
+}
 
 export function FiltersProvider({ children }: { children: React.ReactNode }) {
-  const [lrvMin, setLrvMin] = useState(0);
-  const [lrvMax, setLrvMax] = useState(100);
+  const [range, setRange] = usePersistentState<LrvRange>(
+    STORAGE_KEYS.lrv,
+    DEFAULT_RANGE,
+    parseLrvRange,
+  );
+  const { min: lrvMin, max: lrvMax } = range;
 
-  const setLrvRange = useCallback((min: number, max: number) => {
-    setLrvMin(clamp(min));
-    setLrvMax(clamp(max));
-  }, []);
+  const setLrvRange = useCallback(
+    (min: number, max: number) =>
+      setRange({ min: clamp(min), max: clamp(max) }),
+    [setRange],
+  );
 
-  const resetLrv = useCallback(() => {
-    setLrvMin(0);
-    setLrvMax(100);
-  }, []);
+  const resetLrv = useCallback(() => setRange(DEFAULT_RANGE), [setRange]);
 
   const value = useMemo<FiltersContextValue>(
     () => ({
       lrvMin,
       lrvMax,
-      lrvRange: { min: lrvMin, max: lrvMax },
+      lrvRange: range,
       isLrvActive: lrvMin > 0 || lrvMax < 100,
       setLrvRange,
       resetLrv,
     }),
-    [lrvMin, lrvMax, setLrvRange, resetLrv],
+    [lrvMin, lrvMax, range, setLrvRange, resetLrv],
   );
 
   return (

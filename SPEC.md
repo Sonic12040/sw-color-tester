@@ -36,7 +36,9 @@ src/
 │   ├── HiddenContext.tsx    # hidden set + actions (useSet)
 │   └── FiltersContext.tsx   # LRV range (useState)
 ├── hooks/
-│   └── useSet.ts            # immutable Set state primitive
+│   ├── useSet.ts            # immutable Set state primitive
+│   ├── usePersistentSet.ts  # useSet backed by localStorage
+│   └── usePersistentState.ts# useState backed by localStorage
 ├── components/
 │   ├── Header/              # title + collapsible toolbar (LrvFilter, clear/export)
 │   ├── LrvFilter/           # debounced dual-range LRV slider
@@ -49,6 +51,7 @@ src/
 │   └── ConfirmDialog/       # promise-based confirm for destructive actions
 ├── utils/
 │   ├── config.ts            # thresholds, family order, timings
+│   ├── storage.ts           # safe localStorage helpers + keys
 │   └── ExportService.ts     # favorites → downloaded JSON
 └── styles/                  # global tokens + base CSS
 ```
@@ -61,17 +64,22 @@ value would re-render every consumer on any change; splitting keeps a `hidden`
 change from re-rendering `favorites`-only consumers. (`AppProviders` composes the
 providers; `context/context-isolation.test.tsx` validates the isolation.)
 
-| Concern         | Source of truth               | Hook                        |
-| --------------- | ----------------------------- | --------------------------- |
-| Favorites       | `FavoritesContext` (`useSet`) | `useFavorites()`            |
-| Hidden colors   | `HiddenContext` (`useSet`)    | `useHidden()`               |
-| LRV filter      | `FiltersContext` (`useState`) | `useFilters()`              |
-| Modal open id   | `useState` in `AppInner`      | `useAppContext().openModal` |
-| Toasts          | `ToastContext`                | `useToast()`                |
-| Confirm dialogs | `ConfirmContext`              | `useConfirmDialog()`        |
+| Concern         | Source of truth                         | Hook                        |
+| --------------- | --------------------------------------- | --------------------------- |
+| Favorites       | `FavoritesContext` (`usePersistentSet`) | `useFavorites()`            |
+| Hidden colors   | `HiddenContext` (`usePersistentSet`)    | `useHidden()`               |
+| LRV filter      | `FiltersContext` (`usePersistentState`) | `useFilters()`              |
+| Modal open id   | `useState` in `AppInner`                | `useAppContext().openModal` |
+| Toasts          | `ToastContext`                          | `useToast()`                |
+| Confirm dialogs | `ConfirmContext`                        | `useConfirmDialog()`        |
 
 `useSet` guarantees a **new `Set` reference on every real change** (and the same
 reference on a no-op) — the contract React's reactivity depends on.
+
+**Persistence.** Favorites, hidden colors, and the LRV filter persist to
+`localStorage` (keys in `utils/storage.ts`) via `usePersistentSet` /
+`usePersistentState`, so they survive reloads. Reads/writes are guarded and
+validated; corrupt or unavailable storage falls back to defaults without throwing.
 
 `ColorModel` is constructed once from the static dataset and holds no UI state; it
 is pure-ish domain logic (filtering/grouping/sorting take state Sets as arguments
@@ -113,8 +121,8 @@ set action.
 
 ## Known follow-ups
 
-- No **persistence**: favorites/hidden/LRV reset on reload (a `localStorage`/URL
-  layer behind the contexts is the natural next step).
+- Persistence is `localStorage`-only; **URL-encoded shareable state** (deep links
+  to a curated set) would build on the same context seam.
 - `Modal.tsx` is large; further decomposition (extract subsections + a reusable
   `useFocusTrap`) would improve maintainability.
 - Toast/ConfirmDialog define their contexts inside component files; moving them to

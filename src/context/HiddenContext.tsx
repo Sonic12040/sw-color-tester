@@ -1,5 +1,7 @@
 import { createContext, useCallback, useContext, useMemo } from "react";
-import { useSet, type SetActions } from "../hooks/useSet.js";
+import { type SetActions } from "../hooks/useSet.js";
+import { usePersistentSet } from "../hooks/usePersistentSet.js";
+import { STORAGE_KEYS } from "../utils/storage.js";
 
 export interface HiddenContextValue {
   hidden: Set<string>;
@@ -20,7 +22,7 @@ export function useHidden(): HiddenContextValue {
 }
 
 export function HiddenProvider({ children }: { children: React.ReactNode }) {
-  const [hidden, actions] = useSet<string>();
+  const [hidden, actions] = usePersistentSet(STORAGE_KEYS.hidden);
 
   const toggleBulkHidden = useCallback(
     (colorIds: string[]) => {
