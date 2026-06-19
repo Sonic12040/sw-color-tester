@@ -20,7 +20,7 @@ paint colors. Built with **Vite + React 19 + TypeScript (strict)**.
 
 ## Source layout
 
-```
+```text
 src/
 ├── main.tsx                 # React root (StrictMode)
 ├── App.tsx                  # AppInner: wiring, derived data, top-level handlers
@@ -87,7 +87,7 @@ and return new arrays). Context values are memoized so identities stay stable.
 
 ## Data flow
 
-```
+```text
 User action → context action (setState) → context re-renders consumers
 ColorExplorer derives visible/grouped colors via ColorModel (memoized)
 ```
@@ -123,7 +123,5 @@ set action.
 
 - Persistence is `localStorage`-only; **URL-encoded shareable state** (deep links
   to a curated set) would build on the same context seam.
-- `Modal.tsx` is large; further decomposition (extract subsections + a reusable
-  `useFocusTrap`) would improve maintainability.
 - Toast/ConfirmDialog define their contexts inside component files; moving them to
   `context/` would match the rest of the codebase.
