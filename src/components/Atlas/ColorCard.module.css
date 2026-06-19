@@ -139,11 +139,16 @@
   color: var(--tile-badge-text, currentColor);
 }
 
-/* Full-width action bar — four equal, generous tap targets. */
+/* Full-width action bar — four equal, generous tap targets. Deliberately a
+   fixed dark bar (independent of the swatch's lightness) so the icons keep a
+   consistent, high-contrast appearance on every color. */
 .actions {
+  --bar-bg: #1b1c20;
+  --bar-fg: rgba(255, 255, 255, 0.92);
+  --bar-fg-strong: #ffffff;
   display: flex;
-  gap: 1px;
   margin-top: auto;
+  background: var(--bar-bg);
 }
 
 .actionBtn {
@@ -155,14 +160,21 @@
   justify-content: center;
   border: none;
   cursor: pointer;
-  background: var(--tile-btn-bg, var(--button-icon-bg));
-  backdrop-filter: var(--blur-md);
-  color: var(--tile-btn-text, currentColor);
-  transition: var(--button-transition);
+  background: transparent;
+  color: var(--bar-fg);
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+/* Hairline divider between buttons (drawn inward so no swatch shows through). */
+.actionBtn + .actionBtn {
+  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.1);
 }
 
 .actionBtn:hover {
-  background: var(--tile-btn-hover-bg, var(--button-icon-hover-bg));
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--bar-fg-strong);
 }
 
 .actionBtn:focus-visible {
@@ -175,6 +187,8 @@
   cursor: not-allowed;
 }
 
+/* Active toggles get a lighter cell + a filled icon (set in the markup). */
 .actionBtnActive {
-  box-shadow: 0 0 0 2px var(--tile-btn-text, currentColor) inset;
+  background: rgba(255, 255, 255, 0.16);
+  color: var(--bar-fg-strong);
 }
