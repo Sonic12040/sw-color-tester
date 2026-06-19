@@ -1,10 +1,11 @@
 .card {
   width: 100%;
-  min-height: 240px;
+  min-height: 268px;
   padding: clamp(1rem, 2.67vw, 1.5rem);
-  padding-top: calc(var(--button-min-height) + 0.5rem);
+  /* Reserve space for the top-right action cluster so it never overlaps text. */
+  padding-top: calc(var(--button-min-height) + var(--spacing-3));
   position: relative;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
   transition:
     box-shadow var(--transition-fast),
@@ -12,13 +13,14 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  gap: var(--spacing-3);
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
   /* Cheap windowing for the ~2,000-card grid: the browser skips layout/paint
      for off-screen cards. contain-intrinsic-size reserves their height so the
      scrollbar stays stable. */
   content-visibility: auto;
-  contain-intrinsic-size: auto 280px;
+  contain-intrinsic-size: auto 300px;
 }
 
 .card:hover {
@@ -58,6 +60,8 @@
   color: var(--tile-text);
 }
 
+/* Top-right cluster: two roomy toggles (favorite + hide). Compare lives in the
+   footer so three targets never crowd one corner. */
 .actions {
   position: absolute;
   top: var(--spacing-2);
@@ -68,42 +72,46 @@
   z-index: 1;
 }
 
-.actionBtn {
+.iconBtn {
   background: var(--tile-btn-bg, var(--button-icon-bg));
   backdrop-filter: var(--blur-md);
   border: none;
-  border-radius: var(--button-border-radius);
-  padding: var(--spacing-2);
+  border-radius: var(--radius-md);
+  padding: 0;
   cursor: pointer;
   transition: var(--button-transition);
+  width: var(--button-min-height);
+  height: var(--button-min-height);
   min-width: var(--button-min-height);
-  min-height: var(--button-min-height);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--tile-btn-text, currentColor);
 }
 
-.actionBtn:hover {
+.iconBtn:hover {
   background: var(--tile-btn-hover-bg, var(--button-icon-hover-bg));
   transform: scale(1.05);
 }
 
-.actionBtn:focus-visible {
+.iconBtn:focus-visible {
   outline: 2px solid var(--color-border-focus);
   outline-offset: 2px;
 }
 
-.actionBtnActive {
-  background: var(--tile-btn-hover-bg, var(--button-icon-hover-bg));
+.iconBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.iconBtnActive {
   box-shadow: 0 0 0 2px var(--tile-btn-text, currentColor) inset;
 }
 
 .badges {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: var(--spacing-1);
-  margin-bottom: var(--spacing-2);
 }
 
 .badge {
@@ -122,12 +130,14 @@
 
 .info {
   color: var(--tile-text, inherit);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
 }
 
 .name {
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-md);
   font-weight: var(--font-weight-bold);
-  margin-bottom: var(--spacing-1);
   line-height: var(--line-height-tight);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -135,23 +145,22 @@
 }
 
 .number {
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
-  margin-bottom: var(--spacing-2);
   opacity: var(--opacity-95);
   letter-spacing: 0.02em;
   line-height: var(--line-height-tight);
+  margin-top: calc(-1 * var(--spacing-1));
 }
 
 .meta {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-1);
-  margin-bottom: var(--spacing-2);
 }
 
 .chip {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
   padding: var(--spacing-1) var(--spacing-2);
   border-radius: var(--radius-sm);
@@ -165,16 +174,27 @@
   color: var(--tile-badge-text, currentColor);
 }
 
+/* Footer: primary "View Details" + a square compare toggle, both ≥44px tall. */
+.footer {
+  display: flex;
+  align-items: stretch;
+  gap: var(--spacing-2);
+  margin-top: var(--spacing-1);
+}
+
 .viewBtn {
-  display: block;
-  width: 100%;
+  flex: 1 1 auto;
+  min-height: var(--button-min-height);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: var(--spacing-2) var(--spacing-3);
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
   background: var(--tile-btn-bg, rgba(128, 128, 128, 0.7));
   backdrop-filter: var(--blur-md);
   border: none;
-  border-radius: var(--button-border-radius);
+  border-radius: var(--radius-md);
   cursor: pointer;
   color: var(--tile-btn-text, currentColor);
   text-align: center;
@@ -189,4 +209,39 @@
 .viewBtn:focus-visible {
   outline: 2px solid var(--color-border-focus);
   outline-offset: 2px;
+}
+
+.compareBtn {
+  flex: 0 0 auto;
+  width: var(--button-min-height);
+  min-width: var(--button-min-height);
+  min-height: var(--button-min-height);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--tile-btn-bg, rgba(128, 128, 128, 0.7));
+  backdrop-filter: var(--blur-md);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  color: var(--tile-btn-text, currentColor);
+  transition: var(--button-transition);
+}
+
+.compareBtn:hover {
+  background: var(--tile-btn-hover-bg, rgba(128, 128, 128, 0.85));
+}
+
+.compareBtn:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+.compareBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.compareBtnActive {
+  box-shadow: 0 0 0 2px var(--tile-btn-text, currentColor) inset;
 }

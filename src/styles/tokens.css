@@ -245,7 +245,7 @@
      ============================================ */
     --layout-max: 1200px; /* default centered content width */
     --rail-width: clamp(15rem, 22vw, 17.5rem); /* 240 → 280px facet rail */
-    --grid-min-tile: 150px; /* min card width (fluid auto-fill) */
+    --grid-min-tile: 165px; /* min card width on phones (keeps 2 columns) */
     --grid-gap: var(--spacing-4);
     --toolbar-height: 56px; /* sticky atlas toolbar */
     --tray-height: 88px; /* compare tray reserved space */

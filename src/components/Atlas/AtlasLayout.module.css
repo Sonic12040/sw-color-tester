@@ -68,6 +68,13 @@
   }
 }
 
+/* ≥ 768px (--bp-md): tablets/desktop get larger cards than phones. */
+@media (min-width: 768px) {
+  .body {
+    --grid-min-tile: 188px;
+  }
+}
+
 /* ≥ 1440px (--bp-xl): wider content well on desktop */
 @media (min-width: 1440px) {
   .body {
@@ -81,7 +88,7 @@
   .body {
     --layout-max: 2400px;
     --rail-width: 320px;
-    --grid-min-tile: 200px;
+    --grid-min-tile: 224px;
     --grid-gap: var(--spacing-6);
   }
 }

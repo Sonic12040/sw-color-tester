@@ -43,34 +43,7 @@ function ColorCardImpl({
       <div className={styles.actions}>
         <button
           type="button"
-          className={`${styles.actionBtn} ${isComparing ? styles.actionBtnActive : ""}`}
-          aria-label={
-            isComparing
-              ? `Remove ${color.name} from comparison`
-              : `Add ${color.name} to comparison`
-          }
-          aria-pressed={isComparing}
-          disabled={compareDisabled && !isComparing}
-          onClick={() => onToggleCompare(color.id)}
-        >
-          <svg
-            width="22"
-            height="22"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="var(--tile-btn-text)"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <rect x="3" y="4" width="7" height="16" rx="1" />
-            <rect x="14" y="4" width="7" height="16" rx="1" />
-          </svg>
-        </button>
-        <button
-          type="button"
-          className={`${styles.actionBtn} ${isFavorite ? styles.actionBtnActive : ""}`}
+          className={`${styles.iconBtn} ${isFavorite ? styles.iconBtnActive : ""}`}
           aria-label={
             isFavorite ? `Unfavorite ${color.name}` : `Favorite ${color.name}`
           }
@@ -93,7 +66,7 @@ function ColorCardImpl({
         </button>
         <button
           type="button"
-          className={`${styles.actionBtn} ${isHidden ? styles.actionBtnActive : ""}`}
+          className={`${styles.iconBtn} ${isHidden ? styles.iconBtnActive : ""}`}
           aria-label={isHidden ? `Unhide ${color.name}` : `Hide ${color.name}`}
           aria-pressed={isHidden}
           onClick={() => onToggleHidden(color.id)}
@@ -143,13 +116,42 @@ function ColorCardImpl({
           </span>
           <span className={styles.chip}>{tone}</span>
         </div>
-        <Link
-          to={colorPath(toSlug(color))}
-          className={styles.viewBtn}
-          aria-label={`See color details and pairings for ${color.name}`}
-        >
-          View Details
-        </Link>
+        <div className={styles.footer}>
+          <Link
+            to={colorPath(toSlug(color))}
+            className={styles.viewBtn}
+            aria-label={`See color details and pairings for ${color.name}`}
+          >
+            View Details
+          </Link>
+          <button
+            type="button"
+            className={`${styles.compareBtn} ${isComparing ? styles.compareBtnActive : ""}`}
+            aria-label={
+              isComparing
+                ? `Remove ${color.name} from comparison`
+                : `Add ${color.name} to comparison`
+            }
+            aria-pressed={isComparing}
+            disabled={compareDisabled && !isComparing}
+            onClick={() => onToggleCompare(color.id)}
+          >
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="var(--tile-btn-text)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="3" y="4" width="7" height="16" rx="1" />
+              <rect x="14" y="4" width="7" height="16" rx="1" />
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
   );
