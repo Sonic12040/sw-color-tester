@@ -3,6 +3,7 @@ import { useAppContext } from "../../context/AppContext.js";
 import { useFavorites } from "../../context/FavoritesContext.js";
 import { useHidden } from "../../context/HiddenContext.js";
 import { useCompare } from "../../context/CompareContext.js";
+import { usePalette } from "../../context/PaletteContext.js";
 import { ColorCard } from "./ColorCard.js";
 import styles from "./ColorGrid.module.css";
 
@@ -22,12 +23,15 @@ export function ColorGrid({ colors, onResetFilters }: ColorGridProps) {
   const { favorites, toggleFavorite } = useFavorites();
   const { hidden, toggleHidden } = useHidden();
   const { compare, toggleCompare, isFull } = useCompare();
+  const { palette, togglePalette } = usePalette();
 
   if (colors.length === 0) {
     return (
       <div className={styles.empty}>
         <p className={styles.emptyTitle}>No colors match your filters</p>
-        <p>Try widening the LRV range, removing a facet, or clearing search.</p>
+        <p>
+          Try a different lightness band, removing a facet, or clearing search.
+        </p>
         <button
           type="button"
           className="btn-secondary"
@@ -48,11 +52,13 @@ export function ColorGrid({ colors, onResetFilters }: ColorGridProps) {
             isFavorite={favorites.has(color.id)}
             isHidden={hidden.has(color.id)}
             isComparing={compare.includes(color.id)}
+            inPalette={palette.includes(color.id)}
             isDesignerPick={colorModel.isDesignerPick(color.id)}
             compareDisabled={isFull}
             onToggleFavorite={toggleFavorite}
             onToggleHidden={toggleHidden}
             onToggleCompare={toggleCompare}
+            onTogglePalette={togglePalette}
           />
         </div>
       ))}

@@ -1,21 +1,16 @@
 .card {
+  position: relative;
   width: 100%;
   min-height: 268px;
-  padding: clamp(1rem, 2.67vw, 1.5rem);
-  /* Reserve space for the top-right action cluster so it never overlaps text. */
-  padding-top: calc(var(--button-min-height) + var(--spacing-3));
-  position: relative;
+  display: flex;
+  flex-direction: column;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
   transition:
     box-shadow var(--transition-fast),
     transform var(--transition-fast);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: var(--spacing-3);
-  -webkit-font-smoothing: antialiased;
-  overflow: hidden;
   /* Cheap windowing for the ~2,000-card grid: the browser skips layout/paint
      for off-screen cards. contain-intrinsic-size reserves their height so the
      scrollbar stays stable. */
@@ -60,52 +55,22 @@
   color: var(--tile-text);
 }
 
-/* Top-right cluster: two roomy toggles (favorite + hide). Compare lives in the
-   footer so three targets never crowd one corner. */
-.actions {
-  position: absolute;
-  top: var(--spacing-2);
-  right: var(--spacing-2);
+/* Clickable colored face: pure swatch up top, info pinned to the bottom. */
+.face {
+  flex: 1 1 auto;
+  min-height: 0;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-end;
   gap: var(--spacing-2);
-  z-index: 1;
+  padding: clamp(1rem, 2.67vw, 1.5rem);
+  text-decoration: none;
+  color: var(--tile-text, inherit);
 }
 
-.iconBtn {
-  background: var(--tile-btn-bg, var(--button-icon-bg));
-  backdrop-filter: var(--blur-md);
-  border: none;
-  border-radius: var(--radius-md);
-  padding: 0;
-  cursor: pointer;
-  transition: var(--button-transition);
-  width: var(--button-min-height);
-  height: var(--button-min-height);
-  min-width: var(--button-min-height);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--tile-btn-text, currentColor);
-}
-
-.iconBtn:hover {
-  background: var(--tile-btn-hover-bg, var(--button-icon-hover-bg));
-  transform: scale(1.05);
-}
-
-.iconBtn:focus-visible {
-  outline: 2px solid var(--color-border-focus);
-  outline-offset: 2px;
-}
-
-.iconBtn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.iconBtnActive {
-  box-shadow: 0 0 0 2px var(--tile-btn-text, currentColor) inset;
+.face:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -3px;
 }
 
 .badges {
@@ -129,10 +94,10 @@
 }
 
 .info {
-  color: var(--tile-text, inherit);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-2);
+  color: var(--tile-text, inherit);
 }
 
 .name {
@@ -174,74 +139,42 @@
   color: var(--tile-badge-text, currentColor);
 }
 
-/* Footer: primary "View Details" + a square compare toggle, both ≥44px tall. */
-.footer {
+/* Full-width action bar — four equal, generous tap targets. */
+.actions {
   display: flex;
-  align-items: stretch;
-  gap: var(--spacing-2);
-  margin-top: var(--spacing-1);
+  gap: 1px;
+  margin-top: auto;
 }
 
-.viewBtn {
-  flex: 1 1 auto;
-  min-height: var(--button-min-height);
-  display: inline-flex;
+.actionBtn {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 48px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-2) var(--spacing-3);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  background: var(--tile-btn-bg, rgba(128, 128, 128, 0.7));
-  backdrop-filter: var(--blur-md);
   border: none;
-  border-radius: var(--radius-md);
   cursor: pointer;
-  color: var(--tile-btn-text, currentColor);
-  text-align: center;
-  text-decoration: none;
-  transition: var(--button-transition);
-}
-
-.viewBtn:hover {
-  background: var(--tile-btn-hover-bg, rgba(128, 128, 128, 0.85));
-}
-
-.viewBtn:focus-visible {
-  outline: 2px solid var(--color-border-focus);
-  outline-offset: 2px;
-}
-
-.compareBtn {
-  flex: 0 0 auto;
-  width: var(--button-min-height);
-  min-width: var(--button-min-height);
-  min-height: var(--button-min-height);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--tile-btn-bg, rgba(128, 128, 128, 0.7));
+  background: var(--tile-btn-bg, var(--button-icon-bg));
   backdrop-filter: var(--blur-md);
-  border: none;
-  border-radius: var(--radius-md);
-  cursor: pointer;
   color: var(--tile-btn-text, currentColor);
   transition: var(--button-transition);
 }
 
-.compareBtn:hover {
-  background: var(--tile-btn-hover-bg, rgba(128, 128, 128, 0.85));
+.actionBtn:hover {
+  background: var(--tile-btn-hover-bg, var(--button-icon-hover-bg));
 }
 
-.compareBtn:focus-visible {
+.actionBtn:focus-visible {
   outline: 2px solid var(--color-border-focus);
-  outline-offset: 2px;
+  outline-offset: -2px;
 }
 
-.compareBtn:disabled {
+.actionBtn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
 
-.compareBtnActive {
+.actionBtnActive {
   box-shadow: 0 0 0 2px var(--tile-btn-text, currentColor) inset;
 }
