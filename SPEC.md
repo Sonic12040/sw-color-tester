@@ -47,8 +47,7 @@ src/
 │   │   ├── ColorTile/       #   single color card (+ HiddenFamilyTile)
 │   │   └── BulkActionsPanel/#   "Favorite All" / "Hide All"
 │   ├── Modal/               # color-detail dialog (focus-trapped, portal)
-│   ├── Toast/               # transient notifications + undo action
-│   └── ConfirmDialog/       # promise-based confirm for destructive actions
+│   └── Toast/               # transient notifications + undo action
 ├── utils/
 │   ├── config.ts            # thresholds, family order, timings
 │   ├── storage.ts           # safe localStorage helpers + keys
@@ -64,14 +63,13 @@ value would re-render every consumer on any change; splitting keeps a `hidden`
 change from re-rendering `favorites`-only consumers. (`AppProviders` composes the
 providers; `context/context-isolation.test.tsx` validates the isolation.)
 
-| Concern         | Source of truth                         | Hook                        |
-| --------------- | --------------------------------------- | --------------------------- |
-| Favorites       | `FavoritesContext` (`usePersistentSet`) | `useFavorites()`            |
-| Hidden colors   | `HiddenContext` (`usePersistentSet`)    | `useHidden()`               |
-| LRV filter      | `FiltersContext` (`usePersistentState`) | `useFilters()`              |
-| Modal open id   | `useState` in `AppInner`                | `useAppContext().openModal` |
-| Toasts          | `ToastContext`                          | `useToast()`                |
-| Confirm dialogs | `ConfirmContext`                        | `useConfirmDialog()`        |
+| Concern       | Source of truth                         | Hook                        |
+| ------------- | --------------------------------------- | --------------------------- |
+| Favorites     | `FavoritesContext` (`usePersistentSet`) | `useFavorites()`            |
+| Hidden colors | `HiddenContext` (`usePersistentSet`)    | `useHidden()`               |
+| LRV filter    | `FiltersContext` (`usePersistentState`) | `useFilters()`              |
+| Modal open id | `useState` in `AppInner`                | `useAppContext().openModal` |
+| Toasts        | `ToastContext`                          | `useToast()`                |
 
 `useSet` guarantees a **new `Set` reference on every real change** (and the same
 reference on a no-op) — the contract React's reactivity depends on.
@@ -92,9 +90,9 @@ User action → context action (setState) → context re-renders consumers
 ColorExplorer derives visible/grouped colors via ColorModel (memoized)
 ```
 
-Destructive actions (Clear All Favorites/Hidden) go through `useConfirmDialog()`
-before mutating. Bulk actions surface an **Undo** toast that applies the inverse
-set action.
+Mutating actions are reversible rather than gated: bulk actions and the
+destructive "Clear All Favorites/Hidden" each apply immediately and surface an
+**Undo** toast that re-applies the inverse set action.
 
 ## Conventions
 
@@ -108,9 +106,9 @@ set action.
 
 - **Unit**: `useSet`, each context (`*.test.tsx`), context isolation.
 - **Integration (user‑centric)**: `App.test.tsx` drives the real app through the
-  DOM (favoriting, hiding, bulk actions, LRV filtering, undo, confirm dialogs);
-  `Modal.test.tsx` covers open / focus-trap / focus-return / navigation + a data
-  snapshot.
+  DOM (favoriting, hiding, bulk actions, LRV filtering, clear-all, undo toasts,
+  persistence across reloads); `Modal.test.tsx` covers open / focus-trap /
+  focus-return / navigation + a data snapshot.
 - CSS Modules use non‑scoped class names in tests (`vitest.config.ts`) so DOM
   snapshots stay readable and stable.
 
@@ -123,5 +121,5 @@ set action.
 
 - Persistence is `localStorage`-only; **URL-encoded shareable state** (deep links
   to a curated set) would build on the same context seam.
-- Toast/ConfirmDialog define their contexts inside component files; moving them to
-  `context/` would match the rest of the codebase.
+- The Toast context is defined inside its component file; moving it to `context/`
+  would match the rest of the codebase.

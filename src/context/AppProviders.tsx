@@ -2,7 +2,6 @@ import { FavoritesProvider } from "./FavoritesContext.js";
 import { HiddenProvider } from "./HiddenContext.js";
 import { FiltersProvider } from "./FiltersContext.js";
 import { ToastProvider } from "../components/Toast/Toast.js";
-import { ConfirmDialogProvider } from "../components/ConfirmDialog/ConfirmDialog.js";
 
 /**
  * Composes the app's independent state contexts into a single provider.
@@ -22,9 +21,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
     <FavoritesProvider>
       <HiddenProvider>
         <FiltersProvider>
-          <ToastProvider>
-            <ConfirmDialogProvider>{children}</ConfirmDialogProvider>
-          </ToastProvider>
+          <ToastProvider>{children}</ToastProvider>
         </FiltersProvider>
       </HiddenProvider>
     </FavoritesProvider>

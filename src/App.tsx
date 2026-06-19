@@ -10,8 +10,7 @@ import { ExportService } from "./utils/ExportService.js";
 import { Header } from "./components/Header/Header.js";
 import { ColorExplorer } from "./components/ColorExplorer/ColorExplorer.js";
 import { Modal } from "./components/Modal/Modal.js";
-import { ToastContainer } from "./components/Toast/Toast.js";
-import { useConfirmDialog } from "./components/ConfirmDialog/ConfirmDialog.js";
+import { ToastContainer, useToast } from "./components/Toast/Toast.js";
 
 // Singletons — created once outside the component tree
 const colorModel = new ColorModel(colorData);
@@ -31,10 +30,10 @@ function AppInner() {
   // favorites / hidden / lrv change.
   const ctxValue = useMemo(() => ({ colorModel, openModal }), [openModal]);
 
-  const { favorites, clearFavorites } = useFavorites();
-  const { hidden, clearHidden } = useHidden();
+  const { favorites, clearFavorites, actions: favActions } = useFavorites();
+  const { hidden, clearHidden, actions: hiddenActions } = useHidden();
   const { lrvMin, lrvMax, lrvRange, setLrvRange } = useFilters();
-  const confirm = useConfirmDialog();
+  const showToast = useToast();
 
   const visibleColors = useMemo(
     () => colorModel.getVisibleColors(hidden, favorites, lrvRange),
@@ -46,24 +45,27 @@ function AppInner() {
     if (favColors.length > 0) exportService.exportColors(favColors);
   };
 
-  const onClearFavorites = async () => {
+  const onClearFavorites = () => {
     if (favorites.size === 0) return;
-    const ok = await confirm({
-      title: "Clear all favorites?",
-      message: `This removes all ${favorites.size} favorited color${favorites.size === 1 ? "" : "s"}.`,
-      confirmLabel: "Clear favorites",
-    });
-    if (ok) clearFavorites();
+    const cleared = [...favorites];
+    clearFavorites();
+    showToast(
+      `Cleared ${cleared.length} favorite${cleared.length === 1 ? "" : "s"}`,
+      { actionText: "Undo", onAction: () => favActions.addMultiple(cleared) },
+    );
   };
 
-  const onClearHidden = async () => {
+  const onClearHidden = () => {
     if (hidden.size === 0) return;
-    const ok = await confirm({
-      title: "Clear all hidden colors?",
-      message: `This unhides all ${hidden.size} hidden color${hidden.size === 1 ? "" : "s"}.`,
-      confirmLabel: "Clear hidden",
-    });
-    if (ok) clearHidden();
+    const cleared = [...hidden];
+    clearHidden();
+    showToast(
+      `Cleared ${cleared.length} hidden color${cleared.length === 1 ? "" : "s"}`,
+      {
+        actionText: "Undo",
+        onAction: () => hiddenActions.addMultiple(cleared),
+      },
+    );
   };
 
   return (

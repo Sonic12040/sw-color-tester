@@ -109,18 +109,6 @@ function region(name: RegExp) {
   return screen.getByRole("region", { name });
 }
 
-/** Confirm the open ConfirmDialog and let its close animation resolve. */
-async function confirmDialog(confirmName: string) {
-  const dialog = screen.getByRole("dialog");
-  vi.useFakeTimers();
-  fireEvent.click(within(dialog).getByRole("button", { name: confirmName }));
-  // ConfirmDialog resolves its promise after a short close animation.
-  await act(async () => {
-    vi.advanceTimersByTime(300);
-  });
-  vi.useRealTimers();
-}
-
 afterEach(() => {
   cleanup();
   vi.useRealTimers();
@@ -320,7 +308,7 @@ describe("Clearing all from the toolbar", () => {
     ).toBe(false);
   });
 
-  it("clears all favorites after confirmation, returning colors to their families", async () => {
+  it("clears all favorites and offers an undo toast", () => {
     render(<App />);
     clickButton(RED);
     fireEvent.click(
@@ -336,15 +324,14 @@ describe("Clearing all from the toolbar", () => {
       screen.getByRole("button", { name: "Clear All Favorites" }),
     );
 
-    // A confirmation dialog gates the destructive action.
-    await confirmDialog("Clear favorites");
-
+    // Cleared immediately (no dialog), with a toast to undo.
     expect(within(region(FAVORITES)).queryByText("Crimson")).toBeNull();
     expect(within(region(FAVORITES)).queryByText("Scarlet")).toBeNull();
     expect(screen.getByRole("button", { name: /^Red \(3\)/ })).toBeTruthy();
+    expect(screen.getByText("Cleared 2 favorites")).toBeTruthy();
   });
 
-  it("keeps favorites when the confirmation is cancelled", async () => {
+  it("restores favorites via the clear toast's Undo", () => {
     render(<App />);
     clickButton(RED);
     fireEvent.click(
@@ -355,12 +342,13 @@ describe("Clearing all from the toolbar", () => {
     fireEvent.click(
       screen.getByRole("button", { name: "Clear All Favorites" }),
     );
-    await confirmDialog("Cancel");
+    expect(within(region(FAVORITES)).queryByText("Crimson")).toBeNull();
 
+    fireEvent.click(screen.getByRole("button", { name: "Undo" }));
     expect(within(region(FAVORITES)).getByText("Crimson")).toBeTruthy();
   });
 
-  it("clears all hidden colors after confirmation, returning colors to their families", async () => {
+  it("clears all hidden colors and offers an undo toast", () => {
     render(<App />);
     clickButton(RED);
     fireEvent.click(
@@ -376,9 +364,13 @@ describe("Clearing all from the toolbar", () => {
     fireEvent.click(
       screen.getByRole("button", { name: "Clear All Hidden Colors" }),
     );
-    await confirmDialog("Clear hidden");
 
     expect(screen.getByRole("button", { name: /^Red \(3\)/ })).toBeTruthy();
+    expect(screen.getByText("Cleared 2 hidden colors")).toBeTruthy();
+
+    // Undo re-hides them.
+    fireEvent.click(screen.getByRole("button", { name: "Undo" }));
+    expect(screen.getByRole("button", { name: /^Red \(1\)/ })).toBeTruthy();
   });
 });
 

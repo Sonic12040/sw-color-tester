@@ -2,9 +2,9 @@ import { describe, it, expect, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { FavoritesProvider, useFavorites } from "./FavoritesContext.js";
 import { HiddenProvider, useHidden } from "./HiddenContext.js";
+import { useFilters } from "./FiltersContext.js";
 import { AppProviders } from "./AppProviders.js";
 import { useToast } from "../components/Toast/Toast.js";
-import { useConfirmDialog } from "../components/ConfirmDialog/ConfirmDialog.js";
 
 // These tests validate the architectural decision to keep state in SEPARATE
 // contexts rather than one combined context: a change to one slice must not
@@ -82,8 +82,8 @@ describe("AppProviders", () => {
       // Throws if any provider is missing — the assertion is "does not throw".
       useFavorites();
       useHidden();
+      useFilters();
       useToast();
-      useConfirmDialog();
       return <div>ok</div>;
     }
 
