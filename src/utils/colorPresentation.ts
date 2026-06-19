@@ -25,6 +25,8 @@ export function contrastText(lrv: number): "white" | "black" {
 
 export type LrvClass = "Dark" | "Medium" | "Light";
 
+export const LRV_CLASSES: LrvClass[] = ["Dark", "Medium", "Light"];
+
 /** Classify a color's lightness (LRV) into Dark / Medium / Light. */
 export function classifyLrv(lrv: number): LrvClass {
   if (lrv < LRV_THRESHOLDS.DARK) return "Dark";

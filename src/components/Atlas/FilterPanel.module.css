@@ -111,6 +111,13 @@
   min-height: 32px;
 }
 
+.checkHint {
+  margin-left: auto;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
 .check input {
   width: 18px;
   height: 18px;

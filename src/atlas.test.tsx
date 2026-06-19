@@ -1,13 +1,6 @@
 import { describe, it, expect, afterEach, vi } from "vitest";
-import {
-  render,
-  screen,
-  fireEvent,
-  cleanup,
-  act,
-} from "@testing-library/react";
+import { render, screen, fireEvent, cleanup } from "@testing-library/react";
 import { createMemoryRouter, RouterProvider } from "react-router";
-import { TIMING } from "./utils/config.js";
 
 // ── Deterministic palette ────────────────────────────────────────────────────
 const { COLORS } = vi.hoisted(() => {
@@ -152,16 +145,12 @@ describe("Atlas browse", () => {
     expect(screen.queryByText("Crimson")).toBeNull();
   });
 
-  it("narrows results with the LRV minimum slider", () => {
+  it("narrows results by lightness band", () => {
     renderApp();
-    vi.useFakeTimers();
-    fireEvent.change(screen.getByLabelText("Minimum LRV value"), {
-      target: { value: "30" },
-    });
-    act(() => vi.advanceTimersByTime(TIMING.LRV_DEBOUNCE_MS));
-    vi.useRealTimers();
-    // Crimson (10) and Azure (20) drop out.
-    expect(screen.getByText("4 of 6")).toBeTruthy();
+    // "Light" = LRV > 60 → only Ruby (90) and Navy (85).
+    fireEvent.click(screen.getByRole("checkbox", { name: /Light/ }));
+    expect(screen.getByText("2 of 6")).toBeTruthy();
+    expect(screen.getByText("Ruby")).toBeTruthy();
     expect(screen.queryByText("Crimson")).toBeNull();
   });
 });

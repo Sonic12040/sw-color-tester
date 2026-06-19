@@ -7,17 +7,16 @@ import {
 } from "react";
 import { usePersistentState } from "../hooks/usePersistentState.js";
 import { STORAGE_KEYS } from "../utils/storage.js";
-import type { Undertone } from "../utils/colorPresentation.js";
+import {
+  LRV_CLASSES,
+  type Undertone,
+  type LrvClass,
+} from "../utils/colorPresentation.js";
 import type {
   AtlasView,
   FilterCriteria,
   SortKey,
 } from "../models/ColorModel.js";
-
-export interface LrvRange {
-  min: number;
-  max: number;
-}
 
 export type UseType = "interior" | "exterior" | null;
 
@@ -26,9 +25,7 @@ export interface FiltersContextValue {
   search: string;
   families: string[];
   undertones: Undertone[];
-  lrvMin: number;
-  lrvMax: number;
-  lrvRange: LrvRange;
+  lightness: LrvClass[];
   useType: UseType;
   collections: string[];
   designerOnly: boolean;
@@ -39,7 +36,7 @@ export interface FiltersContextValue {
   setSearch: (s: string) => void;
   toggleFamily: (f: string) => void;
   toggleUndertone: (u: Undertone) => void;
-  setLrvRange: (min: number, max: number) => void;
+  toggleLightness: (l: LrvClass) => void;
   setUseType: (t: UseType) => void;
   toggleCollection: (c: string) => void;
   setDesignerOnly: (v: boolean) => void;
@@ -51,7 +48,6 @@ export interface FiltersContextValue {
   criteria: FilterCriteria;
   /** Count of active facets (excludes search/sort/view) — for the "Filters (n)" badge. */
   activeFacetCount: number;
-  isLrvActive: boolean;
 }
 
 export const FiltersContext = createContext<FiltersContextValue | null>(null);
@@ -64,14 +60,11 @@ export function useFilters(): FiltersContextValue {
   return ctx;
 }
 
-const clamp = (n: number) => Math.max(0, Math.min(100, n));
-const DEFAULT_RANGE: LrvRange = { min: 0, max: 100 };
-
-function parseLrvRange(raw: unknown): LrvRange | null {
-  if (typeof raw !== "object" || raw === null) return null;
-  const r = raw as Record<string, unknown>;
-  if (typeof r.min !== "number" || typeof r.max !== "number") return null;
-  return { min: clamp(r.min), max: clamp(r.max) };
+function parseLightness(raw: unknown): LrvClass[] | null {
+  if (!Array.isArray(raw)) return null;
+  return raw.filter((x): x is LrvClass =>
+    (LRV_CLASSES as string[]).includes(x),
+  );
 }
 
 const SORT_KEYS: SortKey[] = ["family", "hue", "lrv-asc", "lrv-desc", "name"];
@@ -94,10 +87,10 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
   const [view, setView] = useState<AtlasView>("all");
 
   // Persisted preferences.
-  const [range, setRange] = usePersistentState<LrvRange>(
+  const [lightness, setLightness] = usePersistentState<LrvClass[]>(
     STORAGE_KEYS.lrv,
-    DEFAULT_RANGE,
-    parseLrvRange,
+    [],
+    parseLightness,
   );
   const [sort, setSort] = usePersistentState<SortKey>(
     STORAGE_KEYS.sort,
@@ -105,13 +98,6 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
     parseSort,
   );
 
-  const { min: lrvMin, max: lrvMax } = range;
-
-  const setLrvRange = useCallback(
-    (min: number, max: number) =>
-      setRange({ min: clamp(min), max: clamp(max) }),
-    [setRange],
-  );
   const toggleFamily = useCallback(
     (f: string) => setFamilies((prev) => toggle(prev, f)),
     [],
@@ -119,6 +105,10 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
   const toggleUndertone = useCallback(
     (u: Undertone) => setUndertones((prev) => toggle(prev, u)),
     [],
+  );
+  const toggleLightness = useCallback(
+    (l: LrvClass) => setLightness((prev) => toggle(prev, l)),
+    [setLightness],
   );
   const toggleCollection = useCallback(
     (c: string) => setCollections((prev) => toggle(prev, c)),
@@ -133,25 +123,23 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
     setCollections([]);
     setDesignerOnly(false);
     setView("all");
-    setRange(DEFAULT_RANGE);
-  }, [setRange]);
-
-  const isLrvActive = lrvMin > 0 || lrvMax < 100;
+    setLightness([]);
+  }, [setLightness]);
 
   const activeFacetCount =
     families.length +
     undertones.length +
+    lightness.length +
     collections.length +
     (useType ? 1 : 0) +
-    (designerOnly ? 1 : 0) +
-    (isLrvActive ? 1 : 0);
+    (designerOnly ? 1 : 0);
 
   const criteria = useMemo<FilterCriteria>(
     () => ({
       search,
       families,
       undertones,
-      lrvRange: range,
+      lightness,
       useType,
       collections,
       designerOnly,
@@ -162,7 +150,7 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
       search,
       families,
       undertones,
-      range,
+      lightness,
       useType,
       collections,
       designerOnly,
@@ -176,9 +164,7 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
       search,
       families,
       undertones,
-      lrvMin,
-      lrvMax,
-      lrvRange: range,
+      lightness,
       useType,
       collections,
       designerOnly,
@@ -187,7 +173,7 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
       setSearch,
       toggleFamily,
       toggleUndertone,
-      setLrvRange,
+      toggleLightness,
       setUseType,
       toggleCollection,
       setDesignerOnly,
@@ -196,29 +182,25 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
       resetAll,
       criteria,
       activeFacetCount,
-      isLrvActive,
     }),
     [
       search,
       families,
       undertones,
-      lrvMin,
-      lrvMax,
-      range,
+      lightness,
       useType,
       collections,
       designerOnly,
       view,
       sort,
-      setLrvRange,
       toggleFamily,
       toggleUndertone,
+      toggleLightness,
       toggleCollection,
       setSort,
       resetAll,
       criteria,
       activeFacetCount,
-      isLrvActive,
     ],
   );
 

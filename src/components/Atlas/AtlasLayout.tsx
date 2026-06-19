@@ -71,11 +71,7 @@ export function AtlasLayout({ colors, totalCount }: AtlasLayoutProps) {
           tabIndex={-1}
           aria-label="Filters"
         >
-          <FilterPanel
-            filteredCount={colors.length}
-            totalCount={totalCount}
-            onClose={closeDrawer}
-          />
+          <FilterPanel onClose={closeDrawer} />
         </aside>
 
         <main className={styles.main} aria-label="Color results">

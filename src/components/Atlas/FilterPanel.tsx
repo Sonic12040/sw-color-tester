@@ -1,13 +1,15 @@
 import { useAppContext } from "../../context/AppContext.js";
 import { useFilters } from "../../context/FiltersContext.js";
-import { UNDERTONES } from "../../utils/colorPresentation.js";
+import {
+  UNDERTONES,
+  LRV_CLASSES,
+  type LrvClass,
+} from "../../utils/colorPresentation.js";
+import { LRV_THRESHOLDS } from "../../utils/config.js";
 import type { AtlasView } from "../../models/ColorModel.js";
-import { LrvFilter } from "../LrvFilter/LrvFilter.js";
 import styles from "./FilterPanel.module.css";
 
 interface FilterPanelProps {
-  filteredCount: number;
-  totalCount: number;
   /** Drawer-only: dismiss the panel. */
   onClose?: () => void;
 }
@@ -24,33 +26,34 @@ const UNDERTONE_DOT: Record<string, string> = {
   Neutral: "var(--undertone-neutral)",
 };
 
+const LIGHTNESS_HINT: Record<LrvClass, string> = {
+  Dark: `LRV < ${LRV_THRESHOLDS.DARK}`,
+  Medium: `LRV ${LRV_THRESHOLDS.DARK}–${LRV_THRESHOLDS.LIGHT}`,
+  Light: `LRV > ${LRV_THRESHOLDS.LIGHT}`,
+};
+
 /**
  * The faceted filter controls. Rendered once — its wrapper (AtlasLayout)
  * positions it as a persistent rail (≥1024px) or a slide-in drawer (<1024px).
  */
-export function FilterPanel({
-  filteredCount,
-  totalCount,
-  onClose,
-}: FilterPanelProps) {
+export function FilterPanel({ onClose }: FilterPanelProps) {
   const { colorModel } = useAppContext();
   const {
     families,
     undertones,
+    lightness,
     useType,
     collections,
     designerOnly,
     view,
-    lrvMin,
-    lrvMax,
     activeFacetCount,
     toggleFamily,
     toggleUndertone,
+    toggleLightness,
     setUseType,
     toggleCollection,
     setDesignerOnly,
     setView,
-    setLrvRange,
     resetAll,
   } = useFilters();
 
@@ -128,13 +131,19 @@ export function FilterPanel({
 
       <fieldset className={styles.group}>
         <legend className={styles.legend}>Lightness (LRV)</legend>
-        <LrvFilter
-          lrvMin={lrvMin}
-          lrvMax={lrvMax}
-          colorCount={totalCount}
-          filteredCount={filteredCount}
-          onChange={setLrvRange}
-        />
+        <div className={styles.checkList}>
+          {LRV_CLASSES.map((l) => (
+            <label key={l} className={styles.check}>
+              <input
+                type="checkbox"
+                checked={lightness.includes(l)}
+                onChange={() => toggleLightness(l)}
+              />
+              {l}
+              <span className={styles.checkHint}>{LIGHTNESS_HINT[l]}</span>
+            </label>
+          ))}
+        </div>
       </fieldset>
 
       <fieldset className={styles.group}>

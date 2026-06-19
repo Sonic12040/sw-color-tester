@@ -1,6 +1,11 @@
 import type { Color } from "../data/types.js";
 import { FAMILY_ORDER, DESIGNER_COLLECTION_PREFIX } from "../utils/config.js";
-import { undertone, type Undertone } from "../utils/colorPresentation.js";
+import {
+  undertone,
+  classifyLrv,
+  type Undertone,
+  type LrvClass,
+} from "../utils/colorPresentation.js";
 import { toSlug } from "../utils/slug.js";
 
 export type SortKey = "family" | "hue" | "lrv-asc" | "lrv-desc" | "name";
@@ -14,7 +19,8 @@ export interface FilterCriteria {
   families?: string[];
   /** Undertone match (OR across the list). */
   undertones?: Undertone[];
-  lrvRange?: { min: number; max: number };
+  /** Lightness band match (Dark / Medium / Light, OR across the list). */
+  lightness?: LrvClass[];
   useType?: "interior" | "exterior" | null;
   /** Branded-collection membership (OR, substring match). */
   collections?: string[];
@@ -221,7 +227,7 @@ export class ColorModel {
       search,
       families,
       undertones,
-      lrvRange,
+      lightness,
       useType,
       collections,
       designerOnly,
@@ -245,8 +251,8 @@ export class ColorModel {
       undertones && undertones.length > 0 ? new Set(undertones) : null;
     const collectionList =
       collections && collections.length > 0 ? collections : null;
-    const lrvActive =
-      lrvRange && (lrvRange.min > 0 || lrvRange.max < 100) ? lrvRange : null;
+    const lightnessSet =
+      lightness && lightness.length > 0 ? new Set(lightness) : null;
 
     const filtered = base.filter((c) => {
       if (q) {
@@ -256,9 +262,8 @@ export class ColorModel {
       }
       if (familySet && !familySet.has(c.colorFamilyNames[0])) return false;
       if (undertoneSet && !undertoneSet.has(undertone(c))) return false;
-      if (lrvActive) {
-        const lrv = c.lrv ?? 0;
-        if (lrv < lrvActive.min || lrv > lrvActive.max) return false;
+      if (lightnessSet && !lightnessSet.has(classifyLrv(c.lrv ?? 0))) {
+        return false;
       }
       if (useType === "interior" && !c.isInterior) return false;
       if (useType === "exterior" && !c.isExterior) return false;
