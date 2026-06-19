@@ -1,6 +1,7 @@
 @layer tokens, base, utilities, components, theme, responsive, a11y;
 
 @import "./tokens.css" layer(tokens);
+@import "./breakpoints.css" layer(responsive);
 @import "./a11y.css" layer(a11y);
 @import "./theme-neutral.css" layer(theme);
 
@@ -20,5 +21,65 @@
     margin: 0;
     background: var(--color-surface-neutral);
     color: var(--color-text-primary);
+  }
+}
+
+@layer utilities {
+  /* Shared button utilities (built on the button tokens) used across the Atlas
+     shell, workspace, and detail pages. */
+  .btn,
+  .btn-primary,
+  .btn-secondary,
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-2);
+    min-height: var(--button-min-height);
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--button-font-size);
+    font-weight: var(--button-font-weight);
+    line-height: var(--button-line-height);
+    border-radius: var(--button-border-radius);
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    transition: var(--button-transition);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn-primary {
+    background: var(--button-primary-bg);
+    color: var(--button-primary-color);
+    border-color: var(--button-primary-border);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--button-primary-hover-bg);
+    border-color: var(--button-primary-hover-border);
+  }
+
+  .btn-secondary {
+    background: var(--button-secondary-bg);
+    color: var(--button-secondary-color);
+    border-color: var(--button-secondary-border);
+  }
+  .btn-secondary:hover:not(:disabled) {
+    background: var(--button-secondary-hover-bg);
+  }
+
+  .btn-ghost {
+    background: var(--button-ghost-bg);
+    color: var(--button-ghost-color);
+  }
+  .btn-ghost:hover:not(:disabled) {
+    background: var(--button-ghost-hover-bg);
+  }
+
+  .btn:disabled,
+  .btn-primary:disabled,
+  .btn-secondary:disabled,
+  .btn-ghost:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }

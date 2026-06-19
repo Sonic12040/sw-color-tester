@@ -1,4 +1,4 @@
-.tile {
+.card {
   width: 100%;
   min-height: 240px;
   padding: clamp(1rem, 2.67vw, 1.5rem);
@@ -13,22 +13,26 @@
   flex-direction: column;
   justify-content: flex-end;
   -webkit-font-smoothing: antialiased;
-  will-change: transform;
   overflow: hidden;
+  /* Cheap windowing for the ~2,000-card grid: the browser skips layout/paint
+     for off-screen cards. contain-intrinsic-size reserves their height so the
+     scrollbar stays stable. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 280px;
 }
 
-.tile:hover {
+.card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
 
-.tile:focus-within {
+.card:focus-within {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
 @media (hover: none) and (pointer: coarse) {
-  .tile:hover {
+  .card:hover {
     transform: none;
     box-shadow: var(--shadow-sm);
   }
@@ -90,6 +94,11 @@
   outline-offset: 2px;
 }
 
+.actionBtnActive {
+  background: var(--tile-btn-hover-bg, var(--button-icon-hover-bg));
+  box-shadow: 0 0 0 2px var(--tile-btn-text, currentColor) inset;
+}
+
 .badges {
   display: flex;
   flex-direction: column;
@@ -109,13 +118,6 @@
   background: var(--tile-badge-bg, rgba(128, 128, 128, 0.7));
   color: var(--tile-badge-text, currentColor);
   line-height: var(--line-height-tight);
-}
-
-.badgeInterior {
-}
-.badgeExterior {
-}
-.badgeDesigner {
 }
 
 .info {
@@ -141,11 +143,14 @@
   line-height: var(--line-height-tight);
 }
 
-.lrvContainer {
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-1);
   margin-bottom: var(--spacing-2);
 }
 
-.lrv {
+.chip {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   padding: var(--spacing-1) var(--spacing-2);
@@ -153,30 +158,11 @@
   backdrop-filter: var(--blur-sm);
   white-space: nowrap;
   line-height: var(--line-height-tight);
-  -webkit-font-smoothing: antialiased;
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-1);
   background: var(--tile-badge-bg, rgba(128, 128, 128, 0.7));
   color: var(--tile-badge-text, currentColor);
-}
-
-.lrvLabel {
-  font-weight: var(--font-weight-bold);
-  text-transform: uppercase;
-  font-size: var(--font-size-xs);
-  letter-spacing: 0.03em;
-}
-
-.lrvValue {
-  font-size: var(--font-size-sm);
-}
-
-.lrvDark {
-}
-.lrvMedium {
-}
-.lrvLight {
 }
 
 .viewBtn {
@@ -192,6 +178,7 @@
   cursor: pointer;
   color: var(--tile-btn-text, currentColor);
   text-align: center;
+  text-decoration: none;
   transition: var(--button-transition);
 }
 
@@ -202,39 +189,4 @@
 .viewBtn:focus-visible {
   outline: 2px solid var(--color-border-focus);
   outline-offset: 2px;
-}
-
-/* Hidden family tile */
-.familyTile {
-  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
-  border: 2px dashed var(--neutral-0);
-  opacity: var(--opacity-30);
-  cursor: pointer;
-  color: white;
-  transition:
-    transform var(--transition-fast),
-    box-shadow var(--transition-fast);
-  justify-content: center;
-}
-
-.familyTile:hover {
-  opacity: 0.6;
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
-
-.count {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-normal);
-  opacity: 0.85;
-}
-
-.iconOverlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0.3;
-  pointer-events: none;
 }

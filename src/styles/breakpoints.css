@@ -1,0 +1,34 @@
+@layer responsive {
+  /* ============================================
+   BREAKPOINT SYSTEM (mobile-first)
+   ============================================
+   CSS custom properties CANNOT be used inside @media
+   conditions, so these tokens are the single source of
+   truth for *documentation / JS access* (read via
+   getComputedStyle). Every @media query in the codebase
+   hardcodes the px value and names the token in a comment,
+   e.g.  @media (min-width: 1024px) { ... } // --bp-lg
+
+   Token   | Width  | Primary devices            | Shell behavior
+   --------|--------|----------------------------|------------------------------
+   --bp-sm | 480px  | small phones               | base 2-col grid
+   --bp-md | 768px  | large phones / tablet edge | grid 2 → 3 cols
+   --bp-lg | 1024px | tablet landscape / desktop | facet rail becomes persistent
+   --bp-xl | 1440px | desktop                    | wider rail + content max-width
+   --bp-2xl| 2560px | UltraHD                    | cap layout width, scale up grid
+
+   Device → tier mapping used for validation:
+     iPhone 390 / Pixel 412      → < md   (drawer, 2 cols)
+     iPad portrait 820           → md–lg  (drawer, 3 cols)
+     iPad landscape 1180         → ≥ lg   (rail, ~4–5 cols)
+     Desktop 1440                → ≥ xl   (rail, centered max-width)
+     UltraHD 3840                → ≥ 2xl  (capped width, larger tiles/gutters)
+  */
+  :root {
+    --bp-sm: 480px;
+    --bp-md: 768px;
+    --bp-lg: 1024px;
+    --bp-xl: 1440px;
+    --bp-2xl: 2560px;
+  }
+}

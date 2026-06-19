@@ -7,15 +7,18 @@ interface ModalActionsProps {
   isHidden: boolean;
   onToggleFavorite: (id: string) => void;
   onToggleHidden: (id: string) => void;
+  /** Optional extra buttons (e.g. compare / palette) appended to the footer. */
+  extraActions?: React.ReactNode;
 }
 
-/** Footer actions for the color modal: favorite, copy hex, hide, store locator. */
+/** Footer actions for the color detail: favorite, copy hex, hide, store locator. */
 export function ModalActions({
   color,
   isFavorite,
   isHidden,
   onToggleFavorite,
   onToggleHidden,
+  extraActions,
 }: ModalActionsProps) {
   const copyHex = () => {
     navigator.clipboard.writeText(color.hex.toUpperCase()).catch(() => {});
@@ -110,6 +113,7 @@ export function ModalActions({
           <span>Store: {color.storeStripLocator}</span>
         </button>
       )}
+      {extraActions}
     </div>
   );
 }

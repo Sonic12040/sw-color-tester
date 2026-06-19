@@ -32,6 +32,26 @@ export function classifyLrv(lrv: number): LrvClass {
   return "Medium";
 }
 
+export type Undertone = "Warm" | "Cool" | "Neutral";
+
+export const UNDERTONES: Undertone[] = ["Warm", "Cool", "Neutral"];
+
+/** Saturation at/below which a color reads as a neutral regardless of hue. */
+const NEUTRAL_SATURATION = 0.1;
+
+/**
+ * Derive a color's temperature/undertone from its HSL hue + saturation.
+ * Low-saturation colors are Neutral; otherwise warm = reds→yellows + magentas,
+ * cool = greens→blues. (`hue` is stored 0–1, so ×360 for degrees.)
+ */
+export function undertone(c: Color): Undertone {
+  if (c.saturation <= NEUTRAL_SATURATION) return "Neutral";
+  const h = c.hue * 360;
+  if (h < 75 || h >= 320) return "Warm";
+  if (h >= 140 && h < 290) return "Cool";
+  return "Neutral"; // yellow-greens (75–140) / magentas (290–320): ambiguous
+}
+
 export interface LrvDescription {
   label: LrvClass;
   context: string;

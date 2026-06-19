@@ -3,7 +3,6 @@ import type { ColorModel } from "../models/ColorModel.js";
 
 export interface AppContextValue {
   colorModel: ColorModel;
-  openModal: (colorId: string) => void;
 }
 
 export const AppContext = createContext<AppContextValue | null>(null);

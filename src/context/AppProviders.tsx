@@ -1,6 +1,8 @@
 import { FavoritesProvider } from "./FavoritesContext.js";
 import { HiddenProvider } from "./HiddenContext.js";
 import { FiltersProvider } from "./FiltersContext.js";
+import { CompareProvider } from "./CompareContext.js";
+import { PaletteProvider } from "./PaletteContext.js";
 import { ToastProvider } from "../components/Toast/Toast.js";
 
 /**
@@ -21,7 +23,11 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
     <FavoritesProvider>
       <HiddenProvider>
         <FiltersProvider>
-          <ToastProvider>{children}</ToastProvider>
+          <CompareProvider>
+            <PaletteProvider>
+              <ToastProvider>{children}</ToastProvider>
+            </PaletteProvider>
+          </CompareProvider>
         </FiltersProvider>
       </HiddenProvider>
     </FavoritesProvider>

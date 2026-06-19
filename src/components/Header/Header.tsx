@@ -1,104 +1,46 @@
-import { useState } from "react";
-import { LrvFilter } from "../LrvFilter/LrvFilter.js";
+import { Link, NavLink } from "react-router";
+import { useFavorites } from "../../context/FavoritesContext.js";
+import { usePalette } from "../../context/PaletteContext.js";
+import { useCompare } from "../../context/CompareContext.js";
 import styles from "./Header.module.css";
 
-interface HeaderProps {
-  lrvMin: number;
-  lrvMax: number;
-  colorCount: number;
-  filteredCount: number;
-  favoritesCount: number;
-  hiddenCount: number;
-  onLrvChange: (min: number, max: number) => void;
-  onExportFavorites: () => void;
-  onClearFavorites: () => void;
-  onClearHidden: () => void;
-}
+const navClass = ({ isActive }: { isActive: boolean }) =>
+  isActive ? `${styles.navLink} ${styles.navLinkActive}` : styles.navLink;
 
-export function Header({
-  lrvMin,
-  lrvMax,
-  colorCount,
-  filteredCount,
-  favoritesCount,
-  hiddenCount,
-  onLrvChange,
-  onExportFavorites,
-  onClearFavorites,
-  onClearHidden,
-}: HeaderProps) {
-  const [toolbarOpen, setToolbarOpen] = useState(false);
+/** Global top bar: brand + primary navigation. Facets/search live in the Atlas toolbar. */
+export function Header() {
+  const { favorites } = useFavorites();
+  const { palette } = usePalette();
+  const { compare } = useCompare();
 
   return (
     <header className={styles.header}>
-      <div className={styles.top}>
-        <h1 className={styles.title}>Sherwin-Williams Color Explorer</h1>
-        <button
-          type="button"
-          id="toolbar-toggle"
-          className={styles.toggle}
-          aria-expanded={toolbarOpen}
-          aria-controls="toolbar-panel"
-          aria-label="Toggle menu"
-          onClick={() => setToolbarOpen((o) => !o)}
-        >
-          <span className={styles.hamburger} aria-hidden="true">
-            <span className={styles.hamburgerLine} />
-            <span className={styles.hamburgerLine} />
-            <span className={styles.hamburgerLine} />
+      <div className={styles.inner}>
+        <Link to="/" className={styles.brand}>
+          <span className={styles.brandMark} aria-hidden="true" />
+          <span className={styles.brandText}>
+            Sherwin-Williams <strong>Color Atlas</strong>
           </span>
-        </button>
+        </Link>
+
+        <nav className={styles.nav} aria-label="Primary">
+          <NavLink to="/" end className={navClass}>
+            Browse
+          </NavLink>
+          <NavLink to="/compare" className={navClass}>
+            Compare{compare.length > 0 ? ` (${compare.length})` : ""}
+          </NavLink>
+          <NavLink to="/palette" className={navClass}>
+            Palette{palette.length > 0 ? ` (${palette.length})` : ""}
+          </NavLink>
+          <span
+            className={styles.favCount}
+            aria-label={`${favorites.size} favorites`}
+          >
+            ♥ {favorites.size}
+          </span>
+        </nav>
       </div>
-
-      {toolbarOpen && (
-        <div id="toolbar-panel" className={styles.toolbarPanel}>
-          <div className={styles.toolbarContent}>
-            {/* LRV Filter */}
-            <div className={styles.toolbarSection}>
-              <LrvFilter
-                lrvMin={lrvMin}
-                lrvMax={lrvMax}
-                colorCount={colorCount}
-                filteredCount={filteredCount}
-                onChange={onLrvChange}
-              />
-            </div>
-
-            {/* Actions */}
-            <div className={styles.toolbarSection}>
-              <div className={styles.toolbarActions}>
-                <button
-                  type="button"
-                  id="export-favorites-btn"
-                  className={styles.actionBtn}
-                  onClick={onExportFavorites}
-                  disabled={favoritesCount === 0}
-                >
-                  Export Favorites
-                </button>
-                <button
-                  type="button"
-                  id="clear-favorites-btn"
-                  className={styles.actionBtn}
-                  onClick={onClearFavorites}
-                  disabled={favoritesCount === 0}
-                >
-                  Clear All Favorites
-                </button>
-                <button
-                  type="button"
-                  id="clear-hidden-btn"
-                  className={styles.actionBtn}
-                  onClick={onClearHidden}
-                  disabled={hiddenCount === 0}
-                >
-                  Clear All Hidden Colors
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </header>
   );
 }

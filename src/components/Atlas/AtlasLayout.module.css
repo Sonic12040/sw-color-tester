@@ -1,0 +1,87 @@
+.shell {
+  width: 100%;
+}
+
+.body {
+  display: grid;
+  grid-template-columns: 1fr; /* phones & tablet-portrait: single column (rail is a drawer) */
+  gap: var(--grid-gap);
+  max-width: var(--layout-max);
+  margin: 0 auto;
+  padding: 0 clamp(0.75rem, 2.67vw, 1.5rem);
+}
+
+.main {
+  min-width: 0; /* let the grid shrink instead of overflowing */
+}
+
+.rail {
+  /* < 1024px: off-canvas drawer */
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: min(var(--drawer-max-width), 85vw);
+  background: var(--color-surface-primary);
+  z-index: var(--z-drawer);
+  transform: translateX(-100%);
+  transition: transform var(--transition-base);
+  overflow-y: auto;
+  box-shadow: var(--shadow-2xl);
+  visibility: hidden;
+}
+
+.rail[data-open="true"] {
+  transform: translateX(0);
+  visibility: visible;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--color-overlay);
+  backdrop-filter: var(--blur-sm);
+  z-index: var(--z-drawer-backdrop);
+}
+
+/* ≥ 1024px (--bp-lg): rail becomes a persistent in-flow column */
+@media (min-width: 1024px) {
+  .body {
+    grid-template-columns: var(--rail-width) 1fr;
+    align-items: start;
+  }
+
+  .rail {
+    position: sticky;
+    top: var(--toolbar-height);
+    width: auto;
+    max-height: calc(100dvh - var(--toolbar-height));
+    transform: none;
+    visibility: visible;
+    box-shadow: none;
+    background: transparent;
+    z-index: auto;
+    inset: auto;
+    border-right: 1px solid var(--color-border-secondary);
+  }
+
+  .backdrop {
+    display: none;
+  }
+}
+
+/* ≥ 1440px (--bp-xl): wider content well on desktop */
+@media (min-width: 1440px) {
+  .body {
+    --layout-max: 1600px;
+  }
+}
+
+/* ≥ 2560px (--bp-2xl): UltraHD — cap width, widen rail, scale tiles + gutters
+   so the grid doesn't become a sea of tiny cards. */
+@media (min-width: 2560px) {
+  .body {
+    --layout-max: 2400px;
+    --rail-width: 320px;
+    --grid-min-tile: 200px;
+    --grid-gap: var(--spacing-6);
+  }
+}

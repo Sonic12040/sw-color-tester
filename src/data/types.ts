@@ -26,4 +26,5 @@ export interface Color {
   };
   archived?: boolean;
   ignore?: boolean;
+  lab?: { L: number; A: number; B: number };
 }

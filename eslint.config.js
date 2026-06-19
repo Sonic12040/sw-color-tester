@@ -9,13 +9,23 @@ export default tseslint.config(
   {
     ignores: [
       "dist",
+      "dist-server",
       "coverage",
       "src/data/palette.ts",
-      "src/data/palette-v1.ts",
+      "src/models/palette-v1.ts",
     ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
+  // Node scripts (prerender, validation). The validation script also runs
+  // browser-context callbacks via Playwright's page.evaluate, so include both.
+  {
+    files: ["**/*.mjs", "scripts/**/*.{js,mjs}"],
+    languageOptions: {
+      ecmaVersion: 2022,
+      globals: { ...globals.node, ...globals.browser },
+    },
+  },
   {
     files: ["**/*.{ts,tsx}"],
     languageOptions: {

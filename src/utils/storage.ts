@@ -5,6 +5,9 @@ export const STORAGE_KEYS = {
   favorites: "sw-color-tester:favorites",
   hidden: "sw-color-tester:hidden",
   lrv: "sw-color-tester:lrv",
+  sort: "sw-color-tester:sort",
+  compare: "sw-color-tester:compare",
+  palette: "sw-color-tester:palette",
 } as const;
 
 /** Read and JSON-parse a value; returns `undefined` if missing or unreadable. */

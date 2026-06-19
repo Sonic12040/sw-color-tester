@@ -1,0 +1,105 @@
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-2) clamp(0.75rem, 2.67vw, 1.5rem);
+  min-height: var(--toolbar-height);
+  background: var(--color-surface-primary);
+  border-bottom: 1px solid var(--color-border-primary);
+  flex-wrap: wrap;
+}
+
+.search {
+  flex: 1 1 220px;
+  min-width: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  position: absolute;
+  left: var(--spacing-3);
+  color: var(--color-text-tertiary);
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  min-height: 40px;
+  padding: var(--spacing-2) var(--spacing-3) var(--spacing-2) var(--spacing-8);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  background: var(--color-surface-secondary);
+  color: var(--color-text-primary);
+}
+
+.searchInput:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 1px;
+}
+
+.count {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.sortLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.sortSelect {
+  min-height: 40px;
+  padding: var(--spacing-1) var(--spacing-2);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-primary);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-bold);
+}
+
+/* The "Filters" button only exists below the rail breakpoint. */
+.filtersBtn {
+  display: inline-flex;
+}
+
+@media (min-width: 1024px) {
+  /* --bp-lg: rail is persistent, so the drawer trigger is hidden */
+  .filtersBtn {
+    display: none;
+  }
+}
+
+/* On the narrowest phones, let search take the full first row. */
+@media (max-width: 479px) {
+  /* --bp-sm */
+  .search {
+    flex-basis: 100%;
+    order: -1;
+  }
+}

@@ -1,0 +1,22 @@
+.wrap {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--spacing-10) clamp(1rem, 2.67vw, 2rem);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+}
+
+.text {
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: var(--line-height-relaxed);
+}

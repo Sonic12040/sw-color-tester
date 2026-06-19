@@ -109,7 +109,11 @@
      Consistent layering system
      ============================================ */
     --z-base: 0;
+    --z-rail: 100;
     --z-sticky: 200;
+    --z-tray: 300;
+    --z-drawer-backdrop: 800;
+    --z-drawer: 850;
     --z-modal-backdrop: 900;
     --z-toast: 2000;
     --z-tooltip: 3000;
@@ -232,6 +236,29 @@
      ============================================ */
     --blur-sm: 4px;
     --blur-md: 8px;
+
+    /* ============================================
+     LAYOUT SYSTEM (Color Atlas shell)
+     Drives the faceted-gallery shell: persistent rail
+     (≥1024px) vs. drawer (<1024px), grid sizing, and the
+     UltraHD cap. See breakpoints.css for the bp scale.
+     ============================================ */
+    --layout-max: 1200px; /* default centered content width */
+    --rail-width: clamp(15rem, 22vw, 17.5rem); /* 240 → 280px facet rail */
+    --grid-min-tile: 150px; /* min card width (fluid auto-fill) */
+    --grid-gap: var(--spacing-4);
+    --toolbar-height: 56px; /* sticky atlas toolbar */
+    --tray-height: 88px; /* compare tray reserved space */
+    --drawer-max-width: 22rem; /* facet drawer width on phones */
+
+    /* ============================================
+     UNDERTONE / TEMPERATURE ACCENTS
+     Chip + badge accents for the undertone facet
+     (derived from hue in colorPresentation.ts).
+     ============================================ */
+    --undertone-warm: #d97706; /* amber */
+    --undertone-cool: var(--blue-600); /* blue */
+    --undertone-neutral: var(--neutral-500); /* gray */
   }
 
   * {
