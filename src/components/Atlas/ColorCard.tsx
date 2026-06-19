@@ -50,6 +50,21 @@ function ColorCardImpl({
         className={styles.face}
         aria-label={`See color details and pairings for ${color.name}`}
       >
+        <div className={styles.info}>
+          <div className={styles.name}>
+            <strong>{color.name}</strong>
+          </div>
+          <div className={styles.meta}>
+            <span
+              className={styles.chip}
+              title={`Light Reflectance Value — ${lrvLabel}: reflects ${color.lrv.toFixed(1)}% of light`}
+            >
+              {lrvLabel}
+            </span>
+            <span className={styles.chip}>{tone}</span>
+          </div>
+        </div>
+
         {(isDesignerPick || color.isInterior !== color.isExterior) && (
           <div className={styles.badges}>
             {isDesignerPick && (
@@ -63,22 +78,6 @@ function ColorCardImpl({
             )}
           </div>
         )}
-
-        <div className={styles.info}>
-          <div className={styles.name}>
-            <strong>{color.name}</strong>
-          </div>
-          <div className={styles.number}>SW {color.colorNumber}</div>
-          <div className={styles.meta}>
-            <span
-              className={styles.chip}
-              title={`Light Reflectance Value — ${lrvLabel}: reflects ${color.lrv.toFixed(1)}% of light`}
-            >
-              {lrvLabel}
-            </span>
-            <span className={styles.chip}>{tone}</span>
-          </div>
-        </div>
       </Link>
 
       {/* Action bar: full-width, equal-width targets so nothing crowds a corner. */}
