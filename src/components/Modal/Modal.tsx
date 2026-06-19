@@ -10,6 +10,9 @@ import { useFavorites } from "../../context/FavoritesContext.js";
 import { useHidden } from "../../context/HiddenContext.js";
 import styles from "./Modal.module.css";
 
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 const COORDINATING_ROLES = ["Accent Wall", "Trim Color", "Coordinating"];
 const SIMILAR_DIFFERENTIATORS = [
   "Warmer",
@@ -54,9 +57,15 @@ interface ModalContentProps {
   colorId: string;
   onClose: () => void;
   onNavigate: (id: string) => void;
+  dialogRef: React.RefObject<HTMLDivElement | null>;
 }
 
-function ModalContent({ colorId, onClose, onNavigate }: ModalContentProps) {
+function ModalContent({
+  colorId,
+  onClose,
+  onNavigate,
+  dialogRef,
+}: ModalContentProps) {
   const { colorModel } = useAppContext();
   const { favorites, toggleFavorite } = useFavorites();
   const { hidden, toggleHidden } = useHidden();
@@ -120,6 +129,8 @@ function ModalContent({ colorId, onClose, onNavigate }: ModalContentProps) {
 
   return (
     <div
+      ref={dialogRef}
+      tabIndex={-1}
       className={styles.overlay}
       id="color-detail-modal"
       aria-modal="true"
@@ -421,6 +432,8 @@ export function Modal({ colorId, onClose }: ModalProps) {
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   // The element focused when the modal opened, so focus can be returned on close.
   const openerRef = useRef<HTMLElement | null>(null);
+  // The dialog element, used to move focus inside and to trap Tab within it.
+  const dialogRef = useRef<HTMLDivElement | null>(null);
 
   // Keep displayedIdRef current whenever a new color is opened.
   // Do this synchronously during render (safe — ref updates don't cause re-renders).
@@ -456,12 +469,41 @@ export function Modal({ colorId, onClose }: ModalProps) {
     };
   }, []);
 
-  // Keyboard Escape — keyed on colorId (the prop) so the listener is removed as
-  // soon as the parent considers the modal closed.
+  // Keyboard handling while open — keyed on colorId (the prop) so the listener is
+  // removed as soon as the parent considers the modal closed. Escape closes;
+  // Tab is trapped so focus cycles within the dialog instead of leaking to the
+  // page behind it.
   useEffect(() => {
     if (!colorId) return;
     const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
+      if (e.key === "Escape") {
+        close();
+        return;
+      }
+      if (e.key !== "Tab") return;
+
+      const dialog = dialogRef.current;
+      if (!dialog) return;
+      const focusables = Array.from(
+        dialog.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
+      );
+      if (focusables.length === 0) {
+        e.preventDefault();
+        dialog.focus();
+        return;
+      }
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement;
+      const outside = active === dialog || !dialog.contains(active);
+
+      if (e.shiftKey && (active === first || outside)) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (active === last || outside)) {
+        e.preventDefault();
+        first.focus();
+      }
     };
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
@@ -472,13 +514,14 @@ export function Modal({ colorId, onClose }: ModalProps) {
     if (!colorId) setClosing(false);
   }, [colorId]);
 
-  // Accessibility: remember the element that opened the modal and return focus to
-  // it when the modal closes, so keyboard users aren't dropped at the top of the
-  // page. Captured only on the initial open — navigating between colors keeps the
-  // original opener.
+  // Accessibility: capture the opener and move focus into the dialog on open, then
+  // return focus to the opener on close, so keyboard users aren't dropped at the
+  // top of the page. The opener is captured only on the initial open (before focus
+  // moves inside) — navigating between colors keeps it and re-focuses the dialog.
   useEffect(() => {
     if (colorId) {
       openerRef.current ??= document.activeElement as HTMLElement | null;
+      dialogRef.current?.focus();
     } else if (openerRef.current) {
       openerRef.current.focus?.();
       openerRef.current = null;
@@ -496,6 +539,7 @@ export function Modal({ colorId, onClose }: ModalProps) {
         onClose={close}
         // Navigation updates the parent's colorId directly — single source of truth.
         onNavigate={openModal}
+        dialogRef={dialogRef}
       />
     </div>,
     document.body,

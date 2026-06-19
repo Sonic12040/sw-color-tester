@@ -212,6 +212,34 @@ describe("Modal", () => {
     expect(document.activeElement).toBe(trigger);
   });
 
+  it("moves focus into the dialog when opened", () => {
+    render(<App />);
+    openModalFor("Crimson");
+
+    const dialog = screen.getByRole("dialog", { name: "Crimson" });
+    expect(dialog.contains(document.activeElement)).toBe(true);
+  });
+
+  it("traps Tab focus within the dialog", () => {
+    render(<App />);
+    openModalFor("Crimson");
+
+    const dialog = screen.getByRole("dialog", { name: "Crimson" });
+    const buttons = within(dialog).getAllByRole("button");
+    const first = buttons[0];
+    const last = buttons[buttons.length - 1];
+
+    // Tab off the last focusable wraps back to the first.
+    last.focus();
+    fireEvent.keyDown(document, { key: "Tab" });
+    expect(document.activeElement).toBe(first);
+
+    // Shift+Tab off the first focusable wraps to the last.
+    first.focus();
+    fireEvent.keyDown(document, { key: "Tab", shiftKey: true });
+    expect(document.activeElement).toBe(last);
+  });
+
   it("navigates to a coordinating color when its tile is clicked", () => {
     render(<App />);
     openModalFor("Crimson");
