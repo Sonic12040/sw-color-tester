@@ -72,7 +72,7 @@ export function ConfirmDialogProvider({
               <div className={styles.body}>
                 <p className={styles.message}>{dialog.options.message}</p>
               </div>
-              <div className={styles.footer}>
+              <div className={styles.actions}>
                 <button
                   type="button"
                   className={styles.cancelBtn}
@@ -84,7 +84,7 @@ export function ConfirmDialogProvider({
                   type="button"
                   className={styles.confirmBtn}
                   onClick={() => close(true)}
-                  ref={confirmBtnRef}
+                  autoFocus
                 >
                   {dialog.options.confirmLabel ?? "Confirm"}
                 </button>

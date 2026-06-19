@@ -2,15 +2,11 @@ import { useSyncExternalStore } from "react";
 import type { AppState } from "../models/AppState.js";
 
 export interface AppSnapshot {
-  hidden: Set<string>;
   lrvMin: number;
   lrvMax: number;
 }
 
-const EVENTS = [
-  "hiddenChanged",
-  "lrvChanged",
-] as const;
+const EVENTS = ["lrvChanged"] as const;
 
 /**
  * useSyncExternalStore requires getSnapshot to return a stable cached reference.
@@ -24,16 +20,10 @@ const snapshotCache = new WeakMap<AppState, AppSnapshot>();
 
 function getSnapshot(state: AppState): AppSnapshot {
   const prev = snapshotCache.get(state);
-  if (
-    prev &&
-    prev.hidden === state.hidden &&
-    prev.lrvMin === state.lrvMin &&
-    prev.lrvMax === state.lrvMax
-  ) {
+  if (prev && prev.lrvMin === state.lrvMin && prev.lrvMax === state.lrvMax) {
     return prev;
   }
   const next: AppSnapshot = {
-    hidden: state.hidden,
     lrvMin: state.lrvMin,
     lrvMax: state.lrvMax,
   };

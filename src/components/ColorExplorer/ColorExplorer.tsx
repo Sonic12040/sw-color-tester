@@ -1,20 +1,21 @@
 import { useAppContext } from "../../context/AppContext.js";
 import { useAppState } from "../../hooks/useAppState.js";
 import { useFavorites } from "../../context/FavoritesContext.js";
-import {
-  ToggleHiddenCommand,
-  BulkHideCommand,
-  UnhideGroupCommand,
-} from "../../commands/index.js";
+import { useHidden } from "../../context/HiddenContext.js";
+import { useToast } from "../Toast/Toast.js";
 import { ColorAccordion } from "./ColorAccordion/ColorAccordion.js";
 import styles from "./ColorExplorer.module.css";
 
 export function ColorExplorer() {
-  const { colorModel, appState, commandBus, openModal } = useAppContext();
+  const { colorModel, appState, openModal } = useAppContext();
   const snapshot = useAppState(appState);
-  const { favorites, toggleFavorite, toggleBulkFavorite } = useFavorites();
+  const { favorites, actions: favActions, toggleFavorite, toggleBulkFavorite } =
+    useFavorites();
+  const { hidden, actions: hiddenActions, toggleHidden, toggleBulkHidden } =
+    useHidden();
+  const showToast = useToast();
 
-  const { hidden, lrvMin, lrvMax } = snapshot;
+  const { lrvMin, lrvMax } = snapshot;
   const lrvRange = { min: lrvMin, max: lrvMax };
 
   const designerPickIds = colorModel.getDesignerPickIds(); // stable — built once in constructor
@@ -25,15 +26,43 @@ export function ColorExplorer() {
   const sortedFamilies = colorModel.sortFamiliesByPriority([...colorFamilies.keys()]);
   const hiddenFamilies = colorModel.getHiddenFamilies(hidden, favorites);
 
-  // Command dispatchers
+  // Event handlers
   const onToggleFavorite = (id: string) => toggleFavorite(id);
-  const onToggleHidden = (id: string) => commandBus.execute(new ToggleHiddenCommand(id));
+  const onToggleHidden = (id: string) => toggleHidden(id);
   const onFavoriteAll = (_groupId: string, groupName: string) => {
-    const groupColors = colorModel.getFamilyColors(groupName);
-    toggleBulkFavorite(groupColors.map((c) => c.id));
+    const ids = colorModel.getFamilyColors(groupName).map((c) => c.id);
+    if (ids.length === 0) return;
+
+    const wereAllFavorited = ids.every((id) => favorites.has(id));
+    toggleBulkFavorite(ids);
+
+    const verb = wereAllFavorited ? "Unfavorited" : "Favorited";
+    showToast(`${verb} ${ids.length} ${groupName} colors`, {
+      actionText: "Undo",
+      onAction: () =>
+        wereAllFavorited
+          ? favActions.addMultiple(ids)
+          : favActions.removeMultiple(ids),
+    });
   };
-  const onHideAll = (groupId: string, groupName: string) => commandBus.execute(new BulkHideCommand(groupId, groupName));
-  const onUnhideFamily = (familyName: string) => commandBus.execute(new UnhideGroupCommand(familyName));
+  const onHideAll = (_groupId: string, groupName: string) => {
+    const ids = colorModel.getFamilyColors(groupName).map((c) => c.id);
+    if (ids.length === 0) return;
+
+    const wereAllHidden = ids.every((id) => hidden.has(id));
+    toggleBulkHidden(ids);
+
+    const verb = wereAllHidden ? "Unhid" : "Hid";
+    showToast(`${verb} ${ids.length} ${groupName} colors`, {
+      actionText: "Undo",
+      onAction: () =>
+        wereAllHidden
+          ? hiddenActions.addMultiple(ids)
+          : hiddenActions.removeMultiple(ids),
+    });
+  };
+  const onUnhideFamily = (familyName: string) =>
+    hiddenActions.removeMultiple(colorModel.getColorIdsForFamily(familyName));
   const onView = (id: string) => openModal(id);
 
   const favTitle =

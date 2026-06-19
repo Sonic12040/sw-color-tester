@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { AppContext } from "./context/AppContext.js";
 import { FavoritesProvider, useFavorites } from "./context/FavoritesContext.js";
+import { HiddenProvider, useHidden } from "./context/HiddenContext.js";
 import { colorData } from "./data/palette.js";
 import { ColorModel } from "./models/ColorModel.js";
 import { AppState } from "./models/AppState.js";
-import { CommandBus } from "./utils/CommandBus.js";
 import { ExportService } from "./utils/ExportService.js";
 import { useAppState } from "./hooks/useAppState.js";
-import { ClearHiddenCommand } from "./commands/index.js";
 import { Header } from "./components/Header/Header.js";
 import { ColorExplorer } from "./components/ColorExplorer/ColorExplorer.js";
 import { Modal } from "./components/Modal/Modal.js";
@@ -17,7 +16,6 @@ import { ConfirmDialogProvider } from "./components/ConfirmDialog/ConfirmDialog.
 // Singletons — created once outside the component tree
 const colorModel = new ColorModel(colorData);
 const appState = new AppState(colorModel);
-const commandBus = new CommandBus(colorModel, appState);
 const exportService = new ExportService();
 
 function AppInner() {
@@ -26,10 +24,11 @@ function AppInner() {
   const openModal = (colorId: string) => setModalColorId(colorId);
   const closeModal = () => setModalColorId(null);
 
-  const ctxValue = { colorModel, appState, commandBus, openModal };
+  const ctxValue = { colorModel, appState, openModal };
   const snapshot = useAppState(appState);
-  const { hidden, lrvMin, lrvMax } = snapshot;
+  const { lrvMin, lrvMax } = snapshot;
   const { favorites, clearFavorites } = useFavorites();
+  const { hidden, clearHidden } = useHidden();
 
   const lrvRange = { min: lrvMin, max: lrvMax };
   const visibleColors = colorModel.getVisibleColors(hidden, favorites, lrvRange);
@@ -48,9 +47,9 @@ function AppInner() {
     clearFavorites();
   };
 
-  const onClearHidden = async () => {
+  const onClearHidden = () => {
     if (hidden.size === 0) return;
-    await commandBus.execute(new ClearHiddenCommand());
+    clearHidden();
   };
 
   return (
@@ -80,11 +79,13 @@ function AppInner() {
 export function App() {
   return (
     <FavoritesProvider>
-      <ToastProvider>
-        <ConfirmDialogProvider>
-          <AppInner />
-        </ConfirmDialogProvider>
-      </ToastProvider>
+      <HiddenProvider>
+        <ToastProvider>
+          <ConfirmDialogProvider>
+            <AppInner />
+          </ConfirmDialogProvider>
+        </ToastProvider>
+      </HiddenProvider>
     </FavoritesProvider>
   );
 }
