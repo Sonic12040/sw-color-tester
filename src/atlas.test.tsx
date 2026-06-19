@@ -146,8 +146,7 @@ describe("Atlas browse", () => {
 
   it("filters by color-family facet", () => {
     renderApp();
-    // Two "Blue" labels can exist (facet chip + undertone). Use the chip.
-    fireEvent.click(screen.getByRole("button", { name: "Blue" }));
+    fireEvent.click(screen.getByRole("checkbox", { name: "Blue" }));
     expect(screen.getByText("3 of 6")).toBeTruthy();
     expect(screen.getByText("Azure")).toBeTruthy();
     expect(screen.queryByText("Crimson")).toBeNull();

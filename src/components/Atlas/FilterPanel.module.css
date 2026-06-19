@@ -49,38 +49,6 @@
   margin-bottom: var(--spacing-1);
 }
 
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-2);
-}
-
-.chip {
-  min-height: 36px;
-  padding: var(--spacing-1) var(--spacing-3);
-  border-radius: var(--radius-full);
-  border: 1px solid var(--color-border-primary);
-  background: var(--color-surface-primary);
-  color: var(--color-text-primary);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  cursor: pointer;
-  transition: var(--button-transition);
-  display: inline-flex;
-  align-items: center;
-  gap: var(--spacing-1);
-}
-
-.chip:hover {
-  background: var(--color-surface-hover);
-}
-
-.chip[aria-pressed="true"] {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-  color: var(--color-text-inverse);
-}
-
 .chipDot {
   width: 10px;
   height: 10px;
@@ -117,6 +85,14 @@
   color: var(--color-text-inverse);
 }
 
+/* Short multi-select lists (family, undertone) — no scroll. */
+.checkList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+/* The long collection list scrolls within a bounded height. */
 .collectionList {
   display: flex;
   flex-direction: column;

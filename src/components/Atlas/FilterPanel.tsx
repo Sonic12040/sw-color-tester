@@ -91,39 +91,37 @@ export function FilterPanel({
 
       <fieldset className={styles.group}>
         <legend className={styles.legend}>Color family</legend>
-        <div className={styles.chips}>
+        <div className={styles.checkList}>
           {familyNames.map((f) => (
-            <button
-              key={f}
-              type="button"
-              className={styles.chip}
-              aria-pressed={families.includes(f)}
-              onClick={() => toggleFamily(f)}
-            >
+            <label key={f} className={styles.check}>
+              <input
+                type="checkbox"
+                checked={families.includes(f)}
+                onChange={() => toggleFamily(f)}
+              />
               {f}
-            </button>
+            </label>
           ))}
         </div>
       </fieldset>
 
       <fieldset className={styles.group}>
         <legend className={styles.legend}>Undertone</legend>
-        <div className={styles.chips}>
+        <div className={styles.checkList}>
           {UNDERTONES.map((u) => (
-            <button
-              key={u}
-              type="button"
-              className={styles.chip}
-              aria-pressed={undertones.includes(u)}
-              onClick={() => toggleUndertone(u)}
-            >
+            <label key={u} className={styles.check}>
+              <input
+                type="checkbox"
+                checked={undertones.includes(u)}
+                onChange={() => toggleUndertone(u)}
+              />
               <span
                 className={styles.chipDot}
                 style={{ background: UNDERTONE_DOT[u] }}
                 aria-hidden="true"
               />
               {u}
-            </button>
+            </label>
           ))}
         </div>
       </fieldset>

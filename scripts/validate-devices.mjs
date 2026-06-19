@@ -119,7 +119,7 @@ async function run() {
       // family chip directly. On mobile, prove the drawer opens + closes, then
       // filter via the always-visible search box (robust, no overlay timing).
       if (p.rail) {
-        await page.getByRole("button", { name: "Red", exact: true }).click();
+        await page.getByRole("checkbox", { name: "Red", exact: true }).click();
         await page.waitForTimeout(150);
       } else {
         await filtersBtn.click();
