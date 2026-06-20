@@ -7,7 +7,7 @@
 // Usage: node scripts/validate-devices.mjs  (expects `vite preview` on :4173)
 import { chromium, devices } from "@playwright/test";
 import { AxeBuilder } from "@axe-core/playwright";
-import { readFileSync, mkdirSync, readdirSync } from "node:fs";
+import { readFileSync, mkdirSync, readdirSync, existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -275,6 +275,25 @@ async function run() {
       fail(
         "SEO/static",
         `prerendered markup incomplete (h1:${hasH1} ld:${hasLd} title:${hasTitleInHead} summary:${hasSummary} summaryMeta:${hasSummaryMeta})`,
+      );
+
+    // Open Graph image (F4): per-color PNG exists + og:image / twitter:image meta.
+    const ogDir = resolve(root, "dist", "og");
+    const hasOgFile = existsSync(resolve(ogDir, `${sample}.png`));
+    const hasDefaultOg = existsSync(resolve(ogDir, "default.png"));
+    const hasOgMeta = new RegExp(
+      `<meta property="og:image" content="[^"]*/og/${sample}\\.png"`,
+    ).test(html);
+    const hasTwitterImg = /<meta name="twitter:image"/.test(html);
+    if (hasOgFile && hasDefaultOg && hasOgMeta && hasTwitterImg)
+      pass(
+        "SEO/og",
+        `OG image for ${sample} exists + og:image/twitter:image meta`,
+      );
+    else
+      fail(
+        "SEO/og",
+        `OG incomplete (file:${hasOgFile} default:${hasDefaultOg} meta:${hasOgMeta} twitter:${hasTwitterImg})`,
       );
   } catch (err) {
     fail("SEO/static", `could not read prerendered file: ${err.message}`);

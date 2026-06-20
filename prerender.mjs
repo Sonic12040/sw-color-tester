@@ -4,12 +4,42 @@
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { createRequire } from "node:module";
+import { Resvg } from "@resvg/resvg-js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const dist = resolve(__dirname, "dist");
 
-const { render, getPrerenderPaths, getSitemapUrls, getColorsIndex, BASENAME } =
-  await import("./dist-server/entry-server.js");
+const {
+  render,
+  getPrerenderPaths,
+  getSitemapUrls,
+  getColorsIndex,
+  colorOgSvg,
+  defaultOgSvg,
+  BASENAME,
+} = await import("./dist-server/entry-server.js");
+
+// Roboto WOFFs (from the roboto-fontface dep) embedded so OG text renders the
+// same locally and in CI — no system-font dependency.
+const require = createRequire(import.meta.url);
+const fontBuffers = [
+  "Roboto-Regular.woff",
+  "Roboto-Medium.woff",
+  "Roboto-Bold.woff",
+].map((f) =>
+  readFileSync(require.resolve(`roboto-fontface/fonts/roboto/${f}`)),
+);
+
+/** Rasterize an OG SVG string to a PNG buffer. */
+function svgToPng(svg) {
+  return new Resvg(svg, {
+    font: { fontBuffers, loadSystemFonts: false, defaultFontFamily: "Roboto" },
+    fitTo: { mode: "width", value: 1200 },
+  })
+    .render()
+    .asPng();
+}
 
 // Use the built client index.html (already has hashed asset tags + PWA SW
 // registration) as the shell. Strip its default <title> so the per-route one
@@ -45,6 +75,29 @@ for (let i = 0; i < paths.length; i += BATCH) {
   );
   done += slice.length;
   process.stdout.write(`\r  prerendered ${done}/${paths.length} pages`);
+}
+process.stdout.write("\n");
+
+// Open Graph images: one branded card per color + a default for the gallery /
+// palette / compare / share fallback. Written after the page render (so workbox,
+// which globs at vite-build time, never precaches these ~2k PNGs).
+const index = getColorsIndex();
+const ogDir = resolve(dist, "og");
+mkdirSync(ogDir, { recursive: true });
+writeFileSync(
+  resolve(ogDir, "default.png"),
+  svgToPng(defaultOgSvg(index.slice(0, 12).map((c) => c.hex))),
+);
+let ogDone = 0;
+for (const c of index) {
+  writeFileSync(
+    resolve(ogDir, `${c.slug}.png`),
+    svgToPng(colorOgSvg({ name: c.name, number: c.number, hex: c.hex })),
+  );
+  ogDone += 1;
+  if (ogDone % 100 === 0 || ogDone === index.length) {
+    process.stdout.write(`\r  rendered ${ogDone}/${index.length} OG images`);
+  }
 }
 process.stdout.write("\n");
 

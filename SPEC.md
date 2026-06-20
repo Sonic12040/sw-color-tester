@@ -50,8 +50,8 @@ src/
 │   ├── Workspace/        # CompareTray, ContrastMatrix
 │   ├── Toast/, ErrorBoundary/, seo/JsonLd
 ├── domain/               # types.ts (shared facet/sort vocabulary)
-├── utils/                # base.ts, config.ts, storage.ts, slug.ts, seo.ts, breakpoints.ts,
-│                         #   clipboard.ts, colorMath.ts, colorCopy.ts, paint.ts, swLinks.ts, ExportService.ts
+├── utils/                # base.ts, config.ts, storage.ts, slug.ts, seo.ts, breakpoints.ts, clipboard.ts,
+│                         #   colorMath.ts, colorCopy.ts, paint.ts, swLinks.ts, ogTemplate.ts, ExportService.ts
 └── styles/               # tokens.css, breakpoints.css, a11y.css, global.css
 prerender.mjs             # post-build: writes dist/colors/<slug>/index.html + 404.html, sitemap, colors.json
 ```
@@ -94,8 +94,12 @@ chroma + use suggestion) used on the detail page and in the SEO meta/JSON-LD.
 `build` runs: `tsc` → client build → SSR build (`entry-server`) → `prerender.mjs`,
 which renders `/`, `/compare`, `/palette`, and every `/colors/<slug>` to static
 HTML (authoritative `<head>` injected by `buildHead`), plus `sitemap.xml`,
-`robots.txt`, `colors.json`, and a `404.html` SPA fallback. The PWA precaches the
-shell only and runtime-caches color pages.
+`robots.txt`, `colors.json`, and a `404.html` SPA fallback. It also rasterizes a
+1200×630 Open Graph PNG per color (+ a brand default) into `/og/` with `resvg`
+(SVG from `utils/ogTemplate.ts`, Roboto WOFF embedded), referenced via
+`og:image`/`twitter:image` in `buildHead`. The PWA precaches the shell only and
+runtime-caches color pages (OG PNGs are written after the client build, so they
+never enter the precache manifest).
 
 ## Design system
 
@@ -220,7 +224,7 @@ section is the source of truth for shape and priority.
 | 1 ✅ | F1 Plain-language summaries      | Shopper      | High  | S      | Cheap; reuses color engine; lifts UX + SEO/AI     |
 | 2 ✅ | F2 Contrast & pairing matrix     | Designer     | High  | S–M    | Reuses contrast math; pro decision tool           |
 | 3    | F3 Analytics & share tracking    | Marketer     | High  | S–M    | Enabler — measures every other bet                |
-| 4    | F4 Dynamic OG/social images      | Marketer     | High  | M      | Compounding reach on existing SSG                 |
+| 4 ✅ | F4 Dynamic OG/social images      | Marketer     | High  | M      | Compounding reach on existing SSG                 |
 | 5 ✅ | F5 "Get this color" panel        | Shopper      | High  | M      | The missing _act_ step for the largest persona    |
 | 6    | F6 Color data API / code-split   | All          | Med   | M      | Perf foundation; data source later features reuse |
 | 7    | F7 Projects (palettes + notes)   | Designer     | Med   | M      | Pro depth; stepping stone to accounts             |
@@ -260,8 +264,9 @@ Benefit: you can't improve what you can't measure; unblocks every roadmap metric
   - AC: share actions append source/medium/campaign; analytics reads them.
   - Tasks: extend the share-URL builder; wire into copy-share actions; test.
 
-**F4 · Dynamic OG / social images** _(Marketer · M · rank 4)_
+**F4 · Dynamic OG / social images** ✅ _shipped_ _(Marketer · M · rank 4)_
 Benefit: every color/palette becomes a branded shareable card → compounding social + SEO reach.
+Delivered: pure SVG builders in `utils/ogTemplate.ts` (unit-tested), rasterized to 1200×630 PNGs by `prerender.mjs` via `@resvg/resvg-js` + embedded Roboto WOFF (`roboto-fontface`) → `dist/og/<slug>.png` + `dist/og/default.png`; `og:image`/`twitter:image` emitted in `buildHead` for color pages (specific) and gallery/compare/palette (brand default — covers palette shares); e2e asserts the file + meta. Per-palette dynamic OG would need serverless (out of static scope) — default-card fallback used.
 
 - **US4.1** As a sharer, I want each color page to have a branded OG image (swatch + name + SW number + hex) so links look professional.
   - AC: per-color 1200×630 image generated at build; `og:image`/`twitter:image` set.

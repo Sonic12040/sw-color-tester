@@ -23,3 +23,10 @@ export const colorPath = (slug: string): string => `/colors/${slug}`;
 /** Absolute canonical URL for a color page (for SEO/sitemap/canonical). */
 export const colorCanonicalUrl = (slug: string): string =>
   `${SITE_ORIGIN}${BASENAME}/colors/${slug}/`;
+
+/** Absolute URL of a color's prerendered Open Graph image. */
+export const ogImageUrl = (slug: string): string =>
+  `${SITE_ORIGIN}${BASENAME}/og/${slug}.png`;
+
+/** Absolute URL of the brand-default OG image (gallery / palette / share fallback). */
+export const OG_DEFAULT_IMAGE = `${SITE_ORIGIN}${BASENAME}/og/default.png`;

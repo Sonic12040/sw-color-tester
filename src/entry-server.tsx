@@ -6,11 +6,19 @@ import {
 } from "react-router";
 import { routes } from "./routes.js";
 import { colorModel } from "./appModel.js";
-import { BASENAME, SITE_URL, colorCanonicalUrl } from "./utils/base.js";
+import {
+  BASENAME,
+  SITE_URL,
+  colorCanonicalUrl,
+  ogImageUrl,
+  OG_DEFAULT_IMAGE,
+} from "./utils/base.js";
 import { colorDescription } from "./utils/seo.js";
 
 // Re-export so the Node prerender script gets the base path from one source.
 export { BASE_URL, BASENAME } from "./utils/base.js";
+// Re-export the OG SVG builders so the prerender script can rasterize them.
+export { colorOgSvg, defaultOgSvg } from "./utils/ogTemplate.js";
 import { undertone } from "./utils/colorMath.js";
 import { toSlug } from "./utils/slug.js";
 
@@ -22,6 +30,18 @@ function esc(s: string): string {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+/** Open Graph + Twitter image tags shared by every route. */
+function ogImageTags(imageUrl: string, alt: string): string[] {
+  return [
+    `<meta property="og:image" content="${imageUrl}">`,
+    `<meta property="og:image:width" content="1200">`,
+    `<meta property="og:image:height" content="630">`,
+    `<meta property="og:image:alt" content="${esc(alt)}">`,
+    `<meta name="twitter:card" content="summary_large_image">`,
+    `<meta name="twitter:image" content="${imageUrl}">`,
+  ];
 }
 
 /**
@@ -37,16 +57,26 @@ function buildHead(appPath: string): string {
       `<title>Sherwin-Williams Color Atlas — browse ${total} paint colors</title>`,
       `<meta name="description" content="${esc(`Search, filter, and compare ${total} Sherwin-Williams paint colors by color family, undertone, lightness (LRV), and collection.`)}">`,
       `<link rel="canonical" href="${SITE_URL}">`,
+      `<meta property="og:site_name" content="Sherwin-Williams Color Atlas">`,
+      `<meta property="og:title" content="Sherwin-Williams Color Atlas">`,
+      `<meta property="og:description" content="${esc(`Browse, filter, and compare ${total} Sherwin-Williams paint colors.`)}">`,
+      `<meta property="og:type" content="website">`,
+      `<meta property="og:url" content="${SITE_URL}">`,
+      ...ogImageTags(OG_DEFAULT_IMAGE, "Sherwin-Williams Color Atlas"),
     );
   } else if (appPath === "/compare") {
     tags.push(
       `<title>Compare colors | Sherwin-Williams Color Atlas</title>`,
       `<meta name="robots" content="noindex">`,
+      `<meta property="og:title" content="Compare colors | Sherwin-Williams Color Atlas">`,
+      ...ogImageTags(OG_DEFAULT_IMAGE, "Sherwin-Williams Color Atlas"),
     );
   } else if (appPath === "/palette") {
     tags.push(
       `<title>My palette | Sherwin-Williams Color Atlas</title>`,
       `<meta name="robots" content="noindex">`,
+      `<meta property="og:title" content="My palette | Sherwin-Williams Color Atlas">`,
+      ...ogImageTags(OG_DEFAULT_IMAGE, "Sherwin-Williams Color Atlas"),
     );
   } else if (appPath.startsWith("/colors/")) {
     const slug = decodeURIComponent(
@@ -64,6 +94,11 @@ function buildHead(appPath: string): string {
         `<meta property="og:description" content="${esc(desc)}">`,
         `<meta property="og:type" content="product">`,
         `<meta property="og:url" content="${canonical}">`,
+        `<meta property="og:site_name" content="Sherwin-Williams Color Atlas">`,
+        ...ogImageTags(
+          ogImageUrl(slug),
+          `${color.name} (SW ${color.colorNumber}) paint color swatch`,
+        ),
       );
     }
   }
