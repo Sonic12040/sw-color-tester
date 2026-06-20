@@ -6,6 +6,7 @@ import {
   type SetStateAction,
 } from "react";
 import { loadJSON, saveJSON } from "../utils/storage.js";
+import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect.js";
 
 /**
  * Like `useState`, but initialized from localStorage and persisted on change.
@@ -16,7 +17,9 @@ import { loadJSON, saveJSON } from "../utils/storage.js";
  *
  * Two-phase init: the first render uses `initial` so that server-prerendered
  * markup and the first client render agree (no hydration mismatch — localStorage
- * is client-only). Stored data is then loaded in an effect on mount. The persist
+ * is client-only). Stored data is then loaded in a **layout** effect on mount —
+ * before the browser paints — so a persisted value (e.g. the chosen sort) shows
+ * in the first visible frame instead of flashing the default first. The persist
  * effect skips the first render so it never clobbers stored data with `initial`
  * before the load runs.
  */
@@ -28,13 +31,12 @@ export function usePersistentState<T>(
   const [value, setValue] = useState<T>(initial);
   const skipSave = useRef(true);
 
-  useEffect(() => {
+  // `validate` is expected to be stable; keying on `key` matches load semantics.
+  useIsomorphicLayoutEffect(() => {
     const raw = loadJSON(key);
     if (raw === undefined) return;
     const next = validate ? validate(raw) : (raw as T);
     if (next !== null) setValue(next as T);
-    // `validate` is expected to be stable; keying on `key` matches load semantics.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key]);
 
   useEffect(() => {

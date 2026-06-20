@@ -1,14 +1,16 @@
 import { useEffect, useRef } from "react";
 import { useSet, type SetActions } from "./useSet.js";
 import { loadJSON, saveJSON } from "../utils/storage.js";
+import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect.js";
 
 /**
  * A {@link useSet} of strings that initializes from localStorage and persists on
  * every change. Malformed stored data is ignored (falls back to empty).
  *
  * Two-phase init (see usePersistentState): renders empty first so server and
- * first client render agree, then loads stored ids on mount. The persist effect
- * skips the first render so it never clobbers stored data before the load.
+ * first client render agree, then loads stored ids in a layout effect on mount
+ * (before paint, so e.g. hidden colors don't flash in then out). The persist
+ * effect skips the first render so it never clobbers stored data before the load.
  */
 export function usePersistentSet(
   key: string,
@@ -16,7 +18,7 @@ export function usePersistentSet(
   const [set, actions] = useSet<string>();
   const skipSave = useRef(true);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const raw = loadJSON(key);
     if (!Array.isArray(raw)) return;
     const items = raw.filter(

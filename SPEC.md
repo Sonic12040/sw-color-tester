@@ -35,7 +35,7 @@ src/
 ├── entry-server.tsx      # SSG render(path) + buildHead() + sitemap/colors helpers
 ├── routes.tsx            # shared route tree (RootLayout → pages)
 ├── appModel.ts           # singletons: colorModel, exportService
-├── data/                 # palette.ts (generated, ~1.7k active) + types.ts (Color)
+├── data/                 # palette.ts (generated, ~1.7k active; code-split into its own client chunk) + types.ts
 ├── models/ColorModel.ts  # index (id/slug/family/collection/designer) + query (filter/sort)
 ├── context/              # Favorites, Hidden, Filters, Compare, Palette, Toast, App
 ├── hooks/                # useSet, usePersistent{Set,State}, useFocusTrap, useDocumentMeta
@@ -72,9 +72,11 @@ so a change to one slice doesn't re-render consumers of another — validated by
 | Palette       | `PaletteContext` (`usePersistentState`) | `usePalette`    |
 | Toasts        | `ToastContext`                          | `useToast`      |
 
-`usePersistent*` use **two-phase init** (render `initial`, load from storage in an
-effect) so server-prerendered markup and the first client render agree (no
-hydration mismatch); storage access is guarded.
+`usePersistent*` use **two-phase init** (render `initial`, then load from storage)
+so server-prerendered markup and the first client render agree (no hydration
+mismatch); storage access is guarded. The load runs in a **layout effect**
+(`useIsomorphicLayoutEffect`) — before the browser paints — so a persisted sort
+or hidden set shows in the first visible frame instead of flashing the default.
 
 `ColorModel` is a thin repository: it builds the indexes (by id/slug, families,
 collections, designer picks) and delegates faceting to the pure `queryColors` /
@@ -135,7 +137,6 @@ than rebuilding, and typecheck runs only in `verify`.
 
 ## Known follow-ups
 
-- `palette.ts` (~1.6 MB) is statically bundled — code-split or fetch as JSON.
 - Soft 404s can't return a real HTTP 404 on static hosting; mitigated with a
   client-side `noindex` (`useNoindex`) on the not-found view.
 
@@ -226,7 +227,7 @@ section is the source of truth for shape and priority.
 | 3    | F3 Analytics & share tracking    | Marketer     | High  | S–M    | Enabler — measures every other bet                |
 | 4 ✅ | F4 Dynamic OG/social images      | Marketer     | High  | M      | Compounding reach on existing SSG                 |
 | 5 ✅ | F5 "Get this color" panel        | Shopper      | High  | M      | The missing _act_ step for the largest persona    |
-| 6    | F6 Color data API / code-split   | All          | Med   | M      | Perf foundation; data source later features reuse |
+| 6 ✅ | F6 Color data API / code-split   | All          | Med   | M      | Perf foundation; data source later features reuse |
 | 7    | F7 Projects (palettes + notes)   | Designer     | Med   | M      | Pro depth; stepping stone to accounts             |
 | 8    | F8 Rich palette export (PNG/PDF) | Designer/Mkt | Med   | M      | Client deliverable; builds on F7                  |
 
@@ -286,8 +287,9 @@ Delivered: `GetColorPanel` on the detail page (order-a-sample / find-a-store / v
   - AC: inputs (area or L×W×H, openings, coats) → gallons + cans; sensible defaults.
   - Tasks: pure `paintEstimate()` util + unit tests; `PaintCalculator` component; accessible form.
 
-**F6 · Color data API / code-split** _(All · M · rank 6, foundation)_
-Benefit: removes the ~1.6 MB bundle from first load (CWV for everyone) and creates a fetchable source future features reuse.
+**F6 · Color data API / code-split** ✅ _shipped_ _(All · M · rank 6, foundation)_
+Benefit: removes the ~1.6 MB bundle from first load (CWV for everyone).
+Delivered: Vite `manualChunks` splits `data/palette` into its own client chunk — main entry **1.6 MB → 336 KiB**, the ~1.25 MB dataset now loads in parallel (modulepreload) and caches separately across deploys. Per the "use stored data, no external call" directive it stays a bundled chunk (no `fetch`/`colors.json`/dynamic data call), which also keeps SSG hydration synchronous. Guarded by `scripts/check-bundle.mjs` (run in `build:client`).
 
 - **US6.1** As any user, I want fast first load so the gallery is interactive quickly.
   - AC: `palette.ts` out of the main client bundle; client reads `colors.json` (already emitted) or a split chunk; SSG pages unchanged; LCP/TBT improve.

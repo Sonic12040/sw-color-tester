@@ -37,11 +37,27 @@ function baseTrailingSlashRedirect() {
   };
 }
 
-export default defineConfig({
+export default defineConfig(({ isSsrBuild }) => ({
   base: BASE,
   // Ensure CSS-module imports are transformed in the SSR (prerender) build.
   ssr: {
     noExternal: ["react-router"],
+  },
+  build: {
+    // Split the ~1.6 MB color dataset out of the main client entry into its own
+    // chunk: it stays bundled "stored data" (no fetch / no external call), loads
+    // in parallel via modulepreload, and is cached separately across deploys so
+    // app-code changes don't force a re-download of the data. The SSR build stays
+    // a single bundle so the prerender step imports one file.
+    rollupOptions: isSsrBuild
+      ? {}
+      : {
+          output: {
+            manualChunks(id: string) {
+              if (id.includes("/data/palette")) return "color-data";
+            },
+          },
+        },
   },
   plugins: [
     baseTrailingSlashRedirect(),
@@ -69,4 +85,4 @@ export default defineConfig({
       },
     }),
   ],
-});
+}));
