@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Outlet } from "react-router";
 import { AppContext, type AppContextValue } from "../context/AppContext.js";
 import { AppProviders } from "../context/AppProviders.js";
@@ -10,9 +11,27 @@ const ctxValue: AppContextValue = { colorModel };
 
 /**
  * Root route element: wires up the global state providers + AppContext and
- * renders the persistent chrome (header, compare tray) around the routed page.
+ * renders the persistent chrome (sticky header, compare tray) around the page.
+ *
+ * Publishes the header's live height to `--header-h` so the sticky search/sort
+ * toolbar and the filter rail can offset beneath it without magic numbers —
+ * staying correct when the header wraps (small screens / zoom).
  */
 export function RootLayout() {
+  useEffect(() => {
+    const header = document.querySelector("header");
+    if (!header || typeof ResizeObserver === "undefined") return;
+    const update = () =>
+      document.documentElement.style.setProperty(
+        "--header-h",
+        `${header.offsetHeight}px`,
+      );
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(header);
+    return () => ro.disconnect();
+  }, []);
+
   return (
     <AppProviders>
       <AppContext.Provider value={ctxValue}>

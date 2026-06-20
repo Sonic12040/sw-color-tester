@@ -1,16 +1,30 @@
-/* Dark toolbar to match the header + color tiles' bars. */
+/* Dark toolbar to match the header + color tiles' bars. Full-bleed bar; its
+   content aligns to the shared content column via .inner. Sticks directly below
+   the sticky header (offset by its measured height, robust to wrapping). */
 .toolbar {
   position: sticky;
   top: 0;
   z-index: var(--z-sticky);
+  background: #1b1c20;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 768px) {
+  /* --bp-md: header is sticky from here up, so sit beneath it. */
+  .toolbar {
+    top: var(--header-h, 56px);
+  }
+}
+
+.inner {
   display: flex;
   align-items: center;
   gap: var(--spacing-3);
-  padding: var(--spacing-2) clamp(0.75rem, 2.67vw, 1.5rem);
-  min-height: var(--toolbar-height);
-  background: #1b1c20;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   flex-wrap: wrap;
+  min-height: var(--toolbar-height);
+  max-width: var(--layout-max);
+  margin: 0 auto;
+  padding: var(--spacing-2) var(--page-pad);
 }
 
 .search {
@@ -63,6 +77,10 @@
   color: rgba(255, 255, 255, 0.72);
 }
 
+.sortText {
+  white-space: nowrap;
+}
+
 .sortSelect {
   min-height: 44px;
   padding: var(--spacing-1) var(--spacing-2);
@@ -90,18 +108,8 @@
   font-weight: var(--font-weight-bold);
 }
 
-/* Compare link + Filters button restyled to read on the dark toolbar
-   (overrides the global .btn-ghost / .btn-secondary utilities — module styles
-   are unlayered, so they win over the layered utilities). */
-.compareLink {
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.compareLink:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-}
-
+/* Filters button restyled to read on the dark toolbar (overrides the global
+   .btn-secondary — module styles are unlayered, so they win over utilities). */
 /* The "Filters" button only exists below the rail breakpoint. */
 .filtersBtn {
   display: inline-flex;

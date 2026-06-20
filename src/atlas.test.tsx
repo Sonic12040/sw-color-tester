@@ -252,8 +252,8 @@ describe("Compare", () => {
     fireEvent.click(
       screen.getByRole("button", { name: "Add Azure to comparison" }),
     );
-    // Toolbar compare link reflects the count.
-    fireEvent.click(screen.getByRole("link", { name: /Open comparison/ }));
+    // Header nav reflects the count and opens the comparison page.
+    fireEvent.click(screen.getByRole("link", { name: /^Compare/ }));
     expect(
       screen.getByRole("heading", { name: "Compare colors" }),
     ).toBeTruthy();

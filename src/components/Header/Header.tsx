@@ -1,17 +1,26 @@
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { useFavorites } from "../../context/FavoritesContext.js";
 import { usePalette } from "../../context/PaletteContext.js";
 import { useCompare } from "../../context/CompareContext.js";
+import { useFilters } from "../../context/FiltersContext.js";
 import styles from "./Header.module.css";
 
 const navClass = ({ isActive }: { isActive: boolean }) =>
   isActive ? `${styles.navLink} ${styles.navLinkActive}` : styles.navLink;
 
-/** Global top bar: brand + primary navigation. Facets/search live in the Atlas toolbar. */
+/** Global sticky top bar: brand + primary navigation. */
 export function Header() {
   const { favorites } = useFavorites();
   const { palette } = usePalette();
   const { compare } = useCompare();
+  const { setView } = useFilters();
+  const navigate = useNavigate();
+
+  // The favorites count is a control: jump to the gallery's Favorites view.
+  const showFavorites = () => {
+    setView("favorites");
+    navigate("/");
+  };
 
   return (
     <header className={styles.header}>
@@ -33,12 +42,14 @@ export function Header() {
           <NavLink to="/palette" className={navClass}>
             Palette{palette.length > 0 ? ` (${palette.length})` : ""}
           </NavLink>
-          <span
-            className={styles.favCount}
-            aria-label={`${favorites.size} favorites`}
+          <button
+            type="button"
+            className={styles.favBtn}
+            onClick={showFavorites}
+            aria-label={`Show ${favorites.size} favorite colors`}
           >
-            ♥ {favorites.size}
-          </span>
+            <span aria-hidden="true">♥</span> {favorites.size}
+          </button>
         </nav>
       </div>
     </header>

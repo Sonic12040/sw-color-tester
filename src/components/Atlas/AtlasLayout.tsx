@@ -4,6 +4,7 @@ import { useFilters } from "../../context/FiltersContext.js";
 import { useFocusTrap } from "../../hooks/useFocusTrap.js";
 import { AtlasToolbar } from "./AtlasToolbar.js";
 import { FilterPanel } from "./FilterPanel.js";
+import { ActiveFilters } from "./ActiveFilters.js";
 import { ColorGrid } from "./ColorGrid.js";
 import styles from "./AtlasLayout.module.css";
 
@@ -71,11 +72,16 @@ export function AtlasLayout({ colors, totalCount }: AtlasLayoutProps) {
           tabIndex={-1}
           aria-label="Filters"
         >
-          <FilterPanel onClose={closeDrawer} />
+          {/* Inner wrapper holds the sticky: the rail column stretches to full
+              height so this can stick (grid items themselves stick unreliably). */}
+          <div className={styles.railInner}>
+            <FilterPanel onClose={closeDrawer} />
+          </div>
         </aside>
 
         {/* Region inside the page-level <main> (in RootLayout). */}
         <section className={styles.main} aria-label="Color results">
+          <ActiveFilters />
           <ColorGrid colors={colors} onResetFilters={resetAll} />
         </section>
       </div>

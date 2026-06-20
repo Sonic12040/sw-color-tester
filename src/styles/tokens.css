@@ -244,6 +244,7 @@
      UltraHD cap. See breakpoints.css for the bp scale.
      ============================================ */
     --layout-max: 1200px; /* default centered content width */
+    --page-pad: clamp(0.75rem, 2.67vw, 1.5rem); /* shared horizontal gutter */
     --rail-width: clamp(15rem, 22vw, 17.5rem); /* 240 → 280px facet rail */
     --grid-min-tile: 165px; /* min card width on phones (keeps 2 columns) */
     --grid-gap: var(--spacing-4);

@@ -25,7 +25,9 @@
    floating compare tray (bottom) when it is scrolled into view.
    (WCAG 2.2 — 2.4.11 / 2.4.12 Focus Not Obscured.) */
 :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
-  scroll-margin-top: 72px;
+  scroll-margin-top: calc(
+    var(--header-h, 56px) + var(--toolbar-height) + var(--spacing-2)
+  );
   scroll-margin-bottom: 104px;
 }
 

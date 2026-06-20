@@ -31,4 +31,22 @@
     --bp-xl: 1440px;
     --bp-2xl: 2560px;
   }
+
+  /* Shared content width + gutter, applied at :root so the header, toolbar, and
+     grid all align to the same column at every breakpoint. */
+  @media (max-width: 479px) {
+    :root {
+      --page-pad: var(--spacing-2);
+    }
+  }
+  @media (min-width: 1440px) {
+    :root {
+      --layout-max: 1600px;
+    }
+  }
+  @media (min-width: 2560px) {
+    :root {
+      --layout-max: 2400px;
+    }
+  }
 }

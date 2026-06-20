@@ -1,5 +1,10 @@
-/* Dark header to match the color tiles' title/action bars. */
+/* Dark header to match the color tiles' title/action bars. Sticky so primary
+   navigation stays reachable while scrolling the gallery; sits above the
+   search/sort toolbar, which offsets beneath it via --header-h. */
 .header {
+  position: sticky;
+  top: 0;
+  z-index: calc(var(--z-sticky) + 1);
   background: #1b1c20;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   color: #ffffff;
@@ -10,7 +15,7 @@
   justify-content: space-between;
   align-items: center;
   gap: var(--spacing-3);
-  padding: var(--spacing-2) clamp(0.75rem, 2.67vw, 1.5rem);
+  padding: var(--spacing-2) var(--page-pad);
   max-width: var(--layout-max);
   margin: 0 auto;
   flex-wrap: wrap;
@@ -84,13 +89,27 @@
   font-weight: var(--font-weight-semibold);
 }
 
-.favCount {
+/* Favorites count — a real control (jumps to the Favorites view). */
+.favBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-height: 44px;
+  padding: var(--spacing-1) var(--spacing-3);
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   /* Lighter amber for ≥7:1 on the dark header (the token gold is ~5.8:1). */
   color: #fbbf24;
-  padding: 0 var(--spacing-2);
   white-space: nowrap;
+  transition: background-color var(--transition-fast);
+}
+
+.favBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 @media (max-width: 479px) {

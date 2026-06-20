@@ -8,7 +8,7 @@
   gap: var(--grid-gap);
   max-width: var(--layout-max);
   margin: 0 auto;
-  padding: 0 clamp(0.75rem, 2.67vw, 1.5rem);
+  padding: 0 var(--page-pad);
 }
 
 .main {
@@ -48,20 +48,27 @@
 @media (min-width: 1024px) {
   .body {
     grid-template-columns: var(--rail-width) 1fr;
-    align-items: start;
   }
 
+  /* Rail column stretches the full grid height (dark sidebar); the sticky lives
+     on .railInner so it pins reliably below the header + toolbar. */
   .rail {
-    position: sticky;
-    top: var(--toolbar-height);
+    position: static;
     width: auto;
-    max-height: calc(100dvh - var(--toolbar-height));
     transform: none;
     visibility: visible;
+    overflow: visible;
     box-shadow: none;
     z-index: auto;
     inset: auto;
     border-right: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .railInner {
+    position: sticky;
+    top: calc(var(--header-h, 56px) + var(--toolbar-height));
+    max-height: calc(100dvh - var(--header-h, 56px) - var(--toolbar-height));
+    overflow-y: auto;
   }
 
   .backdrop {
@@ -74,8 +81,6 @@
 @media (max-width: 479px) {
   .body {
     --grid-gap: var(--spacing-2);
-    padding-left: var(--spacing-2);
-    padding-right: var(--spacing-2);
   }
 }
 
@@ -86,18 +91,10 @@
   }
 }
 
-/* ≥ 1440px (--bp-xl): wider content well on desktop */
-@media (min-width: 1440px) {
-  .body {
-    --layout-max: 1600px;
-  }
-}
-
-/* ≥ 2560px (--bp-2xl): UltraHD — cap width, widen rail, scale tiles + gutters
-   so the grid doesn't become a sea of tiny cards. */
+/* ≥ 2560px (--bp-2xl): UltraHD — widen rail, scale tiles + gutters so the grid
+   doesn't become a sea of tiny cards. (--layout-max is shared at :root.) */
 @media (min-width: 2560px) {
   .body {
-    --layout-max: 2400px;
     --rail-width: 320px;
     --grid-min-tile: 224px;
     --grid-gap: var(--spacing-6);
