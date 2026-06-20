@@ -34,7 +34,7 @@ export function HslBreakdown({ color }: HslBreakdownProps) {
 
   return (
     <div className={styles.hslSection}>
-      <h3 className={styles.sectionTitle}>HSL Color Breakdown</h3>
+      <h2 className={styles.sectionTitle}>HSL color breakdown</h2>
       {channels.map(({ name, value, pct, bg }) => (
         <div key={name} className={styles.hslItem}>
           <div className={styles.hslItemLabel}>

@@ -20,8 +20,8 @@ export function ColorGridSection({
 }: ColorGridSectionProps) {
   if (colors.length === 0) return null;
   return (
-    <div className={styles.section}>
-      <h3 className={styles.sectionTitle}>{title}</h3>
+    <section>
+      <h2 className={styles.sectionTitle}>{title}</h2>
       <p className={styles.sectionDesc}>{description}</p>
       <div className={styles.colorGrid}>
         {colors.map((c, i) => (
@@ -33,6 +33,6 @@ export function ColorGridSection({
           />
         ))}
       </div>
-    </div>
+    </section>
   );
 }
