@@ -90,8 +90,16 @@
   color: #ffffff;
   font-size: var(--font-size-sm);
   cursor: pointer;
-  /* Render the native dropdown in dark mode (legible options, no hacks). */
+  /* Hint dark-mode native UI (scrollbar/checkmark) where supported. */
   color-scheme: dark;
+}
+
+/* The open dropdown renders on the OS surface; `color-scheme` isn't always
+   honored, so set the option colors explicitly (dark bg, light text) instead
+   of inheriting the select's white text onto a light popup. */
+.sortSelect option {
+  background: #1b1c20;
+  color: #ffffff;
 }
 
 .badge {
