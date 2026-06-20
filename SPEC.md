@@ -22,8 +22,9 @@ for SEO/AI discoverability.
 2. **Entity** (`/colors/:slug`) — a canonical, pre-rendered page per color: a
    plain-language summary, JSON-LD, coordinating/similar colors, with HSL/LAB and
    raw specs tucked under a "Technical details" disclosure.
-3. **Workspace** — `/compare` (up to 4 side-by-side) and `/palette` (collect,
-   reorder, export, shareable `?c=` URL).
+3. **Workspace** — `/compare` (up to 4 side-by-side, with a pairwise WCAG
+   contrast matrix) and `/palette` (collect, reorder, export, per-row hue
+   relationships, shareable `?c=` URL).
 
 ## Source layout
 
@@ -44,7 +45,7 @@ src/
 │   ├── Atlas/            # AtlasLayout (rail/drawer shell), AtlasToolbar, FilterPanel,
 │   │                     #   ActiveFilters, ColorGrid, ColorCard (memoized)
 │   ├── ColorDetailView/  # ColorDetail + DetailActions, ColorGridSection, MiniTile, HslBreakdown
-│   ├── Workspace/        # CompareTray
+│   ├── Workspace/        # CompareTray, ContrastMatrix
 │   ├── Toast/, ErrorBoundary/, seo/JsonLd
 ├── domain/               # types.ts (shared facet/sort vocabulary)
 ├── utils/                # base.ts, config.ts, storage.ts, slug.ts, seo.ts, breakpoints.ts,
@@ -76,7 +77,8 @@ hydration mismatch); storage access is guarded.
 `ColorModel` is a thin repository: it builds the indexes (by id/slug, families,
 collections, designer picks) and delegates faceting to the pure `queryColors` /
 `sortColors` in `models/colorQuery.ts` (no `this`, fully unit-tested). Color math
-(`hsl`, `classifyLrv`, `undertone`, `neutrality`) lives in `utils/colorMath.ts`;
+(`hsl`, `classifyLrv`, `undertone`, `neutrality`, `contrastRatio`, `hueRelation`)
+lives in `utils/colorMath.ts`;
 user-facing prose (`summarize`, `describeLrv`, `similarityRole`, `formatUseTypes`)
 in `utils/colorCopy.ts`. Shared facet/sort types live in `domain/types.ts`.
 `summarize` composes a one-sentence, jargon-free description (warmth + lightness +
@@ -214,7 +216,7 @@ section is the source of truth for shape and priority.
 | Rank | Feature                          | Persona      | Value | Effort | Why this order                                    |
 | ---- | -------------------------------- | ------------ | ----- | ------ | ------------------------------------------------- |
 | 1 ✅ | F1 Plain-language summaries      | Shopper      | High  | S      | Cheap; reuses color engine; lifts UX + SEO/AI     |
-| 2    | F2 Contrast & pairing matrix     | Designer     | High  | S–M    | Reuses contrast math; pro decision tool           |
+| 2 ✅ | F2 Contrast & pairing matrix     | Designer     | High  | S–M    | Reuses contrast math; pro decision tool           |
 | 3    | F3 Analytics & share tracking    | Marketer     | High  | S–M    | Enabler — measures every other bet                |
 | 4    | F4 Dynamic OG/social images      | Marketer     | High  | M      | Compounding reach on existing SSG                 |
 | 5    | F5 "Get this color" panel        | Shopper      | High  | M      | The missing _act_ step for the largest persona    |
@@ -235,8 +237,9 @@ Delivered: `summarize()` in `colorCopy.ts` (warmth + lightness + chroma + use su
   - AC: `colorDescription` and JSON-LD `description` use the summary.
   - Tasks: thread `summarize` through `utils/seo.ts`; update `seo` unit test.
 
-**F2 · Contrast & pairing matrix** _(Designer · S–M · rank 2)_
+**F2 · Contrast & pairing matrix** ✅ _shipped_ _(Designer · S–M · rank 2)_
 Benefit: turns Compare/Palette from display into a decision tool (legibility + harmony).
+Delivered: `contrastRatio()` + `hueRelation()` in `colorMath.ts`; `ContrastMatrix` (semantic `<table>`, marks + labels carry meaning, not color alone) on ComparePage; per-row hue relationship on PalettePage; covered by `colorMath`/`atlas` tests and axe-clean in e2e.
 
 - **US2.1** As a designer, I want a pairwise WCAG-contrast matrix for selected colors so I know which pairings are legible.
   - AC: N×N ratios with AA/AAA pass-fail badges; updates live; accessible table.

@@ -5,6 +5,7 @@ import { toSlug } from "../utils/slug.js";
 import { useAppContext } from "../context/AppContext.js";
 import { useCompare } from "../context/CompareContext.js";
 import { useDocumentMeta } from "../hooks/useDocumentMeta.js";
+import { ContrastMatrix } from "../components/Workspace/ContrastMatrix.js";
 import styles from "./ComparePage.module.css";
 
 export function ComparePage() {
@@ -97,6 +98,8 @@ export function ComparePage() {
           </div>
         </div>
       )}
+
+      {colors.length >= 2 && <ContrastMatrix colors={colors} />}
     </div>
   );
 }

@@ -212,6 +212,21 @@ describe("Compare", () => {
     expect(screen.getByRole("link", { name: "Cherry Tomato" })).toBeTruthy();
     expect(screen.getByRole("link", { name: "Naval" })).toBeTruthy();
   });
+
+  it("shows a pairwise contrast matrix for 2+ colors", () => {
+    renderApp();
+    fireEvent.click(
+      screen.getByRole("button", { name: "Add Cherry Tomato to comparison" }),
+    );
+    fireEvent.click(
+      screen.getByRole("button", { name: "Add Naval to comparison" }),
+    );
+    fireEvent.click(screen.getByRole("link", { name: /^Compare/ }));
+    expect(
+      screen.getByRole("heading", { name: "Contrast pairings" }),
+    ).toBeTruthy();
+    expect(screen.getAllByText(/:1$/).length).toBeGreaterThan(0);
+  });
 });
 
 describe("Palette", () => {
@@ -235,6 +250,8 @@ describe("Palette", () => {
     let rows = within(list).getAllByRole("listitem");
     expect(within(rows[0]).getByText("Tricorn Black")).toBeTruthy();
     expect(within(rows[1]).getByText("Repose Gray")).toBeTruthy();
+    // Each non-first row shows its hue relationship to the previous color.
+    expect(within(rows[1]).getByText(/from previous/)).toBeTruthy();
 
     fireEvent.click(
       screen.getByRole("button", { name: "Move Tricorn Black down" }),

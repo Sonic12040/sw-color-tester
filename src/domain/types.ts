@@ -20,6 +20,14 @@ export type LrvClass = "Dark" | "Medium" | "Light";
 /** Neutrality band, derived from chroma (how close to gray). */
 export type NeutralClass = "High" | "Medium" | "Low";
 
+/** Color-wheel relationship between two colors (by hue proximity). */
+export type HueRelation =
+  | "Monochromatic"
+  | "Analogous"
+  | "Complementary"
+  | "Contrasting"
+  | "Neutral";
+
 /** Which painting context a color is rated for. `null` = no filter. */
 export type UseType = "interior" | "exterior" | null;
 

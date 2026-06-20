@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Link, useSearchParams } from "react-router";
-import { hsl, classifyLrv } from "../utils/colorMath.js";
+import { hsl, classifyLrv, hueRelation } from "../utils/colorMath.js";
 import { colorPath, BASENAME } from "../utils/base.js";
 import { toSlug } from "../utils/slug.js";
 import { copyText } from "../utils/clipboard.js";
@@ -135,6 +135,14 @@ export function PalettePage() {
                     SW {c.colorNumber} · {classifyLrv(c.lrv)} · LRV{" "}
                     {c.lrv.toFixed(1)}
                   </span>
+                  {i > 0 && (
+                    <span
+                      className={styles.relation}
+                      title="Hue relationship to the color above"
+                    >
+                      {hueRelation(colors[i - 1], c)} from previous
+                    </span>
+                  )}
                 </span>
                 <span className={styles.rowActions}>
                   <button

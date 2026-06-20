@@ -1,5 +1,10 @@
 import type { Color } from "../data/types.js";
-import type { Undertone, LrvClass, NeutralClass } from "../domain/types.js";
+import type {
+  Undertone,
+  LrvClass,
+  NeutralClass,
+  HueRelation,
+} from "../domain/types.js";
 import { LRV_THRESHOLDS, NEUTRALITY_THRESHOLDS } from "./config.js";
 
 /**
@@ -73,4 +78,44 @@ export function neutralityBand(c: Color): NeutralClass {
   if (n >= NEUTRALITY_THRESHOLDS.HIGH) return "High";
   if (n >= NEUTRALITY_THRESHOLDS.MEDIUM) return "Medium";
   return "Low";
+}
+
+/** WCAG relative luminance (0–1) of an sRGB color. */
+function relativeLuminance(r: number, g: number, b: number): number {
+  const lin = (c: number) => {
+    const s = c / 255;
+    return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+  };
+  return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+}
+
+/**
+ * WCAG 2.x contrast ratio (1–21) between two colors, from their RGB channels.
+ * Symmetric: order of arguments doesn't matter.
+ */
+export function contrastRatio(a: Color, b: Color): number {
+  const la = relativeLuminance(a.red, a.green, a.blue);
+  const lb = relativeLuminance(b.red, b.green, b.blue);
+  const [hi, lo] = la >= lb ? [la, lb] : [lb, la];
+  return (hi + 0.05) / (lo + 0.05);
+}
+
+/**
+ * Color-wheel relationship between two colors by hue distance. Hue is
+ * meaningless for near-neutrals, so any pairing involving one is "Neutral".
+ * (`hue` is stored 0–1.)
+ */
+export function hueRelation(a: Color, b: Color): HueRelation {
+  if (
+    a.saturation <= NEUTRAL_SATURATION ||
+    b.saturation <= NEUTRAL_SATURATION
+  ) {
+    return "Neutral";
+  }
+  let degrees = Math.abs(a.hue - b.hue) * 360;
+  if (degrees > 180) degrees = 360 - degrees; // shortest way around the wheel
+  if (degrees <= 15) return "Monochromatic";
+  if (degrees <= 50) return "Analogous";
+  if (degrees >= 150) return "Complementary";
+  return "Contrasting";
 }

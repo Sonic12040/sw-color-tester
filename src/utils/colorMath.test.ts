@@ -3,6 +3,8 @@ import type { Color } from "../data/types.js";
 import {
   classifyLrv,
   contrastText,
+  contrastRatio,
+  hueRelation,
   undertone,
   UNDERTONES,
   LRV_CLASSES,
@@ -40,6 +42,58 @@ describe("contrastText", () => {
   it("returns white below the contrast threshold and black above", () => {
     expect(contrastText(10)).toBe("white");
     expect(contrastText(80)).toBe("black");
+  });
+});
+
+describe("contrastRatio", () => {
+  const black = make({ red: 0, green: 0, blue: 0 });
+  const white = make({ red: 255, green: 255, blue: 255 });
+
+  it("returns 21:1 for black vs white and 1:1 for identical colors", () => {
+    expect(contrastRatio(black, white)).toBeCloseTo(21, 0);
+    expect(contrastRatio(white, white)).toBeCloseTo(1, 5);
+  });
+
+  it("is symmetric", () => {
+    const mid = make({ red: 119, green: 119, blue: 119 });
+    expect(contrastRatio(mid, white)).toBeCloseTo(
+      contrastRatio(white, mid),
+      10,
+    );
+  });
+});
+
+describe("hueRelation", () => {
+  const sat = { saturation: 0.6 };
+  it("classifies by hue distance on the wheel", () => {
+    expect(
+      hueRelation(make({ hue: 0.0, ...sat }), make({ hue: 0.02, ...sat })),
+    ).toBe("Monochromatic");
+    expect(
+      hueRelation(make({ hue: 0.0, ...sat }), make({ hue: 0.1, ...sat })),
+    ).toBe("Analogous");
+    // 0.5 apart = 180° → opposite side of the wheel.
+    expect(
+      hueRelation(make({ hue: 0.0, ...sat }), make({ hue: 0.5, ...sat })),
+    ).toBe("Complementary");
+    expect(
+      hueRelation(make({ hue: 0.0, ...sat }), make({ hue: 0.25, ...sat })),
+    ).toBe("Contrasting");
+  });
+
+  it("wraps around the wheel (350° ≈ 10° apart → Monochromatic)", () => {
+    expect(
+      hueRelation(make({ hue: 0.97, ...sat }), make({ hue: 0.0, ...sat })),
+    ).toBe("Monochromatic");
+  });
+
+  it("returns Neutral when either color is near-gray", () => {
+    expect(
+      hueRelation(
+        make({ hue: 0.0, saturation: 0.05 }),
+        make({ hue: 0.5, ...sat }),
+      ),
+    ).toBe("Neutral");
   });
 });
 
