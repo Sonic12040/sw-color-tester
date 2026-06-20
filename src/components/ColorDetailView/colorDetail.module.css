@@ -161,6 +161,103 @@
   padding: 0 var(--spacing-4) var(--spacing-4);
 }
 
+/* "Get this color" conversion panel */
+.getColor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  padding: var(--spacing-4);
+  border: 1px solid var(--on-dark-subtle);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.rackCode {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--on-dark-muted);
+}
+
+.rackCode strong {
+  color: #ffffff;
+}
+
+.getColorActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+}
+
+/* Paint calculator */
+.calc {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.calcFieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.calcLegend {
+  padding: 0;
+  margin-bottom: var(--spacing-2);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--on-dark-muted);
+}
+
+.calcGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: var(--spacing-3);
+}
+
+.calcField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.calcLabel {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--on-dark-muted);
+}
+
+.calcInput {
+  min-height: 44px;
+  padding: var(--spacing-2);
+  font-size: var(--font-size-sm);
+  color: #ffffff;
+  background: var(--on-dark-subtle);
+  border: 1px solid var(--on-dark-border);
+  border-radius: var(--radius-sm);
+  color-scheme: dark;
+}
+
+.calcInput:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+.calcResult {
+  margin: 0;
+  font-size: var(--font-size-md);
+  color: #ffffff;
+}
+
+.calcNote {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  color: var(--on-dark-faint);
+  line-height: var(--line-height-normal);
+}
+
 /* Coordinating / similar mini tiles */
 .colorGrid {
   display: grid;

@@ -20,8 +20,9 @@ for SEO/AI discoverability.
    search/sort toolbar and a filter rail (family, undertone, neutrality, lightness,
    use, collection, favorites/hidden view).
 2. **Entity** (`/colors/:slug`) — a canonical, pre-rendered page per color: a
-   plain-language summary, JSON-LD, coordinating/similar colors, with HSL/LAB and
-   raw specs tucked under a "Technical details" disclosure.
+   plain-language summary, a "Get this color" panel (sample/store/buy links +
+   paint calculator), JSON-LD, coordinating/similar colors, with HSL/LAB and raw
+   specs tucked under a "Technical details" disclosure.
 3. **Workspace** — `/compare` (up to 4 side-by-side, with a pairwise WCAG
    contrast matrix) and `/palette` (collect, reorder, export, per-row hue
    relationships, shareable `?c=` URL).
@@ -44,12 +45,13 @@ src/
 │   ├── Header/           # sticky brand + primary nav
 │   ├── Atlas/            # AtlasLayout (rail/drawer shell), AtlasToolbar, FilterPanel,
 │   │                     #   ActiveFilters, ColorGrid, ColorCard (memoized)
-│   ├── ColorDetailView/  # ColorDetail + DetailActions, ColorGridSection, MiniTile, HslBreakdown
+│   ├── ColorDetailView/  # ColorDetail, DetailActions, GetColorPanel, PaintCalculator,
+│   │                     #   ColorGridSection, MiniTile, HslBreakdown
 │   ├── Workspace/        # CompareTray, ContrastMatrix
 │   ├── Toast/, ErrorBoundary/, seo/JsonLd
 ├── domain/               # types.ts (shared facet/sort vocabulary)
 ├── utils/                # base.ts, config.ts, storage.ts, slug.ts, seo.ts, breakpoints.ts,
-│                         #   clipboard.ts, colorMath.ts, colorCopy.ts, ExportService.ts
+│                         #   clipboard.ts, colorMath.ts, colorCopy.ts, paint.ts, swLinks.ts, ExportService.ts
 └── styles/               # tokens.css, breakpoints.css, a11y.css, global.css
 prerender.mjs             # post-build: writes dist/colors/<slug>/index.html + 404.html, sitemap, colors.json
 ```
@@ -219,7 +221,7 @@ section is the source of truth for shape and priority.
 | 2 ✅ | F2 Contrast & pairing matrix     | Designer     | High  | S–M    | Reuses contrast math; pro decision tool           |
 | 3    | F3 Analytics & share tracking    | Marketer     | High  | S–M    | Enabler — measures every other bet                |
 | 4    | F4 Dynamic OG/social images      | Marketer     | High  | M      | Compounding reach on existing SSG                 |
-| 5    | F5 "Get this color" panel        | Shopper      | High  | M      | The missing _act_ step for the largest persona    |
+| 5 ✅ | F5 "Get this color" panel        | Shopper      | High  | M      | The missing _act_ step for the largest persona    |
 | 6    | F6 Color data API / code-split   | All          | Med   | M      | Perf foundation; data source later features reuse |
 | 7    | F7 Projects (palettes + notes)   | Designer     | Med   | M      | Pro depth; stepping stone to accounts             |
 | 8    | F8 Rich palette export (PNG/PDF) | Designer/Mkt | Med   | M      | Client deliverable; builds on F7                  |
@@ -268,8 +270,9 @@ Benefit: every color/palette becomes a branded shareable card → compounding so
   - AC: palette `?c=` share resolves an OG image; brand-default fallback.
   - Tasks: generate palette OG (static common-case or serverless); fallback wiring.
 
-**F5 · "Get this color" conversion panel** _(Shopper · M · rank 5)_
+**F5 · "Get this color" conversion panel** ✅ _shipped_ _(Shopper · M · rank 5)_
 Benefit: the missing _act_ step; ties browsing to a real outcome and right-quantity confidence.
+Delivered: `GetColorPanel` on the detail page (order-a-sample / find-a-store / view-at-SW links via centralized best-effort `swLinks.ts`, surfaces the in-store rack locator) + a `PaintCalculator` (pure `paint.ts` `paintEstimate`, accessible fieldset, live result) in a disclosure; covered by `paint`/`swLinks`/`atlas` tests and axe-clean in e2e. Outbound-click tracking deferred with the rest of F3 (hook point noted in code).
 
 - **US5.1** As a shopper, I want a "Get this color" panel (order sample / find store / buy) so I can act.
   - AC: panel on detail page; surfaces `storeStripLocator`; outbound clicks tracked (F3).

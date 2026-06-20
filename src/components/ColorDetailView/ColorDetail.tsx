@@ -18,6 +18,7 @@ import { useCompare } from "../../context/CompareContext.js";
 import { usePalette } from "../../context/PaletteContext.js";
 import { ColorGridSection } from "./ColorGridSection.js";
 import { HslBreakdown } from "./HslBreakdown.js";
+import { GetColorPanel } from "./GetColorPanel.js";
 import { DetailActions } from "./DetailActions.js";
 import styles from "./colorDetail.module.css";
 
@@ -106,6 +107,8 @@ export function ColorDetail({ color }: ColorDetailProps) {
 
         <div className={styles.body}>
           <p className={styles.summary}>{summarize(color)}</p>
+
+          <GetColorPanel color={color} />
 
           {color.description.length > 0 && (
             <section>

@@ -156,6 +156,21 @@ describe("Color detail", () => {
     expect(screen.getByText("Technical details")).toBeTruthy();
   });
 
+  it("offers a 'Get this color' panel with store code, links, and a calculator", () => {
+    renderApp("/colors/sw-6258-tricorn-black");
+    expect(
+      screen.getByRole("heading", { name: "Get this color" }),
+    ).toBeTruthy();
+    expect(screen.getByText("194-C1")).toBeTruthy(); // in-store rack code
+    expect(
+      screen.getByRole("link", { name: /Find a Sherwin-Williams store/ }),
+    ).toBeTruthy();
+    expect(screen.getByText("Paint calculator")).toBeTruthy();
+    // Calculator computes a default estimate.
+    expect(screen.getByText(/buy/)).toBeTruthy();
+    expect(screen.getByLabelText("Length")).toBeTruthy();
+  });
+
   it("shows a not-found page for an unknown slug", () => {
     renderApp("/colors/sw-9999-nope");
     expect(screen.getByRole("heading", { name: /not found/i })).toBeTruthy();
