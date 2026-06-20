@@ -5,6 +5,7 @@ import { AppProviders } from "../context/AppProviders.js";
 import { colorModel } from "../appModel.js";
 import { Header } from "./Header/Header.js";
 import { CompareTray } from "./Workspace/CompareTray.js";
+import { RouteAnnouncer } from "./RouteAnnouncer.js";
 
 // Stable AppContext value — colorModel is a singleton, so this never changes.
 const ctxValue: AppContextValue = { colorModel };
@@ -43,6 +44,7 @@ export function RootLayout() {
           <Outlet />
         </main>
         <CompareTray />
+        <RouteAnnouncer />
       </AppContext.Provider>
     </AppProviders>
   );
