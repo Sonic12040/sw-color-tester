@@ -255,7 +255,7 @@
     /* ============================================
      UNDERTONE / TEMPERATURE ACCENTS
      Chip + badge accents for the undertone facet
-     (derived from hue in colorPresentation.ts).
+     (derived from hue in colorMath.ts).
      ============================================ */
     --undertone-warm: #d97706; /* amber */
     --undertone-cool: var(--blue-600); /* blue */
@@ -283,6 +283,26 @@
       0.1
     ); /* hairlines / dividers / hover */
     --on-dark-active: rgba(255, 255, 255, 0.16); /* pressed / active cell */
+    --on-dark-strong: rgba(
+      255,
+      255,
+      255,
+      0.82
+    ); /* high-emphasis labels / legends / empty-state text */
+    --on-dark-hint: rgba(255, 255, 255, 0.66); /* hint text on dark */
+    --on-dark-fill: rgba(255, 255, 255, 0.18); /* subtle filled chip on dark */
+    --on-dark-border: rgba(
+      255,
+      255,
+      255,
+      0.25
+    ); /* outline-button border on dark */
+    --on-dark-border-strong: rgba(
+      255,
+      255,
+      255,
+      0.4
+    ); /* interactive control edges (≥3:1) on dark */
   }
 
   * {

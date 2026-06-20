@@ -6,7 +6,7 @@ export const LRV_THRESHOLDS = {
   CONTRAST: 40,
 };
 
-// Neutrality score (0–100, see colorPresentation.neutrality) band thresholds.
+// Neutrality score (0–100, see colorMath.neutrality) band thresholds.
 // Tuned to the dataset's terciles so each band is well populated:
 // High ≥ 85 (near-gray), Medium 69–84 (muted), Low < 69 (colorful).
 export const NEUTRALITY_THRESHOLDS = {

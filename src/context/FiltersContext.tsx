@@ -7,19 +7,16 @@ import {
 } from "react";
 import { usePersistentState } from "../hooks/usePersistentState.js";
 import { STORAGE_KEYS } from "../utils/storage.js";
-import {
-  LRV_CLASSES,
-  type Undertone,
-  type LrvClass,
-  type NeutralClass,
-} from "../utils/colorPresentation.js";
+import { LRV_CLASSES } from "../utils/colorMath.js";
 import type {
   AtlasView,
   FilterCriteria,
+  LrvClass,
+  NeutralClass,
   SortKey,
-} from "../models/ColorModel.js";
-
-export type UseType = "interior" | "exterior" | null;
+  Undertone,
+  UseType,
+} from "../domain/types.js";
 
 export interface FiltersContextValue {
   // Facet state

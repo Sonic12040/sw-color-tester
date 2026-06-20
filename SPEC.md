@@ -45,8 +45,9 @@ src/
 │   ├── ColorDetailView/  # ColorDetail + DetailActions, ColorGridSection, MiniTile, HslBreakdown
 │   ├── Workspace/        # CompareTray
 │   ├── Toast/, ErrorBoundary/, seo/JsonLd
-├── utils/                # base.ts, config.ts, storage.ts, slug.ts, seo.ts,
-│                         #   clipboard.ts, colorPresentation.ts, ExportService.ts
+├── domain/               # types.ts (shared facet/sort vocabulary)
+├── utils/                # base.ts, config.ts, storage.ts, slug.ts, seo.ts, breakpoints.ts,
+│                         #   clipboard.ts, colorMath.ts, colorCopy.ts, ExportService.ts
 └── styles/               # tokens.css, breakpoints.css, a11y.css, global.css
 prerender.mjs             # post-build: writes dist/colors/<slug>/index.html + 404.html, sitemap, colors.json
 ```
@@ -71,10 +72,12 @@ so a change to one slice doesn't re-render consumers of another — validated by
 effect) so server-prerendered markup and the first client render agree (no
 hydration mismatch); storage access is guarded.
 
-`ColorModel` holds no UI state. `getFilteredColors(criteria, favorites, hidden)`
-and `sortColors` take state as arguments and return fresh arrays. Color math +
-classification (`hsl`, `classifyLrv`, `undertone`, `neutrality`, `describeLrv`)
-live in `utils/colorPresentation.ts`.
+`ColorModel` is a thin repository: it builds the indexes (by id/slug, families,
+collections, designer picks) and delegates faceting to the pure `queryColors` /
+`sortColors` in `models/colorQuery.ts` (no `this`, fully unit-tested). Color math
+(`hsl`, `classifyLrv`, `undertone`, `neutrality`) lives in `utils/colorMath.ts`;
+user-facing prose (`describeLrv`, `similarityRole`, `formatUseTypes`) in
+`utils/colorCopy.ts`. Shared facet/sort types live in `domain/types.ts`.
 
 **Neutrality** = inverse of perceptual chroma: `0.6·(C*ab/60) + 0.25·rgbSpread +
 0.15·saturation`, banded High/Medium/Low at dataset terciles (`config.ts`).
@@ -103,8 +106,8 @@ undertone / neutrality / lightness).
 
 ## Testing
 
-- **Unit**: `colorPresentation`, `ColorModel`, `slug`, `seo`, `contrast`, the
-  hooks, and each context.
+- **Unit**: `colorMath`, `colorCopy`, `colorQuery`, `ColorModel`, `slug`, `seo`,
+  `contrast`, `ExportService`, `Toast`, the hooks, and each context.
 - **Integration**: `atlas.test.tsx` drives the routed app (facets, sort, views,
   compare, palette, detail, clipboard) via the DOM; `ColorCard.test.tsx`.
 - **E2E**: `scripts/validate-devices.mjs` — 6 device profiles, axe scan, skip link,
@@ -112,14 +115,11 @@ undertone / neutrality / lightness).
 
 ## CI/CD (`.github/workflows/deploy.yml`)
 
-`verify` (lint → format:check → typecheck → test) gates `build` → `deploy` to
-GitHub Pages. **The Playwright/axe e2e is not yet wired into CI** (see follow-ups).
+`verify` (lint → format:check → typecheck → test) and `e2e` (Playwright/axe via
+`npm run test:e2e:ci`) both gate `build` → `deploy` to GitHub Pages.
 
 ## Known follow-ups
 
-- Wire `scripts/validate-devices.mjs` into CI as a gating `test:e2e`.
-- Extract `getFilteredColors`/`sortColors` into pure functions; centralize domain
-  types; split color _math_ from UI _copy_ in `colorPresentation.ts`.
-- Unify the button styles; tokenize the remaining one-off on-dark alphas.
 - `palette.ts` (~1.6 MB) is statically bundled — code-split or fetch as JSON.
 - SPA route changes aren't announced to screen readers; soft 404s return HTTP 200.
+- `Color` carries redundant RGB+HSL+hex+LAB encodings — add a data-integrity test.

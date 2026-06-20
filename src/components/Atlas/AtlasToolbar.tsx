@@ -1,8 +1,12 @@
-import { useFilters } from "../../context/FiltersContext.js";
-import type { SortKey } from "../../models/ColorModel.js";
+import type { SortKey } from "../../domain/types.js";
 import styles from "./AtlasToolbar.module.css";
 
 interface AtlasToolbarProps {
+  search: string;
+  onSearchChange: (s: string) => void;
+  sort: SortKey;
+  onSortChange: (s: SortKey) => void;
+  activeFacetCount: number;
   filteredCount: number;
   totalCount: number;
   onOpenFilters: () => void;
@@ -19,12 +23,15 @@ const SORTS: { key: SortKey; label: string }[] = [
 ];
 
 export function AtlasToolbar({
+  search,
+  onSearchChange,
+  sort,
+  onSortChange,
+  activeFacetCount,
   filteredCount,
   totalCount,
   onOpenFilters,
 }: AtlasToolbarProps) {
-  const { search, setSearch, sort, setSort, activeFacetCount } = useFilters();
-
   return (
     <div className={styles.toolbar}>
       <div className={styles.inner}>
@@ -77,7 +84,7 @@ export function AtlasToolbar({
             placeholder="Search name or SW number…"
             aria-label="Search colors"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => onSearchChange(e.target.value)}
           />
         </div>
 
@@ -90,7 +97,7 @@ export function AtlasToolbar({
           <select
             className={styles.sortSelect}
             value={sort}
-            onChange={(e) => setSort(e.target.value as SortKey)}
+            onChange={(e) => onSortChange(e.target.value as SortKey)}
             aria-label="Sort colors"
           >
             {SORTS.map((s) => (

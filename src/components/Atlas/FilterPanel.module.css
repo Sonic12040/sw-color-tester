@@ -46,7 +46,7 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   /* Light section headers — high contrast on the dark rail (≈9:1). */
-  color: rgba(255, 255, 255, 0.82);
+  color: var(--on-dark-strong);
   padding: 0;
   margin-bottom: var(--spacing-1);
 }
@@ -118,7 +118,7 @@
   margin-left: auto;
   font-size: var(--font-size-xs);
   /* Light enough for ≥7:1 on the dark rail. */
-  color: rgba(255, 255, 255, 0.66);
+  color: var(--on-dark-hint);
   font-variant-numeric: tabular-nums;
 }
 

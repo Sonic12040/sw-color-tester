@@ -1,47 +1,16 @@
 import type { Color } from "../data/types.js";
-import { FAMILY_ORDER, DESIGNER_COLLECTION_PREFIX } from "../utils/config.js";
-import {
-  undertone,
-  classifyLrv,
-  neutrality,
-  neutralityBand,
-  type Undertone,
-  type LrvClass,
-  type NeutralClass,
-} from "../utils/colorPresentation.js";
+import type { FilterCriteria, SortKey } from "../domain/types.js";
+import { DESIGNER_COLLECTION_PREFIX } from "../utils/config.js";
 import { toSlug } from "../utils/slug.js";
+import { orderFamilies, queryColors, sortColors } from "./colorQuery.js";
 
-export type SortKey =
-  | "family"
-  | "hue"
-  | "lrv-asc"
-  | "lrv-desc"
-  | "name"
-  | "neutral-high"
-  | "neutral-low";
-
-export type AtlasView = "all" | "favorites" | "hidden";
-
-export interface FilterCriteria {
-  /** Free text matched against name, SW number, and description. */
-  search?: string;
-  /** Primary-family match (OR across the list). */
-  families?: string[];
-  /** Undertone match (OR across the list). */
-  undertones?: Undertone[];
-  /** Lightness band match (Dark / Medium / Light, OR across the list). */
-  lightness?: LrvClass[];
-  /** Neutrality band match (High / Medium / Low, OR across the list). */
-  neutrality?: NeutralClass[];
-  useType?: "interior" | "exterior" | null;
-  /** Branded-collection membership (OR, substring match). */
-  collections?: string[];
-  designerOnly?: boolean;
-  /** Which base set to draw from. Defaults to "all" (active minus hidden). */
-  view?: AtlasView;
-  sort?: SortKey;
-}
-
+/**
+ * Repository over the color dataset: filters the raw data down to active
+ * colors, builds the lookup indexes (by id, by slug, families, collections,
+ * designer picks), and exposes them. The actual faceted querying/sorting is
+ * pure and lives in `colorQuery.ts`; this class just owns the indexes and
+ * delegates.
+ */
 export class ColorModel {
   #activeColors: Color[];
   #colorById: Map<string, Color>;
@@ -97,7 +66,7 @@ export class ColorModel {
 
   /** Families in display order (for the family facet list). */
   getOrderedFamilies(): string[] {
-    return this.#sortFamiliesByPriority(this.#familyNames);
+    return orderFamilies(this.#familyNames);
   }
 
   getColorBySlug(slug: string): Color | undefined {
@@ -121,118 +90,24 @@ export class ColorModel {
     return this.#activeColors;
   }
 
-  #sortFamiliesByPriority(familyKeys: string[]): string[] {
-    return [...familyKeys].sort((a, b) => {
-      const aIndex = FAMILY_ORDER.indexOf(a);
-      const bIndex = FAMILY_ORDER.indexOf(b);
-      if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
-      if (aIndex !== -1) return -1;
-      if (bIndex !== -1) return 1;
-      return a.localeCompare(b);
-    });
-  }
-
   /**
-   * The faceted-browse query powering the Color Atlas: picks a base set from
-   * `view`, applies every active facet, then sorts. Returns a fresh array.
+   * The faceted-browse query powering the Color Atlas. Delegates to the pure
+   * `queryColors`, supplying the designer-pick index it can't derive on its own.
    */
   getFilteredColors(
     criteria: FilterCriteria,
     favorites: Set<string> = new Set(),
     hidden: Set<string> = new Set(),
   ): Color[] {
-    const {
-      search,
-      families,
-      undertones,
-      lightness,
-      neutrality: neutralBands,
-      useType,
-      collections,
-      designerOnly,
-      view = "all",
-      sort = "family",
-    } = criteria;
-
-    let base: Color[];
-    if (view === "favorites") {
-      base = this.#activeColors.filter((c) => favorites.has(c.id));
-    } else if (view === "hidden") {
-      base = this.#activeColors.filter((c) => hidden.has(c.id));
-    } else {
-      base = this.#activeColors.filter((c) => !hidden.has(c.id));
-    }
-
-    const q = search?.trim().toLowerCase();
-    const familySet =
-      families && families.length > 0 ? new Set(families) : null;
-    const undertoneSet =
-      undertones && undertones.length > 0 ? new Set(undertones) : null;
-    const collectionList =
-      collections && collections.length > 0 ? collections : null;
-    const lightnessSet =
-      lightness && lightness.length > 0 ? new Set(lightness) : null;
-    const neutralSet =
-      neutralBands && neutralBands.length > 0 ? new Set(neutralBands) : null;
-
-    const filtered = base.filter((c) => {
-      if (q) {
-        const haystack =
-          `${c.name} ${c.colorNumber} ${c.description.join(" ")}`.toLowerCase();
-        if (!haystack.includes(q)) return false;
-      }
-      if (familySet && !familySet.has(c.colorFamilyNames[0])) return false;
-      if (undertoneSet && !undertoneSet.has(undertone(c))) return false;
-      if (lightnessSet && !lightnessSet.has(classifyLrv(c.lrv ?? 0))) {
-        return false;
-      }
-      if (neutralSet && !neutralSet.has(neutralityBand(c))) return false;
-      if (useType === "interior" && !c.isInterior) return false;
-      if (useType === "exterior" && !c.isExterior) return false;
-      if (designerOnly && !this.#designerPickIds.has(c.id)) return false;
-      if (
-        collectionList &&
-        !collectionList.some((name) => c.brandedCollectionNames.includes(name))
-      ) {
-        return false;
-      }
-      return true;
+    return queryColors(this.#activeColors, criteria, {
+      favorites,
+      hidden,
+      designerPickIds: this.#designerPickIds,
     });
-
-    return this.sortColors(filtered, sort);
   }
 
   /** Sort a copy of `colors` by the given key. */
   sortColors(colors: Color[], key: SortKey): Color[] {
-    const sorted = [...colors];
-    switch (key) {
-      case "hue":
-        return sorted.sort((a, b) => a.hue - b.hue || b.lrv - a.lrv);
-      case "lrv-asc":
-        return sorted.sort((a, b) => a.lrv - b.lrv);
-      case "lrv-desc":
-        return sorted.sort((a, b) => b.lrv - a.lrv);
-      case "name":
-        return sorted.sort((a, b) => a.name.localeCompare(b.name));
-      case "neutral-high":
-        return sorted.sort(
-          (a, b) =>
-            neutrality(b) - neutrality(a) || a.name.localeCompare(b.name),
-        );
-      case "neutral-low":
-        return sorted.sort(
-          (a, b) =>
-            neutrality(a) - neutrality(b) || a.name.localeCompare(b.name),
-        );
-      case "family":
-      default:
-        return sorted.sort((a, b) => {
-          const fa = FAMILY_ORDER.indexOf(a.colorFamilyNames[0]);
-          const fb = FAMILY_ORDER.indexOf(b.colorFamilyNames[0]);
-          const ra = fa === -1 ? FAMILY_ORDER.length : fa;
-          const rb = fb === -1 ? FAMILY_ORDER.length : fb;
-          return ra - rb || a.name.localeCompare(b.name);
-        });
-    }
+    return sortColors(colors, key);
   }
 }

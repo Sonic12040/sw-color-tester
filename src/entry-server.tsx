@@ -11,7 +11,7 @@ import { colorDescription } from "./utils/seo.js";
 
 // Re-export so the Node prerender script gets the base path from one source.
 export { BASE_URL, BASENAME } from "./utils/base.js";
-import { undertone } from "./utils/colorPresentation.js";
+import { undertone } from "./utils/colorMath.js";
 import { toSlug } from "./utils/slug.js";
 
 const handler = createStaticHandler(routes, { basename: BASENAME });

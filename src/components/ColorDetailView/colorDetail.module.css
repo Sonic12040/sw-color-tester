@@ -273,40 +273,7 @@
   border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.actionBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--spacing-2);
-  min-height: 44px;
-  padding: var(--spacing-2) var(--spacing-4);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: var(--button-border-radius);
-  background: transparent;
-  color: #ffffff;
-  cursor: pointer;
-  transition: var(--button-transition);
-}
-
-.actionBtn:hover:not(:disabled) {
-  background: var(--on-dark-subtle);
-}
-
-.actionBtn:focus-visible {
-  outline: 2px solid var(--color-border-focus);
-  outline-offset: 2px;
-}
-
-.actionBtn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.actionBtnActive {
-  background: var(--on-dark-active);
-  border-color: rgba(255, 255, 255, 0.4);
-}
+/* Buttons use the shared .btn .btn-on-dark utilities (see global.css). */
 
 @media (max-width: 399px) {
   .title {

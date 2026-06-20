@@ -41,7 +41,7 @@
   width: 20px;
   height: 20px;
   border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.18);
+  background: var(--on-dark-fill);
   font-size: var(--font-size-xs);
   line-height: 1;
 }

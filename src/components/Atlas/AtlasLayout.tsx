@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { Color } from "../../data/types.js";
 import { useFilters } from "../../context/FiltersContext.js";
 import { useFocusTrap } from "../../hooks/useFocusTrap.js";
+import { RAIL_BREAKPOINT } from "../../utils/breakpoints.js";
 import { AtlasToolbar } from "./AtlasToolbar.js";
 import { FilterPanel } from "./FilterPanel.js";
 import { ActiveFilters } from "./ActiveFilters.js";
@@ -13,9 +14,6 @@ interface AtlasLayoutProps {
   totalCount: number;
 }
 
-/** Width (px) at which the facet rail becomes persistent — keep in sync with --bp-lg. */
-const RAIL_BREAKPOINT = 1024;
-
 /**
  * Responsive faceted-gallery shell. The facet panel is a persistent left rail
  * at ≥1024px and an off-canvas drawer below that. The single source of truth
@@ -23,7 +21,8 @@ const RAIL_BREAKPOINT = 1024;
  * drawer's open state only matters below it.
  */
 export function AtlasLayout({ colors, totalCount }: AtlasLayoutProps) {
-  const { resetAll } = useFilters();
+  const { search, setSearch, sort, setSort, activeFacetCount, resetAll } =
+    useFilters();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const railRef = useRef<HTMLDivElement | null>(null);
 
@@ -51,6 +50,11 @@ export function AtlasLayout({ colors, totalCount }: AtlasLayoutProps) {
   return (
     <div className={styles.shell}>
       <AtlasToolbar
+        search={search}
+        onSearchChange={setSearch}
+        sort={sort}
+        onSortChange={setSort}
+        activeFacetCount={activeFacetCount}
         filteredCount={colors.length}
         totalCount={totalCount}
         onOpenFilters={() => setDrawerOpen(true)}

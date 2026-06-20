@@ -4,11 +4,9 @@ import {
   UNDERTONES,
   LRV_CLASSES,
   NEUTRAL_CLASSES,
-  type LrvClass,
-  type NeutralClass,
-} from "../../utils/colorPresentation.js";
+} from "../../utils/colorMath.js";
 import { LRV_THRESHOLDS } from "../../utils/config.js";
-import type { AtlasView } from "../../models/ColorModel.js";
+import type { AtlasView, LrvClass, NeutralClass } from "../../domain/types.js";
 import styles from "./FilterPanel.module.css";
 
 interface FilterPanelProps {

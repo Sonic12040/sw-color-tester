@@ -30,7 +30,8 @@
   .btn,
   .btn-primary,
   .btn-secondary,
-  .btn-ghost {
+  .btn-ghost,
+  .btn-on-dark {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -75,10 +76,29 @@
     background: var(--button-ghost-hover-bg);
   }
 
+  /* Outline button for dark surfaces (detail page, dark chrome). Translucent
+     white border + fill on hover; the active/pressed look is added by callers
+     via [aria-pressed] or an `is-active` class. */
+  .btn-on-dark {
+    background: transparent;
+    color: var(--on-dark);
+    border-color: var(--on-dark-border);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+  }
+  .btn-on-dark:hover:not(:disabled) {
+    background: var(--on-dark-subtle);
+  }
+  .btn-on-dark.is-active {
+    background: var(--on-dark-active);
+    border-color: var(--on-dark-border-strong);
+  }
+
   .btn:disabled,
   .btn-primary:disabled,
   .btn-secondary:disabled,
-  .btn-ghost:disabled {
+  .btn-ghost:disabled,
+  .btn-on-dark:disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }

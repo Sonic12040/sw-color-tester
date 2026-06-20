@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { Link } from "react-router";
 import type { Color } from "../../data/types.js";
-import { hsl, classifyLrv, undertone } from "../../utils/colorPresentation.js";
+import { hsl, classifyLrv, undertone } from "../../utils/colorMath.js";
 import { colorPath } from "../../utils/base.js";
 import { toSlug } from "../../utils/slug.js";
 import styles from "./ColorCard.module.css";

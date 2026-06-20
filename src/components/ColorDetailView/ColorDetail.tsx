@@ -1,15 +1,13 @@
 import { useNavigate, Link } from "react-router";
 import type { Color } from "../../data/types.js";
+import { hsl, classifyLrv, undertone } from "../../utils/colorMath.js";
 import {
-  hsl,
   describeLrv,
-  classifyLrv,
   designerCollections,
   formatUseTypes,
   similarityRole,
-  undertone,
   COORDINATING_ROLES,
-} from "../../utils/colorPresentation.js";
+} from "../../utils/colorCopy.js";
 import { colorPath } from "../../utils/base.js";
 import { toSlug } from "../../utils/slug.js";
 import { useAppContext } from "../../context/AppContext.js";
@@ -180,7 +178,7 @@ export function ColorDetail({ color }: ColorDetailProps) {
             <>
               <button
                 type="button"
-                className={`${styles.actionBtn} ${comparing ? styles.actionBtnActive : ""}`}
+                className={`btn btn-on-dark ${comparing ? "is-active" : ""}`}
                 disabled={isFull && !comparing}
                 onClick={() => toggleCompare(color.id)}
               >
@@ -188,7 +186,7 @@ export function ColorDetail({ color }: ColorDetailProps) {
               </button>
               <button
                 type="button"
-                className={`${styles.actionBtn} ${inPal ? styles.actionBtnActive : ""}`}
+                className={`btn btn-on-dark ${inPal ? "is-active" : ""}`}
                 onClick={() => togglePalette(color.id)}
               >
                 {inPal ? "In palette" : "Add to palette"}

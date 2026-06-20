@@ -45,7 +45,7 @@ export function DetailActions({
     <div className={styles.actions}>
       <button
         type="button"
-        className={`${styles.actionBtn} ${isFavorite ? styles.actionBtnActive : ""}`}
+        className={`btn btn-on-dark ${isFavorite ? "is-active" : ""}`}
         onClick={() => onToggleFavorite(color.id)}
       >
         <svg
@@ -63,7 +63,7 @@ export function DetailActions({
         </svg>
         <span>{isFavorite ? "Favorited" : "Add to Favorites"}</span>
       </button>
-      <button type="button" className={styles.actionBtn} onClick={copyHex}>
+      <button type="button" className="btn btn-on-dark" onClick={copyHex}>
         <svg
           width="20"
           height="20"
@@ -82,7 +82,7 @@ export function DetailActions({
       </button>
       <button
         type="button"
-        className={`${styles.actionBtn} ${isHidden ? styles.actionBtnActive : ""}`}
+        className={`btn btn-on-dark ${isHidden ? "is-active" : ""}`}
         onClick={() => onToggleHidden(color.id)}
       >
         <svg
@@ -114,7 +114,7 @@ export function DetailActions({
       {color.storeStripLocator && (
         <button
           type="button"
-          className={styles.actionBtn}
+          className="btn btn-on-dark"
           onClick={copyStore}
           aria-label={`Copy store location ${color.storeStripLocator}`}
         >

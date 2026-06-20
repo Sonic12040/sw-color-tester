@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router";
-import { hsl } from "../../utils/colorPresentation.js";
+import { hsl } from "../../utils/colorMath.js";
 import { useAppContext } from "../../context/AppContext.js";
 import { useCompare } from "../../context/CompareContext.js";
 import styles from "./CompareTray.module.css";

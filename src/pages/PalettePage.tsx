@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Link, useSearchParams } from "react-router";
-import { hsl, classifyLrv } from "../utils/colorPresentation.js";
+import { hsl, classifyLrv } from "../utils/colorMath.js";
 import { colorPath, BASENAME } from "../utils/base.js";
 import { toSlug } from "../utils/slug.js";
 import { copyText } from "../utils/clipboard.js";

@@ -1,5 +1,6 @@
 import type { Color } from "../data/types.js";
-import { describeLrv, formatUseTypes, undertone } from "./colorPresentation.js";
+import { undertone } from "./colorMath.js";
+import { describeLrv, formatUseTypes } from "./colorCopy.js";
 import { colorCanonicalUrl, SITE_URL } from "./base.js";
 import { toSlug } from "./slug.js";
 

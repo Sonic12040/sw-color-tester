@@ -1,5 +1,5 @@
 import type { Color } from "../../data/types.js";
-import { hsl } from "../../utils/colorPresentation.js";
+import { hsl } from "../../utils/colorMath.js";
 import styles from "./colorDetail.module.css";
 
 interface MiniTileProps {

@@ -11,7 +11,7 @@
 /* Dark surface so the message keeps full contrast on the neutral-gray gutter. */
 .empty {
   text-align: center;
-  color: rgba(255, 255, 255, 0.82);
+  color: var(--on-dark-strong);
   font-size: var(--font-size-base);
   line-height: var(--line-height-relaxed);
   padding: var(--spacing-10) var(--spacing-6);
