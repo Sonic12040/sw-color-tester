@@ -1,18 +1,22 @@
 import type { Color } from "../data/types.js";
 import { undertone } from "./colorMath.js";
-import { describeLrv, formatUseTypes } from "./colorCopy.js";
+import { describeLrv, formatUseTypes, summarize } from "./colorCopy.js";
 import { colorCanonicalUrl, SITE_URL } from "./base.js";
 import { toSlug } from "./slug.js";
 
-/** A plain-language description of a color (meta description + AI summary). */
+/**
+ * A plain-language description of a color (meta description + AI summary). Leads
+ * with the human-readable `summarize` sentence — so shared/indexed snippets read
+ * naturally — then appends the keyword-rich specifics crawlers expect.
+ */
 export function colorDescription(color: Color): string {
   const desc =
     color.description.length > 0 ? `${color.description.join(", ")}. ` : "";
   const use = formatUseTypes(color);
   return (
-    `${color.name} (SW ${color.colorNumber}) is a ${undertone(color).toLowerCase()}-undertoned ` +
-    `Sherwin-Williams paint color. ${desc}` +
-    `LRV ${color.lrv.toFixed(1)} (${describeLrv(color.lrv).label.toLowerCase()}), hex ${color.hex.toUpperCase()}` +
+    `${summarize(color)} ${desc}` +
+    `Sherwin-Williams SW ${color.colorNumber}, LRV ${color.lrv.toFixed(1)} ` +
+    `(${describeLrv(color.lrv).label.toLowerCase()}), hex ${color.hex.toUpperCase()}` +
     (use ? `, suitable for ${use.toLowerCase()} use` : "") +
     "."
   );

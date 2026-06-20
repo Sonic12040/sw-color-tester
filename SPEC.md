@@ -19,8 +19,9 @@ for SEO/AI discoverability.
 1. **Browse** (`/`) — a faceted gallery: one virtualized grid of all colors with a
    search/sort toolbar and a filter rail (family, undertone, neutrality, lightness,
    use, collection, favorites/hidden view).
-2. **Entity** (`/colors/:slug`) — a canonical, pre-rendered page per color with
-   JSON-LD, coordinating/similar colors, and HSL/LAB detail.
+2. **Entity** (`/colors/:slug`) — a canonical, pre-rendered page per color: a
+   plain-language summary, JSON-LD, coordinating/similar colors, with HSL/LAB and
+   raw specs tucked under a "Technical details" disclosure.
 3. **Workspace** — `/compare` (up to 4 side-by-side) and `/palette` (collect,
    reorder, export, shareable `?c=` URL).
 
@@ -76,8 +77,10 @@ hydration mismatch); storage access is guarded.
 collections, designer picks) and delegates faceting to the pure `queryColors` /
 `sortColors` in `models/colorQuery.ts` (no `this`, fully unit-tested). Color math
 (`hsl`, `classifyLrv`, `undertone`, `neutrality`) lives in `utils/colorMath.ts`;
-user-facing prose (`describeLrv`, `similarityRole`, `formatUseTypes`) in
-`utils/colorCopy.ts`. Shared facet/sort types live in `domain/types.ts`.
+user-facing prose (`summarize`, `describeLrv`, `similarityRole`, `formatUseTypes`)
+in `utils/colorCopy.ts`. Shared facet/sort types live in `domain/types.ts`.
+`summarize` composes a one-sentence, jargon-free description (warmth + lightness +
+chroma + use suggestion) used on the detail page and in the SEO meta/JSON-LD.
 
 **Neutrality** = inverse of perceptual chroma: `0.6·(C*ab/60) + 0.25·rgbSpread +
 0.15·saturation`, banded High/Medium/Low at dataset terciles (`config.ts`).
@@ -210,7 +213,7 @@ section is the source of truth for shape and priority.
 
 | Rank | Feature                          | Persona      | Value | Effort | Why this order                                    |
 | ---- | -------------------------------- | ------------ | ----- | ------ | ------------------------------------------------- |
-| 1    | F1 Plain-language summaries      | Shopper      | High  | S      | Cheap; reuses color engine; lifts UX + SEO/AI     |
+| 1 ✅ | F1 Plain-language summaries      | Shopper      | High  | S      | Cheap; reuses color engine; lifts UX + SEO/AI     |
 | 2    | F2 Contrast & pairing matrix     | Designer     | High  | S–M    | Reuses contrast math; pro decision tool           |
 | 3    | F3 Analytics & share tracking    | Marketer     | High  | S–M    | Enabler — measures every other bet                |
 | 4    | F4 Dynamic OG/social images      | Marketer     | High  | M      | Compounding reach on existing SSG                 |
@@ -221,8 +224,9 @@ section is the source of truth for shape and priority.
 
 ### Features → stories → tasks (Now)
 
-**F1 · Plain-language color summary** _(Shopper · S · rank 1)_
+**F1 · Plain-language color summary** ✅ _shipped_ _(Shopper · S · rank 1)_
 Benefit: removes the LRV/undertone jargon barrier for the largest audience; richer page copy compounds SEO/AI.
+Delivered: `summarize()` in `colorCopy.ts` (warmth + lightness + chroma + use suggestion); rendered as the lead paragraph in `ColorDetail` with HSL/LAB + raw specs moved under a "Technical details" `<details>` disclosure; threaded into `colorDescription` (meta + JSON-LD); covered by `colorCopy`/`seo`/`atlas` tests and the e2e SSG check.
 
 - **US1.1** As a shopper, I want a plain-English summary on each color page so I grasp its character without knowing the jargon.
   - AC: names warmth + lightness + a use suggestion in plain words; on every prerendered page; no layout shift.

@@ -258,15 +258,23 @@ async function run() {
     const hasH1 = /<h1[\s>]/.test(html);
     const hasLd = /application\/ld\+json/.test(html);
     const hasTitleInHead = /<head>[\s\S]*?<title>[\s\S]*?<\/head>/.test(html);
-    if (hasH1 && hasLd && hasTitleInHead)
+    // Plain-language summary (F1) rendered server-side, in body + meta description.
+    const hasSummary = /is a (deep|mid-tone|light) (warm|cool|neutral) /.test(
+      html,
+    );
+    const hasSummaryMeta =
+      /<meta name="description" content="[^"]*is a (deep|mid-tone|light)/.test(
+        html,
+      );
+    if (hasH1 && hasLd && hasTitleInHead && hasSummary && hasSummaryMeta)
       pass(
         "SEO/static",
-        `prerendered ${sample} has h1 + JSON-LD + head <title>`,
+        `prerendered ${sample} has h1 + JSON-LD + head <title> + plain-language summary`,
       );
     else
       fail(
         "SEO/static",
-        `prerendered markup incomplete (h1:${hasH1} ld:${hasLd} title:${hasTitleInHead})`,
+        `prerendered markup incomplete (h1:${hasH1} ld:${hasLd} title:${hasTitleInHead} summary:${hasSummary} summaryMeta:${hasSummaryMeta})`,
       );
   } catch (err) {
     fail("SEO/static", `could not read prerendered file: ${err.message}`);

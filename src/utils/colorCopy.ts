@@ -1,7 +1,7 @@
 import type { Color } from "../data/types.js";
-import type { LrvClass } from "../domain/types.js";
+import type { LrvClass, NeutralClass, Undertone } from "../domain/types.js";
 import { DESIGNER_COLLECTION_PREFIX } from "./config.js";
-import { classifyLrv } from "./colorMath.js";
+import { classifyLrv, neutralityBand, undertone } from "./colorMath.js";
 
 /**
  * User-facing color copy — the English prose and labels shown in the UI.
@@ -39,6 +39,49 @@ export function describeLrv(lrv: number): LrvDescription {
     label,
     context: `Reflects ${lrv.toFixed(1)}% of light. ${LRV_CONTEXT[label]}`,
   };
+}
+
+const WARMTH_WORD: Record<Undertone, string> = {
+  Warm: "warm",
+  Cool: "cool",
+  Neutral: "neutral",
+};
+
+const LIGHT_WORD: Record<LrvClass, string> = {
+  Dark: "deep",
+  Medium: "mid-tone",
+  Light: "light",
+};
+
+const CHROMA_PHRASE: Record<NeutralClass, string> = {
+  High: "soft, near-neutral color",
+  Medium: "gently muted color",
+  Low: "rich, saturated color",
+};
+
+const ROOM_ADVICE: Record<LrvClass, string> = {
+  Dark: "It adds depth and a cozy, dramatic mood",
+  Medium: "It's versatile enough to work in most rooms",
+  Light: "It keeps spaces feeling bright and open",
+};
+
+/**
+ * A one-sentence, jargon-free summary of a color's character — warmth +
+ * lightness + chroma + a use suggestion — for shoppers who don't read LRV or
+ * undertone. Deterministic (derives only from the color), so it's safe to render
+ * server-side into prerendered pages and meta tags.
+ */
+export function summarize(c: Color): string {
+  const band = classifyLrv(c.lrv ?? 0);
+  const family = c.colorFamilyNames[0];
+  const noun =
+    !family || family === "NA" || family.toLowerCase() === "neutral"
+      ? "shade"
+      : family.toLowerCase();
+  return (
+    `${c.name} is a ${LIGHT_WORD[band]} ${WARMTH_WORD[undertone(c)]} ${noun} ` +
+    `with ${CHROMA_PHRASE[neutralityBand(c)]}. ${ROOM_ADVICE[band]}.`
+  );
 }
 
 /** Designer Color Collection names a color belongs to, with the prefix stripped. */

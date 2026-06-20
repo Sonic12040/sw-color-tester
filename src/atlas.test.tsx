@@ -150,6 +150,12 @@ describe("Color detail", () => {
     expect(screen.getByText(/SW 6258/)).toBeTruthy();
   });
 
+  it("leads with a plain-language summary and tucks specs under a disclosure", () => {
+    renderApp("/colors/sw-6258-tricorn-black");
+    expect(screen.getByText(/is a deep neutral shade/)).toBeTruthy();
+    expect(screen.getByText("Technical details")).toBeTruthy();
+  });
+
   it("shows a not-found page for an unknown slug", () => {
     renderApp("/colors/sw-9999-nope");
     expect(screen.getByRole("heading", { name: /not found/i })).toBeTruthy();

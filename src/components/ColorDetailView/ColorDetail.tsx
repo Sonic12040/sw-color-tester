@@ -6,6 +6,7 @@ import {
   designerCollections,
   formatUseTypes,
   similarityRole,
+  summarize,
   COORDINATING_ROLES,
 } from "../../utils/colorCopy.js";
 import { colorPath } from "../../utils/base.js";
@@ -104,6 +105,8 @@ export function ColorDetail({ color }: ColorDetailProps) {
         </div>
 
         <div className={styles.body}>
+          <p className={styles.summary}>{summarize(color)}</p>
+
           {color.description.length > 0 && (
             <section>
               <h2 className={styles.sectionTitle}>Mood &amp; feel</h2>
@@ -141,31 +144,38 @@ export function ColorDetail({ color }: ColorDetailProps) {
             onNavigate={goToColor}
           />
 
-          <HslBreakdown color={color} />
+          <details className={styles.tech}>
+            <summary className={styles.techSummary}>Technical details</summary>
+            <div className={styles.techBody}>
+              <HslBreakdown color={color} />
 
-          <section>
-            <h2 className={styles.sectionTitle}>Details</h2>
-            <div className={styles.infoGrid}>
-              <div className={styles.infoItem}>
-                <span className={styles.infoLabel}>Hex</span>
-                <span>{color.hex.toUpperCase()}</span>
-              </div>
-              <div className={styles.infoItem}>
-                <span className={styles.infoLabel}>RGB</span>
-                <span>
-                  rgb({color.red}, {color.green}, {color.blue})
-                </span>
-              </div>
-              <div className={styles.infoItem}>
-                <span className={styles.infoLabel}>Family</span>
-                <span>{color.colorFamilyNames.join(", ") || "None"}</span>
-              </div>
-              <div className={styles.infoItem}>
-                <span className={styles.infoLabel}>Collections</span>
-                <span>{color.brandedCollectionNames.join(", ") || "None"}</span>
-              </div>
+              <section>
+                <h2 className={styles.sectionTitle}>Specifications</h2>
+                <div className={styles.infoGrid}>
+                  <div className={styles.infoItem}>
+                    <span className={styles.infoLabel}>Hex</span>
+                    <span>{color.hex.toUpperCase()}</span>
+                  </div>
+                  <div className={styles.infoItem}>
+                    <span className={styles.infoLabel}>RGB</span>
+                    <span>
+                      rgb({color.red}, {color.green}, {color.blue})
+                    </span>
+                  </div>
+                  <div className={styles.infoItem}>
+                    <span className={styles.infoLabel}>Family</span>
+                    <span>{color.colorFamilyNames.join(", ") || "None"}</span>
+                  </div>
+                  <div className={styles.infoItem}>
+                    <span className={styles.infoLabel}>Collections</span>
+                    <span>
+                      {color.brandedCollectionNames.join(", ") || "None"}
+                    </span>
+                  </div>
+                </div>
+              </section>
             </div>
-          </section>
+          </details>
         </div>
 
         <DetailActions

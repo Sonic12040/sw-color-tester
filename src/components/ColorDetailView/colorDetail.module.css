@@ -111,6 +111,56 @@
   line-height: var(--line-height-relaxed);
 }
 
+/* Plain-language lead summary (jargon-free, first thing in the body). */
+.summary {
+  margin: 0;
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-relaxed);
+  color: #ffffff;
+}
+
+/* Technical-details disclosure (HSL + raw specs, collapsed by default). */
+.tech {
+  border: 1px solid var(--on-dark-subtle);
+  border-radius: var(--radius-md);
+}
+
+.techSummary {
+  cursor: pointer;
+  list-style: none;
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: #ffffff;
+}
+
+.techSummary::-webkit-details-marker {
+  display: none;
+}
+
+.techSummary::after {
+  content: "▾";
+  float: right;
+  color: var(--on-dark-hint);
+  transition: transform var(--transition-fast);
+}
+
+.tech[open] .techSummary::after {
+  transform: rotate(180deg);
+}
+
+.techSummary:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+.techBody {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 3vw, 2rem);
+  padding: 0 var(--spacing-4) var(--spacing-4);
+}
+
 /* Coordinating / similar mini tiles */
 .colorGrid {
   display: grid;

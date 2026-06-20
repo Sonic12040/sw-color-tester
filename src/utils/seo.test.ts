@@ -32,13 +32,16 @@ function make(over: Partial<Color>): Color {
 }
 
 describe("colorDescription", () => {
-  it("includes name, SW number, undertone, LRV and hex", () => {
+  it("leads with the plain-language summary, then the keyword specifics", () => {
     const d = colorDescription(make({}));
-    expect(d).toContain("Tricorn Black");
+    // Plain-language lead (from summarize).
+    expect(d).toMatch(/^Tricorn Black is a deep neutral shade/);
+    // Keyword-rich specifics for crawlers.
     expect(d).toContain("SW 6258");
     expect(d).toContain("#2F2F30");
-    expect(d.toLowerCase()).toContain("neutral-undertoned");
     expect(d).toContain("LRV 3.0");
+    expect(d.toLowerCase()).toContain("dark");
+    expect(d).toContain("Bold, Dramatic"); // original mood descriptors retained
   });
 });
 

@@ -5,6 +5,7 @@ import {
   designerCollections,
   formatUseTypes,
   similarityRole,
+  summarize,
 } from "./colorCopy.js";
 
 function make(over: Partial<Color>): Color {
@@ -38,6 +39,72 @@ describe("describeLrv", () => {
     expect(describeLrv(50).label).toBe("Medium");
     expect(describeLrv(80).label).toBe("Light");
     expect(describeLrv(10).context).toContain("10.0%");
+  });
+});
+
+describe("summarize", () => {
+  it("composes warmth + lightness + chroma + a use suggestion", () => {
+    expect(
+      summarize(
+        make({
+          name: "Forsythia",
+          lrv: 78,
+          hue: 0.13,
+          saturation: 0.91,
+          red: 245,
+          green: 205,
+          blue: 40,
+          colorFamilyNames: ["Yellow"],
+          lab: { L: 82, A: 2, B: 80 },
+        }),
+      ),
+    ).toBe(
+      "Forsythia is a light warm yellow with rich, saturated color. " +
+        "It keeps spaces feeling bright and open.",
+    );
+
+    expect(
+      summarize(
+        make({
+          name: "Naval",
+          lrv: 4,
+          hue: 0.58,
+          saturation: 0.28,
+          red: 45,
+          green: 61,
+          blue: 80,
+          colorFamilyNames: ["Blue"],
+          lab: { L: 25, A: -3, B: -16 },
+        }),
+      ),
+    ).toBe(
+      "Naval is a deep cool blue with gently muted color. " +
+        "It adds depth and a cozy, dramatic mood.",
+    );
+  });
+
+  it("uses 'shade' (not a doubled noun) for neutral / unknown families", () => {
+    expect(
+      summarize(
+        make({
+          name: "Repose Gray",
+          lrv: 58,
+          hue: 0.11,
+          saturation: 0.1,
+          red: 204,
+          green: 201,
+          blue: 194,
+          colorFamilyNames: ["Neutral"],
+          lab: { L: 81, A: 1, B: 4 },
+        }),
+      ),
+    ).toBe(
+      "Repose Gray is a mid-tone neutral shade with soft, near-neutral color. " +
+        "It's versatile enough to work in most rooms.",
+    );
+    expect(
+      summarize(make({ name: "Mystery", colorFamilyNames: [] })),
+    ).toContain("Mystery is a mid-tone");
   });
 });
 
