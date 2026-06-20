@@ -50,10 +50,12 @@ function ColorCardImpl({
         className={styles.face}
         aria-label={`See color details and pairings for ${color.name}`}
       >
-        <div className={styles.info}>
-          <div className={styles.name}>
-            <strong>{color.name}</strong>
-          </div>
+        {/* Dark title bar (mirrors the action bar) so the name is always light. */}
+        <div className={styles.titleBar}>
+          <span className={styles.name}>{color.name}</span>
+        </div>
+
+        <div className={styles.body}>
           <div className={styles.meta}>
             <span
               className={styles.chip}
@@ -63,21 +65,21 @@ function ColorCardImpl({
             </span>
             <span className={styles.chip}>{tone}</span>
           </div>
-        </div>
 
-        {(isDesignerPick || color.isInterior !== color.isExterior) && (
-          <div className={styles.badges}>
-            {isDesignerPick && (
-              <span className={styles.badge}>Designer Pick</span>
-            )}
-            {color.isInterior && !color.isExterior && (
-              <span className={styles.badge}>Interior Only</span>
-            )}
-            {color.isExterior && !color.isInterior && (
-              <span className={styles.badge}>Exterior Only</span>
-            )}
-          </div>
-        )}
+          {(isDesignerPick || color.isInterior !== color.isExterior) && (
+            <div className={styles.badges}>
+              {isDesignerPick && (
+                <span className={styles.badge}>Designer Pick</span>
+              )}
+              {color.isInterior && !color.isExterior && (
+                <span className={styles.badge}>Interior Only</span>
+              )}
+              {color.isExterior && !color.isInterior && (
+                <span className={styles.badge}>Exterior Only</span>
+              )}
+            </div>
+          )}
+        </div>
       </Link>
 
       {/* Action bar: full-width, equal-width targets so nothing crowds a corner. */}

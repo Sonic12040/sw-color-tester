@@ -55,23 +55,35 @@
   color: var(--tile-text);
 }
 
-/* Clickable colored face: name pinned to the TOP (consistent start point for
-   every tile), pure swatch fills the space below. */
+/* Clickable area: dark title bar on top, colored swatch (with chips/badges)
+   below. The swatch sits between the title bar and the action bar. */
 .face {
   flex: 1 1 auto;
   min-height: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  gap: var(--spacing-2);
-  padding: clamp(1rem, 2.67vw, 1.5rem);
   text-decoration: none;
-  color: var(--tile-text, inherit);
 }
 
 .face:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: -3px;
+}
+
+/* Dark title bar (matches the action bar) — name is always light text. */
+.titleBar {
+  background: #1b1c20;
+  color: #ffffff;
+  padding: var(--spacing-3) clamp(0.875rem, 2.4vw, 1.25rem);
+}
+
+.body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  padding: clamp(0.875rem, 2.4vw, 1.25rem);
 }
 
 .badges {
@@ -96,13 +108,6 @@
   line-height: var(--line-height-tight);
 }
 
-.info {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-2);
-  color: var(--tile-text, inherit);
-}
-
 .name {
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-bold);
@@ -110,6 +115,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: block;
 }
 
 .meta {
