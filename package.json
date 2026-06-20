@@ -15,7 +15,9 @@
     "format:check": "prettier --check .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:e2e": "start-server-and-test \"vite preview --port 4173 --strictPort\" http://localhost:4173/sw-color-tester/ \"node scripts/validate-devices.mjs\"",
+    "test:e2e:ci": "npm run build && npm run test:e2e"
   },
   "keywords": [],
   "author": "",
@@ -36,6 +38,7 @@
     "globals": "^17.6.0",
     "jsdom": "^29.1.1",
     "prettier": "^3.8.4",
+    "start-server-and-test": "^3.0.11",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.61.1",
     "vite": "^8.0.16",

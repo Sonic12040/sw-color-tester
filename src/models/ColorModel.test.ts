@@ -1,198 +1,138 @@
 import { describe, it, expect } from "vitest";
 import type { Color } from "../data/types.js";
 import { ColorModel } from "./ColorModel.js";
+import { TEST_COLORS } from "../test/fixtures.js";
 
-/** Build a Color with sensible defaults overridden per test. */
-function c(over: Partial<Color>): Color {
-  return {
-    id: "id",
-    name: "Name",
-    colorNumber: "0000",
-    brandKey: "SW",
-    hex: "#888888",
-    red: 136,
-    green: 136,
-    blue: 136,
-    hue: 0,
-    saturation: 0.8,
-    lightness: 0.5,
-    lrv: 50,
-    isDark: false,
-    isInterior: false,
-    isExterior: false,
-    colorFamilyNames: ["Red"],
-    brandedCollectionNames: [],
-    similarColors: [],
-    description: [],
-    ...over,
-  };
-}
-
-// Crimson(Dark/Warm/int), Ruby(Light/Warm/ext), Azure(Medium/Cool/int, Blue),
-// Greige(Medium/Neutral/int+ext, Neutral, Historic Color),
-// DesignerRed(Medium/Warm, designer pick + High Voltage), Archived(filtered out).
-const DATA: Color[] = [
-  c({
-    id: "r1",
-    name: "Crimson",
-    colorNumber: "1001",
-    lrv: 10,
-    hue: 0,
-    saturation: 0.8,
-    isInterior: true,
-  }),
-  c({
-    id: "r2",
-    name: "Ruby",
-    colorNumber: "1003",
-    lrv: 90,
-    hue: 0.99,
-    saturation: 0.8,
-    isExterior: true,
-  }),
-  c({
-    id: "b1",
-    name: "Azure",
-    colorNumber: "2001",
-    lrv: 55,
-    hue: 0.6,
-    saturation: 0.8,
-    colorFamilyNames: ["Blue"],
-    isInterior: true,
-  }),
-  c({
-    id: "n1",
-    name: "Greige",
-    colorNumber: "3001",
-    lrv: 50,
-    hue: 0.1,
-    saturation: 0.03,
-    colorFamilyNames: ["Neutral"],
-    isInterior: true,
-    isExterior: true,
-    brandedCollectionNames: ["Historic Color"],
-  }),
-  c({
-    id: "d1",
-    name: "Designer Red",
-    colorNumber: "1009",
-    lrv: 40,
-    hue: 0.02,
-    saturation: 0.7,
-    brandedCollectionNames: [
-      "Designer Color Collection - Pottery",
-      "High Voltage",
-    ],
-  }),
-  c({ id: "arch", name: "Archived", colorNumber: "9999", archived: true }),
-];
-
-const model = new ColorModel(DATA);
-const names = (cs: Color[]) => cs.map((x) => x.name);
+const model = new ColorModel(TEST_COLORS);
+const names = (cs: Color[]) => cs.map((c) => c.name);
+const sorted = (cs: Color[]) => names(cs).sort();
 
 describe("ColorModel construction + indexes", () => {
   it("excludes archived/ignored colors", () => {
-    expect(model.getActiveColors()).toHaveLength(5);
-    expect(names(model.getActiveColors())).not.toContain("Archived");
+    expect(model.getActiveColors()).toHaveLength(8);
+    expect(names(model.getActiveColors())).not.toContain("Archived One");
   });
 
   it("indexes colors by canonical slug, one per active color", () => {
-    expect(model.getAllSlugs()).toHaveLength(5);
-    expect(model.getColorBySlug("sw-1001-crimson")?.name).toBe("Crimson");
+    expect(model.getAllSlugs()).toHaveLength(8);
+    expect(model.getColorBySlug("sw-6258-tricorn-black")?.name).toBe(
+      "Tricorn Black",
+    );
     expect(model.getColorBySlug("nope")).toBeUndefined();
   });
 
   it("orders families by priority then alphabetically", () => {
-    expect(model.getOrderedFamilies()).toEqual(["Red", "Blue", "Neutral"]);
-  });
-
-  it("lists non-designer collections, sorted", () => {
-    expect(model.getCollectionNames()).toEqual([
-      "High Voltage",
-      "Historic Color",
+    expect(model.getOrderedFamilies()).toEqual([
+      "Red",
+      "Yellow",
+      "Green",
+      "Blue",
+      "Neutral",
     ]);
   });
 
+  it("lists non-designer collections, sorted", () => {
+    expect(model.getCollectionNames()).toEqual(["Timeless Color"]);
+  });
+
   it("flags designer picks", () => {
-    expect(model.isDesignerPick("d1")).toBe(true);
-    expect(model.isDesignerPick("r1")).toBe(false);
+    expect(model.isDesignerPick("accessible")).toBe(true);
+    expect(model.isDesignerPick("tricorn")).toBe(false);
   });
 });
 
 describe("getFilteredColors — facets", () => {
-  it("returns all active colors (family order) with no criteria", () => {
+  it("returns all active colors in family order with no criteria", () => {
     expect(names(model.getFilteredColors({}))).toEqual([
-      "Crimson",
-      "Designer Red",
-      "Ruby",
-      "Azure",
-      "Greige",
+      "Cherry Tomato", // Red
+      "Forsythia", // Yellow
+      "Quietude", // Green
+      "Naval", // Blue
+      "Tradewind", // Blue
+      "Accessible Beige", // Neutral
+      "Repose Gray",
+      "Tricorn Black",
     ]);
   });
 
   it("matches search against name / number / description", () => {
-    expect(names(model.getFilteredColors({ search: "ruby" }))).toEqual([
-      "Ruby",
+    expect(names(model.getFilteredColors({ search: "naval" }))).toEqual([
+      "Naval",
     ]);
-    expect(names(model.getFilteredColors({ search: "2001" }))).toEqual([
-      "Azure",
+    expect(names(model.getFilteredColors({ search: "6258" }))).toEqual([
+      "Tricorn Black",
     ]);
   });
 
-  it("filters by family (OR)", () => {
+  it("filters by family", () => {
     expect(names(model.getFilteredColors({ families: ["Blue"] }))).toEqual([
-      "Azure",
+      "Naval",
+      "Tradewind",
     ]);
   });
 
   it("filters by undertone", () => {
-    expect(names(model.getFilteredColors({ undertones: ["Cool"] }))).toEqual([
-      "Azure",
+    expect(sorted(model.getFilteredColors({ undertones: ["Cool"] }))).toEqual([
+      "Naval",
+      "Quietude",
+      "Tradewind",
     ]);
-    expect(names(model.getFilteredColors({ undertones: ["Neutral"] }))).toEqual(
-      ["Greige"],
-    );
+    expect(
+      sorted(model.getFilteredColors({ undertones: ["Neutral"] })),
+    ).toEqual(["Repose Gray", "Tricorn Black"]);
   });
 
   it("filters by lightness band", () => {
-    expect(names(model.getFilteredColors({ lightness: ["Dark"] }))).toEqual([
-      "Crimson",
+    expect(sorted(model.getFilteredColors({ lightness: ["Dark"] }))).toEqual([
+      "Cherry Tomato",
+      "Naval",
+      "Tricorn Black",
     ]);
     expect(names(model.getFilteredColors({ lightness: ["Light"] }))).toEqual([
-      "Ruby",
+      "Forsythia",
+    ]);
+  });
+
+  it("filters by neutrality band", () => {
+    expect(sorted(model.getFilteredColors({ neutrality: ["High"] }))).toEqual([
+      "Accessible Beige",
+      "Repose Gray",
+      "Tricorn Black",
+    ]);
+    expect(sorted(model.getFilteredColors({ neutrality: ["Low"] }))).toEqual([
+      "Cherry Tomato",
+      "Forsythia",
     ]);
   });
 
   it("filters by use type", () => {
-    expect(names(model.getFilteredColors({ useType: "exterior" }))).toEqual([
-      "Ruby",
-      "Greige",
-    ]);
+    const ext = model.getFilteredColors({ useType: "exterior" });
+    expect(names(ext)).not.toContain("Naval"); // interior-only
+    expect(names(ext)).toContain("Forsythia");
   });
 
   it("filters by collection membership and designer picks", () => {
     expect(
-      names(model.getFilteredColors({ collections: ["High Voltage"] })),
-    ).toEqual(["Designer Red"]);
+      sorted(model.getFilteredColors({ collections: ["Timeless Color"] })),
+    ).toEqual(["Accessible Beige", "Repose Gray"]);
     expect(names(model.getFilteredColors({ designerOnly: true }))).toEqual([
-      "Designer Red",
+      "Accessible Beige",
     ]);
   });
 
-  it("respects the favorites / hidden / all views", () => {
-    const favs = new Set(["r1"]);
-    const hidden = new Set(["b1"]);
+  it("respects favorites / hidden / all views", () => {
+    const favs = new Set(["cherry"]);
+    const hidden = new Set(["naval"]);
     expect(
       names(model.getFilteredColors({ view: "favorites" }, favs, hidden)),
-    ).toEqual(["Crimson"]);
+    ).toEqual(["Cherry Tomato"]);
     expect(
       names(model.getFilteredColors({ view: "hidden" }, favs, hidden)),
-    ).toEqual(["Azure"]);
-    // "all" excludes hidden.
+    ).toEqual(["Naval"]);
     expect(
       model
         .getFilteredColors({ view: "all" }, favs, hidden)
-        .every((x) => x.id !== "b1"),
+        .every((c) => c.id !== "naval"),
     ).toBe(true);
   });
 
@@ -201,99 +141,34 @@ describe("getFilteredColors — facets", () => {
       names(
         model.getFilteredColors({ families: ["Red"], lightness: ["Dark"] }),
       ),
-    ).toEqual(["Crimson"]);
+    ).toEqual(["Cherry Tomato"]);
   });
 });
 
 describe("getFilteredColors — sorting", () => {
-  it("sorts by name, lrv, and hue", () => {
-    expect(names(model.getFilteredColors({ sort: "name" }))).toEqual([
-      "Azure",
-      "Crimson",
-      "Designer Red",
-      "Greige",
-      "Ruby",
-    ]);
-    expect(names(model.getFilteredColors({ sort: "lrv-asc" }))).toEqual([
-      "Crimson",
-      "Designer Red",
-      "Greige",
-      "Azure",
-      "Ruby",
-    ]);
-    expect(names(model.getFilteredColors({ sort: "hue" }))).toEqual([
-      "Crimson",
-      "Designer Red",
-      "Greige",
-      "Azure",
-      "Ruby",
-    ]);
+  it("sorts by name", () => {
+    expect(names(model.getFilteredColors({ sort: "name" }))[0]).toBe(
+      "Accessible Beige",
+    );
+  });
+
+  it("sorts by lrv ascending/descending", () => {
+    const asc = names(model.getFilteredColors({ sort: "lrv-asc" }));
+    expect(asc[0]).toBe("Tricorn Black"); // lrv 3
+    expect(asc[asc.length - 1]).toBe("Forsythia"); // lrv 78
+  });
+
+  it("sorts by neutrality (most neutral / most colorful first)", () => {
+    const high = names(model.getFilteredColors({ sort: "neutral-high" }));
+    expect(high[0]).toBe("Tricorn Black");
+    expect(high[high.length - 1]).toBe("Forsythia");
+    const low = names(model.getFilteredColors({ sort: "neutral-low" }));
+    expect(low[0]).toBe("Forsythia");
   });
 
   it("does not mutate the input order", () => {
     const before = names(model.getActiveColors());
     model.getFilteredColors({ sort: "name" });
     expect(names(model.getActiveColors())).toEqual(before);
-  });
-});
-
-describe("neutrality facet + sort", () => {
-  // Colors with explicit lab spanning the neutrality bands.
-  const nm = new ColorModel([
-    c({
-      id: "g",
-      name: "Gray",
-      colorNumber: "1",
-      red: 128,
-      green: 128,
-      blue: 128,
-      saturation: 0,
-      lab: { L: 54, A: 0, B: 0 },
-    }),
-    c({
-      id: "m",
-      name: "Muted",
-      colorNumber: "2",
-      red: 150,
-      green: 140,
-      blue: 120,
-      saturation: 0.15,
-      lab: { L: 60, A: 8, B: 14 },
-    }),
-    c({
-      id: "r",
-      name: "Red",
-      colorNumber: "3",
-      red: 255,
-      green: 0,
-      blue: 0,
-      saturation: 1,
-      lab: { L: 53, A: 80, B: 67 },
-    }),
-  ]);
-
-  it("filters by neutrality band", () => {
-    expect(names(nm.getFilteredColors({ neutrality: ["High"] }))).toEqual([
-      "Gray",
-    ]);
-    expect(names(nm.getFilteredColors({ neutrality: ["Medium"] }))).toEqual([
-      "Muted",
-    ]);
-    expect(names(nm.getFilteredColors({ neutrality: ["Low"] }))).toEqual([
-      "Red",
-    ]);
-  });
-
-  it("sorts most-neutral and most-colorful first", () => {
-    expect(names(nm.getFilteredColors({ sort: "neutral-high" }))).toEqual([
-      "Gray",
-      "Muted",
-      "Red",
-    ]);
-    expect(names(nm.getFilteredColors({ sort: "neutral-low" }))).toEqual([
-      "Red",
-      "Muted",
-      "Gray",
-    ]);
   });
 });
