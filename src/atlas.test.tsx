@@ -155,6 +155,12 @@ describe("Color detail", () => {
     expect(screen.getByRole("heading", { name: /not found/i })).toBeTruthy();
   });
 
+  it("marks the not-found page noindex (soft-404 mitigation)", () => {
+    renderApp("/colors/sw-9999-nope");
+    const meta = document.head.querySelector('meta[name="robots"]');
+    expect(meta?.getAttribute("content")).toBe("noindex");
+  });
+
   it("copies the hex code and store location with feedback", async () => {
     const writeText = vi.fn().mockResolvedValue(undefined);
     Object.defineProperty(navigator, "clipboard", {
@@ -171,6 +177,16 @@ describe("Color detail", () => {
     expect(
       await screen.findByText("Copied store location 194-C1"),
     ).toBeTruthy();
+  });
+});
+
+describe("Route announcer", () => {
+  it("announces the new page title after navigation", async () => {
+    renderApp();
+    fireEvent.click(
+      screen.getAllByRole("link", { name: /See color details/ })[0],
+    );
+    expect(await screen.findByText(/^Navigated to .+/)).toBeTruthy();
   });
 });
 
