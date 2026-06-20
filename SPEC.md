@@ -102,12 +102,14 @@ literal in `utils/base.ts` (consumed by the app, `vite.config.ts`, and `prerende
 Skip link → `<main>`; sticky-aware `scroll-margin` (focus not obscured); focus
 rings tuned per surface; ≥44px targets; AAA-grade contrast (guarded by
 `styles/contrast.test.ts`); color never the sole signal (text chips for family /
-undertone / neutrality / lightness).
+undertone / neutrality / lightness); SPA navigations announced via a polite live
+region (`RouteAnnouncer`).
 
 ## Testing
 
 - **Unit**: `colorMath`, `colorCopy`, `colorQuery`, `ColorModel`, `slug`, `seo`,
-  `contrast`, `ExportService`, `Toast`, the hooks, and each context.
+  `contrast`, `ExportService`, `Toast`, dataset integrity (`palette.integrity`),
+  the hooks, and each context.
 - **Integration**: `atlas.test.tsx` drives the routed app (facets, sort, views,
   compare, palette, detail, clipboard) via the DOM; `ColorCard.test.tsx`.
 - **E2E**: `scripts/validate-devices.mjs` — 6 device profiles, axe scan, skip link,
@@ -121,5 +123,5 @@ undertone / neutrality / lightness).
 ## Known follow-ups
 
 - `palette.ts` (~1.6 MB) is statically bundled — code-split or fetch as JSON.
-- SPA route changes aren't announced to screen readers; soft 404s return HTTP 200.
-- `Color` carries redundant RGB+HSL+hex+LAB encodings — add a data-integrity test.
+- Soft 404s can't return a real HTTP 404 on static hosting; mitigated with a
+  client-side `noindex` (`useNoindex`) on the not-found view.
