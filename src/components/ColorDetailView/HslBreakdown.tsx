@@ -1,5 +1,5 @@
 import type { Color } from "../../data/types.js";
-import styles from "./Modal.module.css";
+import styles from "./colorDetail.module.css";
 
 interface HslBreakdownProps {
   color: Color;

@@ -1,138 +1,125 @@
 # Architecture — sw-color-tester
 
-A Progressive Web App for exploring, organizing, and sharing Sherwin‑Williams
-paint colors. Built with **Vite + React 19 + TypeScript (strict)**.
-
-> This document describes the architecture as it currently stands. (An earlier
-> revision described a planned migration from a vanilla‑JS Command/CommandBus
-> design; that design was superseded by the idiomatic‑React structure below.)
-
----
+The **Color Atlas**: a Progressive Web App for browsing, comparing, and
+collecting Sherwin‑Williams paint colors. Built with **Vite + React 19 +
+TypeScript (strict)** and **statically pre‑rendered** (one HTML page per color)
+for SEO/AI discoverability.
 
 ## Tech stack
 
-- **Vite 8** — dev server + build; `vite-plugin-pwa` generates the service worker.
-- **React 19** — function components, hooks, context.
-- **TypeScript** — strict; bundler module resolution; `.js` extensions on relative
-  imports (Vite/TS resolve them to `.ts(x)`).
-- **Vitest + Testing Library (jsdom)** — unit + user‑centric integration tests.
-- **ESLint (flat config) + Prettier** — enforced in CI.
+- **Vite 8** — dev/build; `vite-plugin-pwa` generates the service worker.
+- **React 19** + **React Router 7** (data router).
+- **TypeScript** strict; bundler resolution; `.js` extensions on relative imports.
+- **Vitest + Testing Library (jsdom)** — unit + integration.
+- **Playwright + axe-core** — cross-device + accessibility e2e (`scripts/validate-devices.mjs`).
+- **ESLint (flat) + Prettier**, enforced in CI.
+
+## Three-tier product
+
+1. **Browse** (`/`) — a faceted gallery: one virtualized grid of all colors with a
+   search/sort toolbar and a filter rail (family, undertone, neutrality, lightness,
+   use, collection, favorites/hidden view).
+2. **Entity** (`/colors/:slug`) — a canonical, pre-rendered page per color with
+   JSON-LD, coordinating/similar colors, and HSL/LAB detail.
+3. **Workspace** — `/compare` (up to 4 side-by-side) and `/palette` (collect,
+   reorder, export, shareable `?c=` URL).
 
 ## Source layout
 
 ```text
 src/
-├── main.tsx                 # React root (StrictMode)
-├── App.tsx                  # AppInner: wiring, derived data, top-level handlers
-├── data/
-│   ├── palette.ts           # generated color dataset (~2k records)
-│   └── types.ts             # Color interface
-├── models/
-│   └── ColorModel.ts        # domain logic: indexing, filtering, grouping, sorting
-├── context/
-│   ├── AppProviders.tsx     # composes all state providers
-│   ├── AppContext.tsx       # { colorModel, openModal } — stable services/UI hook
-│   ├── FavoritesContext.tsx # favorites set + actions (useSet)
-│   ├── HiddenContext.tsx    # hidden set + actions (useSet)
-│   └── FiltersContext.tsx   # LRV range (useState)
-├── hooks/
-│   ├── useSet.ts            # immutable Set state primitive
-│   ├── usePersistentSet.ts  # useSet backed by localStorage
-│   └── usePersistentState.ts# useState backed by localStorage
+├── main.tsx              # client entry: createBrowserRouter + hydrate/createRoot
+├── entry-server.tsx      # SSG render(path) + buildHead() + sitemap/colors helpers
+├── routes.tsx            # shared route tree (RootLayout → pages)
+├── appModel.ts           # singletons: colorModel, exportService
+├── data/                 # palette.ts (generated, ~1.7k active) + types.ts (Color)
+├── models/ColorModel.ts  # index (id/slug/family/collection/designer) + query (filter/sort)
+├── context/              # Favorites, Hidden, Filters, Compare, Palette, Toast, App
+├── hooks/                # useSet, usePersistent{Set,State}, useFocusTrap, useDocumentMeta
+├── pages/                # GalleryPage, ColorDetailPage, ComparePage, PalettePage, NotFoundPage
 ├── components/
-│   ├── ErrorBoundary/       # top-level render-error recovery UI
-│   ├── Header/              # title + collapsible toolbar (LrvFilter, clear/export)
-│   ├── LrvFilter/           # debounced dual-range LRV slider
-│   ├── ColorExplorer/       # accordion of Favorites / Hidden / family sections
-│   │   ├── ColorAccordion/  #   collapsible layout section (no per-tile state)
-│   │   ├── ColorTile/       #   self-sufficient color card (+ HiddenFamilyTile)
-│   │   └── BulkActionsPanel/#   "Favorite All" / "Hide All"
-│   ├── Modal/               # color-detail dialog (focus-trapped, portal)
-│   └── Toast/               # transient notifications + undo action
-├── utils/
-│   ├── config.ts            # thresholds, family order, timings
-│   ├── storage.ts           # safe localStorage helpers + keys
-│   └── ExportService.ts     # favorites → downloaded JSON
-└── styles/                  # global tokens + base CSS
+│   ├── RootLayout.tsx    # skip link + sticky Header + <main> + CompareTray; AppProviders
+│   ├── Header/           # sticky brand + primary nav
+│   ├── Atlas/            # AtlasLayout (rail/drawer shell), AtlasToolbar, FilterPanel,
+│   │                     #   ActiveFilters, ColorGrid, ColorCard (memoized)
+│   ├── ColorDetailView/  # ColorDetail + DetailActions, ColorGridSection, MiniTile, HslBreakdown
+│   ├── Workspace/        # CompareTray
+│   ├── Toast/, ErrorBoundary/, seo/JsonLd
+├── utils/                # base.ts, config.ts, storage.ts, slug.ts, seo.ts,
+│                         #   clipboard.ts, colorPresentation.ts, ExportService.ts
+└── styles/               # tokens.css, breakpoints.css, a11y.css, global.css
+prerender.mjs             # post-build: writes dist/colors/<slug>/index.html + 404.html, sitemap, colors.json
 ```
 
-## State management
+## State
 
-All shared state lives in **separate, focused React contexts** — never one
-combined context. React propagates context by value identity, so a single merged
-value would re-render every consumer on any change; splitting keeps a `hidden`
-change from re-rendering `favorites`-only consumers. (`AppProviders` composes the
-providers; `context/context-isolation.test.tsx` validates the isolation.)
+Shared state lives in **separate, focused contexts** (composed by `AppProviders`)
+so a change to one slice doesn't re-render consumers of another — validated by
+`context/context-isolation.test.tsx`.
 
-| Concern       | Source of truth                         | Hook                        |
-| ------------- | --------------------------------------- | --------------------------- |
-| Favorites     | `FavoritesContext` (`usePersistentSet`) | `useFavorites()`            |
-| Hidden colors | `HiddenContext` (`usePersistentSet`)    | `useHidden()`               |
-| LRV filter    | `FiltersContext` (`usePersistentState`) | `useFilters()`              |
-| Modal open id | `useState` in `AppInner`                | `useAppContext().openModal` |
-| Toasts        | `ToastContext`                          | `useToast()`                |
+| Concern       | Source of truth                         | Hook            |
+| ------------- | --------------------------------------- | --------------- |
+| Color model   | `AppContext` (singleton)                | `useAppContext` |
+| Favorites     | `FavoritesContext` (`usePersistentSet`) | `useFavorites`  |
+| Hidden        | `HiddenContext` (`usePersistentSet`)    | `useHidden`     |
+| Facets + sort | `FiltersContext`                        | `useFilters`    |
+| Compare (≤4)  | `CompareContext` (`usePersistentState`) | `useCompare`    |
+| Palette       | `PaletteContext` (`usePersistentState`) | `usePalette`    |
+| Toasts        | `ToastContext`                          | `useToast`      |
 
-`useSet` guarantees a **new `Set` reference on every real change** (and the same
-reference on a no-op) — the contract React's reactivity depends on.
+`usePersistent*` use **two-phase init** (render `initial`, load from storage in an
+effect) so server-prerendered markup and the first client render agree (no
+hydration mismatch); storage access is guarded.
 
-**Persistence.** Favorites, hidden colors, and the LRV filter persist to
-`localStorage` (keys in `utils/storage.ts`) via `usePersistentSet` /
-`usePersistentState`, so they survive reloads. Reads/writes are guarded and
-validated; corrupt or unavailable storage falls back to defaults without throwing.
+`ColorModel` holds no UI state. `getFilteredColors(criteria, favorites, hidden)`
+and `sortColors` take state as arguments and return fresh arrays. Color math +
+classification (`hsl`, `classifyLrv`, `undertone`, `neutrality`, `describeLrv`)
+live in `utils/colorPresentation.ts`.
 
-`ColorModel` is constructed once from the static dataset and holds no UI state; it
-is pure-ish domain logic (filtering/grouping/sorting take state Sets as arguments
-and return new arrays). Context values are memoized so identities stay stable.
+**Neutrality** = inverse of perceptual chroma: `0.6·(C*ab/60) + 0.25·rgbSpread +
+0.15·saturation`, banded High/Medium/Low at dataset terciles (`config.ts`).
 
-Leaf components consume the contexts they need directly (e.g. `ColorTile` reads
-favorites/hidden/model) rather than receiving state through props, so
-`ColorAccordion` is a pure layout component. Color presentation (hsl string, LRV
-classification, similarity labels) lives in `utils/colorPresentation.ts` — one
-source of truth shared by tiles and the modal.
+## Rendering / SSG
 
-A top-level `<ErrorBoundary>` (in `main.tsx`) catches render errors so a single
-failure shows a recovery UI instead of blanking the PWA.
+`build` runs: `tsc` → client build → SSR build (`entry-server`) → `prerender.mjs`,
+which renders `/`, `/compare`, `/palette`, and every `/colors/<slug>` to static
+HTML (authoritative `<head>` injected by `buildHead`), plus `sitemap.xml`,
+`robots.txt`, `colors.json`, and a `404.html` SPA fallback. The PWA precaches the
+shell only and runtime-caches color pages.
 
-## Data flow
+## Design system
 
-```text
-User action → context action (setState) → context re-renders consumers
-ColorExplorer derives visible/grouped colors via ColorModel (memoized)
-```
+Dark chrome (header, toolbar, rail, tile bars, detail card) over a neutral-gray
+color canvas. All surfaces/text on dark come from tokens in `tokens.css`
+(`--surface-dark`, `--chip-dark`, `--on-dark*`); the deploy base path is the single
+literal in `utils/base.ts` (consumed by the app, `vite.config.ts`, and `prerender.mjs`).
 
-Mutating actions are reversible rather than gated: bulk actions and the
-destructive "Clear All Favorites/Hidden" each apply immediately and surface an
-**Undo** toast that re-applies the inverse set action.
+## Accessibility
 
-## Conventions
-
-- **Named exports only** for components; **interfaces** for object shapes.
-- **CSS Modules** per component; class names via `styles.foo`.
-- **No `any`**; relative imports with `.js` extension.
-- Context + provider + hook are **colocated** in one file per concern.
-- Components are queried in tests by **role/text/accessible name**, not classes.
+Skip link → `<main>`; sticky-aware `scroll-margin` (focus not obscured); focus
+rings tuned per surface; ≥44px targets; AAA-grade contrast (guarded by
+`styles/contrast.test.ts`); color never the sole signal (text chips for family /
+undertone / neutrality / lightness).
 
 ## Testing
 
-- **Unit**: `useSet`, each context (`*.test.tsx`), context isolation.
-- **Integration (user‑centric)**: `App.test.tsx` drives the real app through the
-  DOM (favoriting, hiding, bulk actions, LRV filtering, clear-all, undo toasts,
-  persistence across reloads); `Modal.test.tsx` covers open / focus-trap /
-  focus-return / navigation + a data snapshot.
-- CSS Modules use non‑scoped class names in tests (`vitest.config.ts`) so DOM
-  snapshots stay readable and stable.
+- **Unit**: `colorPresentation`, `ColorModel`, `slug`, `seo`, `contrast`, the
+  hooks, and each context.
+- **Integration**: `atlas.test.tsx` drives the routed app (facets, sort, views,
+  compare, palette, detail, clipboard) via the DOM; `ColorCard.test.tsx`.
+- **E2E**: `scripts/validate-devices.mjs` — 6 device profiles, axe scan, skip link,
+  no-overflow, SSG-markup, no-trailing-slash redirect (run against `vite preview`).
 
 ## CI/CD (`.github/workflows/deploy.yml`)
 
-`verify` (lint → format:check → typecheck → test) gates `build`, which gates
-`deploy` to GitHub Pages.
+`verify` (lint → format:check → typecheck → test) gates `build` → `deploy` to
+GitHub Pages. **The Playwright/axe e2e is not yet wired into CI** (see follow-ups).
 
 ## Known follow-ups
 
-- Persistence is `localStorage`-only; **URL-encoded shareable state** (deep links
-  to a curated set) would build on the same context seam.
-- The Toast context is defined inside its component file; moving it to `context/`
-  would match the rest of the codebase.
-- `palette.ts` (~2k records) is statically bundled (~340 kB gzip, trips Vite's
-  chunk-size warning). **Code-splitting the dataset** (dynamic `import()` or a
-  fetched JSON asset) is the main bundle-size lever.
+- Wire `scripts/validate-devices.mjs` into CI as a gating `test:e2e`.
+- Extract `getFilteredColors`/`sortColors` into pure functions; centralize domain
+  types; split color _math_ from UI _copy_ in `colorPresentation.ts`.
+- Unify the button styles; tokenize the remaining one-off on-dark alphas.
+- `palette.ts` (~1.6 MB) is statically bundled — code-split or fetch as JSON.
+- SPA route changes aren't announced to screen readers; soft 404s return HTTP 200.

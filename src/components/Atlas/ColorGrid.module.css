@@ -17,7 +17,7 @@
   padding: var(--spacing-10) var(--spacing-6);
   margin: var(--grid-gap) auto;
   max-width: 28rem;
-  background: #1b1c20;
+  background: var(--surface-dark);
   border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;

@@ -1,6 +1,6 @@
 import type { Color } from "../../data/types.js";
 import { MiniTile } from "./MiniTile.js";
-import styles from "./Modal.module.css";
+import styles from "./colorDetail.module.css";
 
 interface ColorGridSectionProps {
   title: string;

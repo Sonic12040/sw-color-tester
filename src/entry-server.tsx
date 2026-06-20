@@ -8,6 +8,9 @@ import { routes } from "./routes.js";
 import { colorModel } from "./appModel.js";
 import { BASENAME, SITE_URL, colorCanonicalUrl } from "./utils/base.js";
 import { colorDescription } from "./utils/seo.js";
+
+// Re-export so the Node prerender script gets the base path from one source.
+export { BASE_URL, BASENAME } from "./utils/base.js";
 import { undertone } from "./utils/colorPresentation.js";
 import { toSlug } from "./utils/slug.js";
 

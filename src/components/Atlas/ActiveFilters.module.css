@@ -22,7 +22,7 @@
   padding: var(--spacing-1) var(--spacing-2) var(--spacing-1) var(--spacing-3);
   border: none;
   border-radius: var(--radius-full);
-  background: rgba(20, 21, 25, 0.82);
+  background: var(--chip-dark);
   color: #ffffff;
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
@@ -31,7 +31,7 @@
 }
 
 .chip:hover {
-  background: #1b1c20;
+  background: var(--surface-dark);
 }
 
 .remove {

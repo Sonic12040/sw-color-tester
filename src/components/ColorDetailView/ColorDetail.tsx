@@ -19,8 +19,8 @@ import { useCompare } from "../../context/CompareContext.js";
 import { usePalette } from "../../context/PaletteContext.js";
 import { ColorGridSection } from "./ColorGridSection.js";
 import { HslBreakdown } from "./HslBreakdown.js";
-import { ModalActions } from "./ModalActions.js";
-import styles from "./Modal.module.css";
+import { DetailActions } from "./DetailActions.js";
+import styles from "./colorDetail.module.css";
 
 interface ColorDetailProps {
   color: Color;
@@ -170,7 +170,7 @@ export function ColorDetail({ color }: ColorDetailProps) {
           </section>
         </div>
 
-        <ModalActions
+        <DetailActions
           color={color}
           isFavorite={favorites.has(color.id)}
           isHidden={hidden.has(color.id)}

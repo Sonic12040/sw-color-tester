@@ -20,7 +20,7 @@
   align-self: flex-start;
   min-height: 44px;
   padding: var(--spacing-1) var(--spacing-3);
-  background: #1b1c20;
+  background: var(--surface-dark);
   color: #ffffff;
   border-radius: var(--radius-md);
   text-decoration: none;
@@ -34,7 +34,7 @@
 }
 
 .card {
-  background: #1b1c20;
+  background: var(--surface-dark);
   color: #ffffff;
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -74,7 +74,7 @@
   font-weight: var(--font-weight-semibold);
   padding: var(--spacing-1) var(--spacing-3);
   border-radius: var(--radius-full);
-  background: rgba(20, 21, 25, 0.82);
+  background: var(--chip-dark);
   color: #ffffff;
   backdrop-filter: var(--blur-sm);
   white-space: nowrap;
@@ -146,7 +146,7 @@
 }
 
 .miniCaption {
-  background: rgba(20, 21, 25, 0.82);
+  background: var(--chip-dark);
   color: #ffffff;
   padding: var(--spacing-2);
   backdrop-filter: var(--blur-sm);
@@ -179,7 +179,7 @@
 /* HSL breakdown */
 .hslSection {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--on-dark-subtle);
   border-radius: var(--radius-md);
   padding: clamp(0.75rem, 1.5vw, 1rem);
 }
@@ -261,7 +261,7 @@
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--on-dark-faint);
 }
 
 /* Action bar — dark, matching the gallery chrome. */
@@ -290,7 +290,7 @@
 }
 
 .actionBtn:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--on-dark-subtle);
 }
 
 .actionBtn:focus-visible {
@@ -304,7 +304,7 @@
 }
 
 .actionBtnActive {
-  background: rgba(255, 255, 255, 0.16);
+  background: var(--on-dark-active);
   border-color: rgba(255, 255, 255, 0.4);
 }
 

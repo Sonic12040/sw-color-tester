@@ -1,9 +1,9 @@
 import type { Color } from "../../data/types.js";
 import { copyText } from "../../utils/clipboard.js";
 import { useToast } from "../Toast/Toast.js";
-import styles from "./Modal.module.css";
+import styles from "./colorDetail.module.css";
 
-interface ModalActionsProps {
+interface DetailActionsProps {
   color: Color;
   isFavorite: boolean;
   isHidden: boolean;
@@ -14,14 +14,14 @@ interface ModalActionsProps {
 }
 
 /** Footer actions for the color detail: favorite, copy hex, hide, store locator. */
-export function ModalActions({
+export function DetailActions({
   color,
   isFavorite,
   isHidden,
   onToggleFavorite,
   onToggleHidden,
   extraActions,
-}: ModalActionsProps) {
+}: DetailActionsProps) {
   const showToast = useToast();
 
   const copyHex = async () => {

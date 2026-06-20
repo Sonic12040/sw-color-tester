@@ -5,8 +5,8 @@
   position: sticky;
   top: 0;
   z-index: calc(var(--z-sticky) + 1);
-  background: #1b1c20;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--surface-dark);
+  border-bottom: 1px solid var(--on-dark-subtle);
   color: #ffffff;
 }
 
@@ -79,12 +79,12 @@
 }
 
 .navLink:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--on-dark-subtle);
   color: #ffffff;
 }
 
 .navLinkActive {
-  background: rgba(255, 255, 255, 0.16);
+  background: var(--on-dark-active);
   color: #ffffff;
   font-weight: var(--font-weight-semibold);
 }
@@ -109,7 +109,7 @@
 }
 
 .favBtn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--on-dark-subtle);
 }
 
 @media (max-width: 479px) {

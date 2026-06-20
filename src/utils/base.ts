@@ -2,11 +2,11 @@
 // (trailing slash) and the react-router `basename` (no trailing slash) never
 // drift, and so workbox / prerender / sitemap all agree.
 
-/** Vite `base` — has a trailing slash. */
+/** Vite `base` — has a trailing slash. The one literal everything derives from. */
 export const BASE_URL = "/sw-color-tester/";
 
-/** react-router `basename` — no trailing slash. */
-export const BASENAME = "/sw-color-tester";
+/** react-router `basename` — no trailing slash (derived from BASE_URL). */
+export const BASENAME = BASE_URL.replace(/\/$/, "");
 
 /**
  * Public origin the site is served from, used for canonical URLs, Open Graph,

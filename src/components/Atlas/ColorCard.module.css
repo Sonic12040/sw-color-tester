@@ -38,26 +38,6 @@
   }
 }
 
-.dark {
-  --tile-text: white;
-  --tile-btn-bg: rgba(255, 255, 255, 0.85);
-  --tile-btn-hover-bg: rgba(255, 255, 255, 0.95);
-  --tile-btn-text: rgba(0, 0, 0, 0.9);
-  --tile-badge-bg: rgba(255, 255, 255, 0.85);
-  --tile-badge-text: rgba(0, 0, 0, 0.9);
-  color: var(--tile-text);
-}
-
-.light {
-  --tile-text: black;
-  --tile-btn-bg: rgba(0, 0, 0, 0.7);
-  --tile-btn-hover-bg: rgba(0, 0, 0, 0.85);
-  --tile-btn-text: white;
-  --tile-badge-bg: rgba(0, 0, 0, 0.75);
-  --tile-badge-text: rgba(255, 255, 255, 0.95);
-  color: var(--tile-text);
-}
-
 /* Clickable area: dark title bar on top, colored swatch (with chips/badges)
    below. The swatch sits between the title bar and the action bar. */
 .face {
@@ -76,7 +56,7 @@
 
 /* Dark title bar (matches the action bar) — name is always light text. */
 .titleBar {
-  background: #1b1c20;
+  background: var(--surface-dark);
   color: #ffffff;
   padding: var(--spacing-3) clamp(0.875rem, 2.4vw, 1.25rem);
 }
@@ -107,7 +87,7 @@
   border-radius: var(--radius-sm);
   backdrop-filter: var(--blur-sm);
   width: fit-content;
-  background: rgba(20, 21, 25, 0.82);
+  background: var(--chip-dark);
   color: #ffffff;
   line-height: var(--line-height-tight);
 }
@@ -141,7 +121,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-1);
-  background: rgba(20, 21, 25, 0.82);
+  background: var(--chip-dark);
   color: #ffffff;
 }
 
@@ -149,8 +129,8 @@
    fixed dark bar (independent of the swatch's lightness) so the icons keep a
    consistent, high-contrast appearance on every color. */
 .actions {
-  --bar-bg: #1b1c20;
-  --bar-fg: rgba(255, 255, 255, 0.92);
+  --bar-bg: var(--surface-dark);
+  --bar-fg: var(--on-dark);
   --bar-fg-strong: #ffffff;
   display: flex;
   margin-top: auto;
@@ -175,11 +155,11 @@
 
 /* Hairline divider between buttons (drawn inward so no swatch shows through). */
 .actionBtn + .actionBtn {
-  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.1);
+  box-shadow: -1px 0 0 var(--on-dark-subtle);
 }
 
 .actionBtn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--on-dark-subtle);
   color: var(--bar-fg-strong);
 }
 
@@ -195,6 +175,6 @@
 
 /* Active toggles get a lighter cell + a filled icon (set in the markup). */
 .actionBtnActive {
-  background: rgba(255, 255, 255, 0.16);
+  background: var(--on-dark-active);
   color: var(--bar-fg-strong);
 }

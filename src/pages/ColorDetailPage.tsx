@@ -1,7 +1,7 @@
 import { useParams } from "react-router";
 import { useAppContext } from "../context/AppContext.js";
 import { useDocumentMeta } from "../hooks/useDocumentMeta.js";
-import { ColorDetail } from "../components/Modal/ColorDetail.js";
+import { ColorDetail } from "../components/ColorDetailView/ColorDetail.js";
 import { JsonLd } from "../components/seo/JsonLd.js";
 import { NotFoundPage } from "./NotFoundPage.js";
 import { buildColorJsonLd, colorDescription } from "../utils/seo.js";

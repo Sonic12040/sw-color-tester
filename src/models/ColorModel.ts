@@ -46,9 +46,7 @@ export class ColorModel {
   #activeColors: Color[];
   #colorById: Map<string, Color>;
   #colorBySlug: Map<string, Color>;
-  #familyColors: Map<string, Color[]>;
-  #familyColorIds: Map<string, string[]>;
-  #familyNameLookup: Map<string, string>;
+  #familyNames: string[];
   #designerPickIds: Set<string>;
   #collectionNames: string[];
 
@@ -64,26 +62,18 @@ export class ColorModel {
       }));
     this.#colorById = new Map(this.#activeColors.map((c) => [c.id, c]));
     this.#colorBySlug = new Map(this.#activeColors.map((c) => [toSlug(c), c]));
-    this.#familyColors = new Map();
-    this.#familyColorIds = new Map();
-    this.#familyNameLookup = new Map();
+    this.#familyNames = [];
     this.#designerPickIds = new Set();
     this.#collectionNames = [];
     this.#buildGroupMaps();
   }
 
   #buildGroupMaps(): void {
+    const families = new Set<string>();
     const collections = new Set<string>();
     for (const color of this.#activeColors) {
       if (color.colorFamilyNames.length > 0) {
-        const family = color.colorFamilyNames[0];
-        if (!this.#familyColors.has(family)) {
-          this.#familyColors.set(family, []);
-          this.#familyColorIds.set(family, []);
-          this.#familyNameLookup.set(family.toLowerCase(), family);
-        }
-        this.#familyColors.get(family)!.push(color);
-        this.#familyColorIds.get(family)!.push(color.id);
+        families.add(color.colorFamilyNames[0]);
       }
       if (
         color.brandedCollectionNames.some((c) =>
@@ -96,6 +86,7 @@ export class ColorModel {
         if (!name.startsWith(DESIGNER_COLLECTION_PREFIX)) collections.add(name);
       }
     }
+    this.#familyNames = [...families];
     this.#collectionNames = [...collections].sort((a, b) => a.localeCompare(b));
   }
 
@@ -106,7 +97,7 @@ export class ColorModel {
 
   /** Families in display order (for the family facet list). */
   getOrderedFamilies(): string[] {
-    return this.sortFamiliesByPriority([...this.#familyColors.keys()]);
+    return this.#sortFamiliesByPriority(this.#familyNames);
   }
 
   getColorBySlug(slug: string): Color | undefined {
@@ -130,45 +121,7 @@ export class ColorModel {
     return this.#activeColors;
   }
 
-  getFavoriteColors(favoriteSet: Set<string>): Color[] {
-    return this.getActiveColors().filter((c) => favoriteSet.has(c.id));
-  }
-
-  getHiddenColors(hiddenSet: Set<string>): Color[] {
-    return this.getActiveColors().filter((c) => hiddenSet.has(c.id));
-  }
-
-  getVisibleColors(
-    hiddenSet: Set<string>,
-    favoriteSet: Set<string> = new Set(),
-    lrvRange?: { min: number; max: number },
-  ): Color[] {
-    return this.getActiveColors().filter((c) => {
-      if (hiddenSet.has(c.id) || favoriteSet.has(c.id)) return false;
-      if (lrvRange && (lrvRange.min > 0 || lrvRange.max < 100)) {
-        const lrv = c.lrv ?? 0;
-        if (lrv < lrvRange.min || lrv > lrvRange.max) return false;
-      }
-      return true;
-    });
-  }
-
-  groupByFamily(colors: Color[]): Map<string, Color[]> {
-    const colorFamilies = new Map<string, Color[]>();
-    for (const color of colors) {
-      const primaryFamily =
-        color.colorFamilyNames.length > 0 ? color.colorFamilyNames[0] : "Other";
-      let group = colorFamilies.get(primaryFamily);
-      if (!group) {
-        group = [];
-        colorFamilies.set(primaryFamily, group);
-      }
-      group.push(color);
-    }
-    return colorFamilies;
-  }
-
-  sortFamiliesByPriority(familyKeys: string[]): string[] {
+  #sortFamiliesByPriority(familyKeys: string[]): string[] {
     return [...familyKeys].sort((a, b) => {
       const aIndex = FAMILY_ORDER.indexOf(a);
       const bIndex = FAMILY_ORDER.indexOf(b);
@@ -177,53 +130,6 @@ export class ColorModel {
       if (bIndex !== -1) return 1;
       return a.localeCompare(b);
     });
-  }
-
-  getFamilyColors(familyName: string): Color[] {
-    const colors = this.#familyColors.get(familyName);
-    if (colors) return colors;
-    const canonical = this.#familyNameLookup.get(familyName.toLowerCase());
-    return canonical ? (this.#familyColors.get(canonical) ?? []) : [];
-  }
-
-  getHiddenFamilies(
-    hiddenSet: Set<string>,
-    favoriteSet: Set<string> = new Set(),
-  ): Array<{ name: string; count: number }> {
-    const hiddenFamilies: Array<{ name: string; count: number }> = [];
-    for (const [familyName, colors] of this.#familyColors) {
-      let nonFavCount = 0;
-      let allHidden = true;
-      for (const color of colors) {
-        if (favoriteSet.has(color.id)) continue;
-        nonFavCount++;
-        if (!hiddenSet.has(color.id)) {
-          allHidden = false;
-          break;
-        }
-      }
-      if (nonFavCount > 0 && allHidden) {
-        hiddenFamilies.push({ name: familyName, count: nonFavCount });
-      }
-    }
-    return hiddenFamilies;
-  }
-
-  getColorIdsForFamily(
-    familyName: string,
-    excludeIds: string[] | Set<string> = [],
-  ): string[] {
-    const ids = this.#familyColorIds.get(familyName);
-    if (!ids) return [];
-    if (
-      (excludeIds instanceof Set && excludeIds.size === 0) ||
-      (Array.isArray(excludeIds) && excludeIds.length === 0)
-    ) {
-      return ids;
-    }
-    const excludeSet =
-      excludeIds instanceof Set ? excludeIds : new Set(excludeIds);
-    return ids.filter((id) => !excludeSet.has(id));
   }
 
   /**

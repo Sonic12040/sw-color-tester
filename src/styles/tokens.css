@@ -260,6 +260,29 @@
     --undertone-warm: #d97706; /* amber */
     --undertone-cool: var(--blue-600); /* blue */
     --undertone-neutral: var(--neutral-500); /* gray */
+
+    /* ============================================
+     DARK CHROME
+     Surfaces + on-dark text/border scale shared by the header, search/sort
+     toolbar, filter rail, color-tile bars, and the detail page.
+     ============================================ */
+    --surface-dark: #1b1c20; /* header / toolbar / rail / tile bars / detail card */
+    --chip-dark: rgba(
+      20,
+      21,
+      25,
+      0.82
+    ); /* chips & badges over color swatches */
+    --on-dark: rgba(255, 255, 255, 0.92); /* primary text + icons on dark */
+    --on-dark-muted: rgba(255, 255, 255, 0.72); /* secondary text */
+    --on-dark-faint: rgba(255, 255, 255, 0.6); /* tertiary text */
+    --on-dark-subtle: rgba(
+      255,
+      255,
+      255,
+      0.1
+    ); /* hairlines / dividers / hover */
+    --on-dark-active: rgba(255, 255, 255, 0.16); /* pressed / active cell */
   }
 
   * {

@@ -7,13 +7,7 @@ import globals from "globals";
 
 export default tseslint.config(
   {
-    ignores: [
-      "dist",
-      "dist-server",
-      "coverage",
-      "src/data/palette.ts",
-      "src/models/palette-v1.ts",
-    ],
+    ignores: ["dist", "dist-server", "coverage", "src/data/palette.ts"],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

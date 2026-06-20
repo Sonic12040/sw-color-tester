@@ -2,9 +2,11 @@ import { defineConfig } from "vite";
 import type { Connect } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
-
-const BASE = "/sw-color-tester/";
-const BASE_NO_SLASH = BASE.replace(/\/$/, "");
+// Single source of truth for the deploy base path (shared with the app + SSG).
+import {
+  BASE_URL as BASE,
+  BASENAME as BASE_NO_SLASH,
+} from "./src/utils/base.ts";
 
 /**
  * Redirect the base path without its trailing slash (e.g. `/sw-color-tester`)
@@ -56,8 +58,7 @@ export default defineConfig({
         // Visited color pages become available offline after first view.
         runtimeCaching: [
           {
-            urlPattern: ({ url }) =>
-              url.pathname.startsWith("/sw-color-tester/colors/"),
+            urlPattern: ({ url }) => url.pathname.startsWith(`${BASE}colors/`),
             handler: "NetworkFirst",
             options: {
               cacheName: "color-pages",

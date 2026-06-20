@@ -21,7 +21,7 @@
   position: fixed;
   inset: 0 auto 0 0;
   width: min(var(--drawer-max-width), 85vw);
-  background: #1b1c20;
+  background: var(--surface-dark);
   color-scheme: dark;
   z-index: var(--z-drawer);
   transform: translateX(-100%);
@@ -61,7 +61,7 @@
     box-shadow: none;
     z-index: auto;
     inset: auto;
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: 1px solid var(--on-dark-subtle);
   }
 
   .railInner {

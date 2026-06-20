@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const dist = resolve(__dirname, "dist");
 
-const { render, getPrerenderPaths, getSitemapUrls, getColorsIndex } =
+const { render, getPrerenderPaths, getSitemapUrls, getColorsIndex, BASENAME } =
   await import("./dist-server/entry-server.js");
 
 // Use the built client index.html (already has hashed asset tags + PWA SW
@@ -18,8 +18,6 @@ const template = readFileSync(resolve(dist, "index.html"), "utf8").replace(
   /<title>.*?<\/title>\s*/s,
   "",
 );
-
-const BASE = "/sw-color-tester";
 
 /** Map an app path to its output file: "/" → dist/index.html, "/colors/x" → dist/colors/x/index.html */
 function outFile(appPath) {
@@ -79,5 +77,5 @@ writeFileSync(
 );
 
 console.log(
-  `SSG complete: ${paths.length} pages + sitemap.xml, robots.txt, colors.json (base ${BASE})`,
+  `SSG complete: ${paths.length} pages + sitemap.xml, robots.txt, colors.json (base ${BASENAME})`,
 );

@@ -4,7 +4,7 @@
 export const STORAGE_KEYS = {
   favorites: "sw-color-tester:favorites",
   hidden: "sw-color-tester:hidden",
-  lrv: "sw-color-tester:lrv",
+  lightness: "sw-color-tester:lightness",
   sort: "sw-color-tester:sort",
   compare: "sw-color-tester:compare",
   palette: "sw-color-tester:palette",

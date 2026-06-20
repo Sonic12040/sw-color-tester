@@ -38,7 +38,7 @@
   left: var(--spacing-2);
   z-index: var(--z-tooltip);
   padding: var(--spacing-2) var(--spacing-4);
-  background: #1b1c20;
+  background: var(--surface-dark);
   color: #ffffff;
   border-radius: var(--radius-md);
   font-weight: var(--font-weight-semibold);

@@ -100,7 +100,7 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
 
   // Persisted preferences.
   const [lightness, setLightness] = usePersistentState<LrvClass[]>(
-    STORAGE_KEYS.lrv,
+    STORAGE_KEYS.lightness,
     [],
     parseLightness,
   );

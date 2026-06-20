@@ -2,7 +2,6 @@ import { memo } from "react";
 import { Link } from "react-router";
 import type { Color } from "../../data/types.js";
 import { hsl, classifyLrv, undertone } from "../../utils/colorPresentation.js";
-import { LRV_THRESHOLDS } from "../../utils/config.js";
 import { colorPath } from "../../utils/base.js";
 import { toSlug } from "../../utils/slug.js";
 import styles from "./ColorCard.module.css";
@@ -34,16 +33,11 @@ function ColorCardImpl({
   onToggleCompare,
   onTogglePalette,
 }: ColorCardProps) {
-  const themeClass =
-    color.lrv < LRV_THRESHOLDS.CONTRAST ? styles.dark : styles.light;
   const lrvLabel = classifyLrv(color.lrv);
   const tone = undertone(color);
 
   return (
-    <article
-      className={`${styles.card} ${themeClass}`}
-      style={{ background: hsl(color) }}
-    >
+    <article className={styles.card} style={{ background: hsl(color) }}>
       {/* Clicking the swatch / info opens the detail page. */}
       <Link
         to={colorPath(toSlug(color))}

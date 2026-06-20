@@ -5,8 +5,8 @@
   position: sticky;
   top: 0;
   z-index: var(--z-sticky);
-  background: #1b1c20;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--surface-dark);
+  border-bottom: 1px solid var(--on-dark-subtle);
 }
 
 @media (min-width: 768px) {
@@ -54,7 +54,7 @@
 }
 
 .searchInput::placeholder {
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--on-dark-muted);
 }
 
 .searchInput:focus-visible {
@@ -64,7 +64,7 @@
 
 .count {
   font-size: var(--font-size-sm);
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--on-dark-muted);
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
@@ -74,7 +74,7 @@
   align-items: center;
   gap: var(--spacing-2);
   font-size: var(--font-size-sm);
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--on-dark-muted);
 }
 
 .sortText {
@@ -98,7 +98,7 @@
    honored, so set the option colors explicitly (dark bg, light text) instead
    of inheriting the select's white text onto a light popup. */
 .sortSelect option {
-  background: #1b1c20;
+  background: var(--surface-dark);
   color: #ffffff;
 }
 
@@ -111,7 +111,7 @@
   padding: 0 6px;
   border-radius: var(--radius-full);
   background: #ffffff;
-  color: #1b1c20;
+  color: var(--surface-dark);
   font-size: var(--font-size-2xs);
   font-weight: var(--font-weight-bold);
 }
@@ -127,7 +127,7 @@
 }
 
 .filtersBtn:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--on-dark-subtle);
 }
 
 @media (min-width: 1024px) {

@@ -111,7 +111,7 @@
   font-size: var(--font-size-sm);
   cursor: pointer;
   min-height: 44px; /* AAA 2.5.5 target size for the clickable label row */
-  color: rgba(255, 255, 255, 0.92);
+  color: var(--on-dark);
 }
 
 .checkHint {
