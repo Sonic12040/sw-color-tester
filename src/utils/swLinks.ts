@@ -18,10 +18,18 @@ function kebab(s: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
-/** Color's page on sherwin-williams.com (where samples are ordered). */
+/**
+ * Color's page on sherwin-williams.com, e.g.
+ * `…/color-family/yellow-paint-colors/SW6141-softer-tan`. Falls back to the
+ * color-family landing page when the color has no usable family.
+ */
 export function swColorUrl(c: Color): string {
-  return `${SW_ORIGIN}/en-us/color/color-family/SW${c.colorNumber}-${kebab(c.name)}`;
+  const family = c.colorFamilyNames[0];
+  if (!family || family === "NA") {
+    return `${SW_ORIGIN}/en-us/color/color-family`;
+  }
+  return `${SW_ORIGIN}/en-us/color/color-family/${kebab(family)}-paint-colors/SW${c.colorNumber}-${kebab(c.name)}`;
 }
 
 export const SW_STORE_LOCATOR_URL = `${SW_ORIGIN}/store-locator`;
-export const SW_SAMPLES_URL = `${SW_ORIGIN}/en-us/paint-colors/order-color-chips`;
+export const SW_SAMPLES_URL = "https://samples.sherwin-williams.com";

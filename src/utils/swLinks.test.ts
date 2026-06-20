@@ -27,25 +27,60 @@ const color = (over: Partial<Color>): Color =>
   }) as Color;
 
 describe("swColorUrl", () => {
-  it("builds an absolute SW url from the number + kebab-cased name", () => {
-    expect(swColorUrl(color({}))).toBe(
-      "https://www.sherwin-williams.com/en-us/color/color-family/SW6864-cherry-tomato",
+  it("includes the {family}-paint-colors segment + SW{number}-{name}", () => {
+    expect(
+      swColorUrl(
+        color({
+          name: "Softer Tan",
+          colorNumber: "6141",
+          colorFamilyNames: ["Yellow"],
+        }),
+      ),
+    ).toBe(
+      "https://www.sherwin-williams.com/en-us/color/color-family/yellow-paint-colors/SW6141-softer-tan",
+    );
+    expect(
+      swColorUrl(
+        color({
+          name: "Lazy Gray",
+          colorNumber: "6254",
+          colorFamilyNames: ["Neutral"],
+        }),
+      ),
+    ).toBe(
+      "https://www.sherwin-williams.com/en-us/color/color-family/neutral-paint-colors/SW6254-lazy-gray",
     );
   });
 
   it("strips punctuation from multi-word names", () => {
     expect(
-      swColorUrl(color({ name: "Naval (Deep)", colorNumber: "6244" })),
+      swColorUrl(
+        color({
+          name: "Naval (Deep)",
+          colorNumber: "6244",
+          colorFamilyNames: ["Blue"],
+        }),
+      ),
     ).toBe(
-      "https://www.sherwin-williams.com/en-us/color/color-family/SW6244-naval-deep",
+      "https://www.sherwin-williams.com/en-us/color/color-family/blue-paint-colors/SW6244-naval-deep",
+    );
+  });
+
+  it("falls back to the color-family landing page when family is unusable", () => {
+    expect(swColorUrl(color({ colorFamilyNames: [] }))).toBe(
+      "https://www.sherwin-williams.com/en-us/color/color-family",
+    );
+    expect(swColorUrl(color({ colorFamilyNames: ["NA"] }))).toBe(
+      "https://www.sherwin-williams.com/en-us/color/color-family",
     );
   });
 });
 
 describe("static SW links", () => {
-  it("are absolute https URLs on the SW origin", () => {
-    for (const url of [SW_STORE_LOCATOR_URL, SW_SAMPLES_URL]) {
-      expect(url).toMatch(/^https:\/\/www\.sherwin-williams\.com\//);
-    }
+  it("point the store locator at www and samples at the samples subdomain", () => {
+    expect(SW_STORE_LOCATOR_URL).toBe(
+      "https://www.sherwin-williams.com/store-locator",
+    );
+    expect(SW_SAMPLES_URL).toBe("https://samples.sherwin-williams.com");
   });
 });
