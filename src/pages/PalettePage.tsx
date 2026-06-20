@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router";
 import { hsl, classifyLrv } from "../utils/colorPresentation.js";
 import { colorPath, BASENAME } from "../utils/base.js";
 import { toSlug } from "../utils/slug.js";
+import { copyText } from "../utils/clipboard.js";
 import { useAppContext } from "../context/AppContext.js";
 import { usePalette } from "../context/PaletteContext.js";
 import { useToast } from "../components/Toast/Toast.js";
@@ -39,14 +40,15 @@ export function PalettePage() {
     setPalette(next);
   };
 
-  const copyShareLink = () => {
+  const copyShareLink = async () => {
     const slugs = colors.map((c) => toSlug(c)).join(",");
     const origin = typeof window !== "undefined" ? window.location.origin : "";
     const url = `${origin}${BASENAME}/palette?c=${slugs}`;
-    navigator.clipboard
-      .writeText(url)
-      .then(() => showToast("Share link copied to clipboard"))
-      .catch(() => showToast("Couldn't copy link"));
+    showToast(
+      (await copyText(url))
+        ? "Share link copied to clipboard"
+        : "Couldn't copy link",
+    );
   };
 
   return (

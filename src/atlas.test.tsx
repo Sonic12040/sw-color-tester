@@ -12,6 +12,7 @@ const { COLORS } = vi.hoisted(() => {
     family: string;
     hue?: number;
     saturation?: number;
+    store?: string;
   }) => ({
     id: over.id,
     name: over.name,
@@ -32,6 +33,7 @@ const { COLORS } = vi.hoisted(() => {
     brandedCollectionNames: [],
     similarColors: [],
     description: [],
+    storeStripLocator: over.store,
   });
 
   const COLORS = [
@@ -43,6 +45,7 @@ const { COLORS } = vi.hoisted(() => {
       family: "Red",
       hue: 0.0,
       saturation: 0.8,
+      store: "101-C1",
     }),
     make({
       id: "r2",
@@ -204,6 +207,37 @@ describe("Accessibility landmarks", () => {
     const mains = document.querySelectorAll("main");
     expect(mains).toHaveLength(1);
     expect(mains[0].id).toBe("main-content");
+  });
+});
+
+describe("Color detail actions", () => {
+  function mockClipboard() {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, "clipboard", {
+      value: { writeText },
+      configurable: true,
+    });
+    return writeText;
+  }
+
+  it("copies the hex code and confirms via toast", async () => {
+    const writeText = mockClipboard();
+    renderApp("/colors/sw-1001-crimson");
+    fireEvent.click(screen.getByRole("button", { name: "Copy Code" }));
+    expect(await screen.findByText("Copied #888888")).toBeTruthy();
+    expect(writeText).toHaveBeenCalledWith("#888888");
+  });
+
+  it("copies the store location and confirms via toast", async () => {
+    const writeText = mockClipboard();
+    renderApp("/colors/sw-1001-crimson");
+    fireEvent.click(
+      screen.getByRole("button", { name: /Copy store location/ }),
+    );
+    expect(
+      await screen.findByText("Copied store location 101-C1"),
+    ).toBeTruthy();
+    expect(writeText).toHaveBeenCalledWith("101-C1");
   });
 });
 

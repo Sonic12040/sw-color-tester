@@ -1,4 +1,6 @@
 import type { Color } from "../../data/types.js";
+import { copyText } from "../../utils/clipboard.js";
+import { useToast } from "../Toast/Toast.js";
 import styles from "./Modal.module.css";
 
 interface ModalActionsProps {
@@ -20,8 +22,23 @@ export function ModalActions({
   onToggleHidden,
   extraActions,
 }: ModalActionsProps) {
-  const copyHex = () => {
-    navigator.clipboard.writeText(color.hex.toUpperCase()).catch(() => {});
+  const showToast = useToast();
+
+  const copyHex = async () => {
+    const hex = color.hex.toUpperCase();
+    showToast(
+      (await copyText(hex)) ? `Copied ${hex}` : "Couldn't copy to clipboard",
+    );
+  };
+
+  const copyStore = async () => {
+    const loc = color.storeStripLocator;
+    if (!loc) return;
+    showToast(
+      (await copyText(loc))
+        ? `Copied store location ${loc}`
+        : "Couldn't copy to clipboard",
+    );
   };
 
   return (
@@ -95,7 +112,12 @@ export function ModalActions({
         <span>{isHidden ? "Hidden" : "Hide Color"}</span>
       </button>
       {color.storeStripLocator && (
-        <button type="button" className={styles.actionBtn}>
+        <button
+          type="button"
+          className={styles.actionBtn}
+          onClick={copyStore}
+          aria-label={`Copy store location ${color.storeStripLocator}`}
+        >
           <svg
             width="20"
             height="20"
