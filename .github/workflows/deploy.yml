@@ -29,19 +29,8 @@ jobs:
       - run: npm run typecheck
       - run: npm test
 
-  e2e:
-    needs: verify
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npx playwright install --with-deps chromium
-      - run: npm run test:e2e:ci
-
+  # Build once; both the e2e job and deploy reuse this dist (typecheck already
+  # ran in `verify`, so the build skips it).
   build:
     needs: verify
     runs-on: ubuntu-latest
@@ -52,13 +41,34 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run build
+      - run: npm run build:assets
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
+  e2e:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+
   deploy:
-    needs: [build, e2e]
+    needs: e2e
     runs-on: ubuntu-latest
     environment:
       name: github-pages
