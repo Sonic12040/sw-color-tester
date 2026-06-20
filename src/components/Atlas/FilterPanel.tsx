@@ -67,7 +67,7 @@ export function FilterPanel({ onClose }: FilterPanelProps) {
         {onClose && (
           <button
             type="button"
-            className={`btn-primary ${styles.done}`}
+            className={`btn-secondary ${styles.done}`}
             onClick={onClose}
           >
             Done

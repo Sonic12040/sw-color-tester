@@ -74,9 +74,10 @@ export function AtlasLayout({ colors, totalCount }: AtlasLayoutProps) {
           <FilterPanel onClose={closeDrawer} />
         </aside>
 
-        <main className={styles.main} aria-label="Color results">
+        {/* Region inside the page-level <main> (in RootLayout). */}
+        <section className={styles.main} aria-label="Color results">
           <ColorGrid colors={colors} onResetFilters={resetAll} />
-        </main>
+        </section>
       </div>
     </div>
   );

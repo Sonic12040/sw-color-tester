@@ -27,6 +27,9 @@ export function GalleryPage() {
 
   return (
     <>
+      <h1 className="sr-only">
+        Sherwin-Williams Color Atlas — browse {total} paint colors
+      </h1>
       <JsonLd data={buildGalleryJsonLd(total)} />
       <AtlasLayout colors={colors} totalCount={total} />
     </>

@@ -6,6 +6,7 @@
 //
 // Usage: node scripts/validate-devices.mjs  (expects `vite preview` on :4173)
 import { chromium, devices } from "@playwright/test";
+import { AxeBuilder } from "@axe-core/playwright";
 import { readFileSync, mkdirSync, readdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -203,6 +204,47 @@ async function run() {
     await ctx.close();
   } catch (err) {
     fail("no-trailing-slash", `exception: ${err.message}`);
+  }
+
+  // Skip link: the first Tab should land on the skip link.
+  try {
+    const ctx = await browser.newContext({
+      viewport: { width: 1440, height: 900 },
+    });
+    const page = await ctx.newPage();
+    await page.goto(BASE, { waitUntil: "networkidle" });
+    await page.keyboard.press("Tab");
+    const focused = await page.evaluate(() =>
+      (document.activeElement?.textContent || "").trim(),
+    );
+    if (/skip/i.test(focused)) pass("skip-link", "first Tab focuses the skip link");
+    else fail("skip-link", `first Tab focused "${focused}"`);
+    await ctx.close();
+  } catch (err) {
+    fail("skip-link", `exception: ${err.message}`);
+  }
+
+  // Automated axe-core scan of the gallery (WCAG 2.0/2.1/2.2 A + AA).
+  try {
+    const ctx = await browser.newContext({
+      viewport: { width: 1440, height: 900 },
+    });
+    const page = await ctx.newPage();
+    await page.goto(BASE, { waitUntil: "networkidle" });
+    const result = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+      .analyze();
+    const serious = result.violations.filter(
+      (v) => v.impact === "serious" || v.impact === "critical",
+    );
+    if (serious.length === 0)
+      pass("axe", `0 serious/critical (${result.violations.length} minor)`);
+    else
+      for (const v of serious)
+        fail("axe", `${v.id} ×${v.nodes.length} — ${v.help}`);
+    await ctx.close();
+  } catch (err) {
+    fail("axe", `exception: ${err.message}`);
   }
 
   await browser.close();

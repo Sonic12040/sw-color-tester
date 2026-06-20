@@ -8,12 +8,17 @@
   padding: var(--grid-gap) 0;
 }
 
+/* Dark surface so the message keeps full contrast on the neutral-gray gutter. */
 .empty {
   text-align: center;
-  color: var(--color-text-secondary);
+  color: rgba(255, 255, 255, 0.82);
   font-size: var(--font-size-base);
   line-height: var(--line-height-relaxed);
   padding: var(--spacing-10) var(--spacing-6);
+  margin: var(--grid-gap) auto;
+  max-width: 28rem;
+  background: #1b1c20;
+  border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,6 +28,6 @@
 .emptyTitle {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
-  color: var(--color-text-primary);
+  color: #ffffff;
   margin: 0;
 }

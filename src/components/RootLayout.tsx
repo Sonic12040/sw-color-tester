@@ -16,8 +16,13 @@ export function RootLayout() {
   return (
     <AppProviders>
       <AppContext.Provider value={ctxValue}>
+        <a className="skip-link" href="#main-content">
+          Skip to colors
+        </a>
         <Header />
-        <Outlet />
+        <main id="main-content">
+          <Outlet />
+        </main>
         <CompareTray />
       </AppContext.Provider>
     </AppProviders>

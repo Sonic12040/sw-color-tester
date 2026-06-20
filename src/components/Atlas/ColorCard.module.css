@@ -23,9 +23,12 @@
   box-shadow: var(--shadow-lg);
 }
 
+/* Focus ring sits in the neutral-gray gutter (offset outward), where a dark
+   ring lands ~5.3:1 — instead of over the dark title bar where it disappeared. */
 .card:focus-within {
-  outline: 2px solid var(--color-primary);
+  outline: 3px solid var(--color-primary);
   outline-offset: 2px;
+  box-shadow: var(--shadow-lg);
 }
 
 @media (hover: none) and (pointer: coarse) {
@@ -65,9 +68,10 @@
   text-decoration: none;
 }
 
+/* The whole-card ring (.card:focus-within) is the visible indicator; the inner
+   link doesn't draw its own (it would land on the swatch/title bar). */
 .face:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: -3px;
+  outline: none;
 }
 
 /* Dark title bar (matches the action bar) — name is always light text. */

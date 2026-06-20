@@ -16,6 +16,7 @@
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
   margin: 0;
+  color: #ffffff;
 }
 
 /* "Done" closes the drawer (<1024px); hidden on the persistent rail. */
@@ -44,7 +45,8 @@
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--color-text-secondary);
+  /* Light section headers — high contrast on the dark rail (≈9:1). */
+  color: rgba(255, 255, 255, 0.82);
   padding: 0;
   margin-bottom: var(--spacing-1);
 }
@@ -66,7 +68,7 @@
 
 .segment {
   flex: 1;
-  min-height: 40px;
+  min-height: 44px;
   border: none;
   background: var(--color-surface-primary);
   color: var(--color-text-primary);
@@ -108,20 +110,22 @@
   gap: var(--spacing-2);
   font-size: var(--font-size-sm);
   cursor: pointer;
-  min-height: 32px;
+  min-height: 44px; /* AAA 2.5.5 target size for the clickable label row */
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .checkHint {
   margin-left: auto;
   font-size: var(--font-size-xs);
-  color: var(--color-text-tertiary);
+  /* Light enough for ≥7:1 on the dark rail. */
+  color: rgba(255, 255, 255, 0.66);
   font-variant-numeric: tabular-nums;
 }
 
 .check input {
   width: 18px;
   height: 18px;
-  accent-color: var(--color-primary);
+  accent-color: var(--color-info);
 }
 
 .clearBtn {

@@ -21,6 +21,37 @@
   outline-offset: 2px;
 }
 
+/* Keep a keyboard-focused element clear of the sticky toolbar (top) and the
+   floating compare tray (bottom) when it is scrolled into view.
+   (WCAG 2.2 — 2.4.11 / 2.4.12 Focus Not Obscured.) */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  scroll-margin-top: 72px;
+  scroll-margin-bottom: 104px;
+}
+
+/* Skip link — visually hidden until focused, then pinned top-left above all chrome. */
+.skip-link {
+  position: fixed;
+  top: var(--spacing-2);
+  left: var(--spacing-2);
+  z-index: var(--z-tooltip);
+  padding: var(--spacing-2) var(--spacing-4);
+  background: #1b1c20;
+  color: #ffffff;
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-150%);
+  transition: transform var(--transition-fast);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
 /* Reduced-motion global override */
 @media (prefers-reduced-motion: reduce) {
   *,

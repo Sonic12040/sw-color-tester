@@ -61,7 +61,7 @@
 .navLink {
   display: inline-flex;
   align-items: center;
-  min-height: 40px;
+  min-height: 44px;
   padding: var(--spacing-1) var(--spacing-3);
   border-radius: var(--radius-sm);
   text-decoration: none;
@@ -87,7 +87,8 @@
 .favCount {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
-  color: var(--color-accent);
+  /* Lighter amber for ≥7:1 on the dark header (the token gold is ~5.8:1). */
+  color: #fbbf24;
   padding: 0 var(--spacing-2);
   white-space: nowrap;
 }

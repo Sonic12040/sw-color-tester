@@ -193,6 +193,20 @@ describe("Hidden view", () => {
   });
 });
 
+describe("Accessibility landmarks", () => {
+  it("exposes an h1, a skip link to #main-content, and a single main", () => {
+    renderApp();
+    expect(screen.getByRole("heading", { level: 1 })).toBeTruthy();
+
+    const skip = screen.getByRole("link", { name: /skip to colors/i });
+    expect(skip.getAttribute("href")).toBe("#main-content");
+
+    const mains = document.querySelectorAll("main");
+    expect(mains).toHaveLength(1);
+    expect(mains[0].id).toBe("main-content");
+  });
+});
+
 describe("Palette", () => {
   it("adds a color from its tile and lists it on the palette page", () => {
     renderApp();
