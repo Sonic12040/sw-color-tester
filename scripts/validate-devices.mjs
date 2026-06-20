@@ -217,7 +217,8 @@ async function run() {
     const focused = await page.evaluate(() =>
       (document.activeElement?.textContent || "").trim(),
     );
-    if (/skip/i.test(focused)) pass("skip-link", "first Tab focuses the skip link");
+    if (/skip/i.test(focused))
+      pass("skip-link", "first Tab focuses the skip link");
     else fail("skip-link", `first Tab focused "${focused}"`);
     await ctx.close();
   } catch (err) {
