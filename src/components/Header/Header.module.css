@@ -1,7 +1,8 @@
+/* Dark header to match the color tiles' title/action bars. */
 .header {
-  background: var(--color-surface-primary);
-  border-bottom: 1px solid var(--color-border-primary);
-  color: var(--color-text-primary);
+  background: #1b1c20;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
 }
 
 .inner {
@@ -64,7 +65,7 @@
   padding: var(--spacing-1) var(--spacing-3);
   border-radius: var(--radius-sm);
   text-decoration: none;
-  color: var(--color-text-secondary);
+  color: rgba(255, 255, 255, 0.78);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   transition:
@@ -73,13 +74,13 @@
 }
 
 .navLink:hover {
-  background: var(--color-surface-hover);
-  color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
 }
 
 .navLinkActive {
-  background: var(--color-surface-active);
-  color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
   font-weight: var(--font-weight-semibold);
 }
 

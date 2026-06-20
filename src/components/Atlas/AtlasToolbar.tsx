@@ -101,7 +101,11 @@ export function AtlasToolbar({
         </select>
       </label>
 
-      <Link to="/compare" className="btn-ghost" aria-label="Open comparison">
+      <Link
+        to="/compare"
+        className={`btn-ghost ${styles.compareLink}`}
+        aria-label="Open comparison"
+      >
         Compare{compare.length > 0 ? ` (${compare.length})` : ""}
       </Link>
     </div>

@@ -1,3 +1,4 @@
+/* Dark toolbar to match the header + color tiles' bars. */
 .toolbar {
   position: sticky;
   top: 0;
@@ -7,8 +8,8 @@
   gap: var(--spacing-3);
   padding: var(--spacing-2) clamp(0.75rem, 2.67vw, 1.5rem);
   min-height: var(--toolbar-height);
-  background: var(--color-surface-primary);
-  border-bottom: 1px solid var(--color-border-primary);
+  background: #1b1c20;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   flex-wrap: wrap;
 }
 
@@ -23,7 +24,7 @@
 .searchIcon {
   position: absolute;
   left: var(--spacing-3);
-  color: var(--color-text-tertiary);
+  color: rgba(255, 255, 255, 0.5);
   pointer-events: none;
 }
 
@@ -31,11 +32,15 @@
   width: 100%;
   min-height: 40px;
   padding: var(--spacing-2) var(--spacing-3) var(--spacing-2) var(--spacing-8);
-  border: 1px solid var(--color-border-primary);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: var(--radius-md);
   font-size: var(--font-size-base);
-  background: var(--color-surface-secondary);
-  color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.searchInput::placeholder {
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .searchInput:focus-visible {
@@ -45,7 +50,7 @@
 
 .count {
   font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
+  color: rgba(255, 255, 255, 0.72);
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
@@ -55,18 +60,23 @@
   align-items: center;
   gap: var(--spacing-2);
   font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .sortSelect {
   min-height: 40px;
   padding: var(--spacing-1) var(--spacing-2);
-  border: 1px solid var(--color-border-primary);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: var(--radius-md);
-  background: var(--color-surface-primary);
-  color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
   font-size: var(--font-size-sm);
   cursor: pointer;
+}
+
+/* Native dropdown options render on the OS surface — keep them legible. */
+.sortSelect option {
+  color: #111111;
 }
 
 .badge {
@@ -77,15 +87,34 @@
   height: 20px;
   padding: 0 6px;
   border-radius: var(--radius-full);
-  background: var(--color-primary);
-  color: var(--color-text-inverse);
+  background: #ffffff;
+  color: #1b1c20;
   font-size: var(--font-size-2xs);
   font-weight: var(--font-weight-bold);
+}
+
+/* Compare link + Filters button restyled to read on the dark toolbar
+   (overrides the global .btn-ghost / .btn-secondary utilities — module styles
+   are unlayered, so they win over the layered utilities). */
+.compareLink {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.compareLink:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
 }
 
 /* The "Filters" button only exists below the rail breakpoint. */
 .filtersBtn {
   display: inline-flex;
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+.filtersBtn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 @media (min-width: 1024px) {
