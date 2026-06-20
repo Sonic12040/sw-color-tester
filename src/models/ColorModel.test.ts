@@ -236,3 +236,64 @@ describe("getFilteredColors — sorting", () => {
     expect(names(model.getActiveColors())).toEqual(before);
   });
 });
+
+describe("neutrality facet + sort", () => {
+  // Colors with explicit lab spanning the neutrality bands.
+  const nm = new ColorModel([
+    c({
+      id: "g",
+      name: "Gray",
+      colorNumber: "1",
+      red: 128,
+      green: 128,
+      blue: 128,
+      saturation: 0,
+      lab: { L: 54, A: 0, B: 0 },
+    }),
+    c({
+      id: "m",
+      name: "Muted",
+      colorNumber: "2",
+      red: 150,
+      green: 140,
+      blue: 120,
+      saturation: 0.15,
+      lab: { L: 60, A: 8, B: 14 },
+    }),
+    c({
+      id: "r",
+      name: "Red",
+      colorNumber: "3",
+      red: 255,
+      green: 0,
+      blue: 0,
+      saturation: 1,
+      lab: { L: 53, A: 80, B: 67 },
+    }),
+  ]);
+
+  it("filters by neutrality band", () => {
+    expect(names(nm.getFilteredColors({ neutrality: ["High"] }))).toEqual([
+      "Gray",
+    ]);
+    expect(names(nm.getFilteredColors({ neutrality: ["Medium"] }))).toEqual([
+      "Muted",
+    ]);
+    expect(names(nm.getFilteredColors({ neutrality: ["Low"] }))).toEqual([
+      "Red",
+    ]);
+  });
+
+  it("sorts most-neutral and most-colorful first", () => {
+    expect(names(nm.getFilteredColors({ sort: "neutral-high" }))).toEqual([
+      "Gray",
+      "Muted",
+      "Red",
+    ]);
+    expect(names(nm.getFilteredColors({ sort: "neutral-low" }))).toEqual([
+      "Red",
+      "Muted",
+      "Gray",
+    ]);
+  });
+});

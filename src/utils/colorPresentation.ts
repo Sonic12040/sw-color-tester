@@ -1,5 +1,9 @@
 import type { Color } from "../data/types.js";
-import { LRV_THRESHOLDS, DESIGNER_COLLECTION_PREFIX } from "./config.js";
+import {
+  LRV_THRESHOLDS,
+  NEUTRALITY_THRESHOLDS,
+  DESIGNER_COLLECTION_PREFIX,
+} from "./config.js";
 
 // Positional labels for a color's coordinating colors (coord1, coord2, white).
 export const COORDINATING_ROLES = ["Accent Wall", "Trim Color", "Coordinating"];
@@ -52,6 +56,38 @@ export function undertone(c: Color): Undertone {
   if (h < 75 || h >= 320) return "Warm";
   if (h >= 140 && h < 290) return "Cool";
   return "Neutral"; // yellow-greens (75–140) / magentas (290–320): ambiguous
+}
+
+export type NeutralClass = "High" | "Medium" | "Low";
+
+export const NEUTRAL_CLASSES: NeutralClass[] = ["High", "Medium", "Low"];
+
+/** Chroma (C*ab) at which a color is treated as fully colorful (score floor). */
+const NEUTRAL_CHROMA_REF = 60;
+
+/**
+ * Neutrality score 0–100 (100 = perfectly gray). Neutrality is the inverse of
+ * chroma; the dominant term is perceptual CIELAB chroma (C*ab = √(a²+b²)),
+ * corroborated by the RGB channel spread (how close r,g,b are) and HSL
+ * saturation. Hue is intentionally excluded — it's only the *direction* of a
+ * residual tint, not how neutral a color is (see `undertone` for that).
+ */
+export function neutrality(c: Color): number {
+  const spread =
+    (Math.max(c.red, c.green, c.blue) - Math.min(c.red, c.green, c.blue)) / 255;
+  const chromaTerm = c.lab
+    ? Math.min(1, Math.hypot(c.lab.A, c.lab.B) / NEUTRAL_CHROMA_REF)
+    : spread; // fallback when LAB is unavailable
+  const colorfulness = 0.6 * chromaTerm + 0.25 * spread + 0.15 * c.saturation;
+  return Math.round(100 * (1 - Math.min(1, Math.max(0, colorfulness))));
+}
+
+/** Classify neutrality into High (near-gray) / Medium (muted) / Low (colorful). */
+export function neutralityBand(c: Color): NeutralClass {
+  const n = neutrality(c);
+  if (n >= NEUTRALITY_THRESHOLDS.HIGH) return "High";
+  if (n >= NEUTRALITY_THRESHOLDS.MEDIUM) return "Medium";
+  return "Low";
 }
 
 export interface LrvDescription {

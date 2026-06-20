@@ -182,6 +182,23 @@ describe("Atlas browse", () => {
   });
 });
 
+describe("Neutrality", () => {
+  it("filters by the neutrality facet", () => {
+    renderApp();
+    // Mocked colors are RGB-gray, so none read as 'Low' neutrality (colorful).
+    fireEvent.click(screen.getByRole("checkbox", { name: /Low/ }));
+    expect(screen.getByText("0 of 6")).toBeTruthy();
+  });
+
+  it("accepts the neutrality sort options", () => {
+    renderApp();
+    fireEvent.change(screen.getByLabelText("Sort colors"), {
+      target: { value: "neutral-high" },
+    });
+    expect(screen.getByText("6 of 6")).toBeTruthy();
+  });
+});
+
 describe("Hidden view", () => {
   it("hides a color from the default view and surfaces it under Hidden", () => {
     renderApp();

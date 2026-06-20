@@ -47,6 +47,12 @@ export function ActiveFilters() {
       label: l,
       onRemove: () => f.toggleLightness(l),
     });
+  for (const n of f.neutrality)
+    chips.push({
+      key: `neutral:${n}`,
+      label: `${n} neutrality`,
+      onRemove: () => f.toggleNeutrality(n),
+    });
   if (f.useType)
     chips.push({
       key: "use",

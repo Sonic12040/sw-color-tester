@@ -13,6 +13,8 @@ const SORTS: { key: SortKey; label: string }[] = [
   { key: "hue", label: "Hue" },
   { key: "lrv-asc", label: "LRV: low → high" },
   { key: "lrv-desc", label: "LRV: high → low" },
+  { key: "neutral-high", label: "Most neutral" },
+  { key: "neutral-low", label: "Most colorful" },
   { key: "name", label: "Name (A–Z)" },
 ];
 

@@ -3,7 +3,9 @@ import { useFilters } from "../../context/FiltersContext.js";
 import {
   UNDERTONES,
   LRV_CLASSES,
+  NEUTRAL_CLASSES,
   type LrvClass,
+  type NeutralClass,
 } from "../../utils/colorPresentation.js";
 import { LRV_THRESHOLDS } from "../../utils/config.js";
 import type { AtlasView } from "../../models/ColorModel.js";
@@ -32,6 +34,12 @@ const LIGHTNESS_HINT: Record<LrvClass, string> = {
   Light: `LRV > ${LRV_THRESHOLDS.LIGHT}`,
 };
 
+const NEUTRALITY_HINT: Record<NeutralClass, string> = {
+  High: "Near-gray",
+  Medium: "Muted",
+  Low: "Colorful",
+};
+
 /**
  * The faceted filter controls. Rendered once — its wrapper (AtlasLayout)
  * positions it as a persistent rail (≥1024px) or a slide-in drawer (<1024px).
@@ -42,6 +50,7 @@ export function FilterPanel({ onClose }: FilterPanelProps) {
     families,
     undertones,
     lightness,
+    neutrality,
     useType,
     collections,
     designerOnly,
@@ -50,6 +59,7 @@ export function FilterPanel({ onClose }: FilterPanelProps) {
     toggleFamily,
     toggleUndertone,
     toggleLightness,
+    toggleNeutrality,
     setUseType,
     toggleCollection,
     setDesignerOnly,
@@ -124,6 +134,23 @@ export function FilterPanel({ onClose }: FilterPanelProps) {
                 aria-hidden="true"
               />
               {u}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <fieldset className={styles.group}>
+        <legend className={styles.legend}>Neutrality</legend>
+        <div className={styles.checkList}>
+          {NEUTRAL_CLASSES.map((n) => (
+            <label key={n} className={styles.check}>
+              <input
+                type="checkbox"
+                checked={neutrality.includes(n)}
+                onChange={() => toggleNeutrality(n)}
+              />
+              {n}
+              <span className={styles.checkHint}>{NEUTRALITY_HINT[n]}</span>
             </label>
           ))}
         </div>

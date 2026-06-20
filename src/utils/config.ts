@@ -6,6 +6,14 @@ export const LRV_THRESHOLDS = {
   CONTRAST: 40,
 };
 
+// Neutrality score (0–100, see colorPresentation.neutrality) band thresholds.
+// Tuned to the dataset's terciles so each band is well populated:
+// High ≥ 85 (near-gray), Medium 69–84 (muted), Low < 69 (colorful).
+export const NEUTRALITY_THRESHOLDS = {
+  HIGH: 85,
+  MEDIUM: 69,
+};
+
 // Prefix used to identify Designer Color Collection entries in brandedCollectionNames.
 // Used for the "Designer Pick" tile badge and modal sub-collection display.
 export const DESIGNER_COLLECTION_PREFIX = "Designer Color Collection";

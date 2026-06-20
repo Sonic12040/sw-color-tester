@@ -11,6 +11,7 @@ import {
   LRV_CLASSES,
   type Undertone,
   type LrvClass,
+  type NeutralClass,
 } from "../utils/colorPresentation.js";
 import type {
   AtlasView,
@@ -26,6 +27,7 @@ export interface FiltersContextValue {
   families: string[];
   undertones: Undertone[];
   lightness: LrvClass[];
+  neutrality: NeutralClass[];
   useType: UseType;
   collections: string[];
   designerOnly: boolean;
@@ -37,6 +39,7 @@ export interface FiltersContextValue {
   toggleFamily: (f: string) => void;
   toggleUndertone: (u: Undertone) => void;
   toggleLightness: (l: LrvClass) => void;
+  toggleNeutrality: (n: NeutralClass) => void;
   setUseType: (t: UseType) => void;
   toggleCollection: (c: string) => void;
   setDesignerOnly: (v: boolean) => void;
@@ -67,7 +70,15 @@ function parseLightness(raw: unknown): LrvClass[] | null {
   );
 }
 
-const SORT_KEYS: SortKey[] = ["family", "hue", "lrv-asc", "lrv-desc", "name"];
+const SORT_KEYS: SortKey[] = [
+  "family",
+  "hue",
+  "lrv-asc",
+  "lrv-desc",
+  "name",
+  "neutral-high",
+  "neutral-low",
+];
 const parseSort = (raw: unknown): SortKey | null =>
   typeof raw === "string" && (SORT_KEYS as string[]).includes(raw)
     ? (raw as SortKey)
@@ -81,6 +92,7 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
   const [search, setSearch] = useState("");
   const [families, setFamilies] = useState<string[]>([]);
   const [undertones, setUndertones] = useState<Undertone[]>([]);
+  const [neutrality, setNeutrality] = useState<NeutralClass[]>([]);
   const [useType, setUseType] = useState<UseType>(null);
   const [collections, setCollections] = useState<string[]>([]);
   const [designerOnly, setDesignerOnly] = useState(false);
@@ -110,6 +122,10 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
     (l: LrvClass) => setLightness((prev) => toggle(prev, l)),
     [setLightness],
   );
+  const toggleNeutrality = useCallback(
+    (n: NeutralClass) => setNeutrality((prev) => toggle(prev, n)),
+    [],
+  );
   const toggleCollection = useCallback(
     (c: string) => setCollections((prev) => toggle(prev, c)),
     [],
@@ -119,6 +135,7 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
     setSearch("");
     setFamilies([]);
     setUndertones([]);
+    setNeutrality([]);
     setUseType(null);
     setCollections([]);
     setDesignerOnly(false);
@@ -130,6 +147,7 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
     families.length +
     undertones.length +
     lightness.length +
+    neutrality.length +
     collections.length +
     (useType ? 1 : 0) +
     (designerOnly ? 1 : 0);
@@ -140,6 +158,7 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
       families,
       undertones,
       lightness,
+      neutrality,
       useType,
       collections,
       designerOnly,
@@ -151,6 +170,7 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
       families,
       undertones,
       lightness,
+      neutrality,
       useType,
       collections,
       designerOnly,
@@ -165,6 +185,7 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
       families,
       undertones,
       lightness,
+      neutrality,
       useType,
       collections,
       designerOnly,
@@ -174,6 +195,7 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
       toggleFamily,
       toggleUndertone,
       toggleLightness,
+      toggleNeutrality,
       setUseType,
       toggleCollection,
       setDesignerOnly,
@@ -188,6 +210,7 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
       families,
       undertones,
       lightness,
+      neutrality,
       useType,
       collections,
       designerOnly,
@@ -196,6 +219,7 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
       toggleFamily,
       toggleUndertone,
       toggleLightness,
+      toggleNeutrality,
       toggleCollection,
       setSort,
       resetAll,

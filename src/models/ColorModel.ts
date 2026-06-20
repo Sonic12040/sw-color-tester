@@ -3,12 +3,22 @@ import { FAMILY_ORDER, DESIGNER_COLLECTION_PREFIX } from "../utils/config.js";
 import {
   undertone,
   classifyLrv,
+  neutrality,
+  neutralityBand,
   type Undertone,
   type LrvClass,
+  type NeutralClass,
 } from "../utils/colorPresentation.js";
 import { toSlug } from "../utils/slug.js";
 
-export type SortKey = "family" | "hue" | "lrv-asc" | "lrv-desc" | "name";
+export type SortKey =
+  | "family"
+  | "hue"
+  | "lrv-asc"
+  | "lrv-desc"
+  | "name"
+  | "neutral-high"
+  | "neutral-low";
 
 export type AtlasView = "all" | "favorites" | "hidden";
 
@@ -21,6 +31,8 @@ export interface FilterCriteria {
   undertones?: Undertone[];
   /** Lightness band match (Dark / Medium / Light, OR across the list). */
   lightness?: LrvClass[];
+  /** Neutrality band match (High / Medium / Low, OR across the list). */
+  neutrality?: NeutralClass[];
   useType?: "interior" | "exterior" | null;
   /** Branded-collection membership (OR, substring match). */
   collections?: string[];
@@ -228,6 +240,7 @@ export class ColorModel {
       families,
       undertones,
       lightness,
+      neutrality: neutralBands,
       useType,
       collections,
       designerOnly,
@@ -253,6 +266,8 @@ export class ColorModel {
       collections && collections.length > 0 ? collections : null;
     const lightnessSet =
       lightness && lightness.length > 0 ? new Set(lightness) : null;
+    const neutralSet =
+      neutralBands && neutralBands.length > 0 ? new Set(neutralBands) : null;
 
     const filtered = base.filter((c) => {
       if (q) {
@@ -265,6 +280,7 @@ export class ColorModel {
       if (lightnessSet && !lightnessSet.has(classifyLrv(c.lrv ?? 0))) {
         return false;
       }
+      if (neutralSet && !neutralSet.has(neutralityBand(c))) return false;
       if (useType === "interior" && !c.isInterior) return false;
       if (useType === "exterior" && !c.isExterior) return false;
       if (designerOnly && !this.#designerPickIds.has(c.id)) return false;
@@ -292,6 +308,16 @@ export class ColorModel {
         return sorted.sort((a, b) => b.lrv - a.lrv);
       case "name":
         return sorted.sort((a, b) => a.name.localeCompare(b.name));
+      case "neutral-high":
+        return sorted.sort(
+          (a, b) =>
+            neutrality(b) - neutrality(a) || a.name.localeCompare(b.name),
+        );
+      case "neutral-low":
+        return sorted.sort(
+          (a, b) =>
+            neutrality(a) - neutrality(b) || a.name.localeCompare(b.name),
+        );
       case "family":
       default:
         return sorted.sort((a, b) => {

@@ -10,6 +10,9 @@ import {
   undertone,
   UNDERTONES,
   LRV_CLASSES,
+  neutrality,
+  neutralityBand,
+  NEUTRAL_CLASSES,
 } from "./colorPresentation.js";
 
 function make(over: Partial<Color>): Color {
@@ -82,6 +85,54 @@ describe("undertone", () => {
   it("exposes the canonical undertone + lightness lists", () => {
     expect(UNDERTONES).toEqual(["Warm", "Cool", "Neutral"]);
     expect(LRV_CLASSES).toEqual(["Dark", "Medium", "Light"]);
+  });
+});
+
+describe("neutrality", () => {
+  it("scores a perfect gray at 100 (High band)", () => {
+    const gray = make({
+      red: 128,
+      green: 128,
+      blue: 128,
+      saturation: 0,
+      lab: { L: 54, A: 0, B: 0 },
+    });
+    expect(neutrality(gray)).toBe(100);
+    expect(neutralityBand(gray)).toBe("High");
+  });
+
+  it("scores a saturated primary very low (Low band)", () => {
+    const red = make({
+      red: 255,
+      green: 0,
+      blue: 0,
+      saturation: 1,
+      lab: { L: 53, A: 80, B: 67 },
+    });
+    expect(neutrality(red)).toBeLessThan(20);
+    expect(neutralityBand(red)).toBe("Low");
+  });
+
+  it("puts a low-chroma muted color in the Medium band", () => {
+    const muted = make({
+      red: 150,
+      green: 140,
+      blue: 120,
+      saturation: 0.15,
+      lab: { L: 60, A: 8, B: 14 },
+    });
+    expect(neutralityBand(muted)).toBe("Medium");
+  });
+
+  it("ignores hue — equal chroma yields equal neutrality", () => {
+    const base = { red: 130, green: 120, blue: 120, saturation: 0.1 };
+    const a = make({ ...base, lab: { L: 50, A: 20, B: 0 } });
+    const b = make({ ...base, lab: { L: 50, A: 0, B: 20 } });
+    expect(neutrality(a)).toBe(neutrality(b));
+  });
+
+  it("exposes the canonical neutrality classes", () => {
+    expect(NEUTRAL_CLASSES).toEqual(["High", "Medium", "Low"]);
   });
 });
 
