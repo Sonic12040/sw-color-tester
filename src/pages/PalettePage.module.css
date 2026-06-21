@@ -1,7 +1,26 @@
+/* ============================================================
+   Palette workspace — dark design language, consistent with the
+   gallery + detail page: a dark card on the gray canvas, on-dark
+   text, faint elevated sub-panels, and outline (btn-on-dark) actions.
+   ============================================================ */
+
 .page {
   max-width: 900px;
   margin: 0 auto;
-  padding: var(--spacing-6) clamp(0.75rem, 2.67vw, 2rem) var(--tray-height);
+  padding: var(--spacing-5) clamp(0.75rem, 2.67vw, 2rem) var(--tray-height);
+}
+
+/* The dark sheet that holds the whole workspace (mirrors the detail card). */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-5);
+  padding: clamp(1rem, 2.4vw, 1.75rem);
+  background: var(--surface-dark);
+  color: var(--on-dark);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  color-scheme: dark;
 }
 
 .head {
@@ -10,13 +29,13 @@
   justify-content: space-between;
   gap: var(--spacing-3);
   flex-wrap: wrap;
-  margin-bottom: var(--spacing-4);
 }
 
 .title {
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
   margin: 0;
+  color: #ffffff;
 }
 
 .actions {
@@ -31,10 +50,9 @@
   justify-content: space-between;
   gap: var(--spacing-3);
   padding: var(--spacing-3) var(--spacing-4);
-  background: var(--color-surface-tertiary);
-  border: 1px solid var(--color-border-secondary);
+  background: var(--on-dark-subtle);
+  border: 1px solid var(--on-dark-border);
   border-radius: var(--radius-md);
-  margin-bottom: var(--spacing-4);
   flex-wrap: wrap;
 }
 
@@ -50,16 +68,16 @@
   align-items: center;
   gap: var(--spacing-3);
   padding: var(--spacing-2);
-  border: 1px solid var(--color-border-secondary);
+  border: 1px solid var(--on-dark-subtle);
   border-radius: var(--radius-md);
-  background: var(--color-surface-primary);
+  background: var(--on-dark-subtle);
 }
 
 .swatch {
   width: 56px;
   height: 56px;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--color-border-secondary);
+  border: 1px solid var(--on-dark-border);
 }
 
 .info {
@@ -71,7 +89,7 @@
 .name {
   font-weight: var(--font-weight-bold);
   text-decoration: none;
-  color: var(--color-text-primary);
+  color: #ffffff;
 }
 
 .name:hover {
@@ -80,7 +98,7 @@
 
 .meta {
   font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
+  color: var(--on-dark-muted);
 }
 
 .relation {
@@ -90,9 +108,7 @@
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  /* secondary (not tertiary): tertiary on white is only ~4.5:1 and fails on the
-     gray page surface; secondary keeps AA wherever the row sits. */
-  color: var(--color-text-secondary);
+  color: var(--on-dark-faint);
 }
 
 /* 60-30-10 role badge + override (E11) */
@@ -111,39 +127,39 @@
   letter-spacing: 0.04em;
   padding: 2px var(--spacing-2);
   border-radius: var(--radius-full);
-  border: 1px solid var(--color-border-secondary);
-  color: var(--color-text-secondary);
+  border: 1px solid var(--on-dark-border);
+  color: var(--on-dark-muted);
 }
 
 .roleBadge[data-role="Dominant"] {
-  background: var(--color-surface-tertiary);
-  color: var(--color-text-primary);
+  background: var(--on-dark-fill);
+  border-color: transparent;
+  color: #ffffff;
 }
 .roleBadge[data-role="Secondary"] {
-  background: var(--color-surface-secondary);
+  background: var(--on-dark-subtle);
+  color: var(--on-dark);
 }
 .roleBadge[data-role="Accent"] {
-  border-color: var(--color-primary);
-  color: var(--color-text-primary);
+  border-color: var(--on-dark-border-strong);
+  color: #ffffff;
 }
 
 .roleSelect {
   min-height: 36px; /* matches the note/room inputs in the same row */
   padding: var(--spacing-1) var(--spacing-2);
   font-size: var(--font-size-sm);
-  border: 1px solid var(--color-border-primary);
+  border: 1px solid var(--on-dark-border-strong);
   border-radius: var(--radius-sm);
-  background: var(--color-surface-primary);
-  color: var(--color-text-primary);
+  background: var(--on-dark-fill);
+  color: #ffffff;
 }
 
-/* Suggested companions (E11). A light panel (like the projects toolbar) so its
-   heading/hint sit on a readable surface instead of the gray page canvas. */
+/* Suggested companions (E11) — a faint elevated panel inside the card. */
 .companions {
-  margin-top: var(--spacing-6);
   padding: var(--spacing-4);
-  background: var(--color-surface-secondary);
-  border: 1px solid var(--color-border-secondary);
+  background: var(--on-dark-subtle);
+  border: 1px solid var(--on-dark-border);
   border-radius: var(--radius-md);
 }
 
@@ -159,12 +175,13 @@
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
   margin: 0;
+  color: #ffffff;
 }
 
 .companionsHint {
   margin: var(--spacing-3) 0;
   font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
+  color: var(--on-dark-muted);
   line-height: var(--line-height-normal);
 }
 
@@ -180,16 +197,17 @@
   align-items: center;
   gap: var(--spacing-3);
   padding: var(--spacing-2);
-  border: 1px solid var(--color-border-secondary);
+  border: 1px solid var(--on-dark-subtle);
   border-radius: var(--radius-md);
-  background: var(--color-surface-primary);
+  /* darker than the companions panel so each item reads as inset */
+  background: var(--surface-dark);
 }
 
 .companionSwatch {
   width: 40px;
   height: 40px;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--color-border-secondary);
+  border: 1px solid var(--on-dark-border);
 }
 
 .rowActions {
@@ -200,11 +218,17 @@
 .iconBtn {
   width: 44px;
   height: 44px;
-  border: 1px solid var(--color-border-primary);
+  border: 1px solid var(--on-dark-border);
   border-radius: var(--radius-sm);
-  background: var(--color-surface-primary);
+  background: transparent;
+  color: var(--on-dark);
   cursor: pointer;
   font-size: var(--font-size-base);
+  transition: background-color var(--transition-fast);
+}
+
+.iconBtn:hover:not(:disabled) {
+  background: var(--on-dark-subtle);
 }
 
 .iconBtn:disabled {
@@ -217,8 +241,7 @@
   height: 64px;
   border-radius: var(--radius-md);
   overflow: hidden;
-  margin-bottom: var(--spacing-4);
-  border: 1px solid var(--color-border-secondary);
+  border: 1px solid var(--on-dark-border);
 }
 
 .stripCell {
@@ -231,10 +254,9 @@
   flex-wrap: wrap;
   align-items: flex-end;
   gap: var(--spacing-3);
-  margin-bottom: var(--spacing-4);
   padding: var(--spacing-3);
-  background: var(--color-surface-secondary);
-  border: 1px solid var(--color-border-secondary);
+  background: var(--on-dark-subtle);
+  border: 1px solid var(--on-dark-border);
   border-radius: var(--radius-md);
 }
 
@@ -248,7 +270,7 @@
   font-size: var(--font-size-2xs);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--color-text-tertiary);
+  color: var(--on-dark-faint);
   font-weight: var(--font-weight-semibold);
 }
 
@@ -257,10 +279,10 @@
   min-height: 44px;
   padding: var(--spacing-2) var(--spacing-3);
   font-size: var(--font-size-sm);
-  border: 1px solid var(--color-border-primary);
+  border: 1px solid var(--on-dark-border-strong);
   border-radius: var(--radius-sm);
-  background: var(--color-surface-primary);
-  color: var(--color-text-primary);
+  background: var(--on-dark-fill);
+  color: #ffffff;
 }
 
 .projectName {
@@ -280,10 +302,15 @@
   min-height: 36px;
   padding: var(--spacing-1) var(--spacing-2);
   font-size: var(--font-size-sm);
-  border: 1px solid var(--color-border-primary);
+  border: 1px solid var(--on-dark-border-strong);
   border-radius: var(--radius-sm);
-  background: var(--color-surface-primary);
-  color: var(--color-text-primary);
+  background: var(--on-dark-fill);
+  color: #ffffff;
+}
+
+.entryInput::placeholder,
+.entryRoom::placeholder {
+  color: var(--on-dark-faint);
 }
 
 .entryInput {
