@@ -1,7 +1,25 @@
+/* ============================================================
+   Compare workspace — dark design language, consistent with the
+   gallery, detail, and palette pages: a dark card on the gray
+   canvas, dark column cards, on-dark text + contrast matrix.
+   ============================================================ */
+
 .page {
   max-width: var(--layout-max, 1200px);
   margin: 0 auto;
-  padding: var(--spacing-6) clamp(0.75rem, 2.67vw, 2rem) var(--tray-height);
+  padding: var(--spacing-5) clamp(0.75rem, 2.67vw, 2rem) var(--tray-height);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-5);
+  padding: clamp(1rem, 2.4vw, 1.75rem);
+  background: var(--surface-dark);
+  color: var(--on-dark);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  color-scheme: dark;
 }
 
 .head {
@@ -10,13 +28,13 @@
   justify-content: space-between;
   gap: var(--spacing-3);
   flex-wrap: wrap;
-  margin-bottom: var(--spacing-5);
 }
 
 .title {
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
   margin: 0;
+  color: #ffffff;
 }
 
 .scroll {
@@ -35,10 +53,10 @@
 .col {
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--color-border-secondary);
+  border: 1px solid var(--on-dark-subtle);
   border-radius: var(--radius-md);
   overflow: hidden;
-  background: var(--color-surface-primary);
+  background: var(--on-dark-subtle);
 }
 
 .swatch {
@@ -54,9 +72,13 @@
   height: 44px;
   border-radius: var(--radius-full);
   border: none;
-  background: rgba(0, 0, 0, 0.55);
-  color: white;
+  background: rgba(0, 0, 0, 0.6);
+  color: #ffffff;
   cursor: pointer;
+}
+
+.remove:hover {
+  background: rgba(0, 0, 0, 0.78);
 }
 
 .rows {
@@ -66,8 +88,9 @@
 
 .cell {
   padding: var(--spacing-2) var(--spacing-3);
-  border-top: 1px solid var(--color-border-secondary);
+  border-top: 1px solid var(--on-dark-subtle);
   font-size: var(--font-size-sm);
+  color: var(--on-dark);
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -77,14 +100,14 @@
   font-size: var(--font-size-2xs);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--color-text-tertiary);
+  color: var(--on-dark-faint);
   font-weight: var(--font-weight-semibold);
 }
 
 .name {
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-bold);
-  color: var(--color-text-primary);
+  color: #ffffff;
   text-decoration: none;
 }
 

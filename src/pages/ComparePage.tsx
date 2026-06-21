@@ -20,86 +20,89 @@ export function ComparePage() {
 
   return (
     <div className={styles.page}>
-      <div className={styles.head}>
-        <h1 className={styles.title}>Compare colors</h1>
-        {colors.length > 0 && (
-          <button
-            type="button"
-            className="btn-secondary"
-            onClick={clearCompare}
-          >
-            Clear all
-          </button>
-        )}
-      </div>
-
-      {colors.length === 0 ? (
-        <EmptyState
-          title="No colors selected to compare yet."
-          description="Use the compare button on any color card (up to four) to line them up side by side."
-          action={
-            <Link to="/" className="btn-primary">
-              Browse colors
-            </Link>
-          }
-        />
-      ) : (
-        <div className={styles.scroll}>
-          <div className={styles.grid}>
-            {colors.map((c) => (
-              <div className={styles.col} key={c.id}>
-                <div className={styles.swatch} style={{ background: hsl(c) }}>
-                  <button
-                    type="button"
-                    className={styles.remove}
-                    aria-label={`Remove ${c.name}`}
-                    onClick={() => removeCompare(c.id)}
-                  >
-                    ✕
-                  </button>
-                </div>
-                <div className={styles.rows}>
-                  <div className={styles.cell}>
-                    <Link className={styles.name} to={colorPath(toSlug(c))}>
-                      {c.name}
-                    </Link>
-                    <span>SW {c.colorNumber}</span>
-                  </div>
-                  <div className={styles.cell}>
-                    <span className={styles.cellLabel}>Undertone</span>
-                    {undertone(c)}
-                  </div>
-                  <div className={styles.cell}>
-                    <span className={styles.cellLabel}>Lightness</span>
-                    {classifyLrv(c.lrv)} · LRV {c.lrv.toFixed(1)}
-                  </div>
-                  <div className={styles.cell}>
-                    <span className={styles.cellLabel}>Hex</span>
-                    {c.hex.toUpperCase()}
-                  </div>
-                  <div className={styles.cell}>
-                    <span className={styles.cellLabel}>RGB</span>
-                    {c.red}, {c.green}, {c.blue}
-                  </div>
-                  {c.lab && (
-                    <div className={styles.cell}>
-                      <span className={styles.cellLabel}>LAB</span>
-                      {c.lab.L.toFixed(0)}, {c.lab.A.toFixed(0)},{" "}
-                      {c.lab.B.toFixed(0)}
-                    </div>
-                  )}
-                  <div className={styles.cell}>
-                    <span className={styles.cellLabel}>Family</span>
-                    {c.colorFamilyNames.join(", ") || "—"}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+      <div className={styles.card}>
+        <div className={styles.head}>
+          <h1 className={styles.title}>Compare colors</h1>
+          {colors.length > 0 && (
+            <button
+              type="button"
+              className="btn-on-dark"
+              onClick={clearCompare}
+            >
+              Clear all
+            </button>
+          )}
         </div>
-      )}
 
-      {colors.length >= 2 && <ContrastMatrix colors={colors} />}
+        {colors.length === 0 ? (
+          <EmptyState
+            onDark
+            title="No colors selected to compare yet."
+            description="Use the compare button on any color card (up to four) to line them up side by side."
+            action={
+              <Link to="/" className="btn-secondary">
+                Browse colors
+              </Link>
+            }
+          />
+        ) : (
+          <div className={styles.scroll}>
+            <div className={styles.grid}>
+              {colors.map((c) => (
+                <div className={styles.col} key={c.id}>
+                  <div className={styles.swatch} style={{ background: hsl(c) }}>
+                    <button
+                      type="button"
+                      className={styles.remove}
+                      aria-label={`Remove ${c.name}`}
+                      onClick={() => removeCompare(c.id)}
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <div className={styles.rows}>
+                    <div className={styles.cell}>
+                      <Link className={styles.name} to={colorPath(toSlug(c))}>
+                        {c.name}
+                      </Link>
+                      <span>SW {c.colorNumber}</span>
+                    </div>
+                    <div className={styles.cell}>
+                      <span className={styles.cellLabel}>Undertone</span>
+                      {undertone(c)}
+                    </div>
+                    <div className={styles.cell}>
+                      <span className={styles.cellLabel}>Lightness</span>
+                      {classifyLrv(c.lrv)} · LRV {c.lrv.toFixed(1)}
+                    </div>
+                    <div className={styles.cell}>
+                      <span className={styles.cellLabel}>Hex</span>
+                      {c.hex.toUpperCase()}
+                    </div>
+                    <div className={styles.cell}>
+                      <span className={styles.cellLabel}>RGB</span>
+                      {c.red}, {c.green}, {c.blue}
+                    </div>
+                    {c.lab && (
+                      <div className={styles.cell}>
+                        <span className={styles.cellLabel}>LAB</span>
+                        {c.lab.L.toFixed(0)}, {c.lab.A.toFixed(0)},{" "}
+                        {c.lab.B.toFixed(0)}
+                      </div>
+                    )}
+                    <div className={styles.cell}>
+                      <span className={styles.cellLabel}>Family</span>
+                      {c.colorFamilyNames.join(", ") || "—"}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {colors.length >= 2 && <ContrastMatrix colors={colors} />}
+      </div>
     </div>
   );
 }

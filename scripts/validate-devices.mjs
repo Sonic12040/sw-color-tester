@@ -285,6 +285,43 @@ async function run() {
     fail("axe/palette", `exception: ${err.message}`);
   }
 
+  // Axe scan of the compare workspace WITH colors selected — the column cards and
+  // the pairwise contrast matrix only render then, and that's where the
+  // dark-on-gray text lived. Add two colors via their detail pages, then scan.
+  try {
+    const ctx = await browser.newContext({
+      viewport: { width: 1440, height: 900 },
+    });
+    const page = await ctx.newPage();
+    const [s1, s2] = readdirSync(resolve(root, "dist", "colors")).slice(0, 2);
+    for (const slug of [s1, s2]) {
+      await page.goto(`${BASE}colors/${slug}`, { waitUntil: "networkidle" });
+      const add = page.getByRole("button", { name: "Add to compare" });
+      if (await add.isVisible().catch(() => false)) await add.click();
+    }
+    await page.goto(`${BASE}compare`, { waitUntil: "networkidle" });
+    await page
+      .getByRole("heading", { name: "Contrast pairings" })
+      .waitFor({ timeout: 10000 });
+    const result = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+      .analyze();
+    const serious = result.violations.filter(
+      (v) => v.impact === "serious" || v.impact === "critical",
+    );
+    if (serious.length === 0)
+      pass(
+        "axe/compare",
+        `0 serious/critical (${result.violations.length} minor)`,
+      );
+    else
+      for (const v of serious)
+        fail("axe/compare", `${v.id} ×${v.nodes.length} — ${v.help}`);
+    await ctx.close();
+  } catch (err) {
+    fail("axe/compare", `exception: ${err.message}`);
+  }
+
   await browser.close();
 
   // 6. SEO-without-JS: a prerendered color file has <h1> + JSON-LD on disk
