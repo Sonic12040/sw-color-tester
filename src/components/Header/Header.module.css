@@ -66,6 +66,7 @@
 .navLink {
   display: inline-flex;
   align-items: center;
+  gap: var(--spacing-2);
   min-height: 44px;
   padding: var(--spacing-1) var(--spacing-3);
   border-radius: var(--radius-sm);
@@ -76,6 +77,11 @@
   transition:
     background-color var(--transition-fast),
     color var(--transition-fast);
+}
+
+/* Decorative leading icon; inherits the link color (incl. hover/active). */
+.navIcon {
+  flex-shrink: 0;
 }
 
 .navLink:hover {
@@ -93,7 +99,7 @@
 .favBtn {
   display: inline-flex;
   align-items: center;
-  gap: 2px;
+  gap: var(--spacing-1);
   min-height: 44px;
   padding: var(--spacing-1) var(--spacing-3);
   border: none;
@@ -118,6 +124,7 @@
     font-size: var(--font-size-sm);
   }
   .navLink {
+    gap: var(--spacing-1);
     padding: var(--spacing-1) var(--spacing-2);
   }
 }

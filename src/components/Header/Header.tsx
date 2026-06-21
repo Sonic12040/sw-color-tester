@@ -3,10 +3,21 @@ import { useFavorites } from "../../context/FavoritesContext.js";
 import { usePalette } from "../../context/PaletteContext.js";
 import { useCompare } from "../../context/CompareContext.js";
 import { useFilters } from "../../context/FiltersContext.js";
+import {
+  BrowseIcon,
+  CompareIcon,
+  PaletteIcon,
+  HeartIcon,
+} from "../icons/Icons.js";
 import styles from "./Header.module.css";
 
 const navClass = ({ isActive }: { isActive: boolean }) =>
   isActive ? `${styles.navLink} ${styles.navLinkActive}` : styles.navLink;
+
+// Nav icons reuse the color-tile glyphs (one source of truth in icons/Icons),
+// so Compare's scales and the palette read the same in both places. They label
+// the link text, so they stay decorative (the components are aria-hidden).
+const NAV_ICON = 16;
 
 /** Global sticky top bar: brand + primary navigation. */
 export function Header() {
@@ -34,13 +45,20 @@ export function Header() {
 
         <nav className={styles.nav} aria-label="Primary">
           <NavLink to="/" end className={navClass}>
-            Browse
+            <BrowseIcon size={NAV_ICON} className={styles.navIcon} />
+            <span>Browse</span>
           </NavLink>
           <NavLink to="/compare" className={navClass}>
-            Compare{compare.length > 0 ? ` (${compare.length})` : ""}
+            <CompareIcon size={NAV_ICON} className={styles.navIcon} />
+            <span>
+              Compare{compare.length > 0 ? ` (${compare.length})` : ""}
+            </span>
           </NavLink>
           <NavLink to="/palette" className={navClass}>
-            Palette{palette.length > 0 ? ` (${palette.length})` : ""}
+            <PaletteIcon size={NAV_ICON} className={styles.navIcon} />
+            <span>
+              Palette{palette.length > 0 ? ` (${palette.length})` : ""}
+            </span>
           </NavLink>
           <button
             type="button"
@@ -48,7 +66,8 @@ export function Header() {
             onClick={showFavorites}
             aria-label={`Show ${favorites.size} favorite colors`}
           >
-            <span aria-hidden="true">♥</span> {favorites.size}
+            <HeartIcon size={NAV_ICON} filled className={styles.navIcon} />
+            {favorites.size}
           </button>
         </nav>
       </div>
