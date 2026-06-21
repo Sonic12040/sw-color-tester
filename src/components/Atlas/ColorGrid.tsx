@@ -5,6 +5,7 @@ import { useHidden } from "../../context/HiddenContext.js";
 import { useCompare } from "../../context/CompareContext.js";
 import { usePalette } from "../../context/PaletteContext.js";
 import { ColorCard } from "./ColorCard.js";
+import { EmptyState } from "../EmptyState/EmptyState.js";
 import styles from "./ColorGrid.module.css";
 
 interface ColorGridProps {
@@ -27,19 +28,20 @@ export function ColorGrid({ colors, onResetFilters }: ColorGridProps) {
 
   if (colors.length === 0) {
     return (
-      <div className={styles.empty}>
-        <p className={styles.emptyTitle}>No colors match your filters</p>
-        <p>
-          Try a different lightness band, removing a facet, or clearing search.
-        </p>
-        <button
-          type="button"
-          className="btn-secondary"
-          onClick={onResetFilters}
-        >
-          Clear all filters
-        </button>
-      </div>
+      <EmptyState
+        onDark
+        title="No colors match your filters"
+        description="Try a different lightness band, removing a facet, or clearing search."
+        action={
+          <button
+            type="button"
+            className="btn-secondary"
+            onClick={onResetFilters}
+          >
+            Clear all filters
+          </button>
+        }
+      />
     );
   }
 

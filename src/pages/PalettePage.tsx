@@ -8,6 +8,7 @@ import { copyText } from "../utils/clipboard.js";
 import { useAppContext } from "../context/AppContext.js";
 import { usePalette, type PaletteEntry } from "../context/PaletteContext.js";
 import { useToast } from "../components/Toast/Toast.js";
+import { EmptyState } from "../components/EmptyState/EmptyState.js";
 import { useDocumentMeta } from "../hooks/useDocumentMeta.js";
 import { exportService } from "../appModel.js";
 import styles from "./PalettePage.module.css";
@@ -95,48 +96,35 @@ export function PalettePage() {
     <div className={styles.page}>
       <div className={styles.head}>
         <h1 className={styles.title}>My palette</h1>
-        <div className={styles.actions}>
-          <button
-            type="button"
-            className="btn-secondary"
-            disabled={colors.length === 0}
-            onClick={copyShareLink}
-          >
-            Copy share link
-          </button>
-          <button
-            type="button"
-            className="btn-secondary"
-            disabled={colors.length === 0}
-            onClick={exportPdf}
-          >
-            Export PDF
-          </button>
-          <button
-            type="button"
-            className="btn-secondary"
-            disabled={colors.length === 0}
-            onClick={exportPng}
-          >
-            Export PNG
-          </button>
-          <button
-            type="button"
-            className="btn-secondary"
-            disabled={colors.length === 0}
-            onClick={exportJson}
-          >
-            Export JSON
-          </button>
-          <button
-            type="button"
-            className="btn-ghost"
-            disabled={colors.length === 0}
-            onClick={clearPalette}
-          >
-            Clear
-          </button>
-        </div>
+        {/* Export/share/clear only make sense with colors in the palette — hide
+            them when empty rather than showing a row of disabled buttons. */}
+        {colors.length > 0 && (
+          <div className={styles.actions}>
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={copyShareLink}
+            >
+              Copy share link
+            </button>
+            <button type="button" className="btn-secondary" onClick={exportPdf}>
+              Export PDF
+            </button>
+            <button type="button" className="btn-secondary" onClick={exportPng}>
+              Export PNG
+            </button>
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={exportJson}
+            >
+              Export JSON
+            </button>
+            <button type="button" className="btn-ghost" onClick={clearPalette}>
+              Clear
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Projects: switch between named palettes, rename, add, delete. */}
@@ -198,15 +186,15 @@ export function PalettePage() {
       )}
 
       {colors.length === 0 ? (
-        <div className={styles.empty}>
-          <p>This palette is empty.</p>
-          <p>
-            Open any color and choose “Add to palette” to start building one.
-          </p>
-          <Link to="/" className="btn-primary">
-            Browse colors
-          </Link>
-        </div>
+        <EmptyState
+          title="This palette is empty."
+          description="Open any color and choose “Add to palette” to start building one."
+          action={
+            <Link to="/" className="btn-primary">
+              Browse colors
+            </Link>
+          }
+        />
       ) : (
         <>
           <div className={styles.strip} aria-hidden="true">

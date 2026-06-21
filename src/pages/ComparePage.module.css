@@ -50,8 +50,8 @@
   position: absolute;
   top: var(--spacing-2);
   right: var(--spacing-2);
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius-full);
   border: none;
   background: rgba(0, 0, 0, 0.55);
@@ -90,14 +90,4 @@
 
 .name:hover {
   text-decoration: underline;
-}
-
-.empty {
-  text-align: center;
-  color: var(--color-text-secondary);
-  padding: var(--spacing-10) var(--spacing-4);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--spacing-4);
 }

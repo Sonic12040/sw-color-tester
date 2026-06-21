@@ -7,27 +7,3 @@
   gap: var(--grid-gap);
   padding: var(--grid-gap) 0;
 }
-
-/* Dark surface so the message keeps full contrast on the neutral-gray gutter. */
-.empty {
-  text-align: center;
-  color: var(--on-dark-strong);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-relaxed);
-  padding: var(--spacing-10) var(--spacing-6);
-  margin: var(--grid-gap) auto;
-  max-width: 28rem;
-  background: var(--surface-dark);
-  border-radius: var(--radius-lg);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--spacing-4);
-}
-
-.emptyTitle {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  color: #ffffff;
-  margin: 0;
-}

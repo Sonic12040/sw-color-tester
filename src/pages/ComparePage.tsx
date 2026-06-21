@@ -6,6 +6,7 @@ import { useAppContext } from "../context/AppContext.js";
 import { useCompare } from "../context/CompareContext.js";
 import { useDocumentMeta } from "../hooks/useDocumentMeta.js";
 import { ContrastMatrix } from "../components/Workspace/ContrastMatrix.js";
+import { EmptyState } from "../components/EmptyState/EmptyState.js";
 import styles from "./ComparePage.module.css";
 
 export function ComparePage() {
@@ -33,16 +34,15 @@ export function ComparePage() {
       </div>
 
       {colors.length === 0 ? (
-        <div className={styles.empty}>
-          <p>No colors selected to compare yet.</p>
-          <p>
-            Use the compare button on any color card (up to four) to line them
-            up side by side.
-          </p>
-          <Link to="/" className="btn-primary">
-            Browse colors
-          </Link>
-        </div>
+        <EmptyState
+          title="No colors selected to compare yet."
+          description="Use the compare button on any color card (up to four) to line them up side by side."
+          action={
+            <Link to="/" className="btn-primary">
+              Browse colors
+            </Link>
+          }
+        />
       ) : (
         <div className={styles.scroll}>
           <div className={styles.grid}>
