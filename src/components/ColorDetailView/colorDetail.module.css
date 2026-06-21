@@ -34,16 +34,14 @@
 }
 
 .card {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 3vw, 2rem);
+  padding: clamp(1rem, 2.4vw, 1.75rem);
   background: var(--surface-dark);
   color: #ffffff;
   border-radius: var(--radius-lg);
-  overflow: hidden;
   box-shadow: var(--shadow-lg);
-}
-
-/* Dark title bar (white name) — mirrors the tile's title bar. */
-.titleBar {
-  padding: var(--spacing-4) clamp(1rem, 2.4vw, 1.75rem);
 }
 
 .title {
@@ -54,13 +52,55 @@
   color: #ffffff;
 }
 
-/* Hero swatch carrying dark metadata chips (like the tile body). */
-.swatch {
-  min-height: clamp(180px, 28vh, 280px);
+/* Product-detail layout: sticky hero swatch beside scrolling content (desktop). */
+.layout {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+@media (min-width: 768px) {
+  .layout {
+    grid-template-columns: minmax(240px, 320px) 1fr;
+    align-items: start;
+  }
+
+  /* Keep the color visible while the content scrolls. */
+  .swatchCol {
+    position: sticky;
+    top: calc(var(--header-h, 56px) + var(--spacing-3));
+  }
+}
+
+.contentCol {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+/* Hero swatch — an inset rounded panel carrying dark metadata chips. The subtle
+   border keeps near-white swatches distinct from the dark card. */
+.heroSwatch {
+  min-height: clamp(180px, 26vh, 260px);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: clamp(1rem, 2.4vw, 1.75rem);
+  padding: var(--spacing-3);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+/* Buy box: summary + the primary CTA and decision actions, beside the swatch. */
+.buyBox {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.buyActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
 }
 
 .chips {
@@ -81,10 +121,29 @@
 }
 
 .body {
-  padding: clamp(1rem, 2.4vw, 1.75rem);
   display: flex;
   flex-direction: column;
   gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+/* "About this color" facts grid (definition list). */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--spacing-3) var(--spacing-4);
+  margin: 0 0 var(--spacing-4);
+}
+
+.fact {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.factValue {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: #ffffff;
 }
 
 .sectionTitle {
@@ -411,16 +470,51 @@
   color: var(--on-dark-faint);
 }
 
-/* Action bar — dark, matching the gallery chrome. */
-.actions {
+/* Buy-box decision buttons use the shared .btn .btn-secondary (primary) +
+   .btn-on-dark (secondary) utilities (see global.css). */
+
+/* Tertiary utility footer (copy hex, hide, copy store) — quiet ghost buttons so
+   they don't compete with the buy-box decision actions. */
+.footer {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-2);
-  padding: clamp(0.75rem, 1.5vw, 1.25rem) clamp(1rem, 2.4vw, 1.75rem);
+  gap: var(--spacing-1);
+  padding-top: var(--spacing-3);
   border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-/* Buttons use the shared .btn .btn-on-dark utilities (see global.css). */
+.footerBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  min-height: 44px;
+  padding: var(--spacing-1) var(--spacing-3);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--on-dark-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.footerBtn:hover {
+  background: var(--on-dark-subtle);
+  color: #ffffff;
+}
+
+.footerBtn:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+.footerBtnActive {
+  color: #ffffff;
+  background: var(--on-dark-subtle);
+}
 
 /* Scheme generator (E11) */
 .schemeControls {

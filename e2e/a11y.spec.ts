@@ -50,6 +50,13 @@ test("palette workspace (with colors + companions) is accessible", async ({
   await expectNoSeriousAxe(page);
 });
 
+test("color detail page is accessible", async ({ page }) => {
+  const [slug] = colorSlugs(1);
+  await page.goto(`colors/${slug}`);
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await expectNoSeriousAxe(page);
+});
+
 test("compare workspace (with the contrast matrix) is accessible", async ({
   page,
 }) => {

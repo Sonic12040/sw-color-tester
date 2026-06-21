@@ -11,6 +11,7 @@ import {
 } from "../../utils/colorCopy.js";
 import { colorPath } from "../../utils/base.js";
 import { toSlug } from "../../utils/slug.js";
+import { SW_SAMPLES_URL } from "../../utils/swLinks.js";
 import { useAppContext } from "../../context/AppContext.js";
 import { useFavorites } from "../../context/FavoritesContext.js";
 import { useHidden } from "../../context/HiddenContext.js";
@@ -28,9 +29,10 @@ interface ColorDetailProps {
 }
 
 /**
- * Full-page color detail (the canonical /colors/:slug view). Uses the gallery's
- * dark design language — dark card, dark title bar, colored hero swatch with
- * dark chips — so it reads as the same product as the browse page.
+ * Full-page color detail (the canonical /colors/:slug view). Dark design language
+ * (matching the gallery), laid out as a product-detail "buy box": on desktop the
+ * hero swatch sticks on the left while the name, facts, decision actions, and the
+ * confidence-building content scroll on the right.
  */
 export function ColorDetail({ color }: ColorDetailProps) {
   const { colorModel } = useAppContext();
@@ -66,6 +68,7 @@ export function ColorDetail({ color }: ColorDetailProps) {
   const isDesignerPick = colorModel.isDesignerPick(color.id);
   const comparing = isComparing(color.id);
   const inPal = inPalette(color.id);
+  const isFavorite = favorites.has(color.id);
 
   return (
     <article className={styles.page}>
@@ -88,128 +91,180 @@ export function ColorDetail({ color }: ColorDetailProps) {
       </Link>
 
       <div className={styles.card}>
-        <div className={styles.titleBar}>
-          <h1 className={styles.title}>{color.name}</h1>
-        </div>
+        <h1 className={styles.title}>{color.name}</h1>
 
-        <div className={styles.swatch} style={{ background: hsl(color) }}>
-          <div className={styles.chips}>
-            <span className={styles.chip}>SW {color.colorNumber}</span>
-            <span className={styles.chip}>
-              {lrvBand} · LRV {color.lrv.toFixed(0)}
-            </span>
-            <span className={styles.chip}>{undertone(color)}</span>
-            {useTypes && <span className={styles.chip}>{useTypes}</span>}
-            {isDesignerPick && (
-              <span className={styles.chip}>Designer Pick</span>
-            )}
+        <div className={styles.layout}>
+          <div className={styles.swatchCol}>
+            <div
+              className={styles.heroSwatch}
+              style={{ background: hsl(color) }}
+            >
+              <div className={styles.chips}>
+                <span className={styles.chip}>SW {color.colorNumber}</span>
+                <span className={styles.chip}>
+                  {lrvBand} · LRV {color.lrv.toFixed(0)}
+                </span>
+                <span className={styles.chip}>{undertone(color)}</span>
+                {useTypes && <span className={styles.chip}>{useTypes}</span>}
+                {isDesignerPick && (
+                  <span className={styles.chip}>Designer Pick</span>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.contentCol}>
+            <div className={styles.buyBox}>
+              <p className={styles.summary}>{summarize(color)}</p>
+              <div className={styles.buyActions}>
+                <a
+                  className="btn btn-secondary"
+                  href={SW_SAMPLES_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Order a color sample at Sherwin-Williams (opens in a new tab)"
+                >
+                  Order a sample
+                </a>
+                <button
+                  type="button"
+                  className={`btn btn-on-dark ${isFavorite ? "is-active" : ""}`}
+                  aria-pressed={isFavorite}
+                  onClick={() => toggleFavorite(color.id)}
+                >
+                  {isFavorite ? "Favorited" : "Favorite"}
+                </button>
+                <button
+                  type="button"
+                  className={`btn btn-on-dark ${inPal ? "is-active" : ""}`}
+                  aria-pressed={inPal}
+                  onClick={() => togglePalette(color.id)}
+                >
+                  {inPal ? "In palette" : "Add to palette"}
+                </button>
+                <button
+                  type="button"
+                  className={`btn btn-on-dark ${comparing ? "is-active" : ""}`}
+                  aria-pressed={comparing}
+                  disabled={isFull && !comparing}
+                  onClick={() => toggleCompare(color.id)}
+                >
+                  {comparing ? "In comparison" : "Add to compare"}
+                </button>
+              </div>
+            </div>
+
+            <div className={styles.body}>
+              <section>
+                <h2 className={styles.sectionTitle}>About this color</h2>
+                {color.description.length > 0 && (
+                  <p className={styles.bodyText}>
+                    {color.description.join(" • ")}
+                  </p>
+                )}
+                <dl className={styles.facts}>
+                  <div className={styles.fact}>
+                    <dt className={styles.infoLabel}>Undertone</dt>
+                    <dd className={styles.factValue}>{undertone(color)}</dd>
+                  </div>
+                  <div className={styles.fact}>
+                    <dt className={styles.infoLabel}>Lightness</dt>
+                    <dd className={styles.factValue}>
+                      {lrvBand} · LRV {color.lrv.toFixed(0)}
+                    </dd>
+                  </div>
+                  {useTypes && (
+                    <div className={styles.fact}>
+                      <dt className={styles.infoLabel}>Use</dt>
+                      <dd className={styles.factValue}>{useTypes}</dd>
+                    </div>
+                  )}
+                  <div className={styles.fact}>
+                    <dt className={styles.infoLabel}>Family</dt>
+                    <dd className={styles.factValue}>
+                      {color.colorFamilyNames.join(", ") || "—"}
+                    </dd>
+                  </div>
+                  {collections.length > 0 && (
+                    <div className={styles.fact}>
+                      <dt className={styles.infoLabel}>Collection</dt>
+                      <dd className={styles.factValue}>
+                        {collections.join(" · ")}
+                      </dd>
+                    </div>
+                  )}
+                </dl>
+                <p className={styles.bodyText}>
+                  <strong>{lrv.label}.</strong> {lrv.context}
+                </p>
+              </section>
+
+              <ColorGridSection
+                title="Coordinating colors"
+                description="Colors that work beautifully together"
+                colors={coordEntries}
+                roleFor={(_c, i) => COORDINATING_ROLES[i] ?? "Coordinating"}
+                onNavigate={goToColor}
+              />
+
+              <SchemeSection base={color} onNavigate={goToColor} />
+
+              <ColorGridSection
+                collapsible
+                title="Similar colors"
+                description="Explore subtle variations"
+                colors={similarEntries}
+                roleFor={(c, i) => similarityRole(color, c, i)}
+                onNavigate={goToColor}
+              />
+
+              <GetColorPanel color={color} />
+
+              <details className={styles.tech}>
+                <summary className={styles.techSummary}>
+                  Technical details
+                </summary>
+                <div className={styles.techBody}>
+                  <HslBreakdown color={color} />
+
+                  <section>
+                    <h2 className={styles.sectionTitle}>Specifications</h2>
+                    <div className={styles.infoGrid}>
+                      <div className={styles.infoItem}>
+                        <span className={styles.infoLabel}>Hex</span>
+                        <span>{color.hex.toUpperCase()}</span>
+                      </div>
+                      <div className={styles.infoItem}>
+                        <span className={styles.infoLabel}>RGB</span>
+                        <span>
+                          rgb({color.red}, {color.green}, {color.blue})
+                        </span>
+                      </div>
+                      <div className={styles.infoItem}>
+                        <span className={styles.infoLabel}>Family</span>
+                        <span>
+                          {color.colorFamilyNames.join(", ") || "None"}
+                        </span>
+                      </div>
+                      <div className={styles.infoItem}>
+                        <span className={styles.infoLabel}>Collections</span>
+                        <span>
+                          {color.brandedCollectionNames.join(", ") || "None"}
+                        </span>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </details>
+
+              <DetailActions
+                color={color}
+                isHidden={hidden.has(color.id)}
+                onToggleHidden={toggleHidden}
+              />
+            </div>
           </div>
         </div>
-
-        <div className={styles.body}>
-          <p className={styles.summary}>{summarize(color)}</p>
-
-          <GetColorPanel color={color} />
-
-          {color.description.length > 0 && (
-            <section>
-              <h2 className={styles.sectionTitle}>Mood &amp; feel</h2>
-              <p className={styles.bodyText}>{color.description.join(" • ")}</p>
-            </section>
-          )}
-
-          <section>
-            <h2 className={styles.sectionTitle}>Lightness</h2>
-            <p className={styles.bodyText}>
-              <strong>{lrv.label}.</strong> {lrv.context}
-            </p>
-          </section>
-
-          {collections.length > 0 && (
-            <section>
-              <h2 className={styles.sectionTitle}>Designer collection</h2>
-              <p className={styles.bodyText}>{collections.join(" · ")}</p>
-            </section>
-          )}
-
-          <SchemeSection base={color} onNavigate={goToColor} />
-
-          <ColorGridSection
-            title="Coordinating colors"
-            description="Colors that work beautifully together"
-            colors={coordEntries}
-            roleFor={(_c, i) => COORDINATING_ROLES[i] ?? "Coordinating"}
-            onNavigate={goToColor}
-          />
-
-          <ColorGridSection
-            title="Similar colors"
-            description="Explore subtle variations"
-            colors={similarEntries}
-            roleFor={(c, i) => similarityRole(color, c, i)}
-            onNavigate={goToColor}
-          />
-
-          <details className={styles.tech}>
-            <summary className={styles.techSummary}>Technical details</summary>
-            <div className={styles.techBody}>
-              <HslBreakdown color={color} />
-
-              <section>
-                <h2 className={styles.sectionTitle}>Specifications</h2>
-                <div className={styles.infoGrid}>
-                  <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Hex</span>
-                    <span>{color.hex.toUpperCase()}</span>
-                  </div>
-                  <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>RGB</span>
-                    <span>
-                      rgb({color.red}, {color.green}, {color.blue})
-                    </span>
-                  </div>
-                  <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Family</span>
-                    <span>{color.colorFamilyNames.join(", ") || "None"}</span>
-                  </div>
-                  <div className={styles.infoItem}>
-                    <span className={styles.infoLabel}>Collections</span>
-                    <span>
-                      {color.brandedCollectionNames.join(", ") || "None"}
-                    </span>
-                  </div>
-                </div>
-              </section>
-            </div>
-          </details>
-        </div>
-
-        <DetailActions
-          color={color}
-          isFavorite={favorites.has(color.id)}
-          isHidden={hidden.has(color.id)}
-          onToggleFavorite={toggleFavorite}
-          onToggleHidden={toggleHidden}
-          extraActions={
-            <>
-              <button
-                type="button"
-                className={`btn btn-on-dark ${comparing ? "is-active" : ""}`}
-                disabled={isFull && !comparing}
-                onClick={() => toggleCompare(color.id)}
-              >
-                {comparing ? "In comparison" : "Add to compare"}
-              </button>
-              <button
-                type="button"
-                className={`btn btn-on-dark ${inPal ? "is-active" : ""}`}
-                onClick={() => togglePalette(color.id)}
-              >
-                {inPal ? "In palette" : "Add to palette"}
-              </button>
-            </>
-          }
-        />
       </div>
     </article>
   );

@@ -5,22 +5,19 @@ import styles from "./colorDetail.module.css";
 
 interface DetailActionsProps {
   color: Color;
-  isFavorite: boolean;
   isHidden: boolean;
-  onToggleFavorite: (id: string) => void;
   onToggleHidden: (id: string) => void;
-  /** Optional extra buttons (e.g. compare / palette) appended to the footer. */
-  extraActions?: React.ReactNode;
 }
 
-/** Footer actions for the color detail: favorite, copy hex, hide, store locator. */
+/**
+ * Tertiary utility footer for the color detail: copy the hex, hide the color,
+ * copy the in-store rack location. Low-intent actions, so they're styled quietly
+ * (the decision actions — favorite / palette / compare — live in the buy box).
+ */
 export function DetailActions({
   color,
-  isFavorite,
   isHidden,
-  onToggleFavorite,
   onToggleHidden,
-  extraActions,
 }: DetailActionsProps) {
   const showToast = useToast();
 
@@ -42,31 +39,11 @@ export function DetailActions({
   };
 
   return (
-    <div className={styles.actions}>
-      <button
-        type="button"
-        className={`btn btn-on-dark ${isFavorite ? "is-active" : ""}`}
-        onClick={() => onToggleFavorite(color.id)}
-      >
+    <div className={styles.footer}>
+      <button type="button" className={styles.footerBtn} onClick={copyHex}>
         <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill={isFavorite ? "currentColor" : "none"}
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-        </svg>
-        <span>{isFavorite ? "Favorited" : "Add to Favorites"}</span>
-      </button>
-      <button type="button" className="btn btn-on-dark" onClick={copyHex}>
-        <svg
-          width="20"
-          height="20"
+          width="18"
+          height="18"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -80,14 +57,16 @@ export function DetailActions({
         </svg>
         <span>Copy Code</span>
       </button>
+
       <button
         type="button"
-        className={`btn btn-on-dark ${isHidden ? "is-active" : ""}`}
+        className={`${styles.footerBtn} ${isHidden ? styles.footerBtnActive : ""}`}
+        aria-pressed={isHidden}
         onClick={() => onToggleHidden(color.id)}
       >
         <svg
-          width="20"
-          height="20"
+          width="18"
+          height="18"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -109,18 +88,19 @@ export function DetailActions({
             </>
           )}
         </svg>
-        <span>{isHidden ? "Hidden" : "Hide Color"}</span>
+        <span>{isHidden ? "Hidden" : "Hide color"}</span>
       </button>
+
       {color.storeStripLocator && (
         <button
           type="button"
-          className="btn btn-on-dark"
+          className={styles.footerBtn}
           onClick={copyStore}
           aria-label={`Copy store location ${color.storeStripLocator}`}
         >
           <svg
-            width="20"
-            height="20"
+            width="18"
+            height="18"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -135,7 +115,6 @@ export function DetailActions({
           <span>Store: {color.storeStripLocator}</span>
         </button>
       )}
-      {extraActions}
     </div>
   );
 }

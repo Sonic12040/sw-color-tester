@@ -1,9 +1,5 @@
 import type { Color } from "../../data/types.js";
-import {
-  swColorUrl,
-  SW_STORE_LOCATOR_URL,
-  SW_SAMPLES_URL,
-} from "../../utils/swLinks.js";
+import { swColorUrl, SW_STORE_LOCATOR_URL } from "../../utils/swLinks.js";
 import { PaintCalculator } from "./PaintCalculator.js";
 import styles from "./colorDetail.module.css";
 
@@ -33,15 +29,6 @@ export function GetColorPanel({ color }: GetColorPanelProps) {
       )}
 
       <div className={styles.getColorActions}>
-        <a
-          className="btn btn-on-dark"
-          href={SW_SAMPLES_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Order a color sample at Sherwin-Williams (opens in a new tab)"
-        >
-          Order a sample
-        </a>
         <a
           className="btn btn-on-dark"
           href={SW_STORE_LOCATOR_URL}
