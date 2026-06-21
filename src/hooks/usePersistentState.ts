@@ -18,10 +18,17 @@ import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect.js";
  * Two-phase init: the first render uses `initial` so that server-prerendered
  * markup and the first client render agree (no hydration mismatch — localStorage
  * is client-only). Stored data is then loaded in a **layout** effect on mount —
- * before the browser paints — so a persisted value (e.g. the chosen sort) shows
- * in the first visible frame instead of flashing the default first. The persist
- * effect skips the first render so it never clobbers stored data with `initial`
- * before the load runs.
+ * before the browser paints — so a persisted value shows in the first *React*
+ * frame instead of flashing the default first. The persist effect skips the
+ * first render so it never clobbers stored data with `initial` before the load
+ * runs.
+ *
+ * Caveat for prerendered routes: the static HTML is painted (with `initial`)
+ * before the JS bundle loads, so the layout effect can't prevent a flash of that
+ * markup. Where the prerendered DOM depends on a persisted value (e.g. the
+ * gallery grid's sort order), an inline pre-paint script in index.html hides the
+ * affected markup until React re-renders with the stored value — see the
+ * `data-presort` handling there and in AtlasLayout.
  */
 export function usePersistentState<T>(
   key: string,

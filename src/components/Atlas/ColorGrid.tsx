@@ -44,7 +44,7 @@ export function ColorGrid({ colors, onResetFilters }: ColorGridProps) {
   }
 
   return (
-    <div className={styles.grid} role="list" aria-label="Colors">
+    <div className={styles.grid} role="list" aria-label="Colors" data-color-grid>
       {colors.map((color) => (
         <div role="listitem" key={color.id}>
           <ColorCard

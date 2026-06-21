@@ -38,6 +38,40 @@
         this.removeAttribute('as');
       "
     />
+    <!-- Anti-flash: the gallery is prerendered with the DEFAULT sort baked into
+         the static HTML (localStorage is unavailable at prerender time). If the
+         visitor persisted a non-default sort, hide the grid before first paint
+         so the stale order never shows; React reveals it after re-sorting (see
+         AtlasLayout). The key / sort keys mirror storage.ts + FiltersContext. -->
+    <style>
+      html[data-presort] [data-color-grid] {
+        visibility: hidden;
+      }
+    </style>
+    <script>
+      (function () {
+        try {
+          var raw = localStorage.getItem("sw-color-tester:sort");
+          if (!raw) return;
+          var sort = JSON.parse(raw);
+          // All sort keys except the default ("family") — only a non-default
+          // persisted sort makes the prerendered order stale.
+          var nonDefault = [
+            "hue",
+            "lrv-asc",
+            "lrv-desc",
+            "name",
+            "neutral-high",
+            "neutral-low",
+          ];
+          if (nonDefault.indexOf(sort) !== -1) {
+            document.documentElement.dataset.presort = sort;
+          }
+        } catch (e) {
+          /* storage unavailable / corrupt — show the default order */
+        }
+      })();
+    </script>
     <!--app-head-->
   </head>
   <body>

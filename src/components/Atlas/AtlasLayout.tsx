@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Color } from "../../data/types.js";
 import { useFilters } from "../../context/FiltersContext.js";
+import { useIsomorphicLayoutEffect } from "../../hooks/useIsomorphicLayoutEffect.js";
 import { useFocusTrap } from "../../hooks/useFocusTrap.js";
 import { RAIL_BREAKPOINT } from "../../utils/breakpoints.js";
 import { AtlasToolbar } from "./AtlasToolbar.js";
@@ -27,6 +28,19 @@ export function AtlasLayout({ colors, totalCount }: AtlasLayoutProps) {
   const railRef = useRef<HTMLDivElement | null>(null);
 
   const closeDrawer = useCallback(() => setDrawerOpen(false), []);
+
+  // Anti-flash reveal (pairs with the inline script in index.html): the grid is
+  // hidden until the persisted sort has been applied, so the stale prerendered
+  // order never shows. Reveal in a layout effect — before paint — once the
+  // rendered sort matches the persisted one. The match guard means the default
+  // first render never reveals prematurely; we also clear any stale attribute
+  // (e.g. after a client-side navigation) so the grid can't stay hidden.
+  useIsomorphicLayoutEffect(() => {
+    const { presort } = document.documentElement.dataset;
+    if (presort && presort === sort) {
+      delete document.documentElement.dataset.presort;
+    }
+  }, [sort]);
 
   // Trap focus inside the drawer while it's open (it can only open below the
   // rail breakpoint, so the trap never engages on desktop).

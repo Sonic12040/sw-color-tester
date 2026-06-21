@@ -7,6 +7,9 @@ import {
   cleanup,
 } from "@testing-library/react";
 import { createMemoryRouter, RouterProvider } from "react-router";
+import { STORAGE_KEYS } from "./utils/storage.js";
+// The shell HTML carries the anti-flash inline script; import it raw to assert on it.
+import indexHtml from "../index.html?raw";
 
 // Realistic shared palette (true rgb/hsl/lab) — see src/test/fixtures.ts.
 vi.mock("./data/palette.js", async () => ({
@@ -34,6 +37,8 @@ const cardOrder = () =>
 afterEach(() => {
   cleanup();
   vi.useRealTimers();
+  localStorage.clear();
+  delete document.documentElement.dataset.presort;
 });
 
 describe("Atlas browse", () => {
@@ -83,6 +88,46 @@ describe("Atlas browse", () => {
       target: { value: "name" },
     });
     expect(cardOrder()[0]).toBe("Accessible Beige");
+  });
+});
+
+describe("Anti-flash for the prerendered sort order", () => {
+  // The gallery is prerendered with the DEFAULT sort; an inline script in
+  // index.html hides that grid (via `html[data-presort] [data-color-grid]`) when
+  // a non-default sort is persisted, and AtlasLayout reveals it after re-sorting.
+  // See usePersistentState. jsdom can't reproduce the pre-JS static paint, so we
+  // test the observable contract: the CSS hook exists and the reveal fires.
+
+  const grid = () => document.querySelector("[data-color-grid]");
+
+  it("marks the grid with the data-color-grid hook the inline CSS targets", () => {
+    renderApp();
+    expect(grid()).not.toBeNull();
+  });
+
+  it("applies the persisted sort and clears the hide flag (reveals the grid)", () => {
+    // Simulate what the index.html inline script does before paint.
+    localStorage.setItem(STORAGE_KEYS.sort, JSON.stringify("name"));
+    document.documentElement.dataset.presort = "name";
+
+    renderApp();
+
+    // The stored sort is applied (not the default "family")...
+    expect(cardOrder()[0]).toBe("Accessible Beige");
+    // ...and the flag is cleared so the grid is no longer hidden.
+    expect(document.documentElement.dataset.presort).toBeUndefined();
+  });
+
+  it("leaves a default-sort load untouched (no hide flag, no flash)", () => {
+    renderApp();
+    expect(document.documentElement.dataset.presort).toBeUndefined();
+    expect(grid()).not.toBeNull();
+  });
+
+  it("ships the inline pre-paint script and hiding style in index.html", () => {
+    expect(indexHtml).toContain("html[data-presort] [data-color-grid]");
+    expect(indexHtml).toContain(STORAGE_KEYS.sort);
+    expect(indexHtml).toContain("dataset.presort");
   });
 });
 
