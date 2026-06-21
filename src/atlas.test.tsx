@@ -274,4 +274,46 @@ describe("Palette", () => {
     rows = within(screen.getByRole("list")).getAllByRole("listitem");
     expect(within(rows[0]).getByText("Repose Gray")).toBeTruthy();
   });
+
+  it("supports multiple named palette projects", () => {
+    renderApp("/palette?c=sw-6258-tricorn-black");
+    fireEvent.click(
+      screen.getByRole("button", { name: /Load shared palette/ }),
+    );
+    expect(screen.getByText("Tricorn Black")).toBeTruthy();
+
+    // Create a second, empty project — it becomes active.
+    fireEvent.click(screen.getByRole("button", { name: "New palette" }));
+    expect(screen.getByText("This palette is empty.")).toBeTruthy();
+    const select = screen.getByLabelText("Select palette") as HTMLSelectElement;
+    expect(within(select).getAllByRole("option")).toHaveLength(2);
+
+    // Switching back to the first project shows its colors again.
+    fireEvent.change(select, { target: { value: select.options[0].value } });
+    expect(screen.getByText("Tricorn Black")).toBeTruthy();
+  });
+
+  it("captures a per-color note and preserves it across reorder", () => {
+    renderApp("/palette?c=sw-6258-tricorn-black,sw-7015-repose-gray");
+    fireEvent.click(
+      screen.getByRole("button", { name: /Load shared palette/ }),
+    );
+    const note = screen.getByLabelText(
+      "Note for Tricorn Black",
+    ) as HTMLInputElement;
+    fireEvent.change(note, { target: { value: "Front door" } });
+    expect(
+      (screen.getByLabelText("Note for Tricorn Black") as HTMLInputElement)
+        .value,
+    ).toBe("Front door");
+
+    // Reordering reconciles by id, so the note survives.
+    fireEvent.click(
+      screen.getByRole("button", { name: "Move Tricorn Black down" }),
+    );
+    expect(
+      (screen.getByLabelText("Note for Tricorn Black") as HTMLInputElement)
+        .value,
+    ).toBe("Front door");
+  });
 });

@@ -24,8 +24,9 @@ for SEO/AI discoverability.
    paint calculator), JSON-LD, coordinating/similar colors, with HSL/LAB and raw
    specs tucked under a "Technical details" disclosure.
 3. **Workspace** — `/compare` (up to 4 side-by-side, with a pairwise WCAG
-   contrast matrix) and `/palette` (collect, reorder, export, per-row hue
-   relationships, shareable `?c=` URL).
+   contrast matrix) and `/palette` — multiple named projects, each with
+   collect / reorder / per-color notes + room tags / annotated export / per-row
+   hue relationships / shareable `?c=` URL.
 
 ## Source layout
 
@@ -228,7 +229,7 @@ section is the source of truth for shape and priority.
 | 4 ✅ | F4 Dynamic OG/social images      | Marketer     | High  | M      | Compounding reach on existing SSG                 |
 | 5 ✅ | F5 "Get this color" panel        | Shopper      | High  | M      | The missing _act_ step for the largest persona    |
 | 6 ✅ | F6 Color data API / code-split   | All          | Med   | M      | Perf foundation; data source later features reuse |
-| 7    | F7 Projects (palettes + notes)   | Designer     | Med   | M      | Pro depth; stepping stone to accounts             |
+| 7 ✅ | F7 Projects (palettes + notes)   | Designer     | Med   | M      | Pro depth; stepping stone to accounts             |
 | 8    | F8 Rich palette export (PNG/PDF) | Designer/Mkt | Med   | M      | Client deliverable; builds on F7                  |
 
 ### Features → stories → tasks (Now)
@@ -295,8 +296,9 @@ Delivered: Vite `manualChunks` splits `data/palette` into its own client chunk �
   - AC: `palette.ts` out of the main client bundle; client reads `colors.json` (already emitted) or a split chunk; SSG pages unchanged; LCP/TBT improve.
   - Tasks: switch client `appModel` to fetch/lazy-load data; keep the build/SSG path importing data at build; add loading skeleton; verify hydration still matches; add a bundle-size budget check.
 
-**F7 · Projects: named palettes + notes/tags** _(Designer · M · rank 7)_
+**F7 · Projects: named palettes + notes/tags** ✅ _shipped_ _(Designer · M · rank 7)_
 Benefit: real multi-project workflow; stepping stone to accounts.
+Delivered: `PaletteContext` now holds `{ projects, activeId }` (entries carry optional `note`/`room`), with legacy `string[]` migration and the prior `palette`/`togglePalette`/`inPalette` API preserved over the active project (no consumer churn). PalettePage gains a project switcher (select / rename / new / delete, never below one), per-row note + room inputs, reorder that reconciles by id (notes survive), and annotated JSON export (`serializeColors` carries `project` + per-color `note`/`room`). Covered by `PaletteContext`/`ExportService`/`atlas` tests.
 
 - **US7.1** As a designer, I want multiple named palettes so I can keep one per project/room.
   - AC: create/rename/delete/switch; persisted; per-palette colors + share URL.

@@ -50,6 +50,33 @@ describe("serializeColors", () => {
     const out = serializeColors([color({ colorFamilyNames: [] })], NOW);
     expect(out.colors[0].family).toBeNull();
   });
+
+  it("includes the project name and per-color annotations when provided", () => {
+    const out = serializeColors([color({ id: "x" })], NOW, {
+      project: "Kitchen",
+      annotations: { x: { note: "accent wall", room: "Kitchen" } },
+    });
+    expect(out.project).toBe("Kitchen");
+    expect(out.colors[0]).toMatchObject({
+      note: "accent wall",
+      room: "Kitchen",
+    });
+  });
+
+  it("omits note/room/project keys when not provided", () => {
+    const out = serializeColors([color({})], NOW);
+    expect(out.project).toBeUndefined();
+    expect(out.colors[0].note).toBeUndefined();
+    expect(out.colors[0].room).toBeUndefined();
+  });
+});
+
+describe("exportFilename", () => {
+  it("uses the given slug (e.g. a palette/project name)", () => {
+    expect(exportFilename(NOW, "palette-kitchen")).toMatch(
+      /^sw-palette-kitchen-2024-01-02T03-04-05.*\.json$/,
+    );
+  });
 });
 
 describe("exportFilename", () => {

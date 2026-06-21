@@ -135,3 +135,74 @@
 .stripCell {
   flex: 1;
 }
+
+/* Projects toolbar */
+.projects {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-4);
+  padding: var(--spacing-3);
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+}
+
+.projectField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.projectLabel {
+  font-size: var(--font-size-2xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-tertiary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.projectSelect,
+.projectName {
+  min-height: 44px;
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-sm);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-primary);
+  color: var(--color-text-primary);
+}
+
+.projectName {
+  min-width: 0;
+}
+
+/* Per-entry annotations */
+.entryFields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  margin-top: var(--spacing-2);
+}
+
+.entryInput,
+.entryRoom {
+  min-height: 36px;
+  padding: var(--spacing-1) var(--spacing-2);
+  font-size: var(--font-size-sm);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-primary);
+  color: var(--color-text-primary);
+}
+
+.entryInput {
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+
+.entryRoom {
+  flex: 0 1 8rem;
+  min-width: 0;
+}

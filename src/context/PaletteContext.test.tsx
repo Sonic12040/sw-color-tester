@@ -35,11 +35,48 @@ describe("PaletteContext", () => {
     expect(result.current.palette).toEqual([]);
   });
 
-  it("persists to localStorage", () => {
+  it("persists the projects shape to localStorage", () => {
     const { result } = setup();
     act(() => result.current.togglePalette("a"));
-    expect(JSON.parse(localStorage.getItem(STORAGE_KEYS.palette)!)).toEqual([
-      "a",
-    ]);
+    const stored = JSON.parse(localStorage.getItem(STORAGE_KEYS.palette)!);
+    expect(stored.projects[0].entries).toEqual([{ id: "a" }]);
+    expect(stored.activeId).toBe(stored.projects[0].id);
+  });
+
+  it("migrates a legacy string[] palette into one project", () => {
+    localStorage.setItem(STORAGE_KEYS.palette, JSON.stringify(["a", "b"]));
+    const { result } = setup();
+    expect(result.current.palette).toEqual(["a", "b"]);
+    expect(result.current.projects).toHaveLength(1);
+  });
+
+  it("manages independent named projects", () => {
+    const { result } = setup();
+    act(() => result.current.togglePalette("a")); // default project
+    act(() => result.current.createProject("Kitchen"));
+    expect(result.current.activeProject.name).toBe("Kitchen");
+    expect(result.current.palette).toEqual([]); // new project starts empty
+    act(() => result.current.togglePalette("b"));
+    expect(result.current.palette).toEqual(["b"]);
+
+    const firstId = result.current.projects[0].id;
+    act(() => result.current.selectProject(firstId));
+    expect(result.current.palette).toEqual(["a"]); // original project intact
+  });
+
+  it("keeps per-color notes through a reorder", () => {
+    const { result } = setup();
+    act(() => result.current.setPalette(["a", "b"]));
+    act(() => result.current.setEntryNote("a", "front door"));
+    act(() => result.current.setPalette(["b", "a"])); // reorder by id
+    expect(result.current.entries.find((e) => e.id === "a")?.note).toBe(
+      "front door",
+    );
+  });
+
+  it("never deletes the last project", () => {
+    const { result } = setup();
+    act(() => result.current.deleteProject(result.current.activeProject.id));
+    expect(result.current.projects).toHaveLength(1);
   });
 });
