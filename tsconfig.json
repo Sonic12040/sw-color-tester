@@ -21,5 +21,8 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  // Node-context test files (filesystem assertions) — kept out of the browser
+  // type program; they're exercised by Vitest's Node projects at runtime.
+  "exclude": ["src/test/build-output.test.ts", "src/test/indexShell.test.ts"]
 }

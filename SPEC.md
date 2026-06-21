@@ -121,20 +121,33 @@ region (`RouteAnnouncer`).
 
 ## Testing
 
-- **Unit**: `colorMath`, `colorCopy`, `colorQuery`, `ColorModel`, `slug`, `seo`,
-  `contrast`, `ExportService`, `Toast`, dataset integrity (`palette.integrity`),
-  the hooks, and each context.
-- **Integration**: `atlas.test.tsx` drives the routed app (facets, sort, views,
-  compare, palette, detail, clipboard) via the DOM; `ColorCard.test.tsx`.
-- **E2E**: `scripts/validate-devices.mjs` — 6 device profiles, axe scan, skip link,
-  no-overflow, SSG-markup, no-trailing-slash redirect (run against `vite preview`).
+Vitest is split into **projects** (run by name; `npm test` runs unit + integration):
+
+- **unit** (Node env, colocated `*.test.ts`): pure logic — `colorMath`, `colorCopy`,
+  `colorQuery`, `ColorModel`, `paletteIntelligence`, `paletteExport`, `slug`, `seo`,
+  `contrast`, dataset integrity (`palette.integrity`), and the index-shell check.
+- **integration** (jsdom + RTL + `@testing-library/user-event`): component/hook/flow
+  specs — each context, the hooks, `ColorCard`, `Toast`, and the routed-app suites in
+  `src/test/integration/` (gallery, colorDetail, compare, palette, emptyStates,
+  appShell) sharing `integration/harness.tsx`. `ExportService.test.ts` lives here too
+  (it touches `document`/`URL`). `src/test/setup.ts` clears storage + auto-cleans.
+- **build-output** (Node, `test:build-output`): asserts the prerendered `dist/` (SEO
+  markup, JSON-LD, plain-language summary, OG images). Runs only after a build, so
+  it's excluded from the default test run.
+
+**E2E** — Playwright Test runner (`playwright.config.ts`, specs in `e2e/`): a
+`webServer` starts `vite preview`; `responsive.spec.ts` runs across a 6-profile device
+matrix (rail-vs-drawer decided from viewport width), and `a11y` / `routing` / `flows`
+run on the Desktop project (axe scans of gallery + both workspaces, skip link,
+no-trailing-slash redirect, and full user flows: palette build + PDF/PNG download,
+share link, scheme-to-palette, clipboard copy, sort persistence, NotFound/noindex).
 
 ## CI/CD (`.github/workflows/deploy.yml`)
 
 `verify` (lint → format:check → typecheck → test) → `build` (`build:assets`,
-uploads the `dist` artifact) → `e2e` (Playwright/axe against the reused artifact)
-→ `deploy` to GitHub Pages. Build runs once; `e2e` consumes its artifact rather
-than rebuilding, and typecheck runs only in `verify`.
+uploads the `dist` artifact) → `e2e` (`playwright test` + `test:build-output`
+against the reused artifact) → `deploy` to GitHub Pages. Build runs once; `e2e`
+consumes its artifact rather than rebuilding, and typecheck runs only in `verify`.
 
 ## Known follow-ups
 

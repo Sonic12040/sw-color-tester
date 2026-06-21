@@ -11,8 +11,7 @@ export default tseslint.config(
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
-  // Node scripts (prerender, validation). The validation script also runs
-  // browser-context callbacks via Playwright's page.evaluate, so include both.
+  // Node scripts (prerender, bundle check).
   {
     files: ["**/*.mjs", "scripts/**/*.{js,mjs}"],
     languageOptions: {
@@ -40,6 +39,19 @@ export default tseslint.config(
         "error",
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
+    },
+  },
+  // Test + e2e files also touch Node APIs (fs, process) — Playwright specs and
+  // the build-output / index-shell checks read the filesystem.
+  {
+    files: [
+      "**/*.test.{ts,tsx}",
+      "src/test/**/*.{ts,tsx}",
+      "e2e/**/*.ts",
+      "playwright.config.ts",
+    ],
+    languageOptions: {
+      globals: { ...globals.node },
     },
   },
   // Must be last: turns off stylistic rules that conflict with Prettier.

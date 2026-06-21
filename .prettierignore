@@ -1,5 +1,8 @@
 dist
+dist-server
 coverage
+test-results
+playwright-report
 package-lock.json
 src/data/palette.ts
 src/data/palette-v1.ts

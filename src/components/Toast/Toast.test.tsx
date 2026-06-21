@@ -6,6 +6,7 @@ import {
   cleanup,
   act,
 } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { TIMING } from "../../utils/config.js";
 import { ToastProvider, useToast } from "./Toast.js";
 
@@ -36,12 +37,15 @@ afterEach(() => {
 });
 
 describe("Toast", () => {
-  it("shows a toast message on demand", () => {
+  it("shows a toast message on demand", async () => {
+    const user = userEvent.setup();
     renderToasts();
-    fireEvent.click(screen.getByRole("button", { name: "fire" }));
+    await user.click(screen.getByRole("button", { name: "fire" }));
     expect(screen.getByText("Saved!")).toBeTruthy();
   });
 
+  // The next two drive fake timers (auto-dismiss + exit animation), so they use
+  // fireEvent — user-event's internal scheduling fights manual timer control.
   it("runs the action and dismisses when the action button is clicked", () => {
     const onAction = vi.fn();
     renderToasts(onAction);

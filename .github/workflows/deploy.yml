@@ -66,6 +66,8 @@ jobs:
           path: dist
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
+      # SEO/OG assertions over the prerendered dist (moved out of the e2e script).
+      - run: npm run test:build-output
 
   deploy:
     needs: e2e
