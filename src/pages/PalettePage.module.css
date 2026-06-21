@@ -86,11 +86,110 @@
 .relation {
   display: inline-block;
   margin-top: 2px;
-  font-size: var(--font-size-2xs);
+  font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--color-text-tertiary);
+  /* secondary (not tertiary): tertiary on white is only ~4.5:1 and fails on the
+     gray page surface; secondary keeps AA wherever the row sits. */
+  color: var(--color-text-secondary);
+}
+
+/* 60-30-10 role badge + override (E11) */
+.roleLine {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  margin-top: var(--spacing-1);
+}
+
+.roleBadge {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px var(--spacing-2);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border-secondary);
+  color: var(--color-text-secondary);
+}
+
+.roleBadge[data-role="Dominant"] {
+  background: var(--color-surface-tertiary);
+  color: var(--color-text-primary);
+}
+.roleBadge[data-role="Secondary"] {
+  background: var(--color-surface-secondary);
+}
+.roleBadge[data-role="Accent"] {
+  border-color: var(--color-primary);
+  color: var(--color-text-primary);
+}
+
+.roleSelect {
+  min-height: 36px; /* matches the note/room inputs in the same row */
+  padding: var(--spacing-1) var(--spacing-2);
+  font-size: var(--font-size-sm);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-primary);
+  color: var(--color-text-primary);
+}
+
+/* Suggested companions (E11). A light panel (like the projects toolbar) so its
+   heading/hint sit on a readable surface instead of the gray page canvas. */
+.companions {
+  margin-top: var(--spacing-6);
+  padding: var(--spacing-4);
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+}
+
+.companionsHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+}
+
+.subTitle {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+}
+
+.companionsHint {
+  margin: var(--spacing-3) 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-normal);
+}
+
+.companionList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.companion {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-2);
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-primary);
+}
+
+.companionSwatch {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border-secondary);
 }
 
 .rowActions {

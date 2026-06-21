@@ -436,3 +436,78 @@ describe("Palette", () => {
     ).toBe("Front door");
   });
 });
+
+describe("Palette intelligence — roles (E11)", () => {
+  const loadPalette = () => {
+    renderApp(
+      "/palette?c=sw-7015-repose-gray,sw-6864-cherry-tomato,sw-6218-tradewind",
+    );
+    fireEvent.click(
+      screen.getByRole("button", { name: /Load shared palette/ }),
+    );
+  };
+
+  it("assigns 60-30-10 role badges across the palette", () => {
+    loadPalette();
+    // The calm neutral becomes Dominant; the colorful one becomes the Accent.
+    expect(screen.getByText(/Dominant · \d+%/)).toBeTruthy();
+    expect(screen.getByText(/Accent · \d+%/)).toBeTruthy();
+  });
+
+  it("lets a user override a color's role", () => {
+    loadPalette();
+    const row = screen
+      .getByRole("link", { name: "Repose Gray" })
+      .closest("li") as HTMLElement;
+    expect(within(row).getByText(/Dominant · /)).toBeTruthy();
+    fireEvent.change(within(row).getByLabelText("Role for Repose Gray"), {
+      target: { value: "Accent" },
+    });
+    expect(within(row).getByText(/Accent · /)).toBeTruthy();
+  });
+
+  it("no longer offers a JSON export (PDF/PNG remain)", () => {
+    loadPalette();
+    expect(screen.queryByRole("button", { name: "Export JSON" })).toBeNull();
+    expect(screen.getByRole("button", { name: "Export PDF" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Export PNG" })).toBeTruthy();
+  });
+});
+
+describe("Palette intelligence — companions (E11)", () => {
+  it("suggests companions on demand and adds one to the palette", async () => {
+    renderApp("/palette?c=sw-7015-repose-gray,sw-6864-cherry-tomato");
+    fireEvent.click(
+      screen.getByRole("button", { name: /Load shared palette/ }),
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Suggest companions" }));
+    const addButtons = screen.getAllByRole("button", {
+      name: /^Add .+ to palette$/,
+    });
+    expect(addButtons.length).toBeGreaterThan(0);
+
+    fireEvent.click(addButtons[0]);
+    expect(await screen.findByText(/Added .+ to palette/)).toBeTruthy();
+  });
+});
+
+describe("Color schemes (E11)", () => {
+  it("generates a scheme from a colorful color and adds it to the palette", async () => {
+    renderApp("/colors/sw-6864-cherry-tomato");
+    expect(screen.getByRole("heading", { name: "Color schemes" })).toBeTruthy();
+    // Real catalog tiles render for a saturated base.
+    expect(
+      screen.getAllByRole("button", { name: /^View / }).length,
+    ).toBeGreaterThan(0);
+
+    fireEvent.click(screen.getByRole("button", { name: "Add all to palette" }));
+    expect(await screen.findByText(/Added \d+ to palette/)).toBeTruthy();
+  });
+
+  it("explains that hue schemes don't apply to a near-neutral base", () => {
+    renderApp("/colors/sw-6258-tricorn-black");
+    expect(screen.getByRole("heading", { name: "Color schemes" })).toBeTruthy();
+    expect(screen.getByText(/hue-based schemes don.t apply/)).toBeTruthy();
+  });
+});

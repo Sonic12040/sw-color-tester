@@ -28,6 +28,20 @@ export type HueRelation =
   | "Contrasting"
   | "Neutral";
 
+/** A color-harmony scheme that can be generated from a single base color. */
+export type SchemeType =
+  | "complementary"
+  | "analogous"
+  | "triadic"
+  | "split-complementary"
+  | "monochromatic";
+
+/**
+ * Usage role in a 60-30-10 palette: Dominant (~60%, large surfaces), Secondary
+ * (~30%, supporting areas), Accent (~10%, small pops).
+ */
+export type PaletteRole = "Dominant" | "Secondary" | "Accent";
+
 /** Which painting context a color is rated for. `null` = no filter. */
 export type UseType = "interior" | "exterior" | null;
 

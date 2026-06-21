@@ -6,7 +6,11 @@ import {
   formatUseTypes,
   similarityRole,
   summarize,
+  explainScheme,
+  explainRole,
+  SCHEME_LABEL,
 } from "./colorCopy.js";
+import { SCHEME_TYPES, PALETTE_ROLES } from "./paletteIntelligence.js";
 
 function make(over: Partial<Color>): Color {
   return {
@@ -156,5 +160,23 @@ describe("similarityRole", () => {
     expect(similarityRole(base, make({ hue: 0.5, lightness: 0.5 }), 4)).toBe(
       "Similar Tone",
     );
+  });
+});
+
+describe("explainScheme / explainRole", () => {
+  it("has a label + non-empty rationale for every scheme type", () => {
+    for (const t of SCHEME_TYPES) {
+      expect(SCHEME_LABEL[t]).toBeTruthy();
+      expect(explainScheme(t).length).toBeGreaterThan(0);
+    }
+  });
+
+  it("explains each 60-30-10 role with its proportion", () => {
+    expect(explainRole("Dominant")).toContain("60%");
+    expect(explainRole("Secondary")).toContain("30%");
+    expect(explainRole("Accent")).toContain("10%");
+    for (const r of PALETTE_ROLES) {
+      expect(explainRole(r).length).toBeGreaterThan(0);
+    }
   });
 });

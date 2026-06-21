@@ -17,6 +17,7 @@ import { useHidden } from "../../context/HiddenContext.js";
 import { useCompare } from "../../context/CompareContext.js";
 import { usePalette } from "../../context/PaletteContext.js";
 import { ColorGridSection } from "./ColorGridSection.js";
+import { SchemeSection } from "./SchemeSection.js";
 import { HslBreakdown } from "./HslBreakdown.js";
 import { GetColorPanel } from "./GetColorPanel.js";
 import { DetailActions } from "./DetailActions.js";
@@ -130,6 +131,8 @@ export function ColorDetail({ color }: ColorDetailProps) {
               <p className={styles.bodyText}>{collections.join(" · ")}</p>
             </section>
           )}
+
+          <SchemeSection base={color} onNavigate={goToColor} />
 
           <ColorGridSection
             title="Coordinating colors"

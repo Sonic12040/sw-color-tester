@@ -15,7 +15,8 @@ const MIN_DATA_KIB = 500; // the split-out color dataset chunk
 const kib = (file) => statSync(resolve(assets, file)).size / 1024;
 
 const html = readFileSync(resolve(root, "dist", "index.html"), "utf8");
-const entryMatch = html.match(/assets\/(index-[A-Za-z0-9-]+\.js)/);
+// Hashes use the base64url alphabet (letters, digits, `-` and `_`).
+const entryMatch = html.match(/assets\/(index-[A-Za-z0-9_-]+\.js)/);
 if (!entryMatch) {
   console.error("check-bundle: could not find the entry chunk in index.html");
   process.exit(1);

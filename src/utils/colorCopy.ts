@@ -1,5 +1,11 @@
 import type { Color } from "../data/types.js";
-import type { LrvClass, NeutralClass, Undertone } from "../domain/types.js";
+import type {
+  LrvClass,
+  NeutralClass,
+  PaletteRole,
+  SchemeType,
+  Undertone,
+} from "../domain/types.js";
 import { DESIGNER_COLLECTION_PREFIX } from "./config.js";
 import { classifyLrv, neutralityBand, undertone } from "./colorMath.js";
 
@@ -96,6 +102,40 @@ export function formatUseTypes(c: Color): string {
   return [c.isInterior && "Interior", c.isExterior && "Exterior"]
     .filter(Boolean)
     .join(" & ");
+}
+
+/** Short, shopper-friendly label for a color-harmony scheme. */
+export const SCHEME_LABEL: Record<SchemeType, string> = {
+  complementary: "Complementary",
+  analogous: "Analogous",
+  triadic: "Triadic",
+  "split-complementary": "Split-complementary",
+  monochromatic: "Monochromatic",
+};
+
+const SCHEME_RATIONALE: Record<SchemeType, string> = {
+  complementary: "Opposite hues on the wheel — bold, high contrast.",
+  analogous: "Neighbors on the wheel — harmonious and low-risk.",
+  triadic: "Three evenly spaced hues — balanced and vibrant.",
+  "split-complementary":
+    "A hue plus the two beside its opposite — contrast with less tension.",
+  monochromatic: "One hue in several tints and shades — calm and cohesive.",
+};
+
+/** One-line, jargon-free explanation of why a scheme's colors work together. */
+export function explainScheme(type: SchemeType): string {
+  return SCHEME_RATIONALE[type];
+}
+
+const ROLE_RATIONALE: Record<PaletteRole, string> = {
+  Dominant: "Largest surfaces (~60%) — walls and big areas.",
+  Secondary: "Supporting areas (~30%) — cabinetry, furniture, an accent wall.",
+  Accent: "Small pops (~10%) — trim, decor, and hardware.",
+};
+
+/** How a 60-30-10 role is meant to be used (for badges/tooltips and exports). */
+export function explainRole(role: PaletteRole): string {
+  return ROLE_RATIONALE[role];
 }
 
 /** Describe how a similar color differs from the base color (for its mini-tile role). */

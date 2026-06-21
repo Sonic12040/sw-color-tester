@@ -1,68 +1,19 @@
 import type { Color } from "../data/types.js";
+import type { PaletteRole } from "../domain/types.js";
 
-/** Per-color free text captured in a palette project. */
+/** Per-color annotations captured in a palette project. */
 export interface ColorAnnotation {
   note?: string;
   room?: string;
+  /** Manual 60-30-10 role override; absent = auto-assigned in the deliverable. */
+  role?: PaletteRole;
 }
 
 export interface SerializeOptions {
-  /** Palette/project name, recorded in the payload + filename. */
+  /** Palette/project name, recorded in the filename + deliverable header. */
   project?: string;
-  /** Per-color notes/room, keyed by color id. */
+  /** Per-color notes/room/role, keyed by color id. */
   annotations?: Record<string, ColorAnnotation>;
-}
-
-export interface ColorExportEntry {
-  id: string;
-  name: string;
-  number: string;
-  hex: string;
-  hsl: { h: number; s: number; l: number };
-  lrv: number;
-  family: string | null;
-  note?: string;
-  room?: string;
-}
-
-export interface ColorExport {
-  exportDate: string;
-  appVersion: string;
-  project?: string;
-  count: number;
-  colors: ColorExportEntry[];
-}
-
-/** Pure: build the export payload (no DOM, no ambient clock — `now` is injected). */
-export function serializeColors(
-  colors: Color[],
-  now: Date,
-  opts: SerializeOptions = {},
-): ColorExport {
-  return {
-    exportDate: now.toISOString(),
-    appVersion: import.meta.env.VITE_APP_VERSION ?? "1.0.0",
-    ...(opts.project ? { project: opts.project } : {}),
-    count: colors.length,
-    colors: colors.map((color) => {
-      const ann = opts.annotations?.[color.id];
-      return {
-        id: color.id,
-        name: color.name,
-        number: color.colorNumber,
-        hex: color.hex,
-        hsl: {
-          h: Math.round(color.hue * 360),
-          s: Math.round(color.saturation * 100),
-          l: Math.round(color.lightness * 100),
-        },
-        lrv: color.lrv,
-        family: color.colorFamilyNames[0] ?? null,
-        ...(ann?.note ? { note: ann.note } : {}),
-        ...(ann?.room ? { room: ann.room } : {}),
-      };
-    }),
-  };
 }
 
 /** Kebab-case a label for filenames. */
@@ -97,20 +48,6 @@ export class ExportService {
     link.download = filename;
     link.click();
     URL.revokeObjectURL(url);
-  }
-
-  /** Serialize the colors to JSON and trigger a download. */
-  exportColors(
-    colors: Color[],
-    opts: SerializeOptions = {},
-  ): { count: number } {
-    const now = new Date();
-    const json = JSON.stringify(serializeColors(colors, now, opts), null, 2);
-    this.#download(
-      new Blob([json], { type: "application/json" }),
-      exportFilename(now, fileSlug(opts), "json"),
-    );
-    return { count: colors.length };
   }
 
   /**

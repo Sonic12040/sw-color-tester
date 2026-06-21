@@ -32,6 +32,27 @@ describe("buildSpecRows", () => {
     expect(rows[0].note).toBeUndefined();
     expect(rows[0].room).toBeUndefined();
   });
+
+  it("assigns 60-30-10 roles + proportions across the palette", () => {
+    const rows = buildSpecRows([
+      colorById("repose"), // calm neutral → Dominant
+      colorById("tradewind"),
+      colorById("cherry"), // colorful → Accent
+    ]);
+    expect(rows.map((r) => r.role)).toEqual([
+      "Dominant",
+      "Secondary",
+      "Accent",
+    ]);
+    expect(rows.reduce((s, r) => s + r.proportion, 0)).toBe(100);
+  });
+
+  it("honors a per-color role override from annotations", () => {
+    const rows = buildSpecRows([colorById("repose"), colorById("cherry")], {
+      cherry: { role: "Dominant" },
+    });
+    expect(rows.find((r) => r.name === "Cherry Tomato")!.role).toBe("Dominant");
+  });
 });
 
 describe("hexToRgb", () => {

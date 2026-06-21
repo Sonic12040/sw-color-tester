@@ -1,12 +1,19 @@
 import { createContext, useContext, useMemo } from "react";
 import { usePersistentState } from "../hooks/usePersistentState.js";
 import { STORAGE_KEYS } from "../utils/storage.js";
+import type { PaletteRole } from "../domain/types.js";
+
+const PALETTE_ROLES: PaletteRole[] = ["Dominant", "Secondary", "Accent"];
+const isRole = (v: unknown): v is PaletteRole =>
+  typeof v === "string" && (PALETTE_ROLES as string[]).includes(v);
 
 /** A color saved to a palette, with optional designer annotations. */
 export interface PaletteEntry {
   id: string;
   note?: string;
   room?: string;
+  /** Manual 60-30-10 role override; absent = auto-assigned from the palette. */
+  role?: PaletteRole;
 }
 
 /** A named palette (a "project" — e.g. one per room or client). */
@@ -35,6 +42,8 @@ export interface PaletteContextValue {
   setPalette: (ids: string[]) => void;
   setEntryNote: (id: string, note: string) => void;
   setEntryRoom: (id: string, room: string) => void;
+  /** Pin a 60-30-10 role for a color, or pass `null` to revert to auto. */
+  setEntryRole: (id: string, role: PaletteRole | null) => void;
 
   // --- Projects ---
   projects: PaletteProject[];
@@ -78,6 +87,7 @@ function normalizeEntries(raw: unknown): PaletteEntry[] {
         id: e.id,
         ...(typeof e.note === "string" ? { note: e.note } : {}),
         ...(typeof e.room === "string" ? { room: e.room } : {}),
+        ...(isRole(e.role) ? { role: e.role } : {}),
       });
     }
   }
@@ -162,6 +172,10 @@ export function PaletteProvider({ children }: { children: React.ReactNode }) {
       setEntryRoom: (id: string, room: string) =>
         editActive((es) =>
           es.map((e) => (e.id === id ? { ...e, room: room || undefined } : e)),
+        ),
+      setEntryRole: (id: string, role: PaletteRole | null) =>
+        editActive((es) =>
+          es.map((e) => (e.id === id ? { ...e, role: role ?? undefined } : e)),
         ),
       selectProject: (id: string) =>
         setData((d) =>

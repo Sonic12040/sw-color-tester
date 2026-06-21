@@ -1,7 +1,13 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router";
 import type { Color } from "../data/types.js";
 import { hsl, classifyLrv, hueRelation } from "../utils/colorMath.js";
+import {
+  assignRoles,
+  suggestCompanions,
+  PALETTE_ROLES,
+} from "../utils/paletteIntelligence.js";
+import { explainRole } from "../utils/colorCopy.js";
 import { colorPath, BASENAME } from "../utils/base.js";
 import { toSlug } from "../utils/slug.js";
 import { copyText } from "../utils/clipboard.js";
@@ -18,10 +24,12 @@ export function PalettePage() {
   const {
     entries,
     setPalette,
+    togglePalette,
     removeFromPalette,
     clearPalette,
     setEntryNote,
     setEntryRoom,
+    setEntryRole,
     projects,
     activeProject,
     selectProject,
@@ -30,6 +38,7 @@ export function PalettePage() {
     deleteProject,
   } = usePalette();
   const [searchParams] = useSearchParams();
+  const [showCompanions, setShowCompanions] = useState(false);
   const showToast = useToast();
   useDocumentMeta("My palette | Sherwin-Williams Color Atlas");
 
@@ -40,6 +49,17 @@ export function PalettePage() {
       Boolean(r.color),
     );
   const colors = rows.map((r) => r.color);
+
+  // 60-30-10 role + proportion across the whole palette (honoring overrides).
+  const roleByIndex = assignRoles(
+    colors,
+    Object.fromEntries(rows.map((r) => [r.color.id, r.entry.role])),
+  );
+
+  // Companion suggestions are computed on demand (cheap full-catalog scan).
+  const companions = showCompanions
+    ? suggestCompanions(colors, colorModel.getActiveColors(), 4)
+    : [];
 
   // A shared palette arrives as ?c=slug,slug,… — resolve it to ids on demand.
   const sharedIds = useMemo(() => {
@@ -73,10 +93,12 @@ export function PalettePage() {
   const exportOpts = {
     project: activeProject.name,
     annotations: Object.fromEntries(
-      rows.map((r) => [r.color.id, { note: r.entry.note, room: r.entry.room }]),
+      rows.map((r) => [
+        r.color.id,
+        { note: r.entry.note, room: r.entry.room, role: r.entry.role },
+      ]),
     ),
   };
-  const exportJson = () => exportService.exportColors(colors, exportOpts);
   const exportPdf = async () => {
     try {
       await exportService.exportSpecPdf(colors, exportOpts);
@@ -112,13 +134,6 @@ export function PalettePage() {
             </button>
             <button type="button" className="btn-secondary" onClick={exportPng}>
               Export PNG
-            </button>
-            <button
-              type="button"
-              className="btn-secondary"
-              onClick={exportJson}
-            >
-              Export JSON
             </button>
             <button type="button" className="btn-ghost" onClick={clearPalette}>
               Clear
@@ -230,6 +245,36 @@ export function PalettePage() {
                       {hueRelation(colors[i - 1], c)} from previous
                     </span>
                   )}
+                  <span className={styles.roleLine}>
+                    <span
+                      className={styles.roleBadge}
+                      data-role={roleByIndex[i].role}
+                      title={explainRole(roleByIndex[i].role)}
+                    >
+                      {roleByIndex[i].role} · {roleByIndex[i].proportion}%
+                    </span>
+                    <select
+                      className={styles.roleSelect}
+                      value={entry.role ?? "auto"}
+                      aria-label={`Role for ${c.name}`}
+                      onChange={(e) =>
+                        setEntryRole(
+                          c.id,
+                          e.target.value === "auto"
+                            ? null
+                            : (e.target
+                                .value as (typeof PALETTE_ROLES)[number]),
+                        )
+                      }
+                    >
+                      <option value="auto">Auto</option>
+                      {PALETTE_ROLES.map((r) => (
+                        <option key={r} value={r}>
+                          {r}
+                        </option>
+                      ))}
+                    </select>
+                  </span>
                   <span className={styles.entryFields}>
                     <input
                       className={styles.entryInput}
@@ -278,6 +323,68 @@ export function PalettePage() {
               </li>
             ))}
           </ol>
+
+          <section
+            className={styles.companions}
+            aria-label="Palette intelligence"
+          >
+            <div className={styles.companionsHead}>
+              <h2 className={styles.subTitle}>Suggested companions</h2>
+              <button
+                type="button"
+                className="btn-secondary"
+                aria-expanded={showCompanions}
+                onClick={() => setShowCompanions((v) => !v)}
+              >
+                {showCompanions ? "Hide suggestions" : "Suggest companions"}
+              </button>
+            </div>
+            {showCompanions &&
+              (companions.length > 0 ? (
+                <>
+                  <p className={styles.companionsHint}>
+                    Colors that round out this palette — balancing neutrality,
+                    light/dark range, and hue variety.
+                  </p>
+                  <ul className={styles.companionList}>
+                    {companions.map((c) => (
+                      <li key={c.id} className={styles.companion}>
+                        <span
+                          className={styles.companionSwatch}
+                          style={{ background: hsl(c) }}
+                        />
+                        <span className={styles.info}>
+                          <Link
+                            className={styles.name}
+                            to={colorPath(toSlug(c))}
+                          >
+                            {c.name}
+                          </Link>
+                          <span className={styles.meta}>
+                            SW {c.colorNumber} · {classifyLrv(c.lrv)}
+                          </span>
+                        </span>
+                        <button
+                          type="button"
+                          className="btn-secondary"
+                          aria-label={`Add ${c.name} to palette`}
+                          onClick={() => {
+                            togglePalette(c.id);
+                            showToast(`Added ${c.name} to palette`);
+                          }}
+                        >
+                          Add
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                <p className={styles.companionsHint}>
+                  No suggestions right now — try removing a color or two.
+                </p>
+              ))}
+          </section>
         </>
       )}
     </div>

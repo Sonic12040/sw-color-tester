@@ -248,6 +248,43 @@ async function run() {
     fail("axe", `exception: ${err.message}`);
   }
 
+  // Axe scan of the palette workspace — its own light-card surfaces sit on the
+  // gray canvas, so it needs its own contrast check (the gallery scan won't cover
+  // it). Load a 2-color shared palette and reveal the companions panel so the
+  // role badges, role selects, and suggestion text are all in the DOM.
+  try {
+    const ctx = await browser.newContext({
+      viewport: { width: 1440, height: 900 },
+    });
+    const page = await ctx.newPage();
+    const [s1, s2] = readdirSync(resolve(root, "dist", "colors")).slice(0, 2);
+    await page.goto(`${BASE}palette?c=${s1},${s2}`, {
+      waitUntil: "networkidle",
+    });
+    const load = page.getByRole("button", { name: /Load shared palette/ });
+    if (await load.isVisible().catch(() => false)) await load.click();
+    const suggest = page.getByRole("button", { name: "Suggest companions" });
+    if (await suggest.isVisible().catch(() => false)) await suggest.click();
+    await page.waitForTimeout(150);
+    const result = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+      .analyze();
+    const serious = result.violations.filter(
+      (v) => v.impact === "serious" || v.impact === "critical",
+    );
+    if (serious.length === 0)
+      pass(
+        "axe/palette",
+        `0 serious/critical (${result.violations.length} minor)`,
+      );
+    else
+      for (const v of serious)
+        fail("axe/palette", `${v.id} ×${v.nodes.length} — ${v.help}`);
+    await ctx.close();
+  } catch (err) {
+    fail("axe/palette", `exception: ${err.message}`);
+  }
+
   await browser.close();
 
   // 6. SEO-without-JS: a prerendered color file has <h1> + JSON-LD on disk

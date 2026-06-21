@@ -1,7 +1,9 @@
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import type { Color } from "../data/types.js";
+import type { PaletteRole } from "../domain/types.js";
 import type { ColorAnnotation } from "./ExportService.js";
 import { undertone, classifyLrv } from "./colorMath.js";
+import { assignRoles } from "./paletteIntelligence.js";
 
 /**
  * Palette deliverables — a PDF spec sheet and a PNG board. The data assembly and
@@ -17,16 +19,31 @@ export interface SpecRow {
   lrvBand: string;
   family: string | null;
   undertone: string;
+  /** 60-30-10 usage role assigned across the palette (E11). */
+  role: PaletteRole;
+  /** Recommended share of the scheme, whole percent. */
+  proportion: number;
   note?: string;
   room?: string;
 }
 
-/** Pure: flatten colors + annotations into the rows a spec sheet / board needs. */
+/**
+ * Pure: flatten colors + annotations into the rows a spec sheet / board needs.
+ * The 60-30-10 role + proportion are computed across the whole palette (honoring
+ * any per-color role override in the annotations), so deliverables carry the same
+ * guidance the app shows.
+ */
 export function buildSpecRows(
   colors: Color[],
   annotations: Record<string, ColorAnnotation> = {},
 ): SpecRow[] {
-  return colors.map((c) => {
+  const roles = assignRoles(
+    colors,
+    Object.fromEntries(
+      Object.entries(annotations).map(([id, a]) => [id, a.role]),
+    ),
+  );
+  return colors.map((c, i) => {
     const ann = annotations[c.id];
     return {
       name: c.name,
@@ -36,6 +53,8 @@ export function buildSpecRows(
       lrvBand: classifyLrv(c.lrv),
       family: c.colorFamilyNames[0] ?? null,
       undertone: undertone(c),
+      role: roles[i].role,
+      proportion: roles[i].proportion,
       ...(ann?.note ? { note: ann.note } : {}),
       ...(ann?.room ? { room: ann.room } : {}),
     };
@@ -132,6 +151,7 @@ export async function buildPalettePdf(
       `LRV ${row.lrv.toFixed(1)} (${row.lrvBand})`,
       `${row.undertone} undertone`,
       row.family ?? "",
+      `${row.role} ${row.proportion}%`,
     ]
       .filter(Boolean)
       .join("   ·   ");
@@ -189,7 +209,7 @@ export function renderBoardToCanvas(
     const r = Math.floor(i / cols);
     const x = PAD + col * (cellW + gap);
     const y = HEADER + PAD + r * (cellH + gap);
-    const swatchH = cellH - 56;
+    const swatchH = cellH - 76; // room for three text lines below the swatch
     ctx.fillStyle = row.hex;
     ctx.fillRect(x, y, cellW, swatchH);
     ctx.fillStyle = "#ffffff";
@@ -198,6 +218,9 @@ export function renderBoardToCanvas(
     ctx.fillStyle = "rgba(255,255,255,0.7)";
     ctx.font = "400 16px Roboto, Arial, sans-serif";
     ctx.fillText(`SW ${row.number} · ${row.hex}`, x, y + swatchH + 48);
+    ctx.fillStyle = "rgba(255,255,255,0.55)";
+    ctx.font = "600 14px Roboto, Arial, sans-serif";
+    ctx.fillText(`${row.role} · ${row.proportion}%`, x, y + swatchH + 68);
   });
 
   return canvas;
