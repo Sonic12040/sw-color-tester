@@ -102,4 +102,30 @@
     opacity: 0.5;
     cursor: not-allowed;
   }
+
+  /* Canonical form field (input/select) on a dark surface — the single source
+     of truth shared by the Browse toolbar, palette workspace, and detail page so
+     they can't drift. Callers add a module class only for layout (flex sizing,
+     the search icon's left padding). `option` colors keep the open <select>
+     popup dark where the OS doesn't honor color-scheme. */
+  .field-on-dark {
+    min-height: 44px;
+    padding: var(--spacing-2) var(--spacing-3);
+    font-size: var(--font-size-sm);
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--on-dark-border-strong);
+    border-radius: var(--radius-md);
+    color-scheme: dark;
+  }
+  .field-on-dark::placeholder {
+    color: var(--on-dark-muted);
+  }
+  select.field-on-dark {
+    cursor: pointer;
+  }
+  .field-on-dark option {
+    background: var(--surface-dark);
+    color: #ffffff;
+  }
 }

@@ -67,7 +67,7 @@ export function SchemeSection({ base, onNavigate }: SchemeSectionProps) {
         <label className={styles.schemeField}>
           <span className={styles.schemeFieldLabel}>Scheme</span>
           <select
-            className={styles.schemeSelect}
+            className="field-on-dark"
             value={type}
             onChange={(e) => setType(e.target.value as SchemeType)}
             aria-label="Scheme type"

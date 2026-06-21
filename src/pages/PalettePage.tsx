@@ -152,7 +152,7 @@ export function PalettePage() {
           <label className={styles.projectField}>
             <span className={styles.projectLabel}>Palette</span>
             <select
-              className={styles.projectSelect}
+              className="field-on-dark"
               value={activeProject.id}
               onChange={(e) => selectProject(e.target.value)}
               aria-label="Select palette"
@@ -167,7 +167,7 @@ export function PalettePage() {
           <label className={styles.projectField}>
             <span className={styles.projectLabel}>Name</span>
             <input
-              className={styles.projectName}
+              className={`field-on-dark ${styles.projectName}`}
               value={activeProject.name}
               onChange={(e) => renameProject(activeProject.id, e.target.value)}
               aria-label="Palette name"
@@ -260,7 +260,7 @@ export function PalettePage() {
                         {roleByIndex[i].role} · {roleByIndex[i].proportion}%
                       </span>
                       <select
-                        className={styles.roleSelect}
+                        className="field-on-dark"
                         value={entry.role ?? "auto"}
                         aria-label={`Role for ${c.name}`}
                         onChange={(e) =>
@@ -283,14 +283,14 @@ export function PalettePage() {
                     </span>
                     <span className={styles.entryFields}>
                       <input
-                        className={styles.entryInput}
+                        className={`field-on-dark ${styles.entryInput}`}
                         value={entry.note ?? ""}
                         placeholder="Note"
                         aria-label={`Note for ${c.name}`}
                         onChange={(e) => setEntryNote(c.id, e.target.value)}
                       />
                       <input
-                        className={styles.entryRoom}
+                        className={`field-on-dark ${styles.entryRoom}`}
                         value={entry.room ?? ""}
                         placeholder="Room"
                         aria-label={`Room for ${c.name}`}

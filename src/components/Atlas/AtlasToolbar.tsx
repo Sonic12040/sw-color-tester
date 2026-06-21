@@ -80,7 +80,7 @@ export function AtlasToolbar({
           </span>
           <input
             type="search"
-            className={styles.searchInput}
+            className={`field-on-dark ${styles.searchInput}`}
             placeholder="Search name or SW number…"
             aria-label="Search colors"
             value={search}
@@ -95,7 +95,7 @@ export function AtlasToolbar({
         <label className={styles.sortLabel}>
           <span className={styles.sortText}>Sort</span>
           <select
-            className={styles.sortSelect}
+            className="field-on-dark"
             value={sort}
             onChange={(e) => onSortChange(e.target.value as SortKey)}
             aria-label="Sort colors"

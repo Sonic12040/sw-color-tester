@@ -42,19 +42,12 @@
   pointer-events: none;
 }
 
+/* Visual styling comes from the shared `.field-on-dark` utility; the module only
+   adds layout: full width, room for the leading icon, and a larger search font. */
 .searchInput {
   width: 100%;
-  min-height: 44px;
-  padding: var(--spacing-2) var(--spacing-3) var(--spacing-2) var(--spacing-8);
-  border: 1px solid var(--on-dark-border-strong);
-  border-radius: var(--radius-md);
+  padding-left: var(--spacing-8);
   font-size: var(--font-size-base);
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
-}
-
-.searchInput::placeholder {
-  color: var(--on-dark-muted);
 }
 
 .searchInput:focus-visible {
@@ -81,26 +74,7 @@
   white-space: nowrap;
 }
 
-.sortSelect {
-  min-height: 44px;
-  padding: var(--spacing-1) var(--spacing-2);
-  border: 1px solid var(--on-dark-border-strong);
-  border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
-  font-size: var(--font-size-sm);
-  cursor: pointer;
-  /* Hint dark-mode native UI (scrollbar/checkmark) where supported. */
-  color-scheme: dark;
-}
-
-/* The open dropdown renders on the OS surface; `color-scheme` isn't always
-   honored, so set the option colors explicitly (dark bg, light text) instead
-   of inheriting the select's white text onto a light popup. */
-.sortSelect option {
-  background: var(--surface-dark);
-  color: #ffffff;
-}
+/* The sort <select> uses the shared `.field-on-dark` utility (see global.css). */
 
 .badge {
   display: inline-flex;

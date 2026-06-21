@@ -145,15 +145,8 @@
   color: #ffffff;
 }
 
-.roleSelect {
-  min-height: 36px; /* matches the note/room inputs in the same row */
-  padding: var(--spacing-1) var(--spacing-2);
-  font-size: var(--font-size-sm);
-  border: 1px solid var(--on-dark-border-strong);
-  border-radius: var(--radius-sm);
-  background: var(--on-dark-fill);
-  color: #ffffff;
-}
+/* Form fields (.roleSelect, .projectSelect/.projectName, .entry*) are styled by
+   the shared `.field-on-dark` utility in global.css; modules add layout only. */
 
 /* Suggested companions (E11) — a faint elevated panel inside the card. */
 .companions {
@@ -274,17 +267,6 @@
   font-weight: var(--font-weight-semibold);
 }
 
-.projectSelect,
-.projectName {
-  min-height: 44px;
-  padding: var(--spacing-2) var(--spacing-3);
-  font-size: var(--font-size-sm);
-  border: 1px solid var(--on-dark-border-strong);
-  border-radius: var(--radius-sm);
-  background: var(--on-dark-fill);
-  color: #ffffff;
-}
-
 .projectName {
   min-width: 0;
 }
@@ -295,22 +277,6 @@
   flex-wrap: wrap;
   gap: var(--spacing-2);
   margin-top: var(--spacing-2);
-}
-
-.entryInput,
-.entryRoom {
-  min-height: 36px;
-  padding: var(--spacing-1) var(--spacing-2);
-  font-size: var(--font-size-sm);
-  border: 1px solid var(--on-dark-border-strong);
-  border-radius: var(--radius-sm);
-  background: var(--on-dark-fill);
-  color: #ffffff;
-}
-
-.entryInput::placeholder,
-.entryRoom::placeholder {
-  color: var(--on-dark-faint);
 }
 
 .entryInput {

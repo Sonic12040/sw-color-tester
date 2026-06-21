@@ -441,16 +441,7 @@
   color: var(--on-dark-faint);
 }
 
-.schemeSelect {
-  min-height: 44px;
-  padding: var(--spacing-2) var(--spacing-3);
-  font-size: var(--font-size-sm);
-  color: #ffffff;
-  background: var(--on-dark-fill);
-  border: 1px solid var(--on-dark-border);
-  border-radius: var(--radius-sm);
-  color-scheme: dark;
-}
+/* The scheme <select> uses the shared `.field-on-dark` utility (see global.css). */
 
 .schemeActions {
   display: flex;
