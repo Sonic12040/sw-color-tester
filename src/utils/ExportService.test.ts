@@ -107,3 +107,29 @@ describe("ExportService.exportColors", () => {
     spy.mockRestore();
   });
 });
+
+describe("ExportService.exportSpecPdf", () => {
+  it("builds a PDF blob and triggers a .pdf download", async () => {
+    const createObjectURL = vi.fn(() => "blob:mock");
+    const revokeObjectURL = vi.fn();
+    Object.assign(URL, { createObjectURL, revokeObjectURL });
+    const anchor = {
+      href: "",
+      download: "",
+      click: vi.fn(),
+    } as unknown as HTMLAnchorElement;
+    const spy = vi
+      .spyOn(document, "createElement")
+      .mockReturnValue(anchor as HTMLAnchorElement);
+
+    const result = await new ExportService().exportSpecPdf([color({})], {
+      project: "Kitchen",
+    });
+
+    expect(result).toEqual({ count: 1 });
+    expect(createObjectURL).toHaveBeenCalledOnce();
+    expect(anchor.download).toMatch(/^sw-palette-kitchen-.*\.pdf$/);
+    expect(anchor.click).toHaveBeenCalledOnce();
+    spy.mockRestore();
+  });
+});

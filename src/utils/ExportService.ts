@@ -75,30 +75,87 @@ function kebab(s: string): string {
   );
 }
 
-/** Pure: timestamped download filename. `slug` defaults to the legacy "favorites". */
-export function exportFilename(now: Date, slug = "favorites"): string {
+/** Pure: timestamped download filename. `slug`/`ext` default to the legacy JSON form. */
+export function exportFilename(
+  now: Date,
+  slug = "favorites",
+  ext = "json",
+): string {
   const stamp = now.toISOString().replace(/[:.]/g, "-").slice(0, -5);
-  return `sw-${slug}-${stamp}.json`;
+  return `sw-${slug}-${stamp}.${ext}`;
 }
 
+const fileSlug = (opts: SerializeOptions): string =>
+  opts.project ? `palette-${kebab(opts.project)}` : "favorites";
+
 export class ExportService {
-  /** Serialize the colors and trigger a browser download. */
+  /** Trigger a browser download of a blob. */
+  #download(blob: Blob, filename: string): void {
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
+  /** Serialize the colors to JSON and trigger a download. */
   exportColors(
     colors: Color[],
     opts: SerializeOptions = {},
   ): { count: number } {
     const now = new Date();
     const json = JSON.stringify(serializeColors(colors, now, opts), null, 2);
-    const blob = new Blob([json], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = exportFilename(
-      now,
-      opts.project ? `palette-${kebab(opts.project)}` : "favorites",
+    this.#download(
+      new Blob([json], { type: "application/json" }),
+      exportFilename(now, fileSlug(opts), "json"),
     );
-    link.click();
-    URL.revokeObjectURL(url);
     return { count: colors.length };
+  }
+
+  /**
+   * Build a PDF spec sheet and trigger a download. The export module (incl.
+   * pdf-lib) is loaded on demand so it never weighs down the main bundle.
+   */
+  async exportSpecPdf(
+    colors: Color[],
+    opts: SerializeOptions = {},
+  ): Promise<{ count: number }> {
+    const { buildSpecRows, buildPalettePdf } =
+      await import("./paletteExport.js");
+    const now = new Date();
+    const rows = buildSpecRows(colors, opts.annotations ?? {});
+    const bytes = await buildPalettePdf(rows, {
+      project: opts.project ?? "My palette",
+      now,
+    });
+    this.#download(
+      new Blob([new Uint8Array(bytes)], { type: "application/pdf" }),
+      exportFilename(now, fileSlug(opts), "pdf"),
+    );
+    return { count: colors.length };
+  }
+
+  /** Render a PNG swatch board and trigger a download (export module loaded on demand). */
+  async exportBoardPng(
+    colors: Color[],
+    opts: SerializeOptions = {},
+  ): Promise<{ count: number }> {
+    const { buildSpecRows, renderBoardToCanvas } =
+      await import("./paletteExport.js");
+    const now = new Date();
+    const rows = buildSpecRows(colors, opts.annotations ?? {});
+    const canvas = document.createElement("canvas");
+    renderBoardToCanvas(canvas, rows, opts.project ?? "My palette");
+    return new Promise((resolve, reject) => {
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          reject(new Error("Could not render the palette board"));
+          return;
+        }
+        this.#download(blob, exportFilename(now, fileSlug(opts), "png"));
+        resolve({ count: colors.length });
+      }, "image/png");
+    });
   }
 }

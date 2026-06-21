@@ -69,16 +69,27 @@ export function PalettePage() {
     );
   };
 
-  const exportJson = () =>
-    exportService.exportColors(colors, {
-      project: activeProject.name,
-      annotations: Object.fromEntries(
-        rows.map((r) => [
-          r.color.id,
-          { note: r.entry.note, room: r.entry.room },
-        ]),
-      ),
-    });
+  const exportOpts = {
+    project: activeProject.name,
+    annotations: Object.fromEntries(
+      rows.map((r) => [r.color.id, { note: r.entry.note, room: r.entry.room }]),
+    ),
+  };
+  const exportJson = () => exportService.exportColors(colors, exportOpts);
+  const exportPdf = async () => {
+    try {
+      await exportService.exportSpecPdf(colors, exportOpts);
+    } catch {
+      showToast("Couldn't generate the PDF");
+    }
+  };
+  const exportPng = async () => {
+    try {
+      await exportService.exportBoardPng(colors, exportOpts);
+    } catch {
+      showToast("Couldn't generate the image");
+    }
+  };
 
   return (
     <div className={styles.page}>
@@ -92,6 +103,22 @@ export function PalettePage() {
             onClick={copyShareLink}
           >
             Copy share link
+          </button>
+          <button
+            type="button"
+            className="btn-secondary"
+            disabled={colors.length === 0}
+            onClick={exportPdf}
+          >
+            Export PDF
+          </button>
+          <button
+            type="button"
+            className="btn-secondary"
+            disabled={colors.length === 0}
+            onClick={exportPng}
+          >
+            Export PNG
           </button>
           <button
             type="button"

@@ -25,8 +25,8 @@ for SEO/AI discoverability.
    specs tucked under a "Technical details" disclosure.
 3. **Workspace** — `/compare` (up to 4 side-by-side, with a pairwise WCAG
    contrast matrix) and `/palette` — multiple named projects, each with
-   collect / reorder / per-color notes + room tags / annotated export / per-row
-   hue relationships / shareable `?c=` URL.
+   collect / reorder / per-color notes + room tags / export (JSON · PNG board ·
+   PDF spec sheet) / per-row hue relationships / shareable `?c=` URL.
 
 ## Source layout
 
@@ -51,8 +51,8 @@ src/
 │   ├── Workspace/        # CompareTray, ContrastMatrix
 │   ├── Toast/, ErrorBoundary/, seo/JsonLd
 ├── domain/               # types.ts (shared facet/sort vocabulary)
-├── utils/                # base.ts, config.ts, storage.ts, slug.ts, seo.ts, breakpoints.ts, clipboard.ts,
-│                         #   colorMath.ts, colorCopy.ts, paint.ts, swLinks.ts, ogTemplate.ts, ExportService.ts
+├── utils/                # base.ts, config.ts, storage.ts, slug.ts, seo.ts, breakpoints.ts, clipboard.ts, colorMath.ts,
+│                         #   colorCopy.ts, paint.ts, swLinks.ts, ogTemplate.ts, ExportService.ts, paletteExport.ts (lazy)
 └── styles/               # tokens.css, breakpoints.css, a11y.css, global.css
 prerender.mjs             # post-build: writes dist/colors/<slug>/index.html + 404.html, sitemap, colors.json
 ```
@@ -230,7 +230,7 @@ section is the source of truth for shape and priority.
 | 5 ✅ | F5 "Get this color" panel        | Shopper      | High  | M      | The missing _act_ step for the largest persona    |
 | 6 ✅ | F6 Color data API / code-split   | All          | Med   | M      | Perf foundation; data source later features reuse |
 | 7 ✅ | F7 Projects (palettes + notes)   | Designer     | Med   | M      | Pro depth; stepping stone to accounts             |
-| 8    | F8 Rich palette export (PNG/PDF) | Designer/Mkt | Med   | M      | Client deliverable; builds on F7                  |
+| 8 ✅ | F8 Rich palette export (PNG/PDF) | Designer/Mkt | Med   | M      | Client deliverable; builds on F7                  |
 
 ### Features → stories → tasks (Now)
 
@@ -307,8 +307,9 @@ Delivered: `PaletteContext` now holds `{ projects, activeId }` (entries carry op
   - AC: editable note + room tag per entry; persisted; included in export.
   - Tasks: extend the palette-entry model + UI + persistence; tests.
 
-**F8 · Rich palette export** _(Designer/Marketer · M · rank 8, depends on F7)_
+**F8 · Rich palette export** ✅ _shipped_ _(Designer/Marketer · M · rank 8, depends on F7)_
 Benefit: client-ready deliverable.
+Delivered: `utils/paletteExport.ts` — pure `buildSpecRows`/`hexToRgb`/`boardGrid` (unit-tested), a `pdf-lib` spec sheet (`buildPalettePdf`, swatch + name/SW#/hex/LRV/undertone/family + notes/room, paginated; tested down to the `%PDF` bytes), and a canvas PNG swatch board (`renderBoardToCanvas`). `ExportService` gains `exportSpecPdf`/`exportBoardPng`, both **dynamic-importing** the module so pdf-lib lands in its own lazy chunk (main entry stayed 341 KiB). PalettePage exposes Export PDF / PNG / JSON, all carrying the active project's name + per-color annotations.
 
 - **US8.1** As a designer, I want a PNG board export so I can drop a palette into a presentation.
   - AC: branded PNG of swatches + names/numbers; one click.
