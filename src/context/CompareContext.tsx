@@ -1,6 +1,7 @@
-import { createContext, useContext, useMemo } from "react";
+import { createContext, useMemo } from "react";
 import { usePersistentState } from "../hooks/usePersistentState.js";
 import { STORAGE_KEYS } from "../utils/storage.js";
+import { useRequiredContext } from "./useRequiredContext.js";
 
 /** Max colors that can be compared side-by-side at once. */
 export const MAX_COMPARE = 4;
@@ -18,9 +19,7 @@ export interface CompareContextValue {
 const CompareContext = createContext<CompareContextValue | null>(null);
 
 export function useCompare(): CompareContextValue {
-  const ctx = useContext(CompareContext);
-  if (!ctx) throw new Error("useCompare must be used inside <CompareProvider>");
-  return ctx;
+  return useRequiredContext(CompareContext, "useCompare", "CompareProvider");
 }
 
 function parseIds(raw: unknown): string[] | null {

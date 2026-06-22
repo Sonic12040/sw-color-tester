@@ -1,6 +1,7 @@
-import { createContext, useContext, useMemo } from "react";
+import { createContext, useMemo } from "react";
 import { usePersistentState } from "../hooks/usePersistentState.js";
 import { STORAGE_KEYS } from "../utils/storage.js";
+import { useRequiredContext } from "./useRequiredContext.js";
 import type { PaletteRole } from "../domain/types.js";
 
 const PALETTE_ROLES: PaletteRole[] = ["Dominant", "Secondary", "Accent"];
@@ -57,9 +58,7 @@ export interface PaletteContextValue {
 const PaletteContext = createContext<PaletteContextValue | null>(null);
 
 export function usePalette(): PaletteContextValue {
-  const ctx = useContext(PaletteContext);
-  if (!ctx) throw new Error("usePalette must be used inside <PaletteProvider>");
-  return ctx;
+  return useRequiredContext(PaletteContext, "usePalette", "PaletteProvider");
 }
 
 const DEFAULT_ID = "default";

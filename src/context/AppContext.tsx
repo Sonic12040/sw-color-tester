@@ -1,5 +1,6 @@
-import { createContext, useContext } from "react";
+import { createContext } from "react";
 import type { ColorModel } from "../models/ColorModel.js";
+import { useRequiredContext } from "./useRequiredContext.js";
 
 export interface AppContextValue {
   colorModel: ColorModel;
@@ -8,7 +9,5 @@ export interface AppContextValue {
 export const AppContext = createContext<AppContextValue | null>(null);
 
 export function useAppContext(): AppContextValue {
-  const ctx = useContext(AppContext);
-  if (!ctx) throw new Error("useAppContext must be used inside <AppProvider>");
-  return ctx;
+  return useRequiredContext(AppContext, "useAppContext", "AppProvider");
 }

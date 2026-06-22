@@ -1,54 +1,16 @@
-import { createContext, useCallback, useContext, useMemo } from "react";
-import { type SetActions } from "../hooks/useSet.js";
-import { usePersistentSet } from "../hooks/usePersistentSet.js";
+import { createSetContext } from "./createSetContext.js";
 import { STORAGE_KEYS } from "../utils/storage.js";
 
-export interface HiddenContextValue {
-  hidden: Set<string>;
-  actions: SetActions<string>;
-  toggleHidden: (id: string) => void;
-  clearHidden: () => void;
-  toggleBulkHidden: (colorIds: string[]) => void;
-}
+const { Provider, useStore } = createSetContext(
+  "useHidden",
+  "HiddenProvider",
+  STORAGE_KEYS.hidden,
+);
 
-export const HiddenContext = createContext<HiddenContextValue | null>(null);
+export const HiddenProvider = Provider;
 
-export function useHidden(): HiddenContextValue {
-  const ctx = useContext(HiddenContext);
-  if (!ctx) {
-    throw new Error("useHidden must be used inside <HiddenProvider>");
-  }
-  return ctx;
-}
-
-export function HiddenProvider({ children }: { children: React.ReactNode }) {
-  const [hidden, actions] = usePersistentSet(STORAGE_KEYS.hidden);
-
-  const toggleBulkHidden = useCallback(
-    (colorIds: string[]) => {
-      const allHidden =
-        colorIds.length > 0 && colorIds.every((id) => hidden.has(id));
-      if (allHidden) {
-        actions.removeMultiple(colorIds);
-      } else {
-        actions.addMultiple(colorIds);
-      }
-    },
-    [hidden, actions],
-  );
-
-  const value = useMemo<HiddenContextValue>(
-    () => ({
-      hidden,
-      actions,
-      toggleHidden: actions.toggle,
-      clearHidden: actions.clear,
-      toggleBulkHidden,
-    }),
-    [hidden, actions, toggleBulkHidden],
-  );
-
-  return (
-    <HiddenContext.Provider value={value}>{children}</HiddenContext.Provider>
-  );
+/** Hidden color ids + a toggle. */
+export function useHidden() {
+  const { set, toggle } = useStore();
+  return { hidden: set, toggleHidden: toggle };
 }

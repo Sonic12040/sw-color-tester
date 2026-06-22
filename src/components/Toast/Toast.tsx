@@ -1,13 +1,7 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { createContext, useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { TIMING } from "../../utils/config.js";
+import { useRequiredContext } from "../../context/useRequiredContext.js";
 import styles from "./Toast.module.css";
 
 export interface ToastMessage {
@@ -27,9 +21,7 @@ type ShowToastFn = (
 const ToastContext = createContext<ShowToastFn | null>(null);
 
 export function useToast(): ShowToastFn {
-  const fn = useContext(ToastContext);
-  if (!fn) throw new Error("useToast must be used inside <ToastProvider>");
-  return fn;
+  return useRequiredContext(ToastContext, "useToast", "ToastProvider");
 }
 
 // ── Individual toast item ───────────────────────────────────────────────────

@@ -1,11 +1,6 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from "react";
+import { createContext, useCallback, useMemo, useState } from "react";
 import { usePersistentState } from "../hooks/usePersistentState.js";
+import { useRequiredContext } from "./useRequiredContext.js";
 import { STORAGE_KEYS } from "../utils/storage.js";
 import { LRV_CLASSES } from "../utils/colorMath.js";
 import type {
@@ -53,11 +48,7 @@ export interface FiltersContextValue {
 export const FiltersContext = createContext<FiltersContextValue | null>(null);
 
 export function useFilters(): FiltersContextValue {
-  const ctx = useContext(FiltersContext);
-  if (!ctx) {
-    throw new Error("useFilters must be used inside <FiltersProvider>");
-  }
-  return ctx;
+  return useRequiredContext(FiltersContext, "useFilters", "FiltersProvider");
 }
 
 function parseLightness(raw: unknown): LrvClass[] | null {
