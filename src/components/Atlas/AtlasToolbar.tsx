@@ -81,7 +81,7 @@ export function AtlasToolbar({
           <input
             type="search"
             className={`field-on-dark ${styles.searchInput}`}
-            placeholder="Search name or SW number…"
+            placeholder="Search name, number, family, collection…"
             aria-label="Search colors"
             value={search}
             onChange={(e) => onSearchChange(e.target.value)}

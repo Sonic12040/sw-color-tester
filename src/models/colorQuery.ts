@@ -22,6 +22,31 @@ export interface QueryContext {
   designerPickIds?: Set<string>;
 }
 
+/**
+ * Lowercased searchable text for a color: not just its name/number, but every
+ * value a user might type — family, collection(s), undertone, lightness band
+ * (e.g. "dark"), neutrality band, interior/exterior, hex, and description. Mirrors
+ * the facet vocabulary so anything you can filter by, you can also type.
+ */
+function searchHaystack(c: Color): string {
+  return [
+    c.name,
+    c.colorNumber,
+    `sw ${c.colorNumber}`,
+    c.hex,
+    ...c.colorFamilyNames,
+    ...c.brandedCollectionNames,
+    undertone(c),
+    classifyLrv(c.lrv ?? 0),
+    neutralityBand(c),
+    c.isInterior ? "interior" : "",
+    c.isExterior ? "exterior" : "",
+    ...c.description,
+  ]
+    .join(" ")
+    .toLowerCase();
+}
+
 /** Order family names by configured priority, then alphabetically. */
 export function orderFamilies(familyKeys: string[]): string[] {
   return [...familyKeys].sort((a, b) => {
@@ -114,11 +139,7 @@ export function queryColors(
     neutralBands && neutralBands.length > 0 ? new Set(neutralBands) : null;
 
   const filtered = base.filter((c) => {
-    if (q) {
-      const haystack =
-        `${c.name} ${c.colorNumber} ${c.description.join(" ")}`.toLowerCase();
-      if (!haystack.includes(q)) return false;
-    }
+    if (q && !searchHaystack(c).includes(q)) return false;
     if (familySet && !familySet.has(c.colorFamilyNames[0])) return false;
     if (undertoneSet && !undertoneSet.has(undertone(c))) return false;
     if (lightnessSet && !lightnessSet.has(classifyLrv(c.lrv ?? 0))) {

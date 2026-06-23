@@ -52,6 +52,51 @@ describe("queryColors", () => {
       ),
     ).toBe(false);
   });
+
+  describe("search matches any value in the color's data", () => {
+    const found = (q: string) =>
+      names(queryColors(ACTIVE, { search: q })).sort();
+
+    it("matches the name and SW number (incl. an 'SW' prefix)", () => {
+      expect(found("naval")).toEqual(["Naval"]);
+      expect(found("6258")).toEqual(["Tricorn Black"]);
+      expect(found("sw 6258")).toEqual(["Tricorn Black"]);
+    });
+
+    it("matches the hex code", () => {
+      expect(found("2f2f30")).toEqual(["Tricorn Black"]);
+    });
+
+    it("matches the color family", () => {
+      expect(found("blue")).toEqual(["Naval", "Tradewind"]);
+    });
+
+    it("matches a collection (incl. designer collections)", () => {
+      expect(found("timeless")).toEqual(["Accessible Beige", "Repose Gray"]);
+      expect(found("pottery")).toEqual(["Accessible Beige"]);
+    });
+
+    it("matches the lightness band (e.g. 'dark')", () => {
+      expect(found("dark")).toEqual([
+        "Cherry Tomato",
+        "Naval",
+        "Tricorn Black",
+      ]);
+    });
+
+    it("matches the undertone (e.g. 'warm')", () => {
+      expect(found("warm")).toEqual([
+        "Accessible Beige",
+        "Cherry Tomato",
+        "Forsythia",
+      ]);
+    });
+
+    it("is case-insensitive and trims; gibberish matches nothing", () => {
+      expect(found("  BLUE  ")).toEqual(["Naval", "Tradewind"]);
+      expect(found("zzzzzz")).toEqual([]);
+    });
+  });
 });
 
 describe("sortColors", () => {
