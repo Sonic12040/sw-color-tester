@@ -4,7 +4,7 @@ import type { PaletteRole } from "../domain/types.js";
 import { finishLabel, surfaceTypeLabel, type Room } from "../domain/project.js";
 import type { ColorAnnotation } from "./ExportService.js";
 import { undertone, classifyLrv } from "./colorMath.js";
-import { resolveSurfaceArea } from "./paint.js";
+import { estimateProjectQuantities, resolveSurfaceArea } from "./paint.js";
 import { assignRoles } from "./paletteIntelligence.js";
 
 /**
@@ -189,23 +189,48 @@ export interface WorkOrderSurface {
   areaSqFt: number;
 }
 
-/** A room section with its surfaces and a summed area. */
+/** A room section with its surfaces, summed area, and paint estimate (E16.2). */
 export interface WorkOrderRoom {
   name: string;
   surfaces: WorkOrderSurface[];
   totalAreaSqFt: number;
+  gallons: number;
+  cans: number;
+}
+
+/** A per-color paint total, aggregated across rooms (E16.2). */
+export interface WorkOrderColor {
+  name: string;
+  number: string;
+  hex: string;
+  areaSqFt: number;
+  gallons: number;
+  cans: number;
+}
+
+/** A fully-resolved work order: room sections + per-color totals + grand totals. */
+export interface WorkOrder {
+  rooms: WorkOrderRoom[];
+  byColor: WorkOrderColor[];
+  totalAreaSqFt: number;
+  totalGallons: number;
+  totalCans: number;
 }
 
 /**
- * Pure: resolve a project's rooms → surfaces into the rows a work order needs,
- * looking each surface's color up by id. Surfaces with no measurement count as
- * 0 sq ft; per-room totals sum the resolved areas.
+ * Pure: resolve a project's rooms → surfaces into a work order — display rows
+ * plus per-room and per-color quantity estimates (`estimateProjectQuantities`
+ * does the area × coats ÷ coverage math). Surfaces with no measurement count as
+ * 0 sq ft; per-color totals aggregate assigned surfaces across rooms.
  */
 export function buildWorkOrder(
   rooms: Room[],
   colorsById: Map<string, Color>,
-): WorkOrderRoom[] {
-  return rooms.map((room) => {
+): WorkOrder {
+  const q = estimateProjectQuantities(rooms);
+  const roomQById = new Map(q.rooms.map((r) => [r.roomId, r]));
+
+  const woRooms: WorkOrderRoom[] = rooms.map((room) => {
     const surfaces: WorkOrderSurface[] = room.surfaces.map((s) => {
       const color = s.colorId ? colorsById.get(s.colorId) : undefined;
       return {
@@ -218,19 +243,53 @@ export function buildWorkOrder(
         areaSqFt: resolveSurfaceArea(s),
       };
     });
+    const rq = roomQById.get(room.id);
     return {
       name: room.name,
       surfaces,
-      totalAreaSqFt: surfaces.reduce((sum, s) => sum + s.areaSqFt, 0),
+      totalAreaSqFt: rq?.areaSqFt ?? 0,
+      gallons: rq?.gallons ?? 0,
+      cans: rq?.cans ?? 0,
     };
   });
+
+  // Resolve the per-color totals to names, dropping any color no longer present.
+  const byColor: WorkOrderColor[] = q.byColor.flatMap((c) => {
+    const color = colorsById.get(c.colorId);
+    if (!color) return [];
+    return [
+      {
+        name: color.name,
+        number: color.colorNumber,
+        hex: color.hex.toUpperCase(),
+        areaSqFt: c.areaSqFt,
+        gallons: c.gallons,
+        cans: c.cans,
+      },
+    ];
+  });
+
+  return {
+    rooms: woRooms,
+    byColor,
+    totalAreaSqFt: q.totalAreaSqFt,
+    totalGallons: q.totalGallons,
+    totalCans: q.totalCans,
+  };
 }
 
-/** Build a Work Order PDF (US Letter): per-room surface tables. Returns bytes. */
+/** Whole-gallon shorthand for headers/summaries, e.g. "~3.7 gal · 4 cans".
+ *  Uses ASCII "~" (not "≈") so the standard WinAnsi PDF font can encode it. */
+function qtyLabel(gallons: number, cans: number): string {
+  return `~${gallons} gal · ${cans} can${cans === 1 ? "" : "s"}`;
+}
+
+/** Build a Work Order PDF (US Letter): per-room surface tables + paint totals. */
 export async function buildWorkOrderPdf(
-  rooms: WorkOrderRoom[],
+  workOrder: WorkOrder,
   opts: { project: string; now: Date },
 ): Promise<Uint8Array> {
+  const { rooms, byColor } = workOrder;
   const doc = await PDFDocument.create();
   doc.setTitle(`${opts.project} — work order`);
   doc.setCreator("Sherwin-Williams Color Atlas");
@@ -273,10 +332,9 @@ export async function buildWorkOrderPdf(
     y = PAGE_H - MARGIN;
   };
 
-  const total = rooms.reduce((sum, r) => sum + r.totalAreaSqFt, 0);
   text(opts.project, 0, y - 18, 20, bold);
   text(
-    `Work order · Sherwin-Williams Color Atlas · ${opts.now.toISOString().slice(0, 10)} · ${Math.round(total)} sq ft`,
+    `Work order · Sherwin-Williams Color Atlas · ${opts.now.toISOString().slice(0, 10)} · ${Math.round(workOrder.totalAreaSqFt)} sq ft · ${qtyLabel(workOrder.totalGallons, workOrder.totalCans)}`,
     0,
     y - 36,
     10,
@@ -287,11 +345,11 @@ export async function buildWorkOrderPdf(
 
   for (const room of rooms) {
     if (y - ROW_H * 2 < MARGIN) newPage();
-    // Room heading + total.
+    // Room heading + area/paint total.
     text(room.name, 0, y, 13, bold);
     text(
-      `${room.surfaces.length} surface${room.surfaces.length === 1 ? "" : "s"} · ${Math.round(room.totalAreaSqFt)} sq ft`,
-      COL.area - 120,
+      `${room.surfaces.length} surface${room.surfaces.length === 1 ? "" : "s"} · ${Math.round(room.totalAreaSqFt)} sq ft · ${qtyLabel(room.gallons, room.cans)}`,
+      COL.area - 160,
       y,
       9,
       font,
@@ -350,6 +408,55 @@ export async function buildWorkOrderPdf(
       y -= ROW_H;
     }
     y -= 12;
+  }
+
+  // Paint by color — totals aggregated across rooms (E16.2).
+  if (byColor.length > 0) {
+    if (y - ROW_H * 3 < MARGIN) newPage();
+    const SUM = { area: 300, paint: 390 };
+    text("Paint by color", 0, y, 13, bold);
+    y -= 16;
+    text("COLOR", COL.color, y, 8, bold, muted);
+    text("AREA", SUM.area, y, 8, bold, muted);
+    text("PAINT", SUM.paint, y, 8, bold, muted);
+    y -= 6;
+    page.drawLine({
+      start: { x: MARGIN, y },
+      end: { x: PAGE_W - MARGIN, y },
+      thickness: 1,
+      color: hairline,
+    });
+    y -= ROW_H;
+
+    for (const c of byColor) {
+      if (y < MARGIN) {
+        newPage();
+        y -= ROW_H;
+      }
+      const { r, g, b } = hexToRgb(c.hex);
+      page.drawRectangle({
+        x: MARGIN + COL.swatch,
+        y: y + 2,
+        width: SWATCH,
+        height: SWATCH,
+        color: rgb(r / 255, g / 255, b / 255),
+        borderColor: hairline,
+        borderWidth: 1,
+      });
+      text(`${c.name}  ·  SW ${c.number}`, COL.color, y + 14, 10, bold);
+      text(`${Math.round(c.areaSqFt)} sq ft`, SUM.area, y + 14);
+      text(qtyLabel(c.gallons, c.cans), SUM.paint, y + 14);
+      y -= ROW_H;
+    }
+    y -= 8;
+    text(
+      `Estimated at ~350 sq ft per gallon — confirm coverage on the can.`,
+      0,
+      y,
+      8,
+      font,
+      muted,
+    );
   }
 
   return doc.save();

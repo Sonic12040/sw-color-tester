@@ -87,8 +87,8 @@ export class ExportService {
       await import("./paletteExport.js");
     const now = new Date();
     const colorsById = new Map(colors.map((c) => [c.id, c]));
-    const sections = buildWorkOrder(rooms, colorsById);
-    const bytes = await buildWorkOrderPdf(sections, {
+    const workOrder = buildWorkOrder(rooms, colorsById);
+    const bytes = await buildWorkOrderPdf(workOrder, {
       project: opts.project ?? "My palette",
       now,
     });

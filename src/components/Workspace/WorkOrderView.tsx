@@ -3,7 +3,11 @@ import type { Color } from "../../data/types.js";
 import { hsl } from "../../utils/colorMath.js";
 import { colorPath } from "../../utils/base.js";
 import { toSlug } from "../../utils/slug.js";
-import { resolveSurfaceArea } from "../../utils/paint.js";
+import {
+  estimateProjectQuantities,
+  resolveSurfaceArea,
+  type RoomQuantity,
+} from "../../utils/paint.js";
 import {
   FINISHES,
   SURFACE_TYPES,
@@ -40,6 +44,10 @@ export function WorkOrderView() {
   const colorsById = new Map(paletteColors.map((c) => [c.id, c]));
 
   const totalSurfaces = rooms.reduce((n, r) => n + r.surfaces.length, 0);
+
+  // Per-room + per-color paint estimates (US16.2), at the default coverage.
+  const quantities = estimateProjectQuantities(rooms);
+  const roomQtyById = new Map(quantities.rooms.map((r) => [r.roomId, r]));
 
   const exportPdf = async () => {
     try {
@@ -80,9 +88,57 @@ export function WorkOrderView() {
           paint (walls, trim, doors…) and assign each a color, finish, and area.
         </p>
       ) : (
-        rooms.map((room) => (
-          <RoomSection key={room.id} room={room} colorsById={colorsById} />
-        ))
+        <>
+          {rooms.map((room) => (
+            <RoomSection
+              key={room.id}
+              room={room}
+              colorsById={colorsById}
+              quantity={roomQtyById.get(room.id)}
+            />
+          ))}
+
+          {quantities.byColor.length > 0 && (
+            <section className={styles.summary} aria-label="Paint by color">
+              <h3 className={styles.summaryTitle}>Paint by color</h3>
+              <ul className={styles.summaryList}>
+                {quantities.byColor.map((c) => {
+                  const color = colorsById.get(c.colorId);
+                  if (!color) return null;
+                  return (
+                    <li key={c.colorId} className={styles.summaryRow}>
+                      <span
+                        className={styles.summarySwatch}
+                        style={{ background: hsl(color) }}
+                        aria-hidden="true"
+                      />
+                      <span className={styles.summaryInfo}>
+                        <Link
+                          className={styles.summaryName}
+                          to={colorPath(toSlug(color))}
+                        >
+                          {color.name}
+                        </Link>
+                        <span className={styles.summaryMeta}>
+                          SW {color.colorNumber} · {Math.round(c.areaSqFt)} sq
+                          ft
+                        </span>
+                      </span>
+                      <span className={styles.summaryQty}>
+                        ≈ {c.gallons} gal · {c.cans} can
+                        {c.cans === 1 ? "" : "s"}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+              <p className={styles.summaryHint}>
+                Estimated at ~350 sq ft per gallon — confirm coverage on the
+                can.
+              </p>
+            </section>
+          )}
+        </>
       )}
     </div>
   );
@@ -91,9 +147,11 @@ export function WorkOrderView() {
 function RoomSection({
   room,
   colorsById,
+  quantity,
 }: {
   room: Room;
   colorsById: Map<string, Color>;
+  quantity: RoomQuantity | undefined;
 }) {
   const {
     entries,
@@ -108,10 +166,8 @@ function RoomSection({
   const colorOptions = entries
     .map((e) => colorModel.getColorById(e.id))
     .filter((c): c is Color => Boolean(c));
-  const totalArea = room.surfaces.reduce(
-    (sum, s) => sum + resolveSurfaceArea(s),
-    0,
-  );
+  const area = quantity?.areaSqFt ?? 0;
+  const cans = quantity?.cans ?? 0;
 
   return (
     <section className={styles.room} aria-label={room.name}>
@@ -124,8 +180,13 @@ function RoomSection({
         />
         <span className={styles.roomMeta}>
           {room.surfaces.length} surface
-          {room.surfaces.length === 1 ? "" : "s"} · {Math.round(totalArea)} sq
-          ft
+          {room.surfaces.length === 1 ? "" : "s"} · {Math.round(area)} sq ft
+          {cans > 0 && (
+            <>
+              {" "}
+              · ≈ {quantity?.gallons} gal · {cans} can{cans === 1 ? "" : "s"}
+            </>
+          )}
         </span>
         <div className={styles.roomActions}>
           <button

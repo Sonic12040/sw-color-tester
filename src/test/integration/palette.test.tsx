@@ -152,12 +152,15 @@ describe("Work Order — rooms × surfaces (US16.1)", () => {
     await user.selectOptions(screen.getByLabelText(/^Finish for/), "Satin");
     await user.type(screen.getByLabelText(/^Area for/), "200");
 
-    // The assigned color links out, the room totals its area, and the PDF
-    // export is now enabled.
+    // The assigned color links out, the room totals its area + paint estimate,
+    // and the PDF export is now enabled.
     expect(
       screen.getByRole("link", { name: /View Tricorn Black/ }),
     ).toBeTruthy();
-    expect(screen.getByText(/1 surface · 200 sq ft/)).toBeTruthy();
+    // 200 sq ft × 2 coats / 350 = 1.1 gal → 2 cans.
+    expect(
+      screen.getByText(/1 surface · 200 sq ft · ≈ 1\.1 gal · 2 cans/),
+    ).toBeTruthy();
     expect(
       (
         screen.getByRole("button", {
@@ -165,6 +168,24 @@ describe("Work Order — rooms × surfaces (US16.1)", () => {
         }) as HTMLButtonElement
       ).disabled,
     ).toBe(false);
+  });
+
+  it("summarizes paint quantities per color across rooms (US16.2)", async () => {
+    const { user } = await openWorkOrder();
+    await user.click(screen.getByRole("button", { name: "Add room" }));
+    await user.click(screen.getByRole("button", { name: "Add surface" }));
+    await user.selectOptions(
+      screen.getByLabelText(/^Color for/),
+      screen.getByRole("option", { name: /Tricorn Black/ }),
+    );
+    await user.type(screen.getByLabelText(/^Area for/), "700");
+
+    // 700 sq ft × 2 coats / 350 = 4 gal → 4 cans, surfaced in the by-color panel.
+    const summary = screen
+      .getByRole("region", { name: "Paint by color" })
+      .closest("section") as HTMLElement;
+    expect(within(summary).getByText(/Tricorn Black/)).toBeTruthy();
+    expect(within(summary).getByText(/≈ 4 gal · 4 cans/)).toBeTruthy();
   });
 
   it("computes a surface's area from L×W×H dimensions", async () => {

@@ -111,8 +111,9 @@ describe("buildWorkOrder", () => {
     },
   ];
 
-  it("resolves surfaces and sums per-room area", () => {
-    const [kitchen] = buildWorkOrder(rooms, colorsMap);
+  it("resolves surfaces and sums per-room area + paint", () => {
+    const { rooms: woRooms } = buildWorkOrder(rooms, colorsMap);
+    const [kitchen] = woRooms;
     expect(kitchen.name).toBe("Kitchen");
     expect(kitchen.surfaces[0]).toMatchObject({
       type: "Wall",
@@ -130,11 +131,23 @@ describe("buildWorkOrder", () => {
       areaSqFt: 50,
     });
     expect(kitchen.totalAreaSqFt).toBe(370);
+    // 320 wall × 2 coats + 50 trim × default 2 coats = 740 sq-ft·coats / 350.
+    expect(kitchen.cans).toBe(3);
+  });
+
+  it("aggregates per-color totals across rooms", () => {
+    const { byColor } = buildWorkOrder(rooms, colorsMap);
+    const tricorn = byColor.find((c) => c.number === "6258")!;
+    expect(tricorn).toMatchObject({ name: "Tricorn Black", areaSqFt: 320 });
+    // 320 × 2 / 350 = 1.83 → 2 cans.
+    expect(tricorn.cans).toBe(2);
+    // The unassigned trim surface contributes to no color total.
+    expect(byColor).toHaveLength(1);
   });
 
   it("produces valid PDF bytes", async () => {
-    const sections = buildWorkOrder(rooms, colorsMap);
-    const bytes = await buildWorkOrderPdf(sections, {
+    const workOrder = buildWorkOrder(rooms, colorsMap);
+    const bytes = await buildWorkOrderPdf(workOrder, {
       project: "Kitchen",
       now: NOW,
     });
@@ -142,7 +155,11 @@ describe("buildWorkOrder", () => {
   });
 
   it("handles a project with no rooms without throwing", async () => {
-    const bytes = await buildWorkOrderPdf([], { project: "Empty", now: NOW });
+    const empty = buildWorkOrder([], colorsMap);
+    const bytes = await buildWorkOrderPdf(empty, {
+      project: "Empty",
+      now: NOW,
+    });
     expect(new TextDecoder().decode(bytes.slice(0, 5))).toBe("%PDF-");
   });
 });

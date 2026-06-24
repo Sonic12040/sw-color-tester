@@ -206,3 +206,77 @@
 .colorLink:hover {
   text-decoration: underline;
 }
+
+/* Paint-by-color summary (US16.2) — a faint elevated panel like the room cards. */
+.summary {
+  padding: var(--spacing-4);
+  background: var(--on-dark-subtle);
+  border: 1px solid var(--on-dark-border);
+  border-radius: var(--radius-md);
+}
+
+.summaryTitle {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin: 0 0 var(--spacing-3);
+  color: #ffffff;
+}
+
+.summaryList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.summaryRow {
+  display: grid;
+  grid-template-columns: 32px 1fr auto;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-2);
+  border: 1px solid var(--on-dark-subtle);
+  border-radius: var(--radius-md);
+  background: var(--surface-dark);
+}
+
+.summarySwatch {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--on-dark-border);
+}
+
+.summaryInfo {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.summaryName {
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.summaryName:hover {
+  text-decoration: underline;
+}
+
+.summaryMeta {
+  font-size: var(--font-size-sm);
+  color: var(--on-dark-muted);
+}
+
+.summaryQty {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.summaryHint {
+  margin: var(--spacing-3) 0 0;
+  font-size: var(--font-size-sm);
+  color: var(--on-dark-muted);
+  line-height: var(--line-height-normal);
+}

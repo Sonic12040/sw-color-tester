@@ -3,13 +3,15 @@
  * server-side. Helps a shopper buy the right amount instead of guessing.
  */
 
-import type { Surface } from "../domain/project.js";
+import type { Room, Surface } from "../domain/project.js";
 
 /** Industry rules of thumb for the area a standard opening removes from walls. */
 const DOOR_SQFT = 21;
 const WINDOW_SQFT = 15;
 /** A gallon of wall paint covers ~350 sq ft per coat. */
 const DEFAULT_COVERAGE = 350;
+/** Coats assumed when a surface doesn't specify one (mirrors the calculator). */
+const DEFAULT_COATS = 2;
 
 /** L×W×H room measurements shared by the calculator and project surfaces. */
 export interface RoomDimensions {
@@ -100,5 +102,111 @@ export function paintEstimate(input: PaintEstimateInput): PaintEstimate {
     coats,
     gallons: Math.round(needed * 10) / 10,
     cans: Math.ceil(needed),
+  };
+}
+
+// ── Work order quantities (E16.2) ─────────────────────────────────────────
+
+export interface PaintQuantity {
+  /** Gallons needed (1 decimal). */
+  gallons: number;
+  /** Whole gallon cans to buy (rounded up). */
+  cans: number;
+}
+
+/**
+ * Pure: gallons + cans for a given paint volume (area × coats, in "sq-ft·coats")
+ * at a coverage rate. Aggregating raw volume *before* this conversion — rather
+ * than summing rounded per-surface cans — keeps totals from over-counting.
+ */
+export function paintQuantity(
+  areaCoats: number,
+  coveragePerGallon: number = DEFAULT_COVERAGE,
+): PaintQuantity {
+  const coverage = coveragePerGallon > 0 ? coveragePerGallon : DEFAULT_COVERAGE;
+  const needed = Math.max(0, areaCoats) / coverage;
+  return { gallons: Math.round(needed * 10) / 10, cans: Math.ceil(needed) };
+}
+
+export interface RoomQuantity extends PaintQuantity {
+  roomId: string;
+  name: string;
+  /** Physical surface area painted in the room (sq ft, openings removed). */
+  areaSqFt: number;
+}
+
+export interface ColorQuantity extends PaintQuantity {
+  colorId: string;
+  /** Physical area painted in this color across all rooms (sq ft). */
+  areaSqFt: number;
+}
+
+export interface ProjectQuantities {
+  /** Per-room totals, in the project's room order. */
+  rooms: RoomQuantity[];
+  /** Per-color totals aggregated across rooms, by first appearance. */
+  byColor: ColorQuantity[];
+  totalAreaSqFt: number;
+  totalGallons: number;
+  totalCans: number;
+}
+
+/**
+ * Pure: aggregate paint quantities over a project's rooms → surfaces. Per-room
+ * totals cover every measured surface; per-color totals aggregate only surfaces
+ * with an assigned color, summing area × coats across rooms before converting to
+ * gallons/cans. Unmeasured surfaces (0 area) contribute nothing.
+ */
+export function estimateProjectQuantities(
+  rooms: Room[],
+  coveragePerGallon: number = DEFAULT_COVERAGE,
+): ProjectQuantities {
+  const coverage = coveragePerGallon > 0 ? coveragePerGallon : DEFAULT_COVERAGE;
+  const byColorVol = new Map<string, { areaSqFt: number; areaCoats: number }>();
+  let totalAreaSqFt = 0;
+  let totalAreaCoats = 0;
+
+  const roomTotals: RoomQuantity[] = rooms.map((room) => {
+    let areaSqFt = 0;
+    let areaCoats = 0;
+    for (const s of room.surfaces) {
+      const area = resolveSurfaceArea(s);
+      if (area <= 0) continue;
+      const coats = Math.max(0, s.coats ?? DEFAULT_COATS);
+      const volume = area * coats;
+      areaSqFt += area;
+      areaCoats += volume;
+      if (s.colorId) {
+        const acc = byColorVol.get(s.colorId) ?? { areaSqFt: 0, areaCoats: 0 };
+        acc.areaSqFt += area;
+        acc.areaCoats += volume;
+        byColorVol.set(s.colorId, acc);
+      }
+    }
+    totalAreaSqFt += areaSqFt;
+    totalAreaCoats += areaCoats;
+    return {
+      roomId: room.id,
+      name: room.name,
+      areaSqFt,
+      ...paintQuantity(areaCoats, coverage),
+    };
+  });
+
+  const byColor: ColorQuantity[] = [...byColorVol.entries()].map(
+    ([colorId, v]) => ({
+      colorId,
+      areaSqFt: v.areaSqFt,
+      ...paintQuantity(v.areaCoats, coverage),
+    }),
+  );
+
+  const total = paintQuantity(totalAreaCoats, coverage);
+  return {
+    rooms: roomTotals,
+    byColor,
+    totalAreaSqFt,
+    totalGallons: total.gallons,
+    totalCans: total.cans,
   };
 }
