@@ -96,6 +96,19 @@ describe("queryColors", () => {
       expect(found("  BLUE  ")).toEqual(["Naval", "Tradewind"]);
       expect(found("zzzzzz")).toEqual([]);
     });
+
+    it("requires every space-separated term (AND): 'warm red'", () => {
+      // Warm undertone ∩ Red family → only Cherry Tomato.
+      expect(found("warm red")).toEqual(["Cherry Tomato"]);
+    });
+
+    it("is order-independent and collapses extra whitespace", () => {
+      expect(found("red   warm")).toEqual(["Cherry Tomato"]);
+    });
+
+    it("returns nothing when the terms can't co-occur ('warm blue')", () => {
+      expect(found("warm blue")).toEqual([]);
+    });
   });
 });
 

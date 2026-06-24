@@ -127,7 +127,12 @@ export function queryColors(
     base = colors.filter((c) => !hidden.has(c.id));
   }
 
-  const q = search?.trim().toLowerCase();
+  // Tokenize the query on whitespace: every term must be present (AND), so
+  // "warm red" matches colors that are both warm and red, each matched against
+  // any field in the haystack.
+  const terms = search
+    ? search.trim().toLowerCase().split(/\s+/).filter(Boolean)
+    : [];
   const familySet = families && families.length > 0 ? new Set(families) : null;
   const undertoneSet =
     undertones && undertones.length > 0 ? new Set(undertones) : null;
@@ -139,7 +144,10 @@ export function queryColors(
     neutralBands && neutralBands.length > 0 ? new Set(neutralBands) : null;
 
   const filtered = base.filter((c) => {
-    if (q && !searchHaystack(c).includes(q)) return false;
+    if (terms.length > 0) {
+      const haystack = searchHaystack(c);
+      if (!terms.every((t) => haystack.includes(t))) return false;
+    }
     if (familySet && !familySet.has(c.colorFamilyNames[0])) return false;
     if (undertoneSet && !undertoneSet.has(undertone(c))) return false;
     if (lightnessSet && !lightnessSet.has(classifyLrv(c.lrv ?? 0))) {
