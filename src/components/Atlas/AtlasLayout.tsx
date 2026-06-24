@@ -6,7 +6,7 @@ import { useFocusTrap } from "../../hooks/useFocusTrap.js";
 import { RAIL_BREAKPOINT } from "../../utils/breakpoints.js";
 import { AtlasToolbar } from "./AtlasToolbar.js";
 import { FilterPanel } from "./FilterPanel.js";
-import { ActiveFilters } from "./ActiveFilters.js";
+import { ResultsBar } from "./ResultsBar.js";
 import { ColorGrid } from "./ColorGrid.js";
 import styles from "./AtlasLayout.module.css";
 
@@ -69,8 +69,6 @@ export function AtlasLayout({ colors, totalCount }: AtlasLayoutProps) {
         sort={sort}
         onSortChange={setSort}
         activeFacetCount={activeFacetCount}
-        filteredCount={colors.length}
-        totalCount={totalCount}
         onOpenFilters={() => setDrawerOpen(true)}
       />
 
@@ -99,7 +97,7 @@ export function AtlasLayout({ colors, totalCount }: AtlasLayoutProps) {
 
         {/* Region inside the page-level <main> (in RootLayout). */}
         <section className={styles.main} aria-label="Color results">
-          <ActiveFilters />
+          <ResultsBar filteredCount={colors.length} totalCount={totalCount} />
           <ColorGrid colors={colors} onResetFilters={resetAll} />
         </section>
       </div>

@@ -15,9 +15,11 @@ test("gallery loads, lays out, filters, and reaches detail + compare", async ({
 }) => {
   const rail = (page.viewportSize()?.width ?? 0) >= 1024;
 
-  // 1. Gallery renders with a live count.
+  // 1. Gallery renders (the grid of color tiles).
   await page.goto("");
-  await expect(page.getByText(/\d[\d,]* of /).first()).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /See color details/ }).first(),
+  ).toBeVisible();
   await expectNoOverflow(page);
 
   // 2. Layout + 3. faceting: persistent rail (≥1024) filters via a chip;
@@ -34,7 +36,10 @@ test("gallery loads, lays out, filters, and reaches detail + compare", async ({
     await done.click();
     await page.getByLabel("Search colors").fill("white");
   }
-  await expect(page.getByText(/\d[\d,]* of /).first()).toBeVisible();
+  // Filter applied → the grid still shows (narrowed) results.
+  await expect(
+    page.getByRole("link", { name: /See color details/ }).first(),
+  ).toBeVisible();
 
   // 4. Color detail: h1 + JSON-LD.
   await page

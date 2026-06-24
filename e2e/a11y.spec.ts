@@ -30,7 +30,6 @@ test("gallery (chrome + a tile) has no serious axe violations", async ({
   const term = colorSlugs(1)[0].split("-").slice(2).join(" ");
   await page.goto("");
   await page.getByLabel("Search colors").fill(term);
-  await expect(page.getByText(/\d[\d,]* of /).first()).toBeVisible();
   await expect(
     page.getByRole("link", { name: /See color details/ }).first(),
   ).toBeVisible();
@@ -55,6 +54,21 @@ test("color detail page is accessible", async ({ page }) => {
   await page.goto(`colors/${slug}`);
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await expectNoSeriousAxe(page);
+});
+
+test("result count is an sr-only live region (no visible count chrome)", async ({
+  page,
+}) => {
+  await page.goto("");
+  const live = page
+    .getByRole("region", { name: "Color results" })
+    .locator("[aria-live]");
+  // Present, visually hidden, and announcing the count for assistive tech…
+  await expect(live).toHaveClass(/sr-only/);
+  await expect(live).toHaveText(/[\d,]+ colors/);
+  // …and it updates as the result set changes (the feedback we kept for AT).
+  await page.getByLabel("Search colors").fill("zzzzzz");
+  await expect(live).toHaveText(/0 of [\d,]+ colors/);
 });
 
 test("compare workspace (with the contrast matrix) is accessible", async ({

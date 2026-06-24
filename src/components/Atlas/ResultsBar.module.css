@@ -1,17 +1,11 @@
+/* Active-filter chips bar — leads the results region, shown only when a facet is
+   active. (The result count itself is an sr-only live region in ResultsBar.tsx.) */
 .bar {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--spacing-2);
   padding: var(--grid-gap) 0 0;
-}
-
-.label {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-bold);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--color-text-primary);
 }
 
 .chip {

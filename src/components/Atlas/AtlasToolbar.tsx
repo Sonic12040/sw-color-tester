@@ -7,8 +7,6 @@ interface AtlasToolbarProps {
   sort: SortKey;
   onSortChange: (s: SortKey) => void;
   activeFacetCount: number;
-  filteredCount: number;
-  totalCount: number;
   onOpenFilters: () => void;
 }
 
@@ -28,8 +26,6 @@ export function AtlasToolbar({
   sort,
   onSortChange,
   activeFacetCount,
-  filteredCount,
-  totalCount,
   onOpenFilters,
 }: AtlasToolbarProps) {
   return (
@@ -87,10 +83,6 @@ export function AtlasToolbar({
             onChange={(e) => onSearchChange(e.target.value)}
           />
         </div>
-
-        <span className={styles.count} aria-live="polite">
-          {filteredCount.toLocaleString()} of {totalCount.toLocaleString()}
-        </span>
 
         <label className={styles.sortLabel}>
           <span className={styles.sortText}>Sort</span>

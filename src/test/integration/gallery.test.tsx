@@ -12,7 +12,7 @@ import { renderApp, cardOrder } from "./harness.js";
 describe("Atlas browse", () => {
   it("renders every active color in one grid with a live count", () => {
     renderApp();
-    expect(screen.getByText("8 of 8")).toBeTruthy();
+    expect(screen.getByText("8 colors")).toBeTruthy();
     expect(screen.getByText("Tricorn Black")).toBeTruthy();
     expect(screen.getByText("Cherry Tomato")).toBeTruthy();
     expect(screen.queryByText("Archived One")).toBeNull();
@@ -21,14 +21,14 @@ describe("Atlas browse", () => {
   it("filters by search query", async () => {
     const { user } = renderApp();
     await user.type(screen.getByLabelText("Search colors"), "naval");
-    expect(screen.getByText("1 of 8")).toBeTruthy();
+    expect(screen.getByText("1 of 8 colors")).toBeTruthy();
     expect(screen.getByText("Naval")).toBeTruthy();
   });
 
   it("filters by color-family facet", async () => {
     const { user } = renderApp();
     await user.click(screen.getByRole("checkbox", { name: "Blue" }));
-    expect(screen.getByText("2 of 8")).toBeTruthy();
+    expect(screen.getByText("2 of 8 colors")).toBeTruthy();
     expect(screen.getByText("Naval")).toBeTruthy();
     expect(screen.queryByText("Cherry Tomato")).toBeNull();
   });
@@ -36,14 +36,14 @@ describe("Atlas browse", () => {
   it("filters by lightness band", async () => {
     const { user } = renderApp();
     await user.click(screen.getByRole("checkbox", { name: /Light/ }));
-    expect(screen.getByText("1 of 8")).toBeTruthy();
+    expect(screen.getByText("1 of 8 colors")).toBeTruthy();
     expect(screen.getByText("Forsythia")).toBeTruthy();
   });
 
   it("filters by undertone facet", async () => {
     const { user } = renderApp();
     await user.click(screen.getByRole("checkbox", { name: "Cool" }));
-    expect(screen.getByText("3 of 8")).toBeTruthy();
+    expect(screen.getByText("3 of 8 colors")).toBeTruthy();
     expect(screen.getByText("Naval")).toBeTruthy();
     expect(screen.queryByText("Cherry Tomato")).toBeNull();
   });
@@ -92,7 +92,7 @@ describe("Neutrality", () => {
   it("filters by neutrality band", async () => {
     const { user } = renderApp();
     await user.click(screen.getByRole("checkbox", { name: /High/ }));
-    expect(screen.getByText("3 of 8")).toBeTruthy(); // the 3 neutrals
+    expect(screen.getByText("3 of 8 colors")).toBeTruthy(); // the 3 neutrals
     expect(screen.getByText("Tricorn Black")).toBeTruthy();
     expect(screen.queryByText("Cherry Tomato")).toBeNull();
   });
@@ -113,10 +113,10 @@ describe("Hidden + favorites views", () => {
     await user.click(
       screen.getByRole("button", { name: "Hide Cherry Tomato" }),
     );
-    expect(screen.getByText("7 of 8")).toBeTruthy();
+    expect(screen.getByText("7 of 8 colors")).toBeTruthy();
     expect(screen.queryByText("Cherry Tomato")).toBeNull();
     await user.click(screen.getByRole("button", { name: "Hidden" }));
-    expect(screen.getByText("1 of 8")).toBeTruthy();
+    expect(screen.getByText("1 of 8 colors")).toBeTruthy();
     expect(screen.getByText("Cherry Tomato")).toBeTruthy();
   });
 
@@ -124,7 +124,7 @@ describe("Hidden + favorites views", () => {
     const { user } = renderApp();
     await user.click(screen.getByRole("button", { name: "Favorite Naval" }));
     await user.click(screen.getByRole("button", { name: "Favorites" }));
-    expect(screen.getByText("1 of 8")).toBeTruthy();
+    expect(screen.getByText("1 of 8 colors")).toBeTruthy();
     expect(screen.getByText("Naval")).toBeTruthy();
   });
 });

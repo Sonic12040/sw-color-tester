@@ -55,13 +55,6 @@
   outline-offset: 1px;
 }
 
-.count {
-  font-size: var(--font-size-sm);
-  color: var(--on-dark-muted);
-  white-space: nowrap;
-  font-variant-numeric: tabular-nums;
-}
-
 .sortLabel {
   display: inline-flex;
   align-items: center;

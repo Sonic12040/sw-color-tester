@@ -5,7 +5,9 @@ test("serves the gallery for the base path without a trailing slash", async ({
 }) => {
   await page.goto("http://localhost:4173/sw-color-tester");
   await expect(page).toHaveURL(/\/sw-color-tester\/$/);
-  await expect(page.getByText(/\d[\d,]* of /).first()).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /See color details/ }).first(),
+  ).toBeVisible();
 });
 
 test("first Tab focuses the skip link", async ({ page }) => {
