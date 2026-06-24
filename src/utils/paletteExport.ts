@@ -5,6 +5,7 @@ import { finishLabel, surfaceTypeLabel, type Room } from "../domain/project.js";
 import type { ColorAnnotation } from "./ExportService.js";
 import { undertone, classifyLrv } from "./colorMath.js";
 import { estimateProjectQuantities, resolveSurfaceArea } from "./paint.js";
+import { buildShoppingList, type ShoppingItem } from "./workOrder.js";
 import { assignRoles } from "./paletteIntelligence.js";
 
 /**
@@ -208,10 +209,12 @@ export interface WorkOrderColor {
   cans: number;
 }
 
-/** A fully-resolved work order: room sections + per-color totals + grand totals. */
+/** A fully-resolved work order: room sections, per-color totals, shopping list. */
 export interface WorkOrder {
   rooms: WorkOrderRoom[];
   byColor: WorkOrderColor[];
+  /** Consolidated buy list, one row per color × finish (US16.3). */
+  shoppingList: ShoppingItem[];
   totalAreaSqFt: number;
   totalGallons: number;
   totalCans: number;
@@ -272,6 +275,7 @@ export function buildWorkOrder(
   return {
     rooms: woRooms,
     byColor,
+    shoppingList: buildShoppingList(rooms, colorsById),
     totalAreaSqFt: q.totalAreaSqFt,
     totalGallons: q.totalGallons,
     totalCans: q.totalCans,
@@ -457,6 +461,49 @@ export async function buildWorkOrderPdf(
       font,
       muted,
     );
+    y -= 24;
+  }
+
+  // Shopping list — one row per color × finish, with rack + cans (US16.3).
+  if (workOrder.shoppingList.length > 0) {
+    if (y - ROW_H * 3 < MARGIN) newPage();
+    const SHOP = { finish: 250, rack: 360, cans: 470 };
+    text("Shopping list", 0, y, 13, bold);
+    y -= 16;
+    text("COLOR", COL.color, y, 8, bold, muted);
+    text("FINISH", SHOP.finish, y, 8, bold, muted);
+    text("RACK", SHOP.rack, y, 8, bold, muted);
+    text("CANS", SHOP.cans, y, 8, bold, muted);
+    y -= 6;
+    page.drawLine({
+      start: { x: MARGIN, y },
+      end: { x: PAGE_W - MARGIN, y },
+      thickness: 1,
+      color: hairline,
+    });
+    y -= ROW_H;
+
+    for (const it of workOrder.shoppingList) {
+      if (y < MARGIN) {
+        newPage();
+        y -= ROW_H;
+      }
+      const { r, g, b } = hexToRgb(it.hex);
+      page.drawRectangle({
+        x: MARGIN + COL.swatch,
+        y: y + 2,
+        width: SWATCH,
+        height: SWATCH,
+        color: rgb(r / 255, g / 255, b / 255),
+        borderColor: hairline,
+        borderWidth: 1,
+      });
+      text(`${it.name}  ·  SW ${it.number}`, COL.color, y + 14, 10, bold);
+      text(it.finishLabel ?? "—", SHOP.finish, y + 14);
+      text(it.rack ?? "—", SHOP.rack, y + 14);
+      text(`${it.cans} can${it.cans === 1 ? "" : "s"}`, SHOP.cans, y + 14);
+      y -= ROW_H;
+    }
   }
 
   return doc.save();

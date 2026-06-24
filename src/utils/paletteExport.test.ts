@@ -145,6 +145,17 @@ describe("buildWorkOrder", () => {
     expect(byColor).toHaveLength(1);
   });
 
+  it("includes a color × finish shopping list with rack + cans", () => {
+    const { shoppingList } = buildWorkOrder(rooms, colorsMap);
+    expect(shoppingList).toHaveLength(1); // only the assigned wall surface
+    expect(shoppingList[0]).toMatchObject({
+      number: "6258",
+      finishLabel: "Satin",
+      rack: "194-C1",
+      cans: 2,
+    });
+  });
+
   it("produces valid PDF bytes", async () => {
     const workOrder = buildWorkOrder(rooms, colorsMap);
     const bytes = await buildWorkOrderPdf(workOrder, {

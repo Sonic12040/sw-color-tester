@@ -206,6 +206,62 @@ describe("Work Order — rooms × surfaces (US16.1)", () => {
   });
 });
 
+describe("Work Order — shopping list (US16.3)", () => {
+  const openWorkOrder = async () => {
+    const handle = renderApp(
+      "/palette?c=sw-6258-tricorn-black,sw-7015-repose-gray",
+    );
+    await handle.user.click(
+      screen.getByRole("button", { name: /Load shared palette/ }),
+    );
+    await handle.user.click(screen.getByRole("button", { name: "Work Order" }));
+    return handle;
+  };
+
+  it("lists a buy row per color × finish with rack + cans", async () => {
+    const { user } = await openWorkOrder();
+    await user.click(screen.getByRole("button", { name: "Add room" }));
+    await user.click(screen.getByRole("button", { name: "Add surface" }));
+    await user.selectOptions(
+      screen.getByLabelText(/^Color for/),
+      screen.getByRole("option", { name: /Tricorn Black/ }),
+    );
+    await user.selectOptions(screen.getByLabelText(/^Finish for/), "Satin");
+    await user.type(screen.getByLabelText(/^Area for/), "200");
+
+    const list = screen
+      .getByRole("region", { name: "Shopping list" })
+      .closest("section") as HTMLElement;
+    // Tricorn Black has a rack code in the fixtures; 200×2/350 = 1.14 → 2 cans.
+    expect(within(list).getByText(/Tricorn Black/)).toBeTruthy();
+    expect(within(list).getByText(/Satin · Rack 194-C1/)).toBeTruthy();
+    expect(within(list).getByText(/2 cans/)).toBeTruthy();
+    expect(
+      within(list).getByRole("button", { name: "Copy shopping list" }),
+    ).toBeTruthy();
+  });
+
+  it("copies the shopping list to the clipboard", async () => {
+    // user-event installs a working clipboard stub we can read back.
+    const { user } = await openWorkOrder();
+    await user.click(screen.getByRole("button", { name: "Add room" }));
+    await user.click(screen.getByRole("button", { name: "Add surface" }));
+    await user.selectOptions(
+      screen.getByLabelText(/^Color for/),
+      screen.getByRole("option", { name: /Tricorn Black/ }),
+    );
+    await user.type(screen.getByLabelText(/^Area for/), "200");
+
+    await user.click(
+      screen.getByRole("button", { name: "Copy shopping list" }),
+    );
+    expect(await screen.findByText(/Shopping list copied/)).toBeTruthy();
+    expect(await navigator.clipboard.readText()).toMatch(
+      /Tricorn Black \(SW 6258\)/,
+    );
+  });
+});
+
 describe("Palette intelligence — roles (E11)", () => {
   const loadPalette = async () => {
     const handle = renderApp(

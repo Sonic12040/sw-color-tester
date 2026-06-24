@@ -215,11 +215,41 @@
   border-radius: var(--radius-md);
 }
 
+.summaryHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-3);
+}
+
 .summaryTitle {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
   margin: 0 0 var(--spacing-3);
   color: #ffffff;
+}
+
+/* In the shopping-list head the title sits in a flex row, so drop its margin. */
+.summaryHead .summaryTitle {
+  margin: 0;
+}
+
+.shopRow {
+  display: grid;
+  grid-template-columns: 32px 1fr auto;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-2);
+  border: 1px solid var(--on-dark-subtle);
+  border-radius: var(--radius-md);
+  background: var(--surface-dark);
+}
+
+.shopNumber {
+  font-weight: var(--font-weight-normal);
+  color: var(--on-dark-muted);
 }
 
 .summaryList {

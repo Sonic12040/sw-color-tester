@@ -11,7 +11,7 @@ const WINDOW_SQFT = 15;
 /** A gallon of wall paint covers ~350 sq ft per coat. */
 const DEFAULT_COVERAGE = 350;
 /** Coats assumed when a surface doesn't specify one (mirrors the calculator). */
-const DEFAULT_COATS = 2;
+export const DEFAULT_COATS = 2;
 
 /** L×W×H room measurements shared by the calculator and project surfaces. */
 export interface RoomDimensions {

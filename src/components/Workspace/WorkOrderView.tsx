@@ -8,6 +8,7 @@ import {
   resolveSurfaceArea,
   type RoomQuantity,
 } from "../../utils/paint.js";
+import { buildShoppingList, shoppingListText } from "../../utils/workOrder.js";
 import {
   FINISHES,
   SURFACE_TYPES,
@@ -15,6 +16,7 @@ import {
   type Surface,
   type SurfaceType,
 } from "../../domain/project.js";
+import { copyText } from "../../utils/clipboard.js";
 import { usePalette } from "../../context/PaletteContext.js";
 import { useAppContext } from "../../context/AppContext.js";
 import { useToast } from "../Toast/Toast.js";
@@ -49,6 +51,9 @@ export function WorkOrderView() {
   const quantities = estimateProjectQuantities(rooms);
   const roomQtyById = new Map(quantities.rooms.map((r) => [r.roomId, r]));
 
+  // Consolidated shopping list, one row per color × finish (US16.3).
+  const shoppingList = buildShoppingList(rooms, colorsById);
+
   const exportPdf = async () => {
     try {
       await exportService.exportWorkOrderPdf(rooms, paletteColors, {
@@ -57,6 +62,13 @@ export function WorkOrderView() {
     } catch {
       showToast("Couldn't generate the work order PDF");
     }
+  };
+
+  const copyShoppingList = async () => {
+    const ok = await copyText(
+      shoppingListText(shoppingList, activeProject.name),
+    );
+    showToast(ok ? "Shopping list copied to clipboard" : "Couldn't copy list");
   };
 
   return (
@@ -136,6 +148,50 @@ export function WorkOrderView() {
                 Estimated at ~350 sq ft per gallon — confirm coverage on the
                 can.
               </p>
+            </section>
+          )}
+
+          {shoppingList.length > 0 && (
+            <section className={styles.summary} aria-label="Shopping list">
+              <div className={styles.summaryHead}>
+                <h3 className={styles.summaryTitle}>Shopping list</h3>
+                <button
+                  type="button"
+                  className="btn-on-dark"
+                  onClick={copyShoppingList}
+                >
+                  Copy shopping list
+                </button>
+              </div>
+              <ul className={styles.summaryList}>
+                {shoppingList.map((it) => (
+                  <li
+                    key={`${it.colorId}-${it.finish ?? "any"}`}
+                    className={styles.shopRow}
+                  >
+                    <span
+                      className={styles.summarySwatch}
+                      style={{ background: it.hex }}
+                      aria-hidden="true"
+                    />
+                    <span className={styles.summaryInfo}>
+                      <span className={styles.summaryName}>
+                        {it.name}{" "}
+                        <span className={styles.shopNumber}>
+                          SW {it.number}
+                        </span>
+                      </span>
+                      <span className={styles.summaryMeta}>
+                        {it.finishLabel ?? "Any finish"} ·{" "}
+                        {it.rack ? `Rack ${it.rack}` : "Rack n/a"}
+                      </span>
+                    </span>
+                    <span className={styles.summaryQty}>
+                      {it.cans} can{it.cans === 1 ? "" : "s"}
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </section>
           )}
         </>
