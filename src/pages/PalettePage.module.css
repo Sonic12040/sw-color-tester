@@ -44,6 +44,14 @@
   flex-wrap: wrap;
 }
 
+/* Project lens toggle (US15.3) — a segmented control built from the shared
+   on-dark toggle buttons (.btn-on-dark + .is-active), so it reads the same as
+   the dark chrome on the Browse toolbar and detail page. */
+.lensToggle {
+  display: inline-flex;
+  gap: var(--spacing-2);
+}
+
 .banner {
   display: flex;
   align-items: center;

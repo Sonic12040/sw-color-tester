@@ -80,6 +80,56 @@ describe("Palette", () => {
   });
 });
 
+describe("Project lenses — Board ↔ Work Order (US15.3)", () => {
+  const loadTwo = async () => {
+    const handle = renderApp(
+      "/palette?c=sw-6258-tricorn-black,sw-7015-repose-gray",
+    );
+    await handle.user.click(
+      screen.getByRole("button", { name: /Load shared palette/ }),
+    );
+    return handle;
+  };
+
+  it("switches the same project to the Work Order lens", async () => {
+    const { user } = await loadTwo();
+    // Board lens shows the 60-30-10 role controls…
+    expect(screen.getByLabelText("Role for Tricorn Black")).toBeTruthy();
+
+    await user.click(screen.getByRole("button", { name: "Work Order" }));
+
+    // …the Work Order lens drops the designer controls but keeps the colors,
+    // leading each row with the SW number a painter orders.
+    expect(screen.queryByLabelText("Role for Tricorn Black")).toBeNull();
+    expect(screen.getByText("SW 6258")).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Tricorn Black" })).toBeTruthy();
+  });
+
+  it("groups Work Order surfaces by assigned room", async () => {
+    const { user } = await loadTwo();
+    await user.type(screen.getByLabelText("Room for Tricorn Black"), "Kitchen");
+
+    await user.click(screen.getByRole("button", { name: "Work Order" }));
+    expect(screen.getByRole("heading", { name: "Kitchen" })).toBeTruthy();
+    // The roomless color falls into an Unassigned bucket.
+    expect(screen.getByRole("heading", { name: "Unassigned" })).toBeTruthy();
+  });
+
+  it("persists the lens preference across navigation", async () => {
+    const { user } = await loadTwo();
+    await user.click(screen.getByRole("button", { name: "Work Order" }));
+
+    // Leave the palette and come back — the Work Order lens is still active.
+    await user.click(screen.getByRole("link", { name: /^Browse/ }));
+    await user.click(screen.getByRole("link", { name: /^Palette/ }));
+    expect(
+      (
+        screen.getByRole("button", { name: "Work Order" }) as HTMLButtonElement
+      ).getAttribute("aria-pressed"),
+    ).toBe("true");
+  });
+});
+
 describe("Palette intelligence — roles (E11)", () => {
   const loadPalette = async () => {
     const handle = renderApp(

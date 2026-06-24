@@ -1,0 +1,101 @@
+/* ============================================================
+   Work Order (painter) lens — same dark design language as the
+   palette Board: faint elevated sub-panels on the dark card, with
+   a field-readable, room-grouped job sheet that leads on SW number.
+   ============================================================ */
+
+.sheet {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.groupHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+  padding-bottom: var(--spacing-2);
+  border-bottom: 1px solid var(--on-dark-border);
+}
+
+.room {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+  color: #ffffff;
+}
+
+.count {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--on-dark-faint);
+  font-weight: var(--font-weight-semibold);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-2);
+  border: 1px solid var(--on-dark-subtle);
+  border-radius: var(--radius-md);
+  background: var(--on-dark-subtle);
+}
+
+.swatch {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--on-dark-border);
+}
+
+.info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* SW number leads the row — it's what the painter orders at the rack. */
+.sw {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.02em;
+  color: #ffffff;
+}
+
+.name {
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  color: var(--on-dark);
+}
+
+.name:hover {
+  text-decoration: underline;
+}
+
+.meta {
+  font-size: var(--font-size-sm);
+  color: var(--on-dark-muted);
+}
+
+.note {
+  margin-top: var(--spacing-1);
+  font-size: var(--font-size-sm);
+  color: var(--on-dark);
+  line-height: var(--line-height-normal);
+}

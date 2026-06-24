@@ -8,6 +8,7 @@ export const STORAGE_KEYS = {
   sort: "sw-color-tester:sort",
   compare: "sw-color-tester:compare",
   palette: "sw-color-tester:palette",
+  paletteLens: "sw-color-tester:palette-lens",
 } as const;
 
 /** Read and JSON-parse a value; returns `undefined` if missing or unreadable. */
