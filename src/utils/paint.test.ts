@@ -1,5 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { paintEstimate } from "./paint.js";
+import {
+  paintEstimate,
+  paintableAreaSqFt,
+  resolveSurfaceArea,
+} from "./paint.js";
 
 describe("paintEstimate", () => {
   it("estimates a standard room with openings and 2 coats", () => {
@@ -59,5 +63,48 @@ describe("paintEstimate", () => {
     // 2×(20)×10 = 400 sq ft × 1 / 400 = exactly 1 gallon.
     expect(e.gallons).toBe(1);
     expect(e.cans).toBe(1);
+  });
+});
+
+describe("paintableAreaSqFt", () => {
+  it("is perimeter × height minus openings", () => {
+    // 12×12×8 → 384 walls − (1 door 21 + 2 windows 30) = 333.
+    expect(
+      paintableAreaSqFt({
+        lengthFt: 12,
+        widthFt: 12,
+        heightFt: 8,
+        doors: 1,
+        windows: 2,
+      }),
+    ).toBe(333);
+  });
+
+  it("clamps negatives and never goes below zero", () => {
+    expect(paintableAreaSqFt({ lengthFt: -5, widthFt: 10, heightFt: 8 })).toBe(
+      160,
+    );
+    expect(
+      paintableAreaSqFt({ lengthFt: 2, widthFt: 2, heightFt: 8, doors: 10 }),
+    ).toBe(0);
+  });
+});
+
+describe("resolveSurfaceArea", () => {
+  it("uses a directly entered area", () => {
+    expect(resolveSurfaceArea({ areaSqFt: 120 })).toBe(120);
+  });
+
+  it("prefers L×W×H dimensions over a direct area", () => {
+    expect(
+      resolveSurfaceArea({
+        areaSqFt: 999,
+        dimensions: { lengthFt: 10, widthFt: 10, heightFt: 8 },
+      }),
+    ).toBe(320);
+  });
+
+  it("is zero for an unmeasured surface", () => {
+    expect(resolveSurfaceArea({})).toBe(0);
   });
 });

@@ -1,8 +1,10 @@
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import type { Color } from "../data/types.js";
 import type { PaletteRole } from "../domain/types.js";
+import { finishLabel, surfaceTypeLabel, type Room } from "../domain/project.js";
 import type { ColorAnnotation } from "./ExportService.js";
 import { undertone, classifyLrv } from "./colorMath.js";
+import { resolveSurfaceArea } from "./paint.js";
 import { assignRoles } from "./paletteIntelligence.js";
 
 /**
@@ -169,6 +171,185 @@ export async function buildPalettePdf(
       });
     }
     y -= ROW_H;
+  }
+
+  return doc.save();
+}
+
+// ── Work Order (painter spec sheet, E16) ──────────────────────────────────
+
+/** One resolved surface row in a work order. */
+export interface WorkOrderSurface {
+  type: string;
+  colorName: string | null;
+  colorNumber: string | null;
+  hex: string | null;
+  finish: string | null;
+  coats: number | null;
+  areaSqFt: number;
+}
+
+/** A room section with its surfaces and a summed area. */
+export interface WorkOrderRoom {
+  name: string;
+  surfaces: WorkOrderSurface[];
+  totalAreaSqFt: number;
+}
+
+/**
+ * Pure: resolve a project's rooms → surfaces into the rows a work order needs,
+ * looking each surface's color up by id. Surfaces with no measurement count as
+ * 0 sq ft; per-room totals sum the resolved areas.
+ */
+export function buildWorkOrder(
+  rooms: Room[],
+  colorsById: Map<string, Color>,
+): WorkOrderRoom[] {
+  return rooms.map((room) => {
+    const surfaces: WorkOrderSurface[] = room.surfaces.map((s) => {
+      const color = s.colorId ? colorsById.get(s.colorId) : undefined;
+      return {
+        type: surfaceTypeLabel(s.type),
+        colorName: color?.name ?? null,
+        colorNumber: color?.colorNumber ?? null,
+        hex: color ? color.hex.toUpperCase() : null,
+        finish: finishLabel(s.finish),
+        coats: s.coats ?? null,
+        areaSqFt: resolveSurfaceArea(s),
+      };
+    });
+    return {
+      name: room.name,
+      surfaces,
+      totalAreaSqFt: surfaces.reduce((sum, s) => sum + s.areaSqFt, 0),
+    };
+  });
+}
+
+/** Build a Work Order PDF (US Letter): per-room surface tables. Returns bytes. */
+export async function buildWorkOrderPdf(
+  rooms: WorkOrderRoom[],
+  opts: { project: string; now: Date },
+): Promise<Uint8Array> {
+  const doc = await PDFDocument.create();
+  doc.setTitle(`${opts.project} — work order`);
+  doc.setCreator("Sherwin-Williams Color Atlas");
+  const font = await doc.embedFont(StandardFonts.Helvetica);
+  const bold = await doc.embedFont(StandardFonts.HelveticaBold);
+
+  const PAGE_W = 612;
+  const PAGE_H = 792;
+  const MARGIN = 48;
+  const ROW_H = 30;
+  const ink = rgb(0.1, 0.1, 0.11);
+  const muted = rgb(0.4, 0.4, 0.42);
+  const hairline = rgb(0.85, 0.85, 0.86);
+
+  // Column x-offsets from the left margin (swatch + 5 text columns).
+  const COL = {
+    swatch: 0,
+    color: 40,
+    type: 250,
+    finish: 350,
+    coats: 450,
+    area: 510,
+  };
+  const SWATCH = 24;
+
+  let page = doc.addPage([PAGE_W, PAGE_H]);
+  let y = PAGE_H - MARGIN;
+
+  const text = (
+    s: string,
+    x: number,
+    yy: number,
+    size = 10,
+    f = font,
+    color = ink,
+  ) => page.drawText(s, { x: MARGIN + x, y: yy, size, font: f, color });
+
+  const newPage = () => {
+    page = doc.addPage([PAGE_W, PAGE_H]);
+    y = PAGE_H - MARGIN;
+  };
+
+  const total = rooms.reduce((sum, r) => sum + r.totalAreaSqFt, 0);
+  text(opts.project, 0, y - 18, 20, bold);
+  text(
+    `Work order · Sherwin-Williams Color Atlas · ${opts.now.toISOString().slice(0, 10)} · ${Math.round(total)} sq ft`,
+    0,
+    y - 36,
+    10,
+    font,
+    muted,
+  );
+  y -= 64;
+
+  for (const room of rooms) {
+    if (y - ROW_H * 2 < MARGIN) newPage();
+    // Room heading + total.
+    text(room.name, 0, y, 13, bold);
+    text(
+      `${room.surfaces.length} surface${room.surfaces.length === 1 ? "" : "s"} · ${Math.round(room.totalAreaSqFt)} sq ft`,
+      COL.area - 120,
+      y,
+      9,
+      font,
+      muted,
+    );
+    y -= 16;
+    // Column header.
+    text("COLOR", COL.color, y, 8, bold, muted);
+    text("SURFACE", COL.type, y, 8, bold, muted);
+    text("FINISH", COL.finish, y, 8, bold, muted);
+    text("COATS", COL.coats, y, 8, bold, muted);
+    text("AREA", COL.area, y, 8, bold, muted);
+    y -= 6;
+    page.drawLine({
+      start: { x: MARGIN, y },
+      end: { x: PAGE_W - MARGIN, y },
+      thickness: 1,
+      color: hairline,
+    });
+    y -= ROW_H;
+
+    if (room.surfaces.length === 0) {
+      text("No surfaces yet.", COL.color, y + 10, 9, font, muted);
+      y -= 8;
+    }
+
+    for (const s of room.surfaces) {
+      if (y < MARGIN) {
+        newPage();
+        y -= ROW_H;
+      }
+      if (s.hex) {
+        const { r, g, b } = hexToRgb(s.hex);
+        page.drawRectangle({
+          x: MARGIN + COL.swatch,
+          y: y + 2,
+          width: SWATCH,
+          height: SWATCH,
+          color: rgb(r / 255, g / 255, b / 255),
+          borderColor: hairline,
+          borderWidth: 1,
+        });
+      }
+      const colorLabel = s.colorName
+        ? `${s.colorName}${s.colorNumber ? `  ·  SW ${s.colorNumber}` : ""}`
+        : "Unassigned";
+      text(colorLabel, COL.color, y + 14, 10, bold, s.colorName ? ink : muted);
+      text(s.type, COL.type, y + 14);
+      text(s.finish ?? "—", COL.finish, y + 14);
+      text(s.coats != null ? String(s.coats) : "—", COL.coats, y + 14);
+      text(
+        s.areaSqFt > 0 ? `${Math.round(s.areaSqFt)}` : "—",
+        COL.area,
+        y + 14,
+      );
+      y -= ROW_H;
+    }
+    y -= 12;
   }
 
   return doc.save();

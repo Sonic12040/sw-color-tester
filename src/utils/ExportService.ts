@@ -1,5 +1,6 @@
 import type { Color } from "../data/types.js";
 import type { PaletteRole } from "../domain/types.js";
+import type { Room } from "../domain/project.js";
 
 /** Per-color annotations captured in a palette project. */
 export interface ColorAnnotation {
@@ -71,6 +72,34 @@ export class ExportService {
       exportFilename(now, fileSlug(opts), "pdf"),
     );
     return { count: colors.length };
+  }
+
+  /**
+   * Build a Work Order PDF (rooms × surfaces) and trigger a download. `colors`
+   * is the palette's color list, used to resolve each surface's assigned color.
+   */
+  async exportWorkOrderPdf(
+    rooms: Room[],
+    colors: Color[],
+    opts: SerializeOptions = {},
+  ): Promise<{ rooms: number }> {
+    const { buildWorkOrder, buildWorkOrderPdf } =
+      await import("./paletteExport.js");
+    const now = new Date();
+    const colorsById = new Map(colors.map((c) => [c.id, c]));
+    const sections = buildWorkOrder(rooms, colorsById);
+    const bytes = await buildWorkOrderPdf(sections, {
+      project: opts.project ?? "My palette",
+      now,
+    });
+    const slug = opts.project
+      ? `workorder-${kebab(opts.project)}`
+      : "workorder";
+    this.#download(
+      new Blob([new Uint8Array(bytes)], { type: "application/pdf" }),
+      exportFilename(now, slug, "pdf"),
+    );
+    return { rooms: rooms.length };
   }
 
   /** Render a PNG swatch board and trigger a download (export module loaded on demand). */

@@ -1,7 +1,7 @@
 /* ============================================================
    Work Order (painter) lens — same dark design language as the
    palette Board: faint elevated sub-panels on the dark card, with
-   a field-readable, room-grouped job sheet that leads on SW number.
+   per-room surface editors that double as the rooms × surfaces table.
    ============================================================ */
 
 .sheet {
@@ -10,29 +10,63 @@
   gap: var(--spacing-4);
 }
 
-.group {
+.head {
   display: flex;
-  flex-direction: column;
-  gap: var(--spacing-2);
-}
-
-.groupHead {
-  display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: var(--spacing-3);
-  padding-bottom: var(--spacing-2);
-  border-bottom: 1px solid var(--on-dark-border);
+  flex-wrap: wrap;
 }
 
-.room {
+.title {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
   margin: 0;
   color: #ffffff;
 }
 
-.count {
+.headActions {
+  display: flex;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+}
+
+.empty {
+  margin: 0;
+  padding: var(--spacing-4);
+  font-size: var(--font-size-sm);
+  color: var(--on-dark-muted);
+  line-height: var(--line-height-normal);
+  background: var(--on-dark-subtle);
+  border: 1px solid var(--on-dark-border);
+  border-radius: var(--radius-md);
+}
+
+/* One room section. */
+.room {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  padding: var(--spacing-4);
+  background: var(--on-dark-subtle);
+  border: 1px solid var(--on-dark-border);
+  border-radius: var(--radius-md);
+}
+
+.roomHead {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+}
+
+.roomName {
+  flex: 1 1 12rem;
+  min-width: 0;
+  font-weight: var(--font-weight-semibold);
+}
+
+.roomMeta {
   font-size: var(--font-size-xs);
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -40,62 +74,135 @@
   font-weight: var(--font-weight-semibold);
 }
 
-.list {
+.roomActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin-left: auto;
+}
+
+.roomEmpty {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--on-dark-muted);
+}
+
+.surfaces {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-2);
 }
 
-.row {
+/* A surface row: swatch + the editable spec fields + delete, with the optional
+   measurement details spanning the full width below. */
+.surface {
   display: grid;
-  grid-template-columns: 56px 1fr;
-  align-items: center;
+  grid-template-columns: 44px 1fr auto;
+  align-items: start;
   gap: var(--spacing-3);
-  padding: var(--spacing-2);
+  padding: var(--spacing-3);
   border: 1px solid var(--on-dark-subtle);
   border-radius: var(--radius-md);
-  background: var(--on-dark-subtle);
+  /* darker than the room panel so each surface reads as inset */
+  background: var(--surface-dark);
 }
 
 .swatch {
-  width: 56px;
-  height: 56px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--on-dark-border);
 }
 
-.info {
+.swatch[data-empty] {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--on-dark-subtle),
+    var(--on-dark-subtle) 6px,
+    transparent 6px,
+    transparent 12px
+  );
+  border-style: dashed;
+}
+
+.fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
   min-width: 0;
+}
+
+.field {
   display: flex;
   flex-direction: column;
+  gap: var(--spacing-1);
+  flex: 1 1 9rem;
+  min-width: 0;
 }
 
-/* SW number leads the row — it's what the painter orders at the rack. */
-.sw {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: 0.02em;
-  color: #ffffff;
+.fieldNarrow {
+  flex: 0 1 6rem;
 }
 
-.name {
+.fieldLabel {
+  font-size: var(--font-size-2xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--on-dark-faint);
   font-weight: var(--font-weight-semibold);
-  text-decoration: none;
+}
+
+.iconBtn {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--on-dark-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
   color: var(--on-dark);
+  cursor: pointer;
+  font-size: var(--font-size-base);
+  transition: background-color var(--transition-fast);
 }
 
-.name:hover {
-  text-decoration: underline;
+.iconBtn:hover:not(:disabled) {
+  background: var(--on-dark-subtle);
 }
 
-.meta {
+/* Measurement details + link span all three columns under the fields. */
+.measure,
+.colorLink {
+  grid-column: 1 / -1;
+}
+
+.measureSummary {
   font-size: var(--font-size-sm);
   color: var(--on-dark-muted);
+  cursor: pointer;
 }
 
-.note {
-  margin-top: var(--spacing-1);
+.dims {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  margin-top: var(--spacing-2);
+  align-items: flex-end;
+}
+
+.dimField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  flex: 0 1 5rem;
+  min-width: 0;
+}
+
+.colorLink {
   font-size: var(--font-size-sm);
-  color: var(--on-dark);
-  line-height: var(--line-height-normal);
+  font-weight: var(--font-weight-semibold);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.colorLink:hover {
+  text-decoration: underline;
 }

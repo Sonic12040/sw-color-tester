@@ -258,7 +258,7 @@ export function PalettePage() {
             </div>
 
             {lens === "workorder" ? (
-              <WorkOrderView rows={rows} />
+              <WorkOrderView />
             ) : (
               <>
                 <div className={styles.strip} aria-hidden="true">

@@ -3,11 +3,52 @@
  * server-side. Helps a shopper buy the right amount instead of guessing.
  */
 
+import type { Surface } from "../domain/project.js";
+
 /** Industry rules of thumb for the area a standard opening removes from walls. */
 const DOOR_SQFT = 21;
 const WINDOW_SQFT = 15;
 /** A gallon of wall paint covers ~350 sq ft per coat. */
 const DEFAULT_COVERAGE = 350;
+
+/** L×W×H room measurements shared by the calculator and project surfaces. */
+export interface RoomDimensions {
+  lengthFt: number;
+  widthFt: number;
+  heightFt: number;
+  /** Doors to subtract (default 0). */
+  doors?: number;
+  /** Windows to subtract (default 0). */
+  windows?: number;
+}
+
+/**
+ * Pure: paintable wall area (sq ft) for a rectangular room — perimeter × height
+ * minus standard door/window openings. The single source of truth for the
+ * calculator and per-surface area; negatives clamp to 0 and openings can't drive
+ * the result below 0.
+ */
+export function paintableAreaSqFt(d: RoomDimensions): number {
+  const length = Math.max(0, d.lengthFt);
+  const width = Math.max(0, d.widthFt);
+  const height = Math.max(0, d.heightFt);
+  const doors = Math.max(0, d.doors ?? 0);
+  const windows = Math.max(0, d.windows ?? 0);
+  const wall = 2 * (length + width) * height;
+  const openings = doors * DOOR_SQFT + windows * WINDOW_SQFT;
+  return Math.max(0, wall - openings);
+}
+
+/**
+ * Pure: a surface's effective area in sq ft. L×W×H dimensions take precedence
+ * over a directly entered area; an unmeasured surface is 0.
+ */
+export function resolveSurfaceArea(
+  s: Pick<Surface, "areaSqFt" | "dimensions">,
+): number {
+  if (s.dimensions) return paintableAreaSqFt(s.dimensions);
+  return Math.max(0, s.areaSqFt ?? 0);
+}
 
 export interface PaintEstimateInput {
   lengthFt: number;
@@ -48,12 +89,9 @@ export function paintEstimate(input: PaintEstimateInput): PaintEstimate {
   const length = Math.max(0, input.lengthFt);
   const width = Math.max(0, input.widthFt);
   const height = Math.max(0, input.heightFt);
-  const doors = Math.max(0, input.doors ?? 0);
-  const windows = Math.max(0, input.windows ?? 0);
 
   const wallArea = 2 * (length + width) * height;
-  const openings = doors * DOOR_SQFT + windows * WINDOW_SQFT;
-  const paintable = Math.max(0, wallArea - openings);
+  const paintable = paintableAreaSqFt(input);
   const needed = (paintable * coats) / coverage;
 
   return {

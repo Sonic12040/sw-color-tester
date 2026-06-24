@@ -98,21 +98,18 @@ describe("Project lenses — Board ↔ Work Order (US15.3)", () => {
 
     await user.click(screen.getByRole("button", { name: "Work Order" }));
 
-    // …the Work Order lens drops the designer controls but keeps the colors,
-    // leading each row with the SW number a painter orders.
+    // …the Work Order lens drops the designer controls for the painter's job
+    // structure: a fresh project has no rooms, so it prompts to add one and the
+    // PDF export is disabled until there's something to spec.
     expect(screen.queryByLabelText("Role for Tricorn Black")).toBeNull();
-    expect(screen.getByText("SW 6258")).toBeTruthy();
-    expect(screen.getByRole("link", { name: "Tricorn Black" })).toBeTruthy();
-  });
-
-  it("groups Work Order surfaces by assigned room", async () => {
-    const { user } = await loadTwo();
-    await user.type(screen.getByLabelText("Room for Tricorn Black"), "Kitchen");
-
-    await user.click(screen.getByRole("button", { name: "Work Order" }));
-    expect(screen.getByRole("heading", { name: "Kitchen" })).toBeTruthy();
-    // The roomless color falls into an Unassigned bucket.
-    expect(screen.getByRole("heading", { name: "Unassigned" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Add room" })).toBeTruthy();
+    expect(
+      (
+        screen.getByRole("button", {
+          name: "Export work order PDF",
+        }) as HTMLButtonElement
+      ).disabled,
+    ).toBe(true);
   });
 
   it("persists the lens preference across navigation", async () => {
@@ -127,6 +124,64 @@ describe("Project lenses — Board ↔ Work Order (US15.3)", () => {
         screen.getByRole("button", { name: "Work Order" }) as HTMLButtonElement
       ).getAttribute("aria-pressed"),
     ).toBe("true");
+  });
+});
+
+describe("Work Order — rooms × surfaces (US16.1)", () => {
+  const openWorkOrder = async () => {
+    const handle = renderApp(
+      "/palette?c=sw-6258-tricorn-black,sw-7015-repose-gray",
+    );
+    await handle.user.click(
+      screen.getByRole("button", { name: /Load shared palette/ }),
+    );
+    await handle.user.click(screen.getByRole("button", { name: "Work Order" }));
+    return handle;
+  };
+
+  it("adds a room with a surface assigned a color, finish, and area", async () => {
+    const { user } = await openWorkOrder();
+    await user.click(screen.getByRole("button", { name: "Add room" }));
+    await user.click(screen.getByRole("button", { name: "Add surface" }));
+
+    // Assign one of the palette's colors, a finish, and a measured area.
+    await user.selectOptions(
+      screen.getByLabelText(/^Color for/),
+      screen.getByRole("option", { name: /Tricorn Black/ }),
+    );
+    await user.selectOptions(screen.getByLabelText(/^Finish for/), "Satin");
+    await user.type(screen.getByLabelText(/^Area for/), "200");
+
+    // The assigned color links out, the room totals its area, and the PDF
+    // export is now enabled.
+    expect(
+      screen.getByRole("link", { name: /View Tricorn Black/ }),
+    ).toBeTruthy();
+    expect(screen.getByText(/1 surface · 200 sq ft/)).toBeTruthy();
+    expect(
+      (
+        screen.getByRole("button", {
+          name: "Export work order PDF",
+        }) as HTMLButtonElement
+      ).disabled,
+    ).toBe(false);
+  });
+
+  it("computes a surface's area from L×W×H dimensions", async () => {
+    const { user } = await openWorkOrder();
+    await user.click(screen.getByRole("button", { name: "Add room" }));
+    await user.click(screen.getByRole("button", { name: "Add surface" }));
+
+    await user.click(screen.getByText("Measure by L×W×H"));
+    await user.type(screen.getByLabelText(/^Length for/), "10");
+    await user.type(screen.getByLabelText(/^Width for/), "10");
+    await user.type(screen.getByLabelText(/^Height for/), "8");
+
+    // 2×(10+10)×8 = 320 sq ft, and the manual area input reflects it (disabled).
+    const area = screen.getByLabelText(/^Area for/) as HTMLInputElement;
+    expect(area.value).toBe("320");
+    expect(area.disabled).toBe(true);
+    expect(screen.getByText(/1 surface · 320 sq ft/)).toBeTruthy();
   });
 });
 

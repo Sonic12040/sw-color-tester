@@ -80,3 +80,106 @@ describe("PaletteContext", () => {
     expect(result.current.projects).toHaveLength(1);
   });
 });
+
+describe("PaletteContext — rooms & surfaces (E15)", () => {
+  it("adds rooms and surfaces to the active project", () => {
+    const { result } = setup();
+    act(() => result.current.addRoom("Kitchen"));
+    expect(result.current.rooms).toHaveLength(1);
+    const roomId = result.current.rooms[0].id;
+    expect(result.current.rooms[0].name).toBe("Kitchen");
+
+    act(() => result.current.addSurface(roomId));
+    // New surfaces default to walls with 2 coats.
+    expect(result.current.rooms[0].surfaces[0]).toMatchObject({
+      type: "wall",
+      coats: 2,
+    });
+  });
+
+  it("updates a surface and clears fields set to undefined", () => {
+    const { result } = setup();
+    act(() => result.current.addRoom("Bath"));
+    const roomId = result.current.rooms[0].id;
+    act(() => result.current.addSurface(roomId));
+    const surfaceId = result.current.rooms[0].surfaces[0].id;
+
+    act(() =>
+      result.current.updateSurface(roomId, surfaceId, {
+        colorId: "tricorn",
+        finish: "satin",
+        areaSqFt: 200,
+      }),
+    );
+    expect(result.current.rooms[0].surfaces[0]).toMatchObject({
+      colorId: "tricorn",
+      finish: "satin",
+      areaSqFt: 200,
+    });
+
+    // Passing undefined clears the key (e.g. unassigning a color).
+    act(() =>
+      result.current.updateSurface(roomId, surfaceId, { colorId: undefined }),
+    );
+    expect(result.current.rooms[0].surfaces[0].colorId).toBeUndefined();
+  });
+
+  it("deletes surfaces and rooms", () => {
+    const { result } = setup();
+    act(() => result.current.addRoom("Hall"));
+    const roomId = result.current.rooms[0].id;
+    act(() => result.current.addSurface(roomId));
+    const surfaceId = result.current.rooms[0].surfaces[0].id;
+
+    act(() => result.current.deleteSurface(roomId, surfaceId));
+    expect(result.current.rooms[0].surfaces).toHaveLength(0);
+    act(() => result.current.deleteRoom(roomId));
+    expect(result.current.rooms).toHaveLength(0);
+  });
+
+  it("keeps rooms per-project (a new project starts with none)", () => {
+    const { result } = setup();
+    act(() => result.current.addRoom("Kitchen"));
+    act(() => result.current.createProject("Studio"));
+    expect(result.current.rooms).toEqual([]);
+  });
+
+  it("migrates a stored project with rooms, dropping invalid surfaces", () => {
+    localStorage.setItem(
+      STORAGE_KEYS.palette,
+      JSON.stringify({
+        projects: [
+          {
+            id: "p1",
+            name: "Job",
+            entries: ["a"],
+            rooms: [
+              {
+                id: "r1",
+                name: "Kitchen",
+                surfaces: [
+                  { id: "s1", type: "wall", colorId: "a", coats: 2 },
+                  { id: "s2", type: "bogus" }, // invalid type → dropped
+                  { id: "s3", type: "trim", finish: "satin", areaSqFt: 50 },
+                ],
+              },
+            ],
+          },
+        ],
+        activeId: "p1",
+      }),
+    );
+    const { result } = setup();
+    expect(result.current.rooms).toHaveLength(1);
+    expect(result.current.rooms[0].surfaces.map((s) => s.id)).toEqual([
+      "s1",
+      "s3",
+    ]);
+  });
+
+  it("ignores legacy projects without a rooms array", () => {
+    localStorage.setItem(STORAGE_KEYS.palette, JSON.stringify(["a", "b"]));
+    const { result } = setup();
+    expect(result.current.rooms).toEqual([]);
+  });
+});
