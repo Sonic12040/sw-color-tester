@@ -86,6 +86,28 @@ function buildHead(appPath: string): string {
       `<meta property="og:title" content="My palette | Sherwin-Williams Color Atlas">`,
       ...ogImageTags(OG_DEFAULT_IMAGE, "Sherwin-Williams Color Atlas"),
     );
+  } else if (appPath === "/embed") {
+    // A fragment for partner iframes — give it a title but keep it out of the index.
+    tags.push(
+      `<title>Sherwin-Williams color embed</title>`,
+      `<meta name="robots" content="noindex">`,
+    );
+  } else if (appPath === "/embed-builder") {
+    const canonical = `${SITE_ORIGIN}${BASENAME}/embed-builder/`;
+    tags.push(
+      `<title>Embed builder | Sherwin-Williams Color Atlas</title>`,
+      `<meta name="description" content="${esc("Build a copy-paste embed of a Sherwin-Williams swatch or palette for your own site.")}">`,
+      `<link rel="canonical" href="${canonical}">`,
+      `<meta property="og:site_name" content="Sherwin-Williams Color Atlas">`,
+      `<meta property="og:title" content="Embed builder | Sherwin-Williams Color Atlas">`,
+      `<meta property="og:description" content="${esc("Embed live Sherwin-Williams swatches and palettes on your own site.")}">`,
+      `<meta property="og:type" content="website">`,
+      `<meta property="og:url" content="${canonical}">`,
+      ...ogImageTags(
+        OG_DEFAULT_IMAGE,
+        "Sherwin-Williams Color Atlas embed builder",
+      ),
+    );
   } else if (appPath === "/visualizer") {
     const canonical = `${SITE_ORIGIN}${BASENAME}/visualizer/`;
     tags.push(
@@ -196,6 +218,8 @@ export function getPrerenderPaths(): string[] {
     "/compare",
     "/palette",
     "/visualizer",
+    "/embed",
+    "/embed-builder",
     "/collections",
     ...colorModel.getCollections().map((c) => `/collections/${c.slug}`),
     ...colorModel.getAllSlugs().map((s) => `/colors/${s}`),
@@ -207,6 +231,7 @@ export function getSitemapUrls(): string[] {
   return [
     SITE_URL,
     `${SITE_ORIGIN}${BASENAME}/visualizer/`,
+    `${SITE_ORIGIN}${BASENAME}/embed-builder/`,
     collectionsIndexCanonicalUrl,
     ...colorModel.getCollections().map((c) => collectionCanonicalUrl(c.slug)),
     ...colorModel.getAllSlugs().map((s) => colorCanonicalUrl(s)),

@@ -1,0 +1,13 @@
+/* Standalone embed wrapper (E14) — minimal, transparent so the host iframe's
+   own background shows through around the widget. */
+.embed {
+  margin: 0;
+  padding: 4px;
+}
+
+.empty {
+  margin: 0;
+  padding: 16px;
+  font-family: Roboto, system-ui, sans-serif;
+  color: #5b5f66;
+}

@@ -236,6 +236,12 @@ export function PalettePage() {
               <button type="button" className="btn-on-dark" onClick={exportPng}>
                 Export PNG
               </button>
+              <Link
+                className="btn-on-dark"
+                to={`/embed-builder?c=${colors.map((c) => toSlug(c)).join(",")}`}
+              >
+                Embed
+              </Link>
               <button
                 type="button"
                 className="btn-on-dark"

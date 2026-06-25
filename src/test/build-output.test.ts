@@ -45,6 +45,25 @@ describe("Open Graph assets", () => {
   });
 });
 
+describe("embeddable widget (E14)", () => {
+  it("prerenders a noindexed /embed fragment", () => {
+    const page = readFileSync(resolve(dist, "embed", "index.html"), "utf8");
+    expect(/<title>Sherwin-Williams color embed<\/title>/.test(page)).toBe(
+      true,
+    );
+    expect(/<meta name="robots" content="noindex">/.test(page)).toBe(true);
+  });
+
+  it("prerenders the /embed-builder page with an authoritative head", () => {
+    const page = readFileSync(
+      resolve(dist, "embed-builder", "index.html"),
+      "utf8",
+    );
+    expect(/<title>Embed builder/.test(page)).toBe(true);
+    expect(/<link rel="canonical"[^>]*\/embed-builder\//.test(page)).toBe(true);
+  });
+});
+
 describe("room visualizer (E9)", () => {
   it("prerenders /visualizer with an authoritative head", () => {
     const page = readFileSync(

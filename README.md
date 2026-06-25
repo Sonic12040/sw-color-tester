@@ -41,6 +41,9 @@ discoverability.
 - **Room Visualizer** — preview a color on real surfaces in curated room scenes,
   switch colors (search / palette / recent), try lighting presets, and save or share
   the look via a deep link — fully client-side, no uploads, no backend.
+- **Embeddable widget** — partners drop a live, themable swatch or palette onto
+  their own site via an `<iframe>`; a self-serve `/embed-builder` previews it and
+  copies the snippet (back-links carry UTM). Static, read-only, no backend.
 - **Paint planning** — per-room and per-color gallon/can estimates (area × coats ÷
   coverage), a consolidated shopping list, and progress tracking, all reusing the
   paint calculator's area math.

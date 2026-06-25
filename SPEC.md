@@ -50,7 +50,8 @@ src/
 ├── context/              # Favorites, Hidden, Filters, Compare, Palette, Toast, App
 ├── hooks/                # useSet, usePersistent{Set,State}, useFocusTrap, useDocumentMeta
 ├── pages/                # GalleryPage, ColorDetailPage, ComparePage, PalettePage,
-│                         #   CollectionsIndexPage, CollectionPage, VisualizerPage, NotFoundPage
+│                         #   CollectionsIndexPage, CollectionPage, VisualizerPage,
+│                         #   EmbedPage (chrome-less) + EmbedBuilderPage (E14), NotFoundPage
 ├── components/
 │   ├── RootLayout.tsx    # skip link + sticky Header + <main> + CompareTray; AppProviders
 │   ├── Header/           # sticky brand + primary nav
@@ -60,6 +61,7 @@ src/
 │   │                     #   ColorGridSection, MiniTile, HslBreakdown
 │   ├── Collections/      # CollectionColorGrid (crawlable swatch links) — E12
 │   ├── Visualizer/       # RoomScene (SVG scene recolor) — E9
+│   ├── Embed/            # EmbedWidget (themable, self-contained read-only swatch/palette) — E14
 │   ├── Workspace/        # CompareTray, ContrastMatrix, WorkOrderView (Painter lens), FieldModeView (E17)
 │   ├── Toast/, ErrorBoundary/, seo/JsonLd
 ├── domain/               # types.ts (shared facet/sort vocabulary), project.ts (Rooms → Surfaces model),
@@ -67,7 +69,8 @@ src/
 │                         #   collection.ts (editorial — E12), scene.ts (visualizer scene — E9)
 ├── utils/                # base.ts, config.ts, storage.ts, slug.ts, seo.ts, breakpoints.ts, clipboard.ts, colorMath.ts,
 │                         #   colorCopy.ts, paint.ts, workOrder.ts, swLinks.ts, ogTemplate.ts, ExportService.ts, paletteExport.ts (lazy),
-│                         #   projectFile.ts + projectShare.ts (E18), collections.ts (E12), sceneRender.ts (E9)
+│                         #   projectFile.ts + projectShare.ts (E18), collections.ts (E12), sceneRender.ts (E9),
+│                         #   embed.ts (embed URL/snippet builders — E14)
 └── styles/               # tokens.css, breakpoints.css, a11y.css, global.css
 prerender.mjs             # post-build: writes dist/colors/<slug>/index.html + 404.html, sitemap, colors.json
 ```
@@ -131,6 +134,18 @@ switch and deep-linkable/shareable; colors are chosen by SW-number search, the
 active palette, or a persisted "recent" list, and "save a look" adds the color to
 the palette. (A look-specific OG image can't be statically prerendered for infinite
 combinations, so shared looks use the brand-default OG card — see Known follow-ups.)
+
+**Embeddable widget (E14).** Partners drop a live swatch/palette onto their own
+site via an `<iframe>` pointing at `/embed?c=slug,slug&theme=light|dark`. `/embed`
+is the one route rendered **outside `RootLayout`** (no header/nav/tray) so it sits
+cleanly in a frame; being provider-less, it reads the `colorModel` singleton
+directly. The widget (`components/Embed/EmbedWidget`) is self-contained (its own
+light/dark literals, not app tokens, so it renders identically off-domain) and
+read-only; back-links open the canonical color pages with **UTM** params so the
+host's analytics can attribute (we run none of our own). `/embed` is prerendered +
+`noindex` (a fragment, not a page). The self-serve **builder** (`/embed-builder`,
+indexed) picks swatch/palette + theme + width, shows a live preview, and copies a
+ready-to-paste snippet (`utils/embed.ts` builds the URL + iframe). No backend.
 
 `usePersistent*` use **two-phase init** (render `initial`, then load from storage)
 so server-prerendered markup and the first client render agree (no hydration
@@ -197,13 +212,13 @@ Vitest is split into **projects** (run by name; `npm test` runs unit + integrati
 
 - **unit** (Node env, colocated `*.test.ts`): pure logic — `colorMath`, `colorCopy`,
   `colorQuery`, `ColorModel`, `paletteIntelligence`, `paletteExport`, `projectFile`,
-  `projectShare`, `collections`, `sceneRender`, `slug`, `seo`, `contrast`, dataset +
-  collections + scenes integrity (`palette.integrity`, `collections.integrity`,
-  `scenes.integrity`), and the index-shell check.
+  `projectShare`, `collections`, `sceneRender`, `embed`, `slug`, `seo`, `contrast`,
+  dataset + collections + scenes integrity (`palette.integrity`,
+  `collections.integrity`, `scenes.integrity`), and the index-shell check.
 - **integration** (jsdom + RTL + `@testing-library/user-event`): component/hook/flow
   specs — each context, the hooks, `ColorCard`, `Toast`, and the routed-app suites in
   `src/test/integration/` (gallery, colorDetail, compare, palette, collections,
-  visualizer, emptyStates, appShell) sharing `integration/harness.tsx`.
+  visualizer, embed, emptyStates, appShell) sharing `integration/harness.tsx`.
   `ExportService.test.ts` lives here too (it touches `document`/`URL`).
   `src/test/setup.ts` clears storage.
 - **build-output** (Node, `test:build-output`): asserts the prerendered `dist/` (SEO
@@ -318,16 +333,15 @@ share reach instead. The Now horizon is therefore **complete**.
 Listed in **delivery order** (see the groomed feature/story backlog below for the
 WSJF-lite scoring and dependencies). **E11 (palette intelligence), E15 (Project
 model), E16 (Work Order + shopping list), E18 (Project portability), E12 (Editorial
-/ trend pages), E17 (Field mode), and E9 (Room Visualizer v1) have shipped** — see
-the architecture sections. **E10 (Accounts & cloud sync) is removed** — see the **no
-backend, no accounts** stance in Assumptions. Every remaining epic is \*\*fully static
+/ trend pages), E17 (Field mode), E9 (Room Visualizer v1), and E14 (Embeddable
+widget) have shipped** — see the architecture sections. **E10 (Accounts & cloud
+sync) is removed** — see the **no backend, no accounts** stance in Assumptions. The
+one remaining epic, **E13 client presentation boards**, is fully static +
+local-first.
 
-- local-first**. The order leads with **E14 embeddable widget\*\*.
-
-| #   | Item                                                  | Epic | Persona           | Effort |
-| --- | ----------------------------------------------------- | ---- | ----------------- | ------ |
-| 1   | Embeddable swatch/palette widget                      | E14  | Marketer/partners | M      |
-| 2   | Client presentation boards (branded, read-only share) | E13  | Designer          | M      |
+| #   | Item                                                  | Epic | Persona  | Effort |
+| --- | ----------------------------------------------------- | ---- | -------- | ------ |
+| 1   | Client presentation boards (branded, read-only share) | E13  | Designer | M      |
 
 ### Later — ambitious bets (3+ quarters)
 
@@ -347,12 +361,11 @@ superseded by the static data program above), and **teams + e-commerce checkout*
 revised.
 
 **Sequencing:** with the **Painter line** (E15 → E16 → E17) shipped, the reach +
-portability wins delivered (E12 editorial, E18 project portability), and the heavy
-client-side shopper bet **E9 Room Visualizer** shipped, what remains under **no
-backend on the table** is the **E14 widget** (a static embed; compounds with
-editorial) and a re-scoped **E13** client board last — a **branded, read-only shared
-board** (built on E18's share primitive); its former live comments/approval is
-dropped as it would require a backend.
+portability + distribution wins delivered (E12 editorial, E18 project portability,
+E14 embeddable widget), and the heavy client-side shopper bet **E9 Room Visualizer**
+shipped, what remains under **no backend on the table** is a re-scoped **E13** client
+board — a **branded, read-only shared board** (built on E18's share primitive); its
+former live comments/approval is dropped as it would require a backend.
 _Enabler:_ a build-time **product-line / sheen / coverage** dataset (like the color
 data) would unlock accurate per-product quantities in the shipped Work Order — which
 today uses a documented default coverage. (Build-time, no server — compatible.)
@@ -396,21 +409,19 @@ serverless signals noted under **Success metrics**. The **Now horizon is complet
 Reprioritized via WSJF-lite ((value + enablement) ÷ effort), then adjusted for hard
 dependencies and the "**local-first, no backend** · validate locally first"
 principles. Effort: S=1, M=2, M–L=2.5, L=3 (value/enable on 1–5). Epic **IDs are
-stable**; the table is in **delivery order**. **E11, E15, E16, E18, E12, E17, and E9
-have shipped** (removed — see the architecture sections); **E10 (Accounts & cloud
-sync) is removed** as backend-dependent. Every epic below is fully static +
-local-first.
+stable**; the table is in **delivery order**. **E11, E15, E16, E18, E12, E17, E9,
+and E14 have shipped** (removed — see the architecture sections); **E10 (Accounts &
+cloud sync) is removed** as backend-dependent. The one remaining epic is fully
+static + local-first.
 
-| Rank | Epic                                 | Persona           | V   | Enable | Eff | WSJF | Why here                                                                             |
-| ---- | ------------------------------------ | ----------------- | --- | ------ | --- | ---- | ------------------------------------------------------------------------------------ |
-| 1    | **E14 · Embeddable widget**          | Marketer/partners | 3   | 3      | 2   | 3.0  | Static embed distribution; compounds with editorial.                                 |
-| 2    | **E13 · Client presentation boards** | Designer          | 3   | 2      | 2   | 2.5  | Branded read-only share (built on E18); live comments/approval dropped (no backend). |
+| Rank | Epic                                 | Persona  | V   | Enable | Eff | WSJF | Why here                                                                             |
+| ---- | ------------------------------------ | -------- | --- | ------ | --- | ---- | ------------------------------------------------------------------------------------ |
+| 1    | **E13 · Client presentation boards** | Designer | 3   | 2      | 2   | 2.5  | Branded read-only share (built on E18); live comments/approval dropped (no backend). |
 
-Sequencing rationale: with the heavy client-side shopper bet shipped (E9) alongside
-the Painter line (E15 → E16 → E17) and the reach + portability wins (E12, E18),
-what remains is the static **E14** widget (extends reach beyond our domain) and a
-re-scoped **E13** (read-only board on E18's share primitive). (Pull **E14** ahead of
-**E13** as scored; E13 depends on the shipped E18.)
+Sequencing rationale: with the reach + distribution wins shipped (E12 editorial, E14
+embeddable widget) alongside the Painter line (E15 → E16 → E17), the shopper bet
+(E9), and portability (E18), the last epic is the re-scoped **E13** — a branded,
+read-only board built on E18's share primitive.
 
 ---
 
@@ -430,30 +441,6 @@ state). Async feedback stays out-of-band (the client replies by email/PDF markup
     (title/logo); loads from an E18 Project link (or imported file) — no stored
     server state; client-side `noindex`; OG card from the share data.
   - Tasks: board view + branding; decode from the E18 share/import path; OG; tests.
-
-#### E14 · Embeddable widget _(Marketer/partners · M)_
-
-Benefit: extends reach beyond our domain — partners/bloggers embed live swatches
-or palettes; compounds with editorial (E12). A static, read-only embed served from
-our existing host — no backend.
-
-**Feature: Embeddable swatch/palette**
-
-- **US14.1** As a partner, I want to embed a swatch or palette via iframe/script so I
-  can show live SW colors on my site. _(M)_
-  - AC: read-only, themable embed rendered from share data / `colors.json` (no auth,
-    no backend write); responsive; accessible; cache-friendly.
-  - Tasks: standalone embed entry/route + minimal bundle; data load from share URL;
-    a11y + size budget.
-
-**Feature: Embed builder**
-
-- **US14.2** As a marketer, I want a builder to configure an embed and copy the
-  snippet so it's self-serve. _(S–M)_
-  - AC: pick swatch/palette + theme/size → copyable iframe/script snippet with live
-    preview; embed-back links carry UTM params (so partners' _own_ analytics can
-    attribute) — we run no analytics of our own.
-  - Tasks: builder UI; UTM-tagged embed/back URLs; a11y + size budget; tests.
 
 ### Later — epics (one-liners)
 
