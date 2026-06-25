@@ -132,6 +132,12 @@ export function VisualizerPage() {
               </span>
             </p>
           )}
+          <Link
+            className={`btn-on-dark ${styles.uploadLink}`}
+            to="/visualizer/upload"
+          >
+            Use your own room photo →
+          </Link>
         </div>
 
         <div className={styles.stage}>

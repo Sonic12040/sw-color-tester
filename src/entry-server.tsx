@@ -117,6 +117,22 @@ function buildHead(appPath: string): string {
         "Sherwin-Williams Color Atlas embed builder",
       ),
     );
+  } else if (appPath === "/visualizer/upload") {
+    const canonical = `${SITE_ORIGIN}${BASENAME}/visualizer/upload/`;
+    tags.push(
+      `<title>Upload your room | Sherwin-Williams Color Atlas</title>`,
+      `<meta name="description" content="${esc("Preview a Sherwin-Williams paint color on a photo of your own room — recolor the walls and try different lighting, all in your browser.")}">`,
+      `<link rel="canonical" href="${canonical}">`,
+      `<meta property="og:site_name" content="Sherwin-Williams Color Atlas">`,
+      `<meta property="og:title" content="Upload your room | Sherwin-Williams Color Atlas">`,
+      `<meta property="og:description" content="${esc("See a paint color on a photo of your own room — fully in your browser.")}">`,
+      `<meta property="og:type" content="website">`,
+      `<meta property="og:url" content="${canonical}">`,
+      ...ogImageTags(
+        OG_DEFAULT_IMAGE,
+        "Sherwin-Williams room photo visualizer",
+      ),
+    );
   } else if (appPath === "/visualizer") {
     const canonical = `${SITE_ORIGIN}${BASENAME}/visualizer/`;
     tags.push(
@@ -227,6 +243,7 @@ export function getPrerenderPaths(): string[] {
     "/compare",
     "/palette",
     "/visualizer",
+    "/visualizer/upload",
     "/embed",
     "/embed-builder",
     "/board",
@@ -241,6 +258,7 @@ export function getSitemapUrls(): string[] {
   return [
     SITE_URL,
     `${SITE_ORIGIN}${BASENAME}/visualizer/`,
+    `${SITE_ORIGIN}${BASENAME}/visualizer/upload/`,
     `${SITE_ORIGIN}${BASENAME}/embed-builder/`,
     collectionsIndexCanonicalUrl,
     ...colorModel.getCollections().map((c) => collectionCanonicalUrl(c.slug)),

@@ -98,6 +98,51 @@ test("shares a palette as a read-only client board", async ({
   await expect(page.getByRole("listitem").first()).toBeVisible();
 });
 
+test("photo visualizer: upload a room photo and recolor a wall (WebGL)", async ({
+  page,
+}) => {
+  await page.goto("visualizer/upload");
+
+  // Build a small room image in-page (wall on top, floor below) and upload it.
+  const dataUrl = await page.evaluate(() => {
+    const c = document.createElement("canvas");
+    c.width = 200;
+    c.height = 200;
+    const x = c.getContext("2d") as CanvasRenderingContext2D;
+    x.fillStyle = "#88aa66"; // wall
+    x.fillRect(0, 0, 200, 120);
+    x.fillStyle = "#5a4632"; // floor
+    x.fillRect(0, 120, 200, 80);
+    return c.toDataURL("image/png");
+  });
+  const buffer = Buffer.from(dataUrl.split(",")[1], "base64");
+  await page.getByLabel("Upload a room photo").setInputFiles({
+    name: "room.png",
+    mimeType: "image/png",
+    buffer,
+  });
+
+  // Editing UI appears once the photo loads.
+  await expect(page.getByLabel("Match tolerance")).toBeVisible();
+  const canvas = page.locator("canvas");
+  const before = await canvas.evaluate((c: HTMLCanvasElement) => c.toDataURL());
+
+  // Pick a strong color, then magic-wand the wall — the canvas must change.
+  await page.getByLabel("Look up a color by SW number").fill("6258");
+  await page.getByRole("button", { name: "Apply" }).click();
+  await canvas.click({ position: { x: 30, y: 15 } });
+  await expect
+    .poll(() => canvas.evaluate((c: HTMLCanvasElement) => c.toDataURL()))
+    .not.toBe(before);
+
+  // The composite exports as a PNG.
+  const [dl] = await Promise.all([
+    page.waitForEvent("download"),
+    page.getByRole("button", { name: "Download image" }).click(),
+  ]);
+  expect(dl.suggestedFilename()).toMatch(/\.png$/);
+});
+
 test("generates a scheme from a color and adds it to the palette", async ({
   page,
 }) => {

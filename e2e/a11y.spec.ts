@@ -83,6 +83,16 @@ test("room visualizer is accessible and recolors the scene", async ({
   await expectNoSeriousAxe(page);
 });
 
+test("upload-your-room visualizer (dropzone) is accessible", async ({
+  page,
+}) => {
+  await page.goto("visualizer/upload");
+  await expect(
+    page.getByRole("heading", { name: "Upload your room" }),
+  ).toBeVisible();
+  await expectNoSeriousAxe(page);
+});
+
 test("embed widget + builder are accessible", async ({ page }) => {
   const [a, b] = colorSlugs(2);
   await page.goto(`embed?c=${a},${b}`);

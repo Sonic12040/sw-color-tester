@@ -7,6 +7,7 @@ import { PalettePage } from "./pages/PalettePage.js";
 import { CollectionsIndexPage } from "./pages/CollectionsIndexPage.js";
 import { CollectionPage } from "./pages/CollectionPage.js";
 import { VisualizerPage } from "./pages/VisualizerPage.js";
+import { PhotoVisualizerPage } from "./pages/PhotoVisualizerPage.js";
 import { EmbedBuilderPage } from "./pages/EmbedBuilderPage.js";
 import { EmbedPage } from "./pages/EmbedPage.js";
 import { BoardPage } from "./pages/BoardPage.js";
@@ -31,6 +32,7 @@ export const routes: RouteObject[] = [
       { path: "collections", element: <CollectionsIndexPage /> },
       { path: "collections/:slug", element: <CollectionPage /> },
       { path: "visualizer", element: <VisualizerPage /> },
+      { path: "visualizer/upload", element: <PhotoVisualizerPage /> },
       { path: "embed-builder", element: <EmbedBuilderPage /> },
       { path: "*", element: <NotFoundPage /> },
     ],

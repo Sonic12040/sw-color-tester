@@ -51,7 +51,8 @@ src/
 ├── context/              # Favorites, Hidden, Filters, Compare, Palette, Toast, App
 ├── hooks/                # useSet, usePersistent{Set,State}, useFocusTrap, useDocumentMeta
 ├── pages/                # GalleryPage, ColorDetailPage, ComparePage, PalettePage,
-│                         #   CollectionsIndexPage, CollectionPage, VisualizerPage,
+│                         #   CollectionsIndexPage, CollectionPage,
+│                         #   VisualizerPage + PhotoVisualizerPage (upload recolor — v2),
 │                         #   EmbedPage (chrome-less) + EmbedBuilderPage (E14),
 │                         #   BoardPage (chrome-less client board — E13), NotFoundPage
 ├── components/
@@ -62,7 +63,7 @@ src/
 │   ├── ColorDetailView/  # ColorDetail, DetailActions, GetColorPanel, PaintCalculator,
 │   │                     #   ColorGridSection, MiniTile, HslBreakdown
 │   ├── Collections/      # CollectionColorGrid (crawlable swatch links) — E12
-│   ├── Visualizer/       # RoomScene (SVG scene recolor) — E9
+│   ├── Visualizer/       # RoomScene (SVG scene recolor — E9); PhotoVisualizer.module.css (upload v2)
 │   ├── Embed/            # EmbedWidget (themable, self-contained read-only swatch/palette) — E14
 │   ├── Workspace/        # CompareTray, ContrastMatrix, WorkOrderView (Painter lens), FieldModeView (E17)
 │   ├── Toast/, ErrorBoundary/, seo/JsonLd
@@ -71,7 +72,8 @@ src/
 │                         #   collection.ts (resolved-collection types — E12), scene.ts (visualizer scene — E9)
 ├── utils/                # base.ts, config.ts, storage.ts, slug.ts, seo.ts, breakpoints.ts, clipboard.ts, colorMath.ts,
 │                         #   colorCopy.ts, paint.ts, workOrder.ts, swLinks.ts, ogTemplate.ts, ExportService.ts, paletteExport.ts (lazy),
-│                         #   projectFile.ts + projectShare.ts (E18), collections.ts (group/derive — E12), sceneRender.ts (E9),
+│                         #   projectFile.ts + projectShare.ts (E18), collections.ts (group/derive — E12),
+│                         #   sceneRender.ts (E9) + photoMask.ts/photoGL.ts (upload recolor — v2),
 │                         #   embed.ts (embed URL/snippet builders — E14)
 └── styles/               # tokens.css, breakpoints.css, a11y.css, global.css
 prerender.mjs             # post-build: writes dist/colors/<slug>/index.html + 404.html, sitemap, colors.json
@@ -136,6 +138,19 @@ switch and deep-linkable/shareable; colors are chosen by SW-number search, the
 active palette, or a persisted "recent" list, and "save a look" adds the color to
 the palette. (A look-specific OG image can't be statically prerendered for infinite
 combinations, so shared looks use the brand-default OG card — see Known follow-ups.)
+
+**Upload-your-room (Visualizer v2).** `/visualizer/upload` previews a color on a
+photo of the user's **own** room — processed entirely in the browser (the photo is
+never uploaded; no backend). The image is downscaled on load (≤1400px) to a 2D
+canvas for pixel reads; the user **magic-wands** a wall — a contiguous flood fill
+within a color tolerance (`utils/photoMask.floodFillMask`) accumulated across
+clicks into a coverage mask. Masked pixels are recolored to the target paint
+**preserving the original luminance** (shadows/edges read through), then a lighting
+tint is blended. The live render runs on the GPU via **WebGL** (`utils/photoGL.ts`:
+a fragment shader that recolors + blends), falling back to the pure CPU compositor
+(`photoMask.compositeRgba`, also the unit-test target) when WebGL is unavailable.
+The recolored canvas exports to a PNG download; the photo is inherently
+non-shareable (local-only), so there's no deep link.
 
 **Embeddable widget (E14).** Partners drop a live swatch/palette onto their own
 site via an `<iframe>` pointing at `/embed?c=slug,slug&theme=light|dark`. `/embed`
@@ -227,13 +242,14 @@ Vitest is split into **projects** (run by name; `npm test` runs unit + integrati
 
 - **unit** (Node env, colocated `*.test.ts`): pure logic — `colorMath`, `colorCopy`,
   `colorQuery`, `ColorModel`, `paletteIntelligence`, `paletteExport`, `projectFile`,
-  `projectShare`, `collections`, `sceneRender`, `embed`, `slug`, `seo`, `contrast`,
-  dataset + scenes integrity (`palette.integrity`, `scenes.integrity`), and the
-  index-shell check.
+  `projectShare`, `collections`, `sceneRender`, `photoMask` (upload recolor),
+  `embed`, `slug`, `seo`, `contrast`, dataset + scenes integrity
+  (`palette.integrity`, `scenes.integrity`), and the index-shell check.
 - **integration** (jsdom + RTL + `@testing-library/user-event`): component/hook/flow
   specs — each context, the hooks, `ColorCard`, `Toast`, and the routed-app suites in
   `src/test/integration/` (gallery, colorDetail, compare, palette, collections,
-  visualizer, embed, board, emptyStates, appShell) sharing `integration/harness.tsx`.
+  visualizer, photoVisualizer, embed, board, emptyStates, appShell) sharing
+  `integration/harness.tsx`.
   `ExportService.test.ts` lives here too (it touches `document`/`URL`).
   `src/test/setup.ts` clears storage.
 - **build-output** (Node, `test:build-output`): asserts the prerendered `dist/` (SEO
@@ -286,13 +302,13 @@ dropped** as backend-dependent. Remaining work lives in the **Later** bets.
 
 ### Later — ambitious bets
 
-All must hold the **no-backend** line.
+All must hold the **no-backend** line. (Upload-your-room photo recolor + lighting
+has **shipped** — see _Upload-your-room (Visualizer v2)_ above.)
 
-| Item                                                                     | Persona              | Effort |
-| ------------------------------------------------------------------------ | -------------------- | ------ |
-| Upload-your-room photo recolor + lighting simulation (client-side WebGL) | Shopper              | L      |
-| Cross-brand color matching (build-time, data-licensing dependent)        | Designer             | L      |
-| Static public data program (`colors.json` + documented contract/bulk)    | Integrator/ecosystem | M–L    |
+| Item                                                                  | Persona              | Effort |
+| --------------------------------------------------------------------- | -------------------- | ------ |
+| Cross-brand color matching (build-time, data-licensing dependent)     | Designer             | L      |
+| Static public data program (`colors.json` + documented contract/bulk) | Integrator/ecosystem | M–L    |
 
 _Dropped as backend-dependent:_ an AI color assistant (LLM proxy/server), a dynamic
 public API (superseded by the static data program above), and teams + e-commerce

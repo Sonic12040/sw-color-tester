@@ -40,7 +40,10 @@ discoverability.
   the dataset's branded collection names and cross-linked from color pages.
 - **Room Visualizer** — preview a color on real surfaces in curated room scenes,
   switch colors (search / palette / recent), try lighting presets, and save or share
-  the look via a deep link — fully client-side, no uploads, no backend.
+  the look via a deep link — fully client-side, no uploads, no backend. Or **upload
+  your own room photo** (`/visualizer/upload`): magic-wand a wall and recolor it
+  preserving its shadows/texture, rendered with WebGL — the photo stays in your
+  browser (no upload).
 - **Embeddable widget** — partners drop a live, themable swatch or palette onto
   their own site via an `<iframe>`; a self-serve `/embed-builder` previews it and
   copies the snippet (back-links carry UTM). Static, read-only, no backend.

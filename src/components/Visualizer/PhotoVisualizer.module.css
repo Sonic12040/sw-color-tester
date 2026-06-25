@@ -1,7 +1,7 @@
 /* ============================================================
-   Room Visualizer (E9) — dark card chrome (consistent with palette /
-   detail), a responsive SVG stage that recolors a scene's walls, and
-   on-dark controls for scene, lighting, and color.
+   Upload-your-photo visualizer (Room Visualizer v2) — dark card chrome
+   consistent with /visualizer; a stage that holds the WebGL/2D canvas
+   and on-dark controls. The uploaded photo stays in the browser.
    ============================================================ */
 
 .page {
@@ -37,37 +37,56 @@
 
 .subtitle {
   margin: 0;
-  color: var(--on-dark);
-}
-
-.colorLink {
-  color: #ffffff;
-  font-weight: var(--font-weight-bold);
-}
-
-.dim {
   color: var(--on-dark-muted);
 }
 
-.uploadLink {
+.modeLink {
   align-self: flex-start;
-  margin-top: var(--spacing-1);
+  font-size: var(--font-size-sm);
 }
 
-/* The scene stage — a 3:2 SVG that scales to the card width. */
+/* Empty / upload prompt before a photo is chosen. */
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: clamp(2rem, 8vw, 4rem) var(--spacing-4);
+  border: 2px dashed var(--on-dark-border);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.privacy {
+  font-size: var(--font-size-sm);
+  color: var(--on-dark-muted);
+  max-width: 46ch;
+}
+
 .stage {
+  position: relative;
   width: 100%;
-  aspect-ratio: 3 / 2;
   border-radius: var(--radius-md);
   overflow: hidden;
   border: 1px solid var(--on-dark-border);
-  background: #ffffff;
+  background: repeating-conic-gradient(#2a2c31 0% 25%, #232529 0% 50%) 50% /
+    24px 24px;
+  min-height: 200px;
+  display: flex;
+  justify-content: center;
 }
 
-.scene {
+.canvas {
   display: block;
-  width: 100%;
-  height: 100%;
+  max-width: 100%;
+  height: auto;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.hint {
+  font-size: var(--font-size-sm);
+  color: var(--on-dark-muted);
 }
 
 .controlGroup {
@@ -85,10 +104,11 @@
   color: var(--on-dark-muted);
 }
 
-.chips {
+.row {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-2);
+  align-items: center;
 }
 
 .search {
@@ -101,11 +121,22 @@
   min-width: 0;
 }
 
-.swatchHeading {
-  margin: var(--spacing-1) 0 0;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-bold);
-  color: var(--on-dark-muted);
+.slider {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+}
+
+.slider input[type="range"] {
+  flex: 1;
+  min-width: 160px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
 }
 
 .swatchRow {
@@ -115,8 +146,8 @@
 }
 
 .swatch {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius-sm);
   border: 2px solid var(--on-dark-border);
   cursor: pointer;
@@ -126,6 +157,13 @@
 .swatch[data-active] {
   outline: 3px solid #ffffff;
   outline-offset: 1px;
+}
+
+.swatchHeading {
+  margin: var(--spacing-1) 0 0;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--on-dark-muted);
 }
 
 .actions {
