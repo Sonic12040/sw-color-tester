@@ -67,6 +67,22 @@ test("collections index + a collection page are accessible", async ({
   await expectNoSeriousAxe(page);
 });
 
+test("room visualizer is accessible and recolors the scene", async ({
+  page,
+}) => {
+  await page.goto("visualizer");
+  await expect(
+    page.getByRole("heading", { name: "Room Visualizer" }),
+  ).toBeVisible();
+  // Switch scene + lighting so axe scans the interactive controls in a real state.
+  await page.getByRole("button", { name: "Bedroom" }).click();
+  await page.getByRole("button", { name: "Warm" }).click();
+  await expect(
+    page.getByRole("img", { name: /Bedroom with the walls painted/ }),
+  ).toBeVisible();
+  await expectNoSeriousAxe(page);
+});
+
 test("color detail page is accessible", async ({ page }) => {
   const [slug] = colorSlugs(1);
   await page.goto(`colors/${slug}`);

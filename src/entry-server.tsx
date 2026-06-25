@@ -8,6 +8,7 @@ import { routes } from "./routes.js";
 import { colorModel } from "./appModel.js";
 import {
   BASENAME,
+  SITE_ORIGIN,
   SITE_URL,
   colorCanonicalUrl,
   collectionCanonicalUrl,
@@ -84,6 +85,19 @@ function buildHead(appPath: string): string {
       `<meta name="robots" content="noindex">`,
       `<meta property="og:title" content="My palette | Sherwin-Williams Color Atlas">`,
       ...ogImageTags(OG_DEFAULT_IMAGE, "Sherwin-Williams Color Atlas"),
+    );
+  } else if (appPath === "/visualizer") {
+    const canonical = `${SITE_ORIGIN}${BASENAME}/visualizer/`;
+    tags.push(
+      `<title>Room Visualizer | Sherwin-Williams Color Atlas</title>`,
+      `<meta name="description" content="${esc("Preview Sherwin-Williams paint colors on real room surfaces — pick a scene, switch colors, and try different lighting.")}">`,
+      `<link rel="canonical" href="${canonical}">`,
+      `<meta property="og:site_name" content="Sherwin-Williams Color Atlas">`,
+      `<meta property="og:title" content="Room Visualizer | Sherwin-Williams Color Atlas">`,
+      `<meta property="og:description" content="${esc("See a paint color in a real room before you commit.")}">`,
+      `<meta property="og:type" content="website">`,
+      `<meta property="og:url" content="${canonical}">`,
+      ...ogImageTags(OG_DEFAULT_IMAGE, "Sherwin-Williams Room Visualizer"),
     );
   } else if (appPath === "/collections") {
     tags.push(
@@ -181,6 +195,7 @@ export function getPrerenderPaths(): string[] {
     "/",
     "/compare",
     "/palette",
+    "/visualizer",
     "/collections",
     ...colorModel.getCollections().map((c) => `/collections/${c.slug}`),
     ...colorModel.getAllSlugs().map((s) => `/colors/${s}`),
@@ -191,6 +206,7 @@ export function getPrerenderPaths(): string[] {
 export function getSitemapUrls(): string[] {
   return [
     SITE_URL,
+    `${SITE_ORIGIN}${BASENAME}/visualizer/`,
     collectionsIndexCanonicalUrl,
     ...colorModel.getCollections().map((c) => collectionCanonicalUrl(c.slug)),
     ...colorModel.getAllSlugs().map((s) => colorCanonicalUrl(s)),

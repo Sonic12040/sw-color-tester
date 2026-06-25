@@ -45,12 +45,12 @@ src/
 ├── routes.tsx            # shared route tree (RootLayout → pages)
 ├── appModel.ts           # singletons: colorModel, exportService
 ├── data/                 # palette.ts (generated, ~1.7k active; code-split into its own client chunk) + types.ts;
-│                         #   collections.ts (curated editorial collections content model — E12)
+│                         #   collections.ts (editorial content model — E12), scenes.ts (visualizer scenes — E9)
 ├── models/ColorModel.ts  # index (id/slug/number/family/collection/designer) + query (filter/sort) + editorial collections
 ├── context/              # Favorites, Hidden, Filters, Compare, Palette, Toast, App
 ├── hooks/                # useSet, usePersistent{Set,State}, useFocusTrap, useDocumentMeta
 ├── pages/                # GalleryPage, ColorDetailPage, ComparePage, PalettePage,
-│                         #   CollectionsIndexPage, CollectionPage, NotFoundPage
+│                         #   CollectionsIndexPage, CollectionPage, VisualizerPage, NotFoundPage
 ├── components/
 │   ├── RootLayout.tsx    # skip link + sticky Header + <main> + CompareTray; AppProviders
 │   ├── Header/           # sticky brand + primary nav
@@ -59,14 +59,15 @@ src/
 │   ├── ColorDetailView/  # ColorDetail, DetailActions, GetColorPanel, PaintCalculator,
 │   │                     #   ColorGridSection, MiniTile, HslBreakdown
 │   ├── Collections/      # CollectionColorGrid (crawlable swatch links) — E12
+│   ├── Visualizer/       # RoomScene (SVG scene recolor) — E9
 │   ├── Workspace/        # CompareTray, ContrastMatrix, WorkOrderView (Painter lens), FieldModeView (E17)
 │   ├── Toast/, ErrorBoundary/, seo/JsonLd
 ├── domain/               # types.ts (shared facet/sort vocabulary), project.ts (Rooms → Surfaces model),
 │                         #   paletteData.ts (persisted shape + pure parse/normalize/migrate — E18),
-│                         #   collection.ts (editorial collection authoring + resolved types — E12)
+│                         #   collection.ts (editorial — E12), scene.ts (visualizer scene — E9)
 ├── utils/                # base.ts, config.ts, storage.ts, slug.ts, seo.ts, breakpoints.ts, clipboard.ts, colorMath.ts,
 │                         #   colorCopy.ts, paint.ts, workOrder.ts, swLinks.ts, ogTemplate.ts, ExportService.ts, paletteExport.ts (lazy),
-│                         #   projectFile.ts + projectShare.ts (E18), collections.ts (resolve/cross-link — E12)
+│                         #   projectFile.ts + projectShare.ts (E18), collections.ts (E12), sceneRender.ts (E9)
 └── styles/               # tokens.css, breakpoints.css, a11y.css, global.css
 prerender.mjs             # post-build: writes dist/colors/<slug>/index.html + 404.html, sitemap, colors.json
 ```
@@ -118,6 +119,19 @@ confirm a color at the counter. It's offline-first: the `/palette` route is in t
 precached PWA shell and the active project lives in `localStorage`, so progress
 check-offs work with no network and persist immediately.
 
+**Room Visualizer (E9).** `/visualizer` lets a shopper preview a color in context.
+v1 is **curated + fully client-side** — no photography, no backend. Scenes
+(`data/scenes.ts`) are procedural SVG: each declares recolorable wall rectangles
+(the "mask") plus a static foreground (floor, window, furniture). `RoomScene` fills
+the walls with the chosen color, **multiplies** a radial shading gradient over the
+wall region to preserve depth, then overlays a **lighting** tint (warm/cool/
+daylight via CSS blend modes; `utils/sceneRender.ts`). The whole look — scene,
+color, lighting — lives in the URL (`?scene=&color=&lighting=`), so it's instant to
+switch and deep-linkable/shareable; colors are chosen by SW-number search, the
+active palette, or a persisted "recent" list, and "save a look" adds the color to
+the palette. (A look-specific OG image can't be statically prerendered for infinite
+combinations, so shared looks use the brand-default OG card — see Known follow-ups.)
+
 `usePersistent*` use **two-phase init** (render `initial`, then load from storage)
 so server-prerendered markup and the first client render agree (no hydration
 mismatch); storage access is guarded. The load runs in a **layout effect**
@@ -140,7 +154,7 @@ chroma + use suggestion) used on the detail page and in the SEO meta/JSON-LD.
 ## Rendering / SSG
 
 `build` runs: `tsc` → client build → SSR build (`entry-server`) → `prerender.mjs`,
-which renders `/`, `/compare`, `/palette`, `/collections`, every
+which renders `/`, `/compare`, `/palette`, `/visualizer`, `/collections`, every
 `/collections/<slug>`, and every `/colors/<slug>` to static HTML (authoritative
 `<head>` injected by `buildHead`), plus `sitemap.xml`, `robots.txt`, `colors.json`,
 and a `404.html` SPA fallback. It also rasterizes a 1200×630 Open Graph PNG per
@@ -183,13 +197,15 @@ Vitest is split into **projects** (run by name; `npm test` runs unit + integrati
 
 - **unit** (Node env, colocated `*.test.ts`): pure logic — `colorMath`, `colorCopy`,
   `colorQuery`, `ColorModel`, `paletteIntelligence`, `paletteExport`, `projectFile`,
-  `projectShare`, `collections`, `slug`, `seo`, `contrast`, dataset + collections
-  integrity (`palette.integrity`, `collections.integrity`), and the index-shell check.
+  `projectShare`, `collections`, `sceneRender`, `slug`, `seo`, `contrast`, dataset +
+  collections + scenes integrity (`palette.integrity`, `collections.integrity`,
+  `scenes.integrity`), and the index-shell check.
 - **integration** (jsdom + RTL + `@testing-library/user-event`): component/hook/flow
   specs — each context, the hooks, `ColorCard`, `Toast`, and the routed-app suites in
   `src/test/integration/` (gallery, colorDetail, compare, palette, collections,
-  emptyStates, appShell) sharing `integration/harness.tsx`. `ExportService.test.ts`
-  lives here too (it touches `document`/`URL`). `src/test/setup.ts` clears storage.
+  visualizer, emptyStates, appShell) sharing `integration/harness.tsx`.
+  `ExportService.test.ts` lives here too (it touches `document`/`URL`).
+  `src/test/setup.ts` clears storage.
 - **build-output** (Node, `test:build-output`): asserts the prerendered `dist/` (SEO
   markup, JSON-LD, plain-language summary, OG images). Runs only after a build, so
   it's excluded from the default test run.
@@ -212,6 +228,9 @@ consumes its artifact rather than rebuilding, and typecheck runs only in `verify
 
 - Soft 404s can't return a real HTTP 404 on static hosting; mitigated with a
   client-side `noindex` (`useNoindex`) on the not-found view.
+- Visualizer "save a look" shares via a deep link, but a **look-specific** OG image
+  can't be prerendered (infinite scene × color × lighting combinations on a static
+  host), so shared looks fall back to the brand-default OG card.
 
 ## Roadmap
 
@@ -244,7 +263,7 @@ different lenses.
 
 | Persona                                  | Job-to-be-done                                                                                                       | Today                                                                                                                                                                                                                                         | Biggest gap                                                                                                                                           |
 | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Shopper** (DIY)                        | Find a color that works in _my_ room and buy with confidence                                                         | Browse/filter, similar + coordinating, plain-language summary, "Get this color" (sample/store/buy + paint calculator)                                                                                                                         | Can't see it in context (no visualizer)                                                                                                               |
+| **Shopper** (DIY)                        | Find a color that works in _my_ room and buy with confidence                                                         | Browse/filter, similar + coordinating, plain-language summary, "Get this color" (sample/store/buy + paint calculator), Room Visualizer v1 (curated scenes, recolor, lighting)                                                                 | No upload-your-own-photo / AR recolor yet (Later)                                                                                                     |
 | **Designer** (pro)                       | Assemble, validate, present, and deliver client palettes                                                             | Compare + contrast matrix, named palette projects (notes/room, 60-30-10 roles, scheme/companion suggestions), PNG/PDF export, share URL                                                                                                       | No project file portability for handoff (export/import); no branded client-facing presentation board; no cross-brand match                            |
 | **Painter** (contractor / trades)        | Turn a chosen palette into the right materials applied to the right surfaces — accurately and efficiently on the job | Structured Project (rooms → surfaces → color + finish + coats + area), Work Order lens with per-room/per-color quantities, consolidated shopping list, per-surface progress, printable PDF; per-color SW number + rack locator + find-a-store | No product-line/sheen dataset (quantities use a default coverage); no on-site **field mode**; handoff is by shared link / PDF / file, not a live sync |
 | **Marketer/promoter**                    | Drive discovery and create shareable content                                                                         | SSG/SEO, JSON-LD, per-color OG/social images, sitemap, share URLs, collections                                                                                                                                                                | No editorial/trend surfaces; no embeddable widget (first-party analytics is out of scope under the no-backend stance)                                 |
@@ -299,16 +318,16 @@ share reach instead. The Now horizon is therefore **complete**.
 Listed in **delivery order** (see the groomed feature/story backlog below for the
 WSJF-lite scoring and dependencies). **E11 (palette intelligence), E15 (Project
 model), E16 (Work Order + shopping list), E18 (Project portability), E12 (Editorial
-/ trend pages), and E17 (Field mode) have shipped** — see the architecture sections.
-**E10 (Accounts & cloud sync) is removed** — see the **no backend, no accounts**
-stance in Assumptions. Every remaining epic is **fully static + local-first**. The
-order leads with **E9 Room Visualizer** — the biggest unserved shopper gap.
+/ trend pages), E17 (Field mode), and E9 (Room Visualizer v1) have shipped** — see
+the architecture sections. **E10 (Accounts & cloud sync) is removed** — see the **no
+backend, no accounts** stance in Assumptions. Every remaining epic is \*\*fully static
 
-| #   | Item                                                                 | Epic | Persona           | Effort |
-| --- | -------------------------------------------------------------------- | ---- | ----------------- | ------ |
-| 1   | Room Visualizer v1 (curated scenes, recolor walls, lighting presets) | E9   | Shopper           | L      |
-| 2   | Embeddable swatch/palette widget                                     | E14  | Marketer/partners | M      |
-| 3   | Client presentation boards (branded, read-only share)                | E13  | Designer          | M      |
+- local-first**. The order leads with **E14 embeddable widget\*\*.
+
+| #   | Item                                                  | Epic | Persona           | Effort |
+| --- | ----------------------------------------------------- | ---- | ----------------- | ------ |
+| 1   | Embeddable swatch/palette widget                      | E14  | Marketer/partners | M      |
+| 2   | Client presentation boards (branded, read-only share) | E13  | Designer          | M      |
 
 ### Later — ambitious bets (3+ quarters)
 
@@ -327,17 +346,13 @@ superseded by the static data program above), and **teams + e-commerce checkout*
 (accounts, carts, order state). Revisit only if the no-backend stance is ever
 revised.
 
-**Sequencing:** with the **Painter line** (E15 → E16) shipped and **no backend on the
-table**, Next leads with **E18 project portability** — file export/import + a
-shareable Project is the local-first answer to "move my work between devices and hand
-it off," the value accounts would otherwise carry, at S–M effort. **E12 editorial**
-follows as an independent SSG/SEO reach win. **E17 field mode** rounds out the Painter
-on-site (depends on the shipped E16; leans on the existing PWA, so it's a natural
-no-backend fit). Then the heavy, fully client-side **E9** (shopper "see it in
-context"), the **E14 widget** (a static embed; compounds with editorial), and a
-re-scoped **E13** client board last — a **branded, read-only shared board** (built on
-E18's share primitive); its former live comments/approval is dropped as it would
-require a backend.
+**Sequencing:** with the **Painter line** (E15 → E16 → E17) shipped, the reach +
+portability wins delivered (E12 editorial, E18 project portability), and the heavy
+client-side shopper bet **E9 Room Visualizer** shipped, what remains under **no
+backend on the table** is the **E14 widget** (a static embed; compounds with
+editorial) and a re-scoped **E13** client board last — a **branded, read-only shared
+board** (built on E18's share primitive); its former live comments/approval is
+dropped as it would require a backend.
 _Enabler:_ a build-time **product-line / sheen / coverage** dataset (like the color
 data) would unlock accurate per-product quantities in the shipped Work Order — which
 today uses a documented default coverage. (Build-time, no server — compatible.)
@@ -381,64 +396,23 @@ serverless signals noted under **Success metrics**. The **Now horizon is complet
 Reprioritized via WSJF-lite ((value + enablement) ÷ effort), then adjusted for hard
 dependencies and the "**local-first, no backend** · validate locally first"
 principles. Effort: S=1, M=2, M–L=2.5, L=3 (value/enable on 1–5). Epic **IDs are
-stable**; the table is in **delivery order**. **E11, E15, E16, E18, E12, and E17
+stable**; the table is in **delivery order**. **E11, E15, E16, E18, E12, E17, and E9
 have shipped** (removed — see the architecture sections); **E10 (Accounts & cloud
 sync) is removed** as backend-dependent. Every epic below is fully static +
 local-first.
 
 | Rank | Epic                                 | Persona           | V   | Enable | Eff | WSJF | Why here                                                                             |
 | ---- | ------------------------------------ | ----------------- | --- | ------ | --- | ---- | ------------------------------------------------------------------------------------ |
-| 1    | **E9 · Room Visualizer v1**          | Shopper           | 5   | 3      | 3   | 2.7  | Biggest shopper gap ("see it in context"); fully client-side; earns the AR v2 bet.   |
-| 2    | **E14 · Embeddable widget**          | Marketer/partners | 3   | 3      | 2   | 3.0  | Static embed distribution; compounds with editorial.                                 |
-| 3    | **E13 · Client presentation boards** | Designer          | 3   | 2      | 2   | 2.5  | Branded read-only share (built on E18); live comments/approval dropped (no backend). |
+| 1    | **E14 · Embeddable widget**          | Marketer/partners | 3   | 3      | 2   | 3.0  | Static embed distribution; compounds with editorial.                                 |
+| 2    | **E13 · Client presentation boards** | Designer          | 3   | 2      | 2   | 2.5  | Branded read-only share (built on E18); live comments/approval dropped (no backend). |
 
-Sequencing rationale: with the **Painter line complete** (E15 → E16 → E17) and the
-reach + portability wins shipped (E12, E18), lead with the heavy but fully
-client-side **E9** — the biggest unserved shopper gap ("see it in context") — then
-the static **E14** widget, and a re-scoped **E13** last (read-only board on E18's
-share primitive). Raw WSJF would float **E14** above **E9**; we hold E9 higher as the
-biggest unserved shopper gap. (Pull **E14** forward if a concrete partner appears.)
+Sequencing rationale: with the heavy client-side shopper bet shipped (E9) alongside
+the Painter line (E15 → E16 → E17) and the reach + portability wins (E12, E18),
+what remains is the static **E14** widget (extends reach beyond our domain) and a
+re-scoped **E13** (read-only board on E18's share primitive). (Pull **E14** ahead of
+**E13** as scored; E13 depends on the shipped E18.)
 
 ---
-
-#### E9 · Room Visualizer v1 _(Shopper · L)_
-
-Benefit: closes the #1 shopper gap — "see it in context." v1 is **curated +
-build-time** (static scenes/masks, client-side recolor) to earn the upload/AR v2
-(Later). Depends: a curated scene/asset pipeline. Fully client-side — no backend;
-"save a look" persists locally and shares via a deep link + rendered OG image.
-
-**Feature: Curated scenes**
-
-- **US9.1** As a shopper, I want to pick from curated room scenes so I can preview a
-  color in a realistic space. _(M)_
-  - AC: scene gallery (living room, bedroom, exterior, kitchen…); each ships a
-    base image + wall mask as static assets; lazy-loaded; accessible picker.
-  - Tasks: asset pipeline (image + mask + metadata) in `data/`/`public`; scene
-    picker UI; integrity test for assets.
-
-**Feature: Wall masking & recolor**
-
-- **US9.2** As a shopper, I want the wall(s) recolored to a chosen color so I see it
-  on real surfaces. _(L)_
-  - AC: canvas recolor through the mask preserving shadows/texture (multiply/luminance
-    blend); reasonable fidelity; no layout overflow; perf budget held on mobile.
-  - Tasks: canvas compositing util; map SW color→blend; reduced-motion/perf checks.
-- **US9.3** As a shopper, I want to switch the applied color from within the
-  visualizer (search/recent/palette) so I can compare options fast. _(M)_
-  - AC: in-context color switcher; updates instantly; deep-linkable `?scene=&color=`.
-  - Tasks: switcher UI; URL state; reuse search.
-
-**Feature: Lighting & save/share**
-
-- **US9.4** As a shopper, I want lighting presets (warm / neutral / cool / daylight)
-  so I see the color under different conditions. _(M)_
-  - AC: presets apply a white-balance/exposure transform over the composite; labeled.
-- **US9.5** As a shopper, I want to save a look and share it so I can decide later or
-  get input. _(M)_
-  - AC: save (scene+color+lighting) to a palette/project in localStorage; share via a
-    deep link (`?scene=&color=&lighting=`) + rendered OG image — no account needed.
-  - Tasks (9.4–9.5): lighting transforms; save model; share/OG render; tests.
 
 #### E13 · Client presentation boards _(Designer · M)_ — depends E18
 

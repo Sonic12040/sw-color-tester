@@ -10,6 +10,7 @@ export const STORAGE_KEYS = {
   palette: "sw-color-tester:palette",
   paletteLens: "sw-color-tester:palette-lens",
   fieldMode: "sw-color-tester:field-mode",
+  visualizerRecent: "sw-color-tester:visualizer-recent",
 } as const;
 
 /** Read and JSON-parse a value; returns `undefined` if missing or unreadable. */

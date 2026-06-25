@@ -45,6 +45,18 @@ describe("Open Graph assets", () => {
   });
 });
 
+describe("room visualizer (E9)", () => {
+  it("prerenders /visualizer with an authoritative head", () => {
+    const page = readFileSync(
+      resolve(dist, "visualizer", "index.html"),
+      "utf8",
+    );
+    expect(/<title>Room Visualizer/.test(page)).toBe(true);
+    expect(/<link rel="canonical"[^>]*\/visualizer\//.test(page)).toBe(true);
+    expect(/<meta property="og:image"/.test(page)).toBe(true);
+  });
+});
+
 describe("editorial collections (E12)", () => {
   // Pick a prerendered collection from the SSG output (skip if none authored).
   const collectionsDir = resolve(dist, "collections");

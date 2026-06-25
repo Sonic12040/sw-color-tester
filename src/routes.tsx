@@ -6,6 +6,7 @@ import { ComparePage } from "./pages/ComparePage.js";
 import { PalettePage } from "./pages/PalettePage.js";
 import { CollectionsIndexPage } from "./pages/CollectionsIndexPage.js";
 import { CollectionPage } from "./pages/CollectionPage.js";
+import { VisualizerPage } from "./pages/VisualizerPage.js";
 import { NotFoundPage } from "./pages/NotFoundPage.js";
 
 /** Single route tree shared by the browser router and the SSG static handler. */
@@ -20,6 +21,7 @@ export const routes: RouteObject[] = [
       { path: "palette", element: <PalettePage /> },
       { path: "collections", element: <CollectionsIndexPage /> },
       { path: "collections/:slug", element: <CollectionPage /> },
+      { path: "visualizer", element: <VisualizerPage /> },
       { path: "*", element: <NotFoundPage /> },
     ],
   },
