@@ -156,6 +156,25 @@ export function PalettePage() {
     );
   };
 
+  // E13: copy a link to a branded, read-only client presentation board. Reuses
+  // the E18 share encoding, pointed at the standalone /board view.
+  const copyBoardLink = async () => {
+    const param = await encodeProjectParam(activeProject);
+    if (!param) {
+      showToast(
+        "This project is too large to share by link — export a file instead.",
+      );
+      return;
+    }
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    const url = `${origin}${BASENAME}/board?project=${param}`;
+    showToast(
+      (await copyText(url))
+        ? "Client board link copied to clipboard"
+        : "Couldn't copy link",
+    );
+  };
+
   // E18.1: export the active Project to a versioned JSON file.
   const exportProjectFile = () => {
     try {
@@ -242,6 +261,13 @@ export function PalettePage() {
               >
                 Embed
               </Link>
+              <button
+                type="button"
+                className="btn-on-dark"
+                onClick={copyBoardLink}
+              >
+                Client board
+              </button>
               <button
                 type="button"
                 className="btn-on-dark"

@@ -51,7 +51,8 @@ src/
 ├── hooks/                # useSet, usePersistent{Set,State}, useFocusTrap, useDocumentMeta
 ├── pages/                # GalleryPage, ColorDetailPage, ComparePage, PalettePage,
 │                         #   CollectionsIndexPage, CollectionPage, VisualizerPage,
-│                         #   EmbedPage (chrome-less) + EmbedBuilderPage (E14), NotFoundPage
+│                         #   EmbedPage (chrome-less) + EmbedBuilderPage (E14),
+│                         #   BoardPage (chrome-less client board — E13), NotFoundPage
 ├── components/
 │   ├── RootLayout.tsx    # skip link + sticky Header + <main> + CompareTray; AppProviders
 │   ├── Header/           # sticky brand + primary nav
@@ -147,6 +148,16 @@ host's analytics can attribute (we run none of our own). `/embed` is prerendered
 indexed) picks swatch/palette + theme + width, shows a live preview, and copies a
 ready-to-paste snippet (`utils/embed.ts` builds the URL + iframe). No backend.
 
+**Client presentation board (E13).** `/board?project=<compressed>` decodes an E18
+share link into a clean, **branded, read-only** artifact a designer hands to a
+client — colors with notes/room + 60-30-10 roles (E11), a light-on-white look
+distinct from the app's working chrome. Like `/embed` it renders **outside
+`RootLayout`** (no nav), reads the `colorModel` singleton, and is `noindex` (a
+private, link-shared view — no stored server state). A `?title=` param overrides the
+heading for branding. "Client board" on the palette page copies the link (reusing
+the E18 encoder). Live comments/approval are intentionally dropped — they'd need a
+backend; async feedback stays out-of-band (the shared link + an exported PDF).
+
 `usePersistent*` use **two-phase init** (render `initial`, then load from storage)
 so server-prerendered markup and the first client render agree (no hydration
 mismatch); storage access is guarded. The load runs in a **layout effect**
@@ -218,7 +229,7 @@ Vitest is split into **projects** (run by name; `npm test` runs unit + integrati
 - **integration** (jsdom + RTL + `@testing-library/user-event`): component/hook/flow
   specs — each context, the hooks, `ColorCard`, `Toast`, and the routed-app suites in
   `src/test/integration/` (gallery, colorDetail, compare, palette, collections,
-  visualizer, embed, emptyStates, appShell) sharing `integration/harness.tsx`.
+  visualizer, embed, board, emptyStates, appShell) sharing `integration/harness.tsx`.
   `ExportService.test.ts` lives here too (it touches `document`/`URL`).
   `src/test/setup.ts` clears storage.
 - **build-output** (Node, `test:build-output`): asserts the prerendered `dist/` (SEO
@@ -330,18 +341,14 @@ share reach instead. The Now horizon is therefore **complete**.
 
 ### Next — core differentiators (1–3 quarters)
 
-Listed in **delivery order** (see the groomed feature/story backlog below for the
-WSJF-lite scoring and dependencies). **E11 (palette intelligence), E15 (Project
-model), E16 (Work Order + shopping list), E18 (Project portability), E12 (Editorial
-/ trend pages), E17 (Field mode), E9 (Room Visualizer v1), and E14 (Embeddable
-widget) have shipped** — see the architecture sections. **E10 (Accounts & cloud
-sync) is removed** — see the **no backend, no accounts** stance in Assumptions. The
-one remaining epic, **E13 client presentation boards**, is fully static +
-local-first.
-
-| #   | Item                                                  | Epic | Persona  | Effort |
-| --- | ----------------------------------------------------- | ---- | -------- | ------ |
-| 1   | Client presentation boards (branded, read-only share) | E13  | Designer | M      |
+**The entire Next horizon has shipped** — every epic is in the architecture
+sections above. **E11** (palette intelligence), **E15** (Project model), **E16**
+(Work Order + shopping list), **E18** (Project portability), **E12** (Editorial /
+trend pages), **E17** (Field mode), **E9** (Room Visualizer v1), **E14** (Embeddable
+widget), and **E13** (Client presentation boards) are all delivered. **E10 (Accounts
+& cloud sync) is removed** — see the **no backend, no accounts** stance in
+Assumptions. The Next horizon is therefore **complete**; the next groomed work comes
+from the **Later** bets below.
 
 ### Later — ambitious bets (3+ quarters)
 
@@ -360,12 +367,12 @@ superseded by the static data program above), and **teams + e-commerce checkout*
 (accounts, carts, order state). Revisit only if the no-backend stance is ever
 revised.
 
-**Sequencing:** with the **Painter line** (E15 → E16 → E17) shipped, the reach +
-portability + distribution wins delivered (E12 editorial, E18 project portability,
-E14 embeddable widget), and the heavy client-side shopper bet **E9 Room Visualizer**
-shipped, what remains under **no backend on the table** is a re-scoped **E13** client
-board — a **branded, read-only shared board** (built on E18's share primitive); its
-former live comments/approval is dropped as it would require a backend.
+**Sequencing:** the whole Next horizon is **shipped** — the Painter line (E15 → E16
+→ E17), the reach + portability + distribution wins (E12 editorial, E18 project
+portability, E14 embeddable widget), the heavy client-side shopper bet (E9 Room
+Visualizer), and the re-scoped **E13** client board (a branded, read-only shared
+board built on E18's share primitive; its former live comments/approval dropped as
+it would require a backend). The roadmap now advances to the **Later** bets.
 _Enabler:_ a build-time **product-line / sheen / coverage** dataset (like the color
 data) would unlock accurate per-product quantities in the shipped Work Order — which
 today uses a documented default coverage. (Build-time, no server — compatible.)
@@ -406,41 +413,11 @@ serverless signals noted under **Success metrics**. The **Now horizon is complet
 
 ### Next — features & stories (groomed)
 
-Reprioritized via WSJF-lite ((value + enablement) ÷ effort), then adjusted for hard
-dependencies and the "**local-first, no backend** · validate locally first"
-principles. Effort: S=1, M=2, M–L=2.5, L=3 (value/enable on 1–5). Epic **IDs are
-stable**; the table is in **delivery order**. **E11, E15, E16, E18, E12, E17, E9,
-and E14 have shipped** (removed — see the architecture sections); **E10 (Accounts &
-cloud sync) is removed** as backend-dependent. The one remaining epic is fully
-static + local-first.
-
-| Rank | Epic                                 | Persona  | V   | Enable | Eff | WSJF | Why here                                                                             |
-| ---- | ------------------------------------ | -------- | --- | ------ | --- | ---- | ------------------------------------------------------------------------------------ |
-| 1    | **E13 · Client presentation boards** | Designer | 3   | 2      | 2   | 2.5  | Branded read-only share (built on E18); live comments/approval dropped (no backend). |
-
-Sequencing rationale: with the reach + distribution wins shipped (E12 editorial, E14
-embeddable widget) alongside the Painter line (E15 → E16 → E17), the shopper bet
-(E9), and portability (E18), the last epic is the re-scoped **E13** — a branded,
-read-only board built on E18's share primitive.
-
----
-
-#### E13 · Client presentation boards _(Designer · M)_ — depends E18
-
-Benefit: lets designers _deliver_, not just assemble — a branded, client-ready
-artifact, closing the workflow loop. **Re-scoped for no-backend:** a polished
-read-only board shared via E18's Project link (or an exported PDF); the original
-live comments/approval workflow is **dropped** (it needs server-side multi-user
-state). Async feedback stays out-of-band (the client replies by email/PDF markup).
-
-**Feature: Branded read-only board**
-
-- **US13.1** As a designer, I want to present a project as a branded, read-only board
-  from a shareable link so I can show clients. _(M)_
-  - AC: board renders colors + notes/room + roles (E11) read-only; light branding
-    (title/logo); loads from an E18 Project link (or imported file) — no stored
-    server state; client-side `noindex`; OG card from the share data.
-  - Tasks: board view + branding; decode from the E18 share/import path; OG; tests.
+**The Next backlog is empty — every groomed epic has shipped** (E11, E15, E16, E18,
+E12, E17, E9, E14, E13). Each is documented in the architecture sections above and
+verified per the Definition of Done; **E10 (Accounts & cloud sync) was removed** as
+backend-dependent. New groomed work is promoted from the **Later** bets below as
+they reach the top.
 
 ### Later — epics (one-liners)
 

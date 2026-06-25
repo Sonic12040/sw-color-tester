@@ -92,6 +92,15 @@ function buildHead(appPath: string): string {
       `<title>Sherwin-Williams color embed</title>`,
       `<meta name="robots" content="noindex">`,
     );
+  } else if (appPath === "/board") {
+    // A private, link-shared client board (E13) — title set client-side from the
+    // decoded project; kept out of the index, with the brand-default OG card.
+    tags.push(
+      `<title>Color board | Sherwin-Williams Color Atlas</title>`,
+      `<meta name="robots" content="noindex">`,
+      `<meta property="og:title" content="A Sherwin-Williams color board">`,
+      ...ogImageTags(OG_DEFAULT_IMAGE, "Sherwin-Williams color board"),
+    );
   } else if (appPath === "/embed-builder") {
     const canonical = `${SITE_ORIGIN}${BASENAME}/embed-builder/`;
     tags.push(
@@ -220,6 +229,7 @@ export function getPrerenderPaths(): string[] {
     "/visualizer",
     "/embed",
     "/embed-builder",
+    "/board",
     "/collections",
     ...colorModel.getCollections().map((c) => `/collections/${c.slug}`),
     ...colorModel.getAllSlugs().map((s) => `/colors/${s}`),

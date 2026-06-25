@@ -74,6 +74,30 @@ test("field mode: build a work order, check off offline, look up by SW number", 
   await expect(page).toHaveURL(new RegExp(`/colors/sw-${swNumber}-`));
 });
 
+test("shares a palette as a read-only client board", async ({
+  page,
+  context,
+}) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  const [a, b] = colorSlugs(2);
+  await page.goto(`palette?c=${a},${b}`);
+  await page.getByRole("button", { name: /Load shared palette/ }).click();
+
+  // Copy the client-board link (E13, built on the E18 share encoding)…
+  await page.getByRole("button", { name: "Client board" }).click();
+  await expect(page.getByText(/Client board link copied/)).toBeVisible();
+  const url = await page.evaluate(() => navigator.clipboard.readText());
+  expect(url).toContain("/board?project=");
+
+  // …and open it: a branded, read-only board with no app nav.
+  await page.goto(url);
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await expect(page.getByRole("navigation", { name: "Primary" })).toHaveCount(
+    0,
+  );
+  await expect(page.getByRole("listitem").first()).toBeVisible();
+});
+
 test("generates a scheme from a color and adds it to the palette", async ({
   page,
 }) => {

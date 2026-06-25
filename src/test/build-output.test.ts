@@ -45,6 +45,14 @@ describe("Open Graph assets", () => {
   });
 });
 
+describe("client presentation board (E13)", () => {
+  it("prerenders a noindexed /board shell", () => {
+    const page = readFileSync(resolve(dist, "board", "index.html"), "utf8");
+    expect(/<title>Color board/.test(page)).toBe(true);
+    expect(/<meta name="robots" content="noindex">/.test(page)).toBe(true);
+  });
+});
+
 describe("embeddable widget (E14)", () => {
   it("prerenders a noindexed /embed fragment", () => {
     const page = readFileSync(resolve(dist, "embed", "index.html"), "utf8");

@@ -1,0 +1,131 @@
+/* ============================================================
+   Client presentation board (E13) — a clean, branded, light artifact
+   meant to be shown to a client (distinct from the app's dark working
+   chrome). Standalone page; centered card on a soft canvas.
+   ============================================================ */
+
+.page {
+  min-height: 100vh;
+  background: #f4f2ee;
+  color: #1b1c20;
+  padding: clamp(1rem, 4vw, 3rem) clamp(0.75rem, 3vw, 2rem);
+  display: flex;
+  justify-content: center;
+}
+
+.board {
+  width: 100%;
+  max-width: 820px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-5);
+}
+
+.head {
+  border-bottom: 2px solid #1b1c20;
+  padding-bottom: var(--spacing-4);
+}
+
+.brandKicker {
+  margin: 0 0 var(--spacing-1);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8a8175;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.75rem, 5vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.note {
+  margin: 0;
+  color: #5b5f66;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: var(--spacing-4);
+  align-items: stretch;
+}
+
+.swatch {
+  border-radius: 12px;
+  min-height: 96px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.name {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: 800;
+}
+
+.meta {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: #5b5f66;
+}
+
+.role {
+  margin: var(--spacing-1) 0 0;
+  align-self: flex-start;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #ece8e1;
+  color: #4a4640;
+}
+
+.annotation {
+  margin: var(--spacing-1) 0 0;
+  font-size: var(--font-size-sm);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  align-items: baseline;
+}
+
+.room {
+  font-weight: var(--font-weight-bold);
+}
+
+.footer {
+  border-top: 1px solid #e2e0db;
+  padding-top: var(--spacing-3);
+  font-size: var(--font-size-sm);
+}
+
+.footer a {
+  color: #6a6258;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}

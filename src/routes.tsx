@@ -9,6 +9,7 @@ import { CollectionPage } from "./pages/CollectionPage.js";
 import { VisualizerPage } from "./pages/VisualizerPage.js";
 import { EmbedBuilderPage } from "./pages/EmbedBuilderPage.js";
 import { EmbedPage } from "./pages/EmbedPage.js";
+import { BoardPage } from "./pages/BoardPage.js";
 import { NotFoundPage } from "./pages/NotFoundPage.js";
 
 /** Single route tree shared by the browser router and the SSG static handler. */
@@ -16,6 +17,9 @@ export const routes: RouteObject[] = [
   // Standalone embed (E14) — rendered WITHOUT the app chrome so it sits cleanly
   // inside a partner's iframe.
   { path: "/embed", element: <EmbedPage /> },
+  // Standalone client presentation board (E13) — a clean, branded artifact
+  // shown to clients, also chrome-less.
+  { path: "/board", element: <BoardPage /> },
   {
     path: "/",
     element: <RootLayout />,

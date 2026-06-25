@@ -44,6 +44,9 @@ discoverability.
 - **Embeddable widget** — partners drop a live, themable swatch or palette onto
   their own site via an `<iframe>`; a self-serve `/embed-builder` previews it and
   copies the snippet (back-links carry UTM). Static, read-only, no backend.
+- **Client presentation board** — share a palette as a clean, branded, read-only
+  `/board` link (colors + notes/room + 60-30-10 roles) to hand to a client — decoded
+  entirely from the share link, no account or server.
 - **Paint planning** — per-room and per-color gallon/can estimates (area × coats ÷
   coverage), a consolidated shopping list, and progress tracking, all reusing the
   paint calculator's area math.
