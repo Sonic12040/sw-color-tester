@@ -10,6 +10,21 @@ test("serves the gallery for the base path without a trailing slash", async ({
   ).toBeVisible();
 });
 
+test("navigates from the collections index into a collection landing page", async ({
+  page,
+}) => {
+  await page.goto("collections");
+  await page
+    .getByRole("link", { name: /\d+ colors$/ })
+    .first()
+    .click();
+  await expect(page).toHaveURL(/\/collections\/[a-z0-9-]+$/);
+  // The featured colors are real, crawlable links to color detail pages.
+  await expect(
+    page.getByRole("link", { name: /SW \d+/ }).first(),
+  ).toBeVisible();
+});
+
 test("first Tab focuses the skip link", async ({ page }) => {
   await page.goto("");
   await page.keyboard.press("Tab");

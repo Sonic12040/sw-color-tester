@@ -4,6 +4,8 @@ import { GalleryPage } from "./pages/GalleryPage.js";
 import { ColorDetailPage } from "./pages/ColorDetailPage.js";
 import { ComparePage } from "./pages/ComparePage.js";
 import { PalettePage } from "./pages/PalettePage.js";
+import { CollectionsIndexPage } from "./pages/CollectionsIndexPage.js";
+import { CollectionPage } from "./pages/CollectionPage.js";
 import { NotFoundPage } from "./pages/NotFoundPage.js";
 
 /** Single route tree shared by the browser router and the SSG static handler. */
@@ -16,6 +18,8 @@ export const routes: RouteObject[] = [
       { path: "colors/:slug", element: <ColorDetailPage /> },
       { path: "compare", element: <ComparePage /> },
       { path: "palette", element: <PalettePage /> },
+      { path: "collections", element: <CollectionsIndexPage /> },
+      { path: "collections/:slug", element: <CollectionPage /> },
       { path: "*", element: <NotFoundPage /> },
     ],
   },

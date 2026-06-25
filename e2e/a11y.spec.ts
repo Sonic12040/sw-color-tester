@@ -49,6 +49,24 @@ test("palette workspace (with colors + companions) is accessible", async ({
   await expectNoSeriousAxe(page);
 });
 
+test("collections index + a collection page are accessible", async ({
+  page,
+}) => {
+  await page.goto("collections");
+  await expect(
+    page.getByRole("heading", { name: "Color collections" }),
+  ).toBeVisible();
+  await expectNoSeriousAxe(page);
+
+  // Into the first collection's landing page.
+  await page
+    .getByRole("link", { name: /\d+ colors$/ })
+    .first()
+    .click();
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await expectNoSeriousAxe(page);
+});
+
 test("color detail page is accessible", async ({ page }) => {
   const [slug] = colorSlugs(1);
   await page.goto(`colors/${slug}`);

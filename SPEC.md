@@ -42,11 +42,13 @@ src/
 ├── entry-server.tsx      # SSG render(path) + buildHead() + sitemap/colors helpers
 ├── routes.tsx            # shared route tree (RootLayout → pages)
 ├── appModel.ts           # singletons: colorModel, exportService
-├── data/                 # palette.ts (generated, ~1.7k active; code-split into its own client chunk) + types.ts
-├── models/ColorModel.ts  # index (id/slug/family/collection/designer) + query (filter/sort)
+├── data/                 # palette.ts (generated, ~1.7k active; code-split into its own client chunk) + types.ts;
+│                         #   collections.ts (curated editorial collections content model — E12)
+├── models/ColorModel.ts  # index (id/slug/number/family/collection/designer) + query (filter/sort) + editorial collections
 ├── context/              # Favorites, Hidden, Filters, Compare, Palette, Toast, App
 ├── hooks/                # useSet, usePersistent{Set,State}, useFocusTrap, useDocumentMeta
-├── pages/                # GalleryPage, ColorDetailPage, ComparePage, PalettePage, NotFoundPage
+├── pages/                # GalleryPage, ColorDetailPage, ComparePage, PalettePage,
+│                         #   CollectionsIndexPage, CollectionPage, NotFoundPage
 ├── components/
 │   ├── RootLayout.tsx    # skip link + sticky Header + <main> + CompareTray; AppProviders
 │   ├── Header/           # sticky brand + primary nav
@@ -54,13 +56,15 @@ src/
 │   │                     #   ActiveFilters, ColorGrid, ColorCard (memoized)
 │   ├── ColorDetailView/  # ColorDetail, DetailActions, GetColorPanel, PaintCalculator,
 │   │                     #   ColorGridSection, MiniTile, HslBreakdown
+│   ├── Collections/      # CollectionColorGrid (crawlable swatch links) — E12
 │   ├── Workspace/        # CompareTray, ContrastMatrix, WorkOrderView (Painter lens)
 │   ├── Toast/, ErrorBoundary/, seo/JsonLd
 ├── domain/               # types.ts (shared facet/sort vocabulary), project.ts (Rooms → Surfaces model),
-│                         #   paletteData.ts (persisted shape + pure parse/normalize/migrate — E18)
+│                         #   paletteData.ts (persisted shape + pure parse/normalize/migrate — E18),
+│                         #   collection.ts (editorial collection authoring + resolved types — E12)
 ├── utils/                # base.ts, config.ts, storage.ts, slug.ts, seo.ts, breakpoints.ts, clipboard.ts, colorMath.ts,
 │                         #   colorCopy.ts, paint.ts, workOrder.ts, swLinks.ts, ogTemplate.ts, ExportService.ts, paletteExport.ts (lazy),
-│                         #   projectFile.ts (export/import envelope) + projectShare.ts (compressed ?project= link) — E18
+│                         #   projectFile.ts + projectShare.ts (E18), collections.ts (resolve/cross-link — E12)
 └── styles/               # tokens.css, breakpoints.css, a11y.css, global.css
 prerender.mjs             # post-build: writes dist/colors/<slug>/index.html + 404.html, sitemap, colors.json
 ```
@@ -125,14 +129,27 @@ chroma + use suggestion) used on the detail page and in the SEO meta/JSON-LD.
 ## Rendering / SSG
 
 `build` runs: `tsc` → client build → SSR build (`entry-server`) → `prerender.mjs`,
-which renders `/`, `/compare`, `/palette`, and every `/colors/<slug>` to static
-HTML (authoritative `<head>` injected by `buildHead`), plus `sitemap.xml`,
-`robots.txt`, `colors.json`, and a `404.html` SPA fallback. It also rasterizes a
-1200×630 Open Graph PNG per color (+ a brand default) into `/og/` with `resvg`
-(SVG from `utils/ogTemplate.ts`, Roboto WOFF embedded), referenced via
+which renders `/`, `/compare`, `/palette`, `/collections`, every
+`/collections/<slug>`, and every `/colors/<slug>` to static HTML (authoritative
+`<head>` injected by `buildHead`), plus `sitemap.xml`, `robots.txt`, `colors.json`,
+and a `404.html` SPA fallback. It also rasterizes a 1200×630 Open Graph PNG per
+color (+ a brand default + one per collection) into `/og/` with `resvg` (SVG from
+`utils/ogTemplate.ts`, Roboto WOFF embedded), referenced via
 `og:image`/`twitter:image` in `buildHead`. The PWA precaches the shell only and
 runtime-caches color pages (OG PNGs are written after the client build, so they
 never enter the precache manifest).
+
+**Editorial collections (E12).** Curated "trend / story" groupings get their own
+prerendered, indexable landing pages — the cheapest reach lever, reusing the same
+SSG / JSON-LD / OG pipeline. The build-time content model (`data/collections.ts`)
+is a flat authoring file: each collection references colors by **SW number**, with
+a `published` flag and an optional `heroNumber` — new collections need no component
+changes, and `collections.integrity.test.ts` guards that every number resolves.
+`ColorModel` resolves the published collections (and builds the reverse
+color→collections map for cross-linking) via the pure `utils/collections.ts`. The
+index (`/collections`) and per-collection pages (`/collections/<slug>`) carry
+authoritative heads, `CollectionPage` + `ItemList` JSON-LD, and a per-collection OG
+card; color pages link back to the collections they appear in ("Featured in").
 
 ## Design system
 
@@ -154,13 +171,14 @@ region (`RouteAnnouncer`).
 Vitest is split into **projects** (run by name; `npm test` runs unit + integration):
 
 - **unit** (Node env, colocated `*.test.ts`): pure logic — `colorMath`, `colorCopy`,
-  `colorQuery`, `ColorModel`, `paletteIntelligence`, `paletteExport`, `slug`, `seo`,
-  `contrast`, dataset integrity (`palette.integrity`), and the index-shell check.
+  `colorQuery`, `ColorModel`, `paletteIntelligence`, `paletteExport`, `projectFile`,
+  `projectShare`, `collections`, `slug`, `seo`, `contrast`, dataset + collections
+  integrity (`palette.integrity`, `collections.integrity`), and the index-shell check.
 - **integration** (jsdom + RTL + `@testing-library/user-event`): component/hook/flow
   specs — each context, the hooks, `ColorCard`, `Toast`, and the routed-app suites in
-  `src/test/integration/` (gallery, colorDetail, compare, palette, emptyStates,
-  appShell) sharing `integration/harness.tsx`. `ExportService.test.ts` lives here too
-  (it touches `document`/`URL`). `src/test/setup.ts` clears storage + auto-cleans.
+  `src/test/integration/` (gallery, colorDetail, compare, palette, collections,
+  emptyStates, appShell) sharing `integration/harness.tsx`. `ExportService.test.ts`
+  lives here too (it touches `document`/`URL`). `src/test/setup.ts` clears storage.
 - **build-output** (Node, `test:build-output`): asserts the prerendered `dist/` (SEO
   markup, JSON-LD, plain-language summary, OG images). Runs only after a build, so
   it's excluded from the default test run.
@@ -269,19 +287,18 @@ share reach instead. The Now horizon is therefore **complete**.
 
 Listed in **delivery order** (see the groomed feature/story backlog below for the
 WSJF-lite scoring and dependencies). **E11 (palette intelligence), E15 (Project
-model), E16 (Work Order + shopping list), and E18 (Project portability) have
-shipped** — see the architecture sections. **E10 (Accounts & cloud sync) is
-removed** — see the **no backend, no accounts** stance in Assumptions. Every
-remaining epic is **fully static + local-first**. The order leads with **E12
-editorial reach**, then **E17 field mode** to round out the Painter on-site.
+model), E16 (Work Order + shopping list), E18 (Project portability), and E12
+(Editorial / trend pages) have shipped** — see the architecture sections. **E10
+(Accounts & cloud sync) is removed** — see the **no backend, no accounts** stance in
+Assumptions. Every remaining epic is **fully static + local-first**. The order leads
+with **E17 field mode** to round out the Painter on-site.
 
 | #   | Item                                                                 | Epic | Persona           | Effort |
 | --- | -------------------------------------------------------------------- | ---- | ----------------- | ------ |
-| 1   | Editorial / trend collection landing pages + light curation          | E12  | Marketer          | M–L    |
-| 2   | Field mode — on-site, high-contrast, offline work order              | E17  | Painter           | M      |
-| 3   | Room Visualizer v1 (curated scenes, recolor walls, lighting presets) | E9   | Shopper           | L      |
-| 4   | Embeddable swatch/palette widget                                     | E14  | Marketer/partners | M      |
-| 5   | Client presentation boards (branded, read-only share)                | E13  | Designer          | M      |
+| 1   | Field mode — on-site, high-contrast, offline work order              | E17  | Painter           | M      |
+| 2   | Room Visualizer v1 (curated scenes, recolor walls, lighting presets) | E9   | Shopper           | L      |
+| 3   | Embeddable swatch/palette widget                                     | E14  | Marketer/partners | M      |
+| 4   | Client presentation boards (branded, read-only share)                | E13  | Designer          | M      |
 
 ### Later — ambitious bets (3+ quarters)
 
@@ -354,61 +371,26 @@ serverless signals noted under **Success metrics**. The **Now horizon is complet
 Reprioritized via WSJF-lite ((value + enablement) ÷ effort), then adjusted for hard
 dependencies and the "**local-first, no backend** · validate locally first"
 principles. Effort: S=1, M=2, M–L=2.5, L=3 (value/enable on 1–5). Epic **IDs are
-stable**; the table is in **delivery order**. **E11, E15, E16, and E18 have
+stable**; the table is in **delivery order**. **E11, E15, E16, E18, and E12 have
 shipped** (removed — see the architecture sections); **E10 (Accounts & cloud sync)
 is removed** as backend-dependent. Every epic below is fully static + local-first.
 
 | Rank | Epic                                 | Persona           | V   | Enable | Eff | WSJF | Why here                                                                              |
 | ---- | ------------------------------------ | ----------------- | --- | ------ | --- | ---- | ------------------------------------------------------------------------------------- |
-| 1    | **E12 · Editorial / trend pages**    | Marketer          | 4   | 3      | 2.5 | 2.8  | Independent SSG/SEO/OG reach at low marginal cost.                                    |
-| 2    | **E17 · Field mode**                 | Painter           | 4   | 1      | 2   | 2.5  | On-site work order (high-contrast/offline); depends on the shipped **E16**; PWA-only. |
-| 3    | **E9 · Room Visualizer v1**          | Shopper           | 5   | 3      | 3   | 2.7  | Biggest shopper gap ("see it in context"); fully client-side; earns the AR v2 bet.    |
-| 4    | **E14 · Embeddable widget**          | Marketer/partners | 3   | 3      | 2   | 3.0  | Static embed distribution; compounds with editorial.                                  |
-| 5    | **E13 · Client presentation boards** | Designer          | 3   | 2      | 2   | 2.5  | Branded read-only share (built on E18); live comments/approval dropped (no backend).  |
+| 1    | **E17 · Field mode**                 | Painter           | 4   | 1      | 2   | 2.5  | On-site work order (high-contrast/offline); depends on the shipped **E16**; PWA-only. |
+| 2    | **E9 · Room Visualizer v1**          | Shopper           | 5   | 3      | 3   | 2.7  | Biggest shopper gap ("see it in context"); fully client-side; earns the AR v2 bet.    |
+| 3    | **E14 · Embeddable widget**          | Marketer/partners | 3   | 3      | 2   | 3.0  | Static embed distribution; compounds with editorial.                                  |
+| 4    | **E13 · Client presentation boards** | Designer          | 3   | 2      | 2   | 2.5  | Branded read-only share (built on E18); live comments/approval dropped (no backend).  |
 
-Sequencing rationale: with **E18 shipped** (file export/import + a shareable Project
-— the local-first answer to portability and the Designer→Painter→Client handoff),
-lead with **E12**, an independent SSG/SEO reach win. **E17** rounds out the Painter
-on-site (needs the shipped E16; PWA-only, no server). Then the heavy but fully
-client-side **E9**, the static **E14** widget, and a re-scoped **E13** last
-(read-only board on E18's share primitive). Raw WSJF would float **E14** above
-**E9**; we hold E9 higher as the biggest unserved shopper gap. (Pull **E14** forward
-if a concrete partner appears.)
+Sequencing rationale: with **E18 + E12 shipped** (portability/handoff, and an
+independent SSG/SEO reach win), lead with **E17** to round out the Painter on-site
+(needs the shipped E16; PWA-only, no server). Then the heavy but fully client-side
+**E9**, the static **E14** widget, and a re-scoped **E13** last (read-only board on
+E18's share primitive). Raw WSJF would float **E14** above **E9**; we hold E9 higher
+as the biggest unserved shopper gap. (Pull **E14** forward if a concrete partner
+appears.)
 
 ---
-
-#### E12 · Editorial / trend collection pages _(Marketer · M–L)_
-
-Benefit: durable, indexable destinations that pull organic traffic and give
-marketers a surface to promote curated/seasonal stories. Extends our existing
-SSG / JSON-LD / OG pipeline (the cheapest reach lever we have).
-
-**Feature: Prerendered collection landing pages**
-
-- **US12.1** As a marketer, I want a prerendered landing page per curated collection
-  (hero, blurb, the colors, JSON-LD, OG card) so it ranks and shares well. _(M)_
-  - AC: `/collections/<slug>` SSG'd like color pages; authoritative `<head>`
-    (title/description/canonical/OG); `ItemList` JSON-LD; in sitemap.
-  - Tasks: add route + `buildHead` branch; extend `getPrerenderPaths`/sitemap;
-    per-collection OG via `ogTemplate`; integration + SEO/static e2e assertions.
-
-**Feature: Lightweight curation (build-time content model)**
-
-- **US12.2** As a marketer/editor, I want a simple build-time content model (title,
-  blurb, hero, ordered featured colors, publish flag) so I can author without code
-  changes to components. _(M)_
-  - AC: collections content authored in one data file (or MD/JSON) validated at
-    build; unpublished entries excluded; ordering respected.
-  - Tasks: define schema + loader in `data/`; integrity test (slugs resolve, no
-    dupes); render from the model; document the authoring flow.
-
-**Feature: Discovery & cross-linking**
-
-- **US12.3** As a visitor, I want a trend/collections index plus cross-links from
-  color pages so I can discover curated stories. _(S–M)_
-  - AC: `/collections` index; each color page links the collections it's in; nav
-    entry; all in sitemap.
-  - Tasks: index page; reverse map color→collections; nav + internal links; tests.
 
 #### E17 · Field mode _(Painter · M)_ — depends E16
 

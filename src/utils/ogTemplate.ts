@@ -42,6 +42,34 @@ export function colorOgSvg({ name, number, hex }: ColorOgInput): string {
 </svg>`;
 }
 
+export interface CollectionOgInput {
+  title: string;
+  hexes: string[];
+}
+
+/**
+ * Editorial-collection card (E12): a band of the collection's swatches across the
+ * top, then the collection title + a "curated collection" tagline on dark.
+ */
+export function collectionOgSvg({ title, hexes }: CollectionOgInput): string {
+  const stripH = 280;
+  const swatches = hexes.length > 0 ? hexes : ["#1b1c20"];
+  const w = OG_WIDTH / swatches.length;
+  const strip = swatches
+    .map(
+      (h, i) =>
+        `<rect x="${i * w}" y="0" width="${Math.ceil(w)}" height="${stripH}" fill="${esc(h.toUpperCase())}"/>`,
+    )
+    .join("");
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${OG_WIDTH}" height="${OG_HEIGHT}" viewBox="0 0 ${OG_WIDTH} ${OG_HEIGHT}">
+  <rect width="${OG_WIDTH}" height="${OG_HEIGHT}" fill="#1b1c20"/>
+  ${strip}
+  <text x="64" y="${stripH + 110}" font-family="Roboto" font-weight="400" font-size="28" fill="#ffffff" fill-opacity="0.7">Curated collection</text>
+  <text x="64" y="${stripH + 175}" font-family="Roboto" font-weight="700" font-size="64" fill="#ffffff">${esc(clip(title, 26))}</text>
+  <text x="64" y="${OG_HEIGHT - 48}" font-family="Roboto" font-weight="500" font-size="24" fill="#ffffff" fill-opacity="0.6">Sherwin-Williams Color Atlas</text>
+</svg>`;
+}
+
 /**
  * Brand-default card (gallery / palette / compare / share fallback): a strip of
  * sample swatches over a dark card with the product name + tagline.

@@ -35,6 +35,9 @@ discoverability.
 
 - **Color intelligence** — plain-language summaries, LRV/undertone/neutrality
   classification, coordinating + similar suggestions, 60-30-10 palette roles.
+- **Editorial collections** — curated, prerendered `/collections` landing pages
+  (hero, blurb, featured colors, `ItemList` JSON-LD, per-collection OG card),
+  authored from a single build-time content file and cross-linked from color pages.
 - **Paint planning** — per-room and per-color gallon/can estimates (area × coats ÷
   coverage), a consolidated shopping list, and progress tracking, all reusing the
   paint calculator's area math.
@@ -73,9 +76,10 @@ npm run preview  # serve the production build locally
 ```
 
 `npm run build` runs `tsc`, builds the client and SSR bundles, then `prerender.mjs`
-writes `dist/` — static HTML for `/`, `/compare`, `/palette`, and every
-`/colors/<slug>`, plus `sitemap.xml`, `robots.txt`, `colors.json`, a `404.html` SPA
-fallback, and a 1200×630 Open Graph PNG per color.
+writes `dist/` — static HTML for `/`, `/compare`, `/palette`, `/collections`, every
+`/collections/<slug>`, and every `/colors/<slug>`, plus `sitemap.xml`, `robots.txt`,
+`colors.json`, a `404.html` SPA fallback, and a 1200×630 Open Graph PNG per color
+(plus one per collection).
 
 ## Scripts
 

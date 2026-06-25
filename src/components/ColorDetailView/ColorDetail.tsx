@@ -9,7 +9,7 @@ import {
   summarize,
   COORDINATING_ROLES,
 } from "../../utils/colorCopy.js";
-import { colorPath } from "../../utils/base.js";
+import { colorPath, collectionPath } from "../../utils/base.js";
 import { toSlug } from "../../utils/slug.js";
 import { SW_SAMPLES_URL } from "../../utils/swLinks.js";
 import { useAppContext } from "../../context/AppContext.js";
@@ -66,6 +66,8 @@ export function ColorDetail({ color }: ColorDetailProps) {
   const collections = designerCollections(color);
   const useTypes = formatUseTypes(color);
   const isDesignerPick = colorModel.isDesignerPick(color.id);
+  // Curated editorial collections this color appears in (E12, US12.3).
+  const editorialCollections = colorModel.getCollectionsForColor(color);
   const comparing = isComparing(color.id);
   const inPal = inPalette(color.id);
   const isFavorite = favorites.has(color.id);
@@ -198,6 +200,20 @@ export function ColorDetail({ color }: ColorDetailProps) {
                   <strong>{lrv.label}.</strong> {lrv.context}
                 </p>
               </section>
+
+              {editorialCollections.length > 0 && (
+                <section>
+                  <h2 className={styles.sectionTitle}>Featured in</h2>
+                  <p className={styles.bodyText}>
+                    {editorialCollections.map((c, i) => (
+                      <span key={c.slug}>
+                        {i > 0 && " · "}
+                        <Link to={collectionPath(c.slug)}>{c.title}</Link>
+                      </span>
+                    ))}
+                  </p>
+                </section>
+              )}
 
               <ColorGridSection
                 title="Coordinating colors"

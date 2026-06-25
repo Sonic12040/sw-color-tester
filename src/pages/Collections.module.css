@@ -1,0 +1,115 @@
+/* ============================================================
+   Editorial collections (E12) — index + landing pages. Same dark
+   design language as the palette/detail: a dark card on the gray
+   canvas, on-dark text, swatch tiles that are real links (crawlable).
+   ============================================================ */
+
+.page {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: var(--spacing-5) clamp(0.75rem, 2.67vw, 2rem) var(--tray-height);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-5);
+  padding: clamp(1rem, 2.4vw, 1.75rem);
+  background: var(--surface-dark);
+  color: var(--on-dark);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  color-scheme: dark;
+}
+
+.crumbs {
+  font-size: var(--font-size-sm);
+  color: var(--on-dark-muted);
+}
+
+.crumbs a {
+  color: var(--on-dark-muted);
+}
+
+.title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+  color: #ffffff;
+}
+
+.blurb {
+  margin: 0;
+  max-width: 60ch;
+  color: var(--on-dark);
+  line-height: 1.55;
+}
+
+/* Hero strip of the collection's swatches (decorative). */
+.heroStrip {
+  display: flex;
+  height: 120px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--on-dark-border);
+}
+
+.heroCell {
+  flex: 1;
+}
+
+/* A responsive grid of swatch links (collection colors + index cards). */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--spacing-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--on-dark-border);
+  background: var(--on-dark-subtle);
+  text-decoration: none;
+  color: var(--on-dark);
+}
+
+.tile:hover .tileName {
+  text-decoration: underline;
+}
+
+.tileSwatch {
+  height: 96px;
+}
+
+/* Index cards stack several hero swatches into a mini strip. */
+.tileStrip {
+  display: flex;
+  height: 96px;
+}
+
+.tileStripCell {
+  flex: 1;
+}
+
+.tileBody {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--spacing-2) var(--spacing-3);
+}
+
+.tileName {
+  font-weight: var(--font-weight-bold);
+  color: #ffffff;
+}
+
+.tileMeta {
+  font-size: var(--font-size-sm);
+  color: var(--on-dark-muted);
+}

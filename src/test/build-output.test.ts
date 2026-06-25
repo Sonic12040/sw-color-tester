@@ -44,3 +44,44 @@ describe("Open Graph assets", () => {
     expect(/<meta name="twitter:image"/.test(html)).toBe(true);
   });
 });
+
+describe("editorial collections (E12)", () => {
+  // Pick a prerendered collection from the SSG output (skip if none authored).
+  const collectionsDir = resolve(dist, "collections");
+  const slugs = existsSync(collectionsDir)
+    ? readdirSync(collectionsDir).filter((d) =>
+        existsSync(resolve(collectionsDir, d, "index.html")),
+      )
+    : [];
+
+  it("prerenders a collections index with JSON-LD + canonical", () => {
+    const indexHtml = readFileSync(
+      resolve(collectionsDir, "index.html"),
+      "utf8",
+    );
+    expect(/<h1[\s>]/.test(indexHtml)).toBe(true);
+    expect(indexHtml).toContain('"@type":"CollectionPage"');
+    expect(/<link rel="canonical"[^>]*\/collections\//.test(indexHtml)).toBe(
+      true,
+    );
+  });
+
+  it("prerenders each collection page with ItemList JSON-LD + OG card", () => {
+    expect(slugs.length).toBeGreaterThan(0);
+    for (const slug of slugs) {
+      const page = readFileSync(
+        resolve(collectionsDir, slug, "index.html"),
+        "utf8",
+      );
+      expect(page).toContain('"@type":"ItemList"');
+      expect(
+        new RegExp(
+          `<meta property="og:image" content="[^"]*/og/collection-${slug}\\.png"`,
+        ).test(page),
+      ).toBe(true);
+      expect(existsSync(resolve(dist, "og", `collection-${slug}.png`))).toBe(
+        true,
+      );
+    }
+  });
+});

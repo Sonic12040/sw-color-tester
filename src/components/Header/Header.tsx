@@ -5,6 +5,7 @@ import { useCompare } from "../../context/CompareContext.js";
 import { useFilters } from "../../context/FiltersContext.js";
 import {
   BrowseIcon,
+  CollectionsIcon,
   CompareIcon,
   PaletteIcon,
   HeartIcon,
@@ -47,6 +48,10 @@ export function Header() {
           <NavLink to="/" end className={navClass}>
             <BrowseIcon size={NAV_ICON} className={styles.navIcon} />
             <span>Browse</span>
+          </NavLink>
+          <NavLink to="/collections" className={navClass}>
+            <CollectionsIcon size={NAV_ICON} className={styles.navIcon} />
+            <span>Collections</span>
           </NavLink>
           <NavLink to="/compare" className={navClass}>
             <CompareIcon size={NAV_ICON} className={styles.navIcon} />
