@@ -152,6 +152,7 @@ function normalizeSurfaces(raw: unknown): Surface[] {
       ...(isFiniteNum(s.coats) ? { coats: s.coats } : {}),
       ...(isFiniteNum(s.areaSqFt) ? { areaSqFt: s.areaSqFt } : {}),
       ...(dimensions ? { dimensions } : {}),
+      ...(s.done === true ? { done: true } : {}),
     });
   }
   return out;

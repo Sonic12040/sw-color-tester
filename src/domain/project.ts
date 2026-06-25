@@ -71,6 +71,8 @@ export interface Surface {
   areaSqFt?: number;
   /** L×W×H measurement; takes precedence over `areaSqFt` when present. */
   dimensions?: SurfaceDimensions;
+  /** Checked off as painted (US16.4). Absent = not done. */
+  done?: boolean;
 }
 
 /** A room is a named group of surfaces. */

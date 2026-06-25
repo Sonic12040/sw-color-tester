@@ -42,6 +42,51 @@
   border-radius: var(--radius-md);
 }
 
+/* Job progress (US16.4) — a faint panel with a completion bar. */
+.progress {
+  padding: var(--spacing-4);
+  background: var(--on-dark-subtle);
+  border: 1px solid var(--on-dark-border);
+  border-radius: var(--radius-md);
+}
+
+.progressHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-2);
+}
+
+.progressTitle {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+  color: #ffffff;
+}
+
+.progressCount {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--on-dark-muted);
+  white-space: nowrap;
+}
+
+.progressTrack {
+  height: 8px;
+  border-radius: var(--radius-pill, 999px);
+  background: var(--surface-dark);
+  border: 1px solid var(--on-dark-border);
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: #ffffff;
+  transition: width var(--transition-fast);
+}
+
 /* One room section. */
 .room {
   display: flex;
@@ -105,6 +150,28 @@
   border-radius: var(--radius-md);
   /* darker than the room panel so each surface reads as inset */
   background: var(--surface-dark);
+}
+
+/* A checked-off surface recedes but stays editable. */
+.surface[data-done="true"] {
+  opacity: 0.6;
+  border-color: var(--on-dark-border);
+}
+
+/* The done checkbox stacked above the color swatch, sharing the first column. */
+.doneCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-2);
+  cursor: pointer;
+}
+
+.doneCheck {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--accent, #ffffff);
 }
 
 .swatch {

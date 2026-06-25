@@ -5,7 +5,9 @@ import { colorPath } from "../../utils/base.js";
 import { toSlug } from "../../utils/slug.js";
 import {
   estimateProjectQuantities,
+  projectProgress,
   resolveSurfaceArea,
+  type RoomProgress,
   type RoomQuantity,
 } from "../../utils/paint.js";
 import { buildShoppingList, shoppingListText } from "../../utils/workOrder.js";
@@ -54,6 +56,11 @@ export function WorkOrderView() {
   // Consolidated shopping list, one row per color × finish (US16.3).
   const shoppingList = buildShoppingList(rooms, colorsById);
 
+  // Per-room + overall completion as surfaces get checked off (US16.4).
+  const progress = projectProgress(rooms);
+  const progressById = new Map(progress.rooms.map((r) => [r.roomId, r]));
+  const pct = Math.round(progress.fraction * 100);
+
   const exportPdf = async () => {
     try {
       await exportService.exportWorkOrderPdf(rooms, paletteColors, {
@@ -101,12 +108,38 @@ export function WorkOrderView() {
         </p>
       ) : (
         <>
+          {totalSurfaces > 0 && (
+            <section className={styles.progress} aria-label="Job progress">
+              <div className={styles.progressHead}>
+                <h3 className={styles.progressTitle}>Job progress</h3>
+                <span className={styles.progressCount}>
+                  {progress.done}/{progress.total} surface
+                  {progress.total === 1 ? "" : "s"} done · {pct}%
+                </span>
+              </div>
+              <div
+                className={styles.progressTrack}
+                role="progressbar"
+                aria-valuemin={0}
+                aria-valuemax={progress.total}
+                aria-valuenow={progress.done}
+                aria-valuetext={`${progress.done} of ${progress.total} surfaces done`}
+              >
+                <div
+                  className={styles.progressFill}
+                  style={{ width: `${pct}%` }}
+                />
+              </div>
+            </section>
+          )}
+
           {rooms.map((room) => (
             <RoomSection
               key={room.id}
               room={room}
               colorsById={colorsById}
               quantity={roomQtyById.get(room.id)}
+              progress={progressById.get(room.id)}
             />
           ))}
 
@@ -204,10 +237,12 @@ function RoomSection({
   room,
   colorsById,
   quantity,
+  progress,
 }: {
   room: Room;
   colorsById: Map<string, Color>;
   quantity: RoomQuantity | undefined;
+  progress: RoomProgress | undefined;
 }) {
   const {
     entries,
@@ -241,6 +276,12 @@ function RoomSection({
             <>
               {" "}
               · ≈ {quantity?.gallons} gal · {cans} can{cans === 1 ? "" : "s"}
+            </>
+          )}
+          {progress && progress.total > 0 && (
+            <>
+              {" "}
+              · {progress.done}/{progress.total} done
             </>
           )}
         </span>
@@ -326,13 +367,22 @@ function SurfaceRow({
     });
 
   return (
-    <li className={styles.surface}>
-      <span
-        className={styles.swatch}
-        data-empty={color ? undefined : true}
-        style={color ? { background: hsl(color) } : undefined}
-        aria-hidden="true"
-      />
+    <li className={styles.surface} data-done={surface.done ? true : undefined}>
+      <label className={styles.doneCol}>
+        <input
+          type="checkbox"
+          className={styles.doneCheck}
+          checked={Boolean(surface.done)}
+          aria-label={`Mark ${label} done`}
+          onChange={(e) => onChange({ done: e.target.checked || undefined })}
+        />
+        <span
+          className={styles.swatch}
+          data-empty={color ? undefined : true}
+          style={color ? { background: hsl(color) } : undefined}
+          aria-hidden="true"
+        />
+      </label>
       <div className={styles.fields}>
         <label className={styles.field}>
           <span className={styles.fieldLabel}>Surface</span>

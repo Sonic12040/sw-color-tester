@@ -262,6 +262,57 @@ describe("Work Order — shopping list (US16.3)", () => {
   });
 });
 
+describe("Work Order — progress tracking (US16.4)", () => {
+  const openWorkOrder = async () => {
+    const handle = renderApp(
+      "/palette?c=sw-6258-tricorn-black,sw-7015-repose-gray",
+    );
+    await handle.user.click(
+      screen.getByRole("button", { name: /Load shared palette/ }),
+    );
+    await handle.user.click(screen.getByRole("button", { name: "Work Order" }));
+    return handle;
+  };
+
+  it("checks off a surface and reflects it in room + overall progress", async () => {
+    const { user } = await openWorkOrder();
+    await user.click(screen.getByRole("button", { name: "Add room" }));
+    await user.click(screen.getByRole("button", { name: "Add surface" }));
+    await user.click(screen.getByRole("button", { name: "Add surface" }));
+
+    // Two surfaces, none done yet: 0/2 overall, 0/2 in the room.
+    const bar = screen.getByRole("progressbar");
+    expect(bar.getAttribute("aria-valuenow")).toBe("0");
+    expect(bar.getAttribute("aria-valuemax")).toBe("2");
+    expect(screen.getByText(/0\/2 surfaces done · 0%/)).toBeTruthy();
+    expect(screen.getByText(/2 surfaces ·.*· 0\/2 done/)).toBeTruthy();
+
+    // Check the first surface off → 1/2 (50%).
+    const checks = screen.getAllByLabelText(/^Mark .* done$/);
+    await user.click(checks[0]);
+    expect(screen.getByRole("progressbar").getAttribute("aria-valuenow")).toBe(
+      "1",
+    );
+    expect(screen.getByText(/1\/2 surfaces done · 50%/)).toBeTruthy();
+    expect(screen.getByText(/· 1\/2 done/)).toBeTruthy();
+  });
+
+  it("persists checked-off surfaces across navigation", async () => {
+    const { user } = await openWorkOrder();
+    await user.click(screen.getByRole("button", { name: "Add room" }));
+    await user.click(screen.getByRole("button", { name: "Add surface" }));
+    await user.click(screen.getByLabelText(/^Mark .* done$/));
+
+    // Leave the palette and return — the done state survives.
+    await user.click(screen.getByRole("link", { name: /^Browse/ }));
+    await user.click(screen.getByRole("link", { name: /^Palette/ }));
+    expect(
+      (screen.getByLabelText(/^Mark .* done$/) as HTMLInputElement).checked,
+    ).toBe(true);
+    expect(screen.getByText(/1\/1 surface done · 100%/)).toBeTruthy();
+  });
+});
+
 describe("Palette intelligence — roles (E11)", () => {
   const loadPalette = async () => {
     const handle = renderApp(

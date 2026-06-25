@@ -210,3 +210,46 @@ export function estimateProjectQuantities(
     totalCans: total.cans,
   };
 }
+
+// ── Progress tracking (US16.4) ─────────────────────────────────────────────
+
+export interface Progress {
+  /** Surfaces checked off as painted. */
+  done: number;
+  /** Total surfaces. */
+  total: number;
+  /** Completion in [0, 1]; 0 when there are no surfaces. */
+  fraction: number;
+}
+
+export interface RoomProgress extends Progress {
+  roomId: string;
+}
+
+export interface ProjectProgress extends Progress {
+  /** Per-room completion, in the project's room order. */
+  rooms: RoomProgress[];
+}
+
+const progress = (done: number, total: number): Progress => ({
+  done,
+  total,
+  fraction: total > 0 ? done / total : 0,
+});
+
+/**
+ * Pure: per-room and overall completion for a project's surfaces. Every surface
+ * counts toward the total — measured or not, assigned or not — and a surface
+ * counts as done only when its `done` flag is set.
+ */
+export function projectProgress(rooms: Room[]): ProjectProgress {
+  let done = 0;
+  let total = 0;
+  const roomProgress: RoomProgress[] = rooms.map((room) => {
+    const roomDone = room.surfaces.filter((s) => s.done).length;
+    done += roomDone;
+    total += room.surfaces.length;
+    return { roomId: room.id, ...progress(roomDone, room.surfaces.length) };
+  });
+  return { rooms: roomProgress, ...progress(done, total) };
+}

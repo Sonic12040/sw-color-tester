@@ -6,6 +6,7 @@ import {
   paintQuantity,
   resolveSurfaceArea,
   estimateProjectQuantities,
+  projectProgress,
 } from "./paint.js";
 
 describe("paintEstimate", () => {
@@ -177,5 +178,58 @@ describe("estimateProjectQuantities", () => {
     ]);
     expect(q.byColor).toEqual([]);
     expect(q.totalCans).toBe(0);
+  });
+});
+
+describe("projectProgress", () => {
+  const rooms: Room[] = [
+    {
+      id: "a",
+      name: "Room A",
+      surfaces: [
+        { id: "a1", type: "wall", done: true },
+        { id: "a2", type: "trim" },
+      ],
+    },
+    {
+      id: "b",
+      name: "Room B",
+      surfaces: [{ id: "b1", type: "ceiling", done: true }],
+    },
+  ];
+
+  it("counts done surfaces per room and overall, regardless of measurement", () => {
+    const p = projectProgress(rooms);
+    expect(p.rooms[0]).toEqual({
+      roomId: "a",
+      done: 1,
+      total: 2,
+      fraction: 0.5,
+    });
+    expect(p.rooms[1]).toEqual({
+      roomId: "b",
+      done: 1,
+      total: 1,
+      fraction: 1,
+    });
+    expect(p).toMatchObject({ done: 2, total: 3 });
+    expect(p.fraction).toBeCloseTo(2 / 3, 5);
+  });
+
+  it("is zero with no surfaces and never divides by zero", () => {
+    expect(projectProgress([])).toEqual({
+      rooms: [],
+      done: 0,
+      total: 0,
+      fraction: 0,
+    });
+    const empty = projectProgress([{ id: "e", name: "Empty", surfaces: [] }]);
+    expect(empty.rooms[0]).toEqual({
+      roomId: "e",
+      done: 0,
+      total: 0,
+      fraction: 0,
+    });
+    expect(empty.fraction).toBe(0);
   });
 });
