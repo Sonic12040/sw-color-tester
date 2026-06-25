@@ -7,10 +7,9 @@ import type {
 import { DESIGNER_COLLECTION_PREFIX } from "../utils/config.js";
 import { toSlug } from "../utils/slug.js";
 import {
+  buildCollections,
   collectionRefsByColorNumber,
-  resolveCollections,
 } from "../utils/collections.js";
-import { CURATED_COLLECTIONS } from "../data/collections.js";
 import { orderFamilies, queryColors, sortColors } from "./colorQuery.js";
 
 /**
@@ -55,8 +54,10 @@ export class ColorModel {
     this.#designerPickIds = new Set();
     this.#collectionNames = [];
     this.#buildGroupMaps();
-    this.#editorialCollections = resolveCollections(CURATED_COLLECTIONS, (n) =>
-      this.#colorByNumber.get(n),
+    // Collections come from the dataset's branded collection names (E12),
+    // excluding designer collections (surfaced separately as "Designer Pick").
+    this.#editorialCollections = buildCollections(this.#activeColors, (name) =>
+      name.startsWith(DESIGNER_COLLECTION_PREFIX),
     );
     this.#collectionsByColorNumber = collectionRefsByColorNumber(
       this.#editorialCollections,

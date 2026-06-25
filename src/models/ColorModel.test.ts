@@ -32,7 +32,28 @@ describe("ColorModel construction + indexes", () => {
   });
 
   it("lists non-designer collections, sorted", () => {
-    expect(model.getCollectionNames()).toEqual(["Timeless Color"]);
+    expect(model.getCollectionNames()).toEqual([
+      "Coastal Cool",
+      "Timeless Color",
+    ]);
+  });
+
+  it("builds editorial collections from the dataset's branded names (E12)", () => {
+    const titles = model.getCollections().map((c) => c.title);
+    // Both branded collections, largest-first then name (here a 2-2 tie → A–Z).
+    expect(titles).toEqual(["Coastal Cool", "Timeless Color"]);
+    // Designer collections are excluded.
+    expect(titles.some((t) => t.startsWith("Designer"))).toBe(false);
+
+    const timeless = model.getCollectionBySlug("timeless-color");
+    expect(timeless?.colors.map((c) => c.name)).toEqual([
+      "Repose Gray",
+      "Accessible Beige",
+    ]);
+    // Reverse map: a color knows the collections it's in.
+    expect(
+      model.getCollectionsForColor(timeless!.colors[0]).map((r) => r.title),
+    ).toEqual(["Timeless Color"]);
   });
 
   it("flags designer picks", () => {

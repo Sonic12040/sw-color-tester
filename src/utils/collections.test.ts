@@ -1,101 +1,115 @@
 import { describe, it, expect } from "vitest";
 import type { Color } from "../data/types.js";
-import type { CollectionContent } from "../domain/collection.js";
 import {
+  buildCollections,
   collectionRefsByColorNumber,
-  resolveCollection,
-  resolveCollections,
+  collectionSlug,
+  describeCollection,
 } from "./collections.js";
 
-const color = (number: string, name: string): Color =>
+const color = (
+  number: string,
+  name: string,
+  family: string,
+  collections: string[],
+): Color =>
   ({
     id: `id-${number}`,
     name,
     colorNumber: number,
     hex: "#888888",
-    colorFamilyNames: [],
-    brandedCollectionNames: [],
+    colorFamilyNames: [family],
+    brandedCollectionNames: collections,
     similarColors: [],
     description: [],
     lrv: 50,
   }) as unknown as Color;
 
-const catalog = new Map([
-  ["100", color("100", "One")],
-  ["200", color("200", "Two")],
-  ["300", color("300", "Three")],
-]);
-const getByNumber = (n: string) => catalog.get(n);
+const DESIGNER = "Designer Color Collection - Pottery";
+const isExcluded = (n: string) => n.startsWith("Designer Color Collection");
 
-const content = (over: Partial<CollectionContent>): CollectionContent => ({
-  slug: "c",
-  title: "Collection",
-  blurb: "A blurb",
-  colorNumbers: ["100", "200"],
-  published: true,
-  ...over,
-});
+const catalog = [
+  color("100", "One", "Blue", ["Coastal", DESIGNER]),
+  color("200", "Two", "Blue", ["Coastal", "Timeless"]),
+  color("300", "Three", "Green", ["Coastal"]),
+  color("400", "Four", "Neutral", ["Timeless"]),
+];
 
-describe("resolveCollection", () => {
-  it("resolves SW numbers to colors in authoring order", () => {
-    const r = resolveCollection(
-      content({ colorNumbers: ["200", "100"] }),
-      getByNumber,
+describe("collectionSlug", () => {
+  it("kebab-cases a branded name", () => {
+    expect(collectionSlug("Top 50 Interior Colors")).toBe(
+      "top-50-interior-colors",
     );
-    expect(r?.colors.map((c) => c.name)).toEqual(["Two", "One"]);
-  });
-
-  it("drops unknown SW numbers but keeps the rest", () => {
-    const r = resolveCollection(
-      content({ colorNumbers: ["100", "999"] }),
-      getByNumber,
+    expect(collectionSlug("Victorian (1830s-1910s)")).toBe(
+      "victorian-1830s-1910s",
     );
-    expect(r?.colors.map((c) => c.colorNumber)).toEqual(["100"]);
-  });
-
-  it("uses the named hero, else falls back to the first color", () => {
-    expect(
-      resolveCollection(content({ heroNumber: "200" }), getByNumber)?.hero.name,
-    ).toBe("Two");
-    expect(resolveCollection(content({}), getByNumber)?.hero.name).toBe("One");
-  });
-
-  it("returns null for unpublished or fully-unresolvable collections", () => {
-    expect(
-      resolveCollection(content({ published: false }), getByNumber),
-    ).toBeNull();
-    expect(
-      resolveCollection(content({ colorNumbers: ["999"] }), getByNumber),
-    ).toBeNull();
   });
 });
 
-describe("resolveCollections", () => {
-  it("keeps only published, resolvable collections in order", () => {
-    const all = resolveCollections(
+describe("buildCollections", () => {
+  it("groups colors by branded name, excluding designer collections", () => {
+    const cols = buildCollections(catalog, isExcluded);
+    expect(cols.map((c) => c.title)).toEqual(["Coastal", "Timeless"]);
+    // Designer collection never becomes its own page.
+    expect(cols.some((c) => c.title.startsWith("Designer"))).toBe(false);
+  });
+
+  it("sorts by size (largest first), then name; preserves dataset order within", () => {
+    const cols = buildCollections(catalog, isExcluded);
+    expect(cols[0].title).toBe("Coastal"); // 3 colors
+    expect(cols[0].colors.map((c) => c.colorNumber)).toEqual([
+      "100",
+      "200",
+      "300",
+    ]);
+    expect(cols[1].title).toBe("Timeless"); // 2 colors
+  });
+
+  it("derives a slug, hero (first color), and a blurb per collection", () => {
+    const coastal = buildCollections(catalog, isExcluded)[0];
+    expect(coastal.slug).toBe("coastal");
+    expect(coastal.hero.colorNumber).toBe("100");
+    expect(coastal.blurb).toContain("3 Sherwin-Williams paint colors");
+    expect(coastal.blurb).toContain("Coastal collection");
+  });
+
+  it("disambiguates slug collisions deterministically", () => {
+    const cols = buildCollections(
       [
-        content({ slug: "a" }),
-        content({ slug: "draft", published: false }),
-        content({ slug: "b", colorNumbers: ["300"] }),
+        color("1", "A", "Blue", ["Top Picks"]),
+        color("2", "B", "Blue", ["Top Picks"]),
+        color("3", "C", "Blue", ["Top  Picks"]), // collides on slug
       ],
-      getByNumber,
+      () => false,
     );
-    expect(all.map((c) => c.slug)).toEqual(["a", "b"]);
+    const slugs = cols.map((c) => c.slug);
+    expect(new Set(slugs).size).toBe(slugs.length);
+    expect(slugs).toContain("top-picks");
+    expect(slugs).toContain("top-picks-2");
+  });
+});
+
+describe("describeCollection", () => {
+  it("mentions the count and the dominant families", () => {
+    const blurb = describeCollection("Coastal", [
+      catalog[0],
+      catalog[1],
+      catalog[2],
+    ]);
+    expect(blurb).toMatch(/^3 Sherwin-Williams paint colors in the Coastal/);
+    expect(blurb).toContain("Blue");
   });
 });
 
 describe("collectionRefsByColorNumber", () => {
   it("maps each color number to the collections featuring it", () => {
-    const resolved = resolveCollections(
-      [
-        content({ slug: "a", title: "A", colorNumbers: ["100", "200"] }),
-        content({ slug: "b", title: "B", colorNumbers: ["200", "300"] }),
-      ],
-      getByNumber,
+    const map = collectionRefsByColorNumber(
+      buildCollections(catalog, isExcluded),
     );
-    const map = collectionRefsByColorNumber(resolved);
-    expect(map.get("100")?.map((r) => r.slug)).toEqual(["a"]);
-    expect(map.get("200")?.map((r) => r.slug)).toEqual(["a", "b"]);
-    expect(map.get("300")?.map((r) => r.title)).toEqual(["B"]);
+    expect(map.get("200")?.map((r) => r.title)).toEqual([
+      "Coastal",
+      "Timeless",
+    ]);
+    expect(map.get("400")?.map((r) => r.title)).toEqual(["Timeless"]);
   });
 });

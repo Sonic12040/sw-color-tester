@@ -35,9 +35,9 @@ discoverability.
 
 - **Color intelligence** — plain-language summaries, LRV/undertone/neutrality
   classification, coordinating + similar suggestions, 60-30-10 palette roles.
-- **Editorial collections** — curated, prerendered `/collections` landing pages
-  (hero, blurb, featured colors, `ItemList` JSON-LD, per-collection OG card),
-  authored from a single build-time content file and cross-linked from color pages.
+- **Editorial collections** — prerendered `/collections` landing pages (hero,
+  blurb, featured colors, `ItemList` JSON-LD, per-collection OG card) derived from
+  the dataset's branded collection names and cross-linked from color pages.
 - **Room Visualizer** — preview a color on real surfaces in curated room scenes,
   switch colors (search / palette / recent), try lighting presets, and save or share
   the look via a deep link — fully client-side, no uploads, no backend.

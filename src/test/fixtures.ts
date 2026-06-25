@@ -107,6 +107,7 @@ export const TEST_COLORS: Color[] = [
     isDark: true,
     isExterior: false,
     colorFamilyNames: ["Blue"],
+    brandedCollectionNames: ["Coastal Cool"],
     lab: { L: 25, A: -3, B: -16 },
   }),
   base({
@@ -121,6 +122,7 @@ export const TEST_COLORS: Color[] = [
     lightness: 0.7,
     lrv: 50,
     colorFamilyNames: ["Blue"],
+    brandedCollectionNames: ["Coastal Cool"],
     lab: { L: 77, A: -8, B: -7 },
   }),
   base({
