@@ -1,6 +1,8 @@
 import type { Color } from "../data/types.js";
 import type { PaletteRole } from "../domain/types.js";
 import type { Room } from "../domain/project.js";
+import type { PaletteProject } from "../domain/paletteData.js";
+import { serializeProject } from "./projectFile.js";
 
 /** Per-color annotations captured in a palette project. */
 export interface ColorAnnotation {
@@ -100,6 +102,21 @@ export class ExportService {
       exportFilename(now, slug, "pdf"),
     );
     return { rooms: rooms.length };
+  }
+
+  /**
+   * Export a Project to a versioned JSON file and trigger a download (E18.1).
+   * The whole project travels — colors + notes/room/roles + rooms/surfaces +
+   * progress — so it round-trips losslessly on import.
+   */
+  exportProjectFile(project: PaletteProject): { name: string } {
+    const json = JSON.stringify(serializeProject(project), null, 2);
+    const slug = `project-${kebab(project.name)}`;
+    this.#download(
+      new Blob([json], { type: "application/json" }),
+      exportFilename(new Date(), slug, "json"),
+    );
+    return { name: project.name };
   }
 
   /** Render a PNG swatch board and trigger a download (export module loaded on demand). */

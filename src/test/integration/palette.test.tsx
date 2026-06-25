@@ -6,6 +6,9 @@ vi.mock("../../data/palette.js", async () => ({
 import { describe, it, expect } from "vitest";
 import { screen, within } from "@testing-library/react";
 import { renderApp } from "./harness.js";
+import { serializeProject } from "../../utils/projectFile.js";
+import { encodeProjectParam } from "../../utils/projectShare.js";
+import type { PaletteProject } from "../../domain/paletteData.js";
 
 describe("Palette", () => {
   it("adds a color from its tile and lists it on the palette page", async () => {
@@ -77,6 +80,72 @@ describe("Palette", () => {
       (screen.getByLabelText("Note for Tricorn Black") as HTMLInputElement)
         .value,
     ).toBe("Front door");
+  });
+});
+
+describe("Project portability — file export/import + link (E18)", () => {
+  const sampleProject: PaletteProject = {
+    id: "exported-id",
+    name: "Beach house",
+    entries: [{ id: "tricorn", note: "Front door" }, { id: "repose" }],
+    rooms: [
+      {
+        id: "room-1",
+        name: "Foyer",
+        surfaces: [{ id: "surf-1", type: "wall", colorId: "tricorn" }],
+      },
+    ],
+  };
+
+  it("imports a project file as a new, selected project (US18.1)", async () => {
+    const { user } = renderApp("/palette");
+    const file = new File(
+      [JSON.stringify(serializeProject(sampleProject))],
+      "beach-house.json",
+      { type: "application/json" },
+    );
+    await user.upload(screen.getByLabelText("Import project file"), file);
+
+    // Imported under a fresh id but its name + colors land, and it's active.
+    expect(await screen.findByText(/Imported “Beach house”/)).toBeTruthy();
+    const select = screen.getByLabelText("Select palette") as HTMLSelectElement;
+    expect(within(select).getAllByRole("option")).toHaveLength(2);
+    expect(
+      (screen.getByLabelText("Palette name") as HTMLInputElement).value,
+    ).toBe("Beach house");
+    expect(screen.getByRole("link", { name: "Tricorn Black" })).toBeTruthy();
+  });
+
+  it("rejects a malformed file gracefully (US18.1)", async () => {
+    const { user } = renderApp("/palette");
+    const bad = new File(["{ not json"], "bad.json", {
+      type: "application/json",
+    });
+    await user.upload(screen.getByLabelText("Import project file"), bad);
+    expect(await screen.findByText(/Couldn't read that file/)).toBeTruthy();
+  });
+
+  it("offers to import a project carried in a ?project= link (US18.2)", async () => {
+    const param = await encodeProjectParam(sampleProject);
+    const { user } = renderApp(`/palette?project=${param}`);
+
+    const importBtn = await screen.findByRole("button", {
+      name: "Import shared project",
+    });
+    expect(screen.getByText(/shared project “Beach house”/)).toBeTruthy();
+    await user.click(importBtn);
+    expect(await screen.findByText(/Imported “Beach house”/)).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Tricorn Black" })).toBeTruthy();
+  });
+
+  it("exposes a Copy project link action once a palette has colors (US18.2)", async () => {
+    const { user } = renderApp("/palette?c=sw-6258-tricorn-black");
+    await user.click(
+      screen.getByRole("button", { name: /Load shared palette/ }),
+    );
+    expect(
+      screen.getByRole("button", { name: "Copy project link" }),
+    ).toBeTruthy();
   });
 });
 

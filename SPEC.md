@@ -56,9 +56,11 @@ src/
 │   │                     #   ColorGridSection, MiniTile, HslBreakdown
 │   ├── Workspace/        # CompareTray, ContrastMatrix, WorkOrderView (Painter lens)
 │   ├── Toast/, ErrorBoundary/, seo/JsonLd
-├── domain/               # types.ts (shared facet/sort vocabulary), project.ts (Rooms → Surfaces model)
+├── domain/               # types.ts (shared facet/sort vocabulary), project.ts (Rooms → Surfaces model),
+│                         #   paletteData.ts (persisted shape + pure parse/normalize/migrate — E18)
 ├── utils/                # base.ts, config.ts, storage.ts, slug.ts, seo.ts, breakpoints.ts, clipboard.ts, colorMath.ts,
-│                         #   colorCopy.ts, paint.ts, workOrder.ts, swLinks.ts, ogTemplate.ts, ExportService.ts, paletteExport.ts (lazy)
+│                         #   colorCopy.ts, paint.ts, workOrder.ts, swLinks.ts, ogTemplate.ts, ExportService.ts, paletteExport.ts (lazy),
+│                         #   projectFile.ts (export/import envelope) + projectShare.ts (compressed ?project= link) — E18
 └── styles/               # tokens.css, breakpoints.css, a11y.css, global.css
 prerender.mjs             # post-build: writes dist/colors/<slug>/index.html + 404.html, sitemap, colors.json
 ```
@@ -80,13 +82,26 @@ so a change to one slice doesn't re-render consumers of another — validated by
 | Toasts        | `ToastContext`                          | `useToast`      |
 
 `PaletteContext` holds the named projects; each is a color list **plus an optional
-structured Project** (`domain/project.ts`: `rooms[] → surfaces[]`, with
-parse/migrate so the legacy flat-list format still loads). Rooms/surfaces and
-per-surface progress persist through the same `usePersistentState` / `storage` seam
-as everything else; this seam (with its versioned serialize/parse) is also what
-makes Project **file export/import** portability (E18) cheap — the product stays
-local-first with no server. Paint quantities, the shopping list, and progress are
-pure functions over the project (`utils/paint.ts`, `utils/workOrder.ts`).
+structured Project** (`domain/project.ts`: `rooms[] → surfaces[]`). The persisted
+shape and all parse/normalize/migrate logic live in the pure, framework-free
+`domain/paletteData.ts` (`parsePaletteData` / `normalizeProject`), so the legacy
+flat-list format still loads and the **same validation guards every entry point**:
+`localStorage`, an imported project file, and a shared project link (E18). Rooms/
+surfaces and per-surface progress persist through the same `usePersistentState` /
+`storage` seam as everything else; this seam is also what makes Project **file
+export/import** portability (E18) cheap — the product stays local-first with no
+server. Paint quantities, the shopping list, and progress are pure functions over
+the project (`utils/paint.ts`, `utils/workOrder.ts`).
+
+**Project portability (E18).** A Project exports to a **versioned JSON file**
+(`utils/projectFile.ts`: `serializeProject` / `parseProjectFile`) and imports back
+as a **new** project (no silent overwrite), round-tripping losslessly. It can also
+be carried whole in a **shareable link** — `utils/projectShare.ts` gzip-compresses
+(`CompressionStream`) the file envelope to a base64url `?project=` param, with a
+size guard that falls back to "export a file instead" above
+`MAX_SHARE_PARAM_LENGTH`. Both paths decode through `normalizeProject`, so an
+imported file or a decoded link is validated exactly like stored data — and the
+whole handoff (Designer → Painter → Client) needs **no backend**.
 
 `usePersistent*` use **two-phase init** (render `initial`, then load from storage)
 so server-prerendered markup and the first client render agree (no hydration
@@ -254,21 +269,19 @@ share reach instead. The Now horizon is therefore **complete**.
 
 Listed in **delivery order** (see the groomed feature/story backlog below for the
 WSJF-lite scoring and dependencies). **E11 (palette intelligence), E15 (Project
-model), and E16 (Work Order + shopping list) have shipped** — see the architecture
-sections. **E10 (Accounts & cloud sync) is removed** — see the **no backend, no
-accounts** stance in Assumptions. Every remaining epic is **fully static +
-local-first**. The order leads with **E18 project portability** (the local-first
-substitute for the handoff that accounts would have provided), then **E12 editorial
-reach**, then **E17 field mode** to round out the Painter on-site.
+model), E16 (Work Order + shopping list), and E18 (Project portability) have
+shipped** — see the architecture sections. **E10 (Accounts & cloud sync) is
+removed** — see the **no backend, no accounts** stance in Assumptions. Every
+remaining epic is **fully static + local-first**. The order leads with **E12
+editorial reach**, then **E17 field mode** to round out the Painter on-site.
 
-| #   | Item                                                                   | Epic | Persona           | Effort |
-| --- | ---------------------------------------------------------------------- | ---- | ----------------- | ------ |
-| 1   | Project portability & sharing (file export/import + shareable Project) | E18  | Designer/Painter  | S–M    |
-| 2   | Editorial / trend collection landing pages + light curation            | E12  | Marketer          | M–L    |
-| 3   | Field mode — on-site, high-contrast, offline work order                | E17  | Painter           | M      |
-| 4   | Room Visualizer v1 (curated scenes, recolor walls, lighting presets)   | E9   | Shopper           | L      |
-| 5   | Embeddable swatch/palette widget                                       | E14  | Marketer/partners | M      |
-| 6   | Client presentation boards (branded, read-only share)                  | E13  | Designer          | M      |
+| #   | Item                                                                 | Epic | Persona           | Effort |
+| --- | -------------------------------------------------------------------- | ---- | ----------------- | ------ |
+| 1   | Editorial / trend collection landing pages + light curation          | E12  | Marketer          | M–L    |
+| 2   | Field mode — on-site, high-contrast, offline work order              | E17  | Painter           | M      |
+| 3   | Room Visualizer v1 (curated scenes, recolor walls, lighting presets) | E9   | Shopper           | L      |
+| 4   | Embeddable swatch/palette widget                                     | E14  | Marketer/partners | M      |
+| 5   | Client presentation boards (branded, read-only share)                | E13  | Designer          | M      |
 
 ### Later — ambitious bets (3+ quarters)
 
@@ -341,28 +354,26 @@ serverless signals noted under **Success metrics**. The **Now horizon is complet
 Reprioritized via WSJF-lite ((value + enablement) ÷ effort), then adjusted for hard
 dependencies and the "**local-first, no backend** · validate locally first"
 principles. Effort: S=1, M=2, M–L=2.5, L=3 (value/enable on 1–5). Epic **IDs are
-stable**; the table is in **delivery order**. **E11, E15, and E16 have shipped**
-(removed — see the architecture sections); **E10 (Accounts & cloud sync) is removed**
-as backend-dependent. Every epic below is fully static + local-first.
+stable**; the table is in **delivery order**. **E11, E15, E16, and E18 have
+shipped** (removed — see the architecture sections); **E10 (Accounts & cloud sync)
+is removed** as backend-dependent. Every epic below is fully static + local-first.
 
-| Rank | Epic                                 | Persona           | V   | Enable | Eff | WSJF | Why here                                                                                  |
-| ---- | ------------------------------------ | ----------------- | --- | ------ | --- | ---- | ----------------------------------------------------------------------------------------- |
-| 1    | **E18 · Project portability**        | Designer/Painter  | 4   | 3      | 1.5 | 4.7  | Local-first handoff/portability — the no-account substitute for sync; cheap, high-enable. |
-| 2    | **E12 · Editorial / trend pages**    | Marketer          | 4   | 3      | 2.5 | 2.8  | Independent SSG/SEO/OG reach at low marginal cost.                                        |
-| 3    | **E17 · Field mode**                 | Painter           | 4   | 1      | 2   | 2.5  | On-site work order (high-contrast/offline); depends on the shipped **E16**; PWA-only.     |
-| 4    | **E9 · Room Visualizer v1**          | Shopper           | 5   | 3      | 3   | 2.7  | Biggest shopper gap ("see it in context"); fully client-side; earns the AR v2 bet.        |
-| 5    | **E14 · Embeddable widget**          | Marketer/partners | 3   | 3      | 2   | 3.0  | Static embed distribution; compounds with editorial.                                      |
-| 6    | **E13 · Client presentation boards** | Designer          | 3   | 2      | 2   | 2.5  | Branded read-only share (built on E18); live comments/approval dropped (no backend).      |
+| Rank | Epic                                 | Persona           | V   | Enable | Eff | WSJF | Why here                                                                              |
+| ---- | ------------------------------------ | ----------------- | --- | ------ | --- | ---- | ------------------------------------------------------------------------------------- |
+| 1    | **E12 · Editorial / trend pages**    | Marketer          | 4   | 3      | 2.5 | 2.8  | Independent SSG/SEO/OG reach at low marginal cost.                                    |
+| 2    | **E17 · Field mode**                 | Painter           | 4   | 1      | 2   | 2.5  | On-site work order (high-contrast/offline); depends on the shipped **E16**; PWA-only. |
+| 3    | **E9 · Room Visualizer v1**          | Shopper           | 5   | 3      | 3   | 2.7  | Biggest shopper gap ("see it in context"); fully client-side; earns the AR v2 bet.    |
+| 4    | **E14 · Embeddable widget**          | Marketer/partners | 3   | 3      | 2   | 3.0  | Static embed distribution; compounds with editorial.                                  |
+| 5    | **E13 · Client presentation boards** | Designer          | 3   | 2      | 2   | 2.5  | Branded read-only share (built on E18); live comments/approval dropped (no backend).  |
 
-Sequencing rationale: with **no backend on the table**, lead with **E18** — file
-export/import + a shareable Project is the local-first answer to portability and the
-Designer→Painter→Client handoff (the value accounts would carry), and it's the
-cheapest item on the board (S–M). **E12** is an independent SSG/SEO reach win.
-**E17** rounds out the Painter on-site (needs the shipped E16; PWA-only, no server).
-Then the heavy but fully client-side **E9**, the static **E14** widget, and a
-re-scoped **E13** last (read-only board on E18's share primitive). Raw WSJF would
-float **E14** above **E9**; we hold E9 higher as the biggest unserved shopper gap.
-(Pull **E14** forward if a concrete partner appears.)
+Sequencing rationale: with **E18 shipped** (file export/import + a shareable Project
+— the local-first answer to portability and the Designer→Painter→Client handoff),
+lead with **E12**, an independent SSG/SEO reach win. **E17** rounds out the Painter
+on-site (needs the shipped E16; PWA-only, no server). Then the heavy but fully
+client-side **E9**, the static **E14** widget, and a re-scoped **E13** last
+(read-only board on E18's share primitive). Raw WSJF would float **E14** above
+**E9**; we hold E9 higher as the biggest unserved shopper gap. (Pull **E14** forward
+if a concrete partner appears.)
 
 ---
 
@@ -398,37 +409,6 @@ SSG / JSON-LD / OG pipeline (the cheapest reach lever we have).
   - AC: `/collections` index; each color page links the collections it's in; nav
     entry; all in sitemap.
   - Tasks: index page; reverse map color→collections; nav + internal links; tests.
-
-#### E18 · Project portability & sharing _(Designer/Painter · S–M)_ — local-first handoff
-
-Benefit: the **local-first substitute for accounts** — move a Project between
-devices and hand it Designer→Painter→Client **without a backend**. Today `?c=`
-shares a flat color list; a full structured Project (rooms → surfaces, assignments,
-and progress) is too large for a URL, so portability becomes **file export/import**
-plus an optional compressed share link, all client-side. Reuses the existing
-serializer/parse-migrate seam (`parsePaletteData`), so imported data flows through
-the same validation as stored data.
-
-**Feature: Project file export / import**
-
-- **US18.1** As a user, I want to export a Project to a file and import it on another
-  device (or from a teammate) so my work is portable without an account. _(S–M)_
-  - AC: export the active Project (colors + notes/room/roles + rooms/surfaces +
-    progress) to a versioned JSON file; import validates + migrates through
-    `parsePaletteData` (rejects malformed input gracefully); import lands as a new
-    Project (no silent overwrite); round-trips losslessly.
-  - Tasks: versioned serialize/deserialize over the storage seam; export/import UI on
-    the projects switcher; unit tests (round-trip + malformed/legacy input).
-
-**Feature: Shareable Project link (best-effort, no server)**
-
-- **US18.2** As a designer, I want a copyable link that carries a whole Project so I
-  can hand off a structured job, not just a color list. _(S–M)_
-  - AC: encode the Project into the URL (compressed) for reasonable sizes; above a
-    size threshold, fall back to "export a file instead" with a clear message; the
-    recipient opens read-to-import; no backend, no stored state.
-  - Tasks: compress/encode + decode; size-guard + fallback copy; extend the existing
-    share-URL flow; tests for the threshold + decode.
 
 #### E17 · Field mode _(Painter · M)_ — depends E16
 

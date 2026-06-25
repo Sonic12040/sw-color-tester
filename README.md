@@ -40,6 +40,9 @@ discoverability.
   paint calculator's area math.
 - **Shareable & discoverable** — pre-rendered pages, JSON-LD, per-color Open Graph
   social images, sitemap, and `?c=` share URLs.
+- **Project portability** — export a Project to a versioned JSON file and import it
+  on another device (or from a teammate), or hand off a whole structured Project in
+  a compressed `?project=` link — all client-side, no account needed.
 - **Local-first** — favorites, hidden colors, sort, compare, and palette projects
   persist in `localStorage` behind a single storage seam (no account required).
 - **PWA** — installable, offline-capable via a generated service worker, with
