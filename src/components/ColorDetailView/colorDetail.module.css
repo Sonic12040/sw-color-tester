@@ -170,6 +170,14 @@
   line-height: var(--line-height-relaxed);
 }
 
+/* Inline links inside body copy (e.g. "Featured in" collections) — white +
+   underline so they're legible on the dark card (the UA default #0000ee fails
+   contrast there). */
+.bodyText a {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
 /* Plain-language lead summary (jargon-free, first thing in the body). */
 .summary {
   margin: 0;
