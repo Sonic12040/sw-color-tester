@@ -15,7 +15,9 @@ const {
   getPrerenderPaths,
   getSitemapUrls,
   getColorsIndex,
+  getCollectionsOgData,
   colorOgSvg,
+  collectionOgSvg,
   defaultOgSvg,
   BASENAME,
 } = await import("./dist-server/entry-server.js");
@@ -100,6 +102,20 @@ for (const c of index) {
   }
 }
 process.stdout.write("\n");
+
+// Editorial-collection OG cards (E12): one branded card per published collection.
+const collectionsOg = getCollectionsOgData();
+for (const c of collectionsOg) {
+  writeFileSync(
+    resolve(ogDir, `collection-${c.slug}.png`),
+    svgToPng(collectionOgSvg({ title: c.title, hexes: c.hexes })),
+  );
+}
+if (collectionsOg.length > 0) {
+  process.stdout.write(
+    `  rendered ${collectionsOg.length} collection OG cards\n`,
+  );
+}
 
 // 404.html — SPA fallback for static hosts (e.g. GitHub Pages). Served for any
 // unmatched path, including the base URL without a trailing slash; the client

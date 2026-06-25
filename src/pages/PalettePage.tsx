@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router";
 import type { Color } from "../data/types.js";
 import { hsl, classifyLrv, hueRelation } from "../utils/colorMath.js";
@@ -11,6 +11,12 @@ import { explainRole } from "../utils/colorCopy.js";
 import { colorPath, BASENAME } from "../utils/base.js";
 import { toSlug } from "../utils/slug.js";
 import { copyText } from "../utils/clipboard.js";
+import { parseProjectFile } from "../utils/projectFile.js";
+import {
+  decodeProjectParam,
+  encodeProjectParam,
+} from "../utils/projectShare.js";
+import type { PaletteProject } from "../domain/paletteData.js";
 import { useAppContext } from "../context/AppContext.js";
 import { usePalette, type PaletteEntry } from "../context/PaletteContext.js";
 import { useToast } from "../components/Toast/Toast.js";
@@ -48,8 +54,10 @@ export function PalettePage() {
     createProject,
     renameProject,
     deleteProject,
+    importProject,
   } = usePalette();
   const [searchParams] = useSearchParams();
+  const importInputRef = useRef<HTMLInputElement>(null);
   const [showCompanions, setShowCompanions] = useState(false);
   // View preference persists across visits (US15.3); flat/empty projects render
   // the same in either lens, so the toggle only appears once there are colors.
@@ -90,6 +98,26 @@ export function PalettePage() {
       .flatMap((id) => (id ? [id] : []));
   }, [searchParams, colorModel]);
 
+  // A full structured Project arrives compressed in ?project= (E18.2). Decode is
+  // async (gzip), so resolve it into state and offer an explicit import.
+  const projectParam = searchParams.get("project");
+  const [sharedProject, setSharedProject] = useState<PaletteProject | null>(
+    null,
+  );
+  useEffect(() => {
+    if (!projectParam) {
+      setSharedProject(null);
+      return;
+    }
+    let cancelled = false;
+    decodeProjectParam(projectParam).then((p) => {
+      if (!cancelled) setSharedProject(p);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [projectParam]);
+
   const move = (index: number, delta: number) => {
     const ids = rows.map((r) => r.color.id);
     const target = index + delta;
@@ -107,6 +135,71 @@ export function PalettePage() {
         ? "Share link copied to clipboard"
         : "Couldn't copy link",
     );
+  };
+
+  // E18.2: copy a link carrying the whole structured Project (compressed). Above
+  // the size threshold the encoder returns null → steer the user to a file.
+  const copyProjectLink = async () => {
+    const param = await encodeProjectParam(activeProject);
+    if (!param) {
+      showToast(
+        "This project is too large to share by link — export a file instead.",
+      );
+      return;
+    }
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    const url = `${origin}${BASENAME}/palette?project=${param}`;
+    showToast(
+      (await copyText(url))
+        ? "Project link copied to clipboard"
+        : "Couldn't copy link",
+    );
+  };
+
+  // E13: copy a link to a branded, read-only client presentation board. Reuses
+  // the E18 share encoding, pointed at the standalone /board view.
+  const copyBoardLink = async () => {
+    const param = await encodeProjectParam(activeProject);
+    if (!param) {
+      showToast(
+        "This project is too large to share by link — export a file instead.",
+      );
+      return;
+    }
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    const url = `${origin}${BASENAME}/board?project=${param}`;
+    showToast(
+      (await copyText(url))
+        ? "Client board link copied to clipboard"
+        : "Couldn't copy link",
+    );
+  };
+
+  // E18.1: export the active Project to a versioned JSON file.
+  const exportProjectFile = () => {
+    try {
+      exportService.exportProjectFile(activeProject);
+    } catch {
+      showToast("Couldn't export the project file");
+    }
+  };
+
+  // E18.1: import a project file as a NEW project (no silent overwrite).
+  const onImportFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = ""; // allow re-importing the same file
+    if (!file) return;
+    try {
+      const project = parseProjectFile(JSON.parse(await file.text()));
+      if (!project) {
+        showToast("That file isn't a valid project export");
+        return;
+      }
+      importProject(project);
+      showToast(`Imported “${project.name}”`);
+    } catch {
+      showToast("Couldn't read that file");
+    }
   };
 
   const exportOpts = {
@@ -149,11 +242,31 @@ export function PalettePage() {
               >
                 Copy share link
               </button>
+              <button
+                type="button"
+                className="btn-on-dark"
+                onClick={copyProjectLink}
+              >
+                Copy project link
+              </button>
               <button type="button" className="btn-on-dark" onClick={exportPdf}>
                 Export PDF
               </button>
               <button type="button" className="btn-on-dark" onClick={exportPng}>
                 Export PNG
+              </button>
+              <Link
+                className="btn-on-dark"
+                to={`/embed-builder?c=${colors.map((c) => toSlug(c)).join(",")}`}
+              >
+                Embed
+              </Link>
+              <button
+                type="button"
+                className="btn-on-dark"
+                onClick={copyBoardLink}
+              >
+                Client board
               </button>
               <button
                 type="button"
@@ -207,6 +320,29 @@ export function PalettePage() {
           >
             Delete palette
           </button>
+          {/* E18.1: project file portability — no account needed. */}
+          <button
+            type="button"
+            className="btn-on-dark"
+            onClick={exportProjectFile}
+          >
+            Export file
+          </button>
+          <button
+            type="button"
+            className="btn-on-dark"
+            onClick={() => importInputRef.current?.click()}
+          >
+            Import file
+          </button>
+          <input
+            ref={importInputRef}
+            type="file"
+            accept="application/json,.json"
+            className="sr-only"
+            aria-label="Import project file"
+            onChange={onImportFile}
+          />
         </div>
 
         {sharedIds.length > 0 && (
@@ -220,6 +356,30 @@ export function PalettePage() {
               onClick={() => setPalette(sharedIds)}
             >
               Load shared palette
+            </button>
+          </div>
+        )}
+
+        {sharedProject && (
+          <div className={styles.banner}>
+            <span>
+              A shared project “{sharedProject.name}” is in this link
+              {sharedProject.rooms?.length
+                ? ` (${sharedProject.rooms.length} room${
+                    sharedProject.rooms.length === 1 ? "" : "s"
+                  })`
+                : ""}
+              .
+            </span>
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={() => {
+                importProject(sharedProject);
+                showToast(`Imported “${sharedProject.name}”`);
+              }}
+            >
+              Import shared project
             </button>
           </div>
         )}

@@ -1,6 +1,9 @@
 import { describe, it, expect } from "vitest";
 import type { Color } from "../data/types.js";
+import type { ResolvedCollection } from "../domain/collection.js";
 import {
+  buildCollectionJsonLd,
+  buildCollectionsIndexJsonLd,
   buildColorJsonLd,
   buildGalleryJsonLd,
   colorDescription,
@@ -66,5 +69,37 @@ describe("buildGalleryJsonLd", () => {
     const ld = buildGalleryJsonLd(1728) as Record<string, unknown>;
     expect(ld["@type"]).toBe("CollectionPage");
     expect(String(ld.description)).toContain("1728");
+  });
+});
+
+describe("collection JSON-LD (E12)", () => {
+  const collection: ResolvedCollection = {
+    slug: "timeless-neutrals",
+    title: "Timeless Neutrals",
+    blurb: "Flexible, light-friendly backdrops.",
+    hero: make({}),
+    colors: [make({}), make({ name: "Repose Gray", colorNumber: "7015" })],
+  };
+
+  it("builds a CollectionPage with an ItemList of the colors", () => {
+    const ld = buildCollectionJsonLd(collection) as Record<string, unknown>;
+    expect(ld["@type"]).toBe("CollectionPage");
+    expect(ld.url).toContain("/collections/timeless-neutrals/");
+    const list = ld.mainEntity as Record<string, unknown>;
+    expect(list["@type"]).toBe("ItemList");
+    expect(list.numberOfItems).toBe(2);
+    const items = list.itemListElement as { position: number; url: string }[];
+    expect(items[0].position).toBe(1);
+    expect(items[1].url).toContain("/colors/sw-7015-repose-gray/");
+  });
+
+  it("builds an index ItemList of the collections", () => {
+    const ld = buildCollectionsIndexJsonLd([collection]) as Record<
+      string,
+      unknown
+    >;
+    expect(ld.url).toContain("/collections/");
+    const list = ld.mainEntity as Record<string, unknown>;
+    expect((list.itemListElement as unknown[]).length).toBe(1);
   });
 });

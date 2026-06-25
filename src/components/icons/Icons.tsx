@@ -50,6 +50,17 @@ export function BrowseIcon(props: IconProps) {
   );
 }
 
+/** Stacked layers — "Collections" (curated editorial palettes). */
+export function CollectionsIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M12 2 2 7l10 5 10-5-10-5Z" />
+      <path d="m2 12 10 5 10-5" />
+      <path d="m2 17 10 5 10-5" />
+    </IconBase>
+  );
+}
+
 /** Balance scales — "Compare". Pans fill when active. */
 export function CompareIcon({
   filled = false,

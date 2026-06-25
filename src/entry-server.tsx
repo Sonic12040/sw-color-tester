@@ -8,8 +8,12 @@ import { routes } from "./routes.js";
 import { colorModel } from "./appModel.js";
 import {
   BASENAME,
+  SITE_ORIGIN,
   SITE_URL,
   colorCanonicalUrl,
+  collectionCanonicalUrl,
+  collectionsIndexCanonicalUrl,
+  collectionOgImageUrl,
   ogImageUrl,
   OG_DEFAULT_IMAGE,
 } from "./utils/base.js";
@@ -18,7 +22,11 @@ import { colorDescription } from "./utils/seo.js";
 // Re-export so the Node prerender script gets the base path from one source.
 export { BASE_URL, BASENAME } from "./utils/base.js";
 // Re-export the OG SVG builders so the prerender script can rasterize them.
-export { colorOgSvg, defaultOgSvg } from "./utils/ogTemplate.js";
+export {
+  colorOgSvg,
+  collectionOgSvg,
+  defaultOgSvg,
+} from "./utils/ogTemplate.js";
 import { undertone } from "./utils/colorMath.js";
 import { toSlug } from "./utils/slug.js";
 
@@ -78,6 +86,85 @@ function buildHead(appPath: string): string {
       `<meta property="og:title" content="My palette | Sherwin-Williams Color Atlas">`,
       ...ogImageTags(OG_DEFAULT_IMAGE, "Sherwin-Williams Color Atlas"),
     );
+  } else if (appPath === "/embed") {
+    // A fragment for partner iframes — give it a title but keep it out of the index.
+    tags.push(
+      `<title>Sherwin-Williams color embed</title>`,
+      `<meta name="robots" content="noindex">`,
+    );
+  } else if (appPath === "/board") {
+    // A private, link-shared client board (E13) — title set client-side from the
+    // decoded project; kept out of the index, with the brand-default OG card.
+    tags.push(
+      `<title>Color board | Sherwin-Williams Color Atlas</title>`,
+      `<meta name="robots" content="noindex">`,
+      `<meta property="og:title" content="A Sherwin-Williams color board">`,
+      ...ogImageTags(OG_DEFAULT_IMAGE, "Sherwin-Williams color board"),
+    );
+  } else if (appPath === "/embed-builder") {
+    const canonical = `${SITE_ORIGIN}${BASENAME}/embed-builder/`;
+    tags.push(
+      `<title>Embed builder | Sherwin-Williams Color Atlas</title>`,
+      `<meta name="description" content="${esc("Build a copy-paste embed of a Sherwin-Williams swatch or palette for your own site.")}">`,
+      `<link rel="canonical" href="${canonical}">`,
+      `<meta property="og:site_name" content="Sherwin-Williams Color Atlas">`,
+      `<meta property="og:title" content="Embed builder | Sherwin-Williams Color Atlas">`,
+      `<meta property="og:description" content="${esc("Embed live Sherwin-Williams swatches and palettes on your own site.")}">`,
+      `<meta property="og:type" content="website">`,
+      `<meta property="og:url" content="${canonical}">`,
+      ...ogImageTags(
+        OG_DEFAULT_IMAGE,
+        "Sherwin-Williams Color Atlas embed builder",
+      ),
+    );
+  } else if (appPath === "/visualizer") {
+    const canonical = `${SITE_ORIGIN}${BASENAME}/visualizer/`;
+    tags.push(
+      `<title>Room Visualizer | Sherwin-Williams Color Atlas</title>`,
+      `<meta name="description" content="${esc("Preview Sherwin-Williams paint colors on real room surfaces — pick a scene, switch colors, and try different lighting.")}">`,
+      `<link rel="canonical" href="${canonical}">`,
+      `<meta property="og:site_name" content="Sherwin-Williams Color Atlas">`,
+      `<meta property="og:title" content="Room Visualizer | Sherwin-Williams Color Atlas">`,
+      `<meta property="og:description" content="${esc("See a paint color in a real room before you commit.")}">`,
+      `<meta property="og:type" content="website">`,
+      `<meta property="og:url" content="${canonical}">`,
+      ...ogImageTags(OG_DEFAULT_IMAGE, "Sherwin-Williams Room Visualizer"),
+    );
+  } else if (appPath === "/collections") {
+    tags.push(
+      `<title>Color collections | Sherwin-Williams Color Atlas</title>`,
+      `<meta name="description" content="${esc("Curated Sherwin-Williams color collections — trend-driven and timeless palettes for every room.")}">`,
+      `<link rel="canonical" href="${collectionsIndexCanonicalUrl}">`,
+      `<meta property="og:site_name" content="Sherwin-Williams Color Atlas">`,
+      `<meta property="og:title" content="Color collections | Sherwin-Williams Color Atlas">`,
+      `<meta property="og:description" content="${esc("Curated Sherwin-Williams color collections for every room.")}">`,
+      `<meta property="og:type" content="website">`,
+      `<meta property="og:url" content="${collectionsIndexCanonicalUrl}">`,
+      ...ogImageTags(OG_DEFAULT_IMAGE, "Sherwin-Williams color collections"),
+    );
+  } else if (appPath.startsWith("/collections/")) {
+    const slug = decodeURIComponent(
+      appPath.slice("/collections/".length).replace(/\/$/, ""),
+    );
+    const collection = colorModel.getCollectionBySlug(slug);
+    if (collection) {
+      const canonical = collectionCanonicalUrl(slug);
+      const title = `${collection.title} — Sherwin-Williams color collection`;
+      tags.push(
+        `<title>${esc(`${title} | Color Atlas`)}</title>`,
+        `<meta name="description" content="${esc(collection.blurb)}">`,
+        `<link rel="canonical" href="${canonical}">`,
+        `<meta property="og:title" content="${esc(title)}">`,
+        `<meta property="og:description" content="${esc(collection.blurb)}">`,
+        `<meta property="og:type" content="website">`,
+        `<meta property="og:url" content="${canonical}">`,
+        `<meta property="og:site_name" content="Sherwin-Williams Color Atlas">`,
+        ...ogImageTags(
+          collectionOgImageUrl(slug),
+          `${collection.title} — a curated Sherwin-Williams color collection`,
+        ),
+      );
+    }
   } else if (appPath.startsWith("/colors/")) {
     const slug = decodeURIComponent(
       appPath.slice("/colors/".length).replace(/\/$/, ""),
@@ -133,22 +220,45 @@ export async function render(appPath: string): Promise<RenderResult> {
   return { html, head: buildHead(path) };
 }
 
-/** App-relative paths to prerender: gallery + workspace + one page per color. */
+/** App-relative paths to prerender: gallery + workspace + collections + colors. */
 export function getPrerenderPaths(): string[] {
   return [
     "/",
     "/compare",
     "/palette",
+    "/visualizer",
+    "/embed",
+    "/embed-builder",
+    "/board",
+    "/collections",
+    ...colorModel.getCollections().map((c) => `/collections/${c.slug}`),
     ...colorModel.getAllSlugs().map((s) => `/colors/${s}`),
   ];
 }
 
-/** Absolute URLs for sitemap.xml (gallery + every color page). */
+/** Absolute URLs for sitemap.xml (gallery + collections + every color page). */
 export function getSitemapUrls(): string[] {
   return [
     SITE_URL,
+    `${SITE_ORIGIN}${BASENAME}/visualizer/`,
+    `${SITE_ORIGIN}${BASENAME}/embed-builder/`,
+    collectionsIndexCanonicalUrl,
+    ...colorModel.getCollections().map((c) => collectionCanonicalUrl(c.slug)),
     ...colorModel.getAllSlugs().map((s) => colorCanonicalUrl(s)),
   ];
+}
+
+/** Per-collection OG card data (slug + title + swatch hexes) for the prerender. */
+export function getCollectionsOgData(): {
+  slug: string;
+  title: string;
+  hexes: string[];
+}[] {
+  return colorModel.getCollections().map((c) => ({
+    slug: c.slug,
+    title: c.title,
+    hexes: c.colors.map((color) => color.hex.toUpperCase()),
+  }));
 }
 
 /** Machine-readable color index (colors.json) for AI/data consumers. */

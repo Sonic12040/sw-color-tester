@@ -49,6 +49,53 @@ test("palette workspace (with colors + companions) is accessible", async ({
   await expectNoSeriousAxe(page);
 });
 
+test("collections index + a collection page are accessible", async ({
+  page,
+}) => {
+  await page.goto("collections");
+  await expect(
+    page.getByRole("heading", { name: "Color collections" }),
+  ).toBeVisible();
+  await expectNoSeriousAxe(page);
+
+  // Into the first collection's landing page.
+  await page
+    .getByRole("link", { name: /\d+ colors$/ })
+    .first()
+    .click();
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await expectNoSeriousAxe(page);
+});
+
+test("room visualizer is accessible and recolors the scene", async ({
+  page,
+}) => {
+  await page.goto("visualizer");
+  await expect(
+    page.getByRole("heading", { name: "Room Visualizer" }),
+  ).toBeVisible();
+  // Switch scene + lighting so axe scans the interactive controls in a real state.
+  await page.getByRole("button", { name: "Bedroom" }).click();
+  await page.getByRole("button", { name: "Warm" }).click();
+  await expect(
+    page.getByRole("img", { name: /Bedroom with the walls painted/ }),
+  ).toBeVisible();
+  await expectNoSeriousAxe(page);
+});
+
+test("embed widget + builder are accessible", async ({ page }) => {
+  const [a, b] = colorSlugs(2);
+  await page.goto(`embed?c=${a},${b}`);
+  await expect(page.getByRole("link").first()).toBeVisible();
+  await expectNoSeriousAxe(page);
+
+  await page.goto(`embed-builder?c=${a},${b}`);
+  await expect(
+    page.getByRole("heading", { name: "Embed builder" }),
+  ).toBeVisible();
+  await expectNoSeriousAxe(page);
+});
+
 test("color detail page is accessible", async ({ page }) => {
   const [slug] = colorSlugs(1);
   await page.goto(`colors/${slug}`);

@@ -1,0 +1,111 @@
+/* ============================================================
+   Embed builder (E14) — dark card chrome consistent with the rest of
+   the app; a light/dark live preview box and a copyable snippet.
+   ============================================================ */
+
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--spacing-5) clamp(0.75rem, 2.67vw, 2rem) var(--tray-height);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  padding: clamp(1rem, 2.4vw, 1.75rem);
+  background: var(--surface-dark);
+  color: var(--on-dark);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  color-scheme: dark;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: #ffffff;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--on-dark-muted);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-4);
+  align-items: flex-end;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.legend {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--on-dark-muted);
+  padding: 0;
+}
+
+.segmented {
+  display: inline-flex;
+  gap: var(--spacing-2);
+}
+
+.sectionTitle {
+  margin: 0 0 var(--spacing-2);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: #ffffff;
+}
+
+.previewWrap,
+.snippetWrap {
+  display: flex;
+  flex-direction: column;
+}
+
+/* A neutral checkerboard backdrop so light + dark widgets both read clearly. */
+.preview {
+  width: 100%;
+  padding: var(--spacing-4);
+  border-radius: var(--radius-md);
+  background: repeating-conic-gradient(#d9d9d9 0% 25%, #ffffff 0% 50%) 50% /
+    24px 24px;
+}
+
+.snippetHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+}
+
+.snippet {
+  width: 100%;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--font-size-sm);
+  padding: var(--spacing-3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--on-dark-border);
+  background: var(--on-dark-subtle);
+  color: var(--on-dark);
+  resize: vertical;
+}

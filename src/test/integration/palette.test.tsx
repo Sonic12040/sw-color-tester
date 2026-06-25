@@ -6,6 +6,9 @@ vi.mock("../../data/palette.js", async () => ({
 import { describe, it, expect } from "vitest";
 import { screen, within } from "@testing-library/react";
 import { renderApp } from "./harness.js";
+import { serializeProject } from "../../utils/projectFile.js";
+import { encodeProjectParam } from "../../utils/projectShare.js";
+import type { PaletteProject } from "../../domain/paletteData.js";
 
 describe("Palette", () => {
   it("adds a color from its tile and lists it on the palette page", async () => {
@@ -77,6 +80,72 @@ describe("Palette", () => {
       (screen.getByLabelText("Note for Tricorn Black") as HTMLInputElement)
         .value,
     ).toBe("Front door");
+  });
+});
+
+describe("Project portability — file export/import + link (E18)", () => {
+  const sampleProject: PaletteProject = {
+    id: "exported-id",
+    name: "Beach house",
+    entries: [{ id: "tricorn", note: "Front door" }, { id: "repose" }],
+    rooms: [
+      {
+        id: "room-1",
+        name: "Foyer",
+        surfaces: [{ id: "surf-1", type: "wall", colorId: "tricorn" }],
+      },
+    ],
+  };
+
+  it("imports a project file as a new, selected project (US18.1)", async () => {
+    const { user } = renderApp("/palette");
+    const file = new File(
+      [JSON.stringify(serializeProject(sampleProject))],
+      "beach-house.json",
+      { type: "application/json" },
+    );
+    await user.upload(screen.getByLabelText("Import project file"), file);
+
+    // Imported under a fresh id but its name + colors land, and it's active.
+    expect(await screen.findByText(/Imported “Beach house”/)).toBeTruthy();
+    const select = screen.getByLabelText("Select palette") as HTMLSelectElement;
+    expect(within(select).getAllByRole("option")).toHaveLength(2);
+    expect(
+      (screen.getByLabelText("Palette name") as HTMLInputElement).value,
+    ).toBe("Beach house");
+    expect(screen.getByRole("link", { name: "Tricorn Black" })).toBeTruthy();
+  });
+
+  it("rejects a malformed file gracefully (US18.1)", async () => {
+    const { user } = renderApp("/palette");
+    const bad = new File(["{ not json"], "bad.json", {
+      type: "application/json",
+    });
+    await user.upload(screen.getByLabelText("Import project file"), bad);
+    expect(await screen.findByText(/Couldn't read that file/)).toBeTruthy();
+  });
+
+  it("offers to import a project carried in a ?project= link (US18.2)", async () => {
+    const param = await encodeProjectParam(sampleProject);
+    const { user } = renderApp(`/palette?project=${param}`);
+
+    const importBtn = await screen.findByRole("button", {
+      name: "Import shared project",
+    });
+    expect(screen.getByText(/shared project “Beach house”/)).toBeTruthy();
+    await user.click(importBtn);
+    expect(await screen.findByText(/Imported “Beach house”/)).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Tricorn Black" })).toBeTruthy();
+  });
+
+  it("exposes a Copy project link action once a palette has colors (US18.2)", async () => {
+    const { user } = renderApp("/palette?c=sw-6258-tricorn-black");
+    await user.click(
+      screen.getByRole("button", { name: /Load shared palette/ }),
+    );
+    expect(
+      screen.getByRole("button", { name: "Copy project link" }),
+    ).toBeTruthy();
   });
 });
 
@@ -310,6 +379,81 @@ describe("Work Order — progress tracking (US16.4)", () => {
       (screen.getByLabelText(/^Mark .* done$/) as HTMLInputElement).checked,
     ).toBe(true);
     expect(screen.getByText(/1\/1 surface done · 100%/)).toBeTruthy();
+  });
+});
+
+describe("Field mode — on-site work order (E17)", () => {
+  const openFieldMode = async () => {
+    const handle = renderApp(
+      "/palette?c=sw-6258-tricorn-black,sw-7015-repose-gray",
+    );
+    await handle.user.click(
+      screen.getByRole("button", { name: /Load shared palette/ }),
+    );
+    await handle.user.click(screen.getByRole("button", { name: "Work Order" }));
+    await handle.user.click(screen.getByRole("button", { name: "Add room" }));
+    await handle.user.click(
+      screen.getByRole("button", { name: "Add surface" }),
+    );
+    await handle.user.selectOptions(
+      screen.getByLabelText(/^Color for/),
+      screen.getByRole("option", { name: /Tricorn Black/ }),
+    );
+    await handle.user.type(screen.getByLabelText(/^Area for/), "200");
+    await handle.user.click(screen.getByRole("button", { name: "Field mode" }));
+    return handle;
+  };
+
+  it("renders a high-contrast read view with the surface + a number lookup (US17.1/17.2)", async () => {
+    await openFieldMode();
+    expect(
+      screen.getByRole("button", { name: "Exit field mode" }),
+    ).toBeTruthy();
+    expect(screen.getByLabelText("Look up a color by SW number")).toBeTruthy();
+    // The editable spec controls are gone; the surface reads as a plain row.
+    expect(screen.queryByLabelText(/^Color for/)).toBeNull();
+    // Appears as the surface row and again in the shopping list.
+    expect(
+      screen.getAllByText(/Tricorn Black · SW 6258/).length,
+    ).toBeGreaterThan(0);
+  });
+
+  it("checks a surface off from field mode and updates progress (US17.1)", async () => {
+    const { user } = await openFieldMode();
+    expect(screen.getByText(/0\/1 surfaces done · 0%/)).toBeTruthy();
+    await user.click(screen.getByLabelText(/^Mark .* done$/));
+    expect(screen.getByText(/1\/1 surfaces done · 100%/)).toBeTruthy();
+  });
+
+  it("jumps to a color by SW number (US17.2)", async () => {
+    const { user } = await openFieldMode();
+    await user.type(
+      screen.getByLabelText("Look up a color by SW number"),
+      "7015",
+    );
+    await user.click(screen.getByRole("button", { name: "Go" }));
+    expect(
+      await screen.findByRole("heading", { level: 1, name: "Repose Gray" }),
+    ).toBeTruthy();
+  });
+
+  it("warns when an SW number has no match (US17.2)", async () => {
+    const { user } = await openFieldMode();
+    await user.type(
+      screen.getByLabelText("Look up a color by SW number"),
+      "0000",
+    );
+    await user.click(screen.getByRole("button", { name: "Go" }));
+    expect(await screen.findByText(/No color found for SW 0000/)).toBeTruthy();
+  });
+
+  it("persists field mode across navigation (US17.1)", async () => {
+    const { user } = await openFieldMode();
+    await user.click(screen.getByRole("link", { name: /^Browse/ }));
+    await user.click(screen.getByRole("link", { name: /^Palette/ }));
+    expect(
+      screen.getByRole("button", { name: "Exit field mode" }),
+    ).toBeTruthy();
   });
 });
 

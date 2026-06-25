@@ -35,11 +35,28 @@ discoverability.
 
 - **Color intelligence** — plain-language summaries, LRV/undertone/neutrality
   classification, coordinating + similar suggestions, 60-30-10 palette roles.
+- **Editorial collections** — curated, prerendered `/collections` landing pages
+  (hero, blurb, featured colors, `ItemList` JSON-LD, per-collection OG card),
+  authored from a single build-time content file and cross-linked from color pages.
+- **Room Visualizer** — preview a color on real surfaces in curated room scenes,
+  switch colors (search / palette / recent), try lighting presets, and save or share
+  the look via a deep link — fully client-side, no uploads, no backend.
+- **Embeddable widget** — partners drop a live, themable swatch or palette onto
+  their own site via an `<iframe>`; a self-serve `/embed-builder` previews it and
+  copies the snippet (back-links carry UTM). Static, read-only, no backend.
+- **Client presentation board** — share a palette as a clean, branded, read-only
+  `/board` link (colors + notes/room + 60-30-10 roles) to hand to a client — decoded
+  entirely from the share link, no account or server.
 - **Paint planning** — per-room and per-color gallon/can estimates (area × coats ÷
   coverage), a consolidated shopping list, and progress tracking, all reusing the
   paint calculator's area math.
+- **Field mode** — an on-site, high-contrast, large-type view of the work order
+  with oversized check-off targets and a jump-to-SW-number lookup; works offline.
 - **Shareable & discoverable** — pre-rendered pages, JSON-LD, per-color Open Graph
   social images, sitemap, and `?c=` share URLs.
+- **Project portability** — export a Project to a versioned JSON file and import it
+  on another device (or from a teammate), or hand off a whole structured Project in
+  a compressed `?project=` link — all client-side, no account needed.
 - **Local-first** — favorites, hidden colors, sort, compare, and palette projects
   persist in `localStorage` behind a single storage seam (no account required).
 - **PWA** — installable, offline-capable via a generated service worker, with
@@ -70,9 +87,10 @@ npm run preview  # serve the production build locally
 ```
 
 `npm run build` runs `tsc`, builds the client and SSR bundles, then `prerender.mjs`
-writes `dist/` — static HTML for `/`, `/compare`, `/palette`, and every
-`/colors/<slug>`, plus `sitemap.xml`, `robots.txt`, `colors.json`, a `404.html` SPA
-fallback, and a 1200×630 Open Graph PNG per color.
+writes `dist/` — static HTML for `/`, `/compare`, `/palette`, `/collections`, every
+`/collections/<slug>`, and every `/colors/<slug>`, plus `sitemap.xml`, `robots.txt`,
+`colors.json`, a `404.html` SPA fallback, and a 1200×630 Open Graph PNG per color
+(plus one per collection).
 
 ## Scripts
 

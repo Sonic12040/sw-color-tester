@@ -42,6 +42,34 @@ describe("exportFilename", () => {
   });
 });
 
+describe("ExportService.exportProjectFile", () => {
+  it("triggers a versioned .json download named after the project", () => {
+    const createObjectURL = vi.fn(() => "blob:mock");
+    const revokeObjectURL = vi.fn();
+    Object.assign(URL, { createObjectURL, revokeObjectURL });
+    const anchor = {
+      href: "",
+      download: "",
+      click: vi.fn(),
+    } as unknown as HTMLAnchorElement;
+    const spy = vi
+      .spyOn(document, "createElement")
+      .mockReturnValue(anchor as HTMLAnchorElement);
+
+    const result = new ExportService().exportProjectFile({
+      id: "p1",
+      name: "Beach House",
+      entries: [{ id: "c1" }],
+    });
+
+    expect(result).toEqual({ name: "Beach House" });
+    expect(createObjectURL).toHaveBeenCalledOnce();
+    expect(anchor.download).toMatch(/^sw-project-beach-house-.*\.json$/);
+    expect(anchor.click).toHaveBeenCalledOnce();
+    spy.mockRestore();
+  });
+});
+
 describe("ExportService.exportSpecPdf", () => {
   it("builds a PDF blob and triggers a .pdf download", async () => {
     const createObjectURL = vi.fn(() => "blob:mock");

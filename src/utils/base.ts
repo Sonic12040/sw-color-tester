@@ -30,3 +30,19 @@ export const ogImageUrl = (slug: string): string =>
 
 /** Absolute URL of the brand-default OG image (gallery / palette / share fallback). */
 export const OG_DEFAULT_IMAGE = `${SITE_ORIGIN}${BASENAME}/og/default.png`;
+
+// ── Editorial collections (E12) ───────────────────────────────────────────
+
+/** Router path to a collection landing page (relative to basename). */
+export const collectionPath = (slug: string): string => `/collections/${slug}`;
+
+/** Absolute canonical URL for the collections index. */
+export const collectionsIndexCanonicalUrl = `${SITE_ORIGIN}${BASENAME}/collections/`;
+
+/** Absolute canonical URL for one collection landing page. */
+export const collectionCanonicalUrl = (slug: string): string =>
+  `${SITE_ORIGIN}${BASENAME}/collections/${slug}/`;
+
+/** Absolute URL of a collection's prerendered Open Graph image. */
+export const collectionOgImageUrl = (slug: string): string =>
+  `${SITE_ORIGIN}${BASENAME}/og/collection-${slug}.png`;

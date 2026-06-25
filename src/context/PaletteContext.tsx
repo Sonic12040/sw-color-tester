@@ -4,40 +4,21 @@ import { STORAGE_KEYS } from "../utils/storage.js";
 import { useRequiredContext } from "./useRequiredContext.js";
 import type { PaletteRole } from "../domain/types.js";
 import {
-  isFinish,
-  isSurfaceType,
   type Room,
   type Surface,
-  type SurfaceDimensions,
   type SurfaceType,
 } from "../domain/project.js";
+import {
+  genId,
+  newDefault,
+  parsePaletteData,
+  type PaletteData,
+  type PaletteEntry,
+  type PaletteProject,
+} from "../domain/paletteData.js";
 
-const PALETTE_ROLES: PaletteRole[] = ["Dominant", "Secondary", "Accent"];
-const isRole = (v: unknown): v is PaletteRole =>
-  typeof v === "string" && (PALETTE_ROLES as string[]).includes(v);
-
-/** A color saved to a palette, with optional designer annotations. */
-export interface PaletteEntry {
-  id: string;
-  note?: string;
-  room?: string;
-  /** Manual 60-30-10 role override; absent = auto-assigned from the palette. */
-  role?: PaletteRole;
-}
-
-/** A named palette (a "project" — e.g. one per room or client). */
-export interface PaletteProject {
-  id: string;
-  name: string;
-  entries: PaletteEntry[];
-  /** Optional structured job model (E15): rooms → surfaces. Absent = flat list. */
-  rooms?: Room[];
-}
-
-interface PaletteData {
-  projects: PaletteProject[];
-  activeId: string;
-}
+// Re-exported for back-compat: UI keeps importing these from the context.
+export type { PaletteEntry, PaletteProject };
 
 export interface PaletteContextValue {
   // --- Active-project view (back-compatible API used across the app) ---
@@ -63,6 +44,8 @@ export interface PaletteContextValue {
   createProject: (name: string) => void;
   renameProject: (id: string, name: string) => void;
   deleteProject: (id: string) => void;
+  /** Add a (validated) project as a new entry with a fresh id, and select it (E18.1). */
+  importProject: (project: PaletteProject) => void;
 
   // --- Rooms & surfaces (active project's structured job model, E15) ---
   rooms: Room[];
@@ -82,139 +65,6 @@ const PaletteContext = createContext<PaletteContextValue | null>(null);
 
 export function usePalette(): PaletteContextValue {
   return useRequiredContext(PaletteContext, "usePalette", "PaletteProvider");
-}
-
-const DEFAULT_ID = "default";
-const newDefault = (): PaletteData => ({
-  projects: [{ id: DEFAULT_ID, name: "My palette", entries: [] }],
-  activeId: DEFAULT_ID,
-});
-
-let idCounter = 0;
-function genId(): string {
-  if (typeof crypto !== "undefined" && crypto.randomUUID) {
-    return crypto.randomUUID();
-  }
-  idCounter += 1;
-  return `p-${idCounter}`;
-}
-
-function normalizeEntries(raw: unknown): PaletteEntry[] {
-  if (!Array.isArray(raw)) return [];
-  const out: PaletteEntry[] = [];
-  for (const e of raw) {
-    if (typeof e === "string") out.push({ id: e });
-    else if (e && typeof e === "object" && typeof e.id === "string") {
-      out.push({
-        id: e.id,
-        ...(typeof e.note === "string" ? { note: e.note } : {}),
-        ...(typeof e.room === "string" ? { room: e.room } : {}),
-        ...(isRole(e.role) ? { role: e.role } : {}),
-      });
-    }
-  }
-  return out;
-}
-
-const isFiniteNum = (v: unknown): v is number =>
-  typeof v === "number" && Number.isFinite(v);
-
-function normalizeDimensions(raw: unknown): SurfaceDimensions | undefined {
-  if (!raw || typeof raw !== "object") return undefined;
-  const d = raw as Record<string, unknown>;
-  if (
-    !isFiniteNum(d.lengthFt) ||
-    !isFiniteNum(d.widthFt) ||
-    !isFiniteNum(d.heightFt)
-  )
-    return undefined;
-  return {
-    lengthFt: d.lengthFt,
-    widthFt: d.widthFt,
-    heightFt: d.heightFt,
-    ...(isFiniteNum(d.doors) ? { doors: d.doors } : {}),
-    ...(isFiniteNum(d.windows) ? { windows: d.windows } : {}),
-  };
-}
-
-function normalizeSurfaces(raw: unknown): Surface[] {
-  if (!Array.isArray(raw)) return [];
-  const out: Surface[] = [];
-  for (const s of raw) {
-    if (!s || typeof s !== "object") continue;
-    if (typeof s.id !== "string" || !isSurfaceType(s.type)) continue;
-    const dimensions = normalizeDimensions(s.dimensions);
-    out.push({
-      id: s.id,
-      type: s.type,
-      ...(typeof s.colorId === "string" ? { colorId: s.colorId } : {}),
-      ...(isFinish(s.finish) ? { finish: s.finish } : {}),
-      ...(isFiniteNum(s.coats) ? { coats: s.coats } : {}),
-      ...(isFiniteNum(s.areaSqFt) ? { areaSqFt: s.areaSqFt } : {}),
-      ...(dimensions ? { dimensions } : {}),
-      ...(s.done === true ? { done: true } : {}),
-    });
-  }
-  return out;
-}
-
-function normalizeRooms(raw: unknown): Room[] {
-  if (!Array.isArray(raw)) return [];
-  const out: Room[] = [];
-  for (const r of raw) {
-    if (
-      r &&
-      typeof r === "object" &&
-      typeof r.id === "string" &&
-      typeof r.name === "string"
-    ) {
-      out.push({
-        id: r.id,
-        name: r.name,
-        surfaces: normalizeSurfaces(r.surfaces),
-      });
-    }
-  }
-  return out;
-}
-
-/** Parse stored data, migrating the legacy `string[]` palette to a single project. */
-function parsePaletteData(raw: unknown): PaletteData | null {
-  // Legacy format: a bare array of color ids.
-  if (Array.isArray(raw)) {
-    return {
-      projects: [
-        { id: DEFAULT_ID, name: "My palette", entries: normalizeEntries(raw) },
-      ],
-      activeId: DEFAULT_ID,
-    };
-  }
-  if (
-    raw &&
-    typeof raw === "object" &&
-    Array.isArray((raw as PaletteData).projects)
-  ) {
-    const projects = (raw as PaletteData).projects
-      .filter(
-        (p) => p && typeof p.id === "string" && typeof p.name === "string",
-      )
-      .map((p) => {
-        const rooms = normalizeRooms((p as PaletteProject).rooms);
-        return {
-          id: p.id,
-          name: p.name,
-          entries: normalizeEntries(p.entries),
-          ...(rooms.length ? { rooms } : {}),
-        };
-      });
-    if (projects.length === 0) return null;
-    const storedActive = (raw as PaletteData).activeId;
-    const activeId = projects.some((p) => p.id === storedActive)
-      ? storedActive
-      : projects[0].id;
-    return { projects, activeId };
-  }
-  return null;
 }
 
 export function PaletteProvider({ children }: { children: React.ReactNode }) {
@@ -314,6 +164,21 @@ export function PaletteProvider({ children }: { children: React.ReactNode }) {
             ? d.activeId
             : projects[0].id;
           return { projects, activeId };
+        }),
+      // Land an imported project as a NEW project (fresh id, no silent
+      // overwrite); the incoming data is already validated by `normalizeProject`.
+      importProject: (project: PaletteProject) =>
+        setData((d) => {
+          const id = genId();
+          const imported: PaletteProject = {
+            ...project,
+            id,
+            name: project.name.trim() || "Imported project",
+          };
+          return {
+            projects: [...d.projects, imported],
+            activeId: id,
+          };
         }),
 
       // --- Rooms & surfaces ---

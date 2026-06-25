@@ -21,8 +21,11 @@ import {
 import { copyText } from "../../utils/clipboard.js";
 import { usePalette } from "../../context/PaletteContext.js";
 import { useAppContext } from "../../context/AppContext.js";
+import { usePersistentState } from "../../hooks/usePersistentState.js";
+import { STORAGE_KEYS } from "../../utils/storage.js";
 import { useToast } from "../Toast/Toast.js";
 import { exportService } from "../../appModel.js";
+import { FieldModeView } from "./FieldModeView.js";
 import styles from "./WorkOrderView.module.css";
 
 const toNum = (s: string) => {
@@ -40,6 +43,12 @@ export function WorkOrderView() {
   const { colorModel } = useAppContext();
   const { entries, activeProject, rooms, addRoom } = usePalette();
   const showToast = useToast();
+  // On-site field mode (E17); preference persists so it survives a reload on the job.
+  const [fieldMode, setFieldMode] = usePersistentState<boolean>(
+    STORAGE_KEYS.fieldMode,
+    false,
+    (raw) => (typeof raw === "boolean" ? raw : null),
+  );
 
   // Colors a surface can be assigned to: the project's palette, in order.
   const paletteColors = entries
@@ -48,6 +57,12 @@ export function WorkOrderView() {
   const colorsById = new Map(paletteColors.map((c) => [c.id, c]));
 
   const totalSurfaces = rooms.reduce((n, r) => n + r.surfaces.length, 0);
+
+  // Field mode is the on-site read view; render it instead of the editable spec
+  // once there's something to read (US17.1).
+  if (fieldMode && totalSurfaces > 0) {
+    return <FieldModeView onExit={() => setFieldMode(false)} />;
+  }
 
   // Per-room + per-color paint estimates (US16.2), at the default coverage.
   const quantities = estimateProjectQuantities(rooms);
@@ -90,6 +105,15 @@ export function WorkOrderView() {
           >
             Add room
           </button>
+          {totalSurfaces > 0 && (
+            <button
+              type="button"
+              className="btn-on-dark"
+              onClick={() => setFieldMode(true)}
+            >
+              Field mode
+            </button>
+          )}
           <button
             type="button"
             className="btn-on-dark"
