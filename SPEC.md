@@ -264,100 +264,29 @@ consumes its artifact rather than rebuilding, and typecheck runs only in `verify
 
 ## Roadmap
 
-Product direction beyond the current architecture. North star: move users from
-_"I like this color"_ → _"I'm confident using it"_ → _"I acted on it,"_ and make
-every color and palette worth sharing. Discovery is solved; the roadmap adds
-**confidence**, **planning**, and **reach**.
+North star: move users from _"I like this color"_ → _"I'm confident using it"_ →
+_"I acted on it,"_ and make every color and palette worth sharing.
 
-**Assumptions:** "marketers" = anyone promoting colors/collections (their currency
-is reach + shareable assets). **Deliberate constraint — no backend, no accounts:**
-the product stays **fully static (SSG) + local-first (localStorage)**. We do _not_
-add auth, a database, or server sync. Portability and the Designer→Painter→Client
-handoff are served by **shareable URLs + local project file export/import**, not
-cloud accounts — a product decision, not a gap to close. This rules out features
-that structurally require a server (cross-device auto-sync, server-side analytics,
-live multi-user comments/approval, a dynamic API, e-commerce checkout); the roadmap
-below reflects that.
+**Deliberate constraint — no backend, no accounts.** The product stays **fully
+static (SSG) + local-first (localStorage)**: no auth, database, or server sync.
+Portability and the Designer → Painter → Client handoff are served by **shareable
+URLs + local file export/import**, never a server. This rules out anything that
+structurally needs a backend (cross-device auto-sync, server-side analytics, live
+multi-user comments/approval, a dynamic API, e-commerce checkout) — and by the same
+logic there are **no first-party product analytics**; reach is read directionally
+from host/CDN logs, search-console impressions, and UTM on share links.
 
 **Principles:** confidence over catalog · plain language first, data on demand · a
-color is a first-class shareable object · **local-first & portable (share links +
-file export, never a server)** · earn heavy features (curated/build-time before
-live/AI) · accessible + fast as table stakes.
+color is a first-class shareable object · local-first & portable · earn heavy
+features (curated/build-time before live/AI) · accessible + fast as table stakes.
 
-### Personas
+The **Now** and **Next** horizons have fully shipped — every epic (E9, E11–E18) is
+documented in the architecture sections above; **E10 (Accounts & cloud sync) was
+dropped** as backend-dependent. Remaining work lives in the **Later** bets.
 
-The paint lifecycle runs discover → specify → **execute** → promote, plus a
-non-human data consumer. Each persona is a distinct job, not a distinct app: they
-share the catalog and (increasingly) one **Project** object viewed through
-different lenses.
+### Later — ambitious bets
 
-| Persona                                  | Job-to-be-done                                                                                                       | Today                                                                                                                                                                                                                                         | Biggest gap                                                                                                                                           |
-| ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Shopper** (DIY)                        | Find a color that works in _my_ room and buy with confidence                                                         | Browse/filter, similar + coordinating, plain-language summary, "Get this color" (sample/store/buy + paint calculator), Room Visualizer v1 (curated scenes, recolor, lighting)                                                                 | No upload-your-own-photo / AR recolor yet (Later)                                                                                                     |
-| **Designer** (pro)                       | Assemble, validate, present, and deliver client palettes                                                             | Compare + contrast matrix, named palette projects (notes/room, 60-30-10 roles, scheme/companion suggestions), PNG/PDF export, share URL                                                                                                       | No project file portability for handoff (export/import); no branded client-facing presentation board; no cross-brand match                            |
-| **Painter** (contractor / trades)        | Turn a chosen palette into the right materials applied to the right surfaces — accurately and efficiently on the job | Structured Project (rooms → surfaces → color + finish + coats + area), Work Order lens with per-room/per-color quantities, consolidated shopping list, per-surface progress, printable PDF; per-color SW number + rack locator + find-a-store | No product-line/sheen dataset (quantities use a default coverage); no on-site **field mode**; handoff is by shared link / PDF / file, not a live sync |
-| **Marketer/promoter**                    | Drive discovery and create shareable content                                                                         | SSG/SEO, JSON-LD, per-color OG/social images, sitemap, share URLs, collections                                                                                                                                                                | No editorial/trend surfaces; no embeddable widget (first-party analytics is out of scope under the no-backend stance)                                 |
-| **Integrator / AI agent** (programmatic) | Consume accurate, structured color data to power external tools, answers, or partner experiences                     | Machine-readable `colors.json` index, JSON-LD, canonical per-color pages, sitemap                                                                                                                                                             | No versioned/documented static data contract or bulk-download page (a dynamic query API is out of scope — static artifacts only)                      |
-
-**Painter — the _execution_ end of the funnel.** Once the underserved end of the
-product — it helped people **choose** and **present** color but nearly stopped where
-the job begins. That gap is now largely closed: the "Palette" page is a first-class
-**Project**, and a Painter's _Work Order/Spec_ and a Designer's _Board_ are two
-lenses over the same structured data (rooms → surfaces → color + finish + coats +
-measured area → quantities → shopping list → progress). The Painter's currency is
-accuracy + efficiency at execution — _which color, which finish, how many coats, how
-many gallons, where to buy it, what's done_ — and the Work Order now answers each.
-What remains is **accuracy** (a build-time product-line/sheen/coverage dataset, vs.
-today's default coverage) and **on-site** delivery (E17 field mode). The
-Designer → Painter → Client handoff is served **without a backend** — a shared
-project link, an exported work-order PDF, and local project file export/import
-(E18) — consistent with the no-accounts stance.
-
-**Adjacent / candidate personas (deliberately not yet first-class).** Persona
-discipline matters more than coverage — over-fragmenting dilutes the roadmap.
-Identified but parked:
-
-- **Store associate / brand retail** — look up rack code, product availability,
-  tint formula, hand a result to a walk-in. Genuinely distinct, but only relevant
-  if Sherwin-Williams operationalizes this as an in-store/associate tool. Park
-  until that's a goal.
-- **Specifier / architect** — a more technical Designer (CSI specs, submittals,
-  durability/finish requirements). Fold into Designer for now; split out only if
-  construction-document workflows are pursued.
-- **Stager / flipper / property manager** — a volume sub-segment of
-  Designer/Shopper (many rooms, fast, resale-neutral palettes). Serve via the
-  Project model, not a separate persona.
-- **Inspiration seeker** — earlier-funnel homeowner browsing trends/mood before a
-  decision. A sub-segment of Shopper, served by the Marketer's editorial surfaces.
-- **Accessibility / low-vision users** — a cross-cutting _constraint_ (table
-  stakes), not a persona.
-- **Casual SEO visitor** — the Marketer's _audience_, not a persona of the tool.
-
-### Now — remaining (0–1 quarter)
-
-The rest of the Now horizon (plain-language summaries, contrast matrix, OG/social
-images, "Get this color" + paint calculator, data code-split, palette projects +
-notes, PNG/PDF export) has **shipped** — see the architecture sections above. The
-one remaining item, **privacy-respecting analytics + share tracking (F3)**, is
-**dropped**: any analytics needs a server-side sink to receive events, which the
-no-backend stance rules out. Marketers lean on platform/referrer signals and OG/
-share reach instead. The Now horizon is therefore **complete**.
-
-### Next — core differentiators (1–3 quarters)
-
-**The entire Next horizon has shipped** — every epic is in the architecture
-sections above. **E11** (palette intelligence), **E15** (Project model), **E16**
-(Work Order + shopping list), **E18** (Project portability), **E12** (Editorial /
-trend pages), **E17** (Field mode), **E9** (Room Visualizer v1), **E14** (Embeddable
-widget), and **E13** (Client presentation boards) are all delivered. **E10 (Accounts
-& cloud sync) is removed** — see the **no backend, no accounts** stance in
-Assumptions. The Next horizon is therefore **complete**; the next groomed work comes
-from the **Later** bets below.
-
-### Later — ambitious bets (3+ quarters)
-
-All Later bets must hold the **no-backend** line; ones that structurally needed a
-server have been dropped (see below the table).
+All must hold the **no-backend** line.
 
 | Item                                                                     | Persona              | Effort |
 | ------------------------------------------------------------------------ | -------------------- | ------ |
@@ -365,74 +294,16 @@ server have been dropped (see below the table).
 | Cross-brand color matching (build-time, data-licensing dependent)        | Designer             | L      |
 | Static public data program (`colors.json` + documented contract/bulk)    | Integrator/ecosystem | M–L    |
 
-**Dropped as backend-dependent (incompatible with no-accounts):** an **AI color
-assistant** (needs an LLM proxy/server), a **dynamic public API** (query endpoints —
-superseded by the static data program above), and **teams + e-commerce checkout**
-(accounts, carts, order state). Revisit only if the no-backend stance is ever
-revised.
+_Dropped as backend-dependent:_ an AI color assistant (LLM proxy/server), a dynamic
+public API (superseded by the static data program above), and teams + e-commerce
+checkout. Revisit only if the no-backend stance is revised.
 
-**Sequencing:** the whole Next horizon is **shipped** — the Painter line (E15 → E16
-→ E17), the reach + portability + distribution wins (E12 editorial, E18 project
-portability, E14 embeddable widget), the heavy client-side shopper bet (E9 Room
-Visualizer), and the re-scoped **E13** client board (a branded, read-only shared
-board built on E18's share primitive; its former live comments/approval dropped as
-it would require a backend). The roadmap now advances to the **Later** bets.
-_Enabler:_ a build-time **product-line / sheen / coverage** dataset (like the color
-data) would unlock accurate per-product quantities in the shipped Work Order — which
-today uses a documented default coverage. (Build-time, no server — compatible.)
+_Enabler:_ a build-time **product-line / sheen / coverage** dataset would unlock
+accurate per-product quantities in the Work Order (today a documented default
+coverage) — build-time, no server, compatible.
 
-### Success metrics
+## Definition of Done
 
-**Measurement under no-backend:** we run **no first-party product analytics** (no
-event sink). These signals are tracked **directionally** from sources that don't
-need our own server — static-host/CDN request logs, search-console impressions,
-outbound SW sample/store/buy clicks, and inbound referrers/UTM on share links — and
-the rest stay qualitative.
-
-- **Shopper:** "Get this color" reach; visualizer deep-link shares; outbound sample/buy clicks.
-- **Designer:** projects exported/imported & shared-board links opened; multi-color palette rate.
-- **Painter:** projects given room/surface structure; work orders / shopping lists printed; field-mode use.
-- **Marketer:** organic traffic (search console); share/referrer counts; OG-card reach; widget embeds; trend-page traffic.
-- **Integrator:** `colors.json` / static-data requests (host logs); partner integrations.
-- **Health (always-on):** Core Web Vitals; axe = 0 serious/critical; e2e green.
-
-## Delivery backlog
-
-The roadmap broken into **features → stories → tasks**, sequenced by value vs.
-work. Grooming method: **WSJF-lite** — rank ≈ (business value + enablement) ÷
-effort. The **Now** horizon is groomed to task level; **Next** is now groomed to
-**feature/story** level (below); **Later** stays as epics until it reaches the
-top. In practice these become tracker issues; this section is the source of truth
-for shape and priority.
-
-### Now — remaining
-
-F1, F2, F4–F8 have shipped (see the architecture sections above). The one open
-item, **F3 · Analytics & share tracking**, is **dropped** under the **no backend,
-no accounts** stance: privacy-respecting or not, analytics needs a server-side sink
-to receive events, so it's out of scope. Share links may still append UTM params
-(a zero-cost, client-side change) so that _recipients'_ own tools can attribute —
-but we operate no analytics of our own. Measurement falls back to the directional,
-serverless signals noted under **Success metrics**. The **Now horizon is complete.**
-
-### Next — features & stories (groomed)
-
-**The Next backlog is empty — every groomed epic has shipped** (E11, E15, E16, E18,
-E12, E17, E9, E14, E13). Each is documented in the architecture sections above and
-verified per the Definition of Done; **E10 (Accounts & cloud sync) was removed** as
-backend-dependent. New groomed work is promoted from the **Later** bets below as
-they reach the top.
-
-### Later — epics (one-liners)
-
-Client-side AR photo recolor + lighting · cross-brand matching (build-time) ·
-static public data program (`colors.json` + contract). _Dropped as
-backend-dependent: AI color assistant, dynamic public API, teams + e-commerce
-checkout._
-
-### Definition of Ready / Done
-
-- **Ready:** persona + benefit + acceptance criteria + estimate + known dependencies.
-- **Done:** AC met; unit/integration tests added; `tsc`/ESLint/Prettier clean;
-  `vitest` green; axe 0 serious/critical; e2e passing; SPEC/docs updated; no Core
-  Web Vitals regression.
+AC met · unit/integration tests added · `tsc` / ESLint / Prettier clean · `vitest`
+green · axe 0 serious/critical · e2e passing · SPEC/docs updated · no Core Web
+Vitals regression.
