@@ -34,6 +34,46 @@ test.describe("palette build + export", () => {
   });
 });
 
+test("field mode: build a work order, check off offline, look up by SW number", async ({
+  page,
+  context,
+}) => {
+  const [a] = colorSlugs(1);
+  await page.goto(`palette?c=${a}`);
+  await page.getByRole("button", { name: /Load shared palette/ }).click();
+  await page.getByRole("button", { name: "Work Order" }).click();
+  await page.getByRole("button", { name: "Add room" }).click();
+  await page.getByRole("button", { name: "Add surface" }).click();
+
+  // Assign the one palette color + an area so the surface is real.
+  const optionText =
+    (await page
+      .getByLabel(/^Color for/)
+      .locator("option")
+      .nth(1)
+      .textContent()) ?? "";
+  const swNumber = optionText.match(/SW (\d+)/)?.[1] ?? "";
+  await page.getByLabel(/^Color for/).selectOption({ index: 1 });
+  await page.getByLabel(/^Area for/).fill("200");
+
+  await page.getByRole("button", { name: "Field mode" }).click();
+  await expect(
+    page.getByRole("button", { name: "Exit field mode" }),
+  ).toBeVisible();
+
+  // Check-offs are local-first — they work with no network.
+  await context.setOffline(true);
+  await expect(page.getByText(/0\/1 surfaces done/)).toBeVisible();
+  await page.getByLabel(/^Mark .* done$/).check();
+  await expect(page.getByText(/1\/1 surfaces done · 100%/)).toBeVisible();
+  await context.setOffline(false);
+
+  // Jump to the assigned color by its SW number.
+  await page.getByLabel("Look up a color by SW number").fill(swNumber);
+  await page.getByRole("button", { name: "Go" }).click();
+  await expect(page).toHaveURL(new RegExp(`/colors/sw-${swNumber}-`));
+});
+
 test("generates a scheme from a color and adds it to the palette", async ({
   page,
 }) => {

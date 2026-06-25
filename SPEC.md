@@ -32,7 +32,9 @@ for SEO/AI discoverability.
    through two lenses: the Designer **Board** (the palette view) and the Painter
    **Work Order** — a rooms × surfaces spec with per-room/per-color paint
    quantities, a consolidated shopping list, per-surface progress check-off, and
-   a printable PDF.
+   a printable PDF. The Work Order also has an on-site **Field mode** (E17): a
+   high-contrast, large-type, offline-first read view with big check-off targets
+   and a jump-to-SW-number lookup.
 
 ## Source layout
 
@@ -57,7 +59,7 @@ src/
 │   ├── ColorDetailView/  # ColorDetail, DetailActions, GetColorPanel, PaintCalculator,
 │   │                     #   ColorGridSection, MiniTile, HslBreakdown
 │   ├── Collections/      # CollectionColorGrid (crawlable swatch links) — E12
-│   ├── Workspace/        # CompareTray, ContrastMatrix, WorkOrderView (Painter lens)
+│   ├── Workspace/        # CompareTray, ContrastMatrix, WorkOrderView (Painter lens), FieldModeView (E17)
 │   ├── Toast/, ErrorBoundary/, seo/JsonLd
 ├── domain/               # types.ts (shared facet/sort vocabulary), project.ts (Rooms → Surfaces model),
 │                         #   paletteData.ts (persisted shape + pure parse/normalize/migrate — E18),
@@ -106,6 +108,15 @@ size guard that falls back to "export a file instead" above
 `MAX_SHARE_PARAM_LENGTH`. Both paths decode through `normalizeProject`, so an
 imported file or a decoded link is validated exactly like stored data — and the
 whole handoff (Designer → Painter → Client) needs **no backend**.
+
+**Field mode (E17).** The Work Order has an on-site lens (`Workspace/FieldModeView`)
+toggled from the lens header (preference persisted via `usePersistentState`, so it
+survives a reload on the job). It's a deliberately non-dark, high-contrast,
+large-type read view with oversized (≥56px) check-off targets for gloved hands in
+bright light, plus a jump-to-SW-number lookup (`ColorModel.getColorByNumber`) to
+confirm a color at the counter. It's offline-first: the `/palette` route is in the
+precached PWA shell and the active project lives in `localStorage`, so progress
+check-offs work with no network and persist immediately.
 
 `usePersistent*` use **two-phase init** (render `initial`, then load from storage)
 so server-prerendered markup and the first client render agree (no hydration
@@ -287,18 +298,17 @@ share reach instead. The Now horizon is therefore **complete**.
 
 Listed in **delivery order** (see the groomed feature/story backlog below for the
 WSJF-lite scoring and dependencies). **E11 (palette intelligence), E15 (Project
-model), E16 (Work Order + shopping list), E18 (Project portability), and E12
-(Editorial / trend pages) have shipped** — see the architecture sections. **E10
-(Accounts & cloud sync) is removed** — see the **no backend, no accounts** stance in
-Assumptions. Every remaining epic is **fully static + local-first**. The order leads
-with **E17 field mode** to round out the Painter on-site.
+model), E16 (Work Order + shopping list), E18 (Project portability), E12 (Editorial
+/ trend pages), and E17 (Field mode) have shipped** — see the architecture sections.
+**E10 (Accounts & cloud sync) is removed** — see the **no backend, no accounts**
+stance in Assumptions. Every remaining epic is **fully static + local-first**. The
+order leads with **E9 Room Visualizer** — the biggest unserved shopper gap.
 
 | #   | Item                                                                 | Epic | Persona           | Effort |
 | --- | -------------------------------------------------------------------- | ---- | ----------------- | ------ |
-| 1   | Field mode — on-site, high-contrast, offline work order              | E17  | Painter           | M      |
-| 2   | Room Visualizer v1 (curated scenes, recolor walls, lighting presets) | E9   | Shopper           | L      |
-| 3   | Embeddable swatch/palette widget                                     | E14  | Marketer/partners | M      |
-| 4   | Client presentation boards (branded, read-only share)                | E13  | Designer          | M      |
+| 1   | Room Visualizer v1 (curated scenes, recolor walls, lighting presets) | E9   | Shopper           | L      |
+| 2   | Embeddable swatch/palette widget                                     | E14  | Marketer/partners | M      |
+| 3   | Client presentation boards (branded, read-only share)                | E13  | Designer          | M      |
 
 ### Later — ambitious bets (3+ quarters)
 
@@ -371,45 +381,25 @@ serverless signals noted under **Success metrics**. The **Now horizon is complet
 Reprioritized via WSJF-lite ((value + enablement) ÷ effort), then adjusted for hard
 dependencies and the "**local-first, no backend** · validate locally first"
 principles. Effort: S=1, M=2, M–L=2.5, L=3 (value/enable on 1–5). Epic **IDs are
-stable**; the table is in **delivery order**. **E11, E15, E16, E18, and E12 have
-shipped** (removed — see the architecture sections); **E10 (Accounts & cloud sync)
-is removed** as backend-dependent. Every epic below is fully static + local-first.
+stable**; the table is in **delivery order**. **E11, E15, E16, E18, E12, and E17
+have shipped** (removed — see the architecture sections); **E10 (Accounts & cloud
+sync) is removed** as backend-dependent. Every epic below is fully static +
+local-first.
 
-| Rank | Epic                                 | Persona           | V   | Enable | Eff | WSJF | Why here                                                                              |
-| ---- | ------------------------------------ | ----------------- | --- | ------ | --- | ---- | ------------------------------------------------------------------------------------- |
-| 1    | **E17 · Field mode**                 | Painter           | 4   | 1      | 2   | 2.5  | On-site work order (high-contrast/offline); depends on the shipped **E16**; PWA-only. |
-| 2    | **E9 · Room Visualizer v1**          | Shopper           | 5   | 3      | 3   | 2.7  | Biggest shopper gap ("see it in context"); fully client-side; earns the AR v2 bet.    |
-| 3    | **E14 · Embeddable widget**          | Marketer/partners | 3   | 3      | 2   | 3.0  | Static embed distribution; compounds with editorial.                                  |
-| 4    | **E13 · Client presentation boards** | Designer          | 3   | 2      | 2   | 2.5  | Branded read-only share (built on E18); live comments/approval dropped (no backend).  |
+| Rank | Epic                                 | Persona           | V   | Enable | Eff | WSJF | Why here                                                                             |
+| ---- | ------------------------------------ | ----------------- | --- | ------ | --- | ---- | ------------------------------------------------------------------------------------ |
+| 1    | **E9 · Room Visualizer v1**          | Shopper           | 5   | 3      | 3   | 2.7  | Biggest shopper gap ("see it in context"); fully client-side; earns the AR v2 bet.   |
+| 2    | **E14 · Embeddable widget**          | Marketer/partners | 3   | 3      | 2   | 3.0  | Static embed distribution; compounds with editorial.                                 |
+| 3    | **E13 · Client presentation boards** | Designer          | 3   | 2      | 2   | 2.5  | Branded read-only share (built on E18); live comments/approval dropped (no backend). |
 
-Sequencing rationale: with **E18 + E12 shipped** (portability/handoff, and an
-independent SSG/SEO reach win), lead with **E17** to round out the Painter on-site
-(needs the shipped E16; PWA-only, no server). Then the heavy but fully client-side
-**E9**, the static **E14** widget, and a re-scoped **E13** last (read-only board on
-E18's share primitive). Raw WSJF would float **E14** above **E9**; we hold E9 higher
-as the biggest unserved shopper gap. (Pull **E14** forward if a concrete partner
-appears.)
+Sequencing rationale: with the **Painter line complete** (E15 → E16 → E17) and the
+reach + portability wins shipped (E12, E18), lead with the heavy but fully
+client-side **E9** — the biggest unserved shopper gap ("see it in context") — then
+the static **E14** widget, and a re-scoped **E13** last (read-only board on E18's
+share primitive). Raw WSJF would float **E14** above **E9**; we hold E9 higher as the
+biggest unserved shopper gap. (Pull **E14** forward if a concrete partner appears.)
 
 ---
-
-#### E17 · Field mode _(Painter · M)_ — depends E16
-
-Benefit: the Work Order gets used on a job site — bright light, gloves, spotty
-signal. Field mode is a high-contrast, large-target, **offline-first** rendering of
-the Work Order + shopping list (leans on the existing PWA).
-
-**Feature: On-site work order**
-
-- **US17.1** As a painter on-site, I want a high-contrast, large-type field view of
-  the work order / shopping list so I can read it in sunlight with gloves. _(M)_
-  - AC: field-mode toggle; larger type + ≥44px (ideally larger) targets; works
-    offline (work-order route + active project precached); progress check-offs work
-    offline and reconcile later.
-  - Tasks: field theme; ensure the route is precached; offline e2e.
-- **US17.2** As a painter, I want quick color lookup by SW number from field mode so
-  I can confirm a color at the counter. _(S)_
-  - AC: jump-to-number search reachable in field mode.
-  - Tasks: number-search entry; reuse existing search.
 
 #### E9 · Room Visualizer v1 _(Shopper · L)_
 

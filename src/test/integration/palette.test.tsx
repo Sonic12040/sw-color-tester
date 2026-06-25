@@ -382,6 +382,81 @@ describe("Work Order — progress tracking (US16.4)", () => {
   });
 });
 
+describe("Field mode — on-site work order (E17)", () => {
+  const openFieldMode = async () => {
+    const handle = renderApp(
+      "/palette?c=sw-6258-tricorn-black,sw-7015-repose-gray",
+    );
+    await handle.user.click(
+      screen.getByRole("button", { name: /Load shared palette/ }),
+    );
+    await handle.user.click(screen.getByRole("button", { name: "Work Order" }));
+    await handle.user.click(screen.getByRole("button", { name: "Add room" }));
+    await handle.user.click(
+      screen.getByRole("button", { name: "Add surface" }),
+    );
+    await handle.user.selectOptions(
+      screen.getByLabelText(/^Color for/),
+      screen.getByRole("option", { name: /Tricorn Black/ }),
+    );
+    await handle.user.type(screen.getByLabelText(/^Area for/), "200");
+    await handle.user.click(screen.getByRole("button", { name: "Field mode" }));
+    return handle;
+  };
+
+  it("renders a high-contrast read view with the surface + a number lookup (US17.1/17.2)", async () => {
+    await openFieldMode();
+    expect(
+      screen.getByRole("button", { name: "Exit field mode" }),
+    ).toBeTruthy();
+    expect(screen.getByLabelText("Look up a color by SW number")).toBeTruthy();
+    // The editable spec controls are gone; the surface reads as a plain row.
+    expect(screen.queryByLabelText(/^Color for/)).toBeNull();
+    // Appears as the surface row and again in the shopping list.
+    expect(
+      screen.getAllByText(/Tricorn Black · SW 6258/).length,
+    ).toBeGreaterThan(0);
+  });
+
+  it("checks a surface off from field mode and updates progress (US17.1)", async () => {
+    const { user } = await openFieldMode();
+    expect(screen.getByText(/0\/1 surfaces done · 0%/)).toBeTruthy();
+    await user.click(screen.getByLabelText(/^Mark .* done$/));
+    expect(screen.getByText(/1\/1 surfaces done · 100%/)).toBeTruthy();
+  });
+
+  it("jumps to a color by SW number (US17.2)", async () => {
+    const { user } = await openFieldMode();
+    await user.type(
+      screen.getByLabelText("Look up a color by SW number"),
+      "7015",
+    );
+    await user.click(screen.getByRole("button", { name: "Go" }));
+    expect(
+      await screen.findByRole("heading", { level: 1, name: "Repose Gray" }),
+    ).toBeTruthy();
+  });
+
+  it("warns when an SW number has no match (US17.2)", async () => {
+    const { user } = await openFieldMode();
+    await user.type(
+      screen.getByLabelText("Look up a color by SW number"),
+      "0000",
+    );
+    await user.click(screen.getByRole("button", { name: "Go" }));
+    expect(await screen.findByText(/No color found for SW 0000/)).toBeTruthy();
+  });
+
+  it("persists field mode across navigation (US17.1)", async () => {
+    const { user } = await openFieldMode();
+    await user.click(screen.getByRole("link", { name: /^Browse/ }));
+    await user.click(screen.getByRole("link", { name: /^Palette/ }));
+    expect(
+      screen.getByRole("button", { name: "Exit field mode" }),
+    ).toBeTruthy();
+  });
+});
+
 describe("Palette intelligence — roles (E11)", () => {
   const loadPalette = async () => {
     const handle = renderApp(

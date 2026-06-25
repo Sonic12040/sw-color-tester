@@ -41,6 +41,8 @@ discoverability.
 - **Paint planning** — per-room and per-color gallon/can estimates (area × coats ÷
   coverage), a consolidated shopping list, and progress tracking, all reusing the
   paint calculator's area math.
+- **Field mode** — an on-site, high-contrast, large-type view of the work order
+  with oversized check-off targets and a jump-to-SW-number lookup; works offline.
 - **Shareable & discoverable** — pre-rendered pages, JSON-LD, per-color Open Graph
   social images, sitemap, and `?c=` share URLs.
 - **Project portability** — export a Project to a versioned JSON file and import it

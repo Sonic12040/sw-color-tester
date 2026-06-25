@@ -1,0 +1,261 @@
+/* ============================================================
+   Field mode (E17) — an on-site view of the Work Order. Deliberately
+   NOT the app's dark chrome: a high-contrast light surface (near-black
+   on white) reads best in bright sunlight, with oversized type and
+   large (≥56px) tap targets for gloved hands.
+   ============================================================ */
+
+.field {
+  color-scheme: light;
+  background: #ffffff;
+  color: #111111;
+  border-radius: var(--radius-md);
+  padding: clamp(0.75rem, 2vw, 1.25rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  font-size: 1.15rem;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  border-bottom: 3px solid #111111;
+  padding-bottom: var(--spacing-3);
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.5rem, 4vw, 2.1rem);
+  font-weight: 800;
+  color: #000000;
+}
+
+.exit {
+  min-height: 48px;
+  padding: 0 var(--spacing-4);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: #111111;
+  border: 2px solid #111111;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.exit:hover {
+  background: #000000;
+}
+
+/* SW-number lookup (US17.2). */
+.search {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.searchLabel {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.searchRow {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.searchInput {
+  flex: 1;
+  min-height: 56px;
+  padding: 0 var(--spacing-3);
+  font-size: 1.3rem;
+  color: #111111;
+  background: #ffffff;
+  border: 3px solid #111111;
+  border-radius: var(--radius-md);
+}
+
+.searchBtn {
+  min-height: 56px;
+  min-width: 72px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #ffffff;
+  background: #111111;
+  border: 3px solid #111111;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.progressCount {
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.progressTrack {
+  height: 20px;
+  background: #e0e0e0;
+  border: 2px solid #111111;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: #111111;
+}
+
+.room {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.roomName {
+  margin: 0;
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  font-weight: 800;
+  border-bottom: 2px solid #cccccc;
+  padding-bottom: var(--spacing-1);
+}
+
+.roomEmpty {
+  margin: 0;
+  color: #555555;
+}
+
+.surfaces {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.surface,
+.shopRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-2);
+  border: 2px solid #111111;
+  border-radius: var(--radius-md);
+}
+
+.surface[data-done] {
+  background: #eaf6ea;
+  border-color: #1b7f1b;
+}
+
+.surface[data-done] .surfaceName {
+  text-decoration: line-through;
+  color: #1b5e1b;
+}
+
+/* Big, obvious check target (US17.1). */
+.check {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  cursor: pointer;
+}
+
+.checkInput {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkBox {
+  width: 56px;
+  height: 56px;
+  border: 3px solid #111111;
+  border-radius: var(--radius-md);
+  background: #ffffff;
+  display: inline-block;
+}
+
+.checkInput:focus-visible + .checkBox {
+  outline: 3px solid #1565c0;
+  outline-offset: 2px;
+}
+
+.checkInput:checked + .checkBox {
+  background: #1b7f1b;
+  border-color: #1b7f1b;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 60%;
+}
+
+.swatch {
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  border: 2px solid #111111;
+}
+
+.swatch[data-empty] {
+  background: repeating-linear-gradient(
+    45deg,
+    #f0f0f0,
+    #f0f0f0 6px,
+    #d8d8d8 6px,
+    #d8d8d8 12px
+  );
+}
+
+.surfaceInfo,
+.shopInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.surfaceName,
+.shopName {
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.surfaceSpecs,
+.shopMeta {
+  font-size: 1.05rem;
+  color: #333333;
+}
+
+.shopCans {
+  font-size: 1.2rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.shop {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
