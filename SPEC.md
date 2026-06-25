@@ -83,9 +83,10 @@ so a change to one slice doesn't re-render consumers of another — validated by
 structured Project** (`domain/project.ts`: `rooms[] → surfaces[]`, with
 parse/migrate so the legacy flat-list format still loads). Rooms/surfaces and
 per-surface progress persist through the same `usePersistentState` / `storage` seam
-as everything else, so a future accounts/sync layer (E10) adopts them for free.
-Paint quantities, the shopping list, and progress are pure functions over the
-project (`utils/paint.ts`, `utils/workOrder.ts`).
+as everything else; this seam (with its versioned serialize/parse) is also what
+makes Project **file export/import** portability (E18) cheap — the product stays
+local-first with no server. Paint quantities, the shopping list, and progress are
+pure functions over the project (`utils/paint.ts`, `utils/workOrder.ts`).
 
 `usePersistent*` use **two-phase init** (render `initial`, then load from storage)
 so server-prerendered markup and the first client render agree (no hydration
@@ -176,13 +177,19 @@ every color and palette worth sharing. Discovery is solved; the roadmap adds
 **confidence**, **planning**, and **reach**.
 
 **Assumptions:** "marketers" = anyone promoting colors/collections (their currency
-is reach + shareable assets + measurement); a lightweight backend is acceptable —
-today everything is localStorage/SSG, which caps cross-device saves, projects,
-analytics, and visualization.
+is reach + shareable assets). **Deliberate constraint — no backend, no accounts:**
+the product stays **fully static (SSG) + local-first (localStorage)**. We do _not_
+add auth, a database, or server sync. Portability and the Designer→Painter→Client
+handoff are served by **shareable URLs + local project file export/import**, not
+cloud accounts — a product decision, not a gap to close. This rules out features
+that structurally require a server (cross-device auto-sync, server-side analytics,
+live multi-user comments/approval, a dynamic API, e-commerce checkout); the roadmap
+below reflects that.
 
 **Principles:** confidence over catalog · plain language first, data on demand · a
-color is a first-class shareable object · earn heavy features (curated/build-time
-before live/AI) · accessible + fast as table stakes.
+color is a first-class shareable object · **local-first & portable (share links +
+file export, never a server)** · earn heavy features (curated/build-time before
+live/AI) · accessible + fast as table stakes.
 
 ### Personas
 
@@ -191,13 +198,13 @@ non-human data consumer. Each persona is a distinct job, not a distinct app: the
 share the catalog and (increasingly) one **Project** object viewed through
 different lenses.
 
-| Persona                                  | Job-to-be-done                                                                                                       | Today                                                                                                                                                                                                                                         | Biggest gap                                                                                                                                             |
-| ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Shopper** (DIY)                        | Find a color that works in _my_ room and buy with confidence                                                         | Browse/filter, similar + coordinating, plain-language summary, "Get this color" (sample/store/buy + paint calculator)                                                                                                                         | Can't see it in context; no synced saves; no AI guidance                                                                                                |
-| **Designer** (pro)                       | Assemble, validate, present, and deliver client palettes                                                             | Compare + contrast matrix, named palette projects (notes/room, 60-30-10 roles, scheme/companion suggestions), PNG/PDF export, share URL                                                                                                       | No cloud sync / collaboration; no client approval/sign-off workflow; no cross-brand match                                                               |
-| **Painter** (contractor / trades)        | Turn a chosen palette into the right materials applied to the right surfaces — accurately and efficiently on the job | Structured Project (rooms → surfaces → color + finish + coats + area), Work Order lens with per-room/per-color quantities, consolidated shopping list, per-surface progress, printable PDF; per-color SW number + rack locator + find-a-store | No product-line/sheen dataset (quantities use a default coverage), no on-site **field mode**, no cloud sync for the Designer → Painter → Client handoff |
-| **Marketer/promoter**                    | Drive discovery and create shareable, measurable content                                                             | SSG/SEO, JSON-LD, per-color OG/social images, sitemap, share URLs, collections                                                                                                                                                                | No analytics/attribution; no editorial/trend surfaces; no embeds                                                                                        |
-| **Integrator / AI agent** (programmatic) | Consume accurate, structured color data to power external tools, answers, or partner experiences                     | Machine-readable `colors.json` index, JSON-LD, canonical per-color pages, sitemap                                                                                                                                                             | No versioned/public API, bulk or query endpoints, usage terms, or change feed                                                                           |
+| Persona                                  | Job-to-be-done                                                                                                       | Today                                                                                                                                                                                                                                         | Biggest gap                                                                                                                                           |
+| ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Shopper** (DIY)                        | Find a color that works in _my_ room and buy with confidence                                                         | Browse/filter, similar + coordinating, plain-language summary, "Get this color" (sample/store/buy + paint calculator)                                                                                                                         | Can't see it in context (no visualizer)                                                                                                               |
+| **Designer** (pro)                       | Assemble, validate, present, and deliver client palettes                                                             | Compare + contrast matrix, named palette projects (notes/room, 60-30-10 roles, scheme/companion suggestions), PNG/PDF export, share URL                                                                                                       | No project file portability for handoff (export/import); no branded client-facing presentation board; no cross-brand match                            |
+| **Painter** (contractor / trades)        | Turn a chosen palette into the right materials applied to the right surfaces — accurately and efficiently on the job | Structured Project (rooms → surfaces → color + finish + coats + area), Work Order lens with per-room/per-color quantities, consolidated shopping list, per-surface progress, printable PDF; per-color SW number + rack locator + find-a-store | No product-line/sheen dataset (quantities use a default coverage); no on-site **field mode**; handoff is by shared link / PDF / file, not a live sync |
+| **Marketer/promoter**                    | Drive discovery and create shareable content                                                                         | SSG/SEO, JSON-LD, per-color OG/social images, sitemap, share URLs, collections                                                                                                                                                                | No editorial/trend surfaces; no embeddable widget (first-party analytics is out of scope under the no-backend stance)                                 |
+| **Integrator / AI agent** (programmatic) | Consume accurate, structured color data to power external tools, answers, or partner experiences                     | Machine-readable `colors.json` index, JSON-LD, canonical per-color pages, sitemap                                                                                                                                                             | No versioned/documented static data contract or bulk-download page (a dynamic query API is out of scope — static artifacts only)                      |
 
 **Painter — the _execution_ end of the funnel.** Once the underserved end of the
 product — it helped people **choose** and **present** color but nearly stopped where
@@ -208,9 +215,10 @@ measured area → quantities → shopping list → progress). The Painter's curr
 accuracy + efficiency at execution — _which color, which finish, how many coats, how
 many gallons, where to buy it, what's done_ — and the Work Order now answers each.
 What remains is **accuracy** (a build-time product-line/sheen/coverage dataset, vs.
-today's default coverage) and **on-site** delivery (E17 field mode). (Painter also
-raises the priority of accounts/sync — the Designer → Painter → Client handoff is a
-stronger reason for a backend than "save my favorites.")
+today's default coverage) and **on-site** delivery (E17 field mode). The
+Designer → Painter → Client handoff is served **without a backend** — a shared
+project link, an exported work-order PDF, and local project file export/import
+(E18) — consistent with the no-accounts stance.
 
 **Adjacent / candidate personas (deliberately not yet first-class).** Persona
 discipline matters more than coverage — over-fragmenting dilutes the roadmap.
@@ -236,65 +244,77 @@ Identified but parked:
 
 The rest of the Now horizon (plain-language summaries, contrast matrix, OG/social
 images, "Get this color" + paint calculator, data code-split, palette projects +
-notes, PNG/PDF export) has **shipped** — see the architecture sections above. One
-item remains, intentionally on hold:
-
-| Item                                                | Persona  | Builds on | Effort |
-| --------------------------------------------------- | -------- | --------- | ------ |
-| Privacy-respecting analytics + share tracking (UTM) | Marketer | —         | S–M    |
-
-_On hold pending a product decision on analytics (privacy stance / approach)._
+notes, PNG/PDF export) has **shipped** — see the architecture sections above. The
+one remaining item, **privacy-respecting analytics + share tracking (F3)**, is
+**dropped**: any analytics needs a server-side sink to receive events, which the
+no-backend stance rules out. Marketers lean on platform/referrer signals and OG/
+share reach instead. The Now horizon is therefore **complete**.
 
 ### Next — core differentiators (1–3 quarters)
 
 Listed in **delivery order** (see the groomed feature/story backlog below for the
 WSJF-lite scoring and dependencies). **E11 (palette intelligence), E15 (Project
 model), and E16 (Work Order + shopping list) have shipped** — see the architecture
-sections. With the **Painter line** now delivered (the structured Project, the Work
-Order lens, paint quantities, the shopping list, and progress tracking — taking the
-north star from "I'm confident" to "I acted on it"), the order leads with **E12
-editorial reach**, then the **E10 accounts** foundation, then **E17 field mode** to
-round out the Painter on-site.
+sections. **E10 (Accounts & cloud sync) is removed** — see the **no backend, no
+accounts** stance in Assumptions. Every remaining epic is **fully static +
+local-first**. The order leads with **E18 project portability** (the local-first
+substitute for the handoff that accounts would have provided), then **E12 editorial
+reach**, then **E17 field mode** to round out the Painter on-site.
 
-| #   | Item                                                                           | Epic | Persona           | Effort |
-| --- | ------------------------------------------------------------------------------ | ---- | ----------------- | ------ |
-| 1   | Editorial / trend collection landing pages + light curation                    | E12  | Marketer          | M–L    |
-| 2   | Accounts & cloud sync (Supabase + RLS; sync + Designer→Painter→Client handoff) | E10  | All               | L      |
-| 3   | Field mode — on-site, high-contrast, offline work order                        | E17  | Painter           | M      |
-| 4   | Room Visualizer v1 (curated scenes, recolor walls, lighting presets)           | E9   | Shopper           | L      |
-| 5   | Client presentation boards (branded, read-only, comments/approval)             | E13  | Designer          | M      |
-| 6   | Embeddable swatch/palette widget                                               | E14  | Marketer/partners | M      |
+| #   | Item                                                                   | Epic | Persona           | Effort |
+| --- | ---------------------------------------------------------------------- | ---- | ----------------- | ------ |
+| 1   | Project portability & sharing (file export/import + shareable Project) | E18  | Designer/Painter  | S–M    |
+| 2   | Editorial / trend collection landing pages + light curation            | E12  | Marketer          | M–L    |
+| 3   | Field mode — on-site, high-contrast, offline work order                | E17  | Painter           | M      |
+| 4   | Room Visualizer v1 (curated scenes, recolor walls, lighting presets)   | E9   | Shopper           | L      |
+| 5   | Embeddable swatch/palette widget                                       | E14  | Marketer/partners | M      |
+| 6   | Client presentation boards (branded, read-only share)                  | E13  | Designer          | M      |
 
 ### Later — ambitious bets (3+ quarters)
 
-| Item                                                                      | Persona              | Effort |
-| ------------------------------------------------------------------------- | -------------------- | ------ |
-| Upload-your-room photo recolor + lighting simulation (AR)                 | Shopper              | L      |
-| AI color assistant (natural-language over the color data + scheme engine) | Shopper/Designer     | L      |
-| Cross-brand color matching (data-licensing dependent)                     | Designer             | L      |
-| Public API / partner data program                                         | Integrator/ecosystem | L      |
-| Teams + e-commerce checkout (sample/paint ordering, firm seats)           | Designer/Shopper     | L      |
+All Later bets must hold the **no-backend** line; ones that structurally needed a
+server have been dropped (see below the table).
 
-**Sequencing:** with the **Painter line** (E15 → E16) now shipped — validated
-locally on the existing `usePersistentState` seam, so E10's sync adapter adopts it
-for free — Next leads with **E12 editorial** as an independent SSG/SEO reach win.
-Then stand up the **E10 accounts** foundation (justified by the
-Designer→Painter→Client handoff, not just saves), earned _after_ the Project model
-proved out locally, per "earn heavy/live features." **E17 field mode** rounds out
-the Painter on-site (it depends on the shipped E16); then the heavy **E9** (shopper
-"see it in context"), the E10-gated **E13**, and **E14 widget** last, trailing until
-editorial + analytics make embeds worth distributing.
+| Item                                                                     | Persona              | Effort |
+| ------------------------------------------------------------------------ | -------------------- | ------ |
+| Upload-your-room photo recolor + lighting simulation (client-side WebGL) | Shopper              | L      |
+| Cross-brand color matching (build-time, data-licensing dependent)        | Designer             | L      |
+| Static public data program (`colors.json` + documented contract/bulk)    | Integrator/ecosystem | M–L    |
+
+**Dropped as backend-dependent (incompatible with no-accounts):** an **AI color
+assistant** (needs an LLM proxy/server), a **dynamic public API** (query endpoints —
+superseded by the static data program above), and **teams + e-commerce checkout**
+(accounts, carts, order state). Revisit only if the no-backend stance is ever
+revised.
+
+**Sequencing:** with the **Painter line** (E15 → E16) shipped and **no backend on the
+table**, Next leads with **E18 project portability** — file export/import + a
+shareable Project is the local-first answer to "move my work between devices and hand
+it off," the value accounts would otherwise carry, at S–M effort. **E12 editorial**
+follows as an independent SSG/SEO reach win. **E17 field mode** rounds out the Painter
+on-site (depends on the shipped E16; leans on the existing PWA, so it's a natural
+no-backend fit). Then the heavy, fully client-side **E9** (shopper "see it in
+context"), the **E14 widget** (a static embed; compounds with editorial), and a
+re-scoped **E13** client board last — a **branded, read-only shared board** (built on
+E18's share primitive); its former live comments/approval is dropped as it would
+require a backend.
 _Enabler:_ a build-time **product-line / sheen / coverage** dataset (like the color
 data) would unlock accurate per-product quantities in the shipped Work Order — which
-today uses a documented default coverage.
+today uses a documented default coverage. (Build-time, no server — compatible.)
 
 ### Success metrics
 
-- **Shopper:** detail → "Get this color" CTR; visualizer engagement; saves that lead to a sample/buy.
-- **Designer:** projects created; exports & shared boards opened; multi-color palette rate; 4-week retention.
-- **Painter:** projects given room/surface structure; work orders / shopping lists generated & printed; field-mode opens; jobs with progress tracked.
-- **Marketer:** organic traffic; share rate; OG-card impressions; widget embeds; trend-page traffic.
-- **Integrator:** `colors.json`/API fetches; partner integrations; (future) API keys issued.
+**Measurement under no-backend:** we run **no first-party product analytics** (no
+event sink). These signals are tracked **directionally** from sources that don't
+need our own server — static-host/CDN request logs, search-console impressions,
+outbound SW sample/store/buy clicks, and inbound referrers/UTM on share links — and
+the rest stay qualitative.
+
+- **Shopper:** "Get this color" reach; visualizer deep-link shares; outbound sample/buy clicks.
+- **Designer:** projects exported/imported & shared-board links opened; multi-color palette rate.
+- **Painter:** projects given room/surface structure; work orders / shopping lists printed; field-mode use.
+- **Marketer:** organic traffic (search console); share/referrer counts; OG-card reach; widget embeds; trend-page traffic.
+- **Integrator:** `colors.json` / static-data requests (host logs); partner integrations.
 - **Health (always-on):** Core Web Vitals; axe = 0 serious/critical; e2e green.
 
 ## Delivery backlog
@@ -308,44 +328,41 @@ for shape and priority.
 
 ### Now — remaining
 
-F1, F2, F4–F8 have shipped (see the architecture sections above); only the
-analytics enabler remains, and it's on hold pending a product decision.
-
-**F3 · Analytics & share tracking** _(Marketer · S–M, enabler — on hold)_
-Benefit: you can't improve what you can't measure; unblocks every roadmap metric. Privacy-respecting (no PII/cookies, honors DNT).
-
-- **US3.1** As a marketer, I want privacy-respecting page + event analytics so I can see what performs.
-  - AC: pageviews + key events (filter applied, compare/palette add, export, CTA click); no cookies/PII; respects DNT.
-  - Tasks: pick approach (Plausible/Umami or first-party beacon to a serverless endpoint); add SSR-guarded `track(event, props)`; instrument events; document the event taxonomy.
-- **US3.2** As a marketer, I want share links to carry UTM params so I can attribute traffic from shared colors/palettes.
-  - AC: share actions append source/medium/campaign; analytics reads them.
-  - Tasks: extend the share-URL builder; wire into copy-share actions; test.
+F1, F2, F4–F8 have shipped (see the architecture sections above). The one open
+item, **F3 · Analytics & share tracking**, is **dropped** under the **no backend,
+no accounts** stance: privacy-respecting or not, analytics needs a server-side sink
+to receive events, so it's out of scope. Share links may still append UTM params
+(a zero-cost, client-side change) so that _recipients'_ own tools can attribute —
+but we operate no analytics of our own. Measurement falls back to the directional,
+serverless signals noted under **Success metrics**. The **Now horizon is complete.**
 
 ### Next — features & stories (groomed)
 
-Reprioritized via WSJF-lite ((value + enablement) ÷ effort), then adjusted for
-hard dependencies and the "earn heavy/live features · validate locally first"
+Reprioritized via WSJF-lite ((value + enablement) ÷ effort), then adjusted for hard
+dependencies and the "**local-first, no backend** · validate locally first"
 principles. Effort: S=1, M=2, M–L=2.5, L=3 (value/enable on 1–5). Epic **IDs are
 stable**; the table is in **delivery order**. **E11, E15, and E16 have shipped**
-(removed — see the architecture sections).
+(removed — see the architecture sections); **E10 (Accounts & cloud sync) is removed**
+as backend-dependent. Every epic below is fully static + local-first.
 
-| Rank | Epic                                 | Persona           | V   | Enable | Eff | WSJF | Why here                                                                                      |
-| ---- | ------------------------------------ | ----------------- | --- | ------ | --- | ---- | --------------------------------------------------------------------------------------------- |
-| 1    | **E12 · Editorial / trend pages**    | Marketer          | 4   | 3      | 2.5 | 2.8  | Independent SSG/SEO/OG reach at low marginal cost.                                            |
-| 2    | **E10 · Accounts & cloud sync**      | All               | 4   | 5      | 3   | 3.0  | Foundation: sync + Designer→Painter→Client handoff; earned after E15/E16 validated the model. |
-| 3    | **E17 · Field mode**                 | Painter           | 4   | 1      | 2   | 2.5  | On-site work order (high-contrast/offline); depends on the shipped **E16**.                   |
-| 4    | **E9 · Room Visualizer v1**          | Shopper           | 5   | 3      | 3   | 2.7  | Biggest shopper gap ("see it in context"); earns the AR v2 bet.                               |
-| 5    | **E13 · Client presentation boards** | Designer          | 3   | 2      | 2   | 2.5  | High designer delight, but **blocked on E10**.                                                |
-| 6    | **E14 · Embeddable widget**          | Marketer/partners | 3   | 3      | 2   | 3.0  | Distribution; worth most _after_ editorial + analytics exist.                                 |
+| Rank | Epic                                 | Persona           | V   | Enable | Eff | WSJF | Why here                                                                                  |
+| ---- | ------------------------------------ | ----------------- | --- | ------ | --- | ---- | ----------------------------------------------------------------------------------------- |
+| 1    | **E18 · Project portability**        | Designer/Painter  | 4   | 3      | 1.5 | 4.7  | Local-first handoff/portability — the no-account substitute for sync; cheap, high-enable. |
+| 2    | **E12 · Editorial / trend pages**    | Marketer          | 4   | 3      | 2.5 | 2.8  | Independent SSG/SEO/OG reach at low marginal cost.                                        |
+| 3    | **E17 · Field mode**                 | Painter           | 4   | 1      | 2   | 2.5  | On-site work order (high-contrast/offline); depends on the shipped **E16**; PWA-only.     |
+| 4    | **E9 · Room Visualizer v1**          | Shopper           | 5   | 3      | 3   | 2.7  | Biggest shopper gap ("see it in context"); fully client-side; earns the AR v2 bet.        |
+| 5    | **E14 · Embeddable widget**          | Marketer/partners | 3   | 3      | 2   | 3.0  | Static embed distribution; compounds with editorial.                                      |
+| 6    | **E13 · Client presentation boards** | Designer          | 3   | 2      | 2   | 2.5  | Branded read-only share (built on E18); live comments/approval dropped (no backend).      |
 
-Sequencing rationale: the **Painter line** (E15 Project model → E16 Work Order +
-shopping list) was the highest-value gap and has shipped — validated locally on the
-existing `usePersistentState` seam so E10's sync adapter adopts it for free,
-reconciling "more local state" with "earn the backend." Next, **E12** is an
-independent reach win. Stand up **E10 accounts** _after_ the Project model proved out
-locally. Then **E17** (rounds out the Painter on-site; needs E16), the heavy **E9**,
-the E10-gated **E13**, and **E14** last. (Pull **E10** forward if cross-device/handoff
-demand spikes; pull **E14** forward if a concrete partner appears.)
+Sequencing rationale: with **no backend on the table**, lead with **E18** — file
+export/import + a shareable Project is the local-first answer to portability and the
+Designer→Painter→Client handoff (the value accounts would carry), and it's the
+cheapest item on the board (S–M). **E12** is an independent SSG/SEO reach win.
+**E17** rounds out the Painter on-site (needs the shipped E16; PWA-only, no server).
+Then the heavy but fully client-side **E9**, the static **E14** widget, and a
+re-scoped **E13** last (read-only board on E18's share primitive). Raw WSJF would
+float **E14** above **E9**; we hold E9 higher as the biggest unserved shopper gap.
+(Pull **E14** forward if a concrete partner appears.)
 
 ---
 
@@ -382,73 +399,36 @@ SSG / JSON-LD / OG pipeline (the cheapest reach lever we have).
     entry; all in sitemap.
   - Tasks: index page; reverse map color→collections; nav + internal links; tests.
 
-#### E10 · Accounts & cloud sync _(All · L)_ — **foundation / enabler**
+#### E18 · Project portability & sharing _(Designer/Painter · S–M)_ — local-first handoff
 
-Benefit: removes the localStorage ceiling — cross-device saves, durable projects,
-the **Designer→Painter→Client handoff**, the data spine for boards (E13), and
-marketer dashboards. Privacy-first (honor the F3 stance; explicit export/delete).
+Benefit: the **local-first substitute for accounts** — move a Project between
+devices and hand it Designer→Painter→Client **without a backend**. Today `?c=`
+shares a flat color list; a full structured Project (rooms → surfaces, assignments,
+and progress) is too large for a URL, so portability becomes **file export/import**
+plus an optional compressed share link, all client-side. Reuses the existing
+serializer/parse-migrate seam (`parsePaletteData`), so imported data flows through
+the same validation as stored data.
 
-**Tech (architect decision — ADR).** **Supabase**: managed **Auth** (passwordless
-magic-link/OTP + OAuth, PKCE) + **Postgres with Row-Level Security** as the
-authorization boundary; the browser talks to the DB directly via
-`@supabase/supabase-js`. The front-end **stays static on GitHub Pages** (Supabase
-is an external HTTPS service — no host change; SSG/PWA/prerender pipeline
-untouched). Only two bespoke server pieces: **Edge Functions** for data **export**
-and **hard delete** (`service_role`). Security: the `anon` key ships publicly and
-is safe _only because RLS is default-deny_ — so RLS policy tests + a CI guard that
-`service_role` never lands in `dist/` are mandatory; **XSS is the top risk** (strict
-CSP, hash the pre-paint inline script, cap user free-text), access token kept in
-memory (refresh token only — a pure static SPA can't use HttpOnly cookies without a
-backend proxy; documented tradeoff). Sharing maps to a
-`project_members(project_id, user_id, role)` table + RLS policies. Alternatives
-weighed and rejected: Firebase (NoSQL fights the relational sharing model; weaker
-export), Clerk+DB / Cloudflare D1+Workers (push the riskiest part — authorization —
-into code we'd own). _Revisit only if_ a security review forbids in-memory tokens
-(→ cookie-session proxy + a host change) or enterprise SSO becomes a headline need.
+**Feature: Project file export / import**
 
-**Feature: Authentication**
+- **US18.1** As a user, I want to export a Project to a file and import it on another
+  device (or from a teammate) so my work is portable without an account. _(S–M)_
+  - AC: export the active Project (colors + notes/room/roles + rooms/surfaces +
+    progress) to a versioned JSON file; import validates + migrates through
+    `parsePaletteData` (rejects malformed input gracefully); import lands as a new
+    Project (no silent overwrite); round-trips losslessly.
+  - Tasks: versioned serialize/deserialize over the storage seam; export/import UI on
+    the projects switcher; unit tests (round-trip + malformed/legacy input).
 
-- **US10.1** As any user, I want to sign in (passwordless email or OAuth) so my work
-  follows me across devices. _(M)_
-  - AC: sign-up/in/out; SSR-safe (no auth flicker on prerendered shell); works
-    offline read-only; no PII beyond email.
-  - Tasks: wire Supabase Auth (PKCE), access token in memory; resolve auth
-    post-hydration (reuse the two-phase init pattern); auth UI; e2e happy-path.
+**Feature: Shareable Project link (best-effort, no server)**
 
-**Feature: Cloud persistence & sync**
-
-- **US10.2** As a signed-in user, I want favorites/hidden synced so they match on
-  every device. _(M)_
-- **US10.3** As a signed-in user, I want my projects (colors, order, notes, room
-  tags, and the E15 rooms/surfaces structure) synced so my work is safe and
-  portable. _(M–L)_
-  - AC (10.2–10.3): writes persist to Postgres (RLS-scoped to the owner) and
-    rehydrate on load; offline edits queue (idempotent upsert by id) and reconcile;
-    last-write-wins with a visible "synced/offline" state; existing context APIs
-    unchanged for consumers.
-  - Tasks: storage adapter behind the current `usePersistent*` seam; outbox/sync
-    queue + reconciliation; default-deny RLS policies + policy tests; tests for
-    offline→online merge.
-
-**Feature: Sharing & handoff (Designer→Painter→Client)**
-
-- **US10.6** As a designer, I want to share a project with a painter (edit) or a
-  client (view/comment) so the spec and board travel with the job. _(M)_
-  - AC: invite by email/link with a role (owner/editor/commenter/viewer); access
-    enforced by RLS via `project_members`; revocable.
-  - Tasks: membership table + RLS; invite/accept flow; role-aware UI gating; tests.
-
-**Feature: Migration & account hygiene**
-
-- **US10.4** As a returning user, I want my existing localStorage data adopted into
-  my account on first sign-in so I lose nothing. _(M)_
-  - AC: one-time, idempotent merge (no dupes); clear before/after; reversible export.
-- **US10.5** As a user, I want to export and delete my account/data so I stay in
-  control. _(S–M)_
-  - AC: full JSON export; hard delete (cascade rows + `project_members` + auth user);
-    requires recent re-auth; honors privacy stance.
-  - Tasks (10.4–10.5): migration routine + guard flag; export + delete **Edge
-    Functions** (`service_role`, transactional); settings screen; tests.
+- **US18.2** As a designer, I want a copyable link that carries a whole Project so I
+  can hand off a structured job, not just a color list. _(S–M)_
+  - AC: encode the Project into the URL (compressed) for reasonable sizes; above a
+    size threshold, fall back to "export a file instead" with a clear message; the
+    recipient opens read-to-import; no backend, no stored state.
+  - Tasks: compress/encode + decode; size-guard + fallback copy; extend the existing
+    share-URL flow; tests for the threshold + decode.
 
 #### E17 · Field mode _(Painter · M)_ — depends E16
 
@@ -473,7 +453,8 @@ the Work Order + shopping list (leans on the existing PWA).
 
 Benefit: closes the #1 shopper gap — "see it in context." v1 is **curated +
 build-time** (static scenes/masks, client-side recolor) to earn the upload/AR v2
-(Later). Depends: a curated scene/asset pipeline; "save/share look" depends on E10.
+(Later). Depends: a curated scene/asset pipeline. Fully client-side — no backend;
+"save a look" persists locally and shares via a deep link + rendered OG image.
 
 **Feature: Curated scenes**
 
@@ -502,36 +483,33 @@ build-time** (static scenes/masks, client-side recolor) to earn the upload/AR v2
   so I see the color under different conditions. _(M)_
   - AC: presets apply a white-balance/exposure transform over the composite; labeled.
 - **US9.5** As a shopper, I want to save a look and share it so I can decide later or
-  get input. _(M, **depends E10** for cross-device; localStorage fallback otherwise)_
-  - AC: save (scene+color+lighting) to a palette/project; share via link + rendered
-    image (OG).
+  get input. _(M)_
+  - AC: save (scene+color+lighting) to a palette/project in localStorage; share via a
+    deep link (`?scene=&color=&lighting=`) + rendered OG image — no account needed.
   - Tasks (9.4–9.5): lighting transforms; save model; share/OG render; tests.
 
-#### E13 · Client presentation boards _(Designer · M)_ — **depends E10**
+#### E13 · Client presentation boards _(Designer · M)_ — depends E18
 
 Benefit: lets designers _deliver_, not just assemble — a branded, client-ready
-artifact with feedback, closing the workflow loop.
+artifact, closing the workflow loop. **Re-scoped for no-backend:** a polished
+read-only board shared via E18's Project link (or an exported PDF); the original
+live comments/approval workflow is **dropped** (it needs server-side multi-user
+state). Async feedback stays out-of-band (the client replies by email/PDF markup).
 
 **Feature: Branded read-only board**
 
-- **US13.1** As a designer, I want to publish a project as a branded, read-only board
-  at a shareable link so I can present to clients. _(M)_
+- **US13.1** As a designer, I want to present a project as a branded, read-only board
+  from a shareable link so I can show clients. _(M)_
   - AC: board renders colors + notes/room + roles (E11) read-only; light branding
-    (title/logo); access via unguessable token; SSR/OG card.
-  - Tasks: board view + token route; render from synced project (E10); OG.
-
-**Feature: Comments & approval**
-
-- **US13.2** As a client, I want to comment per color and approve / request changes
-  so the designer gets clear feedback. _(M)_
-  - AC: threaded per-color comments; board-level status (approved / changes
-    requested); designer notification.
-  - Tasks: comments data model (E10 backend); status + notify; tests.
+    (title/logo); loads from an E18 Project link (or imported file) — no stored
+    server state; client-side `noindex`; OG card from the share data.
+  - Tasks: board view + branding; decode from the E18 share/import path; OG; tests.
 
 #### E14 · Embeddable widget _(Marketer/partners · M)_
 
 Benefit: extends reach beyond our domain — partners/bloggers embed live swatches
-or palettes; compounds with editorial (E12) and share analytics (F3).
+or palettes; compounds with editorial (E12). A static, read-only embed served from
+our existing host — no backend.
 
 **Feature: Embeddable swatch/palette**
 
@@ -542,21 +520,21 @@ or palettes; compounds with editorial (E12) and share analytics (F3).
   - Tasks: standalone embed entry/route + minimal bundle; data load from share URL;
     a11y + size budget.
 
-**Feature: Embed builder & attribution**
+**Feature: Embed builder**
 
 - **US14.2** As a marketer, I want a builder to configure an embed and copy the
   snippet so it's self-serve. _(S–M)_
   - AC: pick swatch/palette + theme/size → copyable iframe/script snippet with live
-    preview.
-- **US14.3** As a marketer, I want embeds to carry attribution so I can measure reach.
-  _(S, **ties F3**)_
-  - AC: embed link/loads include source/medium params read by analytics; documented.
-  - Tasks (14.2–14.3): builder UI; UTM-tagged embed URLs; event hooks (F3).
+    preview; embed-back links carry UTM params (so partners' _own_ analytics can
+    attribute) — we run no analytics of our own.
+  - Tasks: builder UI; UTM-tagged embed/back URLs; a11y + size budget; tests.
 
 ### Later — epics (one-liners)
 
-AR photo recolor + lighting · AI color assistant · cross-brand matching · public
-API / partner data · teams + e-commerce checkout.
+Client-side AR photo recolor + lighting · cross-brand matching (build-time) ·
+static public data program (`colors.json` + contract). _Dropped as
+backend-dependent: AI color assistant, dynamic public API, teams + e-commerce
+checkout._
 
 ### Definition of Ready / Done
 
