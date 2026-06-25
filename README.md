@@ -1,146 +1,139 @@
-# Sherwin-Williams Color Explorer
+# Sherwin-Williams Color Atlas
 
-A Progressive Web Application (PWA) for exploring, organizing, and sharing Sherwin-Williams paint colors with comprehensive color information and visualization tools.
+A Progressive Web App for browsing, comparing, collecting, and **planning paint
+jobs** around Sherwin-Williams colors. Built with **Vite + React 19 + TypeScript
+(strict)** and **statically pre-rendered** (one HTML page per color) for SEO and AI
+discoverability.
+
+> Architecture, state model, and product roadmap live in [SPEC.md](./SPEC.md); the
+> visual language lives in [design-system.md](./design-system.md). This README is
+> the quick start.
+
+## Three-tier product
+
+1. **Browse** (`/`) — a faceted gallery: one virtualized grid of every color with a
+   search/sort toolbar and a filter rail (family, undertone, neutrality, lightness,
+   use, collection, favorites/hidden view).
+2. **Color detail** (`/colors/:slug`) — a canonical, pre-rendered page per color: a
+   plain-language summary, a "Get this color" panel (sample / store / buy links + a
+   paint calculator), coordinating & similar colors, JSON-LD, and HSL/LAB + raw
+   specs under a "Technical details" disclosure.
+3. **Workspace**
+   - **Compare** (`/compare`) — up to 4 colors side by side with a pairwise WCAG
+     contrast matrix.
+   - **Palette** (`/palette`) — multiple named projects: collect, reorder, per-color
+     notes + room tags, 60-30-10 role suggestions, scheme/companion suggestions,
+     PNG board + PDF spec-sheet export, and a shareable `?c=` URL. A project can
+     optionally become a **structured Project** (Rooms → Surfaces, each assigned a
+     color + finish + coats + measured area) viewed through two lenses:
+     - **Board** (Designer) — the palette view.
+     - **Work Order** (Painter) — a rooms × surfaces spec with per-room/per-color
+       paint quantities, a consolidated shopping list (SW number, rack locator,
+       total cans), per-surface progress check-off, and a printable PDF.
 
 ## Features
 
-### Color Discovery & Information
+- **Color intelligence** — plain-language summaries, LRV/undertone/neutrality
+  classification, coordinating + similar suggestions, 60-30-10 palette roles.
+- **Paint planning** — per-room and per-color gallon/can estimates (area × coats ÷
+  coverage), a consolidated shopping list, and progress tracking, all reusing the
+  paint calculator's area math.
+- **Shareable & discoverable** — pre-rendered pages, JSON-LD, per-color Open Graph
+  social images, sitemap, and `?c=` share URLs.
+- **Local-first** — favorites, hidden colors, sort, compare, and palette projects
+  persist in `localStorage` behind a single storage seam (no account required).
+- **PWA** — installable, offline-capable via a generated service worker, with
+  update notifications.
+- **Accessible** — keyboard navigation, AAA-grade contrast (guarded by tests),
+  ≥44px targets, ARIA labels, color never the sole signal, announced SPA routes.
 
-- **Comprehensive Color Details**: View complete color information including:
+## Getting started
 
-  - Color name and SW number
-  - Light Reflectance Value (LRV) with contextual badges (dark/medium/light)
-  - Hex color codes and RGB values
-  - HSL color values
-  - Interior/Exterior use indicators
-  - Color families and branded collections
-  - Store strip locator information
+### Prerequisites
 
-- **Organized Color Families**: Browse colors organized by color families in an expandable accordion interface
+- **Node.js 20+** and npm.
 
-- **Color Recommendations**:
-  - Coordinating colors (up to 3 suggested pairings)
-  - Similar colors (up to 6 alternatives)
+### Install & run
 
-### Color Management
+```bash
+git clone https://github.com/Sonic12040/sw-color-tester.git
+cd sw-color-tester
+npm install
+npm run dev      # Vite dev server → http://localhost:5173
+```
 
-- **Favorites**: Mark colors as favorites for quick access and comparison
-- **Hide Colors**: Remove colors from view to narrow down your selection
-- **Bulk Actions**: Clear all favorites or hidden colors with one click
-- **URL Sharing**: Share your color selections via URL - favorites and hidden colors persist as query parameters
+### Build & preview
 
-### User Experience
+```bash
+npm run build    # typecheck → client + SSR build → prerender static HTML/sitemap/OG
+npm run preview  # serve the production build locally
+```
 
-- **Responsive Design**: Optimized layouts for mobile, tablet, and desktop devices
-- **Accessible Interface**: WCAG 2.1 Level A compliant with:
+`npm run build` runs `tsc`, builds the client and SSR bundles, then `prerender.mjs`
+writes `dist/` — static HTML for `/`, `/compare`, `/palette`, and every
+`/colors/<slug>`, plus `sitemap.xml`, `robots.txt`, `colors.json`, a `404.html` SPA
+fallback, and a 1200×630 Open Graph PNG per color.
 
-  - Keyboard navigation support
-  - High contrast text based on color background
-  - Screen reader compatibility
-  - Proper ARIA labels and roles
+## Scripts
 
-- **Progressive Web App**:
+| Script                     | What it does                                             |
+| -------------------------- | -------------------------------------------------------- |
+| `npm run dev`              | Vite dev server with HMR.                                |
+| `npm run build`            | Typecheck, build client + SSR, and prerender to `dist/`. |
+| `npm run preview`          | Preview the built site.                                  |
+| `npm test`                 | Run the unit + integration Vitest projects.              |
+| `npm run test:unit`        | Pure-logic unit tests only.                              |
+| `npm run test:integration` | Component/hook/flow tests (jsdom + Testing Library).     |
+| `npm run test:e2e`         | Playwright + axe-core cross-device / a11y e2e.           |
+| `npm run typecheck`        | `tsc --noEmit`.                                          |
+| `npm run lint`             | ESLint (flat config).                                    |
+| `npm run format`           | Prettier write (`format:check` to verify).               |
 
-  - Install on your device
-  - Offline functionality with service worker caching
-  - Automatic update notifications
+## Tech stack
 
-- **Enhanced Readability**:
-  - Roboto and Roboto Mono font families
-  - Font smoothing and optimized rendering
-  - Adaptive text colors for optimal contrast
+- **Vite 8** (dev/build; `vite-plugin-pwa` for the service worker)
+- **React 19** + **React Router 7** (data router)
+- **TypeScript** (strict; `.js` extensions on relative imports)
+- **Vitest + Testing Library (jsdom)** for unit + integration tests
+- **Playwright + axe-core** for cross-device + accessibility e2e
+- **ESLint (flat) + Prettier**, enforced in CI
+- **pdf-lib** for client-side PDF export
 
-### Color Visualization
+## Project structure
 
-- **Color Detail Modal**: Click "View Details" on any color to see:
+A high-level map (see [SPEC.md](./SPEC.md) for the full breakdown):
 
-  - Full-screen color preview
-  - Complete technical specifications
-  - Coordinating and similar color suggestions
-  - Color family and collection information
+```text
+src/
+├── main.tsx / entry-server.tsx   # client hydrate + SSG render
+├── routes.tsx                    # shared route tree
+├── data/                         # generated color dataset + types
+├── models/                       # ColorModel repository + pure query/sort
+├── context/                      # Favorites, Hidden, Filters, Compare, Palette, Toast, App
+├── domain/                       # shared facet/sort vocabulary + project (rooms → surfaces) model
+├── utils/                        # color math/copy, paint quantities, work order, export, SEO
+├── components/                   # Atlas (gallery), ColorDetailView, Workspace (Compare, WorkOrder), …
+└── styles/                       # design tokens + global CSS
+prerender.mjs                     # post-build static HTML / sitemap / OG generation
+```
 
-- **Visual Indicators**:
-  - LRV badges showing light absorption/reflection
-  - Interior/Exterior use badges with adaptive colors
-  - Dynamic text colors for accessibility
+## Testing
 
-## Getting Started
+- **Unit** — colocated `*.test.ts` over pure logic (color math/copy, query, paint
+  estimates, work order, SEO, dataset integrity).
+- **Integration** — jsdom + React Testing Library specs for contexts, hooks, and the
+  routed flows (gallery, detail, compare, palette/work order).
+- **Build-output** — asserts the prerendered `dist/` (SEO markup, JSON-LD, summaries,
+  OG images); runs after a build.
+- **E2E** — Playwright across a 6-profile device matrix plus axe accessibility scans.
 
-### Installation
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/Sonic12040/sw-color-tester.git
-   cd sw-color-tester
-   ```
-
-2. Serve the application using a local web server:
-
-   ```bash
-   # Using Python
-   python -m http.server 3000
-
-   # Using Node.js http-server
-   npx http-server -p 3000
-   ```
-
-3. Open your browser and navigate to `http://localhost:3000`
-
-### Usage
-
-#### Browse Colors
-
-- Expand color family sections to view available colors
-- Each color tile displays name, number, LRV, hex, and RGB values
-
-#### Manage Your Selection
-
-- Click the heart icon to favorite a color
-- Click the eye-off icon to hide a color from view
-- Use bulk actions in the header to clear all favorites or hidden colors
-
-#### View Detailed Information
-
-- Click the "View Details" button on any color tile
-- Explore coordinating and similar colors
-- Review complete technical specifications
-
-#### Share Your Selections
-
-- Copy the URL to share your current favorites and hidden colors
-- Recipients will see the same color selections when they open the link
-
-## Technical Details
-
-### Architecture
-
-- **Model-View-Controller (MVC)**: Clean separation of concerns
-- **Command Pattern**: Undo/redo support for color management operations
-- **Observer Pattern**: State management with URL synchronization
-- **Strategy Pattern**: Extensible event handling
-
-### Browser Support
-
-- Modern browsers with ES6 module support
-- Progressive enhancement for older browsers
-- Service Worker support for PWA features
-
-### Performance
-
-- Efficient color data loading and caching
-- Hardware-accelerated CSS rendering
-- Optimized font loading with preconnect
-- Service worker caching for offline access
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
+CI runs lint → format:check → typecheck → test → build → e2e, then deploys to GitHub
+Pages.
 
 ## License
 
-This project is for educational and demonstration purposes.
+For educational and demonstration purposes.
 
 ## Acknowledgments
 
-Color data provided by the Sherwin-Williams API.
+Color data sourced from Sherwin-Williams.

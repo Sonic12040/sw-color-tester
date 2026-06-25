@@ -25,8 +25,14 @@ for SEO/AI discoverability.
    specs tucked under a "Technical details" disclosure.
 3. **Workspace** — `/compare` (up to 4 side-by-side, with a pairwise WCAG
    contrast matrix) and `/palette` — multiple named projects, each with
-   collect / reorder / per-color notes + room tags / export (JSON · PNG board ·
-   PDF spec sheet) / per-row hue relationships / shareable `?c=` URL.
+   collect / reorder / per-color notes + room tags / 60-30-10 roles /
+   export (PNG board · PDF spec sheet) / per-row hue relationships / shareable
+   `?c=` URL. A project can optionally become a **structured Project** (Rooms →
+   Surfaces, each assigned a color + finish + coats + measured area) viewed
+   through two lenses: the Designer **Board** (the palette view) and the Painter
+   **Work Order** — a rooms × surfaces spec with per-room/per-color paint
+   quantities, a consolidated shopping list, per-surface progress check-off, and
+   a printable PDF.
 
 ## Source layout
 
@@ -48,11 +54,11 @@ src/
 │   │                     #   ActiveFilters, ColorGrid, ColorCard (memoized)
 │   ├── ColorDetailView/  # ColorDetail, DetailActions, GetColorPanel, PaintCalculator,
 │   │                     #   ColorGridSection, MiniTile, HslBreakdown
-│   ├── Workspace/        # CompareTray, ContrastMatrix
+│   ├── Workspace/        # CompareTray, ContrastMatrix, WorkOrderView (Painter lens)
 │   ├── Toast/, ErrorBoundary/, seo/JsonLd
-├── domain/               # types.ts (shared facet/sort vocabulary)
+├── domain/               # types.ts (shared facet/sort vocabulary), project.ts (Rooms → Surfaces model)
 ├── utils/                # base.ts, config.ts, storage.ts, slug.ts, seo.ts, breakpoints.ts, clipboard.ts, colorMath.ts,
-│                         #   colorCopy.ts, paint.ts, swLinks.ts, ogTemplate.ts, ExportService.ts, paletteExport.ts (lazy)
+│                         #   colorCopy.ts, paint.ts, workOrder.ts, swLinks.ts, ogTemplate.ts, ExportService.ts, paletteExport.ts (lazy)
 └── styles/               # tokens.css, breakpoints.css, a11y.css, global.css
 prerender.mjs             # post-build: writes dist/colors/<slug>/index.html + 404.html, sitemap, colors.json
 ```
@@ -72,6 +78,14 @@ so a change to one slice doesn't re-render consumers of another — validated by
 | Compare (≤4)  | `CompareContext` (`usePersistentState`) | `useCompare`    |
 | Palette       | `PaletteContext` (`usePersistentState`) | `usePalette`    |
 | Toasts        | `ToastContext`                          | `useToast`      |
+
+`PaletteContext` holds the named projects; each is a color list **plus an optional
+structured Project** (`domain/project.ts`: `rooms[] → surfaces[]`, with
+parse/migrate so the legacy flat-list format still loads). Rooms/surfaces and
+per-surface progress persist through the same `usePersistentState` / `storage` seam
+as everything else, so a future accounts/sync layer (E10) adopts them for free.
+Paint quantities, the shopping list, and progress are pure functions over the
+project (`utils/paint.ts`, `utils/workOrder.ts`).
 
 `usePersistent*` use **two-phase init** (render `initial`, then load from storage)
 so server-prerendered markup and the first client render agree (no hydration
@@ -177,26 +191,26 @@ non-human data consumer. Each persona is a distinct job, not a distinct app: the
 share the catalog and (increasingly) one **Project** object viewed through
 different lenses.
 
-| Persona                                  | Job-to-be-done                                                                                                       | Today                                                                                                                                   | Biggest gap                                                                                                                                                            |
-| ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Shopper** (DIY)                        | Find a color that works in _my_ room and buy with confidence                                                         | Browse/filter, similar + coordinating, plain-language summary, "Get this color" (sample/store/buy + paint calculator)                   | Can't see it in context; no synced saves; no AI guidance                                                                                                               |
-| **Designer** (pro)                       | Assemble, validate, present, and deliver client palettes                                                             | Compare + contrast matrix, named palette projects (notes/room, 60-30-10 roles, scheme/companion suggestions), PNG/PDF export, share URL | No cloud sync / collaboration; no client approval/sign-off workflow; no cross-brand match                                                                              |
-| **Painter** (contractor / trades)        | Turn a chosen palette into the right materials applied to the right surfaces — accurately and efficiently on the job | Per-color SW number + in-store rack locator, find-a-store links, a rough single-room paint calculator                                   | No job model (rooms → surfaces), no finish/sheen or product line, no per-room quantities or consolidated shopping list, no progress tracking or on-site **field mode** |
-| **Marketer/promoter**                    | Drive discovery and create shareable, measurable content                                                             | SSG/SEO, JSON-LD, per-color OG/social images, sitemap, share URLs, collections                                                          | No analytics/attribution; no editorial/trend surfaces; no embeds                                                                                                       |
-| **Integrator / AI agent** (programmatic) | Consume accurate, structured color data to power external tools, answers, or partner experiences                     | Machine-readable `colors.json` index, JSON-LD, canonical per-color pages, sitemap                                                       | No versioned/public API, bulk or query endpoints, usage terms, or change feed                                                                                          |
+| Persona                                  | Job-to-be-done                                                                                                       | Today                                                                                                                                                                                                                                         | Biggest gap                                                                                                                                             |
+| ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Shopper** (DIY)                        | Find a color that works in _my_ room and buy with confidence                                                         | Browse/filter, similar + coordinating, plain-language summary, "Get this color" (sample/store/buy + paint calculator)                                                                                                                         | Can't see it in context; no synced saves; no AI guidance                                                                                                |
+| **Designer** (pro)                       | Assemble, validate, present, and deliver client palettes                                                             | Compare + contrast matrix, named palette projects (notes/room, 60-30-10 roles, scheme/companion suggestions), PNG/PDF export, share URL                                                                                                       | No cloud sync / collaboration; no client approval/sign-off workflow; no cross-brand match                                                               |
+| **Painter** (contractor / trades)        | Turn a chosen palette into the right materials applied to the right surfaces — accurately and efficiently on the job | Structured Project (rooms → surfaces → color + finish + coats + area), Work Order lens with per-room/per-color quantities, consolidated shopping list, per-surface progress, printable PDF; per-color SW number + rack locator + find-a-store | No product-line/sheen dataset (quantities use a default coverage), no on-site **field mode**, no cloud sync for the Designer → Painter → Client handoff |
+| **Marketer/promoter**                    | Drive discovery and create shareable, measurable content                                                             | SSG/SEO, JSON-LD, per-color OG/social images, sitemap, share URLs, collections                                                                                                                                                                | No analytics/attribution; no editorial/trend surfaces; no embeds                                                                                        |
+| **Integrator / AI agent** (programmatic) | Consume accurate, structured color data to power external tools, answers, or partner experiences                     | Machine-readable `colors.json` index, JSON-LD, canonical per-color pages, sitemap                                                                                                                                                             | No versioned/public API, bulk or query endpoints, usage terms, or change feed                                                                           |
 
-**Painter — the newly identified persona.** This is the _execution_ end of the
-funnel the product currently underserves: it helps people **choose** and
-**present** color but nearly stops where the job begins. The Painter's currency is
-accuracy + efficiency at execution — _which color, which finish, how many coats,
-how many gallons, where to buy it, what's done_. The single-room paint calculator
-and the per-color rack locator are seeds of this, but there is no **job** object
-(rooms → surfaces → color + finish + coats + measured area → quantities →
-shopping list → progress). This reframes the "Palette" page: it is really an
-immature **Project**, and a Painter's _Work Order/Spec_ and a Designer's _Board_
-are two lenses over the same structured data. (Painter also raises the priority of
-accounts/sync — the Designer → Painter → Client handoff is a stronger reason for a
-backend than "save my favorites.")
+**Painter — the _execution_ end of the funnel.** Once the underserved end of the
+product — it helped people **choose** and **present** color but nearly stopped where
+the job begins. That gap is now largely closed: the "Palette" page is a first-class
+**Project**, and a Painter's _Work Order/Spec_ and a Designer's _Board_ are two
+lenses over the same structured data (rooms → surfaces → color + finish + coats +
+measured area → quantities → shopping list → progress). The Painter's currency is
+accuracy + efficiency at execution — _which color, which finish, how many coats, how
+many gallons, where to buy it, what's done_ — and the Work Order now answers each.
+What remains is **accuracy** (a build-time product-line/sheen/coverage dataset, vs.
+today's default coverage) and **on-site** delivery (E17 field mode). (Painter also
+raises the priority of accounts/sync — the Designer → Painter → Client handoff is a
+stronger reason for a backend than "save my favorites.")
 
 **Adjacent / candidate personas (deliberately not yet first-class).** Persona
 discipline matters more than coverage — over-fragmenting dilutes the roadmap.
@@ -234,21 +248,22 @@ _On hold pending a product decision on analytics (privacy stance / approach)._
 ### Next — core differentiators (1–3 quarters)
 
 Listed in **delivery order** (see the groomed feature/story backlog below for the
-WSJF-lite scoring and dependencies). **E11 (palette intelligence) has shipped** —
-see the architecture sections. The order now leads with the **Painter** line
-(E15→E16→E17): the execution end of the funnel the product underserves, and the
-move that takes the north star from "I'm confident" to "I acted on it."
+WSJF-lite scoring and dependencies). **E11 (palette intelligence), E15 (Project
+model), and E16 (Work Order + shopping list) have shipped** — see the architecture
+sections. With the **Painter line** now delivered (the structured Project, the Work
+Order lens, paint quantities, the shopping list, and progress tracking — taking the
+north star from "I'm confident" to "I acted on it"), the order leads with **E12
+editorial reach**, then the **E10 accounts** foundation, then **E17 field mode** to
+round out the Painter on-site.
 
 | #   | Item                                                                           | Epic | Persona           | Effort |
 | --- | ------------------------------------------------------------------------------ | ---- | ----------------- | ------ |
-| 1   | Project model — palette becomes a structured Project (rooms → surfaces)        | E15  | Painter/Designer  | M–L    |
-| 2   | Work Order / Spec lens + consolidated shopping list                            | E16  | Painter           | M–L    |
-| 3   | Editorial / trend collection landing pages + light curation                    | E12  | Marketer          | M–L    |
-| 4   | Accounts & cloud sync (Supabase + RLS; sync + Designer→Painter→Client handoff) | E10  | All               | L      |
-| 5   | Field mode — on-site, high-contrast, offline work order                        | E17  | Painter           | M      |
-| 6   | Room Visualizer v1 (curated scenes, recolor walls, lighting presets)           | E9   | Shopper           | L      |
-| 7   | Client presentation boards (branded, read-only, comments/approval)             | E13  | Designer          | M      |
-| 8   | Embeddable swatch/palette widget                                               | E14  | Marketer/partners | M      |
+| 1   | Editorial / trend collection landing pages + light curation                    | E12  | Marketer          | M–L    |
+| 2   | Accounts & cloud sync (Supabase + RLS; sync + Designer→Painter→Client handoff) | E10  | All               | L      |
+| 3   | Field mode — on-site, high-contrast, offline work order                        | E17  | Painter           | M      |
+| 4   | Room Visualizer v1 (curated scenes, recolor walls, lighting presets)           | E9   | Shopper           | L      |
+| 5   | Client presentation boards (branded, read-only, comments/approval)             | E13  | Designer          | M      |
+| 6   | Embeddable swatch/palette widget                                               | E14  | Marketer/partners | M      |
 
 ### Later — ambitious bets (3+ quarters)
 
@@ -260,21 +275,18 @@ move that takes the north star from "I'm confident" to "I acted on it."
 | Public API / partner data program                                         | Integrator/ecosystem | L      |
 | Teams + e-commerce checkout (sample/paint ordering, firm seats)           | Designer/Shopper     | L      |
 
-**Sequencing:** with E11 shipped, Next leads with the **Painter line** — the
-underserved execution end. **E15 (Project model)** is a mostly-local refactor of
-the palette that both unlocks the Painter _and_ upgrades the Designer board, so it
-goes first; **E16 (Work Order + shopping list)** delivers the Painter on top of it
-(a basic slice needs no backend — it reuses the paint calculator's coverage).
-**E12 editorial** stays high as an independent SSG/SEO reach win. Then stand up the
-**E10 accounts** foundation (now justified by the Designer→Painter→Client
-handoff, not just saves) — earned _after_ validating the Project model locally,
-per "earn heavy/live features." E15/E16 must persist through the existing
-`usePersistentState` seam so E10's adapter syncs them for free. **E17 field mode**
-follows E16; **E9** (shopper "see it in context") and the E10-gated **E13** follow;
-**E14 widget** trails until editorial + analytics make embeds worth distributing.
+**Sequencing:** with the **Painter line** (E15 → E16) now shipped — validated
+locally on the existing `usePersistentState` seam, so E10's sync adapter adopts it
+for free — Next leads with **E12 editorial** as an independent SSG/SEO reach win.
+Then stand up the **E10 accounts** foundation (justified by the
+Designer→Painter→Client handoff, not just saves), earned _after_ the Project model
+proved out locally, per "earn heavy/live features." **E17 field mode** rounds out
+the Painter on-site (it depends on the shipped E16); then the heavy **E9** (shopper
+"see it in context"), the E10-gated **E13**, and **E14 widget** last, trailing until
+editorial + analytics make embeds worth distributing.
 _Enabler:_ a build-time **product-line / sheen / coverage** dataset (like the color
-data) unlocks accurate per-product quantities in E16 — basic quantities ship
-without it.
+data) would unlock accurate per-product quantities in the shipped Work Order — which
+today uses a documented default coverage.
 
 ### Success metrics
 
@@ -314,104 +326,28 @@ Benefit: you can't improve what you can't measure; unblocks every roadmap metric
 Reprioritized via WSJF-lite ((value + enablement) ÷ effort), then adjusted for
 hard dependencies and the "earn heavy/live features · validate locally first"
 principles. Effort: S=1, M=2, M–L=2.5, L=3 (value/enable on 1–5). Epic **IDs are
-stable**; the table is in **delivery order**. **E11 has shipped** (removed).
+stable**; the table is in **delivery order**. **E11, E15, and E16 have shipped**
+(removed — see the architecture sections).
 
-| Rank | Epic                                 | Persona           | V   | Enable | Eff | WSJF | Why here                                                                                       |
-| ---- | ------------------------------------ | ----------------- | --- | ------ | --- | ---- | ---------------------------------------------------------------------------------------------- |
-| 1    | **E15 · Project model**              | Painter/Designer  | 5   | 4      | 2.5 | 3.6  | Unlocks the unserved Painter _and_ upgrades the Designer board; local refactor of the palette. |
-| 2    | **E16 · Work Order + shopping list** | Painter           | 5   | 2      | 2.5 | 2.8  | Delivers the Painter ("I acted on it"); basic slice reuses the calculator, no backend.         |
-| 3    | **E12 · Editorial / trend pages**    | Marketer          | 4   | 3      | 2.5 | 2.8  | Independent SSG/SEO/OG reach at low marginal cost.                                             |
-| 4    | **E10 · Accounts & cloud sync**      | All               | 4   | 5      | 3   | 3.0  | Foundation: sync + Designer→Painter→Client handoff; earned after E15/E16 validate the model.   |
-| 5    | **E17 · Field mode**                 | Painter           | 4   | 1      | 2   | 2.5  | On-site work order (high-contrast/offline); depends on **E16**.                                |
-| 6    | **E9 · Room Visualizer v1**          | Shopper           | 5   | 3      | 3   | 2.7  | Biggest shopper gap ("see it in context"); earns the AR v2 bet.                                |
-| 7    | **E13 · Client presentation boards** | Designer          | 3   | 2      | 2   | 2.5  | High designer delight, but **blocked on E10**.                                                 |
-| 8    | **E14 · Embeddable widget**          | Marketer/partners | 3   | 3      | 2   | 3.0  | Distribution; worth most _after_ editorial + analytics exist.                                  |
+| Rank | Epic                                 | Persona           | V   | Enable | Eff | WSJF | Why here                                                                                      |
+| ---- | ------------------------------------ | ----------------- | --- | ------ | --- | ---- | --------------------------------------------------------------------------------------------- |
+| 1    | **E12 · Editorial / trend pages**    | Marketer          | 4   | 3      | 2.5 | 2.8  | Independent SSG/SEO/OG reach at low marginal cost.                                            |
+| 2    | **E10 · Accounts & cloud sync**      | All               | 4   | 5      | 3   | 3.0  | Foundation: sync + Designer→Painter→Client handoff; earned after E15/E16 validated the model. |
+| 3    | **E17 · Field mode**                 | Painter           | 4   | 1      | 2   | 2.5  | On-site work order (high-contrast/offline); depends on the shipped **E16**.                   |
+| 4    | **E9 · Room Visualizer v1**          | Shopper           | 5   | 3      | 3   | 2.7  | Biggest shopper gap ("see it in context"); earns the AR v2 bet.                               |
+| 5    | **E13 · Client presentation boards** | Designer          | 3   | 2      | 2   | 2.5  | High designer delight, but **blocked on E10**.                                                |
+| 6    | **E14 · Embeddable widget**          | Marketer/partners | 3   | 3      | 2   | 3.0  | Distribution; worth most _after_ editorial + analytics exist.                                 |
 
-Sequencing rationale: the Painter is the highest-value gap, so lead with **E15**
-(a mostly-local palette→Project refactor that also upgrades the Designer board),
-then **E16** (the Painter deliverable; a basic version ships with no backend).
-**E12** stays high as an independent reach win. Stand up **E10 accounts** _after_
-the Project model is validated locally — keeping E15/E16 on the existing
-`usePersistentState` seam so E10's sync adapter adopts them for free, which
-reconciles "more local state" with "earn the backend." Then **E17** (needs E16),
-the heavy **E9**, the E10-gated **E13**, and **E14** last. (Pull **E10** forward if
-cross-device/handoff demand spikes; pull **E14** forward if a concrete partner
-appears.)
+Sequencing rationale: the **Painter line** (E15 Project model → E16 Work Order +
+shopping list) was the highest-value gap and has shipped — validated locally on the
+existing `usePersistentState` seam so E10's sync adapter adopts it for free,
+reconciling "more local state" with "earn the backend." Next, **E12** is an
+independent reach win. Stand up **E10 accounts** _after_ the Project model proved out
+locally. Then **E17** (rounds out the Painter on-site; needs E16), the heavy **E9**,
+the E10-gated **E13**, and **E14** last. (Pull **E10** forward if cross-device/handoff
+demand spikes; pull **E14** forward if a concrete partner appears.)
 
 ---
-
-#### E15 · Project model — rooms → surfaces _(Painter/Designer · M–L)_ — foundation
-
-Benefit: today's flat "palette" is really an immature **Project**. Model a Project
-as colors **plus optional Rooms → Surfaces**, each surface assigned a color +
-finish + coats + measured area. One object, persona lenses (Designer **Board** =
-today's palette view; Painter **Work Order** = E16). Structure is opt-in
-(progressive disclosure) and stays local-first behind the existing
-`usePersistentState` / `storage` seam, so E10 syncs it for free.
-
-**Feature: Structured project data model**
-
-- **US15.1** As a user, I want my palette to optionally gain Rooms and Surfaces so it
-  can describe a real job, while a plain color list still works for quick saves. _(M)_
-  - AC: backward-compatible migration of existing `PaletteData`; a project is a color
-    list plus optional `rooms[]`, each room with `surfaces[]`
-    (wall/ceiling/trim/door/cabinet/other); the flat list stays the default view.
-  - Tasks: extend `PaletteContext` types + parse/migrate (mirror `parsePaletteData`);
-    add-room / add-surface UI; integrity + migration tests.
-- **US15.2** As a user, I want to assign a color + finish + coats + measured area to a
-  surface so the project captures what actually gets painted. _(M)_
-  - AC: per-surface assignment (color; finish/sheen from flat/eggshell/satin/
-    semi-gloss/gloss; coats; area or L×W×H); reuses the paint-calculator area math.
-  - Tasks: assignment UI; lift `PaintCalculator` area math into a shared util;
-    persist; unit-test.
-
-**Feature: Project lenses**
-
-- **US15.3** As a user, I want to switch a project between Board and Work Order views
-  without duplicating data. _(S–M)_
-  - AC: the same project renders as Board (Designer) or Work Order (Painter); view
-    preference persists; flat/empty projects degrade gracefully.
-  - Tasks: lens toggle + routing/state; reuse the existing palette board rendering.
-
-#### E16 · Work Order / Spec + shopping list _(Painter · M–L)_ — depends E15
-
-Benefit: turn a structured Project into **materials + quantities + where to buy +
-progress** — the Painter deliverable that completes "I acted on it." A basic slice
-needs no new data (reuse the calculator's ~350 sq ft/gal); per-product accuracy is
-gated on the build-time **product/sheen/coverage** enabler.
-
-**Feature: Work Order / Spec sheet**
-
-- **US16.1** As a painter, I want a rooms × surfaces table (color, SW number, finish,
-  coats, area) so I can execute the job, printable as a PDF. _(M)_
-  - AC: per-room sections; surface rows with color chip + SW number + finish + coats +
-    area; PDF via the existing `paletteExport` pipeline; field-readable layout.
-  - Tasks: Work Order view + PDF template (extend `paletteExport`); tests.
-- **US16.2** As a painter, I want per-room and per-color quantity estimates so I buy
-  the right amount. _(M)_
-  - AC: gallons/cans = area × coats ÷ coverage (default coverage now, per-product when
-    the enabler lands); totals per color aggregated across rooms.
-  - Tasks: extend the pure `paint` estimate to aggregate over assignments; unit-test.
-
-**Feature: Consolidated shopping list**
-
-- **US16.3** As a painter, I want one shopping list (each color × finish: SW number,
-  rack location, total quantity) so I can buy everything in one trip. _(M)_
-  - AC: one row per color×finish with total cans + `storeStripLocator`; printable +
-    copyable; aggregated across all rooms.
-  - Tasks: aggregate from assignments; render + export; tests.
-
-**Feature: Progress tracking**
-
-- **US16.4** As a painter, I want to check off surfaces/rooms as done so I can track
-  job progress. _(S–M)_
-  - AC: per-surface done state; per-room + overall progress; persists (and syncs once
-    E10 lands).
-  - Tasks: state + UI; persist via the storage seam; tests.
-
-_Enabler:_ a build-time **product-line / sheen / coverage** dataset (sourced like
-the color data) unlocks product selection + accurate per-product quantities; until
-then, quantities use a documented default coverage.
 
 #### E12 · Editorial / trend collection pages _(Marketer · M–L)_
 
