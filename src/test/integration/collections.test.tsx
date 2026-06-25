@@ -2,53 +2,37 @@ import { vi } from "vitest";
 vi.mock("../../data/palette.js", async () => ({
   colorData: (await import("../fixtures.js")).TEST_COLORS,
 }));
-vi.mock("../../data/collections.js", () => ({
-  CURATED_COLLECTIONS: [
-    {
-      slug: "test-neutrals",
-      title: "Test Neutrals",
-      blurb: "Calm test neutrals that flatter any room and never feel dated.",
-      heroNumber: "7015",
-      colorNumbers: ["7015", "7036"],
-      published: true,
-    },
-    {
-      slug: "test-darks",
-      title: "Test Darks",
-      blurb: "Deep, dramatic test darks for accent walls and front doors.",
-      colorNumbers: ["6258", "6244"],
-      published: true,
-    },
-    {
-      slug: "draft-one",
-      title: "Draft Collection",
-      blurb: "An unpublished draft that should never appear anywhere.",
-      colorNumbers: ["6864"],
-      published: false,
-    },
-  ],
-}));
 
 import { describe, it, expect } from "vitest";
 import { screen, within } from "@testing-library/react";
 import { renderApp } from "./harness.js";
 
-describe("Editorial collections (E12)", () => {
-  it("lists published collections on the index, hiding drafts (US12.3)", () => {
+// Collections are derived from the fixtures' brandedCollectionNames:
+//   "Coastal Cool"  → Naval, Tradewind
+//   "Timeless Color" → Repose Gray, Accessible Beige
+//   "Designer Color Collection - Pottery" → excluded (designer collection)
+
+describe("Editorial collections (E12) — from dataset branded names", () => {
+  it("lists branded collections on the index, excluding designer ones (US12.3)", () => {
     renderApp("/collections");
     expect(
       screen.getByRole("heading", { name: "Color collections" }),
     ).toBeTruthy();
-    expect(screen.getByRole("link", { name: /Test Neutrals/ })).toBeTruthy();
-    expect(screen.getByRole("link", { name: /Test Darks/ })).toBeTruthy();
-    expect(screen.queryByText(/Draft Collection/)).toBeNull();
+    expect(screen.getByRole("link", { name: /Coastal Cool/ })).toBeTruthy();
+    expect(screen.getByRole("link", { name: /Timeless Color/ })).toBeTruthy();
+    // Designer collections are surfaced separately ("Designer Pick"), not here.
+    expect(screen.queryByText(/Designer Color Collection/)).toBeNull();
   });
 
   it("renders a collection landing page with its colors as links (US12.1)", () => {
-    renderApp("/collections/test-neutrals");
-    expect(screen.getByRole("heading", { name: "Test Neutrals" })).toBeTruthy();
-    expect(screen.getByText(/Calm test neutrals/)).toBeTruthy();
-    // The featured colors are real crawlable links to their detail pages.
+    renderApp("/collections/timeless-color");
+    expect(
+      screen.getByRole("heading", { name: "Timeless Color" }),
+    ).toBeTruthy();
+    // Blurb is generated from the grouped colors.
+    expect(
+      screen.getByText(/2 Sherwin-Williams paint colors in the Timeless Color/),
+    ).toBeTruthy();
     const repose = screen.getByRole("link", { name: /Repose Gray/ });
     expect(repose.getAttribute("href")).toMatch(
       /\/colors\/sw-7015-repose-gray$/,
@@ -57,7 +41,7 @@ describe("Editorial collections (E12)", () => {
   });
 
   it("emits ItemList JSON-LD for a collection (US12.1)", () => {
-    const { container } = renderApp("/collections/test-neutrals");
+    const { container } = renderApp("/collections/coastal-cool");
     const ld = container.querySelector(
       'script[type="application/ld+json"]',
     ) as HTMLScriptElement;
@@ -77,8 +61,8 @@ describe("Editorial collections (E12)", () => {
     const featured = screen
       .getByRole("heading", { name: "Featured in" })
       .closest("section") as HTMLElement;
-    const link = within(featured).getByRole("link", { name: "Test Neutrals" });
-    expect(link.getAttribute("href")).toMatch(/\/collections\/test-neutrals$/);
+    const link = within(featured).getByRole("link", { name: "Timeless Color" });
+    expect(link.getAttribute("href")).toMatch(/\/collections\/timeless-color$/);
   });
 
   it("offers a Collections entry in the primary nav", () => {

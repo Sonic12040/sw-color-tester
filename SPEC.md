@@ -45,8 +45,9 @@ src/
 ├── routes.tsx            # shared route tree (RootLayout → pages)
 ├── appModel.ts           # singletons: colorModel, exportService
 ├── data/                 # palette.ts (generated, ~1.7k active; code-split into its own client chunk) + types.ts;
-│                         #   collections.ts (editorial content model — E12), scenes.ts (visualizer scenes — E9)
-├── models/ColorModel.ts  # index (id/slug/number/family/collection/designer) + query (filter/sort) + editorial collections
+│                         #   scenes.ts (visualizer scenes — E9)
+├── models/ColorModel.ts  # index (id/slug/number/family/collection/designer) + query (filter/sort);
+│                         #   derives editorial collections from branded names (E12)
 ├── context/              # Favorites, Hidden, Filters, Compare, Palette, Toast, App
 ├── hooks/                # useSet, usePersistent{Set,State}, useFocusTrap, useDocumentMeta
 ├── pages/                # GalleryPage, ColorDetailPage, ComparePage, PalettePage,
@@ -67,10 +68,10 @@ src/
 │   ├── Toast/, ErrorBoundary/, seo/JsonLd
 ├── domain/               # types.ts (shared facet/sort vocabulary), project.ts (Rooms → Surfaces model),
 │                         #   paletteData.ts (persisted shape + pure parse/normalize/migrate — E18),
-│                         #   collection.ts (editorial — E12), scene.ts (visualizer scene — E9)
+│                         #   collection.ts (resolved-collection types — E12), scene.ts (visualizer scene — E9)
 ├── utils/                # base.ts, config.ts, storage.ts, slug.ts, seo.ts, breakpoints.ts, clipboard.ts, colorMath.ts,
 │                         #   colorCopy.ts, paint.ts, workOrder.ts, swLinks.ts, ogTemplate.ts, ExportService.ts, paletteExport.ts (lazy),
-│                         #   projectFile.ts + projectShare.ts (E18), collections.ts (E12), sceneRender.ts (E9),
+│                         #   projectFile.ts + projectShare.ts (E18), collections.ts (group/derive — E12), sceneRender.ts (E9),
 │                         #   embed.ts (embed URL/snippet builders — E14)
 └── styles/               # tokens.css, breakpoints.css, a11y.css, global.css
 prerender.mjs             # post-build: writes dist/colors/<slug>/index.html + 404.html, sitemap, colors.json
@@ -190,17 +191,20 @@ color (+ a brand default + one per collection) into `/og/` with `resvg` (SVG fro
 runtime-caches color pages (OG PNGs are written after the client build, so they
 never enter the precache manifest).
 
-**Editorial collections (E12).** Curated "trend / story" groupings get their own
+**Editorial collections (E12).** Branded "trend / story" groupings get their own
 prerendered, indexable landing pages — the cheapest reach lever, reusing the same
-SSG / JSON-LD / OG pipeline. The build-time content model (`data/collections.ts`)
-is a flat authoring file: each collection references colors by **SW number**, with
-a `published` flag and an optional `heroNumber` — new collections need no component
-changes, and `collections.integrity.test.ts` guards that every number resolves.
-`ColorModel` resolves the published collections (and builds the reverse
-color→collections map for cross-linking) via the pure `utils/collections.ts`. The
-index (`/collections`) and per-collection pages (`/collections/<slug>`) carry
-authoritative heads, `CollectionPage` + `ItemList` JSON-LD, and a per-collection OG
-card; color pages link back to the collections they appear in ("Featured in").
+SSG / JSON-LD / OG pipeline. Collections are **derived from the dataset itself**:
+every color carries its `brandedCollectionNames` (e.g. "Timeless Color Wall",
+"Top 50 Interior Colors"), so a collection is just the set of colors that share a
+name. `ColorModel` groups the active colors into collections via the pure
+`utils/collections.ts` (`buildCollections`) — excluding **designer collections**
+(the `DESIGNER_COLLECTION_PREFIX` ones, surfaced separately as "Designer Pick"),
+sorting by size then name, deriving a slug + a generated blurb (count + dominant
+families) + a hero, and building the reverse color→collections map for
+cross-linking. The index (`/collections`) and per-collection pages
+(`/collections/<slug>`) carry authoritative heads, `CollectionPage` + `ItemList`
+JSON-LD, and a per-collection OG card; color pages link back to the collections
+they appear in ("Featured in").
 
 ## Design system
 
@@ -224,8 +228,8 @@ Vitest is split into **projects** (run by name; `npm test` runs unit + integrati
 - **unit** (Node env, colocated `*.test.ts`): pure logic — `colorMath`, `colorCopy`,
   `colorQuery`, `ColorModel`, `paletteIntelligence`, `paletteExport`, `projectFile`,
   `projectShare`, `collections`, `sceneRender`, `embed`, `slug`, `seo`, `contrast`,
-  dataset + collections + scenes integrity (`palette.integrity`,
-  `collections.integrity`, `scenes.integrity`), and the index-shell check.
+  dataset + scenes integrity (`palette.integrity`, `scenes.integrity`), and the
+  index-shell check.
 - **integration** (jsdom + RTL + `@testing-library/user-event`): component/hook/flow
   specs — each context, the hooks, `ColorCard`, `Toast`, and the routed-app suites in
   `src/test/integration/` (gallery, colorDetail, compare, palette, collections,

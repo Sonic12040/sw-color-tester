@@ -205,12 +205,14 @@ export function ColorDetail({ color }: ColorDetailProps) {
                 <section>
                   <h2 className={styles.sectionTitle}>Featured in</h2>
                   <p className={styles.bodyText}>
-                    {editorialCollections.map((c, i) => (
+                    {editorialCollections.slice(0, 8).map((c, i) => (
                       <span key={c.slug}>
                         {i > 0 && " · "}
                         <Link to={collectionPath(c.slug)}>{c.title}</Link>
                       </span>
                     ))}
+                    {editorialCollections.length > 8 &&
+                      ` · +${editorialCollections.length - 8} more`}
                   </p>
                 </section>
               )}
