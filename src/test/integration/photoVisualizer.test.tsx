@@ -21,7 +21,9 @@ describe("Upload-your-room visualizer (Room Visualizer v2)", () => {
     expect(screen.getByLabelText("Upload a room photo")).toBeTruthy();
     expect(screen.getByText(/never uploaded to a server/i)).toBeTruthy();
     // The editing controls only appear once a photo is loaded.
-    expect(screen.queryByLabelText("Match tolerance")).toBeNull();
+    expect(
+      screen.queryByRole("button", { name: "Reset selection" }),
+    ).toBeNull();
   });
 
   it("links back to the curated scene visualizer", () => {

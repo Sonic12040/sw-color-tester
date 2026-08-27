@@ -53,10 +53,93 @@ const pixelAt = (data: Uint8ClampedArray, p: number): Rgb => ({
 });
 
 /**
- * Magic-wand flood fill (4-connected) from a seed pixel over RGBA `data`,
- * selecting the contiguous run of pixels within `tolerance` (0–255, Euclidean)
- * of the seed color. Returns a coverage mask (`255` selected, `0` not). Pass an
- * existing mask as `into` to accumulate multiple clicks.
+ * Fixed magic-wand tuning — the "standard" thresholds (no user-facing slider),
+ * picked to cover the common case (a well-lit wall with shadows + trim) in a
+ * single click. Two independent gates make it robust *and* not finicky:
+ *
+ * - `LOCAL_TOLERANCE` — max Euclidean-RGB step between a pixel and the *neighbor
+ *   it spreads from*. A smoothly shaded wall has tiny neighbor steps (it flows);
+ *   the sharp edge at trim / a corner / furniture is a big step (it stops). This
+ *   is compared locally, not to the seed, so a wall that fades light→dark across
+ *   the whole room is still selected in one click.
+ * - `SEED_CHROMA_TOLERANCE` — a safety cap on how far a pixel's **chromaticity**
+ *   (hue, brightness-independent) may drift from the clicked color, so the fill
+ *   can't wander through a long soft ramp onto a *different-colored* surface.
+ *   Being brightness-independent, deep shadow on the same paint never trips it.
+ */
+export const LOCAL_TOLERANCE = 34;
+export const SEED_CHROMA_TOLERANCE = 0.06;
+const LOCAL_SQ = LOCAL_TOLERANCE * LOCAL_TOLERANCE;
+const SEED_CHROMA_SQ = SEED_CHROMA_TOLERANCE * SEED_CHROMA_TOLERANCE;
+
+/** Chromaticity (r,g share of total) — the color's hue, independent of how
+ *  bright/dark it is, so a paint reads the same in light and in shadow. */
+function chromaticity({ r, g, b }: Rgb): { a: number; b: number } {
+  const sum = r + g + b + 1; // +1 avoids a divide-by-zero on pure black
+  return { a: r / sum, b: g / sum };
+}
+
+function chromaDistSq(a: Rgb, b: Rgb): number {
+  const ca = chromaticity(a);
+  const cb = chromaticity(b);
+  const da = ca.a - cb.a;
+  const db = ca.b - cb.b;
+  return da * da + db * db;
+}
+
+/**
+ * Separable box blur over an RGBA buffer (radius `r`). Smoothing the *working*
+ * copy the wand runs on (not the displayed photo) collapses JPEG noise, so a
+ * single speck can't fragment or halt the selection — the biggest source of
+ * "finicky" behavior. Returns a fresh buffer; pure.
+ */
+export function boxBlurRgba(
+  data: Uint8ClampedArray,
+  width: number,
+  height: number,
+  r = 2,
+): Uint8ClampedArray {
+  if (r <= 0) return new Uint8ClampedArray(data);
+  const pass = (src: Uint8ClampedArray, horizontal: boolean) => {
+    const dst = new Uint8ClampedArray(src.length);
+    const major = horizontal ? height : width;
+    const minor = horizontal ? width : height;
+    const step = horizontal ? 1 : width; // pixel stride along the blur axis
+    for (let m = 0; m < major; m += 1) {
+      const base = horizontal ? m * width : m; // first pixel of this line
+      for (let k = 0; k < minor; k += 1) {
+        let sr = 0;
+        let sg = 0;
+        let sb = 0;
+        let count = 0;
+        for (let d = -r; d <= r; d += 1) {
+          const kk = k + d;
+          if (kk < 0 || kk >= minor) continue;
+          const o = (base + kk * step) * 4;
+          sr += src[o];
+          sg += src[o + 1];
+          sb += src[o + 2];
+          count += 1;
+        }
+        const o = (base + k * step) * 4;
+        dst[o] = sr / count;
+        dst[o + 1] = sg / count;
+        dst[o + 2] = sb / count;
+        dst[o + 3] = 255;
+      }
+    }
+    return dst;
+  };
+  return pass(pass(data, true), false);
+}
+
+/**
+ * Magic-wand flood fill (4-connected) from a seed pixel over RGBA `data`, using a
+ * fixed neighbor-difference standard (`LOCAL_TOLERANCE`) plus a seed safety cap
+ * (`SEED_TOLERANCE`) — see those constants. Returns a coverage mask (`255`
+ * selected, `0` not). Pass an existing mask as `into` to accumulate clicks.
+ *
+ * Run this on a blurred working copy (see `boxBlurRgba`) for best results.
  */
 export function floodFillMask(
   data: Uint8ClampedArray,
@@ -64,29 +147,44 @@ export function floodFillMask(
   height: number,
   seedX: number,
   seedY: number,
-  tolerance: number,
   into?: Uint8Array,
 ): Uint8Array {
   const mask = into ?? new Uint8Array(width * height);
   if (seedX < 0 || seedY < 0 || seedX >= width || seedY >= height) return mask;
 
-  const seed = pixelAt(data, seedY * width + seedX);
-  const tolSq = tolerance * tolerance;
+  const start = seedY * width + seedX;
+  const seed = pixelAt(data, start);
   const visited = new Uint8Array(width * height);
-  const stack: number[] = [seedY * width + seedX];
+  const stack: number[] = [start];
+  visited[start] = 1;
+  mask[start] = 255;
 
   while (stack.length) {
     const p = stack.pop() as number;
-    if (visited[p]) continue;
-    visited[p] = 1;
-    if (rgbDistanceSq(pixelAt(data, p), seed) > tolSq) continue;
-    mask[p] = 255;
+    const pc = pixelAt(data, p);
     const x = p % width;
     const y = (p - x) / width;
-    if (x > 0) stack.push(p - 1);
-    if (x < width - 1) stack.push(p + 1);
-    if (y > 0) stack.push(p - width);
-    if (y < height - 1) stack.push(p + width);
+    const neighbors: number[] = [];
+    if (x > 0) neighbors.push(p - 1);
+    if (x < width - 1) neighbors.push(p + 1);
+    if (y > 0) neighbors.push(p - width);
+    if (y < height - 1) neighbors.push(p + width);
+
+    for (const n of neighbors) {
+      if (visited[n]) continue;
+      const nc = pixelAt(data, n);
+      // Spread across smooth gradients (small step from the current pixel), but
+      // never past a hard edge, and never far in hue from the clicked color
+      // (brightness may roam freely, so shadows stay selected).
+      if (
+        rgbDistanceSq(nc, pc) <= LOCAL_SQ &&
+        chromaDistSq(nc, seed) <= SEED_CHROMA_SQ
+      ) {
+        visited[n] = 1;
+        mask[n] = 255;
+        stack.push(n);
+      }
+    }
   }
   return mask;
 }

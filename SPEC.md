@@ -142,9 +142,15 @@ combinations, so shared looks use the brand-default OG card — see Known follow
 **Upload-your-room (Visualizer v2).** `/visualizer/upload` previews a color on a
 photo of the user's **own** room — processed entirely in the browser (the photo is
 never uploaded; no backend). The image is downscaled on load (≤1400px) to a 2D
-canvas for pixel reads; the user **magic-wands** a wall — a contiguous flood fill
-within a color tolerance (`utils/photoMask.floodFillMask`) accumulated across
-clicks into a coverage mask. Masked pixels are recolored to the target paint
+canvas for pixel reads; the user **magic-wands** a wall — `floodFillMask` grows a
+contiguous region, accumulated across clicks, using a **fixed standard** (no
+tolerance slider) tuned to cover most rooms in one click: it spreads across small
+**neighbor-to-neighbor** color steps (so a wall's shading flows) but stops at the
+big step of trim / a corner, and caps drift by **chromaticity** (hue,
+brightness-independent) from the clicked color so deep shadow on the same paint
+stays selected while a different-colored surface doesn't. The wand runs on a
+noise-smoothed working copy (`boxBlurRgba`) so JPEG speckle can't fragment the
+selection. Masked pixels are recolored to the target paint
 **preserving the original luminance** (shadows/edges read through), then a lighting
 tint is blended. The live render runs on the GPU via **WebGL** (`utils/photoGL.ts`:
 a fragment shader that recolors + blends), falling back to the pure CPU compositor

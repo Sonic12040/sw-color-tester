@@ -123,7 +123,9 @@ test("photo visualizer: upload a room photo and recolor a wall (WebGL)", async (
   });
 
   // Editing UI appears once the photo loads.
-  await expect(page.getByLabel("Match tolerance")).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Reset selection" }),
+  ).toBeVisible();
   const canvas = page.locator("canvas");
   const before = await canvas.evaluate((c: HTMLCanvasElement) => c.toDataURL());
 

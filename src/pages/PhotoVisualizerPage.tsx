@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import type { Color } from "../data/types.js";
 import { LIGHTING_PRESETS, resolveLighting } from "../utils/sceneRender.js";
 import {
+  boxBlurRgba,
   compositeRgba,
   floodFillMask,
   hexToRgb,
@@ -28,7 +29,8 @@ const isStringArray = (v: unknown): v is string[] =>
 
 interface Source {
   canvas: HTMLCanvasElement; // 2D, holds the downscaled photo (GL tex source)
-  data: Uint8ClampedArray; // RGBA pixels (flood fill + CPU composite)
+  data: Uint8ClampedArray; // original RGBA pixels (recolor luminance reference)
+  work: Uint8ClampedArray; // noise-smoothed copy the wand runs on
   width: number;
   height: number;
 }
@@ -65,7 +67,6 @@ export function PhotoVisualizerPage() {
   const [ready, setReady] = useState(false);
   const [colorNumber, setColorNumber] = useState(DEFAULT_COLOR_NUMBER);
   const [lightingKey, setLightingKey] = useState("neutral");
-  const [tolerance, setTolerance] = useState(40);
   const [numberQuery, setNumberQuery] = useState("");
   const [recentIds, setRecentIds] = usePersistentState<string[]>(
     STORAGE_KEYS.visualizerRecent,
@@ -150,7 +151,9 @@ export function PhotoVisualizerPage() {
       if (!octx) throw new Error("2D context unavailable");
       octx.drawImage(img, 0, 0, width, height);
       const data = octx.getImageData(0, 0, width, height).data;
-      sourceRef.current = { canvas: off, data, width, height };
+      // Smooth a working copy once so the wand isn't derailed by JPEG noise.
+      const work = boxBlurRgba(data, width, height, 2);
+      sourceRef.current = { canvas: off, data, work, width, height };
       maskRef.current = new Uint8Array(width * height);
 
       // Pick the render path now that we have a canvas to bind.
@@ -189,7 +192,7 @@ export function PhotoVisualizerPage() {
     const rect = canvas.getBoundingClientRect();
     const x = Math.floor(((e.clientX - rect.left) / rect.width) * src.width);
     const y = Math.floor(((e.clientY - rect.top) / rect.height) * src.height);
-    floodFillMask(src.data, src.width, src.height, x, y, tolerance, mask);
+    floodFillMask(src.work, src.width, src.height, x, y, mask);
     renderComposite();
   };
 
@@ -288,8 +291,9 @@ export function PhotoVisualizerPage() {
               />
             </div>
             <p className={styles.hint}>
-              Click a wall to select it (click more areas to add). Adjust the
-              match tolerance if too much or too little is selected.
+              Click a wall to paint it. Click another wall (or a spot the first
+              click missed) to add it. The selection follows the wall's shading
+              and stops at trim and corners automatically.
             </p>
 
             {/* Wall selection. */}
@@ -298,18 +302,7 @@ export function PhotoVisualizerPage() {
               className={styles.controlGroup}
             >
               <h2 className={styles.controlTitle}>Wall selection</h2>
-              <div className={styles.slider}>
-                <label htmlFor="photo-tolerance">Match tolerance</label>
-                <input
-                  id="photo-tolerance"
-                  type="range"
-                  min={5}
-                  max={120}
-                  step={5}
-                  value={tolerance}
-                  onChange={(e) => setTolerance(Number(e.target.value))}
-                />
-                <span>{tolerance}</span>
+              <div className={styles.row}>
                 <button
                   type="button"
                   className="btn-on-dark"

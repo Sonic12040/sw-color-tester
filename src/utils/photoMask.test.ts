@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   applyLighting,
+  boxBlurRgba,
   compositeRgba,
   floodFillMask,
   hexToRgb,
@@ -44,29 +45,69 @@ describe("luma / rgbDistanceSq", () => {
   });
 });
 
-describe("floodFillMask", () => {
-  it("selects the contiguous run within tolerance, stopping at edges", () => {
-    // [white, white, black, white] — seed at 0 grabs the first two whites only.
+describe("floodFillMask (fixed neighbor+seed standard)", () => {
+  it("stops at a hard edge (wall → trim) but not before it", () => {
+    // [white, white, black, white] — seed on the first white grabs the two
+    // whites, stops at the black step, never reaches the isolated white.
     const data = rgba([W, W, K, W]);
-    const mask = floodFillMask(data, 4, 1, 0, 0, 30);
+    const mask = floodFillMask(data, 4, 1, 0, 0);
     expect(Array.from(mask)).toEqual([255, 255, 0, 0]);
+  });
+
+  it("follows a smooth luminance gradient across the whole wall (one click)", () => {
+    // A neutral wall shaded light→dark in small steps: neighbor steps are tiny
+    // and the hue never changes, so one click selects the entire run even
+    // though the bright and shadowed ends differ a lot in brightness.
+    const shades: [number, number, number][] = [];
+    for (let v = 230; v >= 90; v -= 16) shades.push([v, v, v]);
+    const data = rgba(shades);
+    const mask = floodFillMask(data, shades.length, 1, 0, 0);
+    expect(Array.from(mask).every((m) => m === 255)).toBe(true);
+  });
+
+  it("does NOT spread across a sharp step even if both sides are 'wall-ish'", () => {
+    // A big single-step jump (a shadow line / corner) halts the fill.
+    const data = rgba([
+      [200, 200, 200],
+      [200, 200, 200],
+      [90, 90, 90],
+    ]);
+    const mask = floodFillMask(data, 3, 1, 0, 0);
+    expect(Array.from(mask)).toEqual([255, 255, 0]);
   });
 
   it("accumulates across clicks via the `into` mask", () => {
     const data = rgba([W, W, K, W]);
-    const mask = floodFillMask(data, 4, 1, 0, 0, 30);
-    floodFillMask(data, 4, 1, 3, 0, 30, mask); // add the isolated white
+    const mask = floodFillMask(data, 4, 1, 0, 0);
+    floodFillMask(data, 4, 1, 3, 0, mask); // add the isolated white
     expect(Array.from(mask)).toEqual([255, 255, 0, 255]);
   });
 
-  it("a wide tolerance bridges across a different color", () => {
-    const data = rgba([W, [200, 200, 200], W]);
-    expect(Array.from(floodFillMask(data, 3, 1, 0, 0, 10))).toEqual([
-      255, 0, 0,
-    ]);
-    expect(Array.from(floodFillMask(data, 3, 1, 0, 0, 120))).toEqual([
-      255, 255, 255,
-    ]);
+  it("caps hue drift from the seed, so a soft ramp to another color can't run away", () => {
+    // Neutral → blue in small neighbor steps (each within the local tolerance),
+    // but the hue drifts steadily. The chromaticity cap stops the fill before
+    // the far, clearly-blue end — even though there's no hard edge.
+    const ramp: [number, number, number][] = [];
+    for (let k = 0; k < 8; k += 1) ramp.push([100 - 4 * k, 100, 100 + 4 * k]);
+    const mask = floodFillMask(rgba(ramp), ramp.length, 1, 0, 0);
+    expect(mask[0]).toBe(255); // the clicked neutral
+    expect(mask[ramp.length - 1]).toBe(0); // the far, bluer end excluded
+  });
+});
+
+describe("boxBlurRgba", () => {
+  it("averages a lone speck toward its neighbors (denoise)", () => {
+    // A single black speck between whites — blur pulls it up toward white so it
+    // no longer fragments a selection.
+    const data = rgba([W, W, K, W, W]);
+    const blurred = boxBlurRgba(data, 5, 1, 1);
+    expect(blurred[2 * 4]).toBeGreaterThan(150); // the speck lifted well off 0
+  });
+  it("is a copy when radius is 0", () => {
+    const data = rgba([W, K]);
+    const out = boxBlurRgba(data, 2, 1, 0);
+    expect(Array.from(out)).toEqual(Array.from(data));
+    expect(out).not.toBe(data);
   });
 });
 
