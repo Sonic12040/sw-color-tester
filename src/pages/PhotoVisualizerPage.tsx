@@ -65,6 +65,9 @@ export function PhotoVisualizerPage() {
   const modeRef = useRef<"gl" | "cpu">("cpu");
 
   const [ready, setReady] = useState(false);
+  // Bumped on each upload to (re)initialize the render target *after* the canvas
+  // has mounted — on the first upload the canvas doesn't exist yet.
+  const [photoNonce, setPhotoNonce] = useState(0);
   const [colorNumber, setColorNumber] = useState(DEFAULT_COLOR_NUMBER);
   const [lightingKey, setLightingKey] = useState("neutral");
   const [numberQuery, setNumberQuery] = useState("");
@@ -120,6 +123,37 @@ export function PhotoVisualizerPage() {
     );
   }, [color, lightingKey]);
 
+  // (Re)bind the render target after each upload. This runs *after* the canvas
+  // has mounted (it doesn't exist on the first upload while `ready` is false),
+  // which fixes the first photo drawing onto an unsized 300×150 canvas (cropped).
+  useEffect(() => {
+    const src = sourceRef.current;
+    const display = canvasRef.current;
+    if (!photoNonce || !src || !display) return;
+    rendererRef.current?.dispose();
+    rendererRef.current = null;
+    modeRef.current = "cpu";
+    if (isWebGLAvailable()) {
+      try {
+        const renderer = new PhotoRenderer(display);
+        renderer.setPhoto(src.canvas, src.width, src.height); // sizes the canvas
+        rendererRef.current = renderer;
+        modeRef.current = "gl";
+      } catch {
+        modeRef.current = "cpu";
+      }
+    }
+    if (modeRef.current === "cpu") {
+      display.width = src.width;
+      display.height = src.height;
+      display.getContext("2d")?.drawImage(src.canvas, 0, 0);
+    }
+    renderComposite();
+    // renderComposite is intentionally omitted: re-running on color/lighting
+    // changes must not rebuild the GL renderer (the effect below handles those).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [photoNonce]);
+
   // Re-render when the color or lighting changes (mask changes call it directly).
   useEffect(() => {
     if (ready) renderComposite();
@@ -155,30 +189,9 @@ export function PhotoVisualizerPage() {
       const work = boxBlurRgba(data, width, height, 2);
       sourceRef.current = { canvas: off, data, work, width, height };
       maskRef.current = new Uint8Array(width * height);
-
-      // Pick the render path now that we have a canvas to bind.
-      const display = canvasRef.current;
-      rendererRef.current?.dispose();
-      rendererRef.current = null;
-      modeRef.current = "cpu";
-      if (display && isWebGLAvailable()) {
-        try {
-          const renderer = new PhotoRenderer(display);
-          renderer.setPhoto(off, width, height);
-          rendererRef.current = renderer;
-          modeRef.current = "gl";
-        } catch {
-          modeRef.current = "cpu";
-        }
-      }
-      if (modeRef.current === "cpu" && display) {
-        display.width = width;
-        display.height = height;
-        display.getContext("2d")?.drawImage(off, 0, 0);
-      }
+      // Mount the canvas (if needed), then bind + render it in the effect above.
       setReady(true);
-      // Effects render after state commits; render once explicitly too.
-      requestAnimationFrame(renderComposite);
+      setPhotoNonce((n) => n + 1);
     } catch {
       showToast("Couldn't read that image");
     }

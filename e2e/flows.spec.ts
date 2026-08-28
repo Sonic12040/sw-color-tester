@@ -103,16 +103,16 @@ test("photo visualizer: upload a room photo and recolor a wall (WebGL)", async (
 }) => {
   await page.goto("visualizer/upload");
 
-  // Build a small room image in-page (wall on top, floor below) and upload it.
+  // Build a small non-square room image (wall on top, floor below) and upload it.
   const dataUrl = await page.evaluate(() => {
     const c = document.createElement("canvas");
-    c.width = 200;
-    c.height = 200;
+    c.width = 240;
+    c.height = 160;
     const x = c.getContext("2d") as CanvasRenderingContext2D;
     x.fillStyle = "#88aa66"; // wall
-    x.fillRect(0, 0, 200, 120);
+    x.fillRect(0, 0, 240, 96);
     x.fillStyle = "#5a4632"; // floor
-    x.fillRect(0, 120, 200, 80);
+    x.fillRect(0, 96, 240, 64);
     return c.toDataURL("image/png");
   });
   const buffer = Buffer.from(dataUrl.split(",")[1], "base64");
@@ -127,6 +127,14 @@ test("photo visualizer: upload a room photo and recolor a wall (WebGL)", async (
     page.getByRole("button", { name: "Reset selection" }),
   ).toBeVisible();
   const canvas = page.locator("canvas");
+
+  // The FIRST upload must adopt the image's intrinsic size (not the default
+  // 300×150) — otherwise it renders cropped / wrong aspect ratio.
+  const dims = await canvas.evaluate((c: HTMLCanvasElement) => ({
+    w: c.width,
+    h: c.height,
+  }));
+  expect(dims).toEqual({ w: 240, h: 160 });
   const before = await canvas.evaluate((c: HTMLCanvasElement) => c.toDataURL());
 
   // Pick a strong color, then magic-wand the wall — the canvas must change.
